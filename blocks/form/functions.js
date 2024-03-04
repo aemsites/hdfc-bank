@@ -13,5 +13,11 @@ function getFullName(firstname, lastname) {
   return firstname.concat(' ').concat(lastname);
 }
 
+export function onWizardInit(){
+console.log('loaded wizard view');
+}
+
+
+
 // eslint-disable-next-line import/prefer-default-export
 export { getFullName };
