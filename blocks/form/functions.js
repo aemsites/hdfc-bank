@@ -12,7 +12,7 @@ function getFullName(firstname, lastname) {
   lastname = (lastname == null) ? '' : lastname;
   return firstname.concat(' ').concat(lastname);
 }
-function onWizardInit(){
+function onWizardInit() {
 }
 // eslint-disable-next-line import/prefer-default-export
 export { getFullName ,onWizardInit};
