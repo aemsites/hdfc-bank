@@ -24,7 +24,7 @@ function onWizardInit() {
     if (child.tagName.toLowerCase() === 'fieldset' && (Number(child.style.getPropertyValue('--wizard-step-index')) !== totalIndex - 1)) {
       const stepperLegend = document.querySelector(`main .form .form-corporatecardwizardview.field-wrapper.wizard .${child.className.split(' ').join('.')} > legend`);
       if (stepperLegend) {
-        stepperLegend.classList.add('stepperStyle');
+        stepperLegend.classList.add('stepper-style');
       }
     }
   });

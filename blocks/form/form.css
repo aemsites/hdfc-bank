@@ -1,4 +1,4 @@
-@import './styles.css';
+@import url('./styles.css');
 
 :root {
     --background-color-primary: #fff;
