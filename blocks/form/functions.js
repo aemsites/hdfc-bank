@@ -12,6 +12,11 @@ function getFullName(firstname, lastname) {
   lastname = (lastname == null) ? '' : lastname;
   return firstname.concat(' ').concat(lastname);
 }
+/**
+ * On Wizard Init.
+ * @name onWizardInit Runs on initialization of wizard
+ */
+function onWizardInit() {}
 
 // eslint-disable-next-line import/prefer-default-export
-export { getFullName };
+export { getFullName, onWizardInit };
