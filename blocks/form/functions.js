@@ -12,11 +12,11 @@ function getFullName(firstname, lastname) {
   lastname = (lastname == null) ? '' : lastname;
   return firstname.concat(' ').concat(lastname);
 }
-/**
- * On Wizard Init.
- * @name onWizardInit Runs on initialization of wizard
- */
 
+/**
+ * Decorates the stepper for CC yourDetails panel
+ * @name decorateStepper Runs after yourDetails panel is initialized
+ */
 function decorateStepper() {
   const ccDetailsWizard = document.querySelector('.form-corporatecardwizardview.field-wrapper.wizard');
 
@@ -29,6 +29,10 @@ function decorateStepper() {
   });
 }
 
+/**
+ * On Wizard Init.
+ * @name onWizardInit Runs on initialization of wizard
+ */
 function onWizardInit() {
   decorateStepper();
 }
