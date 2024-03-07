@@ -1,11 +1,26 @@
-main .form .form-corporatecardwizardview.field-wrapper.wizard .stepper-style::after {
-    margin: auto 0;
-    content: "";
-    display: block;
-    width: 61px;
-    height: 3px;
-    background: linear-gradient(90deg, rgb(211 214 220) 50%, rgba(255 255 255 / 0%) 100%);
-    margin-top: 24px;
+:root {
+    --hdfc-stepper-background-style: linear-gradient(90deg, rgb(211 214 220) 50%, rgba(255 255 255 / 0%) 100%);
+    --hdfc-stepper-margin-style: 24px;
+    --hdfc-stepper-width: 61px;
+    --hdfc-stepper-height: 3px;
+    --hdfc-wizard-border-color: rgba(0 0 0 / 0%);
+    --hdfc-wizard-step-legend-padding: 0;
+    --hdfc-wizard-step-legend-width: clamp(100px, calc(308%/var(--wizard-step-count)), 330px);
+}
+
+main .form .form-corporatecardwizardview.field-wrapper.wizard {
+    .form-personaldetails {
+        margin-top: var(--hdfc-stepper-margin-style);
+    }
+
+    .stepper-style::after {
+        content: "";
+        display: block;
+        width: var(--hdfc-stepper-width);
+        height: var(--hdfc-stepper-height);
+        background: var(--hdfc-stepper-background-style);
+        margin-top: var(--hdfc-stepper-margin-style);
+    }
 }
 
 main .form form .wizard > .current-wizard-step > legend::before {
@@ -34,13 +49,9 @@ main .form form .wizard > .current-wizard-step > legend::before {
 }
 
 @media (width < 1200px) {
-    main .form form .wizard {
-        --form-wizard-step-legend-padding: 0;
-        --form-wizard-step-legend-font-size: 1.2rem;
-        --form-wizard-step-legend-width: clamp(100px, calc(308%/var(--wizard-step-count)), 330px);
-    }
-
     main .form form .form-corporatecardwizardview.wizard {
+        --hdfc-wizard-step-legend-width: clamp(100px, calc(308%/var(--wizard-step-count)), 330px);
+
         overflow: hidden;
         border: rgba(0 0 0 / 0%);
         border-right: solid 20px rgba(0 0 0 / 0%);
@@ -50,14 +61,20 @@ main .form form .wizard > .current-wizard-step > legend::before {
         padding: 10px 0 0 15px;
     }
 
+    main .form form .wizard > fieldset > legend::before {
+        width: 30px;
+        height: 30px;
+    }
+
     main .form form .form-corporatecardwizardview.wizard > fieldset > legend{
         display: flex !important;
         text-indent: 1%;
+        font-size: var(--form-font-size-xs);
         width: 100%;
         white-space: break-spaces;
         text-overflow: ellipsis;
-        padding: 0 var(--form-wizard-step-legend-padding) calc(2*var(--form-wizard-step-legend-padding));
-        left: calc(var(--form-wizard-step-legend-width) * var(--wizard-step-index));
+        padding: 0 var(--hdfc-wizard-step-legend-padding) calc(2*var(--hdfc-wizard-step-legend-padding));
+        left: calc(var(--hdfc-wizard-step-legend-width) * var(--wizard-step-index));
     }
 
     main .form form .form-corporatecardwizardview.wizard > fieldset > fieldset > legend {
