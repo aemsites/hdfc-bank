@@ -61,6 +61,33 @@ const createLabelInElement = (elementSelector, labelClass) => {
   labelElement.textContent = labelText;
   element.appendChild(labelElement);
 };
+/**
+ * Decorates the stepper for CC yourDetails panel
+ * @name decorateStepper Runs after yourDetails panel is initialized
+ */
+function decorateStepper() {
+  const ccDetailsWizard = document.querySelector(
+    '.form-corporatecardwizardview.field-wrapper.wizard'
+  );
+
+  const totalIndex = ccDetailsWizard.style.getPropertyValue(
+    '--wizard-step-count'
+  );
+  Array.from(ccDetailsWizard.children).forEach((child) => {
+    if (
+      child.tagName.toLowerCase() === 'fieldset' &&
+      Number(child.style.getPropertyValue('--wizard-step-index')) !==
+        totalIndex - 1
+    ) {
+      const stepperLegend = document.querySelector(
+        `main .form .form-corporatecardwizardview.field-wrapper.wizard .${child.className
+          .split(' ')
+          .join('.')} > legend`
+      );
+      stepperLegend?.classList?.add('stepper-style');
+    }
+  });
+}
 
 /**
  * On Wizard Init.
@@ -71,6 +98,7 @@ function onWizardInit() {
     '.form-permanentaddresstoggle',
     'permanent-address-toggle__label'
   );
+  decorateStepper();
 }
 
 // eslint-disable-next-line import/prefer-default-export
