@@ -69,7 +69,7 @@ form output {
   font-size: 1.625rem;
 }
 
-form [data-visible="false"] {
+form [data-visible='false'] {
   display: none !important;
 }
 
@@ -136,15 +136,15 @@ main .form select {
   padding-bottom: 0;
 }
 
-main .form input[type="file"] {
+main .form input[type='file'] {
   border: none;
   padding-inline-start: 0;
   background: unset;
   color: unset;
 }
 
-main .form input[type="checkbox"],
-main .form input[type="radio"] {
+main .form input[type='checkbox'],
+main .form input[type='radio'] {
   width: 16px;
   height: 16px;
   flex: none;
@@ -179,7 +179,7 @@ main .form label {
 }
 
 main .form label.required::after {
-  content: "*";
+  content: '*';
   color: var(--form-label-color);
   padding-inline-start: 5px;
 }
@@ -253,7 +253,7 @@ main .form button:disabled {
   background-color: var(--form-input-disable-color);
 }
 
-main .form-file-wrapper.decorated input[type="file"] {
+main .form-file-wrapper.decorated input[type='file'] {
   display: none;
 }
 
@@ -281,13 +281,13 @@ main .form form .item-remove span {
   display: block;
   width: 20px;
   height: 20px;
-  background: url("./icons/delete.svg") no-repeat;
+  background: url('./icons/delete.svg') no-repeat;
 }
 
 main .form-file-wrapper .file-description button {
   --form-button-padding: 15px;
 
-  background: url("./icons/delete.svg") no-repeat;
+  background: url('./icons/delete.svg') no-repeat;
   width: unset;
   border: unset;
   text-align: center;
@@ -536,75 +536,3 @@ main .form .form-file-wrapper .form-file-drag-area {
   justify-content: center;
   align-items: center;
 }
-
-/* Form permanent address toogle styling starts */
-
-main .form form .form-permanentaddress .form-permanentaddresstoggle {
-  align-items: center;
-}
-
-main
-  .form
-  form
-  .form-permanentaddress
-  .form-permanentaddresstoggle
-  input[type="checkbox"] {
-  display: none;
-}
-
-main
-  .form
-  form
-  .form-permanentaddress
-  .form-permanentaddresstoggle
-  .field-label {
-  display: flex;
-  flex-basis: 40px;
-  align-items: center;
-  background-color: #9ca3af;
-  color: #fff;
-  cursor: pointer;
-  border-radius: 12px;
-  height: 24px;
-  width: 40px;
-}
-
-main
-  .form
-  form
-  .form-permanentaddress
-  .form-permanentaddresstoggle
-  input[type="checkbox"]:checked
-  + .field-label {
-  background-color: #1c3fca;
-}
-
-main
-  .form
-  form
-  .form-permanentaddress
-  .form-permanentaddresstoggle
-  .field-label::before {
-  content: "";
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  background-color: #fff;
-  border-radius: 50%;
-  margin-right: 10px;
-  transition: transform 0.3s;
-  margin-left: 1px;
-}
-
-main
-  .form
-  form
-  .form-permanentaddress
-  .form-permanentaddresstoggle
-  input[type="checkbox"]:checked
-  + .field-label::before {
-  transform: translateX(20px);
-  margin-right: 21px;
-}
-
-/* Form permanent address toogle styling ends */
