@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-:root {
+ :root {
   /* colors */
   --link-color: #035fe6;
   --link-hover-color: #136ff6;
@@ -22,8 +22,7 @@
   /* fonts */
   --body-font-family: roboto, roboto-fallback;
   --heading-font-family: var(--body-font-family);
-  --fixed-font-family: 'Roboto Mono', menlo, consolas, 'Liberation Mono',
-    monospace;
+  --fixed-font-family: 'Roboto Mono', menlo, consolas, 'Liberation Mono', monospace;
 
   /* body sizes */
   --body-font-size-m: 22px;
@@ -78,62 +77,35 @@ header {
   height: var(--nav-height);
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h1, h2, h3,
+h4, h5, h6 {
   font-family: var(--heading-font-family);
   font-weight: 600;
   line-height: 1.25;
   margin-top: 1em;
-  margin-bottom: 0.5em;
+  margin-bottom: .5em;
   scroll-margin: calc(var(--nav-height) + 1em);
 }
 
-h1 {
-  font-size: var(--heading-font-size-xxl);
-}
+h1 { font-size: var(--heading-font-size-xxl) }
+h2 { font-size: var(--heading-font-size-xl) }
+h3 { font-size: var(--heading-font-size-l) }
+h4 { font-size: var(--heading-font-size-m) }
+h5 { font-size: var(--heading-font-size-s) }
+h6 { font-size: var(--heading-font-size-xs) }
 
-h2 {
-  font-size: var(--heading-font-size-xl);
-}
-
-h3 {
-  font-size: var(--heading-font-size-l);
-}
-
-h4 {
-  font-size: var(--heading-font-size-m);
-}
-
-h5 {
-  font-size: var(--heading-font-size-s);
-}
-
-h6 {
-  font-size: var(--heading-font-size-xs);
-}
-
-p,
-dl,
-ol,
-ul,
-pre,
-blockquote {
+p, dl, ol, ul, pre, blockquote {
   margin-top: 1em;
   margin-bottom: 1em;
 }
 
-code,
-pre {
+code, pre {
   font-family: var(--fixed-font-family);
   font-size: var(--body-font-size-s);
 }
 
 code {
-  padding: 0.125em;
+  padding: .125em;
 }
 
 pre {
@@ -143,7 +115,7 @@ pre {
 main pre {
   background-color: var(--light-color);
   padding: 1em;
-  border-radius: 0.25em;
+  border-radius: .25em;
   overflow-x: auto;
   white-space: pre;
 }
@@ -160,8 +132,7 @@ a:hover {
 }
 
 /* buttons */
-a.button:any-link,
-button {
+a.button:any-link, button {
   font-family: var(--body-font-family);
   display: inline-block;
   box-sizing: border-box;
@@ -181,25 +152,20 @@ button {
   border-radius: 30px;
 }
 
-a.button:hover,
-a.button:focus,
-button:hover,
-button:focus {
+a.button:hover, a.button:focus, button:hover, button:focus  {
   background-color: var(--link-hover-color);
   cursor: pointer;
 }
 
-button:disabled,
-button:disabled:hover {
+button:disabled, button:disabled:hover {
   background-color: var(--light-color);
   cursor: unset;
 }
 
-a.button.secondary,
-button.secondary {
+a.button.secondary, button.secondary {
   background-color: unset;
   border: 2px solid currentcolor;
-  color: var(--text-color);
+  color: var(--text-color)
 }
 
 main img {
