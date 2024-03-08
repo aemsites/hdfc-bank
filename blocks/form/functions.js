@@ -5,6 +5,9 @@
  * @param {string} lastname in Stringformat
  * @return {string}
  */
+
+import { getOTP, otpValidation } from '../../common/functions.js';
+
 function getFullName(firstname, lastname) {
   // eslint-disable-next-line no-param-reassign
   firstname = (firstname == null) ? '' : firstname;
@@ -18,5 +21,6 @@ function getFullName(firstname, lastname) {
  */
 function onWizardInit() {}
 
-// eslint-disable-next-line import/prefer-default-export
-export { getFullName, onWizardInit };
+export {
+  getFullName, onWizardInit, getOTP, otpValidation,
+};
