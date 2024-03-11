@@ -1,5 +1,3 @@
-import openModal from '../common/components/modal/modal.js';
-
 const createLabelInElement = (elementSelector, labelClass) => {
   /**
   * The main element in the DOM where the form resides.
@@ -68,37 +66,5 @@ function onWizardInit() {
   createLabelInElement('.form-permanentaddresstoggle', 'permanent-address-toggle__label');
   decorateStepper();
 }
-
-function addLegend() {
-  const inputs = document.querySelectorAll('.field-wrapper input');
-  inputs.forEach((input) => {
-    const wrapper = input.closest('.field-wrapper');
-    input.addEventListener('focus', () => {
-      wrapper.dataset.active = 'true';
-      wrapper.dataset.empty = !input.value;
-    });
-    input.addEventListener('blur', () => {
-      delete wrapper.dataset.active;
-      wrapper.dataset.empty = !input.value;
-    });
-    // Initialize the state based on the input's current value
-    wrapper.dataset.empty = !input.value;
-  });
-}
-
-const checkBox1ClickElement = document.getElementsByName('consentCheckBox1')[0];
-const checkBox1ContentElement = document.getElementsByClassName('form-consent1text')[0];
-// const checkBox1ContentElement = document.getElementsByClassName('form-consent1-text')[0];
-const checkBox1agreeButton = document.getElementsByName('iAgreeConsent1')[0];
-
-const linkModalFunction = (trigerElement, innerElement, agreeBtn) => {
-  trigerElement.addEventListener('click', async (e) => {
-    if (e.target.checked) {
-      openModal(innerElement, agreeBtn);
-    }
-  });
-};
-
-linkModalFunction(checkBox1ClickElement, checkBox1ContentElement, checkBox1agreeButton);
 
 export { decorateStepper, onWizardInit };
