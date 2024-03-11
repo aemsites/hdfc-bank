@@ -1,3 +1,4 @@
+/* eslint no-console: ["error", { allow: ["warn", "error"] }] */
 /**
  * Get Full Name
  * @name getFullName Concats first name and last name

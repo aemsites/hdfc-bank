@@ -1,3 +1,6 @@
+/* eslint no-console: ["error", { allow: ["warn", "error", "debug"] }] */
+import openModal from '../components/modal/modal.js';
+
 const createLabelInElement = (elementSelector, labelClass) => {
   /**
   * The main element in the DOM where the form resides.
@@ -66,5 +69,14 @@ function onWizardInit() {
   createLabelInElement('.form-permanentaddresstoggle', 'permanent-address-toggle__label');
   decorateStepper();
 }
-
+const checkBox1ClickElement = document.getElementsByName('checkBoxConsent1')[0];
+const panelAsPopUp = document.getElementsByName('consentPanel1')[0];
+const linkModalFunction = (trigerElement, innerElement) => {
+  trigerElement.addEventListener('click', async (e) => {
+    if (e.target.checked) {
+      openModal(innerElement);
+    }
+  });
+};
+linkModalFunction(checkBox1ClickElement, panelAsPopUp);
 export { decorateStepper, onWizardInit };
