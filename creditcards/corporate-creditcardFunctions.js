@@ -160,6 +160,10 @@ const otpValFailure = (res, globals) => {
   loginPanel.visible(false);
   otpPanel.visible(false);
   ccWizardPannel.visible(true);
+  (async () => {
+    const myImportedModule = await import('./cc.js');
+    myImportedModule.onWizardInit();
+  })();
   // resultPanel.visible(true);
 };
 
