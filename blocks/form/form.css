@@ -58,6 +58,7 @@
   --form-wizard-padding-bottom: 160px;
   --form-wizard-step-legend-padding: 10px;
   --form-wizard-step-legend-font-size: 1.1rem;
+
   /* form--btn-start */
   --form-buttion-disable-color: #A3BAF9;
   --form-buttion-enable-color: #1C3FCA;
@@ -74,6 +75,7 @@
   --form-buttion-text-align: center;
   --form-buttion-margin: 0;
   --form-buttion-padding: 0;
+  
   /* form--btn-end */
   --center-aligment: center;
   --right-aligment: right;

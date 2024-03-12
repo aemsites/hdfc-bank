@@ -166,8 +166,10 @@ main .form form .form-permanentaddress .form-permanentaddresstoggle input[type="
 }
 
 /* Form permanent address toogle styling ends */
+
 .form-button-wrapper {
   text-align: var(--center-aligment);
+
   .button {
     max-width: var(--form-long-buttion-max-width);
     width: 100%;
@@ -184,7 +186,8 @@ main .form form .form-permanentaddress .form-permanentaddresstoggle input[type="
     border: var(--form-buttion-enable-border-color);
     color: var(--form-color-primary);
   }
-  .btn--short {
+
+  .btn-short {
     max-width: var(--form-short-buttion-max-width);
     width: 100%;
   }
@@ -194,13 +197,17 @@ main .form form .form-permanentaddress .form-permanentaddresstoggle input[type="
     border: var(--form-buttion-disable-border-color);
     color: var(--form-color-primary);
   }
+
 }
+
 .center{
   text-align: var(--center-aligment);
 }
+
 .left{
   text-align: var(--left-aligment);
 }
+
 .right{
   text-align: var(--right-aligment);
 }
