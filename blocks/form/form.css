@@ -8,6 +8,7 @@
   --button-primary-color: #5f8dda;
   --button-secondary-color: #666;
   --button-primary-hover-color: #035fe6;
+  --form-color-primary: #fff;
   --form-font-size-m: 22px;
   --form-font-size-s: 18px;
   --form-font-size-xs: 16px;
@@ -57,6 +58,26 @@
   --form-wizard-padding-bottom: 160px;
   --form-wizard-step-legend-padding: 10px;
   --form-wizard-step-legend-font-size: 1.1rem;
+  /* form--btn-start */
+  --form-buttion-disable-color: #A3BAF9;
+  --form-buttion-enable-color: #1C3FCA;
+  --form-buttion-enable-border-color:#1C3FCA;
+  --form-buttion-disable-border-color: #A3BAF9;
+  --form-long-buttion-max-width: 400px;
+  --form-short-buttion-max-width: 260px;
+  --form-buttion-max-height: 52px;
+  --form-buttion-border-radius: 13px;
+  --form-buttion-font-size: 16px;
+  --form-buttion-font-weight: 700;
+  --form-buttion-line-height: 24px;
+  --form-buttion-letter-spacing: 0em;
+  --form-buttion-text-align: center;
+  --form-buttion-margin: 0;
+  --form-buttion-padding: 0;
+  /* form--btn-end */
+  --center-aligment: center;
+  --right-aligment: right;
+  --left-aligment: left;
 }
 
 * {
@@ -224,7 +245,7 @@ input::file-selector-button {
   text-align: center;
 }
 
-main .form button {
+/* main .form button {
   color: var(--form-button-color);
   background: var(--form-button-background-color);
   border: var(--form-button-border);
@@ -232,15 +253,15 @@ main .form button {
   font-size: var(--form-button-font-size);
   border-radius: unset;
   width: 100%;
-}
+} */
 
 main form .form-file-wrapper > button {
   display: flex;
 }
 
-main .form button:hover {
+/* main .form button:hover {
   background: var(--form-button-background-hover-color);
-}
+} */
 
 main .form-submit-wrapper {
   width: var(--form-submit-width);
@@ -248,8 +269,8 @@ main .form-submit-wrapper {
 
 main .form input:disabled,
 main .form textarea:disabled,
-main .form select:disabled,
-main .form button:disabled {
+main .form select:disabled
+{
   background-color: var(--form-input-disable-color);
 }
 
@@ -297,21 +318,21 @@ main .form .form-button-wrapper button {
   cursor: pointer;
 }
 
-main .form .form-button-wrapper button:hover {
+/* main .form .form-button-wrapper button:hover {
   border: 3px solid var(#fff);
   color: #fff;
   background-color: var(--button-secondary-color);
-}
+} */
 
 main .form .form-button-wrapper button[disabled] {
   cursor: auto;
 }
 
-main .form .form-button-wrapper button[disabled]:hover {
+/* main .form .form-button-wrapper button[disabled]:hover {
   border: 3px solid var(--button-secondary-color);
   color: var(--button-secondary-color);
   background-color: transparent;
-}
+} */
 
 /** Wizard Styling */
 main .form form .wizard {
@@ -422,9 +443,9 @@ main
 }
 
 @media (width >= 600px) {
-  main .form button {
+  /* main .form button {
     width: unset;
-  }
+  } */
 }
 
 @media (width >= 992px) {
@@ -536,3 +557,7 @@ main .form .form-file-wrapper .form-file-drag-area {
   justify-content: center;
   align-items: center;
 }
+
+
+
+/* BTN CSS START */

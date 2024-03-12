@@ -166,3 +166,41 @@ main .form form .form-permanentaddress .form-permanentaddresstoggle input[type="
 }
 
 /* Form permanent address toogle styling ends */
+.form-button-wrapper {
+  text-align: var(--center-aligment);
+  .button {
+    max-width: var(--form-long-buttion-max-width);
+    width: 100%;
+    height: var(--form-buttion-max-height);
+    border-radius: var(--form-buttion-border-radius);
+    font-size: var(--form-buttion-font-size);
+    font-weight: var(--form-buttion-font-weight);
+    line-height: var(--form-buttion-line-height);
+    letter-spacing: var(--form-buttion-letter-spacing);
+    text-align: var(--form-buttion-text-align);
+    margin: var(--form-buttion-margin);
+    padding: var(--form-buttion-padding);
+    background: var(--form-buttion-enable-color);
+    border: var(--form-buttion-enable-border-color);
+    color: var(--form-color-primary);
+  }
+  .btn--short {
+    max-width: var(--form-short-buttion-max-width);
+    width: 100%;
+  }
+
+  :disabled {
+    background-color: var(--form-buttion-disable-color);
+    border: var(--form-buttion-disable-border-color);
+    color: var(--form-color-primary);
+  }
+}
+.center{
+  text-align: var(--center-aligment);
+}
+.left{
+  text-align: var(--left-aligment);
+}
+.right{
+  text-align: var(--right-aligment);
+}
