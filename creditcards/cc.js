@@ -71,6 +71,9 @@ function onWizardInit() {
 }
 const checkBox1ClickElement = document.getElementsByName('checkBoxConsent1')[0];
 const panelAsPopUp = document.getElementsByName('consentPanel1')[0];
+const checkBox2ClickElement = document.getElementsByName('checkBoxConsent2')[0];
+const panelAsPopUp2 = document.getElementsByName('consentPanel2')[0];
+
 const linkModalFunction = (trigerElement, innerElement) => {
   trigerElement.addEventListener('click', async (e) => {
     if (e.target.checked) {
@@ -79,4 +82,5 @@ const linkModalFunction = (trigerElement, innerElement) => {
   });
 };
 linkModalFunction(checkBox1ClickElement, panelAsPopUp);
+linkModalFunction(checkBox2ClickElement, panelAsPopUp2);
 export { decorateStepper, onWizardInit };

@@ -16,11 +16,19 @@ async function createMainModal(conntentNodes) {
   closeButton.innerHTML = '<span class="icon icon-close">X</span>';
   closeButton.addEventListener('click', () => dialog.close());
   dialog.append(closeButton);
-  //   const buttonNodes = document.getElementsByTagName('button')[0];
-  //   buttonNodes.addEventListener('click', () => dialog.close());
-  //   dialog.append(buttonNodes);
-
   // close dialog on clicks outside the dialog. https://stackoverflow.com/a/70593278/79461
+  // dialog button parsed binding close action for each buttons
+  const consentBtns = conntentNodes.childNodes;
+  const formBtnWrap = Array.from(consentBtns).filter((node) => node.nodeType === 1 && node.classList.contains('form-button-wrapper'));
+  formBtnWrap.forEach((element) => {
+    const actionBtns = element.querySelectorAll('button');
+    actionBtns.forEach((button) => {
+      // providing close functionalities to all the btns available
+      button.addEventListener('click', () => dialog.close());
+      dialog.append(button); // appending all the action buttons to the dialogPopUp
+    });
+  });
+
   dialog.addEventListener('click', (event) => {
     const dialogDimensions = dialog.getBoundingClientRect();
     if (event.clientX < dialogDimensions.left
