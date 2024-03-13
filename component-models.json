@@ -1186,6 +1186,43 @@
             ]
         }
     ]
+  },
+  {
+    "id": "form-image",
+    "fields": [
+      {
+        "component": "text-input",
+        "name": "name",
+        "label": "Name",
+        "valueType": "string",
+        "required": true
+      },
+      {
+        "component": "text-input",
+        "name": "jcr:title",
+        "label": "Label",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "fileReference",
+        "label": "Image",
+        "multi": false
+      },
+      {
+        "component": "text-input",
+        "valueType": "string",
+        "name": "altText",
+        "label": "Alternate text"
+      },
+      {
+        "component": "boolean",
+        "name": "unboundFormElement",
+        "label": "Mark as Unbound Form Element",
+        "valueType": "boolean"
+      }
+    ]
   }
 
   

@@ -77,7 +77,7 @@ export function createFieldWrapper(fd, tagName = 'div', labelFn = createLabel) {
   if (fd.properties) {
     fieldWrapper.setAttribute('data-aue-type', 'component');
     fieldWrapper.setAttribute('data-aue-resource', `urn:aemconnection:${fd.properties["fd:path"]}`);
-    fieldWrapper.setAttribute('data-aue-model', fd.fieldType);
+    fieldWrapper.setAttribute('data-aue-model', fd.fieldType === 'image'? 'form-image': fd.fieldType);
     fieldWrapper.setAttribute('data-aue-label', fd.name);
   }
   if (fd.label && fd.label.value && typeof labelFn === 'function') {

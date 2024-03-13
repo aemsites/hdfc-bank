@@ -48,7 +48,8 @@
       "radio-group",
       "email",
       "fragment",
-      "button"
+      "button",
+      "form-image"
     ]
   }
 ]
