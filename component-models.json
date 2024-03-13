@@ -168,6 +168,12 @@
                 "valueType": "string"
               },
               {
+                "component": "text-input",
+                "name": "dataRef",
+                "label": "Bind reference",
+                "valueType": "string"
+              },
+              {
                 "component": "boolean",
                 "name": "visible",
                 "label": "Show Component",
@@ -277,6 +283,12 @@
                 "component": "text-input",
                 "name": "placeholder",
                 "label": "Placeholder text",
+                "valueType": "string"
+              },
+              {
+                "component": "text-input",
+                "name": "dataRef",
+                "label": "Bind reference",
                 "valueType": "string"
               },
               {
@@ -392,6 +404,12 @@
                 "valueType": "string"
               },
               {
+                "component": "text-input",
+                "name": "dataRef",
+                "label": "Bind reference",
+                "valueType": "string"
+              },
+              {
                 "component": "boolean",
                 "name": "visible",
                 "label": "Show Component",
@@ -498,6 +516,12 @@
                 "valueType": "string"
               },
               {
+                "component": "text-input",
+                "name": "dataRef",
+                "label": "Bind reference",
+                "valueType": "string"
+              },
+              {
                 "component": "boolean",
                 "name": "visible",
                 "label": "Show Component",
@@ -561,6 +585,12 @@
                 "component": "text-input",
                 "name": "jcr:title",
                 "label": "Label",
+                "valueType": "string"
+              },
+              {
+                "component": "text-input",
+                "name": "dataRef",
+                "label": "Bind reference",
                 "valueType": "string"
               },
               {
@@ -805,12 +835,6 @@
                 "valueType": "string"
               },
               {
-                "component": "boolean",
-                "name": "unboundFormElement",
-                "label": "Mark as Unbound Form Element",
-                "valueType": "boolean"
-              },
-              {
                 "component": "text-input",
                 "name": "enum",
                 "label": "Options (Data Value)",
@@ -823,6 +847,18 @@
                 "label": "Options (Display Value)",
                 "valueType": "string",
                 "multi": true
+              },
+              {
+                "component": "text-input",
+                "name": "dataRef",
+                "label": "Bind reference",
+                "valueType": "string"
+              },
+              {
+                "component": "boolean",
+                "name": "unboundFormElement",
+                "label": "Mark as Unbound Form Element",
+                "valueType": "boolean"
               },
               {
                 "component": "select",
@@ -978,6 +1014,12 @@
                 "valueType": "string"
               },
               {
+                "component": "text-input",
+                "name": "dataRef",
+                "label": "Bind reference",
+                "valueType": "string"
+              },
+              {
                 "component": "boolean",
                 "name": "visible",
                 "label": "Show Component",
@@ -1060,6 +1102,85 @@
             ]
         }
     ]
+  },
+  {
+    "id": "button",
+    "fields": [
+        {
+            "component": "container",
+            "name": "basic",
+            "label": "Basic",
+            "collapsible": false,
+            "fields": [
+              {
+                "component": "text-input",
+                "name": "name",
+                "label": "Name",
+                "valueType": "string",
+                "required": true
+              },
+              {
+                "component": "text-input",
+                "name": "jcr:title",
+                "label": "Label",
+                "valueType": "string"
+              },
+              {
+                "component": "text-input",
+                "name": "placeholder",
+                "label": "Placeholder text",
+                "valueType": "string"
+              },
+              {
+                "component": "text-input",
+                "name": "dataRef",
+                "label": "Bind reference",
+                "valueType": "string"
+              },
+              {
+                "component": "boolean",
+                "name": "unboundFormElement",
+                "label": "Mark as Unbound Form Element",
+                "valueType": "boolean"
+              },
+              {
+                "component": "boolean",
+                "name": "visible",
+                "label": "Show Component",
+                "valueType": "boolean",
+                "value": true
+              },
+              {
+                "component": "boolean",
+                "name": "enabled",
+                "label": "Enable Component",
+                "valueType": "boolean",
+                "value": true 
+              }
+            ]
+        },
+        {
+            "component": "container",
+            "name": "help",
+            "label": "Help Content",
+            "collapsible": true,
+            "fields": [ 
+              {
+                "component": "richtext",
+                "name": "description",
+                "label": "Help text",
+                "valueType": "string"
+              },
+              {
+                "component": "richtext",
+                "name": "tooltip",
+                "label": "Short description",
+                "valueType": "string"
+              }
+            ]
+        }
+    ]
   }
+
   
 ]

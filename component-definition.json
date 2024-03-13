@@ -178,7 +178,7 @@
             "plugins": {
               "xwalk": {
                 "page": {
-                  "resourceType": "core/fd/components/form/text/v1/text",
+                  "resourceType": "core/fd/components/form/emailinput/v1/emailinput",
                   "template": {
                     "jcr:title": "Email Input",
                     "fieldType": "email"

@@ -45,7 +45,8 @@
       "drop-down",
       "radio-group",
       "email",
-      "fragment"
+      "fragment",
+      "button"
     ]
   }
 ]
