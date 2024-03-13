@@ -12,18 +12,14 @@
   {
     "id": "column",
     "components": [
-      "text",
       "image",
-      "button",
       "title"
     ]
   },
   {
     "id": "section",
     "components": [
-      "text",
       "image",
-      "button",
       "title",
       "hero",
       "cards",
@@ -40,9 +36,15 @@
   {
     "id": "form",
     "components": [
-      "textinput",
-      "textarea",
-      "numberinput"
+      "text",
+      "text-input",
+      "number-input",
+      "date-input",
+      "panel",
+      "checkbox",
+      "drop-down",
+      "email",
+      "fragment"
     ]
   }
 ]
