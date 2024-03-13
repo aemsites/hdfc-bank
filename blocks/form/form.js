@@ -404,7 +404,7 @@ export default async function decorate(block) {
       formDef.action = `/adobe/af/submit/${formDef.id}`;
     }
   }
-  let { rules, source } = { rules: true, source: 'aem' };
+  let { rules, source } = { rules: false, source: 'aem' };
   let form;
   if (formDef) {
     if (isDocumentBasedForm(formDef)) {
