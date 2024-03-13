@@ -1,0 +1,15 @@
+:root{
+/* form--btn-start */
+  --form-button-font-size: 16px;
+  --form-button-font-weight: 700;
+  --form-button-line-height: 24px;
+  --form-button-letter-spacing: 0em;
+  --form-button-text-align: center;
+  --form-button-margin: 0;
+  --form-button-padding: 0;
+
+ /* form--btn-end */
+  --text-center-aligment: center;
+  --text-right-aligment: right;
+  --text-left-aligment: left;
+}

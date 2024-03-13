@@ -58,31 +58,9 @@
   --form-wizard-padding-bottom: 160px;
   --form-wizard-step-legend-padding: 10px;
   --form-wizard-step-legend-font-size: 1.1rem;
-
-  /* form--btn-start */
-  --form-buttion-disable-color: #A3BAF9;
-  --form-buttion-enable-color: #1C3FCA;
-  --form-buttion-enable-border-color:#1C3FCA;
-  --form-buttion-disable-border-color: #A3BAF9;
-  --form-long-buttion-max-width: 400px;
-  --form-short-buttion-max-width: 260px;
-  --form-buttion-max-height: 52px;
-  --form-buttion-border-radius: 13px;
-  --form-buttion-font-size: 16px;
-  --form-buttion-font-weight: 700;
-  --form-buttion-line-height: 24px;
-  --form-buttion-letter-spacing: 0em;
-  --form-buttion-text-align: center;
-  --form-buttion-margin: 0;
-  --form-buttion-padding: 0;
-  
-  /* form--btn-end */
-  --center-aligment: center;
-  --right-aligment: right;
-  --left-aligment: left;
 }
 
-* {
+  * {
   box-sizing: border-box;
 }
 

@@ -1,0 +1,11 @@
+:root{
+    --color-action-text-primary-default: #fff;
+    --color-action-text-primary-hover: #fff;
+    --color-action-text-primary-disabled: #F5F6FB;
+    --color-action-border-primary-default: #1C3FCA;
+    --color-action-border-primary-hover: #1C3FCA;
+    --color-action-border-primary-disabled: #A3BAF9;
+    --color-action-background-primary-default: #1C3FCA;
+    --color-action-background-primary-hover: #1C3FCA;
+    --color-action-background-primary-disabled: #A3BAF9;
+}
