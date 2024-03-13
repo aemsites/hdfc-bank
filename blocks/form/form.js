@@ -400,6 +400,8 @@ export default async function decorate(block) {
     const content = codeEl?.textContent;
     if (content) {
       formDef = JSON.parse(cleanUp(content));
+      formDef.id = btoa(formDef.properties['fd:path']);
+      formDef.action = `/adobe/af/submit/${formDef.id}`;
     }
   }
   let { rules, source } = { rules: true, source: 'aem' };
