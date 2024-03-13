@@ -43,6 +43,7 @@
       "panel",
       "checkbox",
       "drop-down",
+      "radio-group",
       "email",
       "fragment"
     ]

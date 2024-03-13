@@ -564,10 +564,21 @@
                 "valueType": "string"
               },
               {
-                "component": "text-input",
-                "name": "placeholder",
-                "label": "Placeholder text",
-                "valueType": "string"
+                "component": "boolean",
+                "name": "unboundFormElement",
+                "label": "Mark as Unbound Form Element",
+                "valueType": "boolean"
+              },
+              {
+                "component": "select",
+                "label": "Data type of submitted value",
+                "name": "type",
+                "valueType": "string",
+                "options": [
+                  { "name": "String", "value": "string" },
+                  { "name": "Boolean", "value": "boolean" },
+                  { "name": "Number", "value": "number" }
+                ]
               },
               {
                 "component": "boolean",
@@ -591,17 +602,44 @@
               },
               {
                 "component": "text-input",
-                "name": "default",
-                "label": "Default Value",
+                "name": "checkedValue",
+                "label": "When Checked, return value",
                 "valueType": "string"
               },
               {
                 "component": "boolean",
-                "name": "unboundFormElement",
-                "label": "Mark as Unbound Form Element",
+                "name": "enableUncheckedValue",
+                "label": "Preserve Uncheck state value.",
                 "valueType": "boolean"
+              },
+              {
+                "component": "text-input",
+                "name": "default",
+                "label": "Default Value",
+                "valueType": "string"
               }
             ]
+        },
+        {
+          "component": "container",
+          "name": "validation",
+          "label": "Validation",
+          "collapsible": true,
+          "fields": [
+            {
+              "component": "boolean",
+              "name": "required",
+              "label": "Required",
+              "valueType": "boolean"
+            },
+            {
+              "component": "text-input",
+              "name": "mandatoryMessage",
+              "label": "Error Message",
+              "valueType": "string",
+              "description": "Error message shown when required field is left empty"
+            }
+          ]
         },
         {
             "component": "container",
@@ -697,6 +735,140 @@
                 "component": "boolean",
                 "name": "unboundFormElement",
                 "label": "Mark as Unbound Form Element",
+                "valueType": "boolean"
+              }
+            ]
+        },
+        {
+            "component": "container",
+            "name": "help",
+            "label": "Help Content",
+            "collapsible": true,
+            "fields": [ 
+              {
+                "component": "richtext",
+                "name": "description",
+                "label": "Help text",
+                "valueType": "string"
+              },
+              {
+                "component": "richtext",
+                "name": "tooltip",
+                "label": "Short description",
+                "valueType": "string"
+              }
+            ]
+        },
+        {
+            "component": "container",
+            "name": "validation",
+            "label": "Validation",
+            "collapsible": true,
+            "fields": [
+              {
+                "component": "boolean",
+                "name": "required",
+                "label": "Required",
+                "valueType": "boolean"
+              },
+              {
+                "component": "text-input",
+                "name": "mandatoryMessage",
+                "label": "Error Message",
+                "valueType": "string",
+                "description": "Error message shown when required field is left empty"
+              }
+            ]
+        }
+    ]
+  },
+  {
+    "id": "radio-group",
+    "fields": [
+        {
+            "component": "container",
+            "name": "basic",
+            "label": "Basic",
+            "collapsible": false,
+            "fields": [
+              {
+                "component": "text-input",
+                "name": "name",
+                "label": "Name",
+                "valueType": "string",
+                "required": true
+              },
+              {
+                "component": "text-input",
+                "name": "jcr:title",
+                "label": "Label",
+                "valueType": "string"
+              },
+              {
+                "component": "boolean",
+                "name": "unboundFormElement",
+                "label": "Mark as Unbound Form Element",
+                "valueType": "boolean"
+              },
+              {
+                "component": "text-input",
+                "name": "enum",
+                "label": "Options (Data Value)",
+                "valueType": "string",
+                "multi": true
+              },
+              {
+                "component": "text-input",
+                "name": "enumNames",
+                "label": "Options (Display Value)",
+                "valueType": "string",
+                "multi": true
+              },
+              {
+                "component": "select",
+                "label": "Data type of submitted value",
+                "name": "type",
+                "valueType": "string",
+                "options": [
+                  { "name": "String", "value": "string" },
+                  { "name": "Boolean", "value": "boolean" },
+                  { "name": "Number", "value": "number" }
+                ]
+              },
+              {
+                "component": "text-input",
+                "name": "default",
+                "label": "Default option",
+                "valueType": "string"
+              },
+              {
+                "component": "radio-group",
+                "label": "Display Options",
+                "name": "orientation",
+                "valueType": "string",
+                "options": [
+                  { "name": "Horizontally", "value": "horizontal" },
+                  { "name": "Vertically", "value": "vertical" }
+                ]
+              },
+              {
+                "component": "boolean",
+                "name": "visible",
+                "label": "Show Component",
+                "valueType": "boolean",
+                "value": true
+              },
+              {
+                "component": "boolean",
+                "name": "enabled",
+                "label": "Enable Component",
+                "valueType": "boolean",
+                "value": true 
+              },
+              {
+                "component": "boolean",
+                "name": "readOnly",
+                "label": "Read-only",
                 "valueType": "boolean"
               }
             ]

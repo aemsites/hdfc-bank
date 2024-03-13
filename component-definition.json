@@ -143,6 +143,21 @@
             }
           },
           {
+            "title": "Adaptive Form Radio Group",
+            "id": "radio-group",
+            "plugins": {
+              "xwalk": {
+                "page": {
+                  "resourceType": "core/fd/components/form/radiobutton/v1/radiobutton",
+                  "template": {
+                    "jcr:title": "Radio Group",
+                    "fieldType": "radio-group"
+                  }
+                }
+              }
+            }
+          },
+          {
             "title": "Adaptive Form Text",
             "id": "text",
             "plugins": {
