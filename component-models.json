@@ -969,6 +969,12 @@
                 "required": true
               },
               {
+                "component": "richtext",
+                "name": "value",
+                "label": "Text",
+                "valueType": "string"
+              },
+              {
                 "component": "boolean",
                 "name": "unboundFormElement",
                 "label": "Mark as Unbound Form Element",
