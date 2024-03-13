@@ -302,7 +302,7 @@ function renderField(fd) {
 
 export async function generateFormRendition(panel, container) {
   if (panel[":items"]) {
-    const promises = Object.entries(panel[":items"]).map(async (_, field) => {
+    const promises = Object.entries(panel[":items"]).map(async ([_, field]) => {
       field.value = field.value ?? '';
       const { fieldType } = field;
       if (fieldType === 'captcha') {
