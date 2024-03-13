@@ -124,6 +124,8 @@ function createFieldSet(fd) {
   wrapper.name = fd.name;
   if (fd.fieldType === 'panel') {
     wrapper.classList.add('form-panel-wrapper');
+    wrapper.setAttribute('data-aue-type', 'container');
+    wrapper.setAttribute('data-aue-behavior', 'component');
   }
   if (fd.repeatable === 'true' || fd.repeatable === true) {
     setConstraints(wrapper, fd);
