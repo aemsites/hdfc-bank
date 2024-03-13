@@ -154,6 +154,7 @@ function createRadioOrCheckboxGroup(fd) {
       fieldType: type,
       enum: [value],
       required: fd.required,
+      properties: fd.properties
     });
     field.classList.remove('field-wrapper', `form-${fd.name}`);
     const input = field.querySelector('input');
