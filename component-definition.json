@@ -49,11 +49,11 @@
       ]
     },
     {
-      "title": "Form Components",
+      "title": "Adaptive Form Components",
       "id": "form-general",
       "components": [
           {
-              "title": "Adaptive Form Text Input",
+              "title": "Text Input",
               "id": "text-input",
               "plugins": {
                 "xwalk": {
@@ -68,7 +68,7 @@
               }
           },
           {
-              "title": "Adaptive Form Number Input",
+              "title": "Number Input",
               "id": "number-input",
               "plugins": {
                 "xwalk": {
@@ -83,7 +83,7 @@
               }
           },
           {
-            "title": "Adaptive Form Date Picker",
+            "title": "Date Picker",
             "id": "date-input",
             "plugins": {
               "xwalk": {
@@ -98,7 +98,7 @@
             }
           },
           {
-            "title": "Adaptive Form Panel",
+            "title": "Panel",
             "id": "panel",
             "plugins": {
               "xwalk": {
@@ -113,7 +113,7 @@
             }
           },
           {
-            "title": "Adaptive Form Checkbox",
+            "title": "Checkbox",
             "id": "checkbox",
             "plugins": {
               "xwalk": {
@@ -128,7 +128,7 @@
             }
           },
           {
-            "title": "Adaptive Form Dropdown List",
+            "title": "Dropdown List",
             "id": "drop-down",
             "plugins": {
               "xwalk": {
@@ -143,7 +143,7 @@
             }
           },
           {
-            "title": "Adaptive Form Radio Group",
+            "title": "Radio Group",
             "id": "radio-group",
             "plugins": {
               "xwalk": {
@@ -158,7 +158,7 @@
             }
           },
           {
-            "title": "Adaptive Form Text",
+            "title": "Text",
             "id": "text",
             "plugins": {
               "xwalk": {
@@ -173,7 +173,7 @@
             }
           },
           {
-            "title": "Adaptive Form Email",
+            "title": "Email",
             "id": "email",
             "plugins": {
               "xwalk": {
@@ -188,7 +188,7 @@
             }
           },
           {
-            "title": "Adaptive Form Fragment",
+            "title": "Fragment",
             "id": "fragment",
             "plugins": {
               "xwalk": {
@@ -203,7 +203,7 @@
             }
           },
           {
-            "title": "Adaptive Form Button",
+            "title": "Button",
             "id": "button",
             "plugins": {
               "xwalk": {
