@@ -5,6 +5,18 @@
       "id": "default",
       "components": [
         {
+          "title": "Text",
+          "id": "text",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/text/v1/text",
+                "template": {}
+              }
+            }
+          }
+        },
+        {
           "title": "Title",
           "id": "title",
           "plugins": {
@@ -159,14 +171,14 @@
           },
           {
             "title": "Text",
-            "id": "text",
+            "id": "plain-text",
             "plugins": {
               "xwalk": {
                 "page": {
                   "resourceType": "core/fd/components/form/text/v1/text",
                   "template": {
                     "jcr:title": "Text",
-                    "fieldType": "text"
+                    "fieldType": "plain-text"
                   }
                 }
               }

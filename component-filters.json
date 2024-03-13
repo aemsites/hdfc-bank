@@ -12,6 +12,7 @@
   {
     "id": "column",
     "components": [
+      "text",
       "image",
       "title"
     ]
@@ -19,6 +20,7 @@
   {
     "id": "section",
     "components": [
+      "text",
       "image",
       "title",
       "hero",
@@ -36,7 +38,7 @@
   {
     "id": "form",
     "components": [
-      "text",
+      "plain-text",
       "text-input",
       "number-input",
       "date-input",

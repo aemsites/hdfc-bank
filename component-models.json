@@ -953,7 +953,7 @@
     ]
   },
   {
-    "id": "text",
+    "id": "plain-text",
     "fields": [
         {
             "component": "container",
