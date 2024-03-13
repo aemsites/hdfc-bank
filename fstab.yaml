@@ -1,5 +1,5 @@
 mountpoints:
   /:
-    url: "https://w0g9qrnmcla6.share.zrok.io/bin/franklin.delivery/aemsites/hdfc-bank/ue"
+    url: "https://2dpxtw8mq6s8.share.zrok.io/bin/franklin.delivery/aemsites/hdfc-bank/ue"
     type: "markup"
     suffix: ".html"
