@@ -301,33 +301,34 @@ function renderField(fd) {
 }
 
 export async function generateFormRendition(panel, container) {
-  const { items = [] } = panel;
-  const promises = items.map(async (field) => {
-    field.value = field.value ?? '';
-    const { fieldType } = field;
-    if (fieldType === 'captcha') {
-      captchaField = field;
-    } else {
-      const element = renderField(field);
-      colSpanDecorator(field, element);
-      const decorator = await componentDecorater(field);
-      if (field?.fieldType === 'panel') {
-        await generateFormRendition(field, element);
+  if (panel[":items"]) {
+    const promises = Object.entries(panel[":items"]).map(async (field) => {
+      field.value = field.value ?? '';
+      const { fieldType } = field;
+      if (fieldType === 'captcha') {
+        captchaField = field;
+      } else {
+        const element = renderField(field);
+        colSpanDecorator(field, element);
+        const decorator = await componentDecorater(field);
+        if (field?.fieldType === 'panel') {
+          await generateFormRendition(field, element);
+          return element;
+        }
+        if (typeof decorator === 'function') {
+          return decorator(element, field, container);
+        }
         return element;
       }
-      if (typeof decorator === 'function') {
-        return decorator(element, field, container);
-      }
-      return element;
-    }
-    return null;
-  });
+      return null;
+    });
 
-  const children = await Promise.all(promises);
-  container.append(...children.filter((_) => _ != null));
-  const decorator = await componentDecorater(panel);
-  if (typeof decorator === 'function') {
-    return decorator(container, panel);
+    const children = await Promise.all(promises);
+    container.append(...children.filter((_) => _ != null));
+    const decorator = await componentDecorater(panel);
+    if (typeof decorator === 'function') {
+      return decorator(container, panel);
+    }
   }
   return container;
 }
