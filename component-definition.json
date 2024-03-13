@@ -77,7 +77,7 @@
       "id": "form-general",
       "components": [
           {
-              "title": "Text Input",
+              "title": "Adaptive Form Text Input",
               "id": "text-input",
               "plugins": {
                 "xwalk": {
@@ -92,7 +92,7 @@
               }
           },
           {
-              "title": "Number Input",
+              "title": "Adaptive Form Number Input",
               "id": "number-input",
               "plugins": {
                 "xwalk": {
@@ -107,7 +107,22 @@
               }
           },
           {
-            "title": "Panel",
+            "title": "Adaptive Form Date Picker",
+            "id": "date-input",
+            "plugins": {
+              "xwalk": {
+                "page": {
+                  "resourceType": "core/fd/components/form/datepicker/v1/datepicker",
+                  "template": {
+                    "jcr:title": "Date Input",
+                    "fieldType": "date-input"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "title": "Adaptive Form Panel",
             "id": "panel",
             "plugins": {
               "xwalk": {
@@ -116,6 +131,96 @@
                   "template": {
                     "jcr:title": "Panel",
                     "fieldType": "panel"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "title": "Adaptive Form Checkbox",
+            "id": "checkbox",
+            "plugins": {
+              "xwalk": {
+                "page": {
+                  "resourceType": "core/fd/components/form/checkbox/v1/checkbox",
+                  "template": {
+                    "jcr:title": "Checkbox",
+                    "fieldType": "checkbox"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "title": "Adaptive Form Dropdown List",
+            "id": "drop-down",
+            "plugins": {
+              "xwalk": {
+                "page": {
+                  "resourceType": "core/fd/components/form/dropdown/v1/dropdown",
+                  "template": {
+                    "jcr:title": "Drop Down List",
+                    "fieldType": "drop-down"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "title": "Adaptive Form Text",
+            "id": "text",
+            "plugins": {
+              "xwalk": {
+                "page": {
+                  "resourceType": "core/fd/components/form/text/v1/text",
+                  "template": {
+                    "jcr:title": "Text",
+                    "fieldType": "text"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "title": "Adaptive Form Email",
+            "id": "email",
+            "plugins": {
+              "xwalk": {
+                "page": {
+                  "resourceType": "core/fd/components/form/text/v1/text",
+                  "template": {
+                    "jcr:title": "Email Input",
+                    "fieldType": "email"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "title": "Adaptive Form Fragment",
+            "id": "fragment",
+            "plugins": {
+              "xwalk": {
+                "page": {
+                  "resourceType": "core/fd/components/form/fragment/v1/fragment",
+                  "template": {
+                    "jcr:title": "Fragment",
+                    "fieldType": "panel"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "title": "Adaptive Form Button",
+            "id": "button",
+            "plugins": {
+              "xwalk": {
+                "page": {
+                  "resourceType": "core/fd/components/form/button/v1/button",
+                  "template": {
+                    "jcr:title": "Button",
+                    "fieldType": "button"
                   }
                 }
               }
