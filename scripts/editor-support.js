@@ -1,3 +1,5 @@
+window.isEditorMode = true;
+
 import {
   decorateBlock,
   decorateBlocks,
@@ -10,6 +12,7 @@ import {
 // eslint-disable-next-line import/no-unresolved
 import { decorateRichtext } from './editor-support-rte.js';
 import { decorateMain } from './scripts.js';
+
 
 async function applyChanges(event) {
   // redecorate default content and blocks on patches (in the properties rail)
@@ -126,9 +129,6 @@ function attachEventListners(main) {
     if (!applied) window.location.reload();
   }));
   main.addEventListener('aue:ui-select', handleEditorSelect);
-  main.addEventListener('aue:ui-edit', () => 
-    window.isEditorMode = true
-  );
 }
 
 attachEventListners(document.querySelector('main'));
