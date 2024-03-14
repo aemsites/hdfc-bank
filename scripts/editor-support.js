@@ -95,31 +95,16 @@ function handleEditorSelect(event) {
 
   if (event.target.closest('.wizard')) {
     const wizardEl = event.target.closest('.wizard');
-    if (event.detail.selected) {
-      const selectedEl = wizardEl.querySelector(`[data-aue-resource='${event.detail.resource}']`);
-      if (selectedEl.hasAttribute("data-index")) {
-        //if selected element is the direct chld of wizard
-        selectedEl.classList.add('current-wizard-step');
-      } else {
-        for(let child of wizardEl.children) {
-          const isElPresentUnderChild = child.querySelector(`"#${selectedEl.id}"`);
-          if (isElPresentUnderChild) {
-            child.classList.add('current-wizard-step');
-          }
-        }
-      }
+    const { resource, selected } = event.detail;
+    const el = wizardEl.querySelector(`[data-aue-resource='${resource}']`);
+    if (el.hasAttribute("data-index")) {
+      //if selected element is the direct chld of wizard
+      selected ? el.classList.add('current-wizard-step') : el.classList.remove('current-wizard-step');
     } else {
-      const unSelectedEl = wizardEl.querySelector(`[data-aue-resource='${event.detail.resource}']`);
-      if (unSelectedEl.hasAttribute("data-index")) {
-        //if selected element is the direct chld of wizard
-        unSelectedEl.classList.remove('current-wizard-step');
-      } else {
-         //find the direct child of wizard of which the selected component is a child
-         for(let child of wizardEl.children) {
-          const isElPresentUnderChild = child.querySelector(`"#${unSelectedEl.id}"`);
-          if (isElPresentUnderChild) {
-            child.classList.remove('current-wizard-step');
-          }
+      for(let child of wizardEl.children) {
+        const isElPresentUnderChild = child.querySelector(`[data-aue-resource='${resource}']`);
+        if (isElPresentUnderChild) {
+          selected ? child.classList.add('current-wizard-step'): child.classList.remove('current-wizard-step') ;
         }
       }
     }
