@@ -88,6 +88,28 @@ async function applyChanges(event) {
   return false;
 }
 
+/**
+ * Event listener for aue:ui-select, selection of a component
+ */
+function handleEditorSelect(event) {
+  // we are only interested in the target
+  if (!event.detail.selected) {
+    return;
+  }
+
+  // if a tab panel was selected
+  if (event.target.closest('.wizard')) {
+    // switch to the selected tab
+    const wizard = event.target.closest('.wizard');
+    // get the corresponding tabs button
+    const buttonId = "form-wizard-button-next";
+    const button = wizard.querySelector(`button[id="${buttonId}"]`);
+    // click it
+    button.click();
+  }
+  
+}
+
 function attachEventListners(main) {
   [
     'aue:content-patch',
@@ -100,6 +122,7 @@ function attachEventListners(main) {
     const applied = await applyChanges(event);
     if (!applied) window.location.reload();
   }));
+  main.addEventListener('aue:ui-select', handleEditorSelect);
 }
 
 attachEventListners(document.querySelector('main'));
