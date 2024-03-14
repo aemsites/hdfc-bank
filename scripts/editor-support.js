@@ -1,5 +1,3 @@
-window.isEditorMode = true;
-
 import {
   decorateBlock,
   decorateBlocks,

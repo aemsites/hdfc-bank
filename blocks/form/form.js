@@ -428,7 +428,7 @@ export default async function decorate(block) {
     form.dataset.action = formDef.action || pathname?.split('.json')[0];
     form.dataset.source = source;
     form.dataset.rules = rules;
-    if (window.isEditorMode) {
+    if (document.documentElement.classList.contains("adobe-ue-edit")) {
       form.classList.add("edit-mode");
     }
     container.replaceWith(form);
