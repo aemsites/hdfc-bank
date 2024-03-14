@@ -93,42 +93,31 @@ async function applyChanges(event) {
  */
 function handleEditorSelect(event) {
 
-  console.log('selected', event.detail.selected);
-  console.log('resource', event.detail.resource);
-
   if (event.target.closest('.wizard')) {
     const wizardEl = event.target.closest('.wizard');
     if (event.detail.selected) {
-      console.log('selected element case');
       const selectedEl = wizardEl.querySelector(`[data-aue-resource='${event.detail.resource}']`);
       if (selectedEl.hasAttribute("data-index")) {
-        console.log('selected element is the direct chld of wizard');
         //if selected element is the direct chld of wizard
         selectedEl.classList.add('current-wizard-step');
       } else {
-        console.log('finding the direct child of wizard of which the selected component is a child');
         for(let child of wizardEl.children) {
           const isElPresentUnderChild = child.getElementById(selectedEl.id);
           if (isElPresentUnderChild) {
-            console.log('selected: child found');
             child.classList.add('current-wizard-step');
           }
         }
       }
     } else {
-      console.log('unselected element case');
       const unSelectedEl = wizardEl.querySelector(`[data-aue-resource='${event.detail.resource}']`);
       if (unSelectedEl.hasAttribute("data-index")) {
-        console.log('unselected element is the direct child of wizard');
         //if selected element is the direct chld of wizard
         unSelectedEl.classList.remove('current-wizard-step');
       } else {
-        console.log('finding the direct child of wizard of which the unselected component is a child');
          //find the direct child of wizard of which the selected component is a child
          for(let child of wizardEl.children) {
           const isElPresentUnderChild = child.getElementById(unSelectedEl.id);
           if (isElPresentUnderChild) {
-            console.log('unselected: child found');
             child.classList.remove('current-wizard-step');
           }
         }
