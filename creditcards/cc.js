@@ -1,5 +1,5 @@
 /* eslint no-console: ["error", { allow: ["warn", "error", "debug"] }] */
-import openModal from '../components/modal/modal.js';
+import openModal from '../blocks/modal/modal.js';
 
 const createLabelInElement = (elementSelector, labelClass) => {
   /**

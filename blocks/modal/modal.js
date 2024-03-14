@@ -1,10 +1,8 @@
 import {
-  buildBlock, decorateBlock, loadBlock, loadCSS,
+  buildBlock, decorateBlock, loadBlock,
 } from '../../scripts/aem.js';
 
 async function createMainModal(content, actionWrapClass, reqConsentAgree) {
-  // const { content, actionWrapClass, reqConsentAgree } = conntentNodes;
-  await loadCSS('/components/modal/modal.css');
   const dialog = document.createElement('dialog');
   const dialogContent = document.createElement('div');
   dialogContent.classList.add('modal-content');
@@ -16,11 +14,9 @@ async function createMainModal(content, actionWrapClass, reqConsentAgree) {
   closeButton.type = 'button';
   closeButton.innerHTML = '<span class="icon icon-close">X</span>';
   closeButton.addEventListener('click', () => dialog.close());
-  // dialog.append(closeButton);
   if (!reqConsentAgree) {
     dialog.append(closeButton);
   }
-  // close dialog on clicks outside the dialog. https://stackoverflow.com/a/70593278/79461
   // dialog button parsed binding close action for each buttons
   const consentBtns = content.childNodes;
   const formBtnWrap = Array.from(consentBtns).filter((node) => node.nodeType === 1 && node.classList.contains(`${actionWrapClass}`));
