@@ -92,10 +92,11 @@ async function applyChanges(event) {
  * Event listener for aue:ui-select, selection of a component
  */
 function handleEditorSelect(event) {
-  // we are only interested in the target
-  if (!event.detail.selected) {
-    return;
-  }
+
+  console.log('selected', event.detail.selected);
+  console.log('resource', event.detail.resource);
+
+  /*
 
   // if a tab panel was selected
   if (event.target.closest('.wizard')) {
@@ -104,9 +105,11 @@ function handleEditorSelect(event) {
     // get the corresponding tabs button
     const buttonId = "form-wizard-button-next";
     const button = wizard.querySelector(`button[id="${buttonId}"]`);
+    current.classList.remove('current-wizard-step');
+    navigateTo.classList.add('current-wizard-step');
     // click it
     button.click();
-  }
+  }*/
   
 }
 
