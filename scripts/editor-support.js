@@ -93,19 +93,20 @@ async function applyChanges(event) {
  */
 function handleEditorSelect(event) {
 
-  if (event.target.closest('.wizard')) {
-    console.log('inside wizard', event.target);
+  if (event.target.closest('.wizard') && selected) {
     const wizardEl = event.target.closest('.wizard');
     const { resource, selected } = event.detail;
     const el = wizardEl.querySelector(`[data-aue-resource='${resource}']`);
+    const existingSelectedEl = wizardEl.querySelector(".current-wizard-step");
+    existingSelectedEl.classList.remove('current-wizard-step');
     if (el.hasAttribute("data-index")) {
       //if selected element is the direct chld of wizard
-      selected ? el.classList.add('current-wizard-step') : el.classList.remove('current-wizard-step');
+      el.classList.add('current-wizard-step');
     } else {
       for(let child of wizardEl.children) {
         const isElPresentUnderChild = child.querySelector(`[data-aue-resource='${resource}']`);
         if (isElPresentUnderChild) {
-          selected ? child.classList.add('current-wizard-step'): child.classList.remove('current-wizard-step') ;
+          child.classList.add('current-wizard-step');
         }
       }
     }
