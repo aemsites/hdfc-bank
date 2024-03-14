@@ -59,7 +59,7 @@
   --form-wizard-step-legend-font-size: 1.1rem;
 }
 
-  * {
+* {
   box-sizing: border-box;
 }
 
@@ -248,9 +248,8 @@ main .form-submit-wrapper {
 
 main .form input:disabled,
 main .form textarea:disabled,
-main .form button:disabled, 
-main .form select:disabled
-{
+main .form select:disabled,
+main .form button:disabled {
   background-color: var(--form-input-disable-color);
 }
 
