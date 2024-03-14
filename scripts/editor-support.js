@@ -126,6 +126,9 @@ function attachEventListners(main) {
     if (!applied) window.location.reload();
   }));
   main.addEventListener('aue:ui-select', handleEditorSelect);
+  main.addEventListener('aue:ui-edit', () => 
+    window.isEditorMode = true
+  );
 }
 
 attachEventListners(document.querySelector('main'));
