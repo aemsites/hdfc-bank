@@ -93,9 +93,9 @@ async function applyChanges(event) {
  */
 function handleEditorSelect(event) {
 
-  if (event.target.closest('.wizard') && selected) {
+  if (event.target.closest('.wizard') && event.detail.selected) {
     const wizardEl = event.target.closest('.wizard');
-    const { resource, selected } = event.detail;
+    const { resource } = event.detail;
     const el = wizardEl.querySelector(`[data-aue-resource='${resource}']`);
     const existingSelectedEl = wizardEl.querySelector(".current-wizard-step");
     existingSelectedEl.classList.remove('current-wizard-step');
