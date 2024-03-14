@@ -67,7 +67,7 @@ form output {
     font-size: 1.625rem;
 }
 
-form:not(.edit-mode)[data-visible="false"] {
+form:not(.edit-mode) [data-visible="false"] {
     display: none !important;
 }
 
