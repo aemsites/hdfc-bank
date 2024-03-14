@@ -5,9 +5,9 @@ import {
 async function createMainModal(content, actionWrapClass, reqConsentAgree) {
   const dialog = document.createElement('dialog');
   const dialogContent = document.createElement('div');
-  dialogContent.classList.add('modal-content');
-  dialogContent.append(content);
-  dialog.append(dialogContent);
+  dialogContent?.classList.add('modal-content');
+  dialogContent?.append(content);
+  dialog?.append(dialogContent);
   const closeButton = document.createElement('button');
   closeButton.classList.add('close-button');
   closeButton.setAttribute('aria-label', 'Close');
@@ -18,7 +18,7 @@ async function createMainModal(content, actionWrapClass, reqConsentAgree) {
     dialog.append(closeButton);
   }
   // dialog button parsed binding close action for each buttons
-  const consentBtns = content.childNodes;
+  const consentBtns = content?.childNodes;
   const formBtnWrap = Array.from(consentBtns).filter((node) => node.nodeType === 1 && node.classList.contains(`${actionWrapClass}`));
   formBtnWrap.forEach((element) => {
     const actionBtns = element.querySelectorAll('button');
