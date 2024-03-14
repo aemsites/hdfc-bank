@@ -94,7 +94,7 @@ const createSelect = withFieldWrapper((fd) => {
 
   const options = fd?.enum || [];
   const optionNames = fd?.enumNames ?? options;
-  options.forEach((value, index) => addOption(optionNames?.[index], value));
+  options.forEach((value, index) => addOption(optionNames?.[index].value, value));
 
   if (ph && optionSelected === false) {
     ph.setAttribute('selected', '');
