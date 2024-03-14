@@ -1,5 +1,5 @@
 /* eslint no-console: ["error", { allow: ["warn", "error", "debug"] }] */
-import openModal from '../blocks/modal/modal.js';
+import {displayLoader, hideLoader} from '../common/makeRestAPI.js';
 
 const createLabelInElement = (elementSelector, labelClass) => {
   /**
@@ -78,7 +78,13 @@ const panelAsPopUp2 = document.getElementsByName('consentPanel2')[0];
 const linkModalFunction = (trigerElement, payload) => {
   trigerElement.addEventListener('click', async (e) => {
     if (e.target.checked) {
-      openModal(payload);
+      displayLoader('Nothing for now');
+      const openModalImport = import('../blocks/modal/modal.js');
+      openModalImport.then((modal) => {
+        modal.default(payload);
+      })
+        .catch((err) => console.error(err))
+        .finally(hideLoader());
     }
   });
 };
