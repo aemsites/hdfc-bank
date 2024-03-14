@@ -391,7 +391,6 @@ function cleanUp(content) {
 
 export default async function decorate(block) {
   let container = block.querySelector('a[href$=".json"]');
-  if (block.)
   let formDef;
   let pathname;
   if (container) {
