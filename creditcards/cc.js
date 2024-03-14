@@ -1,5 +1,5 @@
 /* eslint no-console: ["error", { allow: ["warn", "error", "debug"] }] */
-import {displayLoader, hideLoader} from '../common/makeRestAPI.js';
+import { displayLoader, hideLoader } from '../common/makeRestAPI.js';
 
 const createLabelInElement = (elementSelector, labelClass) => {
   /**
