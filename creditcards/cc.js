@@ -1,3 +1,4 @@
+/* eslint no-console: ["error", { allow: ["warn", "error", "debug"] }] */
 const createLabelInElement = (elementSelector, labelClass) => {
   /**
   * The main element in the DOM where the form resides.

@@ -7,7 +7,7 @@ import { restAPICall } from './makeRestAPI.js';
  */
 function getOTP(globals) {
   const payload = OTPGEN.getPayload(globals);
-  restAPICall(globals, 'POST', payload, OTPGEN.path, OTPGEN.successCallback, OTPGEN.errorCallback);
+  restAPICall(globals, 'POST', payload, OTPGEN.path, OTPGEN.successCallback, OTPGEN.errorCallback, OTPGEN.loadingText);
 }
 
 /**
@@ -17,7 +17,7 @@ function getOTP(globals) {
  */
 function otpValidation(globals) {
   const payload = OTPVAL.getPayload(globals);
-  restAPICall(globals, 'POST', payload, OTPVAL.path, OTPVAL.successCallback, OTPVAL.errorCallback);
+  restAPICall(globals, 'POST', payload, OTPVAL.path, OTPVAL.successCallback, OTPVAL.errorCallback, OTPVAL.loadingText);
 }
 
 export { getOTP, otpValidation };
