@@ -102,7 +102,7 @@ function handleEditorSelect(event) {
         selectedEl.classList.add('current-wizard-step');
       } else {
         for(let child of wizardEl.children) {
-          const isElPresentUnderChild = child.querySelector(`#${selectedEl.id}`);
+          const isElPresentUnderChild = child.querySelector(`"#${selectedEl.id}"`);
           if (isElPresentUnderChild) {
             child.classList.add('current-wizard-step');
           }
@@ -116,7 +116,7 @@ function handleEditorSelect(event) {
       } else {
          //find the direct child of wizard of which the selected component is a child
          for(let child of wizardEl.children) {
-          const isElPresentUnderChild = child.querySelector(`#${unSelectedEl.id}`);
+          const isElPresentUnderChild = child.querySelector(`"#${unSelectedEl.id}"`);
           if (isElPresentUnderChild) {
             child.classList.remove('current-wizard-step');
           }
