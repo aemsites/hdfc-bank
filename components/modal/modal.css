@@ -1,5 +1,3 @@
-@import url("../../styles/variable.css");
-
 body.modal-open {
   overflow: hidden;
 }
