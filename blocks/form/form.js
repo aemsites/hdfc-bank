@@ -391,6 +391,7 @@ function cleanUp(content) {
 
 export default async function decorate(block) {
   let container = block.querySelector('a[href$=".json"]');
+  if (block.)
   let formDef;
   let pathname;
   if (container) {
@@ -428,6 +429,9 @@ export default async function decorate(block) {
     form.dataset.action = formDef.action || pathname?.split('.json')[0];
     form.dataset.source = source;
     form.dataset.rules = rules;
+    if (window.isEditorMode) {
+      form.classList.add("edit-mode");
+    }
     container.replaceWith(form);
   }
 }
