@@ -94,6 +94,7 @@ async function applyChanges(event) {
 function handleEditorSelect(event) {
 
   if (event.target.closest('.wizard')) {
+    console.log('inside wizard', event.target);
     const wizardEl = event.target.closest('.wizard');
     const { resource, selected } = event.detail;
     const el = wizardEl.querySelector(`[data-aue-resource='${resource}']`);
