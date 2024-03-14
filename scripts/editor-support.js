@@ -96,21 +96,45 @@ function handleEditorSelect(event) {
   console.log('selected', event.detail.selected);
   console.log('resource', event.detail.resource);
 
-  /*
-
-  // if a tab panel was selected
   if (event.target.closest('.wizard')) {
-    // switch to the selected tab
-    const wizard = event.target.closest('.wizard');
-    // get the corresponding tabs button
-    const buttonId = "form-wizard-button-next";
-    const button = wizard.querySelector(`button[id="${buttonId}"]`);
-    current.classList.remove('current-wizard-step');
-    navigateTo.classList.add('current-wizard-step');
-    // click it
-    button.click();
-  }*/
-  
+    const wizardEl = event.target.closest('.wizard');
+    if (event.detail.selected) {
+      console.log('selected element case');
+      const selectedEl = wizardEl.querySelector(`[data-aue-resource=${event.detail.resource}]`);
+      if (selectedEl.hasAttribute("data-index")) {
+        console.log('selected element is the direct chld of wizard');
+        //if selected element is the direct chld of wizard
+        selectedEl.classList.add('current-wizard-step');
+      } else {
+        console.log('finding the direct child of wizard of which the selected component is a child');
+        for(let child of wizardEl.children) {
+          const isElPresentUnderChild = child.getElementById(selectedEl.id);
+          if (isElPresentUnderChild) {
+            console.log('selected: child found');
+            child.classList.add('current-wizard-step');
+          }
+        }
+      }
+    } else {
+      console.log('unselected element case');
+      const unSelectedEl = wizardEl.querySelector(`[data-aue-resource=${event.detail.resource}]`);
+      if (unSelectedEl.hasAttribute("data-index")) {
+        console.log('unselected element is the direct child of wizard');
+        //if selected element is the direct chld of wizard
+        unSelectedEl.classList.remove('current-wizard-step');
+      } else {
+        console.log('finding the direct child of wizard of which the unselected component is a child');
+         //find the direct child of wizard of which the selected component is a child
+         for(let child of wizardEl.children) {
+          const isElPresentUnderChild = child.getElementById(unSelectedEl.id);
+          if (isElPresentUnderChild) {
+            console.log('unselected: child found');
+            child.classList.remove('current-wizard-step');
+          }
+        }
+      }
+    }
+  }
 }
 
 function attachEventListners(main) {
