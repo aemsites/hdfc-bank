@@ -100,7 +100,7 @@ function handleEditorSelect(event) {
     const wizardEl = event.target.closest('.wizard');
     if (event.detail.selected) {
       console.log('selected element case');
-      const selectedEl = wizardEl.querySelector(`[data-aue-resource=${event.detail.resource}]`);
+      const selectedEl = wizardEl.querySelector(`[data-aue-resource='${event.detail.resource}']`);
       if (selectedEl.hasAttribute("data-index")) {
         console.log('selected element is the direct chld of wizard');
         //if selected element is the direct chld of wizard
@@ -117,7 +117,7 @@ function handleEditorSelect(event) {
       }
     } else {
       console.log('unselected element case');
-      const unSelectedEl = wizardEl.querySelector(`[data-aue-resource=${event.detail.resource}]`);
+      const unSelectedEl = wizardEl.querySelector(`[data-aue-resource='${event.detail.resource}']`);
       if (unSelectedEl.hasAttribute("data-index")) {
         console.log('unselected element is the direct child of wizard');
         //if selected element is the direct chld of wizard
