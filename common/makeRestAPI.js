@@ -53,11 +53,12 @@ function getJsonResponse(url, payload, method = 'POST') {
  * @param {string} method - The HTTP method to use for the request (e.g., 'GET', 'POST').
  * @param {object} payload - The data payload to send with the request.
  * @param {string} path - The endpoint or path for the API call.
+ * @param {string} loadingText - The loading text during the API call.
  * @callback successCallback - The callback function to handle after successful API response.
  * @callback errorCallback - The callback function to handle after errors during the API call.
  */
-function restAPICall(globals, method, payload, path, successCallback, errorCallback) {
-  displayLoader('please wait while we are authenticating you');
+function restAPICall(globals, method, payload, path, successCallback, errorCallback, loadingText) {
+  displayLoader(loadingText);
   getJsonResponse(path, payload, method)
     .then((res) => {
       if (res) {
