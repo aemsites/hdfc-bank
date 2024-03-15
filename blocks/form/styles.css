@@ -19,6 +19,15 @@ main .section.form-container {
     max-width: var(--form-max-width);
 }
 
+main .form form .wizard > .current-wizard-step > legend::before {
+  background-image: url("../../icons/current-step-indicator.svg");
+  content: "";
+  background-size: cover;
+  background-color: unset;
+  color: unset;
+  border: none;
+}
+
 main .form .form-corporatecardwizardview.field-wrapper.wizard {
   background-color: var(--background-color-primary);
   border-radius: var(--form-border-radius);
@@ -80,14 +89,7 @@ main .form .form-corporatecardwizardview.field-wrapper.wizard {
   margin-top: -9px;
 }
 
-main .form form .wizard > .current-wizard-step > legend::before {
-  background-image: url("../../icons/current-step-indicator.svg");
-  content: "";
-  background-size: cover;
-  background-color: unset;
-  color: unset;
-  border: none;
-}
+
 
 @media (width >= 1200px) { 
   main .form form .form-corporatecardwizardview.wizard {
