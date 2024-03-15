@@ -28,9 +28,7 @@ const createLabelInElement = (elementSelector, labelClass) => {
   const labelText = element.getElementsByTagName('label')[0].innerHTML;
   element.getElementsByTagName('label')[0].innerHTML = '';
   if (!labelText) {
-    console.error(
-      `No data-label attribute found for element with selector '${elementSelector}'.`
-    );
+    console.error(`No data-label attribute found for element with selector '${elementSelector}'.`);
     return;
   }
 
@@ -48,24 +46,12 @@ const createLabelInElement = (elementSelector, labelClass) => {
  * @name decorateStepper Runs after yourDetails panel is initialized
  */
 function decorateStepper() {
-  const ccDetailsWizard = document.querySelector(
-    '.form-corporatecardwizardview.field-wrapper.wizard'
-  );
+  const ccDetailsWizard = document.querySelector('.form-corporatecardwizardview.field-wrapper.wizard');
 
-  const totalIndex = ccDetailsWizard.style.getPropertyValue(
-    '--wizard-step-count'
-  );
+  const totalIndex = ccDetailsWizard.style.getPropertyValue('--wizard-step-count');
   Array.from(ccDetailsWizard.children).forEach((child) => {
-    if (
-      child.tagName.toLowerCase() === 'fieldset' &&
-      Number(child.style.getPropertyValue('--wizard-step-index')) !==
-        totalIndex - 1
-    ) {
-      const stepperLegend = document.querySelector(
-        `main .form .form-corporatecardwizardview.field-wrapper.wizard .${child.className
-          .split(' ')
-          .join('.')} > legend`
-      );
+    if (child.tagName.toLowerCase() === 'fieldset' && Number(child.style.getPropertyValue('--wizard-step-index')) !== totalIndex - 1) {
+      const stepperLegend = document.querySelector(`main .form .form-corporatecardwizardview.field-wrapper.wizard .${child.className.split(' ').join('.')} > legend`);
       stepperLegend?.classList?.add('stepper-style');
     }
   });
@@ -76,14 +62,8 @@ function decorateStepper() {
  * @name onWizardInit Runs on initialization of wizard
  */
 function onWizardInit() {
-  createLabelInElement(
-    '.form-permanentaddresstoggle',
-    'permanent-address-toggle__label'
-  );
-  createLabelInElement(
-    '.form-currentaddresstoggle',
-    'current-address-toggle__label'
-  );
+  createLabelInElement('.form-permanentaddresstoggle', 'permanent-address-toggle__label');
+  createLabelInElement('.form-currentaddresstoggle', 'current-address-toggle__label');
   decorateStepper();
 }
 
@@ -100,12 +80,14 @@ const linkModalFunction = (trigerElement, payload) => {
   });
 };
 
-const consent1Config = { // config to create modal for consent-1
+const consent1Config = {
+  // config to create modal for consent-1
   content: panelAsPopUp, // content to display in modal
   actionWrapClass: 'form-actionwrapperpanel', // wrapper class containing all the buttons
   reqConsentAgree: true, // Flag indicating whether consent agreement is required or not
 };
-const consent2Config = { // config to create modal for consent-2
+const consent2Config = {
+  // config to create modal for consent-2
   content: panelAsPopUp2, // content to display in modal
   actionWrapClass: 'form-button-wrapper', // wrapper class containing all the buttons
   reqConsentAgree: false, // Flag indicating whether consent agreement is required or not
