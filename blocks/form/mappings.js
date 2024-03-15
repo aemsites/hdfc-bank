@@ -3,7 +3,6 @@
  *
  * */
 export default async function componentDecorator(fd) {
-  console.log(fd);
   const { ':type': type = '', fieldType } = fd;
   if (fieldType === 'file-input') {
     const module = await import('./components/file.js');
@@ -17,8 +16,5 @@ export default async function componentDecorator(fd) {
     const module = await import('./components/accordion.js');
     return module.default;
   }
-  // if(fieldType === 'text-input' || fieldType ===  'date-input' || fieldType === 'drop-down' || fieldType === 'email' || fieldType === 'number-input') {
-  //   console.log(fd);
-  // }
   return null;
 }
