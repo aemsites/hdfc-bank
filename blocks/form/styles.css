@@ -339,7 +339,7 @@ main .form .form-errorresultpanel, main .form .form-successresultpanel {
       
       p {
           padding: 20px 0 10px;
-          color: var(--background-color-primary);
+          color: var(--color-interface-background-primary);
           text-align: center;
       }
   }

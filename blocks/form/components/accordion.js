@@ -6,8 +6,8 @@ export class AccordionLayout {
       Array.from(panel.children).forEach((child) => {
         if (child.tagName.toLowerCase() === 'fieldset') {
           const legend = child.querySelector('legend');
-          legend.classList.add('hdfc-accordion-style');
           if (legend) {
+            legend.classList.add('hdfc-accordion-style');
             legend.addEventListener('click', () => {
               legend.classList.toggle('accordion-collapse');
               Array.from(child.children).forEach((childElement) => {
