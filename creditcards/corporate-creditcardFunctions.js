@@ -195,7 +195,7 @@ const OTPVAL = {
   errorCallback(err, globals) {
     console.log(`I am in errorCallback_OtpFailure ${globals}`);
   },
-  path: urlPath('/content/hdfc_ccforms/api/otpValidationV4.json'),
+  path: urlPath('/content/hdfc_cc_unified/api/otpValFetchAssetDemog.json'),
   loadingText: 'Please wait while we are authenticating you',
 };
 export { OTPGEN, OTPVAL };

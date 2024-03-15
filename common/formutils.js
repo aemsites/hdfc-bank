@@ -4,7 +4,7 @@
  * @returns {string} - The complete API URL including the base URL and the provided endpoint.
  */
 
-const DEFAULT_BASE_PATH = 'https://applyonlinestage.hdfcbank.com'; // baseApiUrl for default
+const DEFAULT_BASE_PATH = 'https://applyonlinedev.hdfcbank.com'; // baseApiUrl for default
 
 const urlPath = (path) => (window.location.host.includes('localhost') ? `${DEFAULT_BASE_PATH}${path}` : `${window.location.origin}${path}`);
 
