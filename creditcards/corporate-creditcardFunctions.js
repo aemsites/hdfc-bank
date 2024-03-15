@@ -40,7 +40,7 @@ const otpGenSuccess = (res, globals) => {
   const panWizardField = formUtil(globals, pannel.panWizardField);
   const dobWizardField = formUtil(globals, pannel.dobWizardField);
   const currentAddressNTB = formUtil(globals, pannel.currentAddressNTB);
-  const currentAddressETB = formUtil(globals.pannel.currentAddressETB);
+  const currentAddressETB = formUtil(globals, pannel.currentAddressETB);
 
   welcomeTxt.visible(false);
   otpBtn.visible(false);
