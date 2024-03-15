@@ -1,12 +1,23 @@
 :root {
-  --hdfc-stepper-background-style: linear-gradient(90deg, rgb(211 214 220) 50%, rgba(255 255 255 / 0%) 100%);
+  --hdfc-form-max-width: 960px;
   --hdfc-stepper-margin-style: 24px;
   --hdfc-stepper-width: 61px;
   --hdfc-stepper-height: 3px;
-  --hdfc-wizard-border-color: rgba(0 0 0 / 0%);
   --hdfc-wizard-step-legend-padding: 0;
   --hdfc-wizard-step-legend-width: clamp(100px, calc(308%/var(--wizard-step-count)), 330px);
   --loader-image-url: url('loader.gif');
+}
+
+body, .section.form-container {
+    background-color: var(--color-interface-body-background-color);
+}
+
+main .form.block {
+    border-radius: 24px;
+}
+
+main .section.form-container {
+    max-width: var(--hdfc-form-max-width);
 }
 
 main .form .form-corporatecardwizardview.field-wrapper.wizard {
@@ -166,3 +177,162 @@ main .form form .form-permanentaddress .form-permanentaddresstoggle input[type="
 }
 
 /* Form permanent address toogle styling ends */
+
+/* Button Styling */
+.form-button-wrapper {
+  text-align: center;
+
+  .button {
+    max-width: 400px;
+    border-radius: 13px;
+    width: 100%;
+    height: 52px;
+    line-height: 24px;
+    letter-spacing: 0 em;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    font-size: var(--form-button-font-size);
+    font-weight: var(--form-button-font-weight);
+    background: var(--color-action-background-primary-default);
+    border: var(--color-action-border-primary-default);
+    color: var(--color-action-text-primary-default);
+  }
+
+  .btn-short {
+    max-width: 260px !important;
+    width: 100%;
+  }
+
+  :hover{
+    background: var(--color-action-background-primary-default) !important;
+    border: var(--color-action-border-primary-default);
+    color: var(--color-action-text-primary-default);
+  }
+
+  :disabled{
+    background-color: var(--color-action-background-primary-disabled) !important;
+    border: var(--color-action-border-primary-disabled) !important;
+    color: var(--color-action-text-primary-disabled) !important;
+  }
+}
+
+.form-button-wrapper.form-vkycproceedbutton button {
+  width: 400px;
+}
+
+.text-center{
+  text-align: center;
+}
+
+.text-left{
+  text-align: left;
+}
+
+.text-right{
+  text-align: right;
+}
+
+/* Error/Success Result Panel */
+main .form .form-resultpanel {
+  p, label {
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 20px;
+      margin: 4px;
+  }
+}
+
+main .form .form-errorresultpanel .form-errorresulttextlabel > p::before {
+  background-image: url("../../icons/hdfc-error-icon.svg");
+}
+
+main .form .form-successresultpanel .form-successresulttextlabel > p::before {
+  background-image: url("../../icons/current-step-indicator.svg");
+}
+
+main .form .form-errorresultpanel, main .form .form-successresultpanel {
+  padding-bottom: 20px;
+  
+  .form-plain-text-wrapper {
+      flex: 100%;
+      padding: 10px;
+  }
+
+  > .field-wrapper {
+      border-radius: 24px 24px 0 0;
+  }
+
+  .form-errorresulttextlabel, .form-successresulttextlabel {
+      background-color: var(--color-interface-result-label-background-color);
+
+      > p::before {
+          background-size: cover;
+          display: inline-block;
+          width: 80px; 
+          height: 80px;
+          content:"";
+      }
+      
+      p {
+          padding: 20px 0 10px;
+          color: var(--background-color-primary);
+          text-align: center;
+      }
+  }
+}
+
+main .form .form-errorresultpanel > div:not(.form-errorresulttextlabel),
+main .form .form-successresultpanel > div:not(.form-successresulttextlabel, .form-arnnumber) {
+  display: flex;
+  max-width: var(--form-max-width);
+  margin: 0 auto;
+  text-align: center;
+
+  p > p:not(:first-child) {
+      padding-top: 15px
+  }
+}
+
+main .form .form-successresultpanel .form-arnnumber {
+  max-width: var(--form-max-width);
+  margin: 0 auto;
+  padding: 10px;
+  border-bottom: 1px solid rgb(236 237 243);
+
+  input {
+      max-width: 45vw;
+      margin: 0 0 0 27px;
+      border: none;
+      font-weight: 600;
+      font-size: 18px;
+      line-height: 28px;
+  }
+}
+
+main .form .form-errorresultpanel > div:not(.form-errorresulttextlabel)::before,
+main .form .form-successresultpanel > div.form-arnnumber::before{
+  content: url("../../icons/hdfc-error-icon.svg");
+  padding-right: 15px;
+}
+
+@media (width <= 750px) {
+  main .section.form-container {
+      width: 100%;
+      margin: 0 auto;
+  }
+
+  main .form.block {
+      border-radius: 0;
+  }
+
+  main .form .form-errorresultpanel, main .form .form-successresultpanel {
+      > div:not(.form-errorresulttextlabel) {
+          max-width: 100%;
+      }
+
+      > .field-wrapper {
+          border-radius: 0;
+      }
+  }
+}

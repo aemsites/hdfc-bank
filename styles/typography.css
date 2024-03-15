@@ -1,0 +1,8 @@
+:root{
+/* form--btn */
+  --form-button-font-size: 16px;
+  --form-button-font-weight: 700;
+
+/* body styles */
+  --form-max-width: 60vw;
+}
