@@ -7,7 +7,7 @@
  * @return {string}
  */
 
-import { getOTP, otpValidation } from '../../common/functions.js';
+import { getOTP, otpValidation , validationPan ,displayMobileNumber } from '../../common/functions.js';
 
 function getFullName(firstname, lastname) {
   // eslint-disable-next-line no-param-reassign
@@ -89,5 +89,5 @@ function onWizardInit() {
 }
 
 export {
-  getFullName, onWizardInit, getOTP, otpValidation,
+  getFullName, onWizardInit, getOTP, otpValidation, validationPan,displayMobileNumber,
 };
