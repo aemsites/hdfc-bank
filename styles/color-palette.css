@@ -41,6 +41,10 @@
   --color-input-border-active: #9ca3af;
   --color-input-border-disabled: #9ca3af;
   --color-input-border-error-default: #e30613;
+  --color-control-background-primary-default: #9ca3af;
+  --color-control-background-primary-selected: #1c3fca;
+  --color-control-icon-primary-default: #fff;
+  --color-control-icon-primary-selected: #fff;
 
   /* body styles */
   --color-interface-body-background-color: rgb(243 246 253);

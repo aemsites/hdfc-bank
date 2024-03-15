@@ -195,8 +195,8 @@ main
   display: flex;
   flex-basis: 40px;
   align-items: center;
-  background-color: #9ca3af;
-  color: #fff;
+  background-color: var(--color-control-background-primary-default);
+  color: var(--color-control-icon-primary-default);
   cursor: pointer;
   border-radius: 12px;
   height: 24px;
@@ -217,7 +217,7 @@ main
   .form-currentaddresstoggle
   input[type='checkbox']:checked
   + .field-label {
-  background-color: #1c3fca;
+  background-color: var(--color-control-background-primary-selected);
 }
 
 main
@@ -236,7 +236,7 @@ main
   display: inline-block;
   width: 20px;
   height: 20px;
-  background-color: #fff;
+  background-color: var(--color-control-icon-primary-default);
   border-radius: 50%;
   margin-right: 10px;
   transition: transform 0.3s;
