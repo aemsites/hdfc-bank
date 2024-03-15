@@ -4,5 +4,10 @@
   --form-button-font-weight: 700;
 
 /* body styles */
-  --form-max-width: 60vw;
+  --form-max-width: 960px;
+
+/* text field styles */
+  --form-input-height: 48px;
+  --form-input-padding: 14px 12px 14px 16px;
+  --form-input-border-radius: 8px;
 }

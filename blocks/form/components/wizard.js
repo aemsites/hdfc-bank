@@ -85,17 +85,17 @@ export class WizardLayout {
     const panelCount = panel.querySelectorAll('.form-panel-wrapper')?.length;
     const wrapper = document.createElement('div');
     wrapper.className = 'form-wizard-button-wrapper';
-    if (this.includePrevBtn && panelCount) {
-      this.addButton(wrapper, panel, {
-        label: { value: 'Back' }, fieldType: 'button', name: 'back', id: 'form-wizard-button-prev',
-      }, false);
-    }
+    // if (this.includePrevBtn && panelCount) {
+    //   this.addButton(wrapper, panel, {
+    //     label: { value: 'Back' }, fieldType: 'button', name: 'back', id: 'form-wizard-button-prev',
+    //   }, false);
+    // }
 
-    if (this.includeNextBtn && panelCount) {
-      this.addButton(wrapper, panel, {
-        label: { value: 'NEXT' }, fieldType: 'button', name: 'next', id: 'form-wizard-button-next',
-      });
-    }
+    // if (this.includeNextBtn && panelCount) {
+    //   this.addButton(wrapper, panel, {
+    //     label: { value: 'NEXT' }, fieldType: 'button', name: 'next', id: 'form-wizard-button-next',
+    //   });
+    // }
 
     const submitBtn = panel.querySelector('.form-submit-wrapper');
     if (submitBtn) {

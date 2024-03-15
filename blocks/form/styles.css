@@ -1,11 +1,11 @@
 :root {
-  --hdfc-form-max-width: 960px;
   --hdfc-stepper-margin-style: 24px;
   --hdfc-stepper-width: 61px;
   --hdfc-stepper-height: 3px;
   --hdfc-wizard-step-legend-padding: 0;
   --hdfc-wizard-step-legend-width: clamp(100px, calc(308%/var(--wizard-step-count)), 330px);
   --loader-image-url: url('loader.gif');
+  --hdfc-accordion-legend-background: rgb(235 241 255);
 }
 
 body, .section.form-container {
@@ -17,13 +17,11 @@ main .form.block {
 }
 
 main .section.form-container {
-    max-width: var(--hdfc-form-max-width);
+    max-width: var(--form-max-width);
 }
 
 main .form .form-corporatecardwizardview.field-wrapper.wizard {
-  .form-personaldetails {
-      margin-top: var(--hdfc-stepper-margin-style);
-  }
+  background-color: var(--background-color-primary);
 
   .stepper-style::after {
       content: "";
@@ -33,6 +31,31 @@ main .form .form-corporatecardwizardview.field-wrapper.wizard {
       background: var(--hdfc-stepper-background-style);
       margin-top: var(--hdfc-stepper-margin-style);
   }
+
+  /* Accordion styling */
+    fieldset {
+        fieldset { 
+            legend {
+                background-color: var(--hdfc-accordion-legend-background);
+                height: 60px;
+                padding: 16px 24px;
+                border-radius: 12px;
+            }
+        }   
+    }
+}
+
+.hdfc-accordion-style::after {
+  content: url("../../icons/accordion-expand-icon.svg");
+  display: inline;
+  position: absolute;
+  right: 7vw;
+  transition: transform 0.3s ease;
+}
+
+.accordion-collapse::after { 
+  transform: rotate(-180deg);
+  margin-top: -9px;
 }
 
 main .form form .wizard > .current-wizard-step > legend::before {
@@ -52,6 +75,7 @@ main .form form .wizard > .current-wizard-step > legend::before {
       text-align: unset;
       padding: 0 0 calc(2*var(--form-wizard-step-legend-padding));
       margin-left: 2%;
+      margin-bottom: 0;
       width: clamp(100px, calc(108% / var(--wizard-step-count)), 330px);
   }
 
@@ -85,6 +109,7 @@ main .form form .wizard > .current-wizard-step > legend::before {
       width: 100%;
       white-space: break-spaces;
       text-overflow: ellipsis;
+      margin-bottom: 60px;
       padding: 0 var(--hdfc-wizard-step-legend-padding) calc(2*var(--hdfc-wizard-step-legend-padding));
       left: calc(var(--hdfc-wizard-step-legend-width) * var(--wizard-step-index));
   }
@@ -217,8 +242,10 @@ main .form form .form-permanentaddress .form-permanentaddresstoggle input[type="
   }
 }
 
-.form-button-wrapper.form-vkycproceedbutton button {
+.form-button-wrapper.form-vkycproceedbutton {
   width: 400px;
+  text-align: center;
+  display: block;
 }
 
 .text-center{
@@ -248,7 +275,7 @@ main .form .form-errorresultpanel .form-errorresulttextlabel > p::before {
 }
 
 main .form .form-successresultpanel .form-successresulttextlabel > p::before {
-  background-image: url("../../icons/current-step-indicator.svg");
+  background-image: url("../../icons/hdfc-success-icon.svg");
 }
 
 main .form .form-errorresultpanel, main .form .form-successresultpanel {
@@ -285,7 +312,7 @@ main .form .form-errorresultpanel, main .form .form-successresultpanel {
 main .form .form-errorresultpanel > div:not(.form-errorresulttextlabel),
 main .form .form-successresultpanel > div:not(.form-successresulttextlabel, .form-arnnumber) {
   display: flex;
-  max-width: var(--form-max-width);
+  max-width: 506px;
   margin: 0 auto;
   text-align: center;
 
@@ -312,7 +339,7 @@ main .form .form-successresultpanel .form-arnnumber {
 
 main .form .form-errorresultpanel > div:not(.form-errorresulttextlabel)::before,
 main .form .form-successresultpanel > div.form-arnnumber::before{
-  content: url("../../icons/hdfc-error-icon.svg");
+  content: url("../../icons/result-list-icon.svg");
   padding-right: 15px;
 }
 
@@ -320,6 +347,7 @@ main .form .form-successresultpanel > div.form-arnnumber::before{
   main .section.form-container {
       width: 100%;
       margin: 0 auto;
+      max-width: 100%;
   }
 
   main .form.block {
@@ -334,5 +362,16 @@ main .form .form-successresultpanel > div.form-arnnumber::before{
       > .field-wrapper {
           border-radius: 0;
       }
+  }
+}
+
+main .form {
+  input[type="text"], input[type="number"], input[type="email"], input[type="date"], select {
+    height: var(--form-input-height) !important;
+    padding: var(--form-input-padding) !important;
+    border: 1px solid var(--color-input-border-default) !important;
+    border-radius: var(--form-input-border-radius) !important;
+    font-weight: 400;
+    font-size: 14px !important;
   }
 }
