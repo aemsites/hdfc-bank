@@ -1,3 +1,4 @@
+/* eslint no-console: ["error", { allow: ["warn", "error", "log"] }] */
 import createJourneyId from '../common/journey-utils.js';
 import {
   formUtil, maskNumber, urlPath, clearString,
@@ -96,11 +97,11 @@ const OTPGEN = {
   successCallback(res, globals) {
     return (res?.otpGenResponse?.status?.errorCode === '0') ? otpGenSuccess(res, globals) : otpGenFailure(res, globals);
   },
-  errorCallback(globals) {
-    /* eslint-disable no-console */
+  errorCallback(err, globals) {
     console.log(`I am in errorCallback ${globals}`);
   },
   path: urlPath('/content/hdfc_ccforms/api/customeridentificationV4.json'),
+  loadingText: 'Please wait while we are authenticating you',
 };
 
 /**
@@ -191,10 +192,10 @@ const OTPVAL = {
   successCallback(res, globals) {
     return (res?.otpGenResponse?.status?.errorCode === '0') ? otpValSuccess(res, globals) : otpValFailure(res, globals);
   },
-  errorCallback(globals) {
-    /* eslint-disable no-console */
+  errorCallback(err, globals) {
     console.log(`I am in errorCallback_OtpFailure ${globals}`);
   },
   path: urlPath('/content/hdfc_ccforms/api/otpValidationV4.json'),
+  loadingText: 'Please wait while we are authenticating you',
 };
 export { OTPGEN, OTPVAL };

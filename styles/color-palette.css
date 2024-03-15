@@ -35,6 +35,7 @@
   --color-input-text-focus: #000;
   --color-input-text-placeholder-default: #6b7280;
   --color-input-text-placeholder-disabled: #6b7280;
+  --color-input-text-msg-error: #e30613;
   --color-input-text-placeholder-focus: #6b7280;
   --color-input-border-default: #9ca3af;
   --color-input-border-focus: #1c3fca;
@@ -45,18 +46,4 @@
   --color-control-background-primary-selected: #1c3fca;
   --color-control-icon-primary-default: #fff;
   --color-control-icon-primary-selected: #fff;
-
-  /* body styles */
-  --color-interface-body-background-color: rgb(243 246 253);
-
-  /* Stepper style */
-  --hdfc-wizard-border-color: rgba(0 0 0 / 0%);
-  --hdfc-stepper-background-style: linear-gradient(
-    90deg,
-    rgb(211 214 220) 50%,
-    rgba(255 255 255 / 0%) 100%
-  );
-
-  /* Result screen style */
-  --color-interface-result-label-background-color: rgba(17 24 39 / 255%);
 }
