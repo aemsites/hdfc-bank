@@ -13,7 +13,7 @@ body, .section.form-container {
 }
 
 main .form.block {
-    border-radius: 24px;
+    border-radius: var(--form-border-radius);
 }
 
 main .section.form-container {
@@ -22,6 +22,11 @@ main .section.form-container {
 
 main .form .form-corporatecardwizardview.field-wrapper.wizard {
   background-color: var(--background-color-primary);
+  border-radius: var(--form-border-radius);
+  
+  > fieldset {
+    margin-bottom: -92px;
+  }
 
   .stepper-style::after {
       content: "";
@@ -68,7 +73,8 @@ main .form form .wizard > .current-wizard-step > legend::before {
 }
 
 @media (width >= 1200px) { 
-  main .form form .form-corporatecardwizardview.wizard > fieldset > legend{
+  main .form form .form-corporatecardwizardview.wizard {
+  > fieldset > legend {
       display: flex !important;
       text-indent: 1%;
       overflow: hidden;
@@ -77,6 +83,12 @@ main .form form .wizard > .current-wizard-step > legend::before {
       margin-left: 2%;
       margin-bottom: 0;
       width: clamp(100px, calc(108% / var(--wizard-step-count)), 330px);
+      }
+
+      .form-plain-text-wrapper b {
+        display: block;
+        width: 800px;
+      }
   }
 
   main .form .form-corporatecardwizardview.field-wrapper.wizard .form-panel-wrapper.form-confirmandsubmitpanel.field-wrapper > legend::before {
@@ -91,10 +103,17 @@ main .form form .wizard > .current-wizard-step > legend::before {
       overflow: hidden;
       border: rgba(0 0 0 / 0%);
       border-right: solid 20px rgba(0 0 0 / 0%);
-  }
 
-  main .form form .form-corporatecardwizardview.wizard > fieldset {
-      padding: 10px 0 0 15px;
+      .form-plain-text-wrapper b {
+        display: block;
+        width: 100%;
+      }
+
+      .form-plain-text-wrapper b, legend {
+        font-weight: 600;
+        font-size: 20px;
+        line-height: 28px;
+      }
   }
 
   main .form form .wizard > fieldset > legend::before {
@@ -287,7 +306,7 @@ main .form .form-errorresultpanel, main .form .form-successresultpanel {
   }
 
   > .field-wrapper {
-      border-radius: 24px 24px 0 0;
+      border-radius: var(--form-border-radius) var(--form-border-radius) 0 0;
   }
 
   .form-errorresulttextlabel, .form-successresulttextlabel {

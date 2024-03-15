@@ -5,6 +5,7 @@
 
 /* body styles */
   --form-max-width: 960px;
+  --form-border-radius: 24px;
 
 /* text field styles */
   --form-input-height: 48px;
