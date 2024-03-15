@@ -1,7 +1,7 @@
 /* eslint no-console: ["error", { allow: ["warn", "error", "log"] }] */
 import createJourneyId from '../common/journey-utils.js';
 import {
-  formUtil, maskNumber, urlPath, clearString,
+  formUtil, maskNumber, urlPath, clearString, getTimeStamp,
 } from '../common/formutils.js';
 
 const journeyName = 'CORPORATE_CREDIT_CARD';
@@ -181,12 +181,16 @@ const OTPVAL = {
     const jsonObj = {};
     jsonObj.requestString = {};
     jsonObj.requestString.mobileNumber = String(mobileNo) ?? '';
-    jsonObj.requestString.identifierValue = panNo || dob;
-    jsonObj.requestString.identifierName = panNo ? 'PAN' : 'DOB';
+    jsonObj.requestString.panNumber = String(panNo) ?? '';
+    jsonObj.requestString.dateOfBirth = String(dob) ?? '';
+    jsonObj.requestString.channelSource = '';
+    jsonObj.requestString.dedupeFlag = 'N';
     jsonObj.requestString.passwordValue = passwordValue ?? '';
+    jsonObj.requestString.referenceNumber = `AD${getTimeStamp(new Date())}` ?? '';
     jsonObj.requestString.journeyID = currentFormContext.journeyID;
     jsonObj.requestString.journeyName = currentFormContext.journeyName;
     jsonObj.requestString.userAgent = window.navigator.userAgent;
+    jsonObj.requestString.existingCustomer = currentFormContext.isCustomerIdentified ?? '';
     return jsonObj;
   },
   successCallback(res, globals) {

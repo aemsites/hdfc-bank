@@ -63,6 +63,25 @@ const formUtil = (globalObj, panelName) => ({
   },
 });
 
+/**
+ * Gets a formatted timestamp from the provided current time.
+ *
+ * @param {Date} currentTime The current time to generate the timestamp from.
+ * @returns {string} The formatted timestamp in 'YYYYMMDDHHmmss' format.
+ */
+const getTimeStamp = (currentTime) => {
+  // Function to pad single digit numbers with leading zero
+  const pad = (number) => ((number < 10) ? `0${number}` : number);
+  // Format the datetime as desired
+  const formattedDatetime = currentTime.getFullYear()
+    + pad(currentTime.getMonth() + 1)
+    + pad(currentTime.getDate())
+    + pad(currentTime.getHours())
+    + pad(currentTime.getMinutes())
+    + pad(currentTime.getSeconds());
+  return formattedDatetime;
+};
+
 export {
-  urlPath, maskNumber, clearString, formUtil,
+  urlPath, maskNumber, clearString, formUtil, getTimeStamp,
 };
