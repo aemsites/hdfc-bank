@@ -72,7 +72,7 @@ main .form .form-corporatecardwizardview.field-wrapper.wizard {
   display: inline;
   position: absolute;
   right: 7vw;
-  transition: transform 0.3s ease;
+  transition: transform 0s;
 }
 
 .accordion-collapse::after { 
