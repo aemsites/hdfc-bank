@@ -438,24 +438,6 @@ export default async function decorate(block) {
   }
 }
 
-document.body.addEventListener("aue:ui-edit", () => {
-   //in case ui-edit is emitted before form initialisation
-  window.addEventListener("FORM_INITIALISED", async (event) => {
-    console.log('form is initialised after ui-edit event')
-    const afEditor = await import('./form-editor-support.js');
-    afEditor.annotateFormForEditing(event.detail.formEl, event.detail.formDefinition);
-  });
-});
-
-window.addEventListener("FORM_INITIALISED", async (event) => {
-  //in case form is initialised before ui-edit
-  document.body.addEventListener("aue:ui-edit", async () => {
-    console.log('ui-edit event is triggered after form init');
-    const afEditor = await import('./form-editor-support.js');
-    afEditor.annotateFormForEditing(event.detail.formEl, event.detail.formDefinition);
-  });
-});
-
 
 
 

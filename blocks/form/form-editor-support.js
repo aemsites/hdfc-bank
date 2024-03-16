@@ -1,4 +1,5 @@
-export function annotateFormForEditing(formEl, formDefinition) {
+function annotateFormForEditing(formEl, formDefinition) {
+
     formEl.classList.add("edit-mode");
     let formFieldMap = {};
     annotateItems(formEl.childNodes);
@@ -44,3 +45,14 @@ export function annotateFormForEditing(formEl, formDefinition) {
         return field;
     }
 }
+
+window.addEventListener("FORM_INITIALISED", async (event) => {
+    //in case form is initialised before ui-edit
+    if (document.documentElement.classList.contains("adobe-ue-edit")) {
+      annotateFormForEditing(event.detail.formEl, event.detail.formDefinition);
+    } else {
+      document.body.addEventListener("aue:ui-edit", async () => {
+        annotateFormForEditing(event.detail.formEl, event.detail.formDefinition);
+      });
+    }
+});
