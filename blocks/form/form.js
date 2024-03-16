@@ -351,6 +351,7 @@ function enableValidation(form) {
 export async function createForm(formDef, data) {
   const { action: formPath } = formDef;
   const form = document.createElement('form');
+  console.log('before annotating in createForm');
   const afEditor = await import('./form-editor-support.js');
   afEditor.annotateFormForEditing(form, formDef);
   form.dataset.action = formPath;
@@ -431,3 +432,19 @@ export default async function decorate(block) {
     container.replaceWith(form);
   }
 }
+
+document.querySelector('main').addEventListener("aue:initialized", () => {
+  console.log('ue initialised on main');
+});
+document.addEventListener("aue:initialized", () => {
+  console.log('ue initialised on document');
+});
+
+document.querySelector('main').addEventListener("aue:ui-edit", () => {
+  console.log('ue edit on main');
+});
+document.addEventListener("aue:ui-edit", () => {
+  console.log('ue edit on document');
+});
+
+
