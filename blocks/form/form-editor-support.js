@@ -1,8 +1,8 @@
 export function annotateFormForEditing(formEl, formDefinition) {
     formEl.classList.add("edit-mode");
-    this.observer = new MutationObserver(annotateForm.bind(this));
+    const observer = new MutationObserver(annotateForm);
     const config = { childList: true, subtree: true };
-    this.observer.observe(formEl, config);
+    observer.observe(formEl, config);
     let formFieldMap = {};
     function annotateForm(mutationsList) {
         for (const mutation of mutationsList) {
