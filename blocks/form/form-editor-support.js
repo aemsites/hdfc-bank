@@ -80,7 +80,7 @@ window.addEventListener("FORM_INITIALISED", (event) => {
         annotateFormForEditing(event.detail.formEl, event.detail.formDefinition);
       });
     }
+    document.querySelector('main').addEventListener('aue:ui-select', handleEditorSelect);
 });
 
 
-document.querySelector('main').addEventListener('aue:ui-select', handleEditorSelect);
