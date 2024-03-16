@@ -14,7 +14,6 @@ export function annotateFormForEditing(formEl, formDefinition) {
     function annotateItems(items) {
         items.forEach((fieldWrapper) => {
             if (fieldWrapper.classList.contains("field-wrapper")) {
-                console.log(fieldWrapper);
                 const id = fieldWrapper.id;
                 const fd = getFieldById(formDefinition[":items"], id);
                 if (fd && fd.properties) {

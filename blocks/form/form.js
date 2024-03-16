@@ -433,11 +433,19 @@ export default async function decorate(block) {
   }
 }
 
+window.addEventListener("aue:initialized", () => {
+  console.log('ue initialised on window');
+});
+
 document.querySelector('main').addEventListener("aue:initialized", () => {
   console.log('ue initialised on main');
 });
 document.addEventListener("aue:initialized", () => {
   console.log('ue initialised on document');
+});
+
+window.addEventListener("aue:ui-edit", () => {
+  console.log('ue initialised on window');
 });
 
 document.querySelector('main').addEventListener("aue:ui-edit", () => {
@@ -446,5 +454,7 @@ document.querySelector('main').addEventListener("aue:ui-edit", () => {
 document.addEventListener("aue:ui-edit", () => {
   console.log('ue edit on document');
 });
+
+
 
 
