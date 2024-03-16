@@ -6,7 +6,7 @@ export function annotateFormForEditing(formEl, formDefinition) {
     let formFieldMap = {};
     function annotateForm(mutationsList) {
         for (const mutation of mutationsList) {
-            if (mutation.type === "childList") {
+            if (mutation.type === "childList" || mutation.type === "subtree") {
                 mutation.addedNodes.forEach((fieldWrapper) => {
                     if (fieldWrapper.classList.contains("field-wrapper")) {
                         console.log(fieldWrapper);
