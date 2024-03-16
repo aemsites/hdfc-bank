@@ -44,9 +44,12 @@ export function annotateFormForEditing(formEl, formDefinition) {
                 if (item.id === id) {
                     field = item;
                 } else if (item.fieldType === 'panel') {
-                    field = getFieldById(item[':items'], id)
+                    if (item[':items']) {
+                        field = getFieldById(item[':items'], id);
+                    }
                 }
             }
+            
         }
         return field;
     }
