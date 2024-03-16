@@ -32,7 +32,7 @@ export function annotateFormForEditing(formEl, formDefinition) {
         if (formFieldMap[id]) {
             return formFieldMap[id];
         } else {
-            for (let item of items) {
+            for (let item of  Object.entries(items)) {
                 formFieldMap[item.id] = item;
                 if (item.id === id) {
                     return item;
