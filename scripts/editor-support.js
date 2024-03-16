@@ -89,31 +89,6 @@ async function applyChanges(event) {
   return false;
 }
 
-/**
- * Event listener for aue:ui-select, selection of a component
- */
-function handleEditorSelect(event) {
-
-  if (event.target.closest('.wizard') && event.detail.selected && !event.target.classList.contains("wizard")) {
-    const wizardEl = event.target.closest('.wizard');
-    const { resource } = event.detail;
-    const el = wizardEl.querySelector(`[data-aue-resource='${resource}']`);
-    const existingSelectedEl = wizardEl.querySelector(".current-wizard-step");
-    existingSelectedEl.classList.remove('current-wizard-step');
-    if (el.hasAttribute("data-index")) {
-      //if selected element is the direct chld of wizard
-      el.classList.add('current-wizard-step');
-    } else {
-      for(let child of wizardEl.children) {
-        const isElPresentUnderChild = child.querySelector(`[data-aue-resource='${resource}']`);
-        if (isElPresentUnderChild) {
-          child.classList.add('current-wizard-step');
-        }
-      }
-    }
-  }
-}
-
 function attachEventListners(main) {
   [
     'aue:content-patch',
@@ -126,7 +101,6 @@ function attachEventListners(main) {
     const applied = await applyChanges(event);
     if (!applied) window.location.reload();
   }));
-  main.addEventListener('aue:ui-select', handleEditorSelect);
 }
 
 attachEventListners(document.querySelector('main'));
