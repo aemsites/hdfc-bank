@@ -352,6 +352,7 @@ export async function createForm(formDef, data) {
   const { action: formPath } = formDef;
   const form = document.createElement('form');
   console.log('before annotating in createForm');
+  console.log('editor-mode', window.isEditorMode);
   const afEditor = await import('./form-editor-support.js');
   afEditor.annotateFormForEditing(form, formDef);
   form.dataset.action = formPath;
@@ -433,26 +434,9 @@ export default async function decorate(block) {
   }
 }
 
-window.addEventListener("aue:initialized", () => {
-  console.log('ue initialised on window');
-});
-
-document.querySelector('main').addEventListener("aue:initialized", () => {
-  console.log('ue initialised on main');
-});
-document.addEventListener("aue:initialized", () => {
-  console.log('ue initialised on document');
-});
-
-window.addEventListener("aue:ui-edit", () => {
-  console.log('ue initialised on window');
-});
-
-document.querySelector('main').addEventListener("aue:ui-edit", () => {
-  console.log('ue edit on main');
-});
-document.addEventListener("aue:ui-edit", () => {
-  console.log('ue edit on document');
+document.body.addEventListener("aue:ui-edit", () => {
+  window.isEditorMode = true;
+  console.log('ue edit on body');
 });
 
 
