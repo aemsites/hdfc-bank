@@ -424,17 +424,17 @@ export default async function decorate(block) {
     } else {
       form = await createForm(formDef);
     }
+    window.dispatchEvent(event);
+    form.dataset.action = formDef.action || pathname?.split('.json')[0];
+    form.dataset.source = source;
+    form.dataset.rules = rules;
+    container.replaceWith(form);
     const event = new CustomEvent("FORM_INITIALISED", {
       detail: {
         formEl: form,
         formDefinition: formDef
       }
     });
-    window.dispatchEvent(event);
-    form.dataset.action = formDef.action || pathname?.split('.json')[0];
-    form.dataset.source = source;
-    form.dataset.rules = rules;
-    container.replaceWith(form);
   }
 }
 
