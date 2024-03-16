@@ -424,16 +424,38 @@ export default async function decorate(block) {
     } else {
       form = await createForm(formDef);
     }
-    if (document.documentElement.classList.contains("adobe-ue-edit")) {
-        const afEditor = await import('./form-editor-support.js');
-        afEditor.annotateFormForEditing(form, formDef);
-    }
+    const event = new CustomEvent("FORM_INITIALISED", {
+      detail: {
+        formEl: form,
+        formDefinition: formDef
+      }
+    });
+    window.dispatchEvent(event);
     form.dataset.action = formDef.action || pathname?.split('.json')[0];
     form.dataset.source = source;
     form.dataset.rules = rules;
     container.replaceWith(form);
   }
 }
+
+document.body.addEventListener("aue:ui-edit", () => {
+   //in case ui-edit is emitted before form initialisation
+  window.addEventListener("FORM_INITIALISED", async (event) => {
+    console.log('form is initialised after ui-edit event')
+    const afEditor = await import('./form-editor-support.js');
+    afEditor.annotateFormForEditing(event.detail.formEl, event.detail.formDefinition);
+  });
+});
+
+window.addEventListener("FORM_INITIALISED", async (event) => {
+  //in case form is initialised before ui-edit
+  document.body.addEventListener("aue:ui-edit", async () => {
+    console.log('ui-edit event is triggered after form init');
+    const afEditor = await import('./form-editor-support.js');
+    afEditor.annotateFormForEditing(event.detail.formEl, event.detail.formDefinition);
+  });
+});
+
 
 
 
