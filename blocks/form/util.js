@@ -42,7 +42,7 @@ export const getId = (function getId() {
 export function createLabel(fd, tagName = 'label') {
   if (fd.label && fd.label.value) {
     const label = document.createElement(tagName);
-    label.setAttribute('for', fd.id);
+    label.setAttribute('for', `${fd.id}-widget`);
     label.className = 'field-label';
     if (fd.label.richText === true) {
       label.innerHTML = stripTags(fd.label.value);
@@ -70,16 +70,11 @@ export function createFieldWrapper(fd, tagName = 'div', labelFn = createLabel) {
   const renderType = getHTMLRenderType(fd);
   const fieldId = `form-${renderType}-wrapper${nameStyle}`;
   fieldWrapper.className = fieldId;
+  fieldWrapper.id = fd.id;
   if (fd.visible === false) {
     fieldWrapper.dataset.visible = fd.visible;
   }
   fieldWrapper.classList.add('field-wrapper');
-  if (fd.properties) {
-    fieldWrapper.setAttribute('data-aue-type', 'component');
-    fieldWrapper.setAttribute('data-aue-resource', `urn:aemconnection:${fd.properties["fd:path"]}`);
-    fieldWrapper.setAttribute('data-aue-model', fd.fieldType === 'image'? 'form-image': fd.fieldType);
-    fieldWrapper.setAttribute('data-aue-label', fd.name);
-  }
   if (fd.label && fd.label.value && typeof labelFn === 'function') {
     const label = labelFn(fd);
     if (label) { fieldWrapper.append(label); }

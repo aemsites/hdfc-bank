@@ -124,8 +124,6 @@ function createFieldSet(fd) {
   wrapper.name = fd.name;
   if (fd.fieldType === 'panel') {
     wrapper.classList.add('form-panel-wrapper');
-    wrapper.setAttribute('data-aue-type', 'container');
-    wrapper.setAttribute('data-aue-behavior', 'component');
   }
   if (fd.repeatable === 'true' || fd.repeatable === true) {
     setConstraints(wrapper, fd);
@@ -232,7 +230,7 @@ const handleFocusOut = (input) => {
 function inputDecorator(field, element) {
   const input = element?.querySelector('input,textarea,select');
   if (input) {
-    input.id = field.id;
+    input.id = `${field.id}-widget`;
     input.name = field.name;
     if (field.tooltip) {
       input.title = stripTags(field.tooltip, '');
@@ -353,6 +351,10 @@ function enableValidation(form) {
 export async function createForm(formDef, data) {
   const { action: formPath } = formDef;
   const form = document.createElement('form');
+  if (document.documentElement.classList.contains("adobe-ue-edit")) {
+    const afEditor = await import('./form-editor-support.js');
+    afEditor.annotateFormForEditing(form, formDef);
+  }
   form.dataset.action = formPath;
   form.noValidate = true;
   await generateFormRendition(formDef, form);
@@ -428,9 +430,6 @@ export default async function decorate(block) {
     form.dataset.action = formDef.action || pathname?.split('.json')[0];
     form.dataset.source = source;
     form.dataset.rules = rules;
-    if (document.documentElement.classList.contains("adobe-ue-edit")) {
-      form.classList.add("edit-mode");
-    }
     container.replaceWith(form);
   }
 }
