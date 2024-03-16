@@ -1,5 +1,6 @@
 export function annotateFormForEditing(formEl, formDefinition) {
     formEl.classList.add("edit-mode");
+    let formFieldMap = {};
     annotateItems(formEl.childNodes);
     function annotateItems(items) {
         items.forEach((fieldWrapper) => {
