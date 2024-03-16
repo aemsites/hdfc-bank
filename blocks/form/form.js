@@ -424,7 +424,6 @@ export default async function decorate(block) {
     } else {
       form = await createForm(formDef);
     }
-    window.dispatchEvent(event);
     form.dataset.action = formDef.action || pathname?.split('.json')[0];
     form.dataset.source = source;
     form.dataset.rules = rules;
@@ -435,6 +434,7 @@ export default async function decorate(block) {
         formDefinition: formDef
       }
     });
+    window.dispatchEvent(event);
   }
 }
 
