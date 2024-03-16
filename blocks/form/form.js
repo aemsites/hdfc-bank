@@ -351,10 +351,10 @@ function enableValidation(form) {
 export async function createForm(formDef, data) {
   const { action: formPath } = formDef;
   const form = document.createElement('form');
-  if (document.documentElement.classList.contains("adobe-ue-edit")) {
+  document.addEventListener("aue:ui-edit", async ()=> {
     const afEditor = await import('./form-editor-support.js');
     afEditor.annotateFormForEditing(form, formDef);
-  }
+  });
   form.dataset.action = formPath;
   form.noValidate = true;
   await generateFormRendition(formDef, form);
