@@ -11,7 +11,7 @@ export function annotateFormForEditing(formEl, formDefinition) {
                     if (fieldWrapper.classList.contains("field-wrapper")) {
                         console.log(fieldWrapper);
                         const id = fieldWrapper.id;
-                        const fd = getFieldById(formDef[":items"], id);
+                        const fd = getFieldById(formDefinition[":items"], id);
                         if (fd.properties) {
                             fieldWrapper.setAttribute('data-aue-type', 'component');
                             fieldWrapper.setAttribute('data-aue-resource', `urn:aemconnection:${fd.properties["fd:path"]}`);
