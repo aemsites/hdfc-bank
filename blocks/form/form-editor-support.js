@@ -71,7 +71,7 @@ function handleEditorSelect(event) {
     }
 }
 
-window.addEventListener("FORM_INITIALISED", async (event) => {
+window.addEventListener("FORM_INITIALISED", (event) => {
     //in case form is initialised before ui-edit
     if (document.documentElement.classList.contains("adobe-ue-edit")) {
       annotateFormForEditing(event.detail.formEl, event.detail.formDefinition);
