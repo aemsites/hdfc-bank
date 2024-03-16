@@ -1,16 +1,6 @@
 export function annotateFormForEditing(formEl, formDefinition) {
     formEl.classList.add("edit-mode");
-    const observer = new MutationObserver(annotateForm);
-    const config = { childList: true, subtree: true };
-    observer.observe(formEl, config);
-    let formFieldMap = {};
-    function annotateForm(mutationsList) {
-        for (const mutation of mutationsList) {
-            if (mutation.type === "childList") {
-                annotateItems(mutation.addedNodes);
-            }
-        }
-    }
+    annotateItems(formEl.childNodes);
     function annotateItems(items) {
         items.forEach((fieldWrapper) => {
             if (fieldWrapper.classList.contains("field-wrapper")) {

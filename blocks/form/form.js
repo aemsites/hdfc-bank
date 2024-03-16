@@ -352,9 +352,6 @@ export async function createForm(formDef, data) {
   const { action: formPath } = formDef;
   const form = document.createElement('form');
   console.log('before annotating in createForm');
-  console.log('editor-mode', window.isEditorMode);
-  const afEditor = await import('./form-editor-support.js');
-  afEditor.annotateFormForEditing(form, formDef);
   form.dataset.action = formPath;
   form.noValidate = true;
   await generateFormRendition(formDef, form);
@@ -427,17 +424,16 @@ export default async function decorate(block) {
     } else {
       form = await createForm(formDef);
     }
+    if (document.documentElement.classList.contains("adobe-ue-edit")) {
+        const afEditor = await import('./form-editor-support.js');
+        afEditor.annotateFormForEditing(form, formDef);
+    }
     form.dataset.action = formDef.action || pathname?.split('.json')[0];
     form.dataset.source = source;
     form.dataset.rules = rules;
     container.replaceWith(form);
   }
 }
-
-document.body.addEventListener("aue:ui-edit", () => {
-  window.isEditorMode = true;
-  console.log('ue edit on body');
-});
 
 
 
