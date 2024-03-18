@@ -4,176 +4,261 @@
   --hdfc-stepper-width: 61px;
   --hdfc-stepper-height: 3px;
   --hdfc-wizard-step-legend-padding: 0;
-  --hdfc-wizard-step-legend-width: clamp(100px, calc(308%/var(--wizard-step-count)), 330px);
+  --hdfc-wizard-step-legend-width: clamp(
+    100px,
+    calc(308% / var(--wizard-step-count)),
+    330px
+  );
   --loader-image-url: url('loader.gif');
 }
 
-body, .section.form-container {
-    background-color: var(--color-interface-body-background-color);
+body,
+.section.form-container {
+  background-color: var(--color-interface-body-background-color);
 }
 
 main .form.block {
-    border-radius: 24px;
+  border-radius: 24px;
 }
 
 main .section.form-container {
-    max-width: var(--hdfc-form-max-width);
+  max-width: var(--hdfc-form-max-width);
 }
 
 main .form .form-corporatecardwizardview.field-wrapper.wizard {
   .form-personaldetails {
-      margin-top: var(--hdfc-stepper-margin-style);
+    margin-top: var(--hdfc-stepper-margin-style);
   }
 
   .stepper-style::after {
-      content: "";
-      display: block;
-      width: var(--hdfc-stepper-width);
-      height: var(--hdfc-stepper-height);
-      background: var(--hdfc-stepper-background-style);
-      margin-top: var(--hdfc-stepper-margin-style);
+    content: '';
+    display: block;
+    width: var(--hdfc-stepper-width);
+    height: var(--hdfc-stepper-height);
+    background: var(--hdfc-stepper-background-style);
+    margin-top: var(--hdfc-stepper-margin-style);
   }
 }
 
 main .form form .wizard > .current-wizard-step > legend::before {
-  background-image: url("../../icons/current-step-indicator.svg");
-  content: "";
+  background-image: url('../../icons/current-step-indicator.svg');
+  content: '';
   background-size: cover;
   background-color: unset;
   color: unset;
   border: none;
 }
 
-@media (width >= 1200px) { 
-  main .form form .form-corporatecardwizardview.wizard > fieldset > legend{
-      display: flex !important;
-      text-indent: 1%;
-      overflow: hidden;
-      text-align: unset;
-      padding: 0 0 calc(2*var(--form-wizard-step-legend-padding));
-      margin-left: 2%;
-      width: clamp(100px, calc(108% / var(--wizard-step-count)), 330px);
+@media (width >= 1200px) {
+  main .form form .form-corporatecardwizardview.wizard > fieldset > legend {
+    display: flex !important;
+    text-indent: 1%;
+    overflow: hidden;
+    text-align: unset;
+    padding: 0 0 calc(2 * var(--form-wizard-step-legend-padding));
+    margin-left: 2%;
+    width: clamp(100px, calc(108% / var(--wizard-step-count)), 330px);
   }
 
-  main .form .form-corporatecardwizardview.field-wrapper.wizard .form-panel-wrapper.form-confirmandsubmitpanel.field-wrapper > legend::before {
-      margin-left: 20px;
+  main
+    .form
+    .form-corporatecardwizardview.field-wrapper.wizard
+    .form-panel-wrapper.form-confirmandsubmitpanel.field-wrapper
+    > legend::before {
+    margin-left: 20px;
   }
 }
 
 @media (width < 1200px) {
   main .form form .form-corporatecardwizardview.wizard {
-      --hdfc-wizard-step-legend-width: clamp(100px, calc(308%/var(--wizard-step-count)), 330px);
+    --hdfc-wizard-step-legend-width: clamp(
+      100px,
+      calc(308% / var(--wizard-step-count)),
+      330px
+    );
 
-      overflow: hidden;
-      border: rgba(0 0 0 / 0%);
-      border-right: solid 20px rgba(0 0 0 / 0%);
+    overflow: hidden;
+    border: rgba(0 0 0 / 0%);
+    border-right: solid 20px rgba(0 0 0 / 0%);
   }
 
   main .form form .form-corporatecardwizardview.wizard > fieldset {
-      padding: 10px 0 0 15px;
+    padding: 10px 0 0 15px;
   }
 
   main .form form .wizard > fieldset > legend::before {
-      width: 30px;
-      height: 30px;
+    width: 30px;
+    height: 30px;
   }
 
-  main .form form .form-corporatecardwizardview.wizard > fieldset > legend{
-      display: flex !important;
-      text-indent: 1%;
-      font-size: var(--form-font-size-xs);
-      width: 100%;
-      white-space: break-spaces;
-      text-overflow: ellipsis;
-      padding: 0 var(--hdfc-wizard-step-legend-padding) calc(2*var(--hdfc-wizard-step-legend-padding));
-      left: calc(var(--hdfc-wizard-step-legend-width) * var(--wizard-step-index));
+  main .form form .form-corporatecardwizardview.wizard > fieldset > legend {
+    display: flex !important;
+    text-indent: 1%;
+    font-size: var(--form-font-size-xs);
+    width: 100%;
+    white-space: break-spaces;
+    text-overflow: ellipsis;
+    padding: 0 var(--hdfc-wizard-step-legend-padding)
+      calc(2 * var(--hdfc-wizard-step-legend-padding));
+    left: calc(var(--hdfc-wizard-step-legend-width) * var(--wizard-step-index));
   }
 
-  main .form form .form-corporatecardwizardview.wizard > fieldset > fieldset > legend {
-      padding-top: 20px;
+  main
+    .form
+    form
+    .form-corporatecardwizardview.wizard
+    > fieldset
+    > fieldset
+    > legend {
+    padding-top: 20px;
   }
 
   main .form form .wizard > fieldset:not(.current-wizard-step) {
-      display: unset;
-      position: absolute;
+    display: unset;
+    position: absolute;
   }
-  
-  main .form .form-corporatecardwizardview.field-wrapper.wizard .form-panel-wrapper.field-wrapper > legend::before {
-      display: block !important;
+
+  main
+    .form
+    .form-corporatecardwizardview.field-wrapper.wizard
+    .form-panel-wrapper.field-wrapper
+    > legend::before {
+    display: block !important;
   }
 }
 
-/* loader for app show hide on api call */ 
+/* loader for app show hide on api call */
 .preloader::before,
 .preloader::after {
-content: '';
-position: fixed;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-z-index: 9999;
-display: flex;
-align-items: center;
-justify-content: center;
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .preloader::before {
-/* preLoading-text-css */
-content: attr(loader-text);
-font-size: 16px;
-color: var(--form-label-title-color);
-font-weight: var(--form-title-font-weight);
-z-index: 10000;
-top: -100px;
+  /* preLoading-text-css */
+  content: attr(loader-text);
+  font-size: 16px;
+  color: var(--form-label-title-color);
+  font-weight: var(--form-title-font-weight);
+  z-index: 10000;
+  top: -100px;
 }
 
 .preloader::after {
   /* preLoading-gif-image */
-background: rgb(255 255 255 / 80%) var(--loader-image-url) no-repeat center center;
+  background: rgb(255 255 255 / 80%) var(--loader-image-url) no-repeat center
+    center;
 }
 
 /* Form permanent address toogle styling starts */
 
-main .form form .form-permanentaddress .form-permanentaddresstoggle{
+main .form form .form-permanentaddress .form-permanentaddresstoggle,
+main .form form .form-currentaddressetb .form-currentaddresstoggle {
   align-items: center;
 }
 
-main .form form .form-permanentaddress .form-permanentaddresstoggle input[type="checkbox"] {
+main
+  .form
+  form
+  .form-permanentaddress
+  .form-permanentaddresstoggle
+  input[type='checkbox'],
+main
+  .form
+  form
+  .form-currentaddressetb
+  .form-currentaddresstoggle
+  input[type='checkbox'] {
   display: none;
 }
 
-main .form form .form-permanentaddress .form-permanentaddresstoggle .field-label {
- display: flex;
-   flex-basis: 40px;
-   align-items: center;
- background-color: #9CA3AF;
- color: #fff;
- cursor: pointer;
- border-radius: 12px;
- height: 24px;
- width: 40px;
+main
+  .form
+  form
+  .form-permanentaddress
+  .form-permanentaddresstoggle
+  .field-label,
+main
+  .form
+  form
+  .form-currentaddressetb
+  .form-currentaddresstoggle
+  .field-label {
+  display: flex;
+  flex-basis: 40px;
+  align-items: center;
+  background-color: var(--color-control-background-primary-default);
+  color: var(--color-control-icon-primary-default);
+  cursor: pointer;
+  border-radius: 12px;
+  height: 24px;
+  width: 40px;
 }
 
-main .form form .form-permanentaddress .form-permanentaddresstoggle input[type="checkbox"]:checked + .field-label {
- background-color: #1C3FCA;
+main
+  .form
+  form
+  .form-permanentaddress
+  .form-permanentaddresstoggle
+  input[type='checkbox']:checked
+  + .field-label,
+main
+  .form
+  form
+  .form-currentaddressetb
+  .form-currentaddresstoggle
+  input[type='checkbox']:checked
+  + .field-label {
+  background-color: var(--color-control-background-primary-selected);
 }
 
-main .form form .form-permanentaddress .form-permanentaddresstoggle .field-label::before {
- content: '';
- display: inline-block;
- width: 20px;
- height: 20px;
- background-color: #fff;
- border-radius: 50%;
- margin-right: 10px;
- transition: transform 0.3s;
- margin-left: 1px;
+main
+  .form
+  form
+  .form-permanentaddress
+  .form-permanentaddresstoggle
+  .field-label::before,
+main
+  .form
+  form
+  .form-currentaddressetb
+  .form-currentaddresstoggle
+  .field-label::before {
+  content: '';
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-color: var(--color-control-icon-primary-default);
+  border-radius: 50%;
+  margin-right: 10px;
+  transition: transform 0.3s;
+  margin-left: 1px;
 }
 
-main .form form .form-permanentaddress .form-permanentaddresstoggle input[type="checkbox"]:checked + .field-label::before {
- transform: translateX(20px);
- margin-right: 21px;
+main
+  .form
+  form
+  .form-permanentaddress
+  .form-permanentaddresstoggle
+  input[type='checkbox']:checked
+  + .field-label::before,
+main
+  .form
+  form
+  .form-currentaddressetb
+  .form-currentaddresstoggle
+  input[type='checkbox']:checked
+  + .field-label::before {
+  transform: translateX(20px);
+  margin-right: 21px;
 }
 
 /* Form permanent address toogle styling ends */
@@ -204,14 +289,16 @@ main .form form .form-permanentaddress .form-permanentaddresstoggle input[type="
     width: 100%;
   }
 
-  :hover{
+  :hover {
     background: var(--color-action-background-primary-default) !important;
     border: var(--color-action-border-primary-default);
     color: var(--color-action-text-primary-default);
   }
 
-  :disabled{
-    background-color: var(--color-action-background-primary-disabled) !important;
+  :disabled {
+    background-color: var(
+      --color-action-background-primary-disabled
+    ) !important;
     border: var(--color-action-border-primary-disabled) !important;
     color: var(--color-action-text-primary-disabled) !important;
   }
@@ -221,76 +308,82 @@ main .form form .form-permanentaddress .form-permanentaddresstoggle input[type="
   width: 400px;
 }
 
-.text-center{
+.text-center {
   text-align: center;
 }
 
-.text-left{
+.text-left {
   text-align: left;
 }
 
-.text-right{
+.text-right {
   text-align: right;
 }
 
 /* Error/Success Result Panel */
 main .form .form-resultpanel {
-  p, label {
-      font-weight: 400;
-      font-size: 14px;
-      line-height: 20px;
-      margin: 4px;
+  p,
+  label {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    margin: 4px;
   }
 }
 
 main .form .form-errorresultpanel .form-errorresulttextlabel > p::before {
-  background-image: url("../../icons/hdfc-error-icon.svg");
+  background-image: url('../../icons/hdfc-error-icon.svg');
 }
 
 main .form .form-successresultpanel .form-successresulttextlabel > p::before {
-  background-image: url("../../icons/current-step-indicator.svg");
+  background-image: url('../../icons/current-step-indicator.svg');
 }
 
-main .form .form-errorresultpanel, main .form .form-successresultpanel {
+main .form .form-errorresultpanel,
+main .form .form-successresultpanel {
   padding-bottom: 20px;
-  
+
   .form-plain-text-wrapper {
-      flex: 100%;
-      padding: 10px;
+    flex: 100%;
+    padding: 10px;
   }
 
   > .field-wrapper {
-      border-radius: 24px 24px 0 0;
+    border-radius: 24px 24px 0 0;
   }
 
-  .form-errorresulttextlabel, .form-successresulttextlabel {
-      background-color: var(--color-interface-result-label-background-color);
+  .form-errorresulttextlabel,
+  .form-successresulttextlabel {
+    background-color: var(--color-interface-result-label-background-color);
 
-      > p::before {
-          background-size: cover;
-          display: inline-block;
-          width: 80px; 
-          height: 80px;
-          content:"";
-      }
-      
-      p {
-          padding: 20px 0 10px;
-          color: var(--background-color-primary);
-          text-align: center;
-      }
+    > p::before {
+      background-size: cover;
+      display: inline-block;
+      width: 80px;
+      height: 80px;
+      content: '';
+    }
+
+    p {
+      padding: 20px 0 10px;
+      color: var(--background-color-primary);
+      text-align: center;
+    }
   }
 }
 
 main .form .form-errorresultpanel > div:not(.form-errorresulttextlabel),
-main .form .form-successresultpanel > div:not(.form-successresulttextlabel, .form-arnnumber) {
+main
+  .form
+  .form-successresultpanel
+  > div:not(.form-successresulttextlabel, .form-arnnumber) {
   display: flex;
   max-width: var(--form-max-width);
   margin: 0 auto;
   text-align: center;
 
   p > p:not(:first-child) {
-      padding-top: 15px
+    padding-top: 15px;
   }
 }
 
@@ -301,38 +394,39 @@ main .form .form-successresultpanel .form-arnnumber {
   border-bottom: 1px solid rgb(236 237 243);
 
   input {
-      max-width: 45vw;
-      margin: 0 0 0 27px;
-      border: none;
-      font-weight: 600;
-      font-size: 18px;
-      line-height: 28px;
+    max-width: 45vw;
+    margin: 0 0 0 27px;
+    border: none;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 28px;
   }
 }
 
 main .form .form-errorresultpanel > div:not(.form-errorresulttextlabel)::before,
-main .form .form-successresultpanel > div.form-arnnumber::before{
-  content: url("../../icons/hdfc-error-icon.svg");
+main .form .form-successresultpanel > div.form-arnnumber::before {
+  content: url('../../icons/hdfc-error-icon.svg');
   padding-right: 15px;
 }
 
 @media (width <= 750px) {
   main .section.form-container {
-      width: 100%;
-      margin: 0 auto;
+    width: 100%;
+    margin: 0 auto;
   }
 
   main .form.block {
-      border-radius: 0;
+    border-radius: 0;
   }
 
-  main .form .form-errorresultpanel, main .form .form-successresultpanel {
-      > div:not(.form-errorresulttextlabel) {
-          max-width: 100%;
-      }
+  main .form .form-errorresultpanel,
+  main .form .form-successresultpanel {
+    > div:not(.form-errorresulttextlabel) {
+      max-width: 100%;
+    }
 
-      > .field-wrapper {
-          border-radius: 0;
-      }
+    > .field-wrapper {
+      border-radius: 0;
+    }
   }
 }
