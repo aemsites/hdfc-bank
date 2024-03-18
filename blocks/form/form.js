@@ -431,13 +431,6 @@ export default async function decorate(block) {
       form.dataset.formpath = formDef.properties['fd:path'];
     }
     container.replaceWith(form);
-    const event = new CustomEvent("FORM_INITIALISED", {
-      detail: {
-        formEl: form,
-        formDefinition: formDef
-      }
-    });
-    //window.dispatchEvent(event);
   }
 }
 

@@ -86,9 +86,11 @@ window.addEventListener("FORM_INITIALISED", (event) => {
 async function instrumentForms(container = document) {
 
     const forms = container.querySelectorAll('form');
+    console.log('forms');
     for(let form of forms) {
         const formDefResp = await fetch(`${form.dataset.formpath}.model.json`);
         const formDef = await formDefResp.json();
+        console.log('formDef', formDef);
         annotateFormForEditing(form, formDef);
     }
 }
