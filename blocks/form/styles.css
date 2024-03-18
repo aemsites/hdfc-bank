@@ -29,7 +29,7 @@ main .form form .wizard > .current-wizard-step > legend::before {
 }
 
 main .form .form-corporatecardwizardview.field-wrapper.wizard {
-  background-color: var(--background-color-primary);
+  background-color: var(--color-interface-background-primary);
   border-radius: var(--form-border-radius);
   border: rgba(0 0 0 / 0%);
   border-right: solid 20px rgba(0 0 0 / 0%);
