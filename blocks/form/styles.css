@@ -63,6 +63,11 @@ main .form .form-corporatecardwizardview.field-wrapper.wizard {
       margin-left: -19px;
   }
 
+  /* Hiding the next and prev button from wizard */
+  > #form-wizard-button-prev, #form-wizard-button-next {
+    display: none;
+  }
+
   /* Accordion styling */
     fieldset {
         fieldset { 
