@@ -64,7 +64,7 @@ main .form .form-corporatecardwizardview.field-wrapper.wizard {
   }
 
   /* Hiding the next and prev button from wizard */
-  > #form-wizard-button-prev, #form-wizard-button-next {
+  > .form-wizard-button-wrapper {
     display: none;
   }
 
