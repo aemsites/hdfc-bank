@@ -83,4 +83,22 @@ window.addEventListener("FORM_INITIALISED", (event) => {
     document.querySelector('main').addEventListener('aue:ui-select', handleEditorSelect);
 });
 
+async function instrumentForms(container = document) {
+
+    const forms = container.querySelectorAll('form');
+    for(let form of forms) {
+        const formDefResp = await fetch(`${form.dataset.formpath}.model.json`);
+        const formDef = await formDefResp.json();
+        annotateFormForEditing(form, formDef);
+    }
+}
+
+const observer = new MutationObserver(() => instrumentForms());
+observer.observe(document, { childList: true, subtree: true });
+
+instrumentForms();
+
+
+
+
 
