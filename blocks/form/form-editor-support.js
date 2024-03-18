@@ -99,7 +99,7 @@ async function annotateFormsForEditing(forms) {
 
 const observer = new MutationObserver(instrumentForms);
 observer.observe(document, { childList: true, subtree: true, attributeFilter: ['form'] });
-const forms = container.querySelectorAll('form');
+const forms = document.querySelectorAll('form');
 annotateFormsForEditing(forms);
 document.querySelector('main')?.addEventListener('aue:ui-select', handleEditorSelect);
 
