@@ -98,11 +98,21 @@ async function annotateFormsForEditing(forms) {
     }
 }
 
+function enableRuleEditorExtension() {
+    let head = document.getElementsByTagName('head')[0];
+    var meta = document.createElement('meta');
+    meta.name = "urn:adobe:aue:config:extensions";
+    meta.content = "https://283250-452aquachinchilla-stage.adobeio-static.net";
+    head.appendChild(meta);
+}
+
 const observer = new MutationObserver(instrumentForms);
 observer.observe(document, { childList: true, subtree: true, attributeFilter: ['form'] });
 const forms = document.querySelectorAll('form');
 annotateFormsForEditing(forms);
 document.querySelector('main')?.addEventListener('aue:ui-select', handleEditorSelect);
+enableRuleEditorExtension();
+
 
 
 
