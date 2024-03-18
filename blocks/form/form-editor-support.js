@@ -71,9 +71,24 @@ function handleEditorSelect(event) {
     }
 }
 
-async function instrumentForms(container = document) {
+async function instrumentForms(mutationsList) {
 
-    const forms = container.querySelectorAll('form');
+    mutationsList.forEach(mutation => {
+        // Check if the mutation type is 'childList' and if nodes are added
+        if (mutation.type === 'childList' && mutation.addedNodes.length) {
+            let formsEl = [];
+            mutation.addedNodes.forEach(node => {
+                // Check if the added node is a form element
+                if (node.nodeName.toLowerCase() === 'form') {
+                    formsEl.push(node);
+                }
+            });
+        }
+        annotateFormsForEditing(formsEl);
+    });
+}
+
+async function annotateFormsForEditing(forms) {
     for(let form of forms) {
         const formDefResp = await fetch(`${form.dataset.formpath}.model.json`);
         const formDef = await formDefResp.json();
@@ -82,10 +97,12 @@ async function instrumentForms(container = document) {
     }
 }
 
-const observer = new MutationObserver(() => instrumentForms());
-observer.observe(document, { childList: true, subtree: true, attributeFilter: ['form'] });
-instrumentForms();
+const observer = new MutationObserver(instrumentForms);
+observer.observe(document, { childList: true, subtree: true, attributes: false, characterData: false, attributeFilter: ['form'] });
+const forms = container.querySelectorAll('form');
+annotateFormsForEditing(forms);
 document.querySelector('main')?.addEventListener('aue:ui-select', handleEditorSelect);
+
 
 
 
