@@ -73,10 +73,11 @@ function handleEditorSelect(event) {
 
 async function instrumentForms(mutationsList) {
 
+    let formsEl = [];
     mutationsList.forEach(mutation => {
         // Check if the mutation type is 'childList' and if nodes are added
         if (mutation.type === 'childList' && mutation.addedNodes.length) {
-            let formsEl = [];
+           
             mutation.addedNodes.forEach(node => {
                 // Check if the added node is a form element
                 if (node.nodeName.toLowerCase() === 'form') {
@@ -84,8 +85,8 @@ async function instrumentForms(mutationsList) {
                 }
             });
         }
-        annotateFormsForEditing(formsEl);
     });
+    annotateFormsForEditing(formsEl);
 }
 
 async function annotateFormsForEditing(forms) {
