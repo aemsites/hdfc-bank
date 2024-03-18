@@ -1,8 +1,15 @@
+/**
+ * Represents a layout manager for creating accordion-style UI components.
+ */
 export class AccordionLayout {
+  /**
+   * Applies the accordion layout to the given panel.
+   * @param {HTMLElement} panel - The panel element to which the accordion layout will be applied.
+   */
   // eslint-disable-next-line class-methods-use-this
   applyLayout(panel) {
-    panel.classList.add('accordion');
     if (panel) {
+      panel.classList.add('accordion');
       Array.from(panel.children).forEach((child) => {
         if (child.tagName.toLowerCase() === 'fieldset') {
           const legend = child.querySelector('legend');
