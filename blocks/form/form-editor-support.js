@@ -71,22 +71,9 @@ function handleEditorSelect(event) {
     }
 }
 
-window.addEventListener("FORM_INITIALISED", (event) => {
-    //in case form is initialised before ui-edit
-    if (document.documentElement.classList.contains("adobe-ue-edit")) {
-      annotateFormForEditing(event.detail.formEl, event.detail.formDefinition);
-    } else {
-      document.body.addEventListener("aue:ui-edit", async () => {
-        annotateFormForEditing(event.detail.formEl, event.detail.formDefinition);
-      });
-    }
-    document.querySelector('main').addEventListener('aue:ui-select', handleEditorSelect);
-});
-
 async function instrumentForms(container = document) {
 
     const forms = container.querySelectorAll('form');
-    console.log('forms');
     for(let form of forms) {
         const formDefResp = await fetch(`${form.dataset.formpath}.model.json`);
         const formDef = await formDefResp.json();
@@ -97,8 +84,9 @@ async function instrumentForms(container = document) {
 
 const observer = new MutationObserver(() => instrumentForms());
 observer.observe(document, { childList: true, subtree: true, attributeFilter: ['form'] });
-
 instrumentForms();
+document.querySelector('main')?.addEventListener('aue:ui-select', handleEditorSelect);
+
 
 
 
