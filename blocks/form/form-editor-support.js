@@ -96,7 +96,7 @@ async function instrumentForms(container = document) {
 }
 
 const observer = new MutationObserver(() => instrumentForms());
-observer.observe(document, { childList: true, subtree: true });
+observer.observe(document, { childList: true, subtree: true, attributeFilter: ['form'] });
 
 instrumentForms();
 
