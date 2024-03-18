@@ -1,4 +1,4 @@
-import { OTPGEN, OTPVAL } from '../creditcards/corporate-creditcardFunctions.js';
+import { OTPGEN, OTPVAL, CHECKOFFER } from '../creditcards/corporate-creditcardFunctions.js';
 import { restAPICall } from './makeRestAPI.js';
 /**
  * generates the otp
@@ -20,4 +20,13 @@ function otpValidation(globals) {
   restAPICall(globals, 'POST', payload, OTPVAL.path, OTPVAL.successCallback, OTPVAL.errorCallback, OTPVAL.loadingText);
 }
 
-export { getOTP, otpValidation };
+/**
+ * otp validation
+ *
+ * @param {object} globals - The global object containing necessary globals form data.
+ */
+function checkOffer(globals) {
+  restAPICall(globals, 'POST', CHECKOFFER.getPayload(globals), CHECKOFFER.path, CHECKOFFER.successCallback, CHECKOFFER.errorCallback, CHECKOFFER.loadingText);
+}
+
+export { getOTP, otpValidation, checkOffer };

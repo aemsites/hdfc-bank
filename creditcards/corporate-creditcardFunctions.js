@@ -1,4 +1,5 @@
 /* eslint no-console: ["error", { allow: ["warn", "error", "log"] }] */
+/* eslint no-unused-vars: ["error", { "args": "none" }] */
 import createJourneyId from '../common/journey-utils.js';
 import {
   formUtil, maskNumber, urlPath, clearString, getTimeStamp,
@@ -202,4 +203,55 @@ const OTPVAL = {
   path: urlPath('/content/hdfc_cc_unified/api/otpValFetchAssetDemog.json'),
   loadingText: 'Please wait while we are authenticating you',
 };
-export { OTPGEN, OTPVAL };
+
+/**
+ * Moves the corporate card wizard view from your detail step to confirm card step
+ */
+const moveCCWizardView = () => {
+  const navigateFrom = document.getElementsByName('corporateCardWizardView')[0];
+  const current = navigateFrom.querySelector('.current-wizard-step');
+  const navigateTo = document.getElementsByName('confirmCardPanel')[0];
+  current.classList.remove('current-wizard-step');
+  navigateTo.classList.add('current-wizard-step');
+  const event = new CustomEvent('wizard:navigate', {
+    detail: {
+      prevStep: { id: current.id, index: +current.dataset.index },
+      currStep: { id: navigateTo.id, index: +navigateTo.dataset.index },
+    },
+    bubbles: false,
+  });
+  navigateFrom.dispatchEvent(event);
+};
+
+/**
+ * Handles the success scenario on check offer.
+ * @param {any} res - The response object containing the check offer success response.
+ * @param {Object} globals - globals variables object containing form configurations.
+ */
+const checkOfferSuccess = (res, globals) => moveCCWizardView();
+
+/**
+ * Handles the failure scenario on check offer.
+ * @param {any} err - The response object containing the check offer failure response.
+ * @param {Object} globals - globals variables object containing form configurations.
+ */
+const checkOfferFailure = (err, globals) => moveCCWizardView();
+
+const CHECKOFFER = {
+  getPayload(globals) {
+    const mobileNo = globals.form.loginPanel.registeredMobileNumber.$value;
+    const jsonObj = {};
+    jsonObj.requestString = {};
+    jsonObj.requestString.mobileNumber = String(mobileNo) ?? '';
+    return jsonObj;
+  },
+  successCallback(res, globals) {
+    return checkOfferSuccess(res, globals);
+  },
+  errorCallback(err, globals) {
+    return checkOfferFailure(err, globals);
+  },
+  path: urlPath('/content/hdfc_cc_unified/api/checkoffer.json'),
+  loadingText: 'Checking offers for you...',
+};
+export { OTPGEN, OTPVAL, CHECKOFFER };
