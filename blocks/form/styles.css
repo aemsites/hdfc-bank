@@ -11,6 +11,10 @@ body, .section.form-container {
     background-color: var(--color-interface-background-secondary);
 }
 
+main .form form {
+  padding: 40px;
+}
+
 main .form.block {
     border-radius: var(--form-border-radius);
 }
@@ -19,155 +23,18 @@ main .section.form-container {
     max-width: var(--form-max-width);
 }
 
-main .form form .wizard > .current-wizard-step > legend::before {
-  background-image: url("../../icons/current-step-indicator.svg");
-  content: "";
-  background-size: cover;
-  background-color: unset;
-  color: unset;
-  border: none;
-}
-
-main .form .form-corporatecardwizardview.field-wrapper.wizard {
-  background-color: var(--color-interface-background-primary);
-  border-radius: var(--form-border-radius);
-  border: rgba(0 0 0 / 0%);
-  border-right: solid 20px rgba(0 0 0 / 0%);
-  
-  > fieldset {
-    margin-bottom: -92px;
-    
-    > legend::before {
-      width: 30px;
-      height: 30px;
-    }
+main .form {
+  input[type="text"], input[type="number"], input[type="email"], input[type="date"], select {
+    height: var(--form-input-height);
+    padding: var(--form-input-padding);
+    border: 1px solid var(--color-input-border-default);
+    border-radius: var(--form-input-border-radius);
+    font-weight: 400;
+    font-size: 14px;
   }
 
-  .form-plain-text-wrapper b, legend {
-    font-weight: 600;
-    font-size: 20px;
-    line-height: 28px;
-  }
-
-  > fieldset > legend {
-    font-size: 16px;
-  }
-
-  .stepper-style::after {
-      content: "";
-      display: block;
-      width: var(--hdfc-stepper-width);
-      height: var(--hdfc-stepper-height);
-      background: var(--color-action-stepper-style);
-      margin-top: var(--hdfc-stepper-margin-style);
-      margin-left: -19px;
-  }
-
-  /* Hiding the next and prev button from wizard */
-  > .form-wizard-button-wrapper {
-    .form-back, .form-next {
-      display: none;
-    }
-  }
-
-  /* Accordion styling */
-    fieldset {
-        fieldset { 
-            legend {
-                background-color: var(--color-interface-background-secondary);
-                height: 60px;
-                padding: 16px 24px;
-                border-radius: 12px;
-            }
-        }   
-    }
-}
-
-.hdfc-accordion-style::after {
-  content: url("../../icons/accordion-expand-icon.svg");
-  display: inline;
-  position: absolute;
-  right: 7vw;
-  transition: transform 0s;
-}
-
-.accordion-collapse::after { 
-  transform: rotate(-180deg);
-  margin-top: -9px;
-}
-
-
-
-@media (width >= 1200px) { 
-  main .form form .form-corporatecardwizardview.wizard {
-    > fieldset > legend {
-      display: flex !important;
-      text-indent: 1%;
-      overflow: hidden;
-      text-align: unset;
-      padding: 0 0 calc(2*var(--form-wizard-step-legend-padding));
-      margin-left: 2%;
-      margin-bottom: 0;
-      width: clamp(100px, calc(128% / var(--wizard-step-count)), 330px);
-    }
-
-    .form-confirmandsubmitpanel > legend {
-      margin-left: 50px;
-    }
-
-    .form-plain-text-wrapper 
-    { 
-      p {
-        margin: 0;
-
-        h2 {
-          margin: 4px 0;
-        }
-
-        b {
-          display: block;
-          width: 800px;
-        }
-      } 
-  }
-}
-}
-
-@media (width < 1200px) {
-  main .form form .form-corporatecardwizardview.wizard {
-      --hdfc-wizard-step-legend-width: clamp(100px, calc(308%/var(--wizard-step-count)), 330px);
-
-      overflow: hidden;
-
-      .form-plain-text-wrapper b {
-        display: block;
-        width: 100%;
-      }
-  }
-
-  main .form form .form-corporatecardwizardview.wizard > fieldset > legend{
-      display: flex !important;
-      text-indent: 1%;
-      font-size: var(--form-font-size-xs);
-      width: 100%;
-      white-space: break-spaces;
-      text-overflow: ellipsis;
-      margin-bottom: 60px;
-      padding: 0 var(--hdfc-wizard-step-legend-padding) calc(2*var(--hdfc-wizard-step-legend-padding));
-      left: calc(var(--hdfc-wizard-step-legend-width) * var(--wizard-step-index));
-  }
-
-  main .form form .form-corporatecardwizardview.wizard > fieldset > fieldset > legend {
-      padding-top: 20px;
-  }
-
-  main .form form .wizard > fieldset:not(.current-wizard-step) {
-      display: unset;
-      position: absolute;
-  }
-  
-  main .form .form-corporatecardwizardview.field-wrapper.wizard .form-panel-wrapper.field-wrapper > legend::before {
-      display: block !important;
+  .date-wrapper .field-description {
+    display: none;
   }
 }
 
@@ -203,15 +70,15 @@ background: rgb(255 255 255 / 80%) var(--loader-image-url) no-repeat center cent
 
 /* Form permanent address toogle styling starts */
 
-main .form form .form-permanentaddress .form-permanentaddresstoggle{
+main .form form .field-permanentaddress .field-permanentaddresstoggle{
   align-items: center;
 }
 
-main .form form .form-permanentaddress .form-permanentaddresstoggle input[type="checkbox"] {
+main .form form .field-permanentaddress .field-permanentaddresstoggle input[type="checkbox"] {
   display: none;
 }
 
-main .form form .form-permanentaddress .form-permanentaddresstoggle .field-label {
+main .form form .field-permanentaddress .field-permanentaddresstoggle .field-label {
  display: flex;
    flex-basis: 40px;
    align-items: center;
@@ -223,11 +90,11 @@ main .form form .form-permanentaddress .form-permanentaddresstoggle .field-label
  width: 40px;
 }
 
-main .form form .form-permanentaddress .form-permanentaddresstoggle input[type="checkbox"]:checked + .field-label {
+main .form form .field-permanentaddress .field-permanentaddresstoggle input[type="checkbox"]:checked + .field-label {
  background-color: #1C3FCA;
 }
 
-main .form form .form-permanentaddress .form-permanentaddresstoggle .field-label::before {
+main .form form .field-permanentaddress .field-permanentaddresstoggle .field-label::before {
  content: '';
  display: inline-block;
  width: 20px;
@@ -239,7 +106,7 @@ main .form form .form-permanentaddress .form-permanentaddresstoggle .field-label
  margin-left: 1px;
 }
 
-main .form form .form-permanentaddress .form-permanentaddresstoggle input[type="checkbox"]:checked + .field-label::before {
+main .form form .field-permanentaddress .field-permanentaddresstoggle input[type="checkbox"]:checked + .field-label::before {
  transform: translateX(20px);
  margin-right: 21px;
 }
@@ -247,7 +114,7 @@ main .form form .form-permanentaddress .form-permanentaddresstoggle input[type="
 /* Form permanent address toogle styling ends */
 
 /* Button Styling */
-.form-button-wrapper {
+.button-wrapper {
   text-align: center;
 
   .button {
@@ -285,7 +152,7 @@ main .form form .form-permanentaddress .form-permanentaddresstoggle input[type="
   }
 }
 
-.form-button-wrapper.form-vkycproceedbutton {
+.button-wrapper.field-vkycproceedbutton {
   width: 400px;
   text-align: center;
   display: block;
@@ -304,7 +171,7 @@ main .form form .form-permanentaddress .form-permanentaddresstoggle input[type="
 }
 
 /* Error/Success Result Panel */
-main .form .form-resultpanel {
+main .form .field-resultpanel {
   p, label {
       font-weight: 400;
       font-size: 14px;
@@ -313,28 +180,30 @@ main .form .form-resultpanel {
   }
 }
 
-main .form .form-errorresultpanel .form-errorresulttextlabel > p::before {
+main .form .field-errorresultpanel .field-errorresulttextlabel > p::before {
   background-image: url("../../icons/hdfc-error-icon.svg");
 }
 
-main .form .form-successresultpanel .form-successresulttextlabel > p::before {
+main .form .field-successresultpanel .field-successresulttextlabel > p::before {
   background-image: url("../../icons/hdfc-success-icon.svg");
 }
 
-main .form .form-errorresultpanel, main .form .form-successresultpanel {
+main .form .field-errorresultpanel, main .form .field-successresultpanel {
   padding-bottom: 20px;
-  
-  .form-plain-text-wrapper {
-      flex: 100%;
-      padding: 10px;
-  }
 
   > .field-wrapper {
       border-radius: var(--form-border-radius) var(--form-border-radius) 0 0;
   }
 
-  .form-errorresulttextlabel, .form-successresulttextlabel {
-      background-color: var(--color-interface-result-label-background-color);
+  .field-errorresulttextlabel, .field-successresulttextlabel {
+      background-color: var(--color-interface-background-quaternary);
+      margin: -40px -40px 0;
+      
+      p {
+        padding: 20px 0 10px;
+        color: var(--color-interface-text-tertiary);
+        text-align: center;
+      }
 
       > p::before {
           background-size: cover;
@@ -343,17 +212,11 @@ main .form .form-errorresultpanel, main .form .form-successresultpanel {
           height: 80px;
           content:"";
       }
-      
-      p {
-          padding: 20px 0 10px;
-          color: var(--color-interface-background-primary);
-          text-align: center;
-      }
   }
 }
 
-main .form .form-errorresultpanel > div:not(.form-errorresulttextlabel),
-main .form .form-successresultpanel > div:not(.form-successresulttextlabel, .form-arnnumber) {
+main .form .field-errorresultpanel > div:not(.field-errorresulttextlabel),
+main .form .field-successresultpanel > div:not(.field-successresulttextlabel, .field-arnnumber) {
   display: flex;
   max-width: 506px;
   margin: 0 auto;
@@ -364,7 +227,7 @@ main .form .form-successresultpanel > div:not(.form-successresulttextlabel, .for
   }
 }
 
-main .form .form-successresultpanel .form-arnnumber {
+main .form .field-successresultpanel .field-arnnumber {
   max-width: var(--form-max-width);
   margin: 0 auto;
   padding: 10px;
@@ -372,7 +235,7 @@ main .form .form-successresultpanel .form-arnnumber {
 
   input {
       max-width: 45vw;
-      margin: 0 0 0 27px;
+      margin: 0 0 0 55px;
       border: none;
       font-weight: 600;
       font-size: 18px;
@@ -380,10 +243,102 @@ main .form .form-successresultpanel .form-arnnumber {
   }
 }
 
-main .form .form-errorresultpanel > div:not(.form-errorresulttextlabel)::before,
-main .form .form-successresultpanel > div.form-arnnumber::before{
+main .form .field-errorresultpanel > div:not(.field-errorresulttextlabel)::before,
+main .form .field-successresultpanel > div.field-arnnumber::before{
   content: url("../../icons/result-list-icon.svg");
   padding-right: 15px;
+}
+
+main .form form .field-corporatecardwizardview.wizard {
+  overflow: auto;
+  padding: 0;
+
+  .plain-text-wrapper b, legend {
+    font-weight: 600;
+    font-size: 20px;
+  }
+
+  /* .plain-text-wrapper {
+    p {
+      margin: 0;
+    }
+    
+    h3 {
+      margin: 0 0 -15px;
+    }
+  } */
+
+  ul.wizard-menu-items {
+    flex-wrap: nowrap;
+    gap: 0;
+    margin-right: -35px;
+  }
+
+  li.wizard-menu-item {
+    flex-grow: 1;
+    position: relative;
+    list-style-type: none;
+    text-indent: 1%;
+    display: flex;
+    font-size: var(--form-font-size-xs);
+  }
+
+  li.wizard-menu-item::before {
+    width: 30px;
+    height: 30px;
+  }
+
+  li.wizard-menu-active-item::before {
+    background-image: url("../../icons/current-step-indicator.svg");
+    content: "";
+    background-size: cover;
+    background-color: unset;
+    color: unset;
+    border: none;
+  }
+
+  .stepper-style::after {
+    content: "";
+    display: block;
+    width: var(--hdfc-stepper-width);
+    height: var(--hdfc-stepper-height);
+    background: var(--color-action-stepper-style);
+    margin-top: var(--hdfc-stepper-margin-style);
+    margin-left: -19px;
+  }
+
+  /* Accordion styling */
+  fieldset {
+    fieldset { 
+      position: relative;
+
+      legend {
+          background-color: var(--color-interface-background-secondary);
+          height: 60px;
+          padding: 16px 24px;
+          border-radius: 12px;
+      }
+    }   
+  }
+
+  > .wizard-button-wrapper {
+    .field-back, .field-next {
+      display: none;
+    }
+  }
+}
+
+.hdfc-accordion-style::after {
+  content: url("../../icons/accordion-expand-icon.svg");
+  display: inline;
+  position: absolute;
+  right: 1vw;
+  transition: transform 0s;
+}
+
+.accordion-collapse::after { 
+  transform: rotate(-180deg);
+  margin-top: -9px;
 }
 
 @media (width <= 750px) {
@@ -397,28 +352,23 @@ main .form .form-successresultpanel > div.form-arnnumber::before{
       border-radius: 0;
   }
 
-  main .form .form-errorresultpanel, main .form .form-successresultpanel {
-      > div:not(.form-errorresulttextlabel) {
+  main .form form .field-corporatecardwizardview.wizard {
+    ul.wizard-menu-items {
+      width: calc(300%);
+    }
+
+    li.wizard-menu-item {
+      width: auto;
+    }
+  }
+
+  main .form .field-errorresultpanel, main .form .field-successresultpanel {
+      > div:not(.field-errorresulttextlabel) {
           max-width: 100%;
       }
 
       > .field-wrapper {
           border-radius: 0;
       }
-  }
-}
-
-main .form {
-  input[type="text"], input[type="number"], input[type="email"], input[type="date"], select {
-    height: var(--form-input-height) !important;
-    padding: var(--form-input-padding) !important;
-    border: 1px solid var(--color-input-border-default) !important;
-    border-radius: var(--form-input-border-radius) !important;
-    font-weight: 400;
-    font-size: 14px !important;
-  }
-
-  .form-date-wrapper .field-description {
-    display: none;
   }
 }
