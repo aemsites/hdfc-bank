@@ -1,8 +1,12 @@
+/* eslint no-console: ["error", { allow: ["warn", "error", "debug"] }] */
 import {
   buildBlock, decorateBlock, loadBlock,
 } from '../../scripts/aem.js';
 
 async function createMainModal(content, actionWrapClass, reqConsentAgree) {
+  if (!content) {
+    return null;
+  }
   const dialog = document.createElement('dialog');
   const dialogContent = document.createElement('div');
   dialogContent.classList.add('modal-content');
@@ -18,13 +22,13 @@ async function createMainModal(content, actionWrapClass, reqConsentAgree) {
     dialog.append(closeButton);
   }
   // dialog button parsed binding close action for each buttons
-  const consentBtns = content.childNodes;
-  const formBtnWrap = Array.from(consentBtns).filter((node) => node.nodeType === 1 && node.classList.contains(`${actionWrapClass}`));
-  formBtnWrap.forEach((element) => {
-    const actionBtns = element.querySelectorAll('button');
-    actionBtns.forEach((button) => {
+  const consentBtns = content?.childNodes;
+  const formBtnWrap = Array?.from(consentBtns)?.filter((node) => node?.nodeType === 1 && node?.classList?.contains(`${actionWrapClass}`));
+  formBtnWrap?.forEach((element) => {
+    const actionBtns = element?.querySelectorAll('button');
+    actionBtns?.forEach((button) => {
       // providing close functionalities to all the btns available
-      button.addEventListener('click', () => dialog.close());
+      button?.addEventListener('click', () => dialog.close());
     });
   });
   const block = buildBlock('modal', '');
@@ -56,16 +60,21 @@ async function createMainModal(content, actionWrapClass, reqConsentAgree) {
 
 /**
  * Opens a modal dialog with the specified content, action wrapper class, and consent requirement.
- * Asynchronously creates and displays a modal dialog using the provided content and configuration.
- * @async
  * @param {HTMLElement} content - The content to be displayed in the modal dialog.
  * @param {string} actionWrapClass - The class name of the wrapper containing action buttons.
  * @param {boolean} reqConsentAgree - Whether consent agreement is required to close the modal.
  * @returns {Promise<void>} - A promise that resolves when the modal is opened.
  */
-async function openModal({ content, actionWrapClass, reqConsentAgree }) {
-  const { showModal } = await createMainModal(content, actionWrapClass, reqConsentAgree);
-  showModal();
+function openModal({ content, actionWrapClass, reqConsentAgree }) {
+  createMainModal(content, actionWrapClass, reqConsentAgree)
+    .then((res) => {
+      if (res?.showModal) {
+        res?.showModal();
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+    });
 }
 
 export default openModal;
