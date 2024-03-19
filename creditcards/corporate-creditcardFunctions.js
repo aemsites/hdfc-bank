@@ -4,7 +4,7 @@
 /* eslint no-console: ["error", { allow: ["warn", "error", "log"] }] */
 import createJourneyId from '../common/journey-utils.js';
 import {
-  formUtil, maskNumber, urlPath, clearString,
+  formUtil, maskNumber, urlPath, clearString, getTimeStamp, convertDateToMmmDdYyyy,
 } from '../common/formutils.js';
 
 const journeyName = 'CORPORATE_CREDIT_CARD';
@@ -142,46 +142,45 @@ const formFieldAutoFill = (res, globals, panel) => {
   // Extract personal details from globals
   const personalDetails = globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.personalDetails;
 
+  // Extract breCheckAndFetchDemogResponse from res
+  const breCheckAndFetchDemogResponse = res.otpValidationResponse?.demogResponse?.BRECheckAndFetchDemogResponse;
+
+  if (!breCheckAndFetchDemogResponse) return;
+
   // Extract gender from response
-  const custGender = res.otpValidationResponse.demogResponse.BRECheckAndFetchDemogResponse.VDCUSTGENDER;
-  let Gender;
-  if (custGender === 'M') {
-    Gender = 'Male';
-  } else if (custGender === 'F') {
-    Gender = 'Female';
-  } else {
-    Gender = 'Others';
-  }
-  globals.functions.setProperty(personalDetails.gender, { value: Gender });
+  const custGender = breCheckAndFetchDemogResponse?.VDCUSTGENDER;
+  const genderMap = {
+    M: 'Male',
+    F: 'Female',
+  };
+
+  const gender = genderMap[custGender] || 'Others';
+  globals.functions.setProperty(personalDetails.gender, { value: gender });
 
   // Extract name from response
-  const FullName = res.otpValidationResponse.demogResponse.BRECheckAndFetchDemogResponse.VDCUSTFULLNAME;
-  const nameParts = FullName.split(' ');
-  const firstName = nameParts[0];
-  let middleName = '';
-  const lastName = nameParts[nameParts.length - 1];
-  if (nameParts.length > 2) {
-    middleName = nameParts.slice(1, -1).join(' ');
-  }
+  const { VDCUSTFULLNAME: FullName } = breCheckAndFetchDemogResponse || {};
+  const [firstName, ...remainingName] = FullName.split(' ');
+  const lastName = remainingName.pop() || '';
+  const middleName = remainingName.join(' ');
   globals.functions.setProperty(personalDetails.firstName, { value: firstName });
   globals.functions.setProperty(personalDetails.lastName, { value: lastName });
   globals.functions.setProperty(personalDetails.middleName, { value: middleName });
 
-  // Convert date format and set date of birth
-  const convertDateFormat = (date) => {
-    const year = date.slice(0, 4);
-    const month = date.slice(4, 6).padStart(2, '0');
-    const day = date.slice(6, 8).padStart(2, '0');
-    const options = { month: 'short', day: 'numeric', year: 'numeric' };
-    return new Date(year, month - 1, day).toLocaleDateString('en-US', options);
-  };
-  const custDate = panel.login.pan.$value ? res.otpValidationResponse.demogResponse.BRECheckAndFetchDemogResponse.DDCUSTDATEOFBIRTH : res.otpValidationResponse.demogResponse.BRECheckAndFetchDemogResponse.VDCUSTITNBR;
-  globals.functions.setProperty(personalDetails.dobPersonalDetails, { value: panel.login.pan.$value ? convertDateFormat(custDate.toString()) : custDate });
+  // Extract date of birth or ITNBR
+  const custDate = panel.login.pan.$value ? breCheckAndFetchDemogResponse?.DDCUSTDATEOFBIRTH : breCheckAndFetchDemogResponse?.VDCUSTITNBR;
+  globals.functions.setProperty(personalDetails.dobPersonalDetails, { value: panel.login.pan.$value ? convertDateToMmmDdYyyy(custDate.toString()) : custDate });
 
   // Create address string and set it to form field
-  const demogResponse = res.otpValidationResponse.demogResponse.BRECheckAndFetchDemogResponse;
-  const AddressPrefill = `${demogResponse.VDCUSTADD1},${demogResponse.VDCUSTADD2},${demogResponse.VDCUSTADD3},${demogResponse.VDCUSTCITY},${demogResponse.VDCUSTSTATE},${demogResponse.VDCUSTZIPCODE}`;
-  globals.functions.setProperty(globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.currentDetails.currentAddressETB.prefilledCurrentAdddress, { value: AddressPrefill });
+  const completeAddress = [
+    breCheckAndFetchDemogResponse?.VDCUSTADD1,
+    breCheckAndFetchDemogResponse?.VDCUSTADD2,
+    breCheckAndFetchDemogResponse?.VDCUSTADD3,
+    breCheckAndFetchDemogResponse?.VDCUSTCITY,
+    breCheckAndFetchDemogResponse?.VDCUSTSTATE,
+    breCheckAndFetchDemogResponse?.VDCUSTZIPCODE,
+  ].filter(Boolean).join(', ');
+
+  globals.functions.setProperty(globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.currentDetails.currentAddressETB.prefilledCurrentAdddress, { value: completeAddress });
 };
 
 /**
@@ -248,8 +247,11 @@ const otpValFailure = (res, globals) => {
   loginPanel.visible(false);
   otpPanel.visible(false);
   ccWizardPannel.visible(true);
+
+  // Created mock flag for testing
   const mockFlag = true;
   if (mockFlag || currentFormContext.existingCustomer === 'Y') {
+    // Created mock result for development
     const result = {
       otpValidationResponse: {
         errorMessage: '',
@@ -309,6 +311,8 @@ const otpValFailure = (res, globals) => {
         },
       },
     };
+
+    // For development passing mock data "result". Need to pass "res" in real case
     formFieldAutoFill(result, globals, pannel);
   }
   (async () => {
@@ -327,12 +331,16 @@ const OTPVAL = {
     const jsonObj = {};
     jsonObj.requestString = {};
     jsonObj.requestString.mobileNumber = String(mobileNo) ?? '';
-    jsonObj.requestString.identifierValue = panNo || dob;
-    jsonObj.requestString.identifierName = panNo ? 'PAN' : 'DOB';
+    jsonObj.requestString.panNumber = String(panNo) ?? '';
+    jsonObj.requestString.dateOfBirth = String(dob) ?? '';
+    jsonObj.requestString.channelSource = '';
+    jsonObj.requestString.dedupeFlag = 'N';
     jsonObj.requestString.passwordValue = passwordValue ?? '';
+    jsonObj.requestString.referenceNumber = `AD${getTimeStamp(new Date())}` ?? '';
     jsonObj.requestString.journeyID = currentFormContext.journeyID;
     jsonObj.requestString.journeyName = currentFormContext.journeyName;
     jsonObj.requestString.userAgent = window.navigator.userAgent;
+    jsonObj.requestString.existingCustomer = currentFormContext.isCustomerIdentified ?? '';
     return jsonObj;
   },
   successCallback(res, globals) {

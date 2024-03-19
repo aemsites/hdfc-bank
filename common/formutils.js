@@ -63,6 +63,43 @@ const formUtil = (globalObj, panelName) => ({
   },
 });
 
+/**
+ * Gets a formatted timestamp from the provided current time.
+ *
+ * @param {Date} currentTime The current time to generate the timestamp from.
+ * @returns {string} The formatted timestamp in 'YYYYMMDDHHmmss' format.
+ */
+const getTimeStamp = (currentTime) => {
+  // Function to pad single digit numbers with leading zero
+  const pad = (number) => ((number < 10) ? `0${number}` : number);
+  // Format the datetime as desired
+  const formattedDatetime = currentTime.getFullYear()
+    + pad(currentTime.getMonth() + 1)
+    + pad(currentTime.getDate())
+    + pad(currentTime.getHours())
+    + pad(currentTime.getMinutes())
+    + pad(currentTime.getSeconds());
+  return formattedDatetime;
+};
+
+/**
+ * Converts a date string from 'YYYYMMDD' format to a localized date string.
+ * @param {string} date - The date string in 'YYYYMMDD' format.
+ * @returns {string} The formatted date string in 'MMM DD, YYYY' format.
+ */
+const convertDateToMmmDdYyyy = (date) => {
+  // Extract year, month, and day parts from the input date string
+  const year = date.slice(0, 4);
+  const month = date.slice(4, 6).padStart(2, '0'); // Ensures zero padding for single-digit months
+  const day = date.slice(6, 8).padStart(2, '0'); // Ensures zero padding for single-digit days
+
+  // Define options for the localized date string
+  const options = { month: 'short', day: 'numeric', year: 'numeric' };
+
+  // Create a new Date object and convert it to a localized date string
+  return new Date(year, month - 1, day).toLocaleDateString('en-US', options);
+};
+
 export {
-  urlPath, maskNumber, clearString, formUtil,
+  urlPath, maskNumber, clearString, formUtil, getTimeStamp, convertDateToMmmDdYyyy,
 };
