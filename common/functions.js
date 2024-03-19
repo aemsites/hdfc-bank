@@ -1,4 +1,6 @@
-import { OTPGEN, OTPVAL, CHECKOFFER } from '../creditcards/corporate-creditcardFunctions.js';
+import {
+  OTPGEN, OTPVAL, CHECKOFFER, getThisCard,
+} from '../creditcards/corporate-creditcardFunctions.js';
 import { restAPICall } from './makeRestAPI.js';
 /**
  * generates the otp
@@ -29,4 +31,6 @@ function checkOffer(globals) {
   restAPICall(globals, 'POST', CHECKOFFER.getPayload(globals), CHECKOFFER.path, CHECKOFFER.successCallback, CHECKOFFER.errorCallback, CHECKOFFER.loadingText);
 }
 
-export { getOTP, otpValidation, checkOffer };
+export {
+  getOTP, otpValidation, checkOffer, getThisCard,
+};

@@ -85,7 +85,7 @@ const OTPGEN = {
     const dob = clearString(globals.form.loginPanel.dateOfBirth.$value); // no special characters
     const jsonObj = {};
     jsonObj.requestString = {};
-    jsonObj.requestString.mobileNumber = String(mobileNo) ?? '';
+    jsonObj.requestString.mobileNumber = String(mobileNo);
     jsonObj.requestString.dateOfBith = dob ?? '';
     jsonObj.requestString.panNumber = panNo ?? '';
     jsonObj.requestString.journeyID = currentFormContext.journeyID;
@@ -181,7 +181,7 @@ const OTPVAL = {
     const dob = clearString(globals.form.loginPanel.dateOfBirth.$value); // no special characters
     const jsonObj = {};
     jsonObj.requestString = {};
-    jsonObj.requestString.mobileNumber = String(mobileNo) ?? '';
+    jsonObj.requestString.mobileNumber = String(mobileNo);
     jsonObj.requestString.panNumber = String(panNo) ?? '';
     jsonObj.requestString.dateOfBirth = String(dob) ?? '';
     jsonObj.requestString.channelSource = '';
@@ -208,19 +208,19 @@ const OTPVAL = {
  * Moves the corporate card wizard view from your detail step to confirm card step
  */
 const moveCCWizardView = () => {
-  const navigateFrom = document.getElementsByName('corporateCardWizardView')[0];
-  const current = navigateFrom.querySelector('.current-wizard-step');
-  const navigateTo = document.getElementsByName('confirmCardPanel')[0];
-  current.classList.remove('current-wizard-step');
-  navigateTo.classList.add('current-wizard-step');
+  const navigateFrom = document.getElementsByName('corporateCardWizardView')?.[0];
+  const current = navigateFrom?.querySelector('.current-wizard-step');
+  const navigateTo = document.getElementsByName('confirmCardPanel')?.[0];
+  current?.classList.remove('current-wizard-step');
+  navigateTo?.classList.add('current-wizard-step');
   const event = new CustomEvent('wizard:navigate', {
     detail: {
-      prevStep: { id: current.id, index: +current.dataset.index },
-      currStep: { id: navigateTo.id, index: +navigateTo.dataset.index },
+      prevStep: { id: current?.id, index: parseInt(current?.dataset?.index || 0, 10) },
+      currStep: { id: navigateTo?.id, index: parseInt(navigateTo?.dataset?.index || 0, 10) },
     },
     bubbles: false,
   });
-  navigateFrom.dispatchEvent(event);
+  navigateFrom?.dispatchEvent(event);
 };
 
 /**
@@ -242,7 +242,7 @@ const CHECKOFFER = {
     const mobileNo = globals.form.loginPanel.registeredMobileNumber.$value;
     const jsonObj = {};
     jsonObj.requestString = {};
-    jsonObj.requestString.mobileNumber = String(mobileNo) ?? '';
+    jsonObj.requestString.mobileNumber = String(mobileNo);
     return jsonObj;
   },
   successCallback(res, globals) {
@@ -254,4 +254,23 @@ const CHECKOFFER = {
   path: urlPath('/content/hdfc_cc_unified/api/checkoffer.json'),
   loadingText: 'Checking offers for you...',
 };
-export { OTPGEN, OTPVAL, CHECKOFFER };
+
+const getThisCard = () => {
+  const navigateFrom = document.getElementsByName('corporateCardWizardView')?.[0];
+  const current = navigateFrom?.querySelector('.current-wizard-step');
+  const navigateTo = document.getElementsByName('selectKycPaymentPanel')?.[0];
+  current?.classList.remove('current-wizard-step');
+  navigateTo?.classList.add('current-wizard-step');
+  const event = new CustomEvent('wizard:navigate', {
+    detail: {
+      prevStep: { id: current?.id, index: parseInt(current?.dataset?.index || 0, 10) },
+      currStep: { id: navigateTo?.id, index: parseInt(navigateTo?.dataset?.index || 0, 10) },
+    },
+    bubbles: false,
+  });
+  navigateFrom?.dispatchEvent(event);
+};
+
+export {
+  OTPGEN, OTPVAL, CHECKOFFER, getThisCard,
+};
