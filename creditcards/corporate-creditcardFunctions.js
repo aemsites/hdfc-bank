@@ -181,7 +181,7 @@ const formFieldAutoFill = (res, globals, panel) => {
   // Create address string and set it to form field
   const demogResponse = res.otpValidationResponse.demogResponse.BRECheckAndFetchDemogResponse;
   const AddressPrefill = `${demogResponse.VDCUSTADD1},${demogResponse.VDCUSTADD2},${demogResponse.VDCUSTADD3},${demogResponse.VDCUSTCITY},${demogResponse.VDCUSTSTATE},${demogResponse.VDCUSTZIPCODE}`;
-  globals.functions.setProperty(globals.form.corporateCardWizardView.yourDetailsPanel.currentDetails.currentAddressETB.prefilledCurrentAdddress, { value: AddressPrefill });
+  globals.functions.setProperty(globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.currentDetails.currentAddressETB.prefilledCurrentAdddress, { value: AddressPrefill });
 };
 
 /**
