@@ -133,6 +133,58 @@ const OTPGEN = {
 };
 
 /**
+ * Automatically fills form fields based on response data.
+ * @param {object} res - The response data object.
+ * @param {object} globals - Global variables object.
+ * @param {object} panel - Panel object.
+ */
+const formFieldAutoFill = (res, globals, panel) => {
+  // Extract personal details from globals
+  const personalDetails = globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.personalDetails;
+
+  // Extract gender from response
+  const custGender = res.otpValidationResponse.demogResponse.BRECheckAndFetchDemogResponse.VDCUSTGENDER;
+  let Gender;
+  if (custGender === 'M') {
+    Gender = 'Male';
+  } else if (custGender === 'F') {
+    Gender = 'Female';
+  } else {
+    Gender = 'Others';
+  }
+  globals.functions.setProperty(personalDetails.gender, { value: Gender });
+
+  // Extract name from response
+  const FullName = res.otpValidationResponse.demogResponse.BRECheckAndFetchDemogResponse.VDCUSTFULLNAME;
+  const nameParts = FullName.split(' ');
+  const firstName = nameParts[0];
+  let middleName = '';
+  const lastName = nameParts[nameParts.length - 1];
+  if (nameParts.length > 2) {
+    middleName = nameParts.slice(1, -1).join(' ');
+  }
+  globals.functions.setProperty(personalDetails.firstName, { value: firstName });
+  globals.functions.setProperty(personalDetails.lastName, { value: lastName });
+  globals.functions.setProperty(personalDetails.middleName, { value: middleName });
+
+  // Convert date format and set date of birth
+  const convertDateFormat = (date) => {
+    const year = date.slice(0, 4);
+    const month = date.slice(4, 6).padStart(2, '0');
+    const day = date.slice(6, 8).padStart(2, '0');
+    const options = { month: 'short', day: 'numeric', year: 'numeric' };
+    return new Date(year, month - 1, day).toLocaleDateString('en-US', options);
+  };
+  const custDate = panel.login.pan.$value ? res.otpValidationResponse.demogResponse.BRECheckAndFetchDemogResponse.DDCUSTDATEOFBIRTH : res.otpValidationResponse.demogResponse.BRECheckAndFetchDemogResponse.VDCUSTITNBR;
+  globals.functions.setProperty(personalDetails.dobPersonalDetails, { value: panel.login.pan.$value ? convertDateFormat(custDate.toString()) : custDate });
+
+  // Create address string and set it to form field
+  const demogResponse = res.otpValidationResponse.demogResponse.BRECheckAndFetchDemogResponse;
+  const AddressPrefill = `${demogResponse.VDCUSTADD1},${demogResponse.VDCUSTADD2},${demogResponse.VDCUSTADD3},${demogResponse.VDCUSTCITY},${demogResponse.VDCUSTSTATE},${demogResponse.VDCUSTZIPCODE}`;
+  globals.functions.setProperty(globals.form.corporateCardWizardView.yourDetailsPanel.currentDetails.currentAddressETB.prefilledCurrentAdddress, { value: AddressPrefill });
+};
+
+/**
  * Handles the success scenario for OTP Validation.
  * @param {any} res  - The response object containing the OTP success generation response.
  * @param {Object} globals - globals variables object containing form configurations.
@@ -160,51 +212,7 @@ const otpValSuccess = (res, globals) => {
   otpPanel.visible(false);
   ccWizardPannel.visible(true);
   if (currentFormContext.existingCustomer === 'Y') {
-    // prefilling logic to start
-    // Gender prefill
-    const custGender = res.otpValidationResponse.demogResponse.BRECheckAndFetchDemogResponse.VDCUSTGENDER;
-    // eslint-disable-next-line no-nested-ternary
-    const Gender = (custGender === 'M') ? 'Male' : (custGender === 'F') ? 'Female' : 'Others';
-    globals.functions.setProperty(globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.personalDetails.gender, { value: Gender });
-
-    // First name ,last name,Middle name prefilling
-    const FullName = res.otpValidationResponse.demogResponse.BRECheckAndFetchDemogResponse.VDCUSTFULLNAME;
-    const firstName = FullName.split(' ')[0];
-    let middleName; let lastName;
-    if (FullName.split(' ').length - 1 >= 2) {
-      middleName = FullName.split(' ')[1];
-      lastName = FullName.value.split(' ')[FullName.split(' ').length - 1];
-    } else {
-      lastName = FullName.split(' ')[1];
-      middleName = '';
-    }
-
-    globals.functions.setProperty(globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.personalDetails.firstName, { value: firstName });
-    globals.functions.setProperty(globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.personalDetails.lastName, { value: lastName });
-    globals.functions.setProperty(globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.personalDetails.middleName, { value: middleName });
-
-    // Date/Pan prefilling
-    const convertDateFormat = (date) => {
-      const year = date.slice(0, 4);
-      const month = date.slice(4, 6).padStart(2, '0');
-      const day = date.slice(6, 8).padStart(2, '0');
-      const options = { month: 'short', day: 'numeric', year: 'numeric' };
-      return new Date(year, month - 1, day).toLocaleDateString('en-US', options);
-    };
-    if (pannel.login.pan.$value) {
-      const custDate = res.otpValidationResponse.demogResponse.BRECheckAndFetchDemogResponse.DDCUSTDATEOFBIRTH;
-      globals.functions.setProperty(globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.personalDetails.dobPersonalDetails, { value: convertDateFormat(custDate.toString()) });
-    } else {
-      // pan prefilling
-      const panValue = res.otpValidationResponse.demogResponse.BRECheckAndFetchDemogResponse.VDCUSTITNBR;
-      globals.functions.setProperty(globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.personalDetails.dobPersonalDetails, { value: panValue });
-    }
-
-    // Address line prefilling
-    const AddressPrefill = `${res.otpValidationResponse.demogResponse.BRECheckAndFetchDemogResponse.VDCUSTADD1},${res.otpValidationResponse.demogResponse.BRECheckAndFetchDemogResponse.VDCUSTADD2},${res.otpValidationResponse.demogResponse.BRECheckAndFetchDemogResponse.VDCUSTADD3},${res.otpValidationResponse.demogResponse.BRECheckAndFetchDemogResponse.VDCUSTCITY},${
-      res.otpValidationResponse.demogResponse.BRECheckAndFetchDemogResponse.VDCUSTSTATE},${
-      res.otpValidationResponse.demogResponse.BRECheckAndFetchDemogResponse.VDCUSTZIPCODE}`;
-    globals.functions.setProperty(globals.form.corporateCardWizardView.yourDetailsPanel.currentDetails.currentAddressETB.prefilledCurrentAdddress, { value: AddressPrefill });
+    formFieldAutoFill(res, globals, pannel);
   }
   (async () => {
     const myImportedModule = await import('./cc.js');
@@ -240,6 +248,69 @@ const otpValFailure = (res, globals) => {
   loginPanel.visible(false);
   otpPanel.visible(false);
   ccWizardPannel.visible(true);
+  const mockFlag = true;
+  if (mockFlag || currentFormContext.existingCustomer === 'Y') {
+    const result = {
+      otpValidationResponse: {
+        errorMessage: '',
+        errorCode: '00',
+        demogResponse: {
+          errorMessage: '0',
+          errorCode: '0',
+          BRECheckAndFetchDemogResponse: {
+            VDCUSTZIPCODE: 400001,
+            DECISION: null,
+            VDCUSTEMAILADD: null,
+            DDCUSTDATEOFBIRTH: 19920910,
+            FWCUSTID: 0,
+            VDCUSTGENDER: 'M',
+            BREFILLER1: null,
+            VDCUSTADD2: 'Halsiyo Ki Dhani, Mumbai 234-B',
+            BREFILLER2: 'D101',
+            VDCUSTADD3: 'Bandup, erondi opiuy jklo  ino',
+            BREFILLER3: 'AD0292400010',
+            SOURCEID: 'FINWARE',
+            BREFILLER4: 'SUCCESSFUL RESPONSE',
+            VDCUSTADD1: 'KANJUR _F qwerrt poiiui asdfg',
+            VDCUSTFIRSTNAME: 'VIPUL KABRA',
+            VDCUSTNAMESHORT: null,
+            PRODUCTCODE: null,
+            VDCUSTMIDDLENAME: null,
+            STP: null,
+            VDCUSTADD4: null,
+            BREFILLER9: null,
+            CUSTOMERID: 0,
+            VDCUSTFULLNAME: 'Vipul Kabra',
+            BREFILLER5: null,
+            IPA0: 'Y',
+            BREFILLER6: null,
+            BREFILLER7: null,
+            BREFILLER8: null,
+            VDCUSTLASTNAME: null,
+            VDCUSTTYPE: 'F',
+            ACCOUNTID: 'XXXXXXXXXX6180',
+            VDCUSTITNBR: 'EGYPZ5203D',
+            OLDAAN: null,
+            ELIGLIMIT: null,
+            BREFILLER12: null,
+            BREFILLER11: null,
+            BREFILLER10: null,
+            SEGMENT: 'ONLY_CASA',
+            VDCUSTSTATE: 'Rajasthan',
+            PRICINGCODE: null,
+            TOKENSTRING: 'ONLY_CASA||Y',
+            PROMOCODE: null,
+            VDCUSTCITY: 'Mumbai',
+            DECISIONCODE: null,
+            FWACCNTNUM: 'XXXXXXXXXX6180',
+            MOBILE: 9819842418,
+          },
+          Id_token_jwt: 'cTibXoo7gMgv04Ra-uWriHhvXJvC4JhXW6VDUymq_fWegg-Wsh5WqBllsYcp-GyKDQqXFC2cahP4At14W80USbHdwBIe0IAjZ7fUKyYBFE597lrSP7uorgnqbW_V3b0dnBwMLDkZaVJryPKTHgLFF5EDEQ__4vS1bK6TtpcgipnwkrF8hXSasPj27MbUTlPun08f-kLiLOraYnngcj0UTJIWE1tn7ugEo-fw2Exb3NgQ3SAqLRNHH79auCMN9xGuQTYMvUQNKY0VxffEB186t1nk9vinIqXVldP38GmEE1vDrnJ0Cw19PERmWDdaFomJs3hyEo-rbTZRjjg_weLcyg.JBnNMyZWTYubzZC5PyKAfg.9iyFigW3IKptm8e2cloIssHcLI_ifOnYt1oIGpYnO9XALwHuumvpVcZ1pRHDL7o9UUDmdfhpI13b_mVufmbm0ErtaGEskqf9aWmT699gQhlv2Nbx-6qWs1d-suYHELLYD-0GEI_xh-Iz4NBW82z7kej8GoHt-aWC8qIkX2q4YB-3bSFY-WL98E0IAiWGZf-4CglXOhCFnElgs-sgz05DtF11r3K2ElF_gkjdBR-IwiswJgBL7EOwruowNNCX6uTzupl8hHb6iMg5SX3_f2d1U8YsFds8vcwPpZuWylJkILS5pklUq6jPeZUqsxDjjlwPoiodMmyLQtBDBzZ6KEKHuV7rxahxbgIw2XbAnUFtSZ-qJR3XE7OqjK4B1hGES8d7l5S39l6DLCw3yclPIze3oWfl0dcbZDAtfyqoS3Vm7D8leiByOuTBJm2gE3FXVkUxcWWzG-ac73O5T5RkdvVoqGMkd8-6zwuNM1Y8t7sZooODER_MT8rtKIUDbI2mct3GTC-BpzvdX8vPrYQaBeA8scQL5mBG_LfmIDJrE0BJF26fRYoNjT9Xtzk08-FeD_2i2BcWxDVUYsOkVWGfWX9iCGNVEww9rgq2L2kOCTp3-dWyjqYCdoSMv1cM_RqKilDvwcRgzKHkTJuTOvyI1Ham-93rbBCVvn2UCbLPxqOrZWAAV3-sBmo2wRgM6Zx4CjhwuyC2xQT1KedNJh-ImrjysenXpW5Ur7R-mohQrxjjORQIe2Pm8tgzKMsY9izeT_V2aJZRQxaGAD5-5xxZaQYWAqvcTK5eFwY3rh519qU0X_AbLn7L059cb8pCY3Osfpw2E4g3zyq8v0DvaI2ZkV9EUWG5P331SFJxIw9cgnLlv7VYzvpIGjf7iSMzUKON-B-T4ND9bdFkQiSHJ8u3tlvGMC96XkCzUMgrJNDMJl-5UgeBKUUKCx2Nk5VGGfzoS_rPPNMI3hn3fPerEHO2iopFkPgI-mApQ5MmGKf5Dzmy8UE.Nj90tcWFn-12O_xbTHx_Tg',
+        },
+      },
+    };
+    formFieldAutoFill(result, globals, pannel);
+  }
   (async () => {
     const myImportedModule = await import('./cc.js');
     myImportedModule.onWizardInit();
