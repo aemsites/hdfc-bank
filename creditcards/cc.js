@@ -70,10 +70,8 @@ function onWizardInit() {
   decorateStepper();
 }
 
-const checkBox1ClickElement = document.getElementsByName('checkBoxConsent1')[0];
-const panelAsPopUp = document.getElementsByName('consentPanel1')[0];
-const checkBox2ClickElement = document.getElementsByName('checkBoxConsent2')[0];
-const panelAsPopUp2 = document.getElementsByName('consentPanel2')[0];
+const checkBox2ClickElement = document.getElementsByName('checkBoxConsent2')?.[0];
+const panelAsPopUp2 = document.getElementsByName('consentPanel2')?.[0];
 
 const linkModalFunction = (trigerElement, payload) => {
   trigerElement.addEventListener('click', async (e) => {
@@ -83,18 +81,12 @@ const linkModalFunction = (trigerElement, payload) => {
   });
 };
 
-const consent1Config = { // config to create modal for consent-1
-  content: panelAsPopUp, // content to display in modal
-  actionWrapClass: 'form-actionwrapperpanel', // wrapper class containing all the buttons
-  reqConsentAgree: true, // Flag indicating whether consent agreement is required or not
-};
 const consent2Config = { // config to create modal for consent-2
   content: panelAsPopUp2, // content to display in modal
-  actionWrapClass: 'form-button-wrapper', // wrapper class containing all the buttons
+  actionWrapClass: 'button-wrapper', // wrapper class containing all the buttons
   reqConsentAgree: false, // Flag indicating whether consent agreement is required or not
 };
 
-linkModalFunction(checkBox1ClickElement, consent1Config);
 linkModalFunction(checkBox2ClickElement, consent2Config);
 
 export { decorateStepper, onWizardInit };
