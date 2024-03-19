@@ -81,8 +81,8 @@ const otpGenFailure = (res, globals) => {
 const OTPGEN = {
   getPayload(globals) {
     const mobileNo = globals.form.loginPanel.registeredMobileNumber.$value;
-    const panNo = globals.form.loginPanel.pan.$value;
-    const dob = clearString(globals.form.loginPanel.dateOfBirth.$value); // no special characters
+    const panNo = globals.form.loginPanel.identifierPanel.pan.$value;
+    const dob = clearString(globals.form.loginPanel.identifierPanel.dateOfBirth.$value); // no special characters
     const jsonObj = {};
     jsonObj.requestString = {};
     jsonObj.requestString.mobileNumber = String(mobileNo);
@@ -176,9 +176,9 @@ const otpValFailure = (res, globals) => {
 const OTPVAL = {
   getPayload(globals) {
     const mobileNo = globals.form.loginPanel.registeredMobileNumber.$value;
-    const panNo = globals.form.loginPanel.pan.$value;
+    const panNo = globals.form.loginPanel.identifierPanel.pan.$value;
     const passwordValue = globals.form.otpPanel.otpNumber.$value;
-    const dob = clearString(globals.form.loginPanel.dateOfBirth.$value); // no special characters
+    const dob = clearString(globals.form.loginPanel.identifierPanel.dateOfBirth.$value); // no special characters
     const jsonObj = {};
     jsonObj.requestString = {};
     jsonObj.requestString.mobileNumber = String(mobileNo);
