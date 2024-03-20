@@ -16,7 +16,7 @@ function annotateFormForEditing(formEl, formDefinition) {
                 } else {
                     console.warn(`field ${id} not found in form definition`);
                 }
-                if (fieldWrapper.classList.contains("form-panel-wrapper")) {
+                if (fieldWrapper.classList.contains("panel-wrapper")) {
                     fieldWrapper.setAttribute('data-aue-type', 'container');
                     fieldWrapper.setAttribute('data-aue-behavior', 'component');
                     annotateItems(fieldWrapper.childNodes);
