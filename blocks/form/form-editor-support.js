@@ -112,3 +112,20 @@ const forms = document.querySelectorAll('form');
 annotateFormsForEditing(forms);
 document.querySelector('main')?.addEventListener('aue:ui-select', handleEditorSelect);
 enableRuleEditorExtension();
+
+document.body.addEventListener("aue:ui-preview", () => {
+
+    const forms = document.querySelectorAll('form');
+    for(let formEl of forms) {
+        formEl.classList.remove("edit-mode");
+    }
+});
+
+document.body.addEventListener("aue:ui-edit", () => {
+    const forms = document.querySelectorAll('form');
+    for(let formEl of forms) {
+        if (!formEl.classList.contains("edit-mode")) {
+            formEl.classList.add("edit-mode");
+        }
+    }
+});
