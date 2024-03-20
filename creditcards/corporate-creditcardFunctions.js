@@ -28,7 +28,7 @@ const otpGenSuccess = (res, globals) => {
   const otpPanel = formUtil(globals, pannel.otp);
   const otpBtn = formUtil(globals, pannel.otpButton);
   const loginPanel = formUtil(globals, pannel.login);
-  const regMobNo = pannel.login.registeredMobileNumber.$value;
+  const regMobNo = pannel.login.mobilePanel.registeredMobileNumber.$value;
 
   welcomeTxt.visible(false);
   otpBtn.visible(false);
@@ -61,7 +61,7 @@ const otpGenFailure = (res, globals) => {
   const otpPanel = formUtil(globals, pannel.otp);
   const loginPanel = formUtil(globals, pannel.login);
   const otpBtn = formUtil(globals, pannel.otpButton);
-  const regMobNo = pannel.login.registeredMobileNumber.$value;
+  const regMobNo = pannel.login.mobilePanel.registeredMobileNumber.$value;
   const failurePanel = formUtil(globals, pannel.resultPanel);
 
   welcomeTxt.visible(false);
@@ -79,7 +79,7 @@ const otpGenFailure = (res, globals) => {
 
 const OTPGEN = {
   getPayload(globals) {
-    const mobileNo = globals.form.loginPanel.registeredMobileNumber.$value;
+    const mobileNo = globals.form.loginPanel.mobilePanel.registeredMobileNumber.$value;
     const panNo = globals.form.loginPanel.identifierPanel.pan.$value;
     const dob = clearString(globals.form.loginPanel.identifierPanel.dateOfBirth.$value);
     const jsonObj = {};
@@ -174,7 +174,7 @@ const otpValFailure = (res, globals) => {
 
 const OTPVAL = {
   getPayload(globals) {
-    const mobileNo = globals.form.loginPanel.registeredMobileNumber.$value;
+    const mobileNo = globals.form.loginPanel.mobilePanel.registeredMobileNumber.$value;
     const panNo = globals.form.loginPanel.identifierPanel.pan.$value;
     const passwordValue = globals.form.otpPanel.otpNumber.$value;
     const dob = clearString(globals.form.loginPanel.identifierPanel.dateOfBirth.$value);
