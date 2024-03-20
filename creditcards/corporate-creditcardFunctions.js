@@ -82,7 +82,7 @@ const OTPGEN = {
   getPayload(globals) {
     const mobileNo = globals.form.loginPanel.registeredMobileNumber.$value;
     const panNo = globals.form.loginPanel.identifierPanel.pan.$value;
-    const dob = clearString(globals.form.loginPanel.identifierPanel.dateOfBirth.$value); // no special characters
+    const dob = clearString(globals.form.loginPanel.identifierPanel.dateOfBirth.$value);
     const jsonObj = {};
     jsonObj.requestString = {};
     jsonObj.requestString.mobileNumber = String(mobileNo);
@@ -178,7 +178,7 @@ const OTPVAL = {
     const mobileNo = globals.form.loginPanel.registeredMobileNumber.$value;
     const panNo = globals.form.loginPanel.identifierPanel.pan.$value;
     const passwordValue = globals.form.otpPanel.otpNumber.$value;
-    const dob = clearString(globals.form.loginPanel.identifierPanel.dateOfBirth.$value); // no special characters
+    const dob = clearString(globals.form.loginPanel.identifierPanel.dateOfBirth.$value);
     const jsonObj = {};
     jsonObj.requestString = {};
     jsonObj.requestString.mobileNumber = String(mobileNo);

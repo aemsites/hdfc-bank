@@ -46,17 +46,11 @@ const createLabelInElement = (elementSelector, labelClass) => {
   * @name decorateStepper Runs after yourDetails panel is initialized
    */
 function decorateStepper() {
-  const ccDetailsWizard = document.querySelector('.form-corporatecardwizardview.field-wrapper.wizard');
-
-  const totalIndex = ccDetailsWizard.style.getPropertyValue('--wizard-step-count');
+  const totalIndex = document.querySelector('.field-corporatecardwizardview.wizard').style.getPropertyValue('--wizard-step-count');
+  const ccDetailsWizard = document.querySelector('.field-corporatecardwizardview.wizard ul');
   Array.from(ccDetailsWizard.children).forEach((child) => {
-    if (
-      child.tagName.toLowerCase() === 'fieldset' && Number(child.style.getPropertyValue('--wizard-step-index')) !== totalIndex - 1
-    ) {
-      const stepperLegend = document.querySelector(
-        `main .form .form-corporatecardwizardview.field-wrapper.wizard .${child.className.split(' ').join('.')} > legend`,
-      );
-      stepperLegend?.classList?.add('stepper-style');
+    if (child.tagName.toLowerCase() === 'li' && Number(child.getAttribute('data-index')) !== totalIndex - 1) {
+      child?.classList?.add('stepper-style');
     }
   });
 }
