@@ -60,7 +60,7 @@ function decorateStepper() {
   * @name onWizardInit Runs on initialization of wizard
   */
 function onWizardInit() {
-  createLabelInElement('.form-permanentaddresstoggle', 'permanent-address-toggle__label');
+  createLabelInElement('.field-permanentaddresstoggle', 'permanent-address-toggle__label');
   decorateStepper();
 }
 
