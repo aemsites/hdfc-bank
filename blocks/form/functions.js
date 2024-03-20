@@ -18,35 +18,6 @@ function getFullName(firstname, lastname) {
 }
 
 /**
-  * Decorates the labels as floating legends for input fields
-  * @name decorateFloatingLegends Runs after loginpanel is initialized
-   */
-function decorateFloatingLegends() {
-  const inputs = document.querySelectorAll('input[type="text"], input[type="number"], input[type="date"], input[type="email"], .field-wrapper textarea, .field-wrapper select');
-
-  inputs.forEach((input) => {
-    const wrapper = input.closest('.field-wrapper');
-    input.addEventListener('focus', () => {
-      wrapper.dataset.active = 'true';
-      wrapper.dataset.empty = !input.value;
-    });
-    input.addEventListener('blur', () => {
-      delete wrapper.dataset.active;
-      wrapper.dataset.empty = !input.value;
-    });
-    wrapper.dataset.empty = !input.value;
-  });
-}
-
-/**
- * On Form Init.
- * @name onFormInit Runs on initialization of Form
- */
-function onFormInit() {
-  decorateFloatingLegends();
-}
-
-/**
  * Creates a label element and appends it to a specified element in the DOM.
  * @param {string} elementSelector - The CSS selector for the target element.
  * @param {string} labelClass - The class to be applied to the created label element.
@@ -134,13 +105,7 @@ function days(endDate, startDate) {
   return Math.floor(diffInMs / (1000 * 60 * 60 * 24));
 }
 
-/**
- * Called on form init.
- * @name onFormInit Is called on form init
- */
-function onFormInit() {}
-
 // eslint-disable-next-line import/prefer-default-export
 export {
-  getFullName, onWizardInit, getOTP, otpValidation, days, onFormInit,
+  getFullName, onWizardInit, getOTP, otpValidation, days,
 };
