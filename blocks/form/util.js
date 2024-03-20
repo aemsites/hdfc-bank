@@ -56,7 +56,7 @@ export function resetIds() {
 export function createLabel(fd, tagName = 'label') {
   if (fd.label && fd.label.value) {
     const label = document.createElement(tagName);
-    label.setAttribute('for', fd.id);
+    label.setAttribute('for', `${fd.id}-widget`);
     label.className = 'field-label';
     if (fd.label.richText === true) {
       label.innerHTML = stripTags(fd.label.value);

@@ -1,0 +1,55 @@
+[
+  {
+    "id": "main",
+    "components": [
+      "section"
+    ]
+  },
+  {
+    "id": "columns",
+    "components": []
+  },
+  {
+    "id": "column",
+    "components": [
+      "text",
+      "image",
+      "title"
+    ]
+  },
+  {
+    "id": "section",
+    "components": [
+      "text",
+      "image",
+      "title",
+      "hero",
+      "cards",
+      "columns",
+      "form"
+    ]
+  },
+  {
+    "id": "cards",
+    "components": [
+      "card"
+    ]
+  },
+  {
+    "id": "form",
+    "components": [
+      "plain-text",
+      "text-input",
+      "number-input",
+      "date-input",
+      "panel",
+      "checkbox",
+      "drop-down",
+      "radio-group",
+      "email",
+      "fragment",
+      "button",
+      "form-image"
+    ]
+  }
+]

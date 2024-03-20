@@ -272,7 +272,7 @@ const handleFocusOut = (input) => {
 function inputDecorator(field, element) {
   const input = element?.querySelector('input,textarea,select');
   if (input) {
-    input.id = field.id;
+    input.id = `${field.id}-widget`;
     input.name = field.name;
     if (field.tooltip) {
       input.title = stripTags(field.tooltip, '');
@@ -447,6 +447,8 @@ export default async function decorate(block) {
     const content = codeEl?.textContent;
     if (content) {
       formDef = JSON.parse(cleanUp(content));
+      formDef.id = btoa(formDef.properties['fd:path']);
+      formDef.action = `/adobe/af/submit/${formDef.id}`;
     }
   }
   let source = 'aem';
@@ -471,6 +473,9 @@ export default async function decorate(block) {
     form.dataset.action = formDef.action || pathname?.split('.json')[0];
     form.dataset.source = source;
     form.dataset.rules = rules;
+    if (source === 'aem') {
+      form.dataset.formpath = formDef.properties['fd:path'];
+    }
     container.replaceWith(form);
   }
 }
