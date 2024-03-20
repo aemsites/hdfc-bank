@@ -205,14 +205,21 @@ const OTPVAL = {
 };
 
 /**
- * Moves the corporate card wizard view from your detail step to confirm card step
+ * Moves the corporate card wizard view from one step to the next step.
+ * @param {String} source - The name attribute of the source element (parent wizard panel).
+ * @param {String} target - The name attribute of the destination element.
  */
-const moveCCWizardView = () => {
-  const navigateFrom = document.getElementsByName('corporateCardWizardView')?.[0];
+const moveCCWizardView = (source, target) => {
+  const navigateFrom = document.getElementsByName(source)?.[0];
   const current = navigateFrom?.querySelector('.current-wizard-step');
-  const navigateTo = document.getElementsByName('confirmCardPanel')?.[0];
-  current?.classList.remove('current-wizard-step');
-  navigateTo?.classList.add('current-wizard-step');
+  const currentMenuItem = navigateFrom?.querySelector('.wizard-menu-active-item');
+  const navigateTo = document.getElementsByName(target)?.[0];
+  current?.classList?.remove('current-wizard-step');
+  navigateTo?.classList?.add('current-wizard-step');
+  // add/remove active class from menu item
+  const navigateToMenuItem = navigateFrom?.querySelector(`li[data-index="${navigateTo?.dataset?.index}"]`);
+  currentMenuItem?.classList?.remove('wizard-menu-active-item');
+  navigateToMenuItem?.classList?.add('wizard-menu-active-item');
   const event = new CustomEvent('wizard:navigate', {
     detail: {
       prevStep: { id: current?.id, index: parseInt(current?.dataset?.index || 0, 10) },
@@ -228,14 +235,14 @@ const moveCCWizardView = () => {
  * @param {any} res - The response object containing the check offer success response.
  * @param {Object} globals - globals variables object containing form configurations.
  */
-const checkOfferSuccess = (res, globals) => moveCCWizardView();
+const checkOfferSuccess = (res, globals) => moveCCWizardView('corporateCardWizardView', 'confirmCardPanel');
 
 /**
  * Handles the failure scenario on check offer.
  * @param {any} err - The response object containing the check offer failure response.
  * @param {Object} globals - globals variables object containing form configurations.
  */
-const checkOfferFailure = (err, globals) => moveCCWizardView();
+const checkOfferFailure = (err, globals) => moveCCWizardView('corporateCardWizardView', 'confirmCardPanel');
 
 const CHECKOFFER = {
   getPayload(globals) {
@@ -254,22 +261,10 @@ const CHECKOFFER = {
   path: urlPath('/content/hdfc_cc_unified/api/checkoffer.json'),
   loadingText: 'Checking offers for you...',
 };
-
-const getThisCard = () => {
-  const navigateFrom = document.getElementsByName('corporateCardWizardView')?.[0];
-  const current = navigateFrom?.querySelector('.current-wizard-step');
-  const navigateTo = document.getElementsByName('selectKycPaymentPanel')?.[0];
-  current?.classList.remove('current-wizard-step');
-  navigateTo?.classList.add('current-wizard-step');
-  const event = new CustomEvent('wizard:navigate', {
-    detail: {
-      prevStep: { id: current?.id, index: parseInt(current?.dataset?.index || 0, 10) },
-      currStep: { id: navigateTo?.id, index: parseInt(navigateTo?.dataset?.index || 0, 10) },
-    },
-    bubbles: false,
-  });
-  navigateFrom?.dispatchEvent(event);
-};
+/**
+ * Moves the wizard view to the "selectKycPaymentPanel" step.
+ */
+const getThisCard = () => moveCCWizardView('corporateCardWizardView', 'selectKycPaymentPanel');
 
 export {
   OTPGEN, OTPVAL, CHECKOFFER, getThisCard,
