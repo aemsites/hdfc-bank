@@ -37,5 +37,18 @@ function days(endDate, startDate) {
   return Math.floor(diffInMs / (1000 * 60 * 60 * 24));
 }
 
+/**
+ * On DateField Init.
+ * @name ageValidation Runs on initialization of dateField
+ */
+function ageValidation() {}
+
+/**
+ * On Form Init.
+ * @name onFormInit Runs on initialization of Form
+ */
+function onFormInit() {}
 // eslint-disable-next-line import/prefer-default-export
-export { getFullName, onWizardInit, days };
+export {
+  getFullName, onWizardInit, days, ageValidation, onFormInit,
+};
