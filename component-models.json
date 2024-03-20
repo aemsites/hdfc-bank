@@ -140,6 +140,34 @@
         ]
     },
     {
+        "id": "form",
+        "fields": [
+            {
+                "component": "select",
+                "valueType": "string",
+                "name": "image",
+                "label": "Submit Action",
+                "options": [
+                    {
+                        "name": "Submit to Workfront Fusion",
+                        "value": "fd/workfrontfusion/components/actions/wfsubmit"
+                    },
+                    {
+                        "name": "Submit to REST endpoint",
+                        "value": "fd/af/components/guidesubmittype/restendpoint"
+                    }
+                ]
+            },
+            {
+                "component": "boolean",
+                "name": "dorType",
+                "label": "Enable Auto DoR",
+                "valueType": "string",
+                "value": "generate"
+            }
+        ]
+    },
+    {
         "id": "text-input",
         "fields": [
             {
