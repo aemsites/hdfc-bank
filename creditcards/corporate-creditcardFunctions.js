@@ -9,9 +9,9 @@ const currentFormContext = {
   journeyID: createJourneyId('a', 'b', 'c'),
   journeyName,
 };
-
+let resendOtpCount = 3;
 /**
- * Appends a masked number to the specified container element.
+ * Appends a masked number to the specified container element if the masked number is not present.
  * @param {String} containerClass - The class name of the container element.
  * @param {String} number - The number to be masked and appended to the container element.
  * @returns {void}
@@ -20,8 +20,11 @@ const appendMaskedNumber = (containerClass, number) => {
   const otpHelpText = document.getElementsByClassName(containerClass)?.[0];
   const pElement = otpHelpText?.querySelector('p');
   const nestedPElement = pElement?.querySelector('p');
-  const newText = document.createTextNode(`${maskNumber(number, 6)}.`);
-  nestedPElement?.appendChild(newText);
+  const maskedNo = `${maskNumber(number, 6)}.`;
+  const newText = document.createTextNode(maskedNo);
+  if (!nestedPElement?.textContent?.includes(maskedNo)) {
+    nestedPElement?.appendChild(newText);
+  }
 };
 
 /**
@@ -104,7 +107,8 @@ const OTPGEN = {
     return (res?.otpGenResponse?.status?.errorCode === '0') ? otpGenSuccess(res, globals) : otpGenFailure(res, globals);
   },
   errorCallback(err, globals) {
-    console.log(`I am in errorCallback ${globals}`);
+    otpGenFailure(err, globals);
+    console.log(`I am in errorCallback of OTPGEN ${globals}`);
   },
   path: urlPath('/content/hdfc_ccforms/api/customeridentificationV4.json'),
   loadingText: 'Please wait while we are authenticating you',
@@ -208,4 +212,38 @@ const OTPVAL = {
   path: urlPath('/content/hdfc_cc_unified/api/otpValFetchAssetDemog.json'),
   loadingText: 'Please wait while we are authenticating you',
 };
-export { OTPGEN, OTPVAL };
+
+/**
+ * Resends OTP success handler.
+ * @param {any} res  - The response object containing the OTP success generation response.
+ * @param {Object} globals - globals variables object containing form configurations.
+ */
+const resendOtpSuccess = (res, globals) => {
+  const pannel = globals.form.otpPanel;
+  const resendBtn = formUtil(globals, pannel.otpResend);
+  const maxAttemptText = formUtil(globals, pannel.maxAttemptText);
+  OTPGEN.successCallback(res, globals);
+  resendOtpCount -= 1;
+  const existCountString = 3;
+  const attemptLeft = pannel.maxAttemptText.$value?.replace(/\d\/\d|\d/, `${resendOtpCount}/${existCountString}`);
+  maxAttemptText.setValue(attemptLeft);
+  if (!resendOtpCount) {
+    // resendBtn.enabled(false); // disabling functionality button willl exist in DOM
+    resendBtn.visible(false); // button will not exist in DOM
+  }
+};
+
+const RESENDOTP = {
+  getPayload(globals) {
+    return OTPGEN.getPayload(globals);
+  },
+  successCallback(res, globals) {
+    return resendOtpSuccess(res, globals);
+  },
+  errorCallback(err, globals) {
+    return OTPGEN.errorCallback(err, globals);
+  },
+  path: OTPGEN.path,
+  loadingText: 'Please wait otp sending again...',
+};
+export { OTPGEN, OTPVAL, RESENDOTP };
