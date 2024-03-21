@@ -105,7 +105,7 @@ main img {
                 font-weight: var(--font-weight-medium);
                 line-height: var (--font-linehight-regular);
                 text-align: left;
-                color: #374151 !important;
+                color: var(--color-interface-text-quaternary) !important;
             }
 
             .radio-wrapper {
@@ -121,7 +121,7 @@ main img {
             ;
             letter-spacing: 30PX;
             text-align: left;
-            color: #000 !important;
+            color: var(--color-input-text-default) !important;
             text-transform: uppercase;
 
             ::placeholder {
