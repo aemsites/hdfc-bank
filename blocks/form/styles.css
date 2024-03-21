@@ -162,11 +162,6 @@ main .form form .field-permanentaddress .field-permanentaddresstoggle input[type
     color: var(--color-action-text-primary-default);
   }
 
-  .btn-short {
-    max-width: 260px !important;
-    width: 100%;
-  }
-
   :hover{
     background: var(--color-action-background-primary-default) !important;
     border: var(--color-action-border-primary-default);
@@ -177,6 +172,15 @@ main .form form .field-permanentaddress .field-permanentaddresstoggle input[type
     background-color: var(--color-action-background-primary-disabled) !important;
     border: var(--color-action-border-primary-disabled) !important;
     color: var(--color-action-text-primary-disabled) !important;
+  }
+}
+
+.btn-short {
+  text-align: center;
+
+  .button {
+    max-width: 260px !important;
+    width: 100%;
   }
 }
 

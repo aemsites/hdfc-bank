@@ -3,9 +3,12 @@
   --color-interface-background-secondary: #ebf1ff;
   --color-interface-background-tertiary: #1d4a88;
   --color-interface-background-quaternary: #111827;
+  --color-interface-background-quinary: #F3F6FD;
+  --color-interface-background-box-shadow-primary: #ccc;
   --color-interface-text-primary: #111827;
   --color-interface-text-secondary: #6b7280;
   --color-interface-text-tertiary: #fff;
+  --color-interface-text-quaternary: #374151;
   --color-interface-border-primary: #ecedf3;
   --color-interface-border-secondary: #d2d5db;
   --color-interface-border-highlight: #4288d4;
