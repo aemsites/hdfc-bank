@@ -163,7 +163,9 @@
                 "resourceType": "core/fd/components/form/radiobutton/v1/radiobutton",
                 "template": {
                   "jcr:title": "Radio Group",
-                  "fieldType": "radio-group"
+                  "fieldType": "radio-group",
+                  "enum": ["0", "1"],
+                  "enumNumes": ["Item 1", "Item 2"]
                 }
               }
             }
