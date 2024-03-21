@@ -12,6 +12,20 @@ const currentFormContext = {
 };
 
 /**
+ * Appends a masked number to the specified container element.
+ * @param {String} containerClass - The class name of the container element.
+ * @param {String} number - The number to be masked and appended to the container element.
+ * @returns {void}
+ */
+const appendMaskedNumber = (containerClass, number) => {
+  const otpHelpText = document.getElementsByClassName(containerClass)?.[0];
+  const pElement = otpHelpText?.querySelector('p');
+  const nestedPElement = pElement?.querySelector('p');
+  const newText = document.createTextNode(`${maskNumber(number, 6)}.`);
+  nestedPElement?.appendChild(newText);
+};
+
+/**
  * Handles the success scenario for OTP generation.
  * @param {any} res  - The response object containing the OTP success generation response.
  * @param {Object} globals - globals variables object containing form configurations.
@@ -29,18 +43,14 @@ const otpGenSuccess = (res, globals) => {
   const otpPanel = formUtil(globals, pannel.otp);
   const otpBtn = formUtil(globals, pannel.otpButton);
   const loginPanel = formUtil(globals, pannel.login);
-  const regMobNo = pannel.login.registeredMobileNumber.$value;
+  const regMobNo = pannel.login.mobilePanel.registeredMobileNumber.$value;
 
   welcomeTxt.visible(false);
   otpBtn.visible(false);
   loginPanel.visible(false);
   otpPanel.visible(true);
 
-  // otHelpText-appending the masked registerMobileNumber -
-  const otpHelpText = document.getElementsByClassName('form-otphelptext')[0];
-  const pElement = otpHelpText.querySelector('p');
-  pElement.classList.add('otp-message');
-  pElement.textContent = `${pElement.textContent}${maskNumber(regMobNo, 6)}`;
+  appendMaskedNumber('field-otphelptext', regMobNo);
 };
 
 /**
@@ -62,7 +72,7 @@ const otpGenFailure = (res, globals) => {
   const otpPanel = formUtil(globals, pannel.otp);
   const loginPanel = formUtil(globals, pannel.login);
   const otpBtn = formUtil(globals, pannel.otpButton);
-  const regMobNo = pannel.login.registeredMobileNumber.$value;
+  const regMobNo = pannel.login.mobilePanel.registeredMobileNumber.$value;
   const failurePanel = formUtil(globals, pannel.resultPanel);
 
   welcomeTxt.visible(false);
@@ -71,16 +81,12 @@ const otpGenFailure = (res, globals) => {
   otpBtn.visible(false);
   failurePanel.visible(true);
 
-  // otHelpText-appending the masked registerMobileNumber -
-  const otpHelpText = document.getElementsByClassName('form-otphelptext')[0];
-  const pElement = otpHelpText.querySelector('p');
-  pElement.classList.add('otp-message');
-  pElement.textContent = `${pElement.textContent}${maskNumber(regMobNo, 6)}`;
+  appendMaskedNumber('field-otphelptext', regMobNo);
 };
 
 const OTPGEN = {
   getPayload(globals) {
-    const mobileNo = globals.form.loginPanel.registeredMobileNumber.$value;
+    const mobileNo = globals.form.loginPanel.mobilePanel.registeredMobileNumber.$value;
     const panNo = globals.form.loginPanel.identifierPanel.pan.$value;
     const dob = clearString(globals.form.loginPanel.identifierPanel.dateOfBirth.$value);
     const jsonObj = {};
@@ -175,7 +181,7 @@ const otpValFailure = (res, globals) => {
 
 const OTPVAL = {
   getPayload(globals) {
-    const mobileNo = globals.form.loginPanel.registeredMobileNumber.$value;
+    const mobileNo = globals.form.loginPanel.mobilePanel.registeredMobileNumber.$value;
     const panNo = globals.form.loginPanel.identifierPanel.pan.$value;
     const passwordValue = globals.form.otpPanel.otpNumber.$value;
     const dob = clearString(globals.form.loginPanel.identifierPanel.dateOfBirth.$value);
