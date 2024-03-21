@@ -252,7 +252,7 @@ const checkOfferFailure = (err, globals) => moveCCWizardView('corporateCardWizar
 
 const CHECKOFFER = {
   getPayload(globals) {
-    const mobileNo = globals.form.loginPanel.registeredMobileNumber.$value;
+    const mobileNo = globals.form.loginPanel.mobilePanel.registeredMobileNumber.$value;
     const jsonObj = {};
     jsonObj.requestString = {};
     jsonObj.requestString.mobileNumber = String(mobileNo);
