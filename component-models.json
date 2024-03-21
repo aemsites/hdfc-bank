@@ -605,6 +605,146 @@
             },
             {
                 "component": "container",
+                "name": "repeat",
+                "label": "Repeat Panel",
+                "collapsible": true,
+                "fields": [
+                    {
+                        "component": "boolean",
+                        "name": "repeatable",
+                        "label": "Make panel repeatable",
+                        "valueType": "boolean"
+                    },
+                    {
+                        "component": "number",
+                        "name": "minOccur",
+                        "label": "Minimum repetitions",
+                        "valueType": "number",
+                        "description": "Minimum number of times the panel appears on the form"
+                    },
+                    {
+                        "component": "number",
+                        "name": "maxOccur",
+                        "label": "Maximum repetitions",
+                        "valueType": "number",
+                        "description": "Maximum number of times the panel can appear on the form"
+                    }
+                ]
+            },
+            {
+                "component": "container",
+                "name": "help",
+                "label": "Help Content",
+                "collapsible": true,
+                "fields": [
+                    {
+                        "component": "richtext",
+                        "name": "description",
+                        "label": "Help text",
+                        "valueType": "string"
+                    },
+                    {
+                        "component": "richtext",
+                        "name": "tooltip",
+                        "label": "Short description",
+                        "valueType": "string"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "fragment",
+        "fields": [
+            {
+                "component": "container",
+                "name": "basic",
+                "label": "Basic",
+                "collapsible": false,
+                "fields": [
+                    {
+                        "component": "text-input",
+                        "name": "name",
+                        "label": "Name",
+                        "valueType": "string",
+                        "required": true
+                    },
+                    {
+                        "component": "text-input",
+                        "name": "jcr:title",
+                        "label": "Label",
+                        "valueType": "string"
+                    },
+                    {
+                        "component": "boolean",
+                        "name": "hideTitle",
+                        "label": "Hide title",
+                        "valueType": "boolean"
+                    },
+                    {
+                        "component": "aem-content",
+                        "name": "fragmentPath",
+                        "label": "Fragment reference",
+                        "valueType": "string"
+                    },
+                    {
+                        "component": "text-input",
+                        "name": "dataRef",
+                        "label": "Bind reference",
+                        "valueType": "string"
+                    },
+                    {
+                        "component": "boolean",
+                        "name": "visible",
+                        "label": "Show Component",
+                        "valueType": "boolean",
+                        "value": true
+                    },
+                    {
+                        "component": "boolean",
+                        "name": "enabled",
+                        "label": "Enable Component",
+                        "valueType": "boolean",
+                        "value": true
+                    },
+                    {
+                        "component": "boolean",
+                        "name": "readOnly",
+                        "label": "Read-only",
+                        "valueType": "boolean"
+                    }
+                ]
+            },
+            {
+                "component": "container",
+                "name": "repeat",
+                "label": "Repeat Fragment",
+                "collapsible": true,
+                "fields": [
+                    {
+                        "component": "boolean",
+                        "name": "repeatable",
+                        "label": "Make fragment repeatable",
+                        "valueType": "boolean"
+                    },
+                    {
+                        "component": "number",
+                        "name": "minOccur",
+                        "label": "Minimum repetitions",
+                        "valueType": "number",
+                        "description": "Minimum number of times the fragment appears on the form"
+                    },
+                    {
+                        "component": "number",
+                        "name": "maxOccur",
+                        "label": "Maximum repetitions",
+                        "valueType": "number",
+                        "description": "Maximum number of times the fragment can appear on the form"
+                    }
+                ]
+            },
+            {
+                "component": "container",
                 "name": "help",
                 "label": "Help Content",
                 "collapsible": true,
