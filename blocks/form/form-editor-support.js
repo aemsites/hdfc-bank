@@ -11,7 +11,11 @@ function annotateFormForEditing(formEl, formDefinition) {
                 if (fd && fd.properties) {
                     fieldWrapper.setAttribute('data-aue-type', 'component');
                     fieldWrapper.setAttribute('data-aue-resource', `urn:aemconnection:${fd.properties["fd:path"]}`);
-                    fieldWrapper.setAttribute('data-aue-model', fd.fieldType === 'image'? 'form-image': fd.fieldType);
+                    if (fd.properties["fd:fragment"]) {
+                        fieldWrapper.setAttribute('data-aue-model', "fragment");
+                    } else {
+                        fieldWrapper.setAttribute('data-aue-model', fd.fieldType === 'image'? 'form-image': fd.fieldType);
+                    }
                     fieldWrapper.setAttribute('data-aue-label', fd.name);
                 } else {
                     console.warn(`field ${id} not found in form definition`);
