@@ -16,6 +16,10 @@ body,
   background-color: var(--color-interface-background-secondary);
 }
 
+main {
+  overflow: hidden;
+}
+
 main .form form {
   padding: 40px;
 }
@@ -106,6 +110,11 @@ main
   font-weight: 600;
   font-size: 13px;
   line-height: 20px;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* Form permanent address toogle styling starts */
@@ -332,7 +341,7 @@ main .form .field-successresultpanel > div.field-arnnumber::before {
 }
 
 main .form form .field-corporatecardwizardview.wizard {
-  overflow: auto;
+  overflow: hidden;
   padding: 0;
 
   .plain-text-wrapper b,
@@ -386,6 +395,10 @@ main .form form .field-corporatecardwizardview.wizard {
 
   /* Accordion styling */
   fieldset {
+    .field-prefilledemploymentdetails.field-wrapper {
+      gap: 20px;
+    }
+
     fieldset {
       position: relative;
 
@@ -419,6 +432,42 @@ main .form form .field-corporatecardwizardview.wizard {
   margin-top: -9px;
 }
 
+main .form .field-otppanel {
+  .field-otpnumber {
+    margin-bottom: -10px;
+
+    input {
+      margin-bottom: 0;
+    }
+  }
+
+  .field-otpresend {
+    text-align: left;
+
+    .button {
+      max-width: fit-content;
+      background: var(--color-action-text-primary-default);
+      color: var(--color-action-text-secondary-default);
+      text-align: left;
+    }
+
+    :hover {
+      background: white !important;
+    }
+  }
+
+  .field-maxattempttext {
+    input {
+      text-align: right;
+      border: none;
+      cursor: text;
+      pointer-events: none;
+      margin-top: 0;
+      padding: 0;
+    }
+  }
+}
+
 @media (width <= 750px) {
   main .section.form-container {
     width: 100%;
@@ -430,6 +479,10 @@ main .form form .field-corporatecardwizardview.wizard {
     border-radius: 0;
   }
 
+  main .form form {
+    padding: 28px;
+  }
+
   main .form form .field-corporatecardwizardview.wizard {
     ul.wizard-menu-items {
       width: calc(300%);
@@ -437,6 +490,22 @@ main .form form .field-corporatecardwizardview.wizard {
 
     li.wizard-menu-item {
       width: auto;
+    }
+
+    fieldset {
+      width: 85vw;
+      display: block;
+
+      .panel-wrapper.field-prefilledemploymentdetails {
+        gap: 20px;
+      }
+    }
+
+    :is([data-active='true'], [data-empty='false'], .date-wrapper) > label {
+      margin-left: 5px;
+      font-weight: 400;
+      font-size: 12px;
+      padding: 0;
     }
   }
 
@@ -452,25 +521,15 @@ main .form form .field-corporatecardwizardview.wizard {
   }
 }
 
-main .form .field-otppanel {
-  .field-otpresend {
-    text-align: left;
-
-    .button {
-      max-width: fit-content;
-      background: var(--color-action-text-primary-default);
-      color: var(--color-action-text-secondary-default);
-    }
-
-    :hover {
-      background: white !important;
-    }
+@media (width <= 480px) {
+  main .form form {
+    padding: 20px;
   }
 
-  .field-maxattempttext {
-    input {
-      text-align: right;
-      border: none;
+  main .form .field-otppanel {
+    .field-maxattempttext input {
+      text-align: left;
+      margin-bottom: 0;
     }
   }
 }
