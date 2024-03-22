@@ -201,11 +201,6 @@ main
     color: var(--color-action-text-primary-default);
   }
 
-  .btn-short {
-    max-width: 260px !important;
-    width: 100%;
-  }
-
   :hover {
     background: var(--color-action-background-primary-default) !important;
     border: var(--color-action-border-primary-default);
@@ -218,6 +213,15 @@ main
     ) !important;
     border: var(--color-action-border-primary-disabled) !important;
     color: var(--color-action-text-primary-disabled) !important;
+  }
+}
+
+.btn-short {
+  text-align: center;
+
+  .button {
+    max-width: 260px !important;
+    width: 100%;
   }
 }
 
