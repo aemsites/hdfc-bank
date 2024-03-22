@@ -51,10 +51,6 @@ main .form {
   .date-wrapper .field-description {
     display: none;
   }
-
-  input[type='text']:disabled > label {
-    background-color: green !important;
-  }
 }
 
 /* loader for app show hide on api call */
