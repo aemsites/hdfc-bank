@@ -130,7 +130,9 @@ const OTPGEN = {
  * @param {object} globals - Global variables object.
  * @param {object} panel - Panel object.
  */
-const formFieldAutoFill = (res, globals, panel) => {
+const personalDetailsPreFillFromBRE = (res, globals, panel) => {
+  const dataAttributeEmpty = 'data-empty';
+  const ancestorClassName = 'field-wrapper';
   // Extract personal details from globals
   const personalDetails = globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.personalDetails;
 
@@ -142,26 +144,25 @@ const formFieldAutoFill = (res, globals, panel) => {
   // Extract gender from response
   const custGender = breCheckAndFetchDemogResponse?.VDCUSTGENDER;
   globals.functions.setProperty(personalDetails.gender, { value: custGender });
-  setDataAttributeOnClosestAncestor(personalDetails.gender._data.$_name, custGender, 'data-empty', false, 'field-wrapper');
+  setDataAttributeOnClosestAncestor(personalDetails.gender._data.$_name, custGender, dataAttributeEmpty, false, ancestorClassName);
 
   // Extract name from response
-  const { VDCUSTFULLNAME: FullName } = breCheckAndFetchDemogResponse || {};
-  const [firstName, ...remainingName] = FullName.split(' ');
+  const { VDCUSTFULLNAME: fullName } = breCheckAndFetchDemogResponse || {};
+  const [firstName, ...remainingName] = fullName.split(' ');
   const lastName = remainingName.pop() || '';
   const middleName = remainingName.join(' ');
-  console.log(document.getElementsByName('test')[0]);
   globals.functions.setProperty(personalDetails.firstName, { value: firstName });
-  setDataAttributeOnClosestAncestor(personalDetails.firstName._data.$_name, firstName, 'data-empty', false, 'field-wrapper');
+  setDataAttributeOnClosestAncestor(personalDetails.firstName._data.$_name, firstName, dataAttributeEmpty, false, ancestorClassName);
   globals.functions.setProperty(personalDetails.lastName, { value: lastName });
-  setDataAttributeOnClosestAncestor(personalDetails.lastName._data.$_name, lastName, 'data-empty', false, 'field-wrapper');
+  setDataAttributeOnClosestAncestor(personalDetails.lastName._data.$_name, lastName, dataAttributeEmpty, false, ancestorClassName);
   globals.functions.setProperty(personalDetails.middleName, { value: middleName });
-  setDataAttributeOnClosestAncestor(personalDetails.middleName._data.$_name, middleName, 'data-empty', false, 'field-wrapper');
+  setDataAttributeOnClosestAncestor(personalDetails.middleName._data.$_name, middleName, dataAttributeEmpty, false, ancestorClassName);
 
   // Extract date of birth or ITNBR
   // const custDate = panel.login.pan.$value ? breCheckAndFetchDemogResponse?.DDCUSTDATEOFBIRTH : breCheckAndFetchDemogResponse?.VDCUSTITNBR;
   // globals.functions.setProperty(personalDetails.dobPersonalDetails, { value: panel.login.pan.$value ? convertDateToMmmDdYyyy(custDate.toString()) : custDate });
   const custDate = breCheckAndFetchDemogResponse?.DDCUSTDATEOFBIRTH;
-  globals.functions.setProperty(personalDetails.dobPersonalDetails, { value: convertDateToMmmDdYyyy(custDate.toString()) });
+  globals.functions.setProperty(personalDetails.dobPersonalDetails, { value: convertDateToMmmDdYyyy(custDate?.toString()) });
 
   // Create address string and set it to form field
   const completeAddress = [
@@ -204,7 +205,7 @@ const otpValSuccess = (res, globals) => {
   otpPanel.visible(false);
   ccWizardPannel.visible(true);
   if (currentFormContext.existingCustomer === 'Y') {
-    formFieldAutoFill(res, globals, pannel);
+    personalDetailsPreFillFromBRE(res, globals, pannel);
   }
   (async () => {
     const myImportedModule = await import('./cc.js');
@@ -306,7 +307,7 @@ const otpValFailure = (res, globals) => {
     };
 
     // For development passing mock data "result". Need to pass "res" in real case
-    formFieldAutoFill(result, globals, pannel);
+    personalDetailsPreFillFromBRE(result, globals, pannel);
   }
   (async () => {
     const myImportedModule = await import('./cc.js');
