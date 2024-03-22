@@ -411,6 +411,7 @@ const CHECKOFFER = {
   path: urlPath('/content/hdfc_cc_unified/api/checkoffer.json'),
   loadingText: 'Checking offers for you...',
 };
+
 /**
  * Moves the wizard view to the "selectKycPaymentPanel" step.
  */
@@ -452,6 +453,7 @@ const RESENDOTP = {
   path: OTPGEN.path,
   loadingText: 'Please wait otp sending again...',
 };
+
 export {
   OTPGEN, OTPVAL, CHECKOFFER, RESENDOTP, getThisCard,
 };

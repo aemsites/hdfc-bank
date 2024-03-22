@@ -1,6 +1,7 @@
 import {
   OTPGEN, OTPVAL, RESENDOTP, CHECKOFFER, getThisCard,
 } from '../creditcards/corporate-creditcardFunctions.js';
+
 import { restAPICall } from './makeRestAPI.js';
 /**
  * generates the otp
