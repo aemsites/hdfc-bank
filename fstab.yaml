@@ -1,5 +1,5 @@
 mountpoints:
   /:
-    url: https://author-p10652-e203356-cmstg.adobeaemcloud.com/
+    url: https://author-p10652-e203356-cmstg.adobeaemcloud.com/bin/franklin.delivery/aemsites/hdfc-bank/ue-develop
     type: "markup"
-    suffix: ".md.html?wcmmode=disabled"
+    suffix: ".html"
