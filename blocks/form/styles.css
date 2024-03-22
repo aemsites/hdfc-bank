@@ -234,6 +234,13 @@ main
   }
 }
 
+.btn-long {
+  .button {
+    width: 100%;
+    max-width: none;
+  }
+}
+
 .button-wrapper.field-vkycproceedbutton {
   width: 400px;
   text-align: center;
@@ -437,7 +444,10 @@ main .form .field-otppanel {
     margin-bottom: -10px;
 
     input {
+      text-align: center;
       margin-bottom: 0;
+      letter-spacing: 10vw;
+      caret-color: transparent;
     }
   }
 
@@ -509,11 +519,19 @@ main .form .field-otppanel {
     }
   }
 
-  main .form .field-errorresultpanel,
-  main .form .field-successresultpanel {
-    > div:not(.field-errorresulttextlabel) {
-      max-width: 100%;
+  main .form .field-otppanel {
+    .field-otpnumber {
+      input {
+        padding: 0 0 0 2vw;
+        letter-spacing: 14vw;
+      }
     }
+  }
+
+  main .form .field-errorresultpanel, main .form .field-successresultpanel {
+      > div:not(.field-errorresulttextlabel) {
+          max-width: 100%;
+      }
 
     > .field-wrapper {
       border-radius: 0;
@@ -530,6 +548,12 @@ main .form .field-otppanel {
     .field-maxattempttext input {
       text-align: left;
       margin-bottom: 0;
+    }
+    
+    .field-otpnumber {
+      input {
+        letter-spacing: 13vw;
+      }
     }
   }
 }

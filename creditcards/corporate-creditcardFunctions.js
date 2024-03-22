@@ -370,6 +370,9 @@ const resendOtpSuccess = (res, globals) => {
   if (!resendOtpCount) {
     // resendBtn.enabled(false); // disabling functionality button willl exist in DOM
     resendBtn.visible(false); // button will not exist in DOM
+    const errMsg = document.querySelector('.field-maxattempttext');
+    errMsg.classList.remove('col-6');
+    errMsg.classList.add('col-12');
   }
 };
 
