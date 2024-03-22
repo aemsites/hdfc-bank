@@ -1,10 +1,11 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable prefer-destructuring */
 /* eslint-disable no-unused-vars */
 /* eslint-disable max-len */
 /* eslint no-console: ["error", { allow: ["warn", "error", "log"] }] */
 import createJourneyId from '../common/journey-utils.js';
 import {
-  formUtil, maskNumber, urlPath, clearString, getTimeStamp, convertDateToMmmDdYyyy,
+  formUtil, maskNumber, urlPath, clearString, getTimeStamp, convertDateToMmmDdYyyy,setDataAttributeOnClosestAncestor,
 } from '../common/formutils.js';
 
 const journeyName = 'CORPORATE_CREDIT_CARD';
@@ -140,26 +141,27 @@ const formFieldAutoFill = (res, globals, panel) => {
 
   // Extract gender from response
   const custGender = breCheckAndFetchDemogResponse?.VDCUSTGENDER;
-  const genderMap = {
-    M: 'Male',
-    F: 'Female',
-  };
-
-  const gender = genderMap[custGender] || 'Others';
-  globals.functions.setProperty(personalDetails.gender, { value: gender });
+  globals.functions.setProperty(personalDetails.gender, { value: custGender });
+  setDataAttributeOnClosestAncestor(personalDetails.gender._data.$_name, custGender, 'data-empty', false, 'field-wrapper');
 
   // Extract name from response
   const { VDCUSTFULLNAME: FullName } = breCheckAndFetchDemogResponse || {};
   const [firstName, ...remainingName] = FullName.split(' ');
   const lastName = remainingName.pop() || '';
   const middleName = remainingName.join(' ');
+  console.log(document.getElementsByName('test')[0]);
   globals.functions.setProperty(personalDetails.firstName, { value: firstName });
+  setDataAttributeOnClosestAncestor(personalDetails.firstName._data.$_name, firstName, 'data-empty', false, 'field-wrapper');
   globals.functions.setProperty(personalDetails.lastName, { value: lastName });
+  setDataAttributeOnClosestAncestor(personalDetails.lastName._data.$_name, lastName, 'data-empty', false, 'field-wrapper');
   globals.functions.setProperty(personalDetails.middleName, { value: middleName });
+  setDataAttributeOnClosestAncestor(personalDetails.middleName._data.$_name, middleName, 'data-empty', false, 'field-wrapper');
 
   // Extract date of birth or ITNBR
-  const custDate = panel.login.pan.$value ? breCheckAndFetchDemogResponse?.DDCUSTDATEOFBIRTH : breCheckAndFetchDemogResponse?.VDCUSTITNBR;
-  globals.functions.setProperty(personalDetails.dobPersonalDetails, { value: panel.login.pan.$value ? convertDateToMmmDdYyyy(custDate.toString()) : custDate });
+  // const custDate = panel.login.pan.$value ? breCheckAndFetchDemogResponse?.DDCUSTDATEOFBIRTH : breCheckAndFetchDemogResponse?.VDCUSTITNBR;
+  // globals.functions.setProperty(personalDetails.dobPersonalDetails, { value: panel.login.pan.$value ? convertDateToMmmDdYyyy(custDate.toString()) : custDate });
+  const custDate = breCheckAndFetchDemogResponse?.DDCUSTDATEOFBIRTH;
+  globals.functions.setProperty(personalDetails.dobPersonalDetails, { value: convertDateToMmmDdYyyy(custDate.toString()) });
 
   // Create address string and set it to form field
   const completeAddress = [
