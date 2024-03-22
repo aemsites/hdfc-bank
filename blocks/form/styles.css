@@ -384,6 +384,9 @@ main .form .field-otppanel {
 
     input {
       margin-bottom: 0;
+      letter-spacing: 10vw;
+      padding-left: 5vw;
+      caret-color: transparent;
     }
   }
 
@@ -409,7 +412,6 @@ main .form .field-otppanel {
       cursor: text;
       pointer-events: none;
       margin-top: 0;
-      padding: 0;
     }
   }
 }
@@ -455,6 +457,15 @@ main .form .field-otppanel {
     }
   }
 
+  main .form .field-otppanel {
+    .field-otpnumber {
+      input {
+        padding: 0 0 0 2vw;
+        letter-spacing: 14vw;
+      }
+    }
+  }
+
   main .form .field-errorresultpanel, main .form .field-successresultpanel {
       > div:not(.field-errorresulttextlabel) {
           max-width: 100%;
@@ -475,6 +486,12 @@ main .form .field-otppanel {
     .field-maxattempttext input {
       text-align: left;
       margin-bottom: 0;
+    }
+    
+    .field-otpnumber {
+      input {
+        letter-spacing: 13vw;
+      }
     }
   }
 }
