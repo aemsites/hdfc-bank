@@ -7,7 +7,7 @@
  * @return {string}
  */
 
-import { getOTP, otpValidation } from '../../common/functions.js';
+import { getOTP, otpValidation, resendOTP } from '../../common/functions.js';
 
 function getFullName(firstname, lastname) {
   // eslint-disable-next-line no-param-reassign
@@ -107,5 +107,5 @@ function days(endDate, startDate) {
 
 // eslint-disable-next-line import/prefer-default-export
 export {
-  getFullName, onWizardInit, getOTP, otpValidation, days,
+  getFullName, onWizardInit, getOTP, otpValidation, days, resendOTP,
 };

@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /**
  * Generates the full API path based on the environment.
  * @param {string} uri - The endpoint to be appended to the base URL.
@@ -5,6 +6,9 @@
  */
 
 const DEFAULT_BASE_PATH = 'https://applyonlinedev.hdfcbank.com'; // baseApiUrl for default
+
+const DATA_ATTRIBUTE_EMPTY = 'data-empty';
+const ANCESTOR_CLASS_NAME = 'field-wrapper';
 
 const urlPath = (path) => (window.location.host.includes('localhost') ? `${DEFAULT_BASE_PATH}${path}` : `${window.location.origin}${path}`);
 
@@ -54,12 +58,23 @@ const formUtil = (globalObj, panelName) => ({
     globalObj.functions.setProperty(panelName, { enabled: val });
   },
   /**
-    * Sets the value of the panel's respective fields.
-    * @param {any} val
-    * @returns {void}
-    */
-  setValue: (val) => {
+ * Sets the value of a panel and updates the data attribute if specified.
+ * @param {any} val - The value to set for the panel.
+ * @param {Object} changeDataAttr - An object containing information about whether to change the data attribute.
+ * @param {boolean} changeDataAttr.attrChange - Indicates whether to change the data attribute.
+ * @param {string} changeDataAttr.value - The value to set for the data attribute.
+ */
+  setValue: (val, changeDataAttr) => {
     globalObj.functions.setProperty(panelName, { value: val });
+    if (changeDataAttr?.attrChange && val) {
+      const element = document.getElementsByName(panelName._data.$_name)?.[0];
+      if (element) {
+        const closestAncestor = element.closest(`.${ANCESTOR_CLASS_NAME}`);
+        if (closestAncestor) {
+          closestAncestor.setAttribute(DATA_ATTRIBUTE_EMPTY, changeDataAttr.value);
+        }
+      }
+    }
   },
 });
 
