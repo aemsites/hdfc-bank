@@ -134,7 +134,7 @@ const personalDetailsPreFillFromBRE = (res, globals, panel) => {
   const personalDetails = globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.personalDetails;
 
   // Extract breCheckAndFetchDemogResponse from res
-  const breCheckAndFetchDemogResponse = res.otpValidationResponse?.demogResponse?.BRECheckAndFetchDemogResponse;
+  const breCheckAndFetchDemogResponse = res?.demogResponse?.BRECheckAndFetchDemogResponse;
 
   if (!breCheckAndFetchDemogResponse) return;
 
@@ -309,7 +309,7 @@ const otpValFailure = (res, globals) => {
     };
 
     // For development passing mock data "result". Need to pass "res" in real case
-    personalDetailsPreFillFromBRE(result, globals, pannel);
+    personalDetailsPreFillFromBRE(result.otpValidationResponse, globals, pannel);
   }
   (async () => {
     const myImportedModule = await import('./cc.js');
