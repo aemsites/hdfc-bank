@@ -3,26 +3,33 @@
   --hdfc-stepper-width: 42px;
   --hdfc-stepper-height: 3px;
   --hdfc-wizard-step-legend-padding: 0;
-  --hdfc-wizard-step-legend-width: clamp(100px, calc(308%/var(--wizard-step-count)), 330px);
+  --hdfc-wizard-step-legend-width: clamp(
+    100px,
+    calc(308% / var(--wizard-step-count)),
+    330px
+  );
   --loader-image-url: url('loader.gif');
 }
 
-body, .section.form-container {
-    background-color: var(--color-interface-background-secondary);
+body,
+.section.form-container {
+  background-color: var(--color-interface-background-secondary);
 }
 
-main { overflow: hidden; }
+main {
+  overflow: hidden;
+}
 
 main .form form {
   padding: 40px;
 }
 
 main .form.block {
-    border-radius: var(--form-border-radius);
+  border-radius: var(--form-border-radius);
 }
 
 main .section.form-container {
-    max-width: var(--form-max-width);
+  max-width: var(--form-max-width);
 }
 
 main .form select {
@@ -33,7 +40,10 @@ main .form select {
 }
 
 main .form {
-  input[type="text"], input[type="number"], input[type="email"], input[type="date"] {
+  input[type='text'],
+  input[type='number'],
+  input[type='email'],
+  input[type='date'] {
     height: var(--form-input-height);
     padding: var(--form-input-padding);
     border: 1px solid var(--color-input-border-default);
@@ -47,47 +57,51 @@ main .form {
   }
 }
 
-/* loader for app show hide on api call */ 
+/* loader for app show hide on api call */
 .preloader::before,
 .preloader::after {
-content: '';
-position: fixed;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-z-index: 9999;
-display: flex;
-align-items: center;
-justify-content: center;
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .preloader::before {
-/* preLoading-text-css */
-content: attr(loader-text);
-font-size: 16px;
-color: var(--form-label-title-color);
-font-weight: var(--form-title-font-weight);
-z-index: 10000;
-top: -100px;
+  /* preLoading-text-css */
+  content: attr(loader-text);
+  font-size: 16px;
+  color: var(--form-label-title-color);
+  font-weight: var(--form-title-font-weight);
+  z-index: 10000;
+  top: -100px;
 }
 
 .preloader::after {
   /* preLoading-gif-image */
-background: rgb(255 255 255 / 80%) var(--loader-image-url) no-repeat center center;
+  background: rgb(255 255 255 / 80%) var(--loader-image-url) no-repeat center
+    center;
 }
 
 /* Base style for labels */
 main .form :not(.checkbox-wrapper, .radio-wrapper) > label {
   margin: 20px;
   position: absolute;
-  transition: .3s cubic-bezier(.25,.8,.5,1);
+  transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
   font-weight: 400;
   font-size: 14px;
 }
 
 /* Style for labels when input is active or not empty */
-main .form :is([data-active='true'], [data-empty='false'], .date-wrapper) > label {
+main
+  .form
+  :is([data-active='true'], [data-empty='false'], .date-wrapper)
+  > label {
   color: var(--label-color);
   transform: translateY(-22px);
   z-index: 1;
@@ -105,45 +119,72 @@ main .form :is([data-active='true'], [data-empty='false'], .date-wrapper) > labe
 
 /* Form permanent address toogle styling starts */
 
-main .form form .field-permanentaddress .field-permanentaddresstoggle{
+main .form form .field-permanentaddress .field-permanentaddresstoggle {
   align-items: center;
 }
 
-main .form form .field-permanentaddress .field-permanentaddresstoggle input[type="checkbox"] {
+main
+  .form
+  form
+  .field-permanentaddress
+  .field-permanentaddresstoggle
+  input[type='checkbox'] {
   display: none;
 }
 
-main .form form .field-permanentaddress .field-permanentaddresstoggle .field-label {
- display: flex;
-   flex-basis: 40px;
-   align-items: center;
- background-color: #9CA3AF;
- color: #fff;
- cursor: pointer;
- border-radius: 12px;
- height: 24px;
- width: 40px;
+main
+  .form
+  form
+  .field-permanentaddress
+  .field-permanentaddresstoggle
+  .field-label {
+  display: flex;
+  flex-basis: 40px;
+  align-items: center;
+  background-color: #9ca3af;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 12px;
+  height: 24px;
+  width: 40px;
 }
 
-main .form form .field-permanentaddress .field-permanentaddresstoggle input[type="checkbox"]:checked + .field-label {
- background-color: #1C3FCA;
+main
+  .form
+  form
+  .field-permanentaddress
+  .field-permanentaddresstoggle
+  input[type='checkbox']:checked
+  + .field-label {
+  background-color: #1c3fca;
 }
 
-main .form form .field-permanentaddress .field-permanentaddresstoggle .field-label::before {
- content: '';
- display: inline-block;
- width: 20px;
- height: 20px;
- background-color: #fff;
- border-radius: 50%;
- margin-right: 10px;
- transition: transform 0.3s;
- margin-left: 1px;
+main
+  .form
+  form
+  .field-permanentaddress
+  .field-permanentaddresstoggle
+  .field-label::before {
+  content: '';
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-color: #fff;
+  border-radius: 50%;
+  margin-right: 10px;
+  transition: transform 0.3s;
+  margin-left: 1px;
 }
 
-main .form form .field-permanentaddress .field-permanentaddresstoggle input[type="checkbox"]:checked + .field-label::before {
- transform: translateX(20px);
- margin-right: 21px;
+main
+  .form
+  form
+  .field-permanentaddress
+  .field-permanentaddresstoggle
+  input[type='checkbox']:checked
+  + .field-label::before {
+  transform: translateX(20px);
+  margin-right: 21px;
 }
 
 /* Form permanent address toogle styling ends */
@@ -169,14 +210,16 @@ main .form form .field-permanentaddress .field-permanentaddresstoggle input[type
     color: var(--color-action-text-primary-default);
   }
 
-  :hover{
+  :hover {
     background: var(--color-action-background-primary-default) !important;
     border: var(--color-action-border-primary-default);
     color: var(--color-action-text-primary-default);
   }
 
-  :disabled{
-    background-color: var(--color-action-background-primary-disabled) !important;
+  :disabled {
+    background-color: var(
+      --color-action-background-primary-disabled
+    ) !important;
     border: var(--color-action-border-primary-disabled) !important;
     color: var(--color-action-text-primary-disabled) !important;
   }
@@ -191,78 +234,91 @@ main .form form .field-permanentaddress .field-permanentaddresstoggle input[type
   }
 }
 
+.btn-long {
+  .button {
+    width: 100%;
+    max-width: none;
+  }
+}
+
 .button-wrapper.field-vkycproceedbutton {
   width: 400px;
   text-align: center;
   display: block;
 }
 
-.text-center{
+.text-center {
   text-align: center;
 }
 
-.text-left{
+.text-left {
   text-align: left;
 }
 
-.text-right{
+.text-right {
   text-align: right;
 }
 
 /* Error/Success Result Panel */
 main .form .field-resultpanel {
-  p, label {
-      font-weight: 400;
-      font-size: 14px;
-      line-height: 20px;
-      margin: 4px;
+  p,
+  label {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    margin: 4px;
   }
 }
 
 main .form .field-errorresultpanel .field-errorresulttextlabel > p::before {
-  background-image: url("../../icons/hdfc-error-icon.svg");
+  background-image: url('../../icons/hdfc-error-icon.svg');
 }
 
 main .form .field-successresultpanel .field-successresulttextlabel > p::before {
-  background-image: url("../../icons/hdfc-success-icon.svg");
+  background-image: url('../../icons/hdfc-success-icon.svg');
 }
 
-main .form .field-errorresultpanel, main .form .field-successresultpanel {
+main .form .field-errorresultpanel,
+main .form .field-successresultpanel {
   padding-bottom: 20px;
 
   > .field-wrapper {
-      border-radius: var(--form-border-radius) var(--form-border-radius) 0 0;
+    border-radius: var(--form-border-radius) var(--form-border-radius) 0 0;
   }
 
-  .field-errorresulttextlabel, .field-successresulttextlabel {
-      background-color: var(--color-interface-background-quaternary);
-      margin: -40px -40px 0;
-      
-      p {
-        padding: 20px 0 10px;
-        color: var(--color-interface-text-tertiary);
-        text-align: center;
-      }
+  .field-errorresulttextlabel,
+  .field-successresulttextlabel {
+    background-color: var(--color-interface-background-quaternary);
+    margin: -40px -40px 0;
 
-      > p::before {
-          background-size: cover;
-          display: inline-block;
-          width: 80px; 
-          height: 80px;
-          content:"";
-      }
+    p {
+      padding: 20px 0 10px;
+      color: var(--color-interface-text-tertiary);
+      text-align: center;
+    }
+
+    > p::before {
+      background-size: cover;
+      display: inline-block;
+      width: 80px;
+      height: 80px;
+      content: '';
+    }
   }
 }
 
 main .form .field-errorresultpanel > div:not(.field-errorresulttextlabel),
-main .form .field-successresultpanel > div:not(.field-successresulttextlabel, .field-arnnumber) {
+main
+  .form
+  .field-successresultpanel
+  > div:not(.field-successresulttextlabel, .field-arnnumber) {
   display: flex;
   max-width: 506px;
   margin: 0 auto;
   text-align: center;
 
   p > p:not(:first-child) {
-      padding-top: 15px
+    padding-top: 15px;
   }
 }
 
@@ -273,18 +329,21 @@ main .form .field-successresultpanel .field-arnnumber {
   border-bottom: 1px solid rgb(236 237 243);
 
   input {
-      max-width: 45vw;
-      margin: 0 0 0 55px;
-      border: none;
-      font-weight: 600;
-      font-size: 18px;
-      line-height: 28px;
+    max-width: 45vw;
+    margin: 0 0 0 55px;
+    border: none;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 28px;
   }
 }
 
-main .form .field-errorresultpanel > div:not(.field-errorresulttextlabel)::before,
-main .form .field-successresultpanel > div.field-arnnumber::before{
-  content: url("../../icons/result-list-icon.svg");
+main
+  .form
+  .field-errorresultpanel
+  > div:not(.field-errorresulttextlabel)::before,
+main .form .field-successresultpanel > div.field-arnnumber::before {
+  content: url('../../icons/result-list-icon.svg');
   padding-right: 15px;
 }
 
@@ -292,7 +351,8 @@ main .form form .field-corporatecardwizardview.wizard {
   overflow: hidden;
   padding: 0;
 
-  .plain-text-wrapper b, legend {
+  .plain-text-wrapper b,
+  legend {
     font-weight: 600;
     font-size: 20px;
   }
@@ -313,7 +373,7 @@ main .form form .field-corporatecardwizardview.wizard {
   }
 
   li.wizard-menu-item:last-child {
-      margin-right: -1vw;
+    margin-right: -1vw;
   }
 
   li.wizard-menu-item::before {
@@ -322,8 +382,8 @@ main .form form .field-corporatecardwizardview.wizard {
   }
 
   li.wizard-menu-active-item::before {
-    background-image: url("../../icons/current-step-indicator.svg");
-    content: "";
+    background-image: url('../../icons/current-step-indicator.svg');
+    content: '';
     background-size: cover;
     background-color: unset;
     color: unset;
@@ -331,7 +391,7 @@ main .form form .field-corporatecardwizardview.wizard {
   }
 
   .stepper-style::after {
-    content: "";
+    content: '';
     display: block;
     width: var(--hdfc-stepper-width);
     height: var(--hdfc-stepper-height);
@@ -346,7 +406,7 @@ main .form form .field-corporatecardwizardview.wizard {
       gap: 20px;
     }
 
-    fieldset { 
+    fieldset {
       position: relative;
 
       legend {
@@ -354,26 +414,27 @@ main .form form .field-corporatecardwizardview.wizard {
         height: 60px;
         padding: 16px 24px;
         border-radius: 12px;
-        }
-      }   
+      }
+    }
   }
 
   > .wizard-button-wrapper {
-    .field-back, .field-next {
+    .field-back,
+    .field-next {
       display: none;
     }
   }
 }
 
 .hdfc-accordion-style::after {
-  content: url("../../icons/accordion-expand-icon.svg");
+  content: url('../../icons/accordion-expand-icon.svg');
   display: inline;
   position: absolute;
   right: 1vw;
   transition: transform 0s;
 }
 
-.accordion-collapse::after { 
+.accordion-collapse::after {
   transform: rotate(-180deg);
   margin-top: -9px;
 }
@@ -383,7 +444,10 @@ main .form .field-otppanel {
     margin-bottom: -10px;
 
     input {
+      text-align: center;
       margin-bottom: 0;
+      letter-spacing: 10vw;
+      caret-color: transparent;
     }
   }
 
@@ -393,15 +457,15 @@ main .form .field-otppanel {
     .button {
       max-width: fit-content;
       background: var(--color-action-text-primary-default);
-      color: var(--color-action-text-secondary-default); 
+      color: var(--color-action-text-secondary-default);
       text-align: left;
     }
 
     :hover {
-        background: white !important;
+      background: white !important;
     }
   }
-  
+
   .field-maxattempttext {
     input {
       text-align: right;
@@ -416,13 +480,13 @@ main .form .field-otppanel {
 
 @media (width <= 750px) {
   main .section.form-container {
-      width: 100%;
-      margin: 0 auto;
-      max-width: 100%;
+    width: 100%;
+    margin: 0 auto;
+    max-width: 100%;
   }
 
   main .form.block {
-      border-radius: 0;
+    border-radius: 0;
   }
 
   main .form form {
@@ -455,14 +519,23 @@ main .form .field-otppanel {
     }
   }
 
+  main .form .field-otppanel {
+    .field-otpnumber {
+      input {
+        padding: 0 0 0 2vw;
+        letter-spacing: 14vw;
+      }
+    }
+  }
+
   main .form .field-errorresultpanel, main .form .field-successresultpanel {
       > div:not(.field-errorresulttextlabel) {
           max-width: 100%;
       }
 
-      > .field-wrapper {
-          border-radius: 0;
-      }
+    > .field-wrapper {
+      border-radius: 0;
+    }
   }
 }
 
@@ -475,6 +548,12 @@ main .form .field-otppanel {
     .field-maxattempttext input {
       text-align: left;
       margin-bottom: 0;
+    }
+    
+    .field-otpnumber {
+      input {
+        letter-spacing: 13vw;
+      }
     }
   }
 }
