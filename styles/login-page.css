@@ -1,3 +1,7 @@
+:root {
+    --form-text-field-horz-gap: 20px;
+}
+
 main {
     background-color: var(--color-interface-background-quinary)
 }
@@ -44,6 +48,7 @@ main img {
 .header-wrapper {
     height: 48px;
     background: var(--color-interface-background-tertiary);
+    border-bottom: 1px solid var(--color-input-text-default);
 }
 
 .cmp-container-container {
@@ -54,8 +59,12 @@ main img {
     max-width: 100% !important;
 }
 
+.field-checkboxconsent1 {
+    margin-bottom: -1em !important;
+}
+
 .field-checkboxconsent1 p,
-.field-checkboxconsent2 label {
+.field-checkboxconsent2 label p {
     font-size: var(--body-sm-font-size) !important;
     font-weight: var(--font-weight-regular);
     line-height: var(--font-linehight-regular);
@@ -82,19 +91,21 @@ main img {
             line-height: var(--font-linehight-regular);
             text-align: left;
             color: var(--color-interface-text-quaternary) !important;
+            margin-top: 6px;
         }
 
-        .field-registeredmobilenumber {
-            margin-top: 4px;
+        .field-registeredmobilenumber{
+            margin-top: -19px;
         }
+
     }
 
     .field-identifierpanel {
         margin-top: 5px !important;
 
         .radio-group-wrapper {
-            margin-top: -10px;
-            margin-bottom: 27px;
+            margin-top: -2px;
+            margin-bottom: 13px;
 
             legend {
                 max-width: fit-content;
@@ -103,7 +114,7 @@ main img {
                 margin-bottom: 0;
                 font-size: var(--body-md-font-size) !important;
                 font-weight: var(--font-weight-medium);
-                line-height: var (--font-linehight-regular);
+                line-height: var(--font-linehight-regular);
                 text-align: left;
                 color: var(--color-interface-text-quaternary) !important;
             }
@@ -115,11 +126,10 @@ main img {
         }
 
         .field-pan input {
-            font-size: var(--body-lg-font-size);
+            font-size: var(--body-md-font-size);
             font-weight: var(--font-weight-medium);
             line-height: var(--font-linehight-medium);
-            ;
-            letter-spacing: 30PX;
+            letter-spacing: 21PX;
             text-align: left;
             color: var(--color-input-text-default) !important;
             text-transform: uppercase;
@@ -131,7 +141,7 @@ main img {
 
         .field-dateofbirth,
         .field-pan {
-            margin-top: -9px !important;
+            margin-top: -19px !important;
         }
 
         .field-dateofbirth input {
@@ -166,10 +176,14 @@ main img {
 
 }
 
+main .form form .panel-wrapper {
+    gap: var(--form-text-field-horz-gap) !important;
+}
+
 /***** mobile large ********/
 @media (320px <=width <=480px) {
     .field-welcometextlabel {
-        margin-bottom: 1.8em !important;
+        margin-bottom: 24px !important;
     }
 
     main .form form {
@@ -179,6 +193,11 @@ main img {
     .form.block>div>div>form,
     .form.block>div>div>form fieldset {
         display: block;
+    }
+
+    .field-dateofbirth,
+    .field-pan {
+        margin-top: -12px !important;
     }
 
     .field-loginpanel {
@@ -206,10 +225,61 @@ main img {
         margin-top: 1em !important;
     }
 
+    .form-container {
+        box-shadow: none;
+    }
+
+    .field-pan input {
+        letter-spacing: 17px !important;
+    }
+
+    .field-checkboxconsent2 {
+        margin-top: 1em !important;
+    }
+
+    .field-registeredmobilenumber {
+        margin-top: 1px !important;
+    }
+
 }
 
 @media (481px <=width <=768px) {
     main .form form {
-        gap: var(--form-field-horz-gap20) !important;
+        padding: 20px !important;
+    }
+
+    .form.block>div>div>form,
+    .form.block>div>div>form fieldset {
+        display: block;
+    }
+
+    .radio-group-wrapper {
+        margin-top: 1px !important;
+        margin-bottom: 25px !important;
+    }
+
+    .field-welcometextlabel {
+        margin-bottom: 24px;
+    }
+
+    .form-container {
+        box-shadow: none;
+    }
+
+    .field-checkboxconsent2 {
+        margin-top: 1em !important;
+    }
+
+    .field-registeredmobilenumber {
+        margin-top: 1px !important;
+    }
+
+    .field-dateofbirth,
+    .field-pan {
+        margin-top: -12px !important;
+    }
+
+    .button-wrapper{
+        margin-top: 1em !important;
     }
 }
