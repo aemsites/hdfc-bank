@@ -82,6 +82,49 @@ const getTimeStamp = (currentTime) => {
   return formattedDatetime;
 };
 
+/**
+ * Converts a date string from 'YYYYMMDD' format to a localized date string.
+ * @param {string} date - The date string in 'YYYYMMDD' format.
+ * @returns {string} The formatted date string in 'MMM DD, YYYY' format.
+ */
+const convertDateToMmmDdYyyy = (date) => {
+  // Extract year, month, and day parts from the input date string
+  const year = date.slice(0, 4);
+  const month = date.slice(4, 6).padStart(2, '0'); // Ensures zero padding for single-digit months
+  const day = date.slice(6, 8).padStart(2, '0'); // Ensures zero padding for single-digit days
+
+  // Define options for the localized date string
+  const options = { month: 'short', day: 'numeric', year: 'numeric' };
+
+  // Create a new Date object and convert it to a localized date string
+  return new Date(year, month - 1, day).toLocaleDateString('en-US', options);
+};
+
+/**
+ * Sets data attribute and value on the closest ancestor element with the specified class name.
+ * @param {string} elementName - The name of the element to search for.
+ * @param {string} fieldValue - The value to check for existence before setting data.
+ * @param {string} dataAttribute - The name of the data attribute to set.
+ * @param {string} value - The value to set for the data attribute.
+ * @param {string} ancestorClassName - The class name of the ancestor element where the data attribute will be set.
+ */
+const setDataAttributeOnClosestAncestor = (elementName, fieldValue, dataAttribute, value, ancestorClassName) => {
+  if (!fieldValue) {
+    return;
+  }
+
+  // Get the element by name
+  const element = document.getElementsByName(elementName)?.[0];
+
+  // If element exists, set data attribute on the closest ancestor with the specified class name
+  if (element) {
+    const closestAncestor = element.closest(`.${ancestorClassName}`);
+    if (closestAncestor) {
+      closestAncestor.setAttribute(dataAttribute, value);
+    }
+  }
+};
+
 export {
-  urlPath, maskNumber, clearString, formUtil, getTimeStamp,
+  urlPath, maskNumber, clearString, formUtil, getTimeStamp, convertDateToMmmDdYyyy, setDataAttributeOnClosestAncestor,
 };
