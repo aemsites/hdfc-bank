@@ -5,7 +5,7 @@
 /* eslint no-console: ["error", { allow: ["warn", "error", "log"] }] */
 import createJourneyId from '../common/journey-utils.js';
 import {
-  formUtil, maskNumber, urlPath, clearString, getTimeStamp, convertDateToMmmDdYyyy,setDataAttributeOnClosestAncestor,
+  formUtil, maskNumber, urlPath, clearString, getTimeStamp, convertDateToMmmDdYyyy, setDataAttributeOnClosestAncestor,
 } from '../common/formutils.js';
 
 const journeyName = 'CORPORATE_CREDIT_CARD';

@@ -126,5 +126,5 @@ const setDataAttributeOnClosestAncestor = (elementName, fieldValue, dataAttribut
 };
 
 export {
-  urlPath, maskNumber, clearString, formUtil, getTimeStamp, convertDateToMmmDdYyyy,setDataAttributeOnClosestAncestor,
+  urlPath, maskNumber, clearString, formUtil, getTimeStamp, convertDateToMmmDdYyyy, setDataAttributeOnClosestAncestor,
 };
