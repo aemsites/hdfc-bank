@@ -114,7 +114,7 @@ const setDataAttributeOnClosestAncestor = (elementName, fieldValue, dataAttribut
   }
 
   // Get the element by name
-  const element = document.getElementsByName(elementName)[0];
+  const element = document.getElementsByName(elementName)?.[0];
 
   // If element exists, set data attribute on the closest ancestor with the specified class name
   if (element) {

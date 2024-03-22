@@ -140,7 +140,8 @@ const personalDetailsPreFillFromBRE = (res, globals, panel) => {
 
   // Extract gender from response
   const custGender = breCheckAndFetchDemogResponse?.VDCUSTGENDER;
-  globals.functions.setProperty(personalDetails.gender, { value: custGender });
+  const gender = formUtil(globals, personalDetails.gender);
+  gender.setValue(custGender);
   setDataAttributeOnClosestAncestor(personalDetails.gender._data.$_name, custGender, dataAttributeEmpty, false, ancestorClassName);
 
   // Extract name from response
@@ -148,18 +149,22 @@ const personalDetailsPreFillFromBRE = (res, globals, panel) => {
   const [firstName, ...remainingName] = fullName.split(' ');
   const lastName = remainingName.pop() || '';
   const middleName = remainingName.join(' ');
-  globals.functions.setProperty(personalDetails.firstName, { value: firstName });
+  const custFirstName = formUtil(globals, personalDetails.firstName);
+  custFirstName.setValue(firstName);
   setDataAttributeOnClosestAncestor(personalDetails.firstName._data.$_name, firstName, dataAttributeEmpty, false, ancestorClassName);
-  globals.functions.setProperty(personalDetails.lastName, { value: lastName });
+  const custLastName = formUtil(globals, personalDetails.lastName);
+  custLastName.setValue(lastName);
   setDataAttributeOnClosestAncestor(personalDetails.lastName._data.$_name, lastName, dataAttributeEmpty, false, ancestorClassName);
-  globals.functions.setProperty(personalDetails.middleName, { value: middleName });
+  const custMiddleName = formUtil(globals, personalDetails.middleName);
+  custMiddleName.setValue(middleName);
   setDataAttributeOnClosestAncestor(personalDetails.middleName._data.$_name, middleName, dataAttributeEmpty, false, ancestorClassName);
 
   // Extract date of birth or ITNBR
   // const custDate = panel.login.pan.$value ? breCheckAndFetchDemogResponse?.DDCUSTDATEOFBIRTH : breCheckAndFetchDemogResponse?.VDCUSTITNBR;
   // globals.functions.setProperty(personalDetails.dobPersonalDetails, { value: panel.login.pan.$value ? convertDateToMmmDdYyyy(custDate.toString()) : custDate });
   const custDate = breCheckAndFetchDemogResponse?.DDCUSTDATEOFBIRTH;
-  globals.functions.setProperty(personalDetails.dobPersonalDetails, { value: convertDateToMmmDdYyyy(custDate?.toString()) });
+  const custDob = formUtil(globals, personalDetails.dobPersonalDetails);
+  custDob.setValue(convertDateToMmmDdYyyy(custDate?.toString()));
 
   // Create address string and set it to form field
   const completeAddress = [
@@ -170,8 +175,8 @@ const personalDetailsPreFillFromBRE = (res, globals, panel) => {
     breCheckAndFetchDemogResponse?.VDCUSTSTATE,
     breCheckAndFetchDemogResponse?.VDCUSTZIPCODE,
   ].filter(Boolean).join(', ');
-
-  globals.functions.setProperty(globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.currentDetails.currentAddressETB.prefilledCurrentAdddress, { value: completeAddress });
+  const custFullAddress = formUtil(globals, globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.currentDetails.currentAddressETB.prefilledCurrentAdddress);
+  custFullAddress.setValue(completeAddress);
 };
 
 /**
