@@ -74,7 +74,6 @@ const otpGenFailure = (res, globals) => {
   const otpPanel = formUtil(globals, pannel.otp);
   const loginPanel = formUtil(globals, pannel.login);
   const otpBtn = formUtil(globals, pannel.otpButton);
-  const regMobNo = pannel.login.mobilePanel.registeredMobileNumber.$value;
   const failurePanel = formUtil(globals, pannel.resultPanel);
 
   welcomeTxt.visible(false);
@@ -82,8 +81,6 @@ const otpGenFailure = (res, globals) => {
   loginPanel.visible(false);
   otpBtn.visible(false);
   failurePanel.visible(true);
-
-  appendMaskedNumber('field-otphelptext', regMobNo);
 };
 
 const OTPGEN = {
@@ -108,7 +105,7 @@ const OTPGEN = {
   },
   errorCallback(err, globals) {
     otpGenFailure(err, globals);
-    console.log(`I am in errorCallback of OTPGEN ${globals}`);
+    console.log(`I am in errorCallbackOtpGen ${globals}`);
   },
   path: urlPath('/content/hdfc_ccforms/api/customeridentificationV4.json'),
   loadingText: 'Please wait while we are authenticating you',
@@ -167,19 +164,19 @@ const otpValFailure = (res, globals) => {
   const otpPanel = formUtil(globals, pannel.otp);
   const otpBtn = formUtil(globals, pannel.otpButton);
   const loginPanel = formUtil(globals, pannel.login);
-  const ccWizardPannel = formUtil(globals, pannel.ccWizardView);
-  // const resultPanel = formUtil(globals, pannel.resultPanel);
+  // const ccWizardPannel = formUtil(globals, pannel.ccWizardView);
+  const resultPanel = formUtil(globals, pannel.resultPanel);
 
   welcomeTxt.visible(false);
   otpBtn.visible(false);
   loginPanel.visible(false);
   otpPanel.visible(false);
-  ccWizardPannel.visible(true);
+  // ccWizardPannel.visible(true);
   (async () => {
     const myImportedModule = await import('./cc.js');
     myImportedModule.onWizardInit();
   })();
-  // resultPanel.visible(true);
+  resultPanel.visible(true);
 };
 
 const OTPVAL = {
@@ -204,9 +201,10 @@ const OTPVAL = {
     return jsonObj;
   },
   successCallback(res, globals) {
-    return (res?.otpGenResponse?.status?.errorCode === '0') ? otpValSuccess(res, globals) : otpValFailure(res, globals);
+    return (res?.demogResponse?.errorCode === '0') ? otpValSuccess(res, globals) : otpValFailure(res, globals);
   },
   errorCallback(err, globals) {
+    otpValFailure(err, globals);
     console.log(`I am in errorCallback_OtpFailure ${globals}`);
   },
   path: urlPath('/content/hdfc_cc_unified/api/otpValFetchAssetDemog.json'),
