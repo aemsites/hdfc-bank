@@ -109,6 +109,31 @@ const OTPGEN = {
 };
 
 /**
+ * Add a class to the label associated with the specified input elements.
+ * @param {string} selector - The CSS selector for the input elements.
+ * @param {string} className - The class name to add to the labels.
+ */
+const addClassToFieldLabel = (selector, className) => {
+  /**
+   * Retrieve the labels associated with the specified input elements and add the class to them.
+   * @param {Element} input - The input element.
+   */
+  const addClassToLabel = (input) => {
+    const inputId = input.id;
+    const label = document.querySelector(`label[for="${inputId}"]`);
+    if (label) {
+      label.classList.add(className);
+    }
+  };
+
+  // Select all input elements using the provided selector
+  const elements = document.querySelectorAll(selector);
+
+  // Iterate over each input element and add the class to its associated label
+  elements.forEach(addClassToLabel);
+};
+
+/**
  * Handles the success scenario for OTP Validation.
  * @param {any} res  - The response object containing the OTP success generation response.
  * @param {Object} globals - globals variables object containing form configurations.
@@ -161,14 +186,15 @@ const otpValFailure = (res, globals) => {
   const otpPanel = formUtil(globals, pannel.otp);
   const otpBtn = formUtil(globals, pannel.otpButton);
   const loginPanel = formUtil(globals, pannel.login);
-  // const ccWizardPannel = formUtil(globals, pannel.ccWizardView);
+  const ccWizardPannel = formUtil(globals, pannel.ccWizardView);
   const resultPanel = formUtil(globals, pannel.resultPanel);
 
   welcomeTxt.visible(false);
   otpBtn.visible(false);
   loginPanel.visible(false);
   otpPanel.visible(false);
-  // ccWizardPannel.visible(true);
+  ccWizardPannel.visible(true);
+  addClassToFieldLabel('.form input[disabled], .form select[disabled]', 'label-disabled');
   (async () => {
     const myImportedModule = await import('./cc.js');
     myImportedModule.onWizardInit();
