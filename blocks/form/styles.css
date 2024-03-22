@@ -191,6 +191,13 @@ main .form form .field-permanentaddress .field-permanentaddresstoggle input[type
   }
 }
 
+.btn-long {
+  .button {
+    width: 100%;
+    max-width: none;
+  }
+}
+
 .button-wrapper.field-vkycproceedbutton {
   width: 400px;
   text-align: center;
@@ -383,9 +390,10 @@ main .form .field-otppanel {
     margin-bottom: -10px;
 
     input {
+      text-align: center;
       margin-bottom: 0;
       letter-spacing: 10vw;
-      padding-left: 5vw;
+      padding-left: 3vw;
       caret-color: transparent;
     }
   }
@@ -412,6 +420,7 @@ main .form .field-otppanel {
       cursor: text;
       pointer-events: none;
       margin-top: 0;
+      padding: 0;
     }
   }
 }
