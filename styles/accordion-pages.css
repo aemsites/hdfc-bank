@@ -157,7 +157,7 @@ main .form form .field-corporatecardwizardview.wizard {
     }
   }
 
-  .field-cardbenefitsagreecheckboz { padding-top: 20px; }
+  .field-cardbenefitsagreecheckbox { padding-top: 20px; }
 
   .hdfc-accordion-style::after {
     content: url('../../icons/accordion-expand-icon.svg');
