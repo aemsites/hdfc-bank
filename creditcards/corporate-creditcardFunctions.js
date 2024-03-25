@@ -30,6 +30,14 @@ const appendMaskedNumber = (containerClass, number) => {
     nestedPElement?.appendChild(newText);
   }
 };
+/**
+  * Decorates the password input to hide the text and display only bullets
+  * @name decoratePasswordField Runs after user clicks on Get OTP
+  */
+function decoratePwdField() {
+  const pwdInput = document.querySelector('main .form .field-otppanel .field-otpnumber input');
+  pwdInput.type = 'password';
+}
 
 /**
  * Handles the success scenario for OTP generation.
@@ -66,6 +74,7 @@ const otpGenSuccess = (res, globals) => {
   otpPanel.visible(true);
 
   appendMaskedNumber('field-otphelptext', regMobNo);
+  decoratePwdField();
 };
 
 /**
