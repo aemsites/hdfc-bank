@@ -1,0 +1,196 @@
+:root {
+    --hdfc-stepper-margin-style: 24px;
+    --hdfc-stepper-width: 42px;
+    --hdfc-stepper-height: 3px;
+    --hdfc-wizard-step-legend-padding: 0;
+    --hdfc-wizard-step-legend-width: clamp(100px, calc(308% / var(--wizard-step-count)), 330px);
+}
+
+main .form form .field-corporatecardwizardview.wizard {
+  overflow: hidden;
+  padding: 0;
+
+  .plain-text-wrapper b, legend {
+    font-weight: 600;
+    font-size: 20px;
+  }
+
+  ul.wizard-menu-items {
+    flex-wrap: nowrap;
+    gap: 0;
+    margin-right: -35px;
+  }
+
+  li.wizard-menu-item {
+    flex-grow: 1;
+    position: relative;
+    list-style-type: none;
+    text-indent: 1%;
+    display: flex;
+    font-size: var(--form-font-size-xs);
+  }
+
+  li.wizard-menu-item:last-child {
+    margin-right: -1vw;
+  }
+
+  li.wizard-menu-item::before {
+    width: 30px;
+    height: 30px;
+  }
+
+  li.wizard-menu-active-item::before {
+    background-image: url('../../icons/current-step-indicator.svg');
+    content: '';
+    background-size: cover;
+    background-color: unset;
+    color: unset;
+    border: none;
+  }
+
+  .stepper-style::after {
+    content: '';
+    display: block;
+    width: var(--hdfc-stepper-width);
+    height: var(--hdfc-stepper-height);
+    background: var(--color-action-stepper-style);
+    margin-top: var(--hdfc-stepper-margin-style);
+    margin-left: -19px;
+  }
+
+  /* Accordion styling */
+  fieldset {
+    .field-prefilledemploymentdetails.field-wrapper { gap: 20px; }
+
+    fieldset { position: relative;
+
+    legend {
+        background-color: var(--color-interface-background-secondary);
+        height: 60px;
+        padding: 16px 24px;
+        border-radius: 12px;
+    }
+    }
+  }
+
+  > .wizard-button-wrapper { .field-back, .field-next { display: none; } }
+
+  /* Confirm card panel */
+  .field-cardnametitle input {
+    font-weight: var(--font-weight-bold);
+    font-size: 24px;
+    border: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .field-cardtagline input {
+    padding: 0;
+    margin: 0;
+    font-size: var(--body-lg-font-size);
+    font-weight: var(--font-weight-regular);
+    border: none;
+   }
+
+  .field-corporatetimageandnamepanel {
+    background: var(--color-interface-background-quinary);
+    padding: 20px;
+    border-radius: 10px;
+
+    img { border-radius: 10px; }
+
+    .field-nameoncarddropdown {
+        label { margin: 13px; }
+
+        select { margin: 0; }
+    }
+  }
+
+  .field-cardbenefitsfeaturespanel {
+    display: grid;
+
+    .field-cardbenefitslabel { width: fit-content; }
+
+    .field-viewallcardbenefits {
+        position: absolute;
+        width: fit-content;
+        right: 0;
+        margin-top: 0 !important;
+
+        button {
+            background: var(--color-action-text-primary-default);
+            color: var(--color-action-background-primary-default);
+        }
+
+        :hover {
+            background: var(--color-action-text-primary-default) !important;
+            color: var(--color-action-background-primary-default);
+        }
+    }
+
+    .field-joiningrenewalfee {
+        display: flex;
+        border: solid 3px var(--color-interface-background-quinary);
+        border-radius: 10px;
+        padding: 0 15px;
+        height: 46px;
+        margin-top: -19px;
+
+        label {
+            width: 90%;
+            display: flex;
+            align-items: center;
+            font-weight: var(--font-weight-bold);
+            font-size: var(--body-sm-font-size);
+        }
+
+        input {
+            width: 30%;
+            text-align: right;
+            margin: 0;
+            padding: 0;
+            border: none;
+            height: 40px;
+            font-weight: var(--font-weight-bold);
+            font-size: var(--body-lg-font-size);
+        }
+    }
+  }
+
+  .field-cardbenefitsagreecheckboz { padding-top: 20px; }
+
+  .hdfc-accordion-style::after {
+    content: url('../../icons/accordion-expand-icon.svg');
+    display: inline;
+    position: absolute;
+    right: 1vw;
+    transition: transform 0s;
+  }
+
+  .accordion-collapse::after {
+    transform: rotate(-180deg);
+    margin-top: -9px;
+  }
+}
+
+@media (width <= 750px) {
+  main .form form .field-corporatecardwizardview.wizard {
+    ul.wizard-menu-items { width: calc(300%); }
+    
+    li.wizard-menu-item { width: auto; }
+
+    fieldset {
+        width: 85vw;
+        display: block;
+
+        .panel-wrapper.field-prefilledemploymentdetails { gap: 20px; }
+    }
+
+    :is([data-active='true'], [data-empty='false'], .date-wrapper):not(.field-joiningrenewalfee) > label {
+        margin-left: 5px;
+        font-weight: 400;
+        font-size: 12px;
+        padding: 0;
+    }
+  }
+}
