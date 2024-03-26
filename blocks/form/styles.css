@@ -421,7 +421,9 @@ main .form .field-resultpanel {
     padding: 20px;
   }
 
-  main .form .field-otppanel {
+  main .form form .field-otppanel {
+    display: grid !important;
+
     .field-maxattempttext input {
       text-align: left;
       margin-bottom: 0;
