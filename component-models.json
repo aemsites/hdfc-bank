@@ -506,6 +506,26 @@
             },
             {
                 "component": "container",
+                "name": "formats",
+                "label": "Formats",
+                "collapsible": true,
+                "fields": [
+                    {
+                        "component": "select",
+                        "label": "Display Format",
+                        "name": "displayFormat",
+                        "valueType": "string",
+                        "options": [
+                            {
+                                "name": "01 April, 2007",
+                                "value": "d MMMM, y"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "component": "container",
                 "name": "custom",
                 "label": "Custom Properties",
                 "collapsible": true,
