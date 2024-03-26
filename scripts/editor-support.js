@@ -46,15 +46,15 @@ async function applyChanges(event) {
       const blockResource = block.getAttribute('data-aue-resource');
       const newBlock = parsedUpdate.querySelector(`[data-aue-resource="${blockResource}"]`);
       if (newBlock) {
-        newBlock.style.display = 'none';
-        block.insertAdjacentElement('afterend', newBlock);
+        //newBlock.style.display = 'none';
+        //block.insertAdjacentElement('afterend', newBlock);
         decorateButtons(newBlock);
         decorateIcons(newBlock);
         decorateBlock(newBlock);
         decorateRichtext(newBlock);
         await loadBlock(newBlock);
-        block.remove();
-        newBlock.style.display = null;
+        block.replaceWith(newBlock);
+        //newBlock.style.display = null;
         return true;
       }
     } else {
