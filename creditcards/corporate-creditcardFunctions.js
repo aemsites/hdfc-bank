@@ -281,7 +281,7 @@ const OTPVAL = {
     return jsonObj;
   },
   successCallback(res, globals) {
-    return (res?.demogResponse?.errorCode === '0') ? otpValSuccess(res, globals) : otpValFailure(res, globals);
+    return ((res?.demogResponse?.errorCode === '0') && (res?.otpValidationResponse?.errorCode === '0')) ? otpValSuccess(res, globals) : otpValFailure(res, globals);
   },
   errorCallback(err, globals) {
     otpValFailure(err, globals);
