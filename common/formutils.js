@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /**
  * Generates the full API path based on the environment.
  * @param {string} uri - The endpoint to be appended to the base URL.
@@ -5,6 +6,9 @@
  */
 
 const DEFAULT_BASE_PATH = 'https://applyonlinedev.hdfcbank.com'; // baseApiUrl for default
+
+const DATA_ATTRIBUTE_EMPTY = 'data-empty';
+const ANCESTOR_CLASS_NAME = 'field-wrapper';
 
 const urlPath = (path) => (window.location.host.includes('localhost') ? `${DEFAULT_BASE_PATH}${path}` : `${window.location.origin}${path}`);
 
@@ -54,12 +58,23 @@ const formUtil = (globalObj, panelName) => ({
     globalObj.functions.setProperty(panelName, { enabled: val });
   },
   /**
-    * Sets the value of the panel's respective fields.
-    * @param {any} val
-    * @returns {void}
-    */
-  setValue: (val) => {
+ * Sets the value of a panel and updates the data attribute if specified.
+ * @param {any} val - The value to set for the panel.
+ * @param {Object} changeDataAttr - An object containing information about whether to change the data attribute.
+ * @param {boolean} changeDataAttr.attrChange - Indicates whether to change the data attribute.
+ * @param {string} changeDataAttr.value - The value to set for the data attribute.
+ */
+  setValue: (val, changeDataAttr) => {
     globalObj.functions.setProperty(panelName, { value: val });
+    if (changeDataAttr?.attrChange && val) {
+      const element = document.getElementsByName(panelName._data.$_name)?.[0];
+      if (element) {
+        const closestAncestor = element.closest(`.${ANCESTOR_CLASS_NAME}`);
+        if (closestAncestor) {
+          closestAncestor.setAttribute(DATA_ATTRIBUTE_EMPTY, changeDataAttr.value);
+        }
+      }
+    }
   },
 });
 
@@ -82,6 +97,49 @@ const getTimeStamp = (currentTime) => {
   return formattedDatetime;
 };
 
+/**
+ * Converts a date string from 'YYYYMMDD' format to a localized date string.
+ * @param {string} date - The date string in 'YYYYMMDD' format.
+ * @returns {string} The formatted date string in 'MMM DD, YYYY' format.
+ */
+const convertDateToMmmDdYyyy = (date) => {
+  // Extract year, month, and day parts from the input date string
+  const year = date.slice(0, 4);
+  const month = date.slice(4, 6).padStart(2, '0'); // Ensures zero padding for single-digit months
+  const day = date.slice(6, 8).padStart(2, '0'); // Ensures zero padding for single-digit days
+
+  // Define options for the localized date string
+  const options = { month: 'short', day: 'numeric', year: 'numeric' };
+
+  // Create a new Date object and convert it to a localized date string
+  return new Date(year, month - 1, day).toLocaleDateString('en-US', options);
+};
+
+/**
+ * Sets data attribute and value on the closest ancestor element with the specified class name.
+ * @param {string} elementName - The name of the element to search for.
+ * @param {string} fieldValue - The value to check for existence before setting data.
+ * @param {string} dataAttribute - The name of the data attribute to set.
+ * @param {string} value - The value to set for the data attribute.
+ * @param {string} ancestorClassName - The class name of the ancestor element where the data attribute will be set.
+ */
+const setDataAttributeOnClosestAncestor = (elementName, fieldValue, dataAttribute, value, ancestorClassName) => {
+  if (!fieldValue) {
+    return;
+  }
+
+  // Get the element by name
+  const element = document.getElementsByName(elementName)?.[0];
+
+  // If element exists, set data attribute on the closest ancestor with the specified class name
+  if (element) {
+    const closestAncestor = element.closest(`.${ancestorClassName}`);
+    if (closestAncestor) {
+      closestAncestor.setAttribute(dataAttribute, value);
+    }
+  }
+};
+
 export {
-  urlPath, maskNumber, clearString, formUtil, getTimeStamp,
+  urlPath, maskNumber, clearString, formUtil, getTimeStamp, convertDateToMmmDdYyyy, setDataAttributeOnClosestAncestor,
 };

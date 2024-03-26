@@ -64,24 +64,43 @@ function onWizardInit() {
   decorateStepper();
 }
 
-const checkBox2ClickElement = document.getElementsByName('checkBoxConsent2')?.[0];
-const panelAsPopUp2 = document.getElementsByName('consentPanel2')?.[0];
-
+/**
+ * Creates a modal pop up when triggered by a specified element.
+ * @param {HTMLElement} triggerElement - The element that triggers the modal when clicked.
+ * @param {Object} payload - Configuration object containing content, action wrapper class, and consent requirement flag.
+ * @param {HTMLElement} payload.content - The content to display in the modal.
+ * @param {string} payload.actionWrapClass - The class of the wrapper containing all the action buttons.
+ * @param {boolean} payload.reqConsentAgree - Flag indicating whether consent agreement is required.
+ */
 const linkModalFunction = (trigerElement, payload) => {
   trigerElement.addEventListener('click', async (e) => {
-    if (e.target.checked) {
+    const findTheElement = e?.target?.tagName?.toLowerCase();
+    const checkTagCondition = (findTheElement === 'input') ? e?.target?.checked : e?.target;
+    if (checkTagCondition) {
       openModal(payload);
     }
   });
 };
 
+const checkBox2ClickElement = document.getElementsByName('checkBoxConsent2')?.[0];
+const panelAsPopUp2 = document.getElementsByName('consentPanel2')?.[0];
+// linkModal for loginScreen checkbox-2
 const consent2Config = { // config to create modal for consent-2
   content: panelAsPopUp2, // content to display in modal
   actionWrapClass: 'button-wrapper', // wrapper class containing all the buttons
   reqConsentAgree: false, // Flag indicating whether consent agreement is required or not
 };
-
 linkModalFunction(checkBox2ClickElement, consent2Config);
+
+// linkModal for corporateCardWizard pannel view all in getThisCard screen.
+const viewAllBtn = document.getElementsByName('viewAllCardBenefits')?.[0];
+const viewAllBtnPannel = document.getElementsByName('viewAllCardBenefitsPanel')?.[0];
+const viewAllBtnPannelConfig = {
+  content: viewAllBtnPannel,
+  actionWrapClass: 'button-wrapper',
+  reqConsentAgree: true,
+};
+linkModalFunction(viewAllBtn, viewAllBtnPannelConfig);
 
 /* Code for floating field label, initialized after DOM is rendered */
 const inputs = document.querySelectorAll('input[type="text"], input[type="number"], input[type="date"], input[type="email"], .field-wrapper textarea, .field-wrapper select');

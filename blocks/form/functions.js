@@ -1,4 +1,8 @@
 /* eslint no-console: ["error", { allow: ["warn", "error"] }] */
+import {
+  getOTP, otpValidation, checkOffer, getThisCard, resendOTP,
+} from '../../common/functions.js';
+
 /**
  * Get Full Name
  * @name getFullName Concats first name and last name
@@ -6,8 +10,6 @@
  * @param {string} lastname in Stringformat
  * @return {string}
  */
-
-import { getOTP, otpValidation } from '../../common/functions.js';
 
 function getFullName(firstname, lastname) {
   // eslint-disable-next-line no-param-reassign
@@ -107,5 +109,5 @@ function days(endDate, startDate) {
 
 // eslint-disable-next-line import/prefer-default-export
 export {
-  getFullName, onWizardInit, getOTP, otpValidation, days,
+  getFullName, onWizardInit, getOTP, otpValidation, days, checkOffer, getThisCard, resendOTP,
 };
