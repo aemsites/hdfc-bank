@@ -660,11 +660,8 @@
                     {
                         "component": "text-input",
                         "name": "fd:additionalCustomPropertyKeys",
-                        "label": "Col Span Hidden",
-                        "valueType": "string",
-                        "value": "colspan",
-                        "hidden": true
-                    },
+                        "label": "Custom Property Key",
+                        "valueType": "string"                    },
                     {
                         "component": "select",
                         "label": "Col Span",
