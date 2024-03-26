@@ -658,63 +658,71 @@
                 "collapsible": true,
                 "fields": [
                     {
-                        "component": "text-input",
+                        "component": "select",
                         "name": "fd:additionalCustomPropertyKeys",
                         "label": "Custom Property Key",
-                        "valueType": "string"                    },
+                        "valueType": "string"  ,
+                        "options": [
+                            {
+                                "name": "Col Span",
+                                "value": "colspan"
+                            }
+                        ]              
+                    },
                     {
                         "component": "select",
                         "label": "Col Span",
                         "name": "fd:additionalCustomPropertyValues",
+                        "condition": { "==": [{ "var": "fd:additionalCustomPropertyKeys" }, "colspan"] },
                         "valueType": "string",
                         "options": [
                             {
                                 "name": "1",
-                                "value": "col-span-1"
+                                "value": "1"
                             },
                             {
                                 "name": "2",
-                                "value": "col-span-2"
+                                "value": "2"
                             },
                             {
                                 "name": "3",
-                                "value": "col-span-3"
+                                "value": "3"
                             },
                             {
                                 "name": "4",
-                                "value": "col-span-4"
+                                "value": "4"
                             },
                             {
                                 "name": "5",
-                                "value": "col-span-5"
+                                "value": "5"
                             },
                             {
                                 "name": "6",
-                                "value": "col-span-6"
+                                "value": "6"
                             },
                             {
                                 "name": "7",
-                                "value": "col-span-7"
+                                "value": "7"
                             },
                             {
                                 "name": "8",
-                                "value": "col-span-8"
+                                "value": "8"
                             },
                             {
                                 "name": "9",
-                                "value": "col-span-9"
+                                "value": "9"
                             },
                             {
                                 "name": "10",
-                                "value": "col-span-10"
+                                "value": "10"
                             },
                             {
                                 "name": "11",
-                                "value": "col-span-11"
+                                "value": "11"
                             },
                             {
                                 "name": "12",
-                                "value": "col-span-12"
+                                "value": "12"
                             }
                         ]
                     }

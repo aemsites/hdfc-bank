@@ -251,7 +251,7 @@ async function fetchForm(pathname) {
 }
 
 function colSpanDecorator(field, element) {
-  const colSpan = field['Column Span'];
+  const colSpan = field['Column Span'] || field.properties?.colspan;
   if (colSpan && element) {
     element.classList.add(`col-${colSpan}`);
   }
