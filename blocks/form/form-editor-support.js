@@ -86,6 +86,8 @@ async function instrumentForms(mutationsList) {
                 // Check if the added node is a form element
                 if (node.nodeName.toLowerCase() === 'form') {
                     formsEl.push(node);
+                } else if (node.dataset.aueModel === 'form') {
+                    formsEl.push(node.querySelector('form'));
                 }
             });
         }
