@@ -52,6 +52,10 @@ main .form {
     font-size: 14px;
   }
 
+  input[type="password"] {
+    font-size: 31px;
+  }
+
   .date-wrapper .field-description {
     display: none;
   }
@@ -446,7 +450,7 @@ main .form .field-otppanel {
     input {
       text-align: center;
       margin-bottom: 0;
-      letter-spacing: 10vw;
+      letter-spacing: 7vw;
       caret-color: transparent;
     }
   }
@@ -528,10 +532,11 @@ main .form .field-otppanel {
     }
   }
 
-  main .form .field-errorresultpanel, main .form .field-successresultpanel {
-      > div:not(.field-errorresulttextlabel) {
-          max-width: 100%;
-      }
+  main .form .field-errorresultpanel,
+  main .form .field-successresultpanel {
+    > div:not(.field-errorresulttextlabel) {
+      max-width: 100%;
+    }
 
     > .field-wrapper {
       border-radius: 0;
@@ -549,7 +554,7 @@ main .form .field-otppanel {
       text-align: left;
       margin-bottom: 0;
     }
-    
+
     .field-otpnumber {
       input {
         letter-spacing: 13vw;
