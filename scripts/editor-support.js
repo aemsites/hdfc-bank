@@ -43,20 +43,23 @@ async function applyChanges(event) {
 
     const block = element.parentElement?.closest('.block[data-aue-resource]') || element?.closest('.block[data-aue-resource]');
     if (block) {
-      const blockResource = block.getAttribute('data-aue-resource');
-      const newBlock = parsedUpdate.querySelector(`[data-aue-resource="${blockResource}"]`);
-      if (newBlock) {
-        newBlock.style.display = 'none';
-        block.insertAdjacentElement('afterend', newBlock);
-        decorateButtons(newBlock);
-        decorateIcons(newBlock);
-        decorateBlock(newBlock);
-        decorateRichtext(newBlock);
-        await loadBlock(newBlock);
-        //block.replaceWith(newBlock);
-        block.remove();
-        newBlock.style.display = null;
-        return true;
+      if (block.dataset.aueModel === 'form') {
+        await loadBlock(block);
+      } else {
+        const blockResource = block.getAttribute('data-aue-resource');
+        const newBlock = parsedUpdate.querySelector(`[data-aue-resource="${blockResource}"]`);
+        if (newBlock) {
+          newBlock.style.display = 'none';
+          block.insertAdjacentElement('afterend', newBlock);
+          decorateButtons(newBlock);
+          decorateIcons(newBlock);
+          decorateBlock(newBlock);
+          decorateRichtext(newBlock);
+          await loadBlock(newBlock);
+          block.remove();
+          newBlock.style.display = null;
+          return true;
+        }
       }
     } else {
       // sections and default content, may be multiple in the case of richtext
