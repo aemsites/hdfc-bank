@@ -78,7 +78,7 @@ async function applyChanges(event) {
         if (content) {
           const formDef = JSON.parse(cleanUp(content));
           const parentPanel = element.closest('.panel-wrapper');
-          const ruleEngine = await import('./blocks/form/rules/model/afb-runtime.js');
+          const ruleEngine = await import('../blocks/form/rules/model/afb-runtime.js'); 
           const form = ruleEngine.createFormInstance(formDef);
           const formState = form.getState(true);
           const panelDefinition = getFormFieldById(formState['items'], parentPanel.id);
