@@ -1,16 +1,16 @@
 /* eslint-disable no-underscore-dangle */
+// declare-CONSTANTS
+const DEFAULT_BASE_PATH = 'https://applyonlinedev.hdfcbank.com'; // baseApiUrl for default
+const DATA_ATTRIBUTE_EMPTY = 'data-empty';
+const ANCESTOR_CLASS_NAME = 'field-wrapper';
+
 /**
  * Generates the full API path based on the environment.
  * @param {string} uri - The endpoint to be appended to the base URL.
  * @returns {string} - The complete API URL including the base URL and the provided endpoint.
  */
 
-const DEFAULT_BASE_PATH = 'https://applyonlinedev.hdfcbank.com'; // baseApiUrl for default
-
-const DATA_ATTRIBUTE_EMPTY = 'data-empty';
-const ANCESTOR_CLASS_NAME = 'field-wrapper';
-
-const urlPath = (path) => (window.location.host.includes('localhost') ? `${DEFAULT_BASE_PATH}${path}` : `${window.location.origin}${path}`);
+const urlPath = (path) => `${DEFAULT_BASE_PATH}${path}`;
 
 /**
  * Masks a number by replacing the specified number of leading digits with asterisks.
