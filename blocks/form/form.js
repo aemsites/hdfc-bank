@@ -368,7 +368,7 @@ export async function generateFormRendition(panel, container) {
   });
 
   const children = await Promise.all(promises);
-  container.append(...children.filter((_) => _ != null));
+  container.replaceChildren(...children.filter((_) => _ != null));
   const decorator = await componentDecorater(panel);
   if (typeof decorator === 'function') {
     return decorator(container, panel);
