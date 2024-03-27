@@ -170,12 +170,6 @@ async function applyChanges(event) {
           const content = codeEl?.textContent;
           if (content) {
             const formDef = JSON.parse(cleanUp(content));
-            /*
-            const ruleEngine = await import('./rules/model/afb-runtime.js'); 
-            await registerCustomFunctions();
-            const form = ruleEngine.createFormInstance(formDef);
-            const formState = form.getState(true);
-            */
             let parent = element.closest('.panel-wrapper');
             let parentDef = {};
             if (!parent) {
