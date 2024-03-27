@@ -4,7 +4,7 @@
 :root{
   --color-text-primary: #4B5563;
   --color-border-primary:#ccc;
-  --color-action-background-primary-default: #6b7280;
+  --color-close-action-background-primary-default: #6b7280;
 }
 
 body.modal-open {
@@ -141,7 +141,7 @@ body.modal-open {
   text-overflow: clip;
   margin: 0;
   border: none;
-  color: var(--color-action-background-primary-default);
+  color: var(--color-close-action-background-primary-default);
 }
 
 .modal dialog .section {
