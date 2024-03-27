@@ -115,8 +115,6 @@ function enableRuleEditorExtension() {
 
 const observer = new MutationObserver(instrumentForms);
 observer.observe(document, { childList: true, subtree: true, attributeFilter: ['form'] });
-const forms = document.querySelectorAll('form');
-annotateFormsForEditing(forms);
 document.querySelector('main')?.addEventListener('aue:ui-select', handleEditorSelect);
 enableRuleEditorExtension();
 
@@ -208,3 +206,5 @@ function attachEventListners(main) {
 }
   
 attachEventListners(document.querySelector('main'));
+const forms = document.querySelectorAll('form');
+annotateFormsForEditing(forms);
