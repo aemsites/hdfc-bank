@@ -342,7 +342,7 @@ function renderField(fd) {
 }
 
 export async function generateFormRendition(panel, container, getItems = (p) => p.items) {
-  const items = getItems(panel);
+  const items = getItems(panel) || [];
   const promises = items.map(async (field) => {
     field.value = field.value ?? '';
     const { fieldType } = field;
