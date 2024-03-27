@@ -1,5 +1,4 @@
 import { generateFormRendition } from './form.js';
-import registerCustomFunctions from './rules/functionRegistration.js';
 
 function getFieldById(items, id, formFieldMap) {
     let field;
@@ -47,7 +46,9 @@ function annotateItems(items, formDefinition, formFieldMap) {
     });
 }
 function annotateFormForEditing(formEl, formDefinition) {
-    formEl.classList.add("edit-mode");
+    if (document.documentElement.classList.contains("adobe-ue-edit")) {
+        formEl.classList.add("edit-mode");
+    }
     let formFieldMap = {};
     annotateItems(formEl.childNodes, formDefinition, formFieldMap);
 }
