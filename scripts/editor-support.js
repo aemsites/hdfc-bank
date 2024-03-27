@@ -10,7 +10,7 @@ import {
 import { decorateRichtext } from './editor-support-rte.js';
 import { decorateMain } from './scripts.js';
 import { generateFormRendition } from '../blocks/form/form.js';
-import { annotateItems } from '../blocks/form/form-editor-support.js';
+import annotateItems from '../blocks/form/form-editor-support.js';
 
 import  registerCustomFunctions from '../blocks/form/rules/functionRegistration.js';
 
