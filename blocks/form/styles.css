@@ -443,15 +443,21 @@ main .form form .field-corporatecardwizardview.wizard {
   margin-top: -9px;
 }
 
-main .form .field-otppanel {
+main .form.block .field-otppanel {
+  display: grid;
+  max-width: 344px;
+  margin: 0 auto;
+  text-align: center;
+
   .field-otpnumber {
     margin-bottom: -10px;
 
     input {
       text-align: center;
       margin-bottom: 0;
-      letter-spacing: 7vw;
+      letter-spacing: 2vw;
       caret-color: transparent;
+      border-radius: 12px;
     }
   }
 
@@ -527,8 +533,12 @@ main .form .field-otppanel {
     .field-otpnumber {
       input {
         padding: 0 0 0 2vw;
-        letter-spacing: 14vw;
+        letter-spacing: 2vw;
       }
+    }
+
+    .field-otpresend {
+      margin: 0 !important;
     }
   }
 
@@ -549,16 +559,33 @@ main .form .field-otppanel {
     padding: 20px;
   }
 
-  main .form .field-otppanel {
+  main .form.block .field-otppanel {
+    display: grid;
+
     .field-maxattempttext input {
-      text-align: left;
+      text-align: right;
       margin-bottom: 0;
     }
 
     .field-otpnumber {
       input {
-        letter-spacing: 13vw;
+        letter-spacing: 6vw;
       }
     }
+
+    .field-otpresend {
+      margin: 0 !important;
+    }
   }
+}
+
+label.disabled-label {
+  color: var(--color-input-text-disabled) !important;
+  background-color: var(--color-input-background-disabled) !important;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+main .form input:disabled, main .form select:disabled {
+  background-color: var(--color-input-background-disabled) !important;
+  color: var(--color-input-text-disabled);
 }
