@@ -63,7 +63,6 @@ async function applyChanges(event) {
           block.remove();
           newBlock.style.display = null;
           return true;
-        }
       }
     } else {
       // sections and default content, may be multiple in the case of richtext
@@ -92,7 +91,6 @@ async function applyChanges(event) {
       }
     }
   }
-
   return false;
 }
 
