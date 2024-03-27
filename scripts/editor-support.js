@@ -10,7 +10,7 @@ import {
 import { decorateRichtext } from './editor-support-rte.js';
 import { decorateMain } from './scripts.js';
 import { generateFormRendition } from '../blocks/form/form.js';
-import  { registerCustomFunctions } from '../blocks/form/rules/functionRegistration.js';
+import  registerCustomFunctions from '../blocks/form/rules/functionRegistration.js';
 
 async function applyChanges(event) {
 
