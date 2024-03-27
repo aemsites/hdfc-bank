@@ -1,18 +1,25 @@
 import { generateFormRendition } from './form.js';
 
-function getFieldById(items, id, formFieldMap) {
+
+function getItems(container) {
+    if (container[':itemsOrder'] && container[':items']) {
+        return container[':itemsOrder'].map((itemKey) => container[':items'][itemKey]);
+    }
+    return [];
+}
+
+function getFieldById(panel, id, formFieldMap) {
     let field;
     if (formFieldMap[id]) {
         field = formFieldMap[id];
     } else {
-        for (let item of  Object.values(items)) {
+        const items = getItems(panel);
+        for (let item of items) {
             formFieldMap[item.id] = item;
             if (item.id === id) {
                 field = item;
             } else if (item.fieldType === 'panel') {
-                if (item[':items']) {
-                    field = getFieldById(item[':items'], id, formFieldMap);
-                }
+                field = getFieldById(item, id, formFieldMap);
             }
         }
     }
@@ -24,7 +31,7 @@ function annotateItems(items, formDefinition, formFieldMap) {
     items.forEach((fieldWrapper) => {
         if (fieldWrapper.classList.contains("field-wrapper")) {
             const id = fieldWrapper.id;
-            const fd = getFieldById(formDefinition[":items"], id, formFieldMap);
+            const fd = getFieldById(formDefinition, id, formFieldMap);
             if (fd && fd.properties) {
                 fieldWrapper.setAttribute('data-aue-type', 'component');
                 fieldWrapper.setAttribute('data-aue-resource', `urn:aemconnection:${fd.properties["fd:path"]}`);
@@ -45,6 +52,7 @@ function annotateItems(items, formDefinition, formFieldMap) {
         }
     });
 }
+
 function annotateFormForEditing(formEl, formDefinition) {
     if (document.documentElement.classList.contains("adobe-ue-edit")) {
         formEl.classList.add("edit-mode");
@@ -113,28 +121,6 @@ function enableRuleEditorExtension() {
     head.appendChild(meta);
 }
 
-const observer = new MutationObserver(instrumentForms);
-observer.observe(document, { childList: true, subtree: true, attributeFilter: ['form'] });
-document.querySelector('main')?.addEventListener('aue:ui-select', handleEditorSelect);
-enableRuleEditorExtension();
-
-document.body.addEventListener("aue:ui-preview", () => {
-
-    const forms = document.querySelectorAll('form');
-    for(let formEl of forms) {
-        formEl.classList.remove("edit-mode");
-    }
-});
-
-document.body.addEventListener("aue:ui-edit", () => {
-    const forms = document.querySelectorAll('form');
-    for(let formEl of forms) {
-        if (!formEl.classList.contains("edit-mode")) {
-            formEl.classList.add("edit-mode");
-        }
-    }
-});
-
 
 async function applyChanges(event) {
 
@@ -174,13 +160,7 @@ async function applyChanges(event) {
                 parent = element.closest('form');
                 parentDef = formDef;
             } else {
-                parentDef = getFieldById(formDef[':items'], parent.id, {});
-            }
-            const getItems = (p) => {
-                if (p[':itemsOrder'] && p[':items']) {
-                    return p[':itemsOrder'].map((itemKey) => p[':items'][itemKey]);
-                }
-                return [];
+                parentDef = getFieldById(formDef, parent.id, {});
             }
             await generateFormRendition(parentDef, parent, getItems);
             annotateItems(parent.childNodes, formDef, {});
@@ -206,8 +186,29 @@ function attachEventListners(main) {
       const applied = await applyChanges(event);
       if (!applied) window.location.reload();
     }));
+
+    main?.addEventListener('aue:ui-select', handleEditorSelect);
+
+    document.body.addEventListener("aue:ui-preview", () => {
+        const forms = document.querySelectorAll('form');
+        for(let formEl of forms) {
+            formEl.classList.remove("edit-mode");
+        }
+    });
+    
+    document.body.addEventListener("aue:ui-edit", () => {
+        const forms = document.querySelectorAll('form');
+        for(let formEl of forms) {
+            if (!formEl.classList.contains("edit-mode")) {
+                formEl.classList.add("edit-mode");
+            }
+        }
+    });
 }
   
 attachEventListners(document.querySelector('main'));
 const forms = document.querySelectorAll('form');
 annotateFormsForEditing(forms);
+const observer = new MutationObserver(instrumentForms);
+observer.observe(document, { childList: true, subtree: true, attributeFilter: ['form'] });
+enableRuleEditorExtension();
