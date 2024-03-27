@@ -56,7 +56,7 @@ export function resetIds() {
 export function createLabel(fd, tagName = 'label') {
   if (fd.label && fd.label.value) {
     const label = document.createElement(tagName);
-    label.setAttribute('for', `${fd.id}-widget`);
+    label.setAttribute('for', fd.id);
     label.className = 'field-label';
     if (fd.label.richText === true) {
       label.innerHTML = stripTags(fd.label.value);
@@ -84,7 +84,7 @@ export function createFieldWrapper(fd, tagName = 'div', labelFn = createLabel) {
   const renderType = getHTMLRenderType(fd);
   const fieldId = `${renderType}-wrapper${nameStyle}`;
   fieldWrapper.className = fieldId;
-  fieldWrapper.id = fd.id;
+  fieldWrapper.dataset.id = fd.id;
   if (fd.visible === false) {
     fieldWrapper.dataset.visible = fd.visible;
   }

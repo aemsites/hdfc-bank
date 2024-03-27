@@ -30,7 +30,7 @@ function annotateItems(items, formDefinition, formFieldMap) {
 
     items.forEach((fieldWrapper) => {
         if (fieldWrapper.classList.contains("field-wrapper")) {
-            const id = fieldWrapper.id;
+            const id = fieldWrapper.dataset.id;
             const fd = getFieldById(formDefinition, id, formFieldMap);
             if (fd && fd.properties) {
                 fieldWrapper.setAttribute('data-aue-type', 'component');

@@ -272,7 +272,7 @@ const handleFocusOut = (input) => {
 function inputDecorator(field, element) {
   const input = element?.querySelector('input,textarea,select');
   if (input) {
-    input.id = `${field.id}-widget`;
+    input.id = field.id;
     input.name = field.name;
     if (field.tooltip) {
       input.title = stripTags(field.tooltip, '');
