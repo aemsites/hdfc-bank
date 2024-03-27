@@ -1,33 +1,5 @@
-function annotateFormForEditing(formEl, formDefinition) {
 
-    formEl.classList.add("edit-mode");
-    let formFieldMap = {};
-    annotateItems(formEl.childNodes);
-    function annotateItems(items) {
-        items.forEach((fieldWrapper) => {
-            if (fieldWrapper.classList.contains("field-wrapper")) {
-                const id = fieldWrapper.id;
-                const fd = getFieldById(formDefinition[":items"], id);
-                if (fd && fd.properties) {
-                    fieldWrapper.setAttribute('data-aue-type', 'component');
-                    fieldWrapper.setAttribute('data-aue-resource', `urn:aemconnection:${fd.properties["fd:path"]}`);
-                    if (fd.properties["fd:fragment"]) {
-                        fieldWrapper.setAttribute('data-aue-model', "fragment");
-                    } else {
-                        fieldWrapper.setAttribute('data-aue-model', fd.fieldType === 'image'? 'form-image': fd.fieldType);
-                    }
-                    fieldWrapper.setAttribute('data-aue-label', fd.name);
-                } else {
-                    console.warn(`field ${id} not found in form definition`);
-                }
-                if (fieldWrapper.classList.contains("panel-wrapper")) {
-                    fieldWrapper.setAttribute('data-aue-type', 'container');
-                    fieldWrapper.setAttribute('data-aue-behavior', 'component');
-                    annotateItems(fieldWrapper.childNodes);
-                }
-            }
-        });
-    }
+export default function annotateItems(items, formDefinition, formFieldMap) {
 
     function getFieldById(items, id) {
         let field;
@@ -48,6 +20,34 @@ function annotateFormForEditing(formEl, formDefinition) {
         }
         return field;
     }
+    items.forEach((fieldWrapper) => {
+        if (fieldWrapper.classList.contains("field-wrapper")) {
+            const id = fieldWrapper.id;
+            const fd = getFieldById(formDefinition[":items"], id);
+            if (fd && fd.properties) {
+                fieldWrapper.setAttribute('data-aue-type', 'component');
+                fieldWrapper.setAttribute('data-aue-resource', `urn:aemconnection:${fd.properties["fd:path"]}`);
+                if (fd.properties["fd:fragment"]) {
+                    fieldWrapper.setAttribute('data-aue-model', "fragment");
+                } else {
+                    fieldWrapper.setAttribute('data-aue-model', fd.fieldType === 'image'? 'form-image': fd.fieldType);
+                }
+                fieldWrapper.setAttribute('data-aue-label', fd.name);
+            } else {
+                console.warn(`field ${id} not found in form definition`);
+            }
+            if (fieldWrapper.classList.contains("panel-wrapper")) {
+                fieldWrapper.setAttribute('data-aue-type', 'container');
+                fieldWrapper.setAttribute('data-aue-behavior', 'component');
+                annotateItems(fieldWrapper.childNodes, formDefinition, formFieldMap);
+            }
+        }
+    });
+}
+function annotateFormForEditing(formEl, formDefinition) {
+    formEl.classList.add("edit-mode");
+    let formFieldMap = {};
+    annotateItems(formEl.childNodes, formDefinition, formFieldMap);
 }
 
 /**

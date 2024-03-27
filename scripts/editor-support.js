@@ -10,6 +10,8 @@ import {
 import { decorateRichtext } from './editor-support-rte.js';
 import { decorateMain } from './scripts.js';
 import { generateFormRendition } from '../blocks/form/form.js';
+import { annotateItems } from '../blocks/form/form-editor-support.js';
+
 import  registerCustomFunctions from '../blocks/form/rules/functionRegistration.js';
 
 async function applyChanges(event) {
@@ -85,6 +87,7 @@ async function applyChanges(event) {
           const formState = form.getState(true);
           const panelDefinition = getFormFieldById(formState['items'], parentPanel.id);
           await generateFormRendition(panelDefinition, parentPanel);
+          annotateItems(panelDefinition.items, formDef, {});
           return true;
         }
       } else if (newBlock) {
