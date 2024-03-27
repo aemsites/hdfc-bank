@@ -1,30 +1,31 @@
 import { generateFormRendition } from './form.js';
 import registerCustomFunctions from './rules/functionRegistration.js';
 
-function annotateItems(items, formDefinition, formFieldMap) {
-
-    function getFieldById(items, id) {
-        let field;
-        if (formFieldMap[id]) {
-            field = formFieldMap[id];
-        } else {
-            for (let item of  Object.values(items)) {
-                formFieldMap[item.id] = item;
-                if (item.id === id) {
-                    field = item;
-                } else if (item.fieldType === 'panel') {
-                    if (item[':items']) {
-                        field = getFieldById(item[':items'], id);
-                    }
+function getFieldById(items, id, formFieldMap) {
+    let field;
+    if (formFieldMap[id]) {
+        field = formFieldMap[id];
+    } else {
+        for (let item of  Object.values(items)) {
+            formFieldMap[item.id] = item;
+            if (item.id === id) {
+                field = item;
+            } else if (item.fieldType === 'panel') {
+                if (item[':items']) {
+                    field = getFieldById(item[':items'], id, formFieldMap);
                 }
             }
         }
-        return field;
     }
+    return field;
+}
+
+function annotateItems(items, formDefinition, formFieldMap) {
+
     items.forEach((fieldWrapper) => {
         if (fieldWrapper.classList.contains("field-wrapper")) {
             const id = fieldWrapper.id;
-            const fd = getFieldById(formDefinition[":items"], id);
+            const fd = getFieldById(formDefinition[":items"], id, formFieldMap);
             if (fd && fd.properties) {
                 fieldWrapper.setAttribute('data-aue-type', 'component');
                 fieldWrapper.setAttribute('data-aue-resource', `urn:aemconnection:${fd.properties["fd:path"]}`);
@@ -138,26 +139,6 @@ document.body.addEventListener("aue:ui-edit", () => {
 
 async function applyChanges(event) {
 
-    let formFieldMap = {};
-  
-    function getFormFieldById(items, id) {
-      let field;
-      if (formFieldMap[id]) {
-          field = formFieldMap[id];
-      } else {
-          for (let item of items) {
-              formFieldMap[item.id] = item;
-              if (item.id === id) {
-                  field = item;
-              } else if (item.fieldType === 'panel') {
-                  if (item['items']) {
-                      field = getFormFieldById(item['items'], id);
-                  }
-              }
-          }
-      }
-      return field;
-    }
     function cleanUp(content) {
       const formDef = content.replaceAll('^(([^<>()\\\\[\\\\]\\\\\\\\.,;:\\\\s@\\"]+(\\\\.[^<>()\\\\[\\\\]\\\\\\\\.,;:\\\\s@\\"]+)*)|(\\".+\\"))@((\\\\[[0-9]{1,3}\\\\.[0-9]{1,3}\\\\.[0-9]{1,3}\\\\.[0-9]{1,3}])|(([a-zA-Z\\\\-0-9]+\\\\.)\\+[a-zA-Z]{2,}))$', '');
       return formDef?.replace(/\x83\n|\n|\s\s+/g, '');
@@ -188,14 +169,25 @@ async function applyChanges(event) {
           const content = codeEl?.textContent;
           if (content) {
             const formDef = JSON.parse(cleanUp(content));
-            const parentPanel = element.closest('.panel-wrapper');
+            /*
             const ruleEngine = await import('./rules/model/afb-runtime.js'); 
             await registerCustomFunctions();
             const form = ruleEngine.createFormInstance(formDef);
             const formState = form.getState(true);
-            const panelDefinition = getFormFieldById(formState['items'], parentPanel.id);
-            await generateFormRendition(panelDefinition, parentPanel);
-            annotateItems(parentPanel.childNodes, formDef, {});
+            */
+            let parent = element.closest('.panel-wrapper');
+            let parentDef = {};
+            if (!parent) {
+                parent = element.closest('form');
+                parentDef = formDef;
+            } else {
+                parentDef = getFieldById(formDef[':items'], parent.id, {});
+            }
+            const getItems = (p) => {
+                return p[':itemsOrder'].map((itemKey) => p[':items'][itemKey]);
+            }
+            await generateFormRendition(parentDef, parent, getItems);
+            annotateItems(parent.childNodes, formDef, {});
             return true;
           } else {
             return false;
