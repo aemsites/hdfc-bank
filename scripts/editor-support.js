@@ -45,6 +45,7 @@ async function applyChanges(event) {
     if (block) {
       if (block.dataset.aueModel === 'form') {
         await loadBlock(block);
+        return true;
       } else {
         const blockResource = block.getAttribute('data-aue-resource');
         const newBlock = parsedUpdate.querySelector(`[data-aue-resource="${blockResource}"]`);
