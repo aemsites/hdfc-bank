@@ -10,6 +10,7 @@ import {
 import { decorateRichtext } from './editor-support-rte.js';
 import { decorateMain } from './scripts.js';
 import { generateFormRendition } from '../blocks/form/form.js';
+import  { registerCustomFunctions } from '../blocks/form/rules/functionRegistration.js';
 
 async function applyChanges(event) {
 
@@ -79,6 +80,7 @@ async function applyChanges(event) {
           const formDef = JSON.parse(cleanUp(content));
           const parentPanel = element.closest('.panel-wrapper');
           const ruleEngine = await import('../blocks/form/rules/model/afb-runtime.js'); 
+          await registerCustomFunctions();
           const form = ruleEngine.createFormInstance(formDef);
           const formState = form.getState(true);
           const panelDefinition = getFormFieldById(formState['items'], parentPanel.id);
