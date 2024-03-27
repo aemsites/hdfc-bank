@@ -87,7 +87,7 @@ async function applyChanges(event) {
           const formState = form.getState(true);
           const panelDefinition = getFormFieldById(formState['items'], parentPanel.id);
           await generateFormRendition(panelDefinition, parentPanel);
-          annotateItems(panelDefinition.items, formDef, {});
+          annotateItems(parentPanel.childNodes, formDef, {});
           return true;
         }
       } else if (newBlock) {
