@@ -44,6 +44,7 @@ async function applyChanges(event) {
     const block = element.parentElement?.closest('.block[data-aue-resource]') || element?.closest('.block[data-aue-resource]');
     if (block) {
       if (block.dataset.aueModel === 'form') {
+        decorateBlock(block);
         await loadBlock(block);
         return true;
       } else {
