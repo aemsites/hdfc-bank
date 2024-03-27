@@ -578,14 +578,3 @@ main .form.block .field-otppanel {
     }
   }
 }
-
-label.disabled-label {
-  color: var(--color-input-text-disabled) !important;
-  background-color: var(--color-input-background-disabled) !important;
-}
-
-/* stylelint-disable-next-line no-descending-specificity */
-main .form input:disabled, main .form select:disabled {
-  background-color: var(--color-input-background-disabled) !important;
-  color: var(--color-input-text-disabled);
-}

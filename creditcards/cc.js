@@ -118,15 +118,6 @@ inputs.forEach((input) => {
   wrapper.dataset.empty = !input.value;
 });
 
-/* Disabled input label styling */
-const disabledInputs = document.querySelectorAll('input[disabled], select[disabled]');
-if (disabledInputs) {
-  disabledInputs.forEach((input) => {
-    const disabledLabel = document.querySelector(`label[for="${input.id}"]`);
-    disabledLabel?.classList.add('disabled-label');
-  });
-}
-
 /* Disable all future dates */
 const dateInputs = document.querySelectorAll('input[id^="datepicker-"]');
 if (dateInputs) {
