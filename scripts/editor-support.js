@@ -9,8 +9,34 @@ import {
 } from './aem.js';
 import { decorateRichtext } from './editor-support-rte.js';
 import { decorateMain } from './scripts.js';
+import { generateFormRendition } from '../blocks/form/form.js';
 
 async function applyChanges(event) {
+
+  let formFieldMap = {};
+
+  function getFormFieldById(items, id) {
+    let field;
+    if (formFieldMap[id]) {
+        field = formFieldMap[id];
+    } else {
+        for (let item of  Object.values(items)) {
+            formFieldMap[item.id] = item;
+            if (item.id === id) {
+                field = item;
+            } else if (item.fieldType === 'panel') {
+                if (item[':items']) {
+                    field = getFormFieldById(item[':items'], id);
+                }
+            }
+        }
+    }
+    return field;
+  }
+  function cleanUp(content) {
+    const formDef = content.replaceAll('^(([^<>()\\\\[\\\\]\\\\\\\\.,;:\\\\s@\\"]+(\\\\.[^<>()\\\\[\\\\]\\\\\\\\.,;:\\\\s@\\"]+)*)|(\\".+\\"))@((\\\\[[0-9]{1,3}\\\\.[0-9]{1,3}\\\\.[0-9]{1,3}\\\\.[0-9]{1,3}])|(([a-zA-Z\\\\-0-9]+\\\\.)\\+[a-zA-Z]{2,}))$', '');
+    return formDef?.replace(/\x83\n|\n|\s\s+/g, '');
+  }
   // redecorate default content and blocks on patches (in the properties rail)
   const { detail } = event;
 
@@ -45,16 +71,18 @@ async function applyChanges(event) {
     if (block) {
       const blockResource = block.getAttribute('data-aue-resource');
       const newBlock = parsedUpdate.querySelector(`[data-aue-resource="${blockResource}"]`);
-      /*
       if (block.dataset.aueModel === 'form') {
         const newContainer = newBlock.querySelector('pre');
-        const oldContainer = block.querySelector('form');
-        oldContainer.replaceWith(newContainer);
-        decorateBlock(block);
-        await loadBlock(block);
-        return true;
-      } else */
-      if (newBlock) {
+        const codeEl = newContainer?.querySelector('code');
+        const content = codeEl?.textContent;
+        if (content) {
+          const formDef = JSON.parse(cleanUp(content));
+          const parentPanel = element.closest('.panel-wrapper');
+          const panelDefinition = getFormFieldById(formDef[':items'], parentPanel.id);
+          await generateFormRendition(panelDefinition, parentPanel);
+          return true;
+        }
+      } else if (newBlock) {
           newBlock.style.display = 'none';
           block.insertAdjacentElement('afterend', newBlock);
           decorateButtons(newBlock);
@@ -94,7 +122,12 @@ async function applyChanges(event) {
     }
   }
   return false;
+
+
 }
+
+
+
 
 function attachEventListners(main) {
   [
