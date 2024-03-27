@@ -20,13 +20,13 @@ async function applyChanges(event) {
     if (formFieldMap[id]) {
         field = formFieldMap[id];
     } else {
-        for (let item of  Object.values(items)) {
+        for (let item of items) {
             formFieldMap[item.id] = item;
             if (item.id === id) {
                 field = item;
             } else if (item.fieldType === 'panel') {
-                if (item[':items']) {
-                    field = getFormFieldById(item[':items'], id);
+                if (item['items']) {
+                    field = getFormFieldById(item['items'], id);
                 }
             }
         }
@@ -78,7 +78,10 @@ async function applyChanges(event) {
         if (content) {
           const formDef = JSON.parse(cleanUp(content));
           const parentPanel = element.closest('.panel-wrapper');
-          const panelDefinition = getFormFieldById(formDef[':items'], parentPanel.id);
+          const ruleEngine = await import('./blocks/form/rules/model/afb-runtime.js');
+          const form = ruleEngine.createFormInstance(formDef);
+          const formState = form.getState(true);
+          const panelDefinition = getFormFieldById(formState['items'], parentPanel.id);
           await generateFormRendition(panelDefinition, parentPanel);
           return true;
         }
