@@ -356,7 +356,7 @@ export async function generateFormRendition(panel, container, getItems = (p) => 
       colSpanDecorator(field, element);
       const decorator = await componentDecorater(field);
       if (field?.fieldType === 'panel') {
-        await generateFormRendition(field, element, getItems);
+        await generateFormRendition(field, element);
         return element;
       }
       if (typeof decorator === 'function') {
