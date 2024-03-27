@@ -9,37 +9,9 @@ import {
 } from './aem.js';
 import { decorateRichtext } from './editor-support-rte.js';
 import { decorateMain } from './scripts.js';
-import { generateFormRendition } from '../blocks/form/form.js';
-import annotateItems from '../blocks/form/form-editor-support.js';
-
-import  registerCustomFunctions from '../blocks/form/rules/functionRegistration.js';
 
 async function applyChanges(event) {
 
-  let formFieldMap = {};
-
-  function getFormFieldById(items, id) {
-    let field;
-    if (formFieldMap[id]) {
-        field = formFieldMap[id];
-    } else {
-        for (let item of items) {
-            formFieldMap[item.id] = item;
-            if (item.id === id) {
-                field = item;
-            } else if (item.fieldType === 'panel') {
-                if (item['items']) {
-                    field = getFormFieldById(item['items'], id);
-                }
-            }
-        }
-    }
-    return field;
-  }
-  function cleanUp(content) {
-    const formDef = content.replaceAll('^(([^<>()\\\\[\\\\]\\\\\\\\.,;:\\\\s@\\"]+(\\\\.[^<>()\\\\[\\\\]\\\\\\\\.,;:\\\\s@\\"]+)*)|(\\".+\\"))@((\\\\[[0-9]{1,3}\\\\.[0-9]{1,3}\\\\.[0-9]{1,3}\\\\.[0-9]{1,3}])|(([a-zA-Z\\\\-0-9]+\\\\.)\\+[a-zA-Z]{2,}))$', '');
-    return formDef?.replace(/\x83\n|\n|\s\s+/g, '');
-  }
   // redecorate default content and blocks on patches (in the properties rail)
   const { detail } = event;
 
@@ -75,21 +47,7 @@ async function applyChanges(event) {
       const blockResource = block.getAttribute('data-aue-resource');
       const newBlock = parsedUpdate.querySelector(`[data-aue-resource="${blockResource}"]`);
       if (block.dataset.aueModel === 'form') {
-        const newContainer = newBlock.querySelector('pre');
-        const codeEl = newContainer?.querySelector('code');
-        const content = codeEl?.textContent;
-        if (content) {
-          const formDef = JSON.parse(cleanUp(content));
-          const parentPanel = element.closest('.panel-wrapper');
-          const ruleEngine = await import('../blocks/form/rules/model/afb-runtime.js'); 
-          await registerCustomFunctions();
-          const form = ruleEngine.createFormInstance(formDef);
-          const formState = form.getState(true);
-          const panelDefinition = getFormFieldById(formState['items'], parentPanel.id);
-          await generateFormRendition(panelDefinition, parentPanel);
-          annotateItems(parentPanel.childNodes, formDef, {});
           return true;
-        }
       } else if (newBlock) {
           newBlock.style.display = 'none';
           block.insertAdjacentElement('afterend', newBlock);

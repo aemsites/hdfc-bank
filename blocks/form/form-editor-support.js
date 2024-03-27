@@ -1,5 +1,7 @@
+import { generateFormRendition } from './form.js';
+import registerCustomFunctions from './rules/functionRegistration.js';
 
-export default function annotateItems(items, formDefinition, formFieldMap) {
+function annotateItems(items, formDefinition, formFieldMap) {
 
     function getFieldById(items, id) {
         let field;
@@ -16,7 +18,6 @@ export default function annotateItems(items, formDefinition, formFieldMap) {
                     }
                 }
             }
-            
         }
         return field;
     }
@@ -133,3 +134,90 @@ document.body.addEventListener("aue:ui-edit", () => {
         }
     }
 });
+
+
+async function applyChanges(event) {
+
+    let formFieldMap = {};
+  
+    function getFormFieldById(items, id) {
+      let field;
+      if (formFieldMap[id]) {
+          field = formFieldMap[id];
+      } else {
+          for (let item of items) {
+              formFieldMap[item.id] = item;
+              if (item.id === id) {
+                  field = item;
+              } else if (item.fieldType === 'panel') {
+                  if (item['items']) {
+                      field = getFormFieldById(item['items'], id);
+                  }
+              }
+          }
+      }
+      return field;
+    }
+    function cleanUp(content) {
+      const formDef = content.replaceAll('^(([^<>()\\\\[\\\\]\\\\\\\\.,;:\\\\s@\\"]+(\\\\.[^<>()\\\\[\\\\]\\\\\\\\.,;:\\\\s@\\"]+)*)|(\\".+\\"))@((\\\\[[0-9]{1,3}\\\\.[0-9]{1,3}\\\\.[0-9]{1,3}\\\\.[0-9]{1,3}])|(([a-zA-Z\\\\-0-9]+\\\\.)\\+[a-zA-Z]{2,}))$', '');
+      return formDef?.replace(/\x83\n|\n|\s\s+/g, '');
+    }
+    // redecorate default content and blocks on patches (in the properties rail)
+    const { detail } = event;
+  
+    const resource = detail?.request?.target?.resource // update, patch components
+      || detail?.request?.target?.container?.resource // update, patch, add to sections
+      || detail?.request?.to?.container?.resource; // move in sections
+    if (!resource) return false;
+    const updates = detail?.response?.updates;
+    if (!updates.length) return false;
+    const { content } = updates[0];
+    if (!content) return false;
+  
+    const parsedUpdate = new DOMParser().parseFromString(content, 'text/html');
+    const element = document.querySelector(`[data-aue-resource="${resource}"]`);
+  
+    if (element) {
+      const block = element.parentElement?.closest('.block[data-aue-resource]') || element?.closest('.block[data-aue-resource]');
+      if (block) {
+        const blockResource = block.getAttribute('data-aue-resource');
+        const newBlock = parsedUpdate.querySelector(`[data-aue-resource="${blockResource}"]`);
+        if (block.dataset.aueModel === 'form') {
+          const newContainer = newBlock.querySelector('pre');
+          const codeEl = newContainer?.querySelector('code');
+          const content = codeEl?.textContent;
+          if (content) {
+            const formDef = JSON.parse(cleanUp(content));
+            const parentPanel = element.closest('.panel-wrapper');
+            const ruleEngine = await import('./rules/model/afb-runtime.js'); 
+            await registerCustomFunctions();
+            const form = ruleEngine.createFormInstance(formDef);
+            const formState = form.getState(true);
+            const panelDefinition = getFormFieldById(formState['items'], parentPanel.id);
+            await generateFormRendition(panelDefinition, parentPanel);
+            annotateItems(parentPanel.childNodes, formDef, {});
+            return true;
+          } else {
+            return false;
+          }
+        }
+      }
+    }
+    return true;
+}
+
+function attachEventListners(main) {
+    [
+      'aue:content-patch',
+      'aue:content-update',
+      'aue:content-add',
+      'aue:content-move',
+      'aue:content-remove',
+    ].forEach((eventType) => main?.addEventListener(eventType, async (event) => {
+      event.stopPropagation();
+      const applied = await applyChanges(event);
+      if (!applied) window.location.reload();
+    }));
+}
+  
+attachEventListners(document.querySelector('main'));
