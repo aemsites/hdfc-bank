@@ -43,18 +43,16 @@ async function applyChanges(event) {
 
     const block = element.parentElement?.closest('.block[data-aue-resource]') || element?.closest('.block[data-aue-resource]');
     if (block) {
+      const blockResource = block.getAttribute('data-aue-resource');
+      const newBlock = parsedUpdate.querySelector(`[data-aue-resource="${blockResource}"]`);
       if (block.dataset.aueModel === 'form') {
-        const newBlock = parsedUpdate.querySelector(`[data-aue-resource="${blockResource}"]`);
         const newContainer = newBlock.querySelector('pre');
         const oldContainer = block.querySelector('form');
         oldContainer.replaceWith(newContainer);
         decorateBlock(block);
         await loadBlock(block);
         return true;
-      } else {
-        const blockResource = block.getAttribute('data-aue-resource');
-        const newBlock = parsedUpdate.querySelector(`[data-aue-resource="${blockResource}"]`);
-        if (newBlock) {
+      } else if (newBlock) {
           newBlock.style.display = 'none';
           block.insertAdjacentElement('afterend', newBlock);
           decorateButtons(newBlock);
