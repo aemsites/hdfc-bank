@@ -237,26 +237,50 @@ const otpValFailure = (res, globals) => {
     otpButton: globals.form.getOTPbutton,
     ccWizardView: globals.form.corporateCardWizardView,
     resultPanel: globals.form.resultPanel,
+    incorrectOtpText: globals.form.incorrectOTPText,
   };
   currentFormContext.isCustomerIdentified = res?.customerIdentificationResponse?.CustomerIdentificationResponse?.errorCode === '0' ? 'Y' : 'N';
   const welcomeTxt = formUtil(globals, pannel.welcome);
   const otpPanel = formUtil(globals, pannel.otp);
   const otpBtn = formUtil(globals, pannel.otpButton);
   const loginPanel = formUtil(globals, pannel.login);
-  // const ccWizardPannel = formUtil(globals, pannel.ccWizardView);
   const resultPanel = formUtil(globals, pannel.resultPanel);
-
-  welcomeTxt.visible(false);
-  otpBtn.visible(false);
-  loginPanel.visible(false);
-  otpPanel.visible(false);
-  // ccWizardPannel.visible(true);
-
-  (async () => {
-    const myImportedModule = await import('./cc.js');
-    myImportedModule.onWizardInit();
-  })();
-  resultPanel.visible(true);
+  const incorectOtp = formUtil(globals, pannel.incorrectOtpText);
+  const otpNumFormName = 'otpNumber';// constantName-otpNumberfieldName
+  const otpFieldinp = formUtil(globals, pannel.otp?.[`${otpNumFormName}`]);
+  /* startCode- switchCase otp-error-scenarios- */
+  switch (res?.otpValidationResponse?.errorCode) {
+    case '02': {
+      otpFieldinp.setValue('');
+      incorectOtp.visible(true);
+      const otpNumbrQry = document.getElementsByName(otpNumFormName)?.[0];
+      otpNumbrQry?.addEventListener('input', (e) => {
+        if (e.target.value) {
+          incorectOtp.visible(false);
+        }
+      });
+      break;
+    }
+    // case '04': {
+    //   debugger;
+    //   errorPannel.setValue('You have entered invalid OTP for 3 consecutive attempts. Please try again later');
+    //   break;
+    // }
+    // case '08': {
+    //   // "errorMessage": "No password in system",
+    //   //   "errorCode": "08"
+    //   break;
+    // You have entered invalid OTP for 3 consecutive attempts. Please try again later
+    // }
+    default: {
+      welcomeTxt.visible(false);
+      otpBtn.visible(false);
+      loginPanel.visible(false);
+      otpPanel.visible(false);
+      resultPanel.visible(true);
+    }
+  }
+  /* endCode- switchCase otp-error-scenarios- */
 };
 
 const OTPVAL = {
@@ -281,7 +305,7 @@ const OTPVAL = {
     return jsonObj;
   },
   successCallback(res, globals) {
-    return (res?.demogResponse?.errorCode === '0') ? otpValSuccess(res, globals) : otpValFailure(res, globals);
+    return ((res?.demogResponse?.errorCode === '0') && (res?.otpValidationResponse?.errorCode === '0')) ? otpValSuccess(res, globals) : otpValFailure(res, globals);
   },
   errorCallback(err, globals) {
     otpValFailure(err, globals);
