@@ -118,6 +118,17 @@ inputs.forEach((input) => {
   wrapper.dataset.empty = !input.value;
 });
 
-/* End of code for floating field label */
+/* Disable all future dates */
+const dateInputs = document.querySelectorAll('input[id^="datepicker-"]');
+if (dateInputs) {
+  dateInputs.forEach((input) => {
+    const textInputValue = input.getAttribute('edit-value');
+    input.type = 'date';
+    input.value = textInputValue;
+    const today = new Date();
+    const currentDate = today.toISOString().split('T')[0];
+    input.setAttribute('max', currentDate);
+  });
+}
 
 export { decorateStepper, onWizardInit };
