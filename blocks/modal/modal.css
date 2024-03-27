@@ -1,28 +1,20 @@
 @import url('../../styles/color-palette.css');
 @import url('../../styles/typography.css');
 
-:root{
-  --color-text-primary: #4B5563;
-  --color-border-primary:#ccc;
-  --color-close-action-background-primary-default: #6b7280;
-}
-
 body.modal-open {
   overflow: hidden;
 }
 
 .modal dialog {
-  --dialog-border-radius: 16px;
-  
   overscroll-behavior: none;
-  border: 1px solid var(--color-border-primary);
-  border-radius: var(--dialog-border-radius);
+  border-radius: var(--modal-popup-border-radius);
+  border: none !important;
 }
 
 .modal-content {
   max-width: 920px;
   width: 100%;
-   color: var(--color-interface-text-primary);
+   color: var(--color-modal-interface-text-primary);
 
   p {
     font-size: var(--body-sm-font-size);
