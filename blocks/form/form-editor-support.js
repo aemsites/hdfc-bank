@@ -177,7 +177,10 @@ async function applyChanges(event) {
                 parentDef = getFieldById(formDef[':items'], parent.id, {});
             }
             const getItems = (p) => {
-                return p[':itemsOrder'].map((itemKey) => p[':items'][itemKey]);
+                if (p[':itemsOrder'] && p[':items']) {
+                    return p[':itemsOrder'].map((itemKey) => p[':items'][itemKey]);
+                }
+                return [];
             }
             await generateFormRendition(parentDef, parent, getItems);
             annotateItems(parent.childNodes, formDef, {});
