@@ -60,6 +60,10 @@ main .form {
     font-size: 31px;
   }
 
+  input::-ms-reveal,  input::-ms-clear {
+    display: none;
+  }
+
   .date-wrapper .field-description {
     display: none;
   }
