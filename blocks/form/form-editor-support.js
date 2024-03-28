@@ -157,7 +157,7 @@ async function applyChanges(event) {
             let parent = element.closest('.panel-wrapper');
             let parentDef = {};
             if (!parent) {
-                parent = element.closest('form');
+                parent = element.closest('form') || element;
                 parentDef = formDef;
             } else {
                 parentDef = getFieldById(formDef, parent.id, {});
