@@ -31,6 +31,23 @@ const appendMaskedNumber = (containerClass, number) => {
     nestedPElement?.appendChild(newText);
   }
 };
+
+/**
+ * Changes the text content of a <p> element inside a pannel with the specified name.
+ * @param {String} pannelName - The name of the panel containing the <p> element.
+ * @param {String} innerContent - The new text content to set for the <p> element.
+ */
+const changeTextContent = (pannelName, innerContent) => {
+  const panel = document.getElementsByName(pannelName)?.[0];
+  if (panel) {
+    const pElement = panel.querySelector('p');
+    const nestedPElement = pElement?.querySelector('p');
+    if (nestedPElement) {
+      nestedPElement.textContent = innerContent;
+    }
+  }
+};
+
 /**
   * Decorates the password input to hide the text and display only bullets
   * @name decoratePasswordField Runs after user clicks on Get OTP
@@ -262,6 +279,7 @@ const otpValFailure = (res, globals) => {
     ccWizardView: globals.form.corporateCardWizardView,
     resultPanel: globals.form.resultPanel,
     incorrectOtpText: globals.form.incorrectOTPText,
+    errorPanelLabel: globals.form.resultPanel.errorResultPanel,
   };
   currentFormContext.isCustomerIdentified = res?.customerIdentificationResponse?.CustomerIdentificationResponse?.errorCode === '0' ? 'Y' : 'N';
   const welcomeTxt = formUtil(globals, pannel.welcome);
@@ -272,9 +290,12 @@ const otpValFailure = (res, globals) => {
   const incorectOtp = formUtil(globals, pannel.incorrectOtpText);
   const otpNumFormName = 'otpNumber';// constantName-otpNumberfieldName
   const otpFieldinp = formUtil(globals, pannel.otp?.[`${otpNumFormName}`]);
+  const resultSetErrorText1 = formUtil(globals, pannel.errorPanelLabel.resultSetErrorText1);
+  const resultSetErrorText2 = formUtil(globals, pannel.errorPanelLabel.resultSetErrorText2);
+  const tryAgainButtonErrorPanel = formUtil(globals, pannel.errorPanelLabel.tryAgainButtonErrorPanel);
   /* startCode- switchCase otp-error-scenarios- */
   switch (res?.otpValidationResponse?.errorCode) {
-    case '02': {
+    case '02': { // incorrect otp
       otpFieldinp.setValue('');
       incorectOtp.visible(true);
       const otpNumbrQry = document.getElementsByName(otpNumFormName)?.[0];
@@ -285,18 +306,39 @@ const otpValFailure = (res, globals) => {
       });
       break;
     }
-    // case '04': {
-    //   debugger;
-    //   errorPannel.setValue('You have entered invalid OTP for 3 consecutive attempts. Please try again later');
-    //   break;
-    // }
-    // case '08': {
-    //   // "errorMessage": "No password in system",
-    //   //   "errorCode": "08"
-    //   break;
-    // You have entered invalid OTP for 3 consecutive attempts. Please try again later
-    // }
+    case '04': { // incorrect otp attempt of 3 times.
+      incorectOtp.visible(false);
+      welcomeTxt.visible(false);
+      otpBtn.visible(false);
+      loginPanel.visible(false);
+      otpPanel.visible(false);
+      resultPanel.visible(true);
+      const errorText = 'You have entered invalid OTP for 3 consecutive attempts. Please try again later';
+      const errorTextPannelName = 'errorResultPanel';
+      changeTextContent(errorTextPannelName, errorText);
+      resultSetErrorText1.visible(false);
+      resultSetErrorText2.visible(false);
+      tryAgainButtonErrorPanel.visible(true);
+      const reloadBtn = document.getElementsByName('tryAgainButtonErrorPanel')?.[0];
+      reloadBtn.addEventListener('click', () => window.location.reload());
+      break;
+    }
+    case 'CZ_HTTP_0003': { // // Unfortunately, we were unable to process your request - happens when value is empty.
+      incorectOtp.visible(false);
+      welcomeTxt.visible(false);
+      otpBtn.visible(false);
+      loginPanel.visible(false);
+      otpPanel.visible(false);
+      resultPanel.visible(true);
+      const errorText = 'Unfortunately, we were unable to process your request';
+      const errorTextPannelName = 'errorResultPanel';
+      changeTextContent(errorTextPannelName, errorText);
+      resultSetErrorText1.visible(false);
+      resultSetErrorText2.visible(false);
+      break;
+    }
     default: {
+      incorectOtp.visible(false);
       welcomeTxt.visible(false);
       otpBtn.visible(false);
       loginPanel.visible(false);
