@@ -47,4 +47,5 @@
   --color-input-border-disabled: #9ca3af;
   --color-input-border-error-default: #e30613;
   --color-action-stepper-style: linear-gradient(90deg, rgb(211 214 220) 50%, rgba(255 255 255 / 0%) 100%);
+  --color-modal-interface-text-primary: #4B5563;
 }
