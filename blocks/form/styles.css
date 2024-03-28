@@ -13,6 +13,10 @@ main {
 
 main .form form {
   padding: 40px;
+
+  .label-disabled {
+    background-color: var(--form-input-disable-color) !important;
+  }
 }
 
 main .form.block {
@@ -43,8 +47,12 @@ main .form {
     font-size: 14px;
   }
 
-  input[type="password"] {
+  input[type='password'] {
     font-size: 31px;
+  }
+
+  input::-ms-reveal,  input::-ms-clear {
+    display: none;
   }
 
   .date-wrapper .field-description {
@@ -329,15 +337,20 @@ main .form .field-successresultpanel > div.field-arnnumber::before {
   padding-right: 15px;
 }
 
-main .form .field-otppanel {
+main .form.block .field-otppanel {
+  display: grid;
+  max-width: 344px;
+  margin: 0 auto;
+  text-align: center;
   .field-otpnumber {
     margin-bottom: -10px;
 
     input {
       text-align: center;
       margin-bottom: 0;
-      letter-spacing: 7vw;
+      letter-spacing: 2vw;
       caret-color: transparent;
+      border-radius: 12px;
     }
   }
 
@@ -399,8 +412,12 @@ main .form .field-resultpanel {
     .field-otpnumber {
       input {
         padding: 0 0 0 2vw;
-        letter-spacing: 14vw;
+        letter-spacing: 2vw;
       }
+    }
+
+    .field-otpresend {
+      margin: 0 !important;
     }
   }
 
@@ -421,18 +438,22 @@ main .form .field-resultpanel {
     padding: 20px;
   }
 
-  main .form form .field-otppanel {
-    display: grid !important;
+  main .form.block .field-otppanel {
+    display: grid;
 
     .field-maxattempttext input {
-      text-align: left;
+      text-align: right;
       margin-bottom: 0;
     }
 
     .field-otpnumber {
       input {
-        letter-spacing: 13vw;
+        letter-spacing: 6vw;
       }
+    }
+
+    .field-otpresend {
+      margin: 0 !important;
     }
   }
 }
