@@ -158,7 +158,7 @@ async function applyChanges(event) {
           if (content) {
             const formDef = JSON.parse(cleanUp(content));
             const parent = element.closest('.panel-wrapper') ||  element.closest('form') || element.querySelector('form');
-            const parentDef = getFieldById(formDef, parent.id, {});
+            const parentDef = getFieldById(formDef, parent.dataset.id, {});
             parent.replaceChildren();
             await generateFormRendition(parentDef, parent, getItems);
             annotateItems(parent.childNodes, formDef, {});
