@@ -10,7 +10,10 @@ function getItems(container) {
 
 function getFieldById(panel, id, formFieldMap) {
     let field;
-    if (formFieldMap[id]) {
+
+    if (panel.id === id) {
+        field = panel;
+    } else if (formFieldMap[id]) {
         field = formFieldMap[id];
     } else {
         const items = getItems(panel);
@@ -154,14 +157,8 @@ async function applyChanges(event) {
           const content = codeEl?.textContent;
           if (content) {
             const formDef = JSON.parse(cleanUp(content));
-            let parent = element.closest('.panel-wrapper');
-            let parentDef = {};
-            if (!parent) {
-                parent = element.closest('form') || element;
-                parentDef = formDef;
-            } else {
-                parentDef = getFieldById(formDef, parent.id, {});
-            }
+            const parent = element.closest('.panel-wrapper') ||  element.closest('form') || element.querySelector('form');
+            const parentDef = getFieldById(formDef, parent.id, {});
             parent.replaceChildren();
             await generateFormRendition(parentDef, parent, getItems);
             annotateItems(parent.childNodes, formDef, {});
