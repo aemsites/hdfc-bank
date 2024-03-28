@@ -64,43 +64,60 @@ function onWizardInit() {
   decorateStepper();
 }
 
+/* startCode for creating Modal */
 /**
- * Creates a modal pop up when triggered by a specified element.
- * @param {HTMLElement} triggerElement - The element that triggers the modal when clicked.
- * @param {Object} payload - Configuration object containing content, action wrapper class, and consent requirement flag.
- * @param {HTMLElement} payload.content - The content to display in the modal.
- * @param {string} payload.actionWrapClass - The class of the wrapper containing all the action buttons.
- * @param {boolean} payload.reqConsentAgree - Flag indicating whether consent agreement is required.
+ * Function to link a trigger element with a modal opening functionality.
+ * @param {Object} config - Configuration object for the modal.
+ * @param {HTMLElement} config.triggerElement - The element triggering the modal.
+ * @param {HTMLElement} config.content - The content to display in the modal.
+ * @param {String} [config.actionWrapClass] - Wrapper class containing all the buttons.
+ * @param {Boolean} [config.reqConsentAgree=false] - Flag indicating whether consent agreement is required.
+ * @param {Function} [config.updateUI] - Function for DOM manipulation upon receiving data.
  */
-const linkModalFunction = (trigerElement, payload) => {
-  trigerElement.addEventListener('click', async (e) => {
-    const findTheElement = e?.target?.tagName?.toLowerCase();
-    const checkTagCondition = (findTheElement === 'input') ? e?.target?.checked : e?.target;
-    if (checkTagCondition) {
-      openModal(payload);
-    }
+
+const linkModalFunction = (config) => {
+  config?.triggerElement?.addEventListener('click', async (e) => {
+    e.preventDefault();
+    await openModal(config);
+    config?.content?.addEventListener('modalTriggerValue', (event) => {
+      const receivedData = event.detail;
+      if (config?.updateUI) {
+        config?.updateUI(receivedData);
+      }
+    });
   });
 };
+/* endCode for creating Modal */
 
-const checkBox2ClickElement = document.getElementsByName('checkBoxConsent2')?.[0];
-const panelAsPopUp2 = document.getElementsByName('consentPanel2')?.[0];
-// linkModal for loginScreen checkbox-2
+/* login screen second checkbox modalLinking */
 const consent2Config = { // config to create modal for consent-2
-  content: panelAsPopUp2, // content to display in modal
+  triggerElement: document.getElementsByName('checkBoxConsent2')?.[0], // trigger element for calling modalFunction
+  content: document.getElementsByName('consentPanel2')?.[0], // content to display in modal
   actionWrapClass: 'button-wrapper', // wrapper class containing all the buttons
-  reqConsentAgree: false, // Flag indicating whether consent agreement is required or not
+  reqConsentAgree: false, // Indicates if consent agreement is needed; shows close icon if not.
+  /**
+   * Updates the UI based on received data.
+   * @param {Object} receivedData - Data received after the modal button trigger,contains name of the btn triggered which is used to update the UI.
+   */
+  updateUI(receivedData) {
+    if (receivedData?.iAgreeConsent2) { // iAgreeConsent2- name of the I agree btn.
+      this.triggerElement.checked = true;
+    }
+    if (receivedData?.closeIcon) { // closeIcon - name of the Close x btn
+      this.triggerElement.checked = false;
+    }
+  },
 };
-linkModalFunction(checkBox2ClickElement, consent2Config);
+linkModalFunction(consent2Config);
 
-// linkModal for corporateCardWizard pannel view all in getThisCard screen.
-const viewAllBtn = document.getElementsByName('viewAllCardBenefits')?.[0];
-const viewAllBtnPannel = document.getElementsByName('viewAllCardBenefitsPanel')?.[0];
-const viewAllBtnPannelConfig = {
-  content: viewAllBtnPannel,
+/* cc wizard screen getCard-viewAll buttonn modalLinking */
+const viewAllBtnPannelConfig = { // linkModal for corporateCardWizard pannel view all in getThisCard screen.
+  triggerElement: document.getElementsByName('viewAllCardBenefits')?.[0],
+  content: document.getElementsByName('viewAllCardBenefitsPanel')?.[0],
   actionWrapClass: 'button-wrapper',
   reqConsentAgree: true,
 };
-linkModalFunction(viewAllBtn, viewAllBtnPannelConfig);
+linkModalFunction(viewAllBtnPannelConfig);
 
 /* Code for floating field label, initialized after DOM is rendered */
 const inputs = document.querySelectorAll('input[type="text"], input[type="number"], input[type="date"], input[type="email"], .field-wrapper textarea, .field-wrapper select');

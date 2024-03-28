@@ -15,6 +15,7 @@ body.modal-open {
   max-width: 920px;
   width: 100%;
    color: var(--color-modal-interface-text-primary);
+   overflow: auto;
 
   p {
     font-size: var(--body-sm-font-size);
@@ -110,6 +111,7 @@ body.modal-open {
     letter-spacing: 0;
     text-align: left;
     padding: 0;
+    overflow: hidden;
   }
 
   .modal dialog .modal-content {
