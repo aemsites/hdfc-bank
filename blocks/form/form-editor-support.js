@@ -162,6 +162,7 @@ async function applyChanges(event) {
             } else {
                 parentDef = getFieldById(formDef, parent.id, {});
             }
+            parent.replaceChildren();
             await generateFormRendition(parentDef, parent, getItems);
             annotateItems(parent.childNodes, formDef, {});
             return true;
