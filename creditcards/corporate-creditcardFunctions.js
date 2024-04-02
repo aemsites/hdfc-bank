@@ -210,6 +210,10 @@ const personalDetailsPreFillFromBRE = (res, globals, panel) => {
   prefilledCurrentAdddress.setValue(completeAddress);
 };
 
+const existingCustomerCheck = (res) => {
+  console.log(res);
+};
+
 /**
  * Handles the success scenario for OTP Validation.
  * @param {any} res  - The response object containing the OTP success generation response.
@@ -238,7 +242,8 @@ const otpValSuccess = (res, globals) => {
   otpPanel.visible(false);
   addClassToFieldLabel('.form input[disabled], .form select[disabled]', 'label-disabled');
   ccWizardPannel.visible(true);
-  if (currentFormContext.existingCustomer === 'Y') {
+  const existingCustomer = existingCustomerCheck(res);
+  if (existingCustomer) {
     personalDetailsPreFillFromBRE(res, globals, pannel);
   }
   (async () => {
