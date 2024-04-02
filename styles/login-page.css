@@ -27,12 +27,6 @@ main .form form .radio-wrapper {
     align-items: center !important;
 }
 
-main img {
-    max-width: 100% !important;
-    width: 100% !important;
-    height: 180px !important;
-}
-
 .form-container {
     max-width: 960px !important;
     width: 100%;
