@@ -178,18 +178,16 @@ const personalDetailsPreFillFromBRE = (res, globals, panel) => {
   const gender = formUtil(globals, personalDetails.gender);
   gender.setValue(custGender, changeDataAttrObj);
 
-  // Extract name from response
-  const { VDCUSTFULLNAME: fullName } = breCheckAndFetchDemogResponse || {};
-  const [custFirstName, ...remainingName] = fullName.split(' ');
-  const custLastName = remainingName.pop() || '';
-  const custMiddleName = remainingName.join(' ');
   const firstName = formUtil(globals, personalDetails.firstName);
-  firstName.setValue(custFirstName, changeDataAttrObj);
+  firstName.setValue(breCheckAndFetchDemogResponse?.VDCUSTFIRSTNAME, changeDataAttrObj);
   const lastName = formUtil(globals, personalDetails.lastName);
-  lastName.setValue(custLastName, changeDataAttrObj);
-  const middleName = formUtil(globals, personalDetails.middleName);
-  middleName.setValue(custMiddleName, changeDataAttrObj);
-
+  lastName.setValue(breCheckAndFetchDemogResponse?.VDCUSTLASTNAME, changeDataAttrObj);
+  // Check if VDCUSTMIDDLENAME exists and set the value if it does
+  const middleNameValue = breCheckAndFetchDemogResponse?.VDCUSTMIDDLENAME ?? null;
+  if (middleNameValue !== null) {
+    const middleName = formUtil(globals, personalDetails.middleName);
+    middleName.setValue(middleNameValue, changeDataAttrObj);
+  }
   // Extract date of birth or ITNBR
   // const custDate = panel.login.pan.$value ? breCheckAndFetchDemogResponse?.DDCUSTDATEOFBIRTH : breCheckAndFetchDemogResponse?.VDCUSTITNBR;
   // globals.functions.setProperty(personalDetails.dobPersonalDetails, { value: panel.login.pan.$value ? convertDateToMmmDdYyyy(custDate.toString()) : custDate });
@@ -210,8 +208,43 @@ const personalDetailsPreFillFromBRE = (res, globals, panel) => {
   prefilledCurrentAdddress.setValue(completeAddress);
 };
 
+/**
+ * Checks if a customer is an existing customer based on specific criteria.
+ * @param {Object} res - The response object containing customer information.
+ * @returns {boolean|null} Returns true if the customer is an existing customer,
+ * false if not, and null if the criteria are not met or the information is incomplete.
+ */
 const existingCustomerCheck = (res) => {
   console.log(res);
+  // Mapping of customer segments to categories
+  const customerCategory = {
+    only_casa: 'ETB',
+    only_cc: 'ETB',
+    only_asset: 'NTB',
+    only_hl: 'NTB',
+    'casa_cc, casa_asset_cc, cc_casa, cc_asset': 'ETB',
+  };
+
+  // Extract customer information
+  const customerInfo = res?.demogResponse?.BRECheckAndFetchDemogResponse;
+  const customerFiller2 = customerInfo?.BREFILLER2?.toUpperCase();
+
+  // Handle specific cases
+  if (customerFiller2 === 'D102') {
+    // Case where customerFiller2 is 'D102'
+    return false;
+  }
+  if (customerFiller2 === 'D101' || customerFiller2 === 'D106') {
+    // Case where customerFiller2 is 'D101' or 'D106'
+    const segment = customerInfo?.SEGMENT?.toLowerCase();
+    const customerType = customerCategory[segment];
+
+    // Check customer type and return accordingly
+    return customerType === 'ETB';
+  }
+
+  // Default case
+  return null;
 };
 
 /**
