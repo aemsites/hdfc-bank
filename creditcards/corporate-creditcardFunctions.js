@@ -135,7 +135,30 @@ const OTPGEN = {
 };
 
 /**
- * Automatically fills form fields based on response data.
+ * Add a class to the label associated with the specified input elements.
+ * @param {string} selector - The CSS selector for the input elements.
+ * @param {string} className - The class name to add to the labels.
+ */
+const addClassToFieldLabel = (selector, className) => {
+  /**
+   * Retrieve the labels associated with the specified input elements and add the class to them.
+   * @param {Element} input - The input element.
+   */
+  const addClassToLabel = (input) => {
+    const inputId = input.id;
+    const label = document.querySelector(`label[for="${inputId}"]`);
+    if (label) {
+      label.classList.add(className);
+    }
+  };
+
+  // Select all input elements using the provided selector
+  const elements = document.querySelectorAll(selector);
+
+  // Iterate over each input element and add the class to its associated label
+  elements.forEach(addClassToLabel);
+};
+/* Automatically fills form fields based on response data.
  * @param {object} res - The response data object.
  * @param {object} globals - Global variables object.
  * @param {object} panel - Panel object.
@@ -213,6 +236,7 @@ const otpValSuccess = (res, globals) => {
   otpBtn.visible(false);
   loginPanel.visible(false);
   otpPanel.visible(false);
+  addClassToFieldLabel('.form input[disabled], .form select[disabled]', 'label-disabled');
   ccWizardPannel.visible(true);
   if (currentFormContext.existingCustomer === 'Y') {
     personalDetailsPreFillFromBRE(res, globals, pannel);
