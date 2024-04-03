@@ -175,10 +175,19 @@ const addClassToFieldLabel = (selector, className) => {
   elements.forEach(addClassToLabel);
 };
 
+/**
+ * Adds the 'wrapper-disabled' class to the parent elements of inputs or selects within the given panel
+ * if their values are truthy.
+ * @param {HTMLElement} selectedPanel - The panel element containing the inputs or selects.
+ */
 const addDisableClass = (selectedPanel) => {
   const panelInputs = Array.from(selectedPanel.querySelectorAll('input, select'));
+
+  // Iterates over each input or select element
   panelInputs.forEach((panelInput) => {
+    // Checks if the input or select element has a truthy value
     if (panelInput.value) {
+      // Adds the 'wrapper-disabled' class to the parent element
       panelInput.parentElement.classList.add('wrapper-disabled');
     }
   });
@@ -243,7 +252,6 @@ const personalDetailsPreFillFromBRE = (res, globals) => {
   prefilledCurrentAdddress.setValue(completeAddress);
   const currentAddressETBUtil = formUtil(globals, currentAddressETB);
   currentAddressETBUtil.visible(true);
-
   const personaldetails = document.querySelector('.field-personaldetails');
   personaldetails.classList.add('personaldetails-disabled');
   addDisableClass(personaldetails);
