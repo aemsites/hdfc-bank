@@ -7,6 +7,7 @@ async function createMainModal(content, actionWrapClass, reqConsentAgree) {
   if (!content) {
     return null;
   }
+  const resultScope = {};
   const dialog = document.createElement('dialog');
   const dialogContent = document.createElement('div');
   dialogContent.classList.add('modal-content');
@@ -17,7 +18,12 @@ async function createMainModal(content, actionWrapClass, reqConsentAgree) {
   closeButton.setAttribute('aria-label', 'Close');
   closeButton.type = 'button';
   closeButton.innerHTML = '<span class="icon icon-close">X</span>';
-  closeButton.addEventListener('click', () => dialog.close());
+  closeButton.addEventListener('click', () => {
+    resultScope[`${'closeIcon'}`] = true;
+    dialog.close();
+    const customEvent = new CustomEvent('modalTriggerValue', { detail: resultScope });
+    content?.dispatchEvent(customEvent);
+  });
   if (!reqConsentAgree) {
     dialog.append(closeButton);
   }
@@ -28,7 +34,13 @@ async function createMainModal(content, actionWrapClass, reqConsentAgree) {
     const actionBtns = element?.querySelectorAll('button');
     actionBtns?.forEach((button) => {
       // providing close functionalities to all the btns available
-      button?.addEventListener('click', () => dialog.close());
+      button?.addEventListener('click', (e) => {
+        const nameOfBtn = e?.target?.name;
+        resultScope[`${nameOfBtn}`] = true;
+        dialog.close();
+        const customEvent = new CustomEvent('modalTriggerValue', { detail: resultScope });
+        content?.dispatchEvent(customEvent);
+      });
     });
   });
   const block = buildBlock('modal', '');

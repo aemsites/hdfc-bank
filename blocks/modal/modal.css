@@ -13,7 +13,10 @@ body.modal-open {
 }
 
 .modal-content {
-  color: #004b8d;
+  max-width: 920px;
+  width: 100%;
+   color: var(--color-modal-interface-text-primary);
+   overflow: auto;
 
   p {
     font-size: 14px;
@@ -79,6 +82,7 @@ body.modal-open {
     letter-spacing: 0;
     text-align: left;
     padding: 0;
+    overflow: hidden;
   }
 
   .modal dialog .modal-content {
