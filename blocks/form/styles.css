@@ -58,6 +58,53 @@ main .form {
   .date-wrapper .field-description {
     display: none;
   }
+
+  .field-permanentaddresstoggle,
+  .field-ckyctoggle {
+    align-items: center !important;
+
+    .field-label {
+      display: flex;
+      flex-basis: 40px;
+      align-items: center;
+      background-color: #9ca3af;
+      color: #fff;
+      cursor: pointer;
+      border-radius: 12px;
+      height: 24px;
+      width: 40px;
+    }
+
+    .field-label::before {
+      content: '';
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      background-color: #fff;
+      border-radius: 50%;
+      margin-right: 10px;
+      transition: transform 0.3s;
+      margin-left: 1px;
+    }
+  }
+
+  .field-permanentaddresstoggle input[type='checkbox'],
+  .field-ckyctoggle input[type='checkbox'] {
+    display: none;
+  }
+
+  .field-permanentaddresstoggle input[type='checkbox']:checked + .field-label,
+  .field-ckyctoggle input[type='checkbox']:checked + .field-label {
+    background-color: #1c3fca;
+  }
+
+  .field-permanentaddresstoggle
+    input[type='checkbox']:checked
+    + .field-label::before,
+  .field-ckyctoggle input[type='checkbox']:checked + .field-label::before {
+    transform: translateX(20px);
+    margin-right: 21px;
+  }
 }
 
 /* loader for app show hide on api call */
@@ -117,78 +164,6 @@ main .form :is([data-active='true'], [data-empty='false'], .date-wrapper):not(.f
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
-/* Form permanent address toogle styling starts */
-
-main .form form .field-permanentaddress .field-permanentaddresstoggle {
-  align-items: center;
-}
-
-main
-  .form
-  form
-  .field-permanentaddress
-  .field-permanentaddresstoggle
-  input[type='checkbox'] {
-  display: none;
-}
-
-main
-  .form
-  form
-  .field-permanentaddress
-  .field-permanentaddresstoggle
-  .field-label {
-  display: flex;
-  flex-basis: 40px;
-  align-items: center;
-  background-color: #9ca3af;
-  color: #fff;
-  cursor: pointer;
-  border-radius: 12px;
-  height: 24px;
-  width: 40px;
-}
-
-main
-  .form
-  form
-  .field-permanentaddress
-  .field-permanentaddresstoggle
-  input[type='checkbox']:checked
-  + .field-label {
-  background-color: #1c3fca;
-}
-
-main
-  .form
-  form
-  .field-permanentaddress
-  .field-permanentaddresstoggle
-  .field-label::before {
-  content: '';
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  background-color: #fff;
-  border-radius: 50%;
-  margin-right: 10px;
-  transition: transform 0.3s;
-  margin-left: 1px;
-}
-
-main
-  .form
-  form
-  .field-permanentaddress
-  .field-permanentaddresstoggle
-  input[type='checkbox']:checked
-  + .field-label::before {
-  transform: translateX(20px);
-  margin-right: 21px;
-}
-
-/* Form permanent address toogle styling ends */
 
 /* Button Styling */
 .button-wrapper {

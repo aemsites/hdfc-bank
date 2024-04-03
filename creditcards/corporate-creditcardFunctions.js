@@ -1,7 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable prefer-destructuring */
 /* eslint-disable no-unused-vars */
-/* eslint-disable max-len */
 /* eslint no-console: ["error", { allow: ["warn", "error", "log"] }] */
 /* eslint no-unused-vars: ["error", { "args": "none" }] */
 import createJourneyId from '../common/journey-utils.js';
@@ -31,6 +30,23 @@ const appendMaskedNumber = (containerClass, number) => {
     nestedPElement?.appendChild(newText);
   }
 };
+
+/**
+ * Changes the text content of a <p> element inside a pannel with the specified name.
+ * @param {String} pannelName - The name of the panel containing the <p> element.
+ * @param {String} innerContent - The new text content to set for the <p> element.
+ */
+const changeTextContent = (pannelName, innerContent) => {
+  const panel = document.getElementsByName(pannelName)?.[0];
+  if (panel) {
+    const pElement = panel.querySelector('p');
+    const nestedPElement = pElement?.querySelector('p');
+    if (nestedPElement) {
+      nestedPElement.textContent = innerContent;
+    }
+  }
+};
+
 /**
   * Decorates the password input to hide the text and display only bullets
   * @name decoratePasswordField Runs after user clicks on Get OTP
@@ -144,6 +160,7 @@ const personalDetailsPreFillFromBRE = (res, globals, panel) => {
   const changeDataAttrObj = { attrChange: true, value: false };
   // Extract personal details from globals
   const personalDetails = globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.personalDetails;
+  const currentAddressNTB = globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.currentDetails.currentAddressNTB;
 
   // Extract breCheckAndFetchDemogResponse from res
   const breCheckAndFetchDemogResponse = res?.demogResponse?.BRECheckAndFetchDemogResponse;
@@ -151,28 +168,47 @@ const personalDetailsPreFillFromBRE = (res, globals, panel) => {
   if (!breCheckAndFetchDemogResponse) return;
 
   // Extract gender from response
-  const custGender = breCheckAndFetchDemogResponse?.VDCUSTGENDER;
-  const gender = formUtil(globals, personalDetails.gender);
-  gender.setValue(custGender, changeDataAttrObj);
+  const personalDetailsFields = {
+    gender: 'VDCUSTGENDER',
+    firstName: 'VDCUSTFIRSTNAME',
+    lastName: 'VDCUSTLASTNAME',
+    middleName: 'VDCUSTMIDDLENAME',
+    personalEmailAddress: 'VDCUSTEMAILADD',
+  };
+  Object.entries(personalDetailsFields).forEach(([field, key]) => {
+    const value = breCheckAndFetchDemogResponse[key];
+    if (value !== undefined && value !== null) {
+      const formField = formUtil(globals, personalDetails[field]);
+      formField.setValue(value, changeDataAttrObj);
+    }
+  });
 
-  // Extract name from response
-  const { VDCUSTFULLNAME: fullName } = breCheckAndFetchDemogResponse || {};
-  const [custFirstName, ...remainingName] = fullName.split(' ');
-  const custLastName = remainingName.pop() || '';
-  const custMiddleName = remainingName.join(' ');
-  const firstName = formUtil(globals, personalDetails.firstName);
-  firstName.setValue(custFirstName, changeDataAttrObj);
-  const lastName = formUtil(globals, personalDetails.lastName);
-  lastName.setValue(custLastName, changeDataAttrObj);
-  const middleName = formUtil(globals, personalDetails.middleName);
-  middleName.setValue(custMiddleName, changeDataAttrObj);
-
-  // Extract date of birth or ITNBR
-  // const custDate = panel.login.pan.$value ? breCheckAndFetchDemogResponse?.DDCUSTDATEOFBIRTH : breCheckAndFetchDemogResponse?.VDCUSTITNBR;
-  // globals.functions.setProperty(personalDetails.dobPersonalDetails, { value: panel.login.pan.$value ? convertDateToMmmDdYyyy(custDate.toString()) : custDate });
   const custDate = breCheckAndFetchDemogResponse?.DDCUSTDATEOFBIRTH;
-  const dobPersonalDetails = formUtil(globals, personalDetails.dobPersonalDetails);
-  dobPersonalDetails.setValue(convertDateToMmmDdYyyy(custDate?.toString()));
+  if (custDate) {
+    const dobField = document.getElementsByName('dobPersonalDetails')?.[0];
+    if (dobField) {
+      // If the input field exists, change its type to 'text' to display date
+      dobField.type = 'text';
+    }
+    const dobPersonalDetails = formUtil(globals, personalDetails.dobPersonalDetails);
+    dobPersonalDetails.setValue(convertDateToMmmDdYyyy(custDate.toString()));
+  }
+
+  const addressFields = {
+    addressLine1: 'VDCUSTADD1',
+    addressLine2: 'VDCUSTADD2',
+    addressLine3: 'VDCUSTADD3',
+    pincode: 'VDCUSTZIPCODE',
+    city: 'VDCUSTCITY',
+    state: 'VDCUSTSTATE',
+  };
+  Object.entries(addressFields).forEach(([field, key]) => {
+    const value = breCheckAndFetchDemogResponse[key];
+    if (value !== undefined && value !== null) {
+      const formField = formUtil(globals, currentAddressNTB[field]);
+      formField.setValue(value, changeDataAttrObj);
+    }
+  });
 
   // Create address string and set it to form field
   const completeAddress = [
@@ -185,6 +221,47 @@ const personalDetailsPreFillFromBRE = (res, globals, panel) => {
   ].filter(Boolean).join(', ');
   const prefilledCurrentAdddress = formUtil(globals, globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.currentDetails.currentAddressETB.prefilledCurrentAdddress);
   prefilledCurrentAdddress.setValue(completeAddress);
+};
+
+/**
+ * Checks if a customer is an existing customer based on specific criteria.
+ * @param {Object} res - The response object containing customer information.
+ * @returns {boolean|null} Returns true if the customer is an existing customer,
+ * false if not, and null if the criteria are not met or the information is incomplete.
+ */
+const existingCustomerCheck = (res) => {
+  // Mapping of customer segments to categories
+  const customerCategory = {
+    only_casa: 'ETB',
+    only_cc: 'ETB',
+    only_asset: 'NTB',
+    only_hl: 'NTB',
+    casa_cc: 'ETB',
+    casa_asset_cc: 'ETB',
+    cc_casa: 'ETB',
+    cc_asset: 'ETB',
+  };
+
+  // Extract customer information
+  const customerInfo = res?.demogResponse?.BRECheckAndFetchDemogResponse;
+  const customerFiller2 = customerInfo?.BREFILLER2?.toUpperCase();
+
+  // Handle specific cases
+  if (customerFiller2 === 'D102') {
+    // Case where customerFiller2 is 'D102'
+    return false;
+  }
+  if (customerFiller2 === 'D101' || customerFiller2 === 'D106') {
+    // Case where customerFiller2 is 'D101' or 'D106'
+    const segment = customerInfo?.SEGMENT?.toLowerCase();
+    const customerType = customerCategory[segment];
+
+    // Check customer type and return accordingly
+    return customerType === 'ETB';
+  }
+
+  // Default case
+  return null;
 };
 
 /**
@@ -214,7 +291,8 @@ const otpValSuccess = (res, globals) => {
   loginPanel.visible(false);
   otpPanel.visible(false);
   ccWizardPannel.visible(true);
-  if (currentFormContext.existingCustomer === 'Y') {
+  const existingCustomer = existingCustomerCheck(res);
+  if (existingCustomer) {
     personalDetailsPreFillFromBRE(res, globals, pannel);
   }
   (async () => {
@@ -237,26 +315,75 @@ const otpValFailure = (res, globals) => {
     otpButton: globals.form.getOTPbutton,
     ccWizardView: globals.form.corporateCardWizardView,
     resultPanel: globals.form.resultPanel,
+    incorrectOtpText: globals.form.incorrectOTPText,
+    errorPanelLabel: globals.form.resultPanel.errorResultPanel,
   };
   currentFormContext.isCustomerIdentified = res?.customerIdentificationResponse?.CustomerIdentificationResponse?.errorCode === '0' ? 'Y' : 'N';
   const welcomeTxt = formUtil(globals, pannel.welcome);
   const otpPanel = formUtil(globals, pannel.otp);
   const otpBtn = formUtil(globals, pannel.otpButton);
   const loginPanel = formUtil(globals, pannel.login);
-  // const ccWizardPannel = formUtil(globals, pannel.ccWizardView);
   const resultPanel = formUtil(globals, pannel.resultPanel);
-
-  welcomeTxt.visible(false);
-  otpBtn.visible(false);
-  loginPanel.visible(false);
-  otpPanel.visible(false);
-  // ccWizardPannel.visible(true);
-
-  (async () => {
-    const myImportedModule = await import('./cc.js');
-    myImportedModule.onWizardInit();
-  })();
-  resultPanel.visible(true);
+  const incorectOtp = formUtil(globals, pannel.incorrectOtpText);
+  const otpNumFormName = 'otpNumber';// constantName-otpNumberfieldName
+  const otpFieldinp = formUtil(globals, pannel.otp?.[`${otpNumFormName}`]);
+  const resultSetErrorText1 = formUtil(globals, pannel.errorPanelLabel.resultSetErrorText1);
+  const resultSetErrorText2 = formUtil(globals, pannel.errorPanelLabel.resultSetErrorText2);
+  const tryAgainButtonErrorPanel = formUtil(globals, pannel.errorPanelLabel.tryAgainButtonErrorPanel);
+  /* startCode- switchCase otp-error-scenarios- */
+  switch (res?.otpValidationResponse?.errorCode) {
+    case '02': { // incorrect otp
+      otpFieldinp.setValue('');
+      incorectOtp.visible(true);
+      const otpNumbrQry = document.getElementsByName(otpNumFormName)?.[0];
+      otpNumbrQry?.addEventListener('input', (e) => {
+        if (e.target.value) {
+          incorectOtp.visible(false);
+        }
+      });
+      break;
+    }
+    case '04': { // incorrect otp attempt of 3 times.
+      incorectOtp.visible(false);
+      welcomeTxt.visible(false);
+      otpBtn.visible(false);
+      loginPanel.visible(false);
+      otpPanel.visible(false);
+      resultPanel.visible(true);
+      const errorText = 'You have entered invalid OTP for 3 consecutive attempts. Please try again later';
+      const errorTextPannelName = 'errorResultPanel';
+      changeTextContent(errorTextPannelName, errorText);
+      resultSetErrorText1.visible(false);
+      resultSetErrorText2.visible(false);
+      tryAgainButtonErrorPanel.visible(true);
+      const reloadBtn = document.getElementsByName('tryAgainButtonErrorPanel')?.[0];
+      reloadBtn.addEventListener('click', () => window.location.reload());
+      break;
+    }
+    case 'CZ_HTTP_0003': { // // Unfortunately, we were unable to process your request - happens when value is empty.
+      incorectOtp.visible(false);
+      welcomeTxt.visible(false);
+      otpBtn.visible(false);
+      loginPanel.visible(false);
+      otpPanel.visible(false);
+      resultPanel.visible(true);
+      const errorText = 'Unfortunately, we were unable to process your request';
+      const errorTextPannelName = 'errorResultPanel';
+      changeTextContent(errorTextPannelName, errorText);
+      resultSetErrorText1.visible(false);
+      resultSetErrorText2.visible(false);
+      break;
+    }
+    default: {
+      incorectOtp.visible(false);
+      welcomeTxt.visible(false);
+      otpBtn.visible(false);
+      loginPanel.visible(false);
+      otpPanel.visible(false);
+      resultPanel.visible(true);
+    }
+  }
+  /* endCode- switchCase otp-error-scenarios- */
 };
 
 const OTPVAL = {
@@ -281,7 +408,7 @@ const OTPVAL = {
     return jsonObj;
   },
   successCallback(res, globals) {
-    return (res?.demogResponse?.errorCode === '0') ? otpValSuccess(res, globals) : otpValFailure(res, globals);
+    return ((res?.demogResponse?.errorCode === '0') && (res?.otpValidationResponse?.errorCode === '0')) ? otpValSuccess(res, globals) : otpValFailure(res, globals);
   },
   errorCallback(err, globals) {
     otpValFailure(err, globals);
