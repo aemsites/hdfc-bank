@@ -174,12 +174,22 @@ const addClassToFieldLabel = (selector, className) => {
   // Iterate over each input element and add the class to its associated label
   elements.forEach(addClassToLabel);
 };
+
+const addDisableClass = (selectedPanel) => {
+  const panelInputs = Array.from(selectedPanel.querySelectorAll('input, select'));
+  panelInputs.forEach((panelInput) => {
+    if (panelInput.value) {
+      panelInput.parentElement.classList.add('wrapper-disabled');
+    }
+  });
+};
+
 /* Automatically fills form fields based on response data.
  * @param {object} res - The response data object.
  * @param {object} globals - Global variables object.
  * @param {object} panel - Panel object.
  */
-const personalDetailsPreFillFromBRE = (res, globals, panel) => {
+const personalDetailsPreFillFromBRE = (res, globals) => {
   const changeDataAttrObj = { attrChange: true, value: false };
   // Extract personal details from globals
   const personalDetails = globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.personalDetails;
@@ -199,6 +209,7 @@ const personalDetailsPreFillFromBRE = (res, globals, panel) => {
     lastName: 'VDCUSTLASTNAME',
     middleName: 'VDCUSTMIDDLENAME',
     personalEmailAddress: 'VDCUSTEMAILADD',
+    panNumberPersonalDetails: 'VDCUSTITNBR',
   };
   Object.entries(personalDetailsFields).forEach(([field, key]) => {
     const value = breCheckAndFetchDemogResponse[key];
@@ -232,6 +243,10 @@ const personalDetailsPreFillFromBRE = (res, globals, panel) => {
   prefilledCurrentAdddress.setValue(completeAddress);
   const currentAddressETBUtil = formUtil(globals, currentAddressETB);
   currentAddressETBUtil.visible(true);
+
+  const personaldetails = document.querySelector('.field-personaldetails');
+  personaldetails.classList.add('personaldetails-disabled');
+  addDisableClass(personaldetails);
 };
 
 /**
@@ -305,7 +320,7 @@ const otpValSuccess = (res, globals) => {
   ccWizardPannel.visible(true);
   const existingCustomer = existingCustomerCheck(res);
   if (existingCustomer) {
-    personalDetailsPreFillFromBRE(res, globals, pannel);
+    personalDetailsPreFillFromBRE(res, globals);
   }
   (async () => {
     const myImportedModule = await import('./cc.js');

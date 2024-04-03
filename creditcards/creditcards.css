@@ -1,0 +1,41 @@
+.personaldetails-disabled {
+  legend.hdfc-accordion-style {
+    margin-bottom: 24px;
+  }
+
+  .wrapper-disabled {
+    .field-label {
+      color: var(--color-interface-text-secondary);
+      font-size: var(--body-sm-font-size);
+      font-weight: var(--font-weight-regular);
+      line-height: var(--font-linehight-regular);
+      margin: 0;
+      padding: 0;
+      transform: none;
+    }
+
+    input[type='text'] {
+      border: 0;
+      color: var(--color-interface-text-primary);
+      font-size: var(--body-md-font-size);
+      font-weight: var(--font-weight-bold);
+      line-height: var(--font-linehight-medium);
+      margin: 0;
+      margin-top: 10px;
+      padding: 0;
+      pointer-events: none;
+    }
+
+    select {
+      appearance: none;
+      border: none !important;
+      color: var(--color-interface-text-primary);
+      font-size: var(--body-md-font-size);
+      font-weight: var(--font-weight-bold);
+      line-height: var(--font-linehight-medium);
+      margin: 10px 0 0;
+      padding: 0 !important;
+      pointer-events: none !important;
+    }
+  }
+}
