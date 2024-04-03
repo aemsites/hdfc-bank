@@ -80,6 +80,10 @@ main img {
     color: var(--color-interface-text-primary) !important;
 }
 
+.field-checkboxconsent1 input, .field-checkboxconsent2 input {
+    margin-top: 4px !important;
+}
+
 .field-loginpanel {
     margin-top: -11px !important;
 
@@ -144,13 +148,19 @@ main img {
             margin-top: -19px !important;
         }
 
-        .field-dateofbirth input {
+        .field-dateofbirth {
+                input {
             font-size: var(--body-sm-font-size);
             font-weight: var(--font-weight-regular);
             line-height: var(--font-linehight-regular);
             text-align: left;
             color: var(--color-interface-background-quaternary);
         }
+
+        .field-description{
+            display: none;
+        }
+    }
     }
 
     .checkbox-wrapper {
@@ -178,6 +188,16 @@ main img {
 
 main .form form .panel-wrapper {
     gap: var(--form-text-field-horz-gap) !important;
+}
+
+.pan-invalid, .pandob-invalid {
+    margin: 0 !important;
+    padding: 0 !important;
+    margin-top: -14px !important;
+    font-size: 14px !important;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-input-text-msg-error) !important;
+    margin-bottom: -8px !important;
 }
 
 /***** mobile large ********/
@@ -245,6 +265,10 @@ main .form form .panel-wrapper {
         margin-bottom: -13px !important;
     }
 
+    .pan-invalid, .pandob-invalid {
+        margin-bottom: 8px !important;
+    }
+
 }
 
 @media (481px <=width <=767px) {
@@ -289,6 +313,10 @@ main .form form .panel-wrapper {
 
     .form-container{
         box-shadow: none;
+    }
+
+    .pan-invalid, .pandob-invalid {
+        margin-bottom: 8px !important;
     }
 }
 
