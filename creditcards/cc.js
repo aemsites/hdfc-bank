@@ -151,28 +151,29 @@ if (dateInputs) {
 }
 
 /* script for dob-pan field validation */
+const parentPannel = document.querySelector('[name="identifierPanel"]');
+const dobPanErrClass = 'panDob-invalid';
 // 1. dob field validation
 const dobIpField = document.querySelector('[name="dateOfBirth"]');
-const dobParent = dobIpField.parentNode;
 const minAge = 21;
 const maxAge = 65;
 const dobErrorText = 'Age should be between 21 to 65';
-const dobErrorClassName = 'dob-invalid';
 const radioDob = document.getElementById('pandobselection');
+const dobWrapper = dobIpField.closest('.field-wrapper');
 
 dobIpField?.addEventListener('blur', async (e) => {
   const ipDobValue = e.target.value;
   if (ipDobValue) {
     const utils = await import('../common/formutils.js');
     const ageValid = utils.ageValidator(minAge, maxAge, ipDobValue);
-    const dobErrorElement = dobParent.querySelector(`.${dobErrorClassName}`);
+    const dobErrorElement = parentPannel.querySelector(`.${dobPanErrClass}`);
     if (!ageValid) {
       const pTag = dobErrorElement || document.createElement('p');
       pTag.innerText = dobErrorText;
-      pTag.classList.add(dobErrorClassName);
-      if (!dobErrorElement) dobParent.appendChild(pTag);
+      pTag.classList.add(dobPanErrClass);
+      if (!dobErrorElement) parentPannel.appendChild(pTag);
     } else if (dobErrorElement) {
-      dobParent.removeChild(dobErrorElement);
+      parentPannel.removeChild(dobErrorElement);
     }
   } else {
     dobIpField.setAttribute('type', 'date');
@@ -182,61 +183,58 @@ dobIpField?.addEventListener('blur', async (e) => {
 });
 
 dobIpField?.addEventListener('input', () => {
-  const dobErrorElement = dobParent.querySelector(`.${dobErrorClassName}`);
+  const dobErrorElement = parentPannel.querySelector(`.${dobPanErrClass}`);
   if (dobErrorElement) {
-    dobParent.removeChild(dobErrorElement);
+    parentPannel.removeChild(dobErrorElement);
   }
 });
 
 radioDob.addEventListener('click', () => {
-  const dobErrorElement = dobParent.querySelector(`.${dobErrorClassName}`);
-  const wrapper = dobParent.closest('.field-wrapper');
+  const dobErrorElement = parentPannel.querySelector(`.${dobPanErrClass}`);
   if (dobErrorElement) {
-    dobParent.removeChild(dobErrorElement);
+    parentPannel.removeChild(dobErrorElement);
   }
   dobIpField.setAttribute('type', 'date');
   dobIpField.setAttribute('edit-value', '');
   dobIpField.setAttribute('display-value', '');
-  wrapper.dataset.empty = !'';
+  dobWrapper.dataset.empty = !'';
 });
 
 // 1. pan field validation
 const panField = document.querySelector('[name="pan"]');
-const panParent = panField.parentNode;
 const panErrorText = 'Please enter a valid PAN Number';
-const panErrorClassName = 'pan-invalid';
 const radioPan = document.getElementById('pandobselection-1');
-const panWrapper = panParent.closest('.field-wrapper');
+const panWrapper = panField.closest('.field-wrapper');
 
 panField?.addEventListener('blur', async (e) => {
   const ipValue = e.target.value.trim();
   const utils = await import('../common/formutils.js');
   const panValid = utils.panValidator(ipValue);
-  let panErrorElement = panParent.querySelector(`.${panErrorClassName}`);
+  let panErrorElement = parentPannel.querySelector(`.${dobPanErrClass}`);
   if (!ipValue || panValid) {
     if (panErrorElement) {
-      panParent.removeChild(panErrorElement);
+      parentPannel.removeChild(panErrorElement);
     }
   } else if (!panErrorElement) {
     panErrorElement = document.createElement('p');
     panErrorElement.innerText = panErrorText;
-    panErrorElement.classList.add(panErrorClassName);
-    panParent.appendChild(panErrorElement);
+    panErrorElement.classList.add(dobPanErrClass);
+    parentPannel.appendChild(panErrorElement);
   }
 });
 
 radioPan.addEventListener('click', () => {
-  const panError = panParent.querySelector(`.${panErrorClassName}`);
+  const panError = parentPannel.querySelector(`.${dobPanErrClass}`);
   if (panError) {
-    panParent.removeChild(panError);
+    parentPannel.removeChild(panError);
   }
   panWrapper.dataset.empty = !'';
 });
 
 panField.addEventListener('input', () => {
-  const panErrorElement = panParent.querySelector(`.${panErrorClassName}`);
+  const panErrorElement = parentPannel.querySelector(`.${dobPanErrClass}`);
   if (panErrorElement) {
-    panParent.removeChild(panErrorElement);
+    parentPannel.removeChild(panErrorElement);
   }
 });
 
