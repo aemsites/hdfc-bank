@@ -1,7 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable prefer-destructuring */
 /* eslint-disable no-unused-vars */
-/* eslint-disable max-len */
 /* eslint no-console: ["error", { allow: ["warn", "error", "log"] }] */
 /* eslint no-unused-vars: ["error", { "args": "none" }] */
 import createJourneyId from '../common/journey-utils.js';
@@ -167,6 +166,7 @@ const personalDetailsPreFillFromBRE = (res, globals, panel) => {
   const changeDataAttrObj = { attrChange: true, value: false };
   // Extract personal details from globals
   const personalDetails = globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.personalDetails;
+  const currentAddressNTB = globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.currentDetails.currentAddressNTB;
 
   // Extract breCheckAndFetchDemogResponse from res
   const breCheckAndFetchDemogResponse = res?.demogResponse?.BRECheckAndFetchDemogResponse;
@@ -174,26 +174,47 @@ const personalDetailsPreFillFromBRE = (res, globals, panel) => {
   if (!breCheckAndFetchDemogResponse) return;
 
   // Extract gender from response
-  const custGender = breCheckAndFetchDemogResponse?.VDCUSTGENDER;
-  const gender = formUtil(globals, personalDetails.gender);
-  gender.setValue(custGender, changeDataAttrObj);
+  const personalDetailsFields = {
+    gender: 'VDCUSTGENDER',
+    firstName: 'VDCUSTFIRSTNAME',
+    lastName: 'VDCUSTLASTNAME',
+    middleName: 'VDCUSTMIDDLENAME',
+    personalEmailAddress: 'VDCUSTEMAILADD',
+  };
+  Object.entries(personalDetailsFields).forEach(([field, key]) => {
+    const value = breCheckAndFetchDemogResponse[key];
+    if (value !== undefined && value !== null) {
+      const formField = formUtil(globals, personalDetails[field]);
+      formField.setValue(value, changeDataAttrObj);
+    }
+  });
 
-  const firstName = formUtil(globals, personalDetails.firstName);
-  firstName.setValue(breCheckAndFetchDemogResponse?.VDCUSTFIRSTNAME, changeDataAttrObj);
-  const lastName = formUtil(globals, personalDetails.lastName);
-  lastName.setValue(breCheckAndFetchDemogResponse?.VDCUSTLASTNAME, changeDataAttrObj);
-  // Check if VDCUSTMIDDLENAME exists and set the value if it does
-  const middleNameValue = breCheckAndFetchDemogResponse?.VDCUSTMIDDLENAME ?? null;
-  if (middleNameValue !== null) {
-    const middleName = formUtil(globals, personalDetails.middleName);
-    middleName.setValue(middleNameValue, changeDataAttrObj);
-  }
-  // Extract date of birth or ITNBR
-  // const custDate = panel.login.pan.$value ? breCheckAndFetchDemogResponse?.DDCUSTDATEOFBIRTH : breCheckAndFetchDemogResponse?.VDCUSTITNBR;
-  // globals.functions.setProperty(personalDetails.dobPersonalDetails, { value: panel.login.pan.$value ? convertDateToMmmDdYyyy(custDate.toString()) : custDate });
   const custDate = breCheckAndFetchDemogResponse?.DDCUSTDATEOFBIRTH;
-  const dobPersonalDetails = formUtil(globals, personalDetails.dobPersonalDetails);
-  dobPersonalDetails.setValue(convertDateToMmmDdYyyy(custDate?.toString()));
+  if (custDate) {
+    const dobField = document.getElementsByName('dobPersonalDetails')?.[0];
+    if (dobField) {
+      // If the input field exists, change its type to 'text' to display date
+      dobField.type = 'text';
+    }
+    const dobPersonalDetails = formUtil(globals, personalDetails.dobPersonalDetails);
+    dobPersonalDetails.setValue(convertDateToMmmDdYyyy(custDate.toString()));
+  }
+
+  const addressFields = {
+    addressLine1: 'VDCUSTADD1',
+    addressLine2: 'VDCUSTADD2',
+    addressLine3: 'VDCUSTADD3',
+    pincode: 'VDCUSTZIPCODE',
+    city: 'VDCUSTCITY',
+    state: 'VDCUSTSTATE',
+  };
+  Object.entries(addressFields).forEach(([field, key]) => {
+    const value = breCheckAndFetchDemogResponse[key];
+    if (value !== undefined && value !== null) {
+      const formField = formUtil(globals, currentAddressNTB[field]);
+      formField.setValue(value, changeDataAttrObj);
+    }
+  });
 
   // Create address string and set it to form field
   const completeAddress = [
@@ -215,14 +236,16 @@ const personalDetailsPreFillFromBRE = (res, globals, panel) => {
  * false if not, and null if the criteria are not met or the information is incomplete.
  */
 const existingCustomerCheck = (res) => {
-  console.log(res);
   // Mapping of customer segments to categories
   const customerCategory = {
     only_casa: 'ETB',
     only_cc: 'ETB',
     only_asset: 'NTB',
     only_hl: 'NTB',
-    'casa_cc, casa_asset_cc, cc_casa, cc_asset': 'ETB',
+    casa_cc: 'ETB',
+    casa_asset_cc: 'ETB',
+    cc_casa: 'ETB',
+    cc_asset: 'ETB',
   };
 
   // Extract customer information
