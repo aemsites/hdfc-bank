@@ -235,6 +235,28 @@ main .form :is([data-active='true'], [data-empty='false'], .date-wrapper):not(.f
   text-align: right;
 }
 
+main .field-incorrectotptext {
+  padding: 0 16px;
+  border-radius: 8px;
+  background: var(--color-interface-error-box-primary);
+  width: fit-content;
+  margin: 0 auto !important;
+
+  > p > p::before {
+    content: url('../../icons/error-info-icon.svg');
+    padding: 10px;
+  }
+
+  p {
+    display: flex;
+    align-items: center;
+    margin: 0 !important;
+    font-weight: 600;
+    font-size: 12px !important;
+    color: var(--color-input-text-msg-error) !important;
+  }
+}
+
 main .form .field-errorresultpanel .field-errorresulttextlabel > p::before {
   background-image: url('../../icons/hdfc-error-icon.svg');
 }
@@ -317,6 +339,7 @@ main .form.block .field-otppanel {
   max-width: 344px;
   margin: 0 auto;
   text-align: center;
+
   .field-otpnumber {
     margin-bottom: -10px;
 
