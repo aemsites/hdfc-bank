@@ -61,6 +61,7 @@ function decorateStepper() {
   */
 function onWizardInit() {
   createLabelInElement('.field-permanentaddresstoggle', 'permanent-address-toggle__label');
+  createLabelInElement('.field-currentaddresstoggle', 'current-address-toggle__label');
   decorateStepper();
 }
 
