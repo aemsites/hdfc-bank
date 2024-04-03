@@ -110,7 +110,7 @@ main img {
             legend {
                 max-width: fit-content;
                 float: left;
-                margin-right: 0.5em;
+                margin-right: 22px;
                 margin-bottom: 0;
                 font-size: var(--body-md-font-size) !important;
                 font-weight: var(--font-weight-medium);
@@ -120,7 +120,7 @@ main img {
             }
 
             .radio-wrapper {
-                margin-right: 9px;
+                margin-right: 20px;
                 float: left;
             }
         }
@@ -241,9 +241,13 @@ main .form form .panel-wrapper {
         margin-top: 1px !important;
     }
 
+    .radio-group-wrapper {
+        margin-bottom: -13px !important;
+    }
+
 }
 
-@media (481px <=width <=768px) {
+@media (481px <=width <=767px) {
     main .form form {
         padding: 20px !important;
     }
@@ -255,18 +259,14 @@ main .form form .panel-wrapper {
 
     .radio-group-wrapper {
         margin-top: 1px !important;
-        margin-bottom: 25px !important;
+        margin-bottom: 38px !important;
     }
 
     .field-welcometextlabel {
         margin-bottom: 24px;
     }
 
-    .form-container {
-        box-shadow: none;
-    }
-
-    .field-checkboxconsent2 {
+     .field-checkboxconsent2 {
         margin-top: 1em !important;
     }
 
@@ -282,4 +282,36 @@ main .form form .panel-wrapper {
     .button-wrapper{
         margin-top: 1em !important;
     }
+
+    main{
+        background-color: var(--color-interface-background-primary);
+    }    
+
+    .form-container{
+        box-shadow: none;
+    }
+}
+
+@media (768px <=width <=960px) {
+    main .form form {
+        padding: 25px !important;
+    }
+
+    main{
+        background-color: var(--color-interface-background-primary);
+    }    
+
+    .form-container{
+        box-shadow: none;
+    }
+
+    [id^="pandobselection-1"] {
+        margin-left: 20px !important;
+    }
+
+    .radio-wrapper {
+        margin-right: 0 !important;
+    }
+
+    
 }
