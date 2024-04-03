@@ -11,29 +11,6 @@ main {
   overflow: hidden;
 }
 
-main .form form {
-  padding: 40px;
-
-  .label-disabled {
-    background-color: var(--form-input-disable-color) !important;
-  }
-}
-
-main .form.block {
-  border-radius: var(--form-border-radius);
-}
-
-main .section.form-container {
-  max-width: var(--form-max-width);
-}
-
-main .form select {
-  height: var(--form-input-height) !important;
-  padding: var(--form-input-padding) !important;
-  border: 1px solid var(--color-input-border-default) !important;
-  border-radius: var(--form-input-border-radius) !important;
-}
-
 main .form {
   input[type='text'],
   input[type='number'],
@@ -51,16 +28,31 @@ main .form {
     font-size: 31px;
   }
 
-  input::-ms-reveal,  input::-ms-clear {
+  input::-ms-reveal,
+  input::-ms-clear {
     display: none;
   }
 
   .date-wrapper .field-description {
     display: none;
   }
+}
+
+main .form form {
+  padding: 40px;
+
+  .label-disabled {
+    background-color: var(--form-input-disable-color) !important;
+  }
+
+  .field-currentaddresstoggle {
+    flex-direction: row-reverse;
+    width: fit-content;
+  }
 
   .field-permanentaddresstoggle,
-  .field-ckyctoggle {
+  .field-ckyctoggle,
+  .field-currentaddresstoggle {
     align-items: center !important;
 
     .field-label {
@@ -89,11 +81,13 @@ main .form {
   }
 
   .field-permanentaddresstoggle input[type='checkbox'],
+  .field-currentaddresstoggle input[type='checkbox'],
   .field-ckyctoggle input[type='checkbox'] {
     display: none;
   }
 
   .field-permanentaddresstoggle input[type='checkbox']:checked + .field-label,
+  .field-currentaddresstoggle input[type='checkbox']:checked + .field-label,
   .field-ckyctoggle input[type='checkbox']:checked + .field-label {
     background-color: #1c3fca;
   }
@@ -101,10 +95,40 @@ main .form {
   .field-permanentaddresstoggle
     input[type='checkbox']:checked
     + .field-label::before,
+  .field-currentaddresstoggle
+    input[type='checkbox']:checked
+    + .field-label::before,
   .field-ckyctoggle input[type='checkbox']:checked + .field-label::before {
     transform: translateX(20px);
     margin-right: 21px;
   }
+
+  .field-prefilledcurrentadddress {
+    input[type='text'] {
+      border: none;
+      pointer-events: none;
+      padding: 0;
+      margin: 0;
+      font-weight: var(--font-weight-bold);
+      font-size: var(--body-md-font-size);
+      line-height: var(--font-linehight-medium);
+    }
+  }
+}
+
+main .form.block {
+  border-radius: var(--form-border-radius);
+}
+
+main .section.form-container {
+  max-width: var(--form-max-width);
+}
+
+main .form select {
+  height: var(--form-input-height) !important;
+  padding: var(--form-input-padding) !important;
+  border: 1px solid var(--color-input-border-default) !important;
+  border-radius: var(--form-input-border-radius) !important;
 }
 
 /* loader for app show hide on api call */

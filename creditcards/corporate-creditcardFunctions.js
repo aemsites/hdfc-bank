@@ -161,7 +161,9 @@ const personalDetailsPreFillFromBRE = (res, globals, panel) => {
   // Extract personal details from globals
   const personalDetails = globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.personalDetails;
   const currentAddressNTB = globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.currentDetails.currentAddressNTB;
-
+  const currentAddressETB = globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.currentDetails.currentAddressETB;
+  const currentAddressNTBUtil = formUtil(globals, currentAddressNTB);
+  currentAddressNTBUtil.visible(false);
   // Extract breCheckAndFetchDemogResponse from res
   const breCheckAndFetchDemogResponse = res?.demogResponse?.BRECheckAndFetchDemogResponse;
 
@@ -194,22 +196,6 @@ const personalDetailsPreFillFromBRE = (res, globals, panel) => {
     dobPersonalDetails.setValue(convertDateToMmmDdYyyy(custDate.toString()));
   }
 
-  const addressFields = {
-    addressLine1: 'VDCUSTADD1',
-    addressLine2: 'VDCUSTADD2',
-    addressLine3: 'VDCUSTADD3',
-    pincode: 'VDCUSTZIPCODE',
-    city: 'VDCUSTCITY',
-    state: 'VDCUSTSTATE',
-  };
-  Object.entries(addressFields).forEach(([field, key]) => {
-    const value = breCheckAndFetchDemogResponse[key];
-    if (value !== undefined && value !== null) {
-      const formField = formUtil(globals, currentAddressNTB[field]);
-      formField.setValue(value, changeDataAttrObj);
-    }
-  });
-
   // Create address string and set it to form field
   const completeAddress = [
     breCheckAndFetchDemogResponse?.VDCUSTADD1,
@@ -219,8 +205,10 @@ const personalDetailsPreFillFromBRE = (res, globals, panel) => {
     breCheckAndFetchDemogResponse?.VDCUSTSTATE,
     breCheckAndFetchDemogResponse?.VDCUSTZIPCODE,
   ].filter(Boolean).join(', ');
-  const prefilledCurrentAdddress = formUtil(globals, globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.currentDetails.currentAddressETB.prefilledCurrentAdddress);
+  const prefilledCurrentAdddress = formUtil(globals, currentAddressETB.prefilledCurrentAdddress);
   prefilledCurrentAdddress.setValue(completeAddress);
+  const currentAddressETBUtil = formUtil(globals, currentAddressETB);
+  currentAddressETBUtil.visible(true);
 };
 
 /**
