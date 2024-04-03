@@ -140,6 +140,31 @@ const setDataAttributeOnClosestAncestor = (elementName, fieldValue, dataAttribut
   }
 };
 
+/**
+ * Validates if a given date of birth falls within a specified age range.
+ * @param {Number} minAge - minAge The minimum age in years.
+ * @param {Number} maxAge - maxAge The maximum age in years.
+ * @param {String | Date} dobValue - obValue The date of birth value to validate. It can be either a string in ISO format (e.g., "YYYY-MM-DD") or a Date object.
+ * @returns {Boolean} - True if the date of birth falls within the specified age range; otherwise, false.
+ */
+const ageValidator = (minAge, maxAge, dobValue) => {
+  const ipDobValue = new Date(dobValue);
+  const age = Math.floor((Date.now() - ipDobValue.getTime()) / (1000 * 60 * 60 * 24 * 365.25));
+  return (age >= minAge && age <= maxAge);
+};
+
+/**
+ * Validates if a given string is a valid PAN (Permanent Account Number) format.
+ * @param {String} panValue - The PAN value to validate.
+ * @returns {Boolean} - True if the given string is a valid PAN format; otherwise, false.
+ */
+const panValidator = (panValue) => {
+  const valueToUpperCase = panValue?.toUpperCase();
+  const regex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+  const valid = regex.test(valueToUpperCase);
+  return valid;
+};
+
 export {
-  urlPath, maskNumber, clearString, formUtil, getTimeStamp, convertDateToMmmDdYyyy, setDataAttributeOnClosestAncestor,
+  urlPath, maskNumber, clearString, formUtil, getTimeStamp, convertDateToMmmDdYyyy, setDataAttributeOnClosestAncestor, ageValidator, panValidator,
 };
