@@ -5,13 +5,13 @@
 
   .wrapper-disabled {
     .field-label {
-      color: var(--color-interface-text-secondary);
-      font-size: var(--body-sm-font-size);
-      font-weight: var(--font-weight-regular);
-      line-height: var(--font-linehight-regular);
-      margin: 0;
-      padding: 0;
-      transform: none;
+      color: var(--color-interface-text-secondary) !important;
+      font-size: var(--body-sm-font-size) !important;
+      font-weight: var(--font-weight-regular) !important;
+      line-height: var(--font-linehight-regular) !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      transform: none !important;
     }
 
     input[type='text'] {
