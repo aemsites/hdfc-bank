@@ -2,15 +2,6 @@
 @import url('../../creditcards/creditcards.css');
 
 :root {
-  --hdfc-stepper-margin-style: 24px;
-  --hdfc-stepper-width: 42px;
-  --hdfc-stepper-height: 3px;
-  --hdfc-wizard-step-legend-padding: 0;
-  --hdfc-wizard-step-legend-width: clamp(
-    100px,
-    calc(308% / var(--wizard-step-count)),
-    330px
-  );
   --loader-image-url: url('loader.gif');
 }
 
@@ -185,7 +176,10 @@ main .form select {
 }
 
 /* Base style for labels */
-main .form :not(.checkbox-wrapper, .radio-wrapper) > label {
+main
+  .form
+  :not(.checkbox-wrapper, .radio-wrapper, .field-joiningrenewalfee)
+  > label {
   margin: 20px;
   position: absolute;
   transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
@@ -196,7 +190,9 @@ main .form :not(.checkbox-wrapper, .radio-wrapper) > label {
 /* Style for labels when input is active or not empty */
 main
   .form
-  :is([data-active='true'], [data-empty='false'], .date-wrapper)
+  :is([data-active='true'], [data-empty='false'], .date-wrapper):not(
+    .field-joiningrenewalfee
+  )
   > label {
   color: var(--label-color);
   transform: translateY(-22px);
@@ -283,14 +279,25 @@ main
   text-align: right;
 }
 
-/* Error/Success Result Panel */
-main .form .field-resultpanel {
-  p,
-  label {
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 20px;
-    margin: 4px;
+main .field-incorrectotptext {
+  padding: 0 16px;
+  border-radius: 8px;
+  background: var(--color-interface-error-box-primary);
+  width: fit-content;
+  margin: 0 auto !important;
+
+  > p > p::before {
+    content: url('../../icons/error-info-icon.svg');
+    padding: 10px;
+  }
+
+  p {
+    display: flex;
+    align-items: center;
+    margin: 0 !important;
+    font-weight: 600;
+    font-size: 12px !important;
+    color: var(--color-input-text-msg-error) !important;
   }
 }
 
@@ -371,98 +378,6 @@ main .form .field-successresultpanel > div.field-arnnumber::before {
   padding-right: 15px;
 }
 
-main .form form .field-corporatecardwizardview.wizard {
-  overflow: hidden;
-  padding: 0;
-
-  .plain-text-wrapper b,
-  legend {
-    font-weight: 600;
-    font-size: 20px;
-  }
-
-  ul.wizard-menu-items {
-    flex-wrap: nowrap;
-    gap: 0;
-    margin-right: -35px;
-  }
-
-  li.wizard-menu-item {
-    flex-grow: 1;
-    position: relative;
-    list-style-type: none;
-    text-indent: 1%;
-    display: flex;
-    font-size: var(--form-font-size-xs);
-  }
-
-  li.wizard-menu-item:last-child {
-    margin-right: -1vw;
-  }
-
-  li.wizard-menu-item::before {
-    width: 30px;
-    height: 30px;
-  }
-
-  li.wizard-menu-active-item::before {
-    background-image: url('../../icons/current-step-indicator.svg');
-    content: '';
-    background-size: cover;
-    background-color: unset;
-    color: unset;
-    border: none;
-  }
-
-  .stepper-style::after {
-    content: '';
-    display: block;
-    width: var(--hdfc-stepper-width);
-    height: var(--hdfc-stepper-height);
-    background: var(--color-action-stepper-style);
-    margin-top: var(--hdfc-stepper-margin-style);
-    margin-left: -19px;
-  }
-
-  /* Accordion styling */
-  fieldset {
-    .field-prefilledemploymentdetails.field-wrapper {
-      gap: 20px;
-    }
-
-    fieldset {
-      position: relative;
-
-      legend {
-        background-color: var(--color-interface-background-secondary);
-        height: 60px;
-        padding: 16px 24px;
-        border-radius: 12px;
-      }
-    }
-  }
-
-  > .wizard-button-wrapper {
-    .field-back,
-    .field-next {
-      display: none;
-    }
-  }
-}
-
-.hdfc-accordion-style::after {
-  content: url('../../icons/accordion-expand-icon.svg');
-  display: inline;
-  position: absolute;
-  right: 1vw;
-  transition: transform 0s;
-}
-
-.accordion-collapse::after {
-  transform: rotate(-180deg);
-  margin-top: -9px;
-}
-
 main .form.block .field-otppanel {
   display: grid;
   max-width: 344px;
@@ -508,6 +423,18 @@ main .form.block .field-otppanel {
   }
 }
 
+/* Error/Success Result Panel */
+main .form .field-resultpanel {
+  /* stylelint-disable-next-line no-descending-specificity */
+  p,
+  label {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    margin: 4px;
+  }
+}
+
 @media (width <= 750px) {
   main .section.form-container {
     width: 100%;
@@ -521,32 +448,6 @@ main .form.block .field-otppanel {
 
   main .form form {
     padding: 28px;
-  }
-
-  main .form form .field-corporatecardwizardview.wizard {
-    ul.wizard-menu-items {
-      width: calc(300%);
-    }
-
-    li.wizard-menu-item {
-      width: auto;
-    }
-
-    fieldset {
-      width: 85vw;
-      display: block;
-
-      .panel-wrapper.field-prefilledemploymentdetails {
-        gap: 20px;
-      }
-    }
-
-    :is([data-active='true'], [data-empty='false'], .date-wrapper) > label {
-      margin-left: 5px;
-      font-weight: 400;
-      font-size: 12px;
-      padding: 0;
-    }
   }
 
   main .form .field-otppanel {
@@ -596,5 +497,12 @@ main .form.block .field-otppanel {
     .field-otpresend {
       margin: 0 !important;
     }
+  }
+}
+
+@media (width <=960px) {
+  main .section.form-container {
+    width: 100%;
+    margin: 0 !important;
   }
 }

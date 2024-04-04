@@ -1,14 +1,15 @@
 @import url('../../styles/color-palette.css');
-@import url('../../styles/typography.css');
 
 body.modal-open {
   overflow: hidden;
 }
 
 .modal dialog {
+  --dialog-border-radius: 16px;
+  
   overscroll-behavior: none;
-  border-radius: var(--modal-popup-border-radius);
-  border: none !important;
+  border: 1px solid #ccc;
+  border-radius: var(--dialog-border-radius);
 }
 
 .modal-content {
@@ -18,17 +19,17 @@ body.modal-open {
    overflow: auto;
 
   p {
-    font-size: var(--body-sm-font-size);
-    font-weight: var(--font-weight-regular);
-    line-height: var(--font-linehight-regular);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
     letter-spacing: 0; 
     text-align: left;
   }
 
   .field-label {
-    font-size: var(--body-lg-font-size);
-    font-weight: var(--font-weight-bold);
-    line-height: var(--font-linehight-large);
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 28px;
     letter-spacing: 0;
     text-align: center;
     padding-top: 32px;
@@ -65,49 +66,19 @@ body.modal-open {
   
 }
 
-/* .modal dialog .modal-content {
+.modal dialog .modal-content {
   overflow-y: auto;
   overscroll-behavior: none;
   max-height: calc(100dvh - 60px);
-} */
-
-@media (320px <=width <=480px) {
-.modal-content{
-    .field-label{
-      text-align: left !important;
-      padding-top: 0;
-    }
-
-    .panel-wrapper {
-        padding: 0;
-  }
-  }
-
-  .modal .close-button{
-    padding: 29px 34px 0 24px !important;
-  }
-
-}
-
-@media (481px <=width <=767px) {
-  .modal-content{
-    .field-label{
-      text-align: left !important;
-      padding-top: 0;
-    }
-
-    .panel-wrapper {
-        padding: 0;
-  }
-  }
-
 }
 
 @media (width >=768px) {
   .modal dialog {
-    font-size: var(--body-sm-font-size);
-    font-weight: var(--font-weight-regular);
-    line-height: var(--body-extra-lg-font-size);
+    width: 100%;
+    max-width: 920px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
     letter-spacing: 0;
     text-align: left;
     padding: 0;
@@ -135,9 +106,10 @@ body.modal-open {
   text-overflow: clip;
   margin: 0;
   border: none;
-  color: var(--color-close-action-background-primary-default);
+  color: #6b7280;
 }
 
 .modal dialog .section {
   padding: 0;
 }
+
