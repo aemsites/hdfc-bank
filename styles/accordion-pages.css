@@ -287,8 +287,3 @@ main .form form .field-corporatecardwizardview.wizard {
     }
   }
 }
-
-.read-only-text {
-  pointer-events: none;
-  cursor: text;
-}

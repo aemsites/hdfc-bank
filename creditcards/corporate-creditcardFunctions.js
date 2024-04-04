@@ -151,12 +151,33 @@ const OTPGEN = {
 };
 
 /**
+<<<<<<< HEAD
  * Automatically fills form fields based on response data.
+=======
+ * Adds the 'wrapper-disabled' class to the parent elements of inputs or selects within the given panel
+ * if their values are truthy.
+ * @param {HTMLElement} selectedPanel - The panel element containing the inputs or selects.
+ */
+const addDisableClass = (selectedPanel) => {
+  const panelInputs = Array.from(selectedPanel.querySelectorAll('input, select'));
+
+  // Iterates over each input or select element
+  panelInputs.forEach((panelInput) => {
+    // Checks if the input or select element has a truthy value
+    if (panelInput.value) {
+      // Adds the 'wrapper-disabled' class to the parent element
+      panelInput.parentElement.classList.add('wrapper-disabled');
+    }
+  });
+};
+
+/* Automatically fills form fields based on response data.
+>>>>>>> cdac824cf44d070190f1224d62e9564c0c171304
  * @param {object} res - The response data object.
  * @param {object} globals - Global variables object.
  * @param {object} panel - Panel object.
  */
-const personalDetailsPreFillFromBRE = (res, globals, panel) => {
+const personalDetailsPreFillFromBRE = (res, globals) => {
   const changeDataAttrObj = { attrChange: true, value: false };
   // Extract personal details from globals
   const personalDetails = globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.personalDetails;
@@ -176,6 +197,7 @@ const personalDetailsPreFillFromBRE = (res, globals, panel) => {
     lastName: 'VDCUSTLASTNAME',
     middleName: 'VDCUSTMIDDLENAME',
     personalEmailAddress: 'VDCUSTEMAILADD',
+    panNumberPersonalDetails: 'VDCUSTITNBR',
   };
   Object.entries(personalDetailsFields).forEach(([field, key]) => {
     const value = breCheckAndFetchDemogResponse[key];
@@ -209,6 +231,9 @@ const personalDetailsPreFillFromBRE = (res, globals, panel) => {
   prefilledCurrentAdddress.setValue(completeAddress);
   const currentAddressETBUtil = formUtil(globals, currentAddressETB);
   currentAddressETBUtil.visible(true);
+  const personaldetails = document.querySelector('.field-personaldetails');
+  personaldetails.classList.add('personaldetails-disabled');
+  addDisableClass(personaldetails);
 };
 
 /**
@@ -281,7 +306,7 @@ const otpValSuccess = (res, globals) => {
   ccWizardPannel.visible(true);
   const existingCustomer = existingCustomerCheck(res);
   if (existingCustomer) {
-    personalDetailsPreFillFromBRE(res, globals, pannel);
+    personalDetailsPreFillFromBRE(res, globals);
   }
   (async () => {
     const myImportedModule = await import('./cc.js');

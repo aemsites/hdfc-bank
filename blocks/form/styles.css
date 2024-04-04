@@ -1,3 +1,6 @@
+/* stylelint-disable selector-class-pattern */
+@import url('../../creditcards/creditcards.css');
+
 :root {
   --loader-image-url: url('loader.gif');
 }
@@ -103,7 +106,16 @@ main .form form {
     margin-right: 21px;
   }
 
+  .current-address-toggle__label {
+    color: var(--color-interface-text-secondary);
+    font-size: var(--body-sm-font-size);
+    font-weight: var(--font-weight-regular);
+    line-height: var(--font-linehight-regular);
+  }
+
   .field-prefilledcurrentadddress {
+    margin-top: -18px !important;
+
     input[type='text'] {
       border: none;
       pointer-events: none;
@@ -112,6 +124,7 @@ main .form form {
       font-weight: var(--font-weight-bold);
       font-size: var(--body-md-font-size);
       line-height: var(--font-linehight-medium);
+      color: var(--color-interface-text-primary);
     }
   }
 }
@@ -485,4 +498,9 @@ main .form .field-resultpanel {
     width: 100%;
     margin: 0 !important;
   }
+}
+
+.read-only-text {
+  pointer-events: none;
+  cursor: text;
 }
