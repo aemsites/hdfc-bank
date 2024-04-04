@@ -100,7 +100,10 @@ main .form form .field-corporatecardwizardview.wizard {
     padding: 20px;
     border-radius: 10px;
 
-    img { border-radius: 10px; }
+    img { 
+      border-radius: 10px; 
+      width: 400px;
+    }
 
     .field-nameoncarddropdown {
       display: flex;
@@ -115,13 +118,17 @@ main .form form .field-corporatecardwizardview.wizard {
     display: grid;
     padding-bottom: 20px;
 
-    .field-cardbenefitslabel { width: fit-content; }
+    .field-cardbenefitslabel { 
+      width: fit-content; 
+      padding: 20px 0 0 20px;
+    }
 
     .field-viewallcardbenefits {
         position: absolute;
         width: fit-content;
         right: 0;
         margin-top: 0 !important;
+        padding: 7px 7px 0 0;
 
         button {
             background: var(--color-action-text-primary-default);
@@ -260,6 +267,8 @@ main .form form .field-corporatecardwizardview.wizard {
     .field-cardbenefitsfeaturespanel {
       padding: 30px 0 0;
 
+      .field-viewallcardbenefits { padding: 40px 0; }
+
       img {
         width: 253.44px;
       }
@@ -271,10 +280,15 @@ main .form form .field-corporatecardwizardview.wizard {
   main .form form .field-corporatecardwizardview.wizard {
     .field-selectkycpaymentpanel {
       fieldset { width: 100%; }
-    }
 
-    div[class*='field-identityverificationtext']{
-      margin: 7px 0 19px !important;
+      div[class*='field-identityverificationtext']{
+        margin: 7px 0 19px !important;
+      }
     }
   }
+}
+
+.read-only-text {
+  pointer-events: none;
+  cursor: text;
 }
