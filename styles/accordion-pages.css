@@ -10,6 +10,10 @@ main .form form .field-corporatecardwizardview.wizard {
 overflow: hidden;
 padding: 0;
 
+.date-wrapper .field-description {
+  display: none;
+}
+
 .plain-text-wrapper b, legend {
   font-weight: 600;
   font-size: 20px;
