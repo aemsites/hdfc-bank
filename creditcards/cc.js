@@ -141,6 +141,7 @@ inputs.forEach((input) => {
 
 /* script for dob-pan field validation */
 const invalidFieldClass = 'pandob-invalid';
+const inputBorderErrClass = 'input-border-error';
 // 1. dob field validation
 const dobIpField = document.querySelector('[name="dateOfBirth"]');
 const dobParent = dobIpField.parentNode;
@@ -159,8 +160,12 @@ dobIpField?.addEventListener('blur', async (e) => {
       const pTag = dobErrorElement || document.createElement('p');
       pTag.innerText = dobErrorText;
       pTag.classList.add(invalidFieldClass);
-      if (!dobErrorElement) dobParent.appendChild(pTag);
+      if (!dobErrorElement) {
+        dobIpField.classList.add(inputBorderErrClass);
+        dobParent.appendChild(pTag);
+      }
     } else if (dobErrorElement) {
+      dobIpField.classList.remove(inputBorderErrClass);
       dobParent.removeChild(dobErrorElement);
     }
   } else {
@@ -174,6 +179,7 @@ dobIpField?.addEventListener('input', () => {
   const dobErrorElement = dobParent.querySelector(`.${invalidFieldClass}`);
   if (dobErrorElement) {
     dobParent.removeChild(dobErrorElement);
+    dobIpField.classList.remove(inputBorderErrClass);
   }
 });
 
@@ -182,6 +188,7 @@ radioDob.addEventListener('click', () => {
   const wrapper = dobParent.closest('.field-wrapper');
   if (dobErrorElement) {
     dobParent.removeChild(dobErrorElement);
+    dobIpField.classList.remove(inputBorderErrClass);
   }
   dobIpField.setAttribute('type', 'date');
   dobIpField.setAttribute('edit-value', '');
@@ -204,12 +211,14 @@ panField?.addEventListener('blur', async (e) => {
   if (!ipValue || panValid) {
     if (panErrorElement) {
       panParent.removeChild(panErrorElement);
+      panField.classList.remove(inputBorderErrClass);
     }
   } else if (!panErrorElement) {
     panErrorElement = document.createElement('p');
     panErrorElement.innerText = panErrorText;
     panErrorElement.classList.add(invalidFieldClass);
     panParent.appendChild(panErrorElement);
+    panField.classList.add(inputBorderErrClass);
   }
 });
 
@@ -217,6 +226,7 @@ radioPan.addEventListener('click', () => {
   const panError = panParent.querySelector(`.${invalidFieldClass}`);
   if (panError) {
     panParent.removeChild(panError);
+    panField.classList.remove(inputBorderErrClass);
   }
   panWrapper.dataset.empty = !'';
 });
@@ -225,6 +235,7 @@ panField.addEventListener('input', () => {
   const panErrorElement = panParent.querySelector(`.${invalidFieldClass}`);
   if (panErrorElement) {
     panParent.removeChild(panErrorElement);
+    panField.classList.remove(inputBorderErrClass);
   }
 });
 

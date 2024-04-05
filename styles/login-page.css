@@ -200,6 +200,10 @@ main .form form .panel-wrapper {
     margin-bottom: -8px !important;
 }
 
+.input-border-error{
+    border: 1px solid var(--color-input-border-error-default) !important;
+}
+
 /***** mobile large ********/
 @media (320px <=width <=480px) {
     .field-welcometextlabel {
