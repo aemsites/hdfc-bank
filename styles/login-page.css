@@ -322,7 +322,7 @@ main .form form .panel-wrapper {
 
 @media (768px <=width <=960px) {
     main .form form {
-        padding: 20px !important;
+        padding: 25px !important;
     }
 
     main{

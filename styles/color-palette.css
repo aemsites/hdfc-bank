@@ -5,6 +5,7 @@
   --color-interface-background-quaternary: #111827;
   --color-interface-background-quinary: #F3F6FD;
   --color-interface-background-box-shadow-primary: #ccc;
+  --color-interface-error-box-primary: #fdefed;
   --color-interface-text-primary: #111827;
   --color-interface-text-secondary: #6b7280;
   --color-interface-text-tertiary: #fff;
@@ -39,7 +40,7 @@
   --color-input-text-focus: #000;
   --color-input-text-placeholder-default: #6b7280;
   --color-input-text-placeholder-disabled: #6b7280;
-  --color-input-text-msg-error: #e30613;
+  --color-input-text-msg-error: #e22853;
   --color-input-text-placeholder-focus: #6b7280;
   --color-input-border-default: #9ca3af;
   --color-input-border-focus: #1c3fca;
@@ -47,5 +48,4 @@
   --color-input-border-disabled: #9ca3af;
   --color-input-border-error-default: #e30613;
   --color-action-stepper-style: linear-gradient(90deg, rgb(211 214 220) 50%, rgba(255 255 255 / 0%) 100%);
-  --color-modal-interface-text-primary: #4B5563;
 }

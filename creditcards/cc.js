@@ -137,18 +137,7 @@ inputs.forEach((input) => {
   wrapper.dataset.empty = !input.value;
 });
 
-/* Disable all future dates */
-const dateInputs = document.querySelectorAll('input[id^="datepicker-"]');
-if (dateInputs) {
-  dateInputs.forEach((input) => {
-    const textInputValue = input.getAttribute('edit-value');
-    input.type = 'date';
-    input.value = textInputValue;
-    const today = new Date();
-    const currentDate = today.toISOString().split('T')[0];
-    input.setAttribute('max', currentDate);
-  });
-}
+/* End of code for floating field label */
 
 /* script for dob-pan field validation */
 const invalidFieldClass = 'pandob-invalid';

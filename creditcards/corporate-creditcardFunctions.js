@@ -151,35 +151,54 @@ const OTPGEN = {
 };
 
 /**
- * Add a class to the label associated with the specified input elements.
- * @param {string} selector - The CSS selector for the input elements.
- * @param {string} className - The class name to add to the labels.
+ * Adds the 'wrapper-disabled' class to the parent elements of inputs or selects within the given panel
+ * if their values are truthy.
+ * @param {HTMLElement} selectedPanel - The panel element containing the inputs or selects.
  */
-const addClassToFieldLabel = (selector, className) => {
-  /**
-   * Retrieve the labels associated with the specified input elements and add the class to them.
-   * @param {Element} input - The input element.
-   */
-  const addClassToLabel = (input) => {
-    const inputId = input.id;
-    const label = document.querySelector(`label[for="${inputId}"]`);
-    if (label) {
-      label.classList.add(className);
+const addDisableClass = (selectedPanel) => {
+  const panelInputs = Array.from(selectedPanel.querySelectorAll('input, select'));
+
+  // Iterates over each input or select element
+  panelInputs.forEach((panelInput) => {
+    // Checks if the input or select element has a truthy value
+    if (panelInput.value) {
+      // Adds the 'wrapper-disabled' class to the parent element
+      panelInput.parentElement.classList.add('wrapper-disabled');
     }
-  };
-
-  // Select all input elements using the provided selector
-  const elements = document.querySelectorAll(selector);
-
-  // Iterate over each input element and add the class to its associated label
-  elements.forEach(addClassToLabel);
+  });
 };
+
+/**
+ * Parses the given address into substrings, each containing up to 30 characters.
+ * @param {string} address - The address to parse.
+ * @returns {string[]} An array of substrings, each containing up to 30 characters.
+ */
+const parseCustomerAddress = (address) => {
+  const words = address.trim().split(' ');
+  const substrings = [];
+  let currentSubstring = '';
+
+  words.forEach((word) => {
+    if (substrings.length === 3) {
+      return; // Exit the loop if substrings length is equal to 3
+    }
+    if ((`${currentSubstring} ${word}`).length <= 30) {
+      currentSubstring += (currentSubstring === '' ? '' : ' ') + word;
+    } else {
+      substrings.push(currentSubstring);
+      currentSubstring = word;
+    }
+  });
+
+  return substrings;
+};
+
 /* Automatically fills form fields based on response data.
  * @param {object} res - The response data object.
  * @param {object} globals - Global variables object.
  * @param {object} panel - Panel object.
  */
-const personalDetailsPreFillFromBRE = (res, globals, panel) => {
+const personalDetailsPreFillFromBRE = (res, globals) => {
   const changeDataAttrObj = { attrChange: true, value: false };
   // Extract personal details from globals
   const personalDetails = globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.personalDetails;
@@ -199,6 +218,7 @@ const personalDetailsPreFillFromBRE = (res, globals, panel) => {
     lastName: 'VDCUSTLASTNAME',
     middleName: 'VDCUSTMIDDLENAME',
     personalEmailAddress: 'VDCUSTEMAILADD',
+    panNumberPersonalDetails: 'VDCUSTITNBR',
   };
   Object.entries(personalDetailsFields).forEach(([field, key]) => {
     const value = breCheckAndFetchDemogResponse[key];
@@ -232,6 +252,13 @@ const personalDetailsPreFillFromBRE = (res, globals, panel) => {
   prefilledCurrentAdddress.setValue(completeAddress);
   const currentAddressETBUtil = formUtil(globals, currentAddressETB);
   currentAddressETBUtil.visible(true);
+  const personaldetails = document.querySelector('.field-personaldetails');
+  personaldetails.classList.add('personaldetails-disabled');
+  addDisableClass(personaldetails);
+  const customerFiller2 = breCheckAndFetchDemogResponse?.BREFILLER2?.toUpperCase();
+  if (customerFiller2 === 'D106') {
+    const customerValidAddress = parseCustomerAddress(`${breCheckAndFetchDemogResponse?.VDCUSTADD1} ${breCheckAndFetchDemogResponse?.VDCUSTADD2} ${breCheckAndFetchDemogResponse?.VDCUSTADD3}`);
+  }
 };
 
 /**
@@ -301,11 +328,10 @@ const otpValSuccess = (res, globals) => {
   otpBtn.visible(false);
   loginPanel.visible(false);
   otpPanel.visible(false);
-  addClassToFieldLabel('.form input[disabled], .form select[disabled]', 'label-disabled');
   ccWizardPannel.visible(true);
   const existingCustomer = existingCustomerCheck(res);
   if (existingCustomer) {
-    personalDetailsPreFillFromBRE(res, globals, pannel);
+    personalDetailsPreFillFromBRE(res, globals);
   }
   (async () => {
     const myImportedModule = await import('./cc.js');
