@@ -4,6 +4,7 @@
 /* eslint no-console: ["error", { allow: ["warn", "error", "log"] }] */
 /* eslint no-unused-vars: ["error", { "args": "none" }] */
 import createJourneyId from '../common/journey-utils.js';
+import PANValidationAndNameMatchService from '../common/panvalidation.js';
 import {
   formUtil,
   maskNumber,
@@ -12,6 +13,7 @@ import {
   getTimeStamp,
   convertDateToMmmDdYyyy,
   setDataAttributeOnClosestAncestor,
+  convertDateToDdMmYyyy,
 } from '../common/formutils.js';
 
 const journeyName = 'CORPORATE_CREDIT_CARD';
@@ -564,25 +566,62 @@ const RESENDOTP = {
 };
 
 const createPanValidationRequest = (globals) => {
-  const personalDetails = globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.personalDetails;
-  const panValidationRequest = {
-    journeyName: currentFormContext.journeyName,
-    journeyID: currentFormContext.journeyID,
-    mobileNumber: globals.form.loginPanel.mobilePanel.registeredMobileNumber.$value,
-    panInfo: {
-      panNumber: 'EXYPU1723A',
-      panType: 'P',
-      dob: convertDateToDdMmYyyy(new Date()),
-      name: 'Ranjit',
+  const panValidation = {
+    sendRequest() {
+      try {
+        const reqObj = {
+          journeyName: currentFormContext.journeyName,
+          journeyID: currentFormContext.journeyID,
+          mobileNumber: globals.form.loginPanel.mobilePanel.registeredMobileNumber.$value,
+          panInfo: {
+            panNumber: 'HUTPP6068K',
+            panType: 'P',
+            dob: convertDateToDdMmYyyy(new Date('10/9/1992')),
+            name: 'Ranjit',
+          },
+          nameInfo: {
+            srcName: 'Ranjit',
+            trgName: 'Ranjit Vijay',
+          },
+        };
+        return reqObj;
+      } catch (errObj) {
+        const errorCode = 'INVALID_INPUT_PAN_REQUEST';
+        return errObj;
+      }
     },
-    nameInfo: {
-      srcName: 'Ranjit',
-      trgName: 'Ranjit Vijay',
+    eventHandlers: {
+      successCallBack(responseObj) {
+        panValidation.handlePanSuccess(responseObj);
+      },
+      failureCallBack(errorObj) {
+        panValidation.handlePanFailure(errorObj);
+      },
+    },
+    handlePanSuccess(respObj) {
+      try {
+        console.log(respObj);
+      } catch (errObj) {
+        console.log(errObj);
+      }
+    },
+    handlePanFailure(errorObj) {
+      try {
+        console.log(errorObj);
+      } catch (errObj) {
+        console.log(errObj);
+      }
     },
   };
-  return panValidationRequest;
+  PANValidationAndNameMatchService(panValidation.sendRequest(), panValidation.eventHandlers);
 };
 
 export {
-  OTPGEN, OTPVAL, CHECKOFFER, RESENDOTP, getThisCard, currentFormContext,
+  OTPGEN,
+  OTPVAL,
+  CHECKOFFER,
+  RESENDOTP,
+  getThisCard,
+  currentFormContext,
+  createPanValidationRequest,
 };
