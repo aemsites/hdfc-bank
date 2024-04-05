@@ -168,6 +168,31 @@ const addDisableClass = (selectedPanel) => {
   });
 };
 
+/**
+ * Parses the given address into substrings, each containing up to 30 characters.
+ * @param {string} address - The address to parse.
+ * @returns {string[]} An array of substrings, each containing up to 30 characters.
+ */
+const parseCustomerAddress = (address) => {
+  const words = address.trim().split(' ');
+  const substrings = [];
+  let currentSubstring = '';
+
+  words.forEach((word) => {
+    if (substrings.length === 3) {
+      return; // Exit the loop if substrings length is equal to 3
+    }
+    if ((`${currentSubstring} ${word}`).length <= 30) {
+      currentSubstring += (currentSubstring === '' ? '' : ' ') + word;
+    } else {
+      substrings.push(currentSubstring);
+      currentSubstring = word;
+    }
+  });
+
+  return substrings;
+};
+
 /* Automatically fills form fields based on response data.
  * @param {object} res - The response data object.
  * @param {object} globals - Global variables object.
@@ -230,6 +255,10 @@ const personalDetailsPreFillFromBRE = (res, globals) => {
   const personaldetails = document.querySelector('.field-personaldetails');
   personaldetails.classList.add('personaldetails-disabled');
   addDisableClass(personaldetails);
+  const customerFiller2 = breCheckAndFetchDemogResponse?.BREFILLER2?.toUpperCase();
+  if (customerFiller2 === 'D106') {
+    const customerValidAddress = parseCustomerAddress(`${breCheckAndFetchDemogResponse?.VDCUSTADD1} ${breCheckAndFetchDemogResponse?.VDCUSTADD2} ${breCheckAndFetchDemogResponse?.VDCUSTADD3}`);
+  }
 };
 
 /**
