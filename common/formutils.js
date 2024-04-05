@@ -160,7 +160,7 @@ const ageValidator = (minAge, maxAge, dobValue) => {
  */
 const panValidator = (panValue) => {
   const valueToUpperCase = panValue?.toUpperCase();
-  const regex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+  const regex = /^[A-Z]{3}P[A-Z][0-9]{4}[A-Z]{1}$/;
   const valid = regex.test(valueToUpperCase);
   return valid;
 };
