@@ -5,7 +5,13 @@
 /* eslint no-unused-vars: ["error", { "args": "none" }] */
 import createJourneyId from '../common/journey-utils.js';
 import {
-  formUtil, maskNumber, urlPath, clearString, getTimeStamp, convertDateToMmmDdYyyy, setDataAttributeOnClosestAncestor,
+  formUtil,
+  maskNumber,
+  urlPath,
+  clearString,
+  getTimeStamp,
+  convertDateToMmmDdYyyy,
+  setDataAttributeOnClosestAncestor,
 } from '../common/formutils.js';
 
 const journeyName = 'CORPORATE_CREDIT_CARD';
@@ -13,6 +19,7 @@ const currentFormContext = {
   journeyID: createJourneyId('a', 'b', 'c'),
   journeyName,
 };
+const CUSTOMER_DATA = {};
 let resendOtpCount = 3;
 /**
  * Appends a masked number to the specified container element if the masked number is not present.
@@ -556,6 +563,26 @@ const RESENDOTP = {
   loadingText: 'Please wait otp sending again...',
 };
 
+const createPanValidationRequest = (globals) => {
+  const personalDetails = globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.personalDetails;
+  const panValidationRequest = {
+    journeyName: currentFormContext.journeyName,
+    journeyID: currentFormContext.journeyID,
+    mobileNumber: globals.form.loginPanel.mobilePanel.registeredMobileNumber.$value,
+    panInfo: {
+      panNumber: 'EXYPU1723A',
+      panType: 'P',
+      dob: convertDateToDdMmYyyy(new Date()),
+      name: 'Ranjit',
+    },
+    nameInfo: {
+      srcName: 'Ranjit',
+      trgName: 'Ranjit Vijay',
+    },
+  };
+  return panValidationRequest;
+};
+
 export {
-  OTPGEN, OTPVAL, CHECKOFFER, RESENDOTP, getThisCard,
+  OTPGEN, OTPVAL, CHECKOFFER, RESENDOTP, getThisCard, currentFormContext,
 };
