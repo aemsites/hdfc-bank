@@ -384,7 +384,7 @@ function enableValidation(form) {
   });
 
   form.addEventListener('change', (event) => {
-      checkValidation(event.target);
+    checkValidation(event.target);
   });
 }
 
