@@ -79,21 +79,22 @@ fieldset fieldset {
 > .wizard-button-wrapper { .field-back, .field-next { display: none; } }
 
 /* Confirm card panel */
-.field-cardnametitle input {
-  font-weight: var(--font-weight-bold);
-  font-size: 24px;
-  border: none;
-  padding: 0;
-  margin: 0;
+.field-cardnametitle {
+  p {
+    margin: 0 !important;
+    font-weight: var(--font-weight-bold);
+    font-size: 24px;
+    color: var(--color-interface-text-primary);
+  }
 }
 
-.field-cardtagline input {
-  padding: 0;
-  margin: 0;
-  font-size: var(--body-lg-font-size);
-  font-weight: var(--font-weight-regular);
-  border: none;
- }
+.field-cardtagline {
+  p {
+    margin: -15px 0 0 !important;
+    font-size: var(--body-lg-font-size);
+    font-weight: var(--font-weight-regular);
+  }
+}
 
 .field-corporatetimageandnamepanel {
   background: var(--color-interface-background-quinary);
@@ -121,6 +122,13 @@ fieldset fieldset {
   .field-cardbenefitslabel { 
     width: fit-content; 
     padding: 20px 0 0 20px;
+
+    p { color: var(--color-interface-text-primary); }
+
+    b::before {
+      content: url('../icons/card-benefit-icon.svg');
+      margin-right: 12px;
+    }
   }
 
   .field-viewallcardbenefits {
@@ -133,6 +141,7 @@ fieldset fieldset {
       button {
           background: var(--color-action-text-primary-default);
           color: var(--color-action-background-primary-default);
+          text-decoration: underline;
       }
 
       :hover {
@@ -155,6 +164,7 @@ fieldset fieldset {
           align-items: center;
           font-weight: var(--font-weight-bold);
           font-size: var(--body-sm-font-size);
+          color: var(--color-interface-text-primary);
       }
 
       input {
@@ -166,6 +176,7 @@ fieldset fieldset {
           height: 40px;
           font-weight: var(--font-weight-bold);
           font-size: var(--body-lg-font-size);
+          color: var(--color-interface-text-primary);
       }
   }
 }
@@ -176,6 +187,9 @@ fieldset fieldset {
 
 
 .field-selectkycpaymentpanel {
+  /* stylelint-disable-next-line no-descending-specificity */
+  .plain-text-wrapper b, legend { color: #111827; }
+
   fieldset { width: 100%; }
 
   fieldset[class*='field-selectkycmethodoption'] {
@@ -207,13 +221,26 @@ fieldset fieldset {
           color: #111827;
           font-weight: 600;
           font-size: 14px !important;
-          padding: 0 0 0 3vw;
+        }
+
+        label::before {
+          content: url('../icons/kyc-bullet-icon.svg');
+          margin-right: 16px;
+          position: relative;
+          top: 5px;
+        }
+
+        .radio-wrapper.field-aadharekycverification {
+          label::before {
+            content: url('../icons/kyc-aadhar-icon.svg');
+            top: 0;
+          }
         }
       }
 
       div[class*='field-identityverificationtext']{
-      padding: 0 1vw 0 3vw;
-      margin: -30px 0 19px;
+        padding: 0 1vw 0 40px;
+        margin: -30px 0 19px;
 
       p {
         font-weight: 400;
@@ -221,6 +248,19 @@ fieldset fieldset {
         margin: 0 !important;
       }
       } 
+  }
+
+  .field-ckycdetailspanel {
+    .field-ckyctoggle {
+      display: flex;            
+      flex-direction: row-reverse;
+      width: fit-content;
+
+      /* stylelint-disable-next-line selector-class-pattern */
+      label.ckyctoggle__label {
+        font-size: 14px;
+      }
+    }
   }
 }
 
@@ -262,6 +302,10 @@ main .form form .field-corporatecardwizardview.wizard {
       font-weight: 400;
       font-size: 12px;
       padding: 0;
+  }
+
+  .field-cardtagline {
+    p { margin: 0 !important; }
   }
 
   .field-cardbenefitsfeaturespanel {
