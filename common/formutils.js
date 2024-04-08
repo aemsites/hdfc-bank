@@ -149,22 +149,13 @@ const setDataAttributeOnClosestAncestor = (elementName, fieldValue, dataAttribut
  */
 const ageValidator = (minAge, maxAge, dobValue) => {
   const ipDobValue = new Date(dobValue);
-  const age = Math.floor((Date.now() - ipDobValue.getTime()) / (1000 * 60 * 60 * 24 * 365.25));
-  return (age >= minAge && age <= maxAge);
-};
-
-/**
- * Validates if a given string is a valid PAN (Permanent Account Number) format.
- * @param {String} panValue - The PAN value to validate.
- * @returns {Boolean} - True if the given string is a valid PAN format; otherwise, false.
- */
-const panValidator = (panValue) => {
-  const valueToUpperCase = panValue?.toUpperCase();
-  const regex = /^[A-Z]{3}P[A-Z][0-9]{4}[A-Z]{1}$/;
-  const valid = regex.test(valueToUpperCase);
-  return valid;
+  const diff = Date.now() - ipDobValue.getTime();
+  const ageDate = new Date(diff);
+  const age = Math.abs(ageDate.getUTCFullYear() - 1970); // Date.now() and the getTime() method, starts from January 1, 1970 hence 1970.
+  const ageBtwMinMax = (age >= minAge && age <= maxAge);
+  return ageBtwMinMax;
 };
 
 export {
-  urlPath, maskNumber, clearString, formUtil, getTimeStamp, convertDateToMmmDdYyyy, setDataAttributeOnClosestAncestor, ageValidator, panValidator,
+  urlPath, maskNumber, clearString, formUtil, getTimeStamp, convertDateToMmmDdYyyy, setDataAttributeOnClosestAncestor, ageValidator,
 };
