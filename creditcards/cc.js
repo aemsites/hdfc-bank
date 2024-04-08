@@ -160,6 +160,7 @@ const dobErrorText = 'Age should be between 21 to 65';
 const radioDob = document.getElementById('pandobselection');
 
 dobIpField?.addEventListener('blur', async (e) => {
+  // debugger;
   const ipDobValue = e.target.value;
   if (ipDobValue) {
     const utils = await import('../common/formutils.js');
@@ -208,31 +209,21 @@ radioDob.addEventListener('click', () => {
 // 2. pan field validation
 const panField = document.querySelector('[name="pan"]');
 const panParent = panField.parentNode;
-const panErrorText = 'Please enter a valid PAN Number';
+const panErrorFieldDesc = 'field-description';
 const radioPan = document.getElementById('pandobselection-1');
 const panWrapper = panParent.closest('.field-wrapper');
 
 panField?.addEventListener('blur', async (e) => {
   const ipValue = e.target.value.trim();
-  const utils = await import('../common/formutils.js');
-  const panValid = utils.panValidator(ipValue);
-  let panErrorElement = panParent.querySelector(`.${invalidFieldClass}`);
-  if (!ipValue || panValid) {
-    if (panErrorElement) {
-      panParent.removeChild(panErrorElement);
-      panField.classList.remove(inputBorderErrClass);
-    }
-  } else if (!panErrorElement) {
-    panErrorElement = document.createElement('p');
-    panErrorElement.innerText = panErrorText;
-    panErrorElement.classList.add(invalidFieldClass);
-    panParent.appendChild(panErrorElement);
+  const panErrorElement = panParent.querySelector(`.${panErrorFieldDesc}`);
+  if (panErrorElement && ipValue) {
     panField.classList.add(inputBorderErrClass);
+    panErrorElement.classList.add(invalidFieldClass);
   }
 });
 
 radioPan.addEventListener('click', () => {
-  const panError = panParent.querySelector(`.${invalidFieldClass}`);
+  const panError = panParent.querySelector(`.${panErrorFieldDesc}`);
   if (panError) {
     panParent.removeChild(panError);
     panField.classList.remove(inputBorderErrClass);
@@ -241,7 +232,7 @@ radioPan.addEventListener('click', () => {
 });
 
 panField.addEventListener('input', () => {
-  const panErrorElement = panParent.querySelector(`.${invalidFieldClass}`);
+  const panErrorElement = panParent.querySelector(`.${panErrorFieldDesc}`);
   if (panErrorElement) {
     panParent.removeChild(panErrorElement);
     panField.classList.remove(inputBorderErrClass);
