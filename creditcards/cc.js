@@ -238,4 +238,25 @@ panField?.addEventListener('input', () => {
   }
 });
 
+// 3. Registered mobile validation
+const mobField = document.querySelector('[name="registeredMobileNumber"]');
+const mobFieldParent = mobField?.parentNode;
+const mobFieldDesc = 'field-description';
+mobField?.addEventListener('blur', async (e) => {
+  const ipValue = e?.target?.value;
+  const regErrorElement = mobFieldParent?.querySelector(`.${mobFieldDesc}`);
+  if (ipValue && regErrorElement) {
+    mobField?.classList.add(inputBorderErrClass);
+    regErrorElement?.classList.add(invalidFieldClass);
+  }
+});
+
+mobField?.addEventListener('input', () => {
+  const regErrorElement = mobFieldParent?.querySelector(`.${mobFieldDesc}`);
+  if (regErrorElement) {
+    mobFieldParent?.removeChild(regErrorElement);
+    mobField?.classList.remove(inputBorderErrClass);
+  }
+});
+
 export { decorateStepper, onWizardInit };
