@@ -140,13 +140,13 @@ inputs.forEach((input) => {
 /* End of code for floating field label */
 
 /* Script to set the maximum value dob fields - disabling the futures date */
-const todayDate = new Date();
-const allDateField = document.querySelectorAll('.date-wrapper');
-allDateField?.forEach((el) => {
-  const maxDateVal = todayDate?.toISOString()?.split('T')?.[0];
-  const inputDateField = el?.querySelector('input');
-  inputDateField.setAttribute('max', maxDateVal);
-});
+// const todayDate = new Date();
+// const allDateField = document.querySelectorAll('.date-wrapper');
+// allDateField?.forEach((el) => {
+//   const maxDateVal = todayDate?.toISOString()?.split('T')?.[0];
+//   const inputDateField = el?.querySelector('input');
+//   inputDateField.setAttribute('max', maxDateVal);
+// });
 
 /* script for dob-pan field validation */
 const invalidFieldClass = 'pandob-invalid';
