@@ -1,280 +1,337 @@
 :root {
-    --hdfc-stepper-margin-style: 24px;
-    --hdfc-stepper-width: 42px;
-    --hdfc-stepper-height: 3px;
-    --hdfc-wizard-step-legend-padding: 0;
-    --hdfc-wizard-step-legend-width: clamp(100px, calc(308% / var(--wizard-step-count)), 330px);
+  --hdfc-stepper-margin-style: 24px;
+  --hdfc-stepper-width: 42px;
+  --hdfc-stepper-height: 3px;
+  --hdfc-wizard-step-legend-padding: 0;
+  --hdfc-wizard-step-legend-width: clamp(100px, calc(308% / var(--wizard-step-count)), 330px);
 }
 
 main .form form .field-corporatecardwizardview.wizard {
-  overflow: hidden;
-  padding: 0;
+overflow: hidden;
+padding: 0;
 
-  .plain-text-wrapper b, legend {
-    font-weight: 600;
-    font-size: 20px;
+.date-wrapper .field-description {
+  display: none;
+}
+
+.plain-text-wrapper b, legend {
+  font-weight: 600;
+  font-size: 20px;
+}
+
+ul.wizard-menu-items {
+  flex-wrap: nowrap;
+  gap: 0;
+  margin-right: -35px;
+}
+
+li.wizard-menu-item {
+  flex-grow: 1;
+  position: relative;
+  list-style-type: none;
+  text-indent: 1%;
+  display: flex;
+  font-size: var(--form-font-size-xs);
+}
+
+li.wizard-menu-item:last-child {
+  margin-right: -1vw;
+}
+
+li.wizard-menu-item::before {
+  width: 30px;
+  height: 30px;
+}
+
+li.wizard-menu-active-item::before {
+  background-image: url('../../icons/current-step-indicator.svg');
+  content: '';
+  background-size: cover;
+  background-color: unset;
+  color: unset;
+  border: none;
+}
+
+.stepper-style::after {
+  content: '';
+  display: block;
+  width: var(--hdfc-stepper-width);
+  height: var(--hdfc-stepper-height);
+  background: var(--color-action-stepper-style);
+  margin-top: var(--hdfc-stepper-margin-style);
+  margin-left: -19px;
+}
+
+/* Accordion styling */
+fieldset fieldset {
+  position: relative;
+}
+
+.field-yourdetailspanel {
+  .field-prefilledemploymentdetails.field-wrapper { gap: 20px; }
+
+  fieldset {
+    legend {
+        background-color: var(--color-interface-background-secondary);
+        height: 60px;
+        padding: 16px 24px;
+        border-radius: 12px;
+    }
+  }
+}
+
+> .wizard-button-wrapper { .field-back, .field-next { display: none; } }
+
+/* Confirm card panel */
+.field-cardnametitle {
+  p {
+    margin: 0 !important;
+    font-weight: var(--font-weight-bold);
+    font-size: 24px;
+    color: var(--color-interface-text-primary);
+  }
+}
+
+.field-cardtagline {
+  p {
+    margin: -15px 0 0 !important;
+    font-size: var(--body-lg-font-size);
+    font-weight: var(--font-weight-regular);
+  }
+}
+
+.field-corporatetimageandnamepanel {
+  background: var(--color-interface-background-quinary);
+  padding: 20px;
+  border-radius: 10px;
+
+  img { 
+    border-radius: 10px; 
+    width: 400px;
   }
 
-  ul.wizard-menu-items {
-    flex-wrap: nowrap;
-    gap: 0;
-    margin-right: -35px;
-  }
-
-  li.wizard-menu-item {
-    flex-grow: 1;
-    position: relative;
-    list-style-type: none;
-    text-indent: 1%;
+  .field-nameoncarddropdown {
     display: flex;
-    font-size: var(--form-font-size-xs);
+    flex-direction: column-reverse;
+    label { margin: 13px; }
+
+    select { margin: 0; }
+  }
+}
+
+.field-cardbenefitsfeaturespanel {
+  display: grid;
+  padding-bottom: 20px;
+
+  .field-cardbenefitslabel { 
+    width: fit-content; 
+    padding: 20px 0 0 20px;
+
+    p { color: var(--color-interface-text-primary); }
+
+    b::before {
+      content: url('../icons/card-benefit-icon.svg');
+      margin-right: 12px;
+    }
   }
 
-  li.wizard-menu-item:last-child {
-    margin-right: -1vw;
+  .field-viewallcardbenefits {
+      position: absolute;
+      width: fit-content;
+      right: 0;
+      margin-top: 0 !important;
+      padding: 7px 7px 0 0;
+
+      button {
+          background: var(--color-action-text-primary-default);
+          color: var(--color-action-background-primary-default);
+          text-decoration: underline;
+      }
+
+      :hover {
+          background: var(--color-action-text-primary-default) !important;
+          color: var(--color-action-background-primary-default);
+      }
   }
 
-  li.wizard-menu-item::before {
-    width: 30px;
-    height: 30px;
+  .field-joiningrenewalfee {
+      display: flex;
+      border: solid 3px var(--color-interface-background-quinary);
+      border-radius: 10px;
+      padding: 0 15px;
+      height: 50px;
+      margin-top: -5px;
+
+      label {
+          width: 90%;
+          display: flex;
+          align-items: center;
+          font-weight: var(--font-weight-bold);
+          font-size: var(--body-sm-font-size);
+          color: var(--color-interface-text-primary);
+      }
+
+      input {
+          width: 30%;
+          text-align: right;
+          margin: 0;
+          padding: 0;
+          border: none;
+          height: 40px;
+          font-weight: var(--font-weight-bold);
+          font-size: var(--body-lg-font-size);
+          color: var(--color-interface-text-primary);
+      }
   }
+}
 
-  li.wizard-menu-active-item::before {
-    background-image: url('../../icons/current-step-indicator.svg');
-    content: '';
-    background-size: cover;
-    background-color: unset;
-    color: unset;
-    border: none;
-  }
+.field-cardbenefitsagreecheckbox { padding-top: 20px; }
 
-  .stepper-style::after {
-    content: '';
-    display: block;
-    width: var(--hdfc-stepper-width);
-    height: var(--hdfc-stepper-height);
-    background: var(--color-action-stepper-style);
-    margin-top: var(--hdfc-stepper-margin-style);
-    margin-left: -19px;
-  }
+/* End of Confirm Card Panel */
 
-  /* Accordion styling */
-  fieldset fieldset {
-    position: relative;
-  }
 
-  .field-yourdetailspanel {
-    .field-prefilledemploymentdetails.field-wrapper { gap: 20px; }
+.field-selectkycpaymentpanel {
+  /* stylelint-disable-next-line no-descending-specificity */
+  .plain-text-wrapper b, legend { color: #111827; }
 
-    fieldset {
-      legend {
-          background-color: var(--color-interface-background-secondary);
-          height: 60px;
-          padding: 16px 24px;
+  fieldset { width: 100%; }
+
+  fieldset[class*='field-selectkycmethodoption'] {
+      border: solid 1px #D2D5DB;
+      border-radius: 16px;
+      padding: 0 13px;
+      margin-bottom: 20px;
+
+      fieldset {
+        transform: translateY(-10px);
+
+        legend {
+          font-weight: 400;
+          font-size: 12px;
+          line-height: 20px;
+          background-color: #D0DDFC;
+          width: fit-content;
+          padding: 0 6px;
           border-radius: 12px;
+          color: #111827;
+        }
+        
+        input[type="radio"] {
+          position: absolute;
+          right: 0;
+        }
+        
+        label {
+          color: #111827;
+          font-weight: 600;
+          font-size: 14px !important;
+        }
+
+        label::before {
+          content: url('../icons/kyc-bullet-icon.svg');
+          margin-right: 16px;
+          position: relative;
+          top: 5px;
+        }
+
+        .radio-wrapper.field-aadharekycverification {
+          label::before {
+            content: url('../icons/kyc-aadhar-icon.svg');
+            top: 0;
+          }
+        }
+      }
+
+      div[class*='field-identityverificationtext']{
+        padding: 0 1vw 0 40px;
+        margin: -30px 0 19px;
+
+      p {
+        font-weight: 400;
+        font-size: 12px !important;
+        margin: 0 !important;
+      }
+      } 
+  }
+
+  .field-ckycdetailspanel {
+    .field-ckyctoggle {
+      display: flex;            
+      flex-direction: row-reverse;
+      width: fit-content;
+
+      /* stylelint-disable-next-line selector-class-pattern */
+      label.ckyctoggle__label {
+        font-size: 14px;
       }
     }
   }
+}
 
-  > .wizard-button-wrapper { .field-back, .field-next { display: none; } }
+.hdfc-accordion-style::after {
+  content: url('../../icons/accordion-expand-icon.svg');
+  display: inline;
+  position: absolute;
+  right: 1vw;
+  transition: transform 0s;
+}
 
-  /* Confirm card panel */
-  .field-cardnametitle input {
-    font-weight: var(--font-weight-bold);
-    font-size: 24px;
-    border: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .field-cardtagline input {
-    padding: 0;
-    margin: 0;
-    font-size: var(--body-lg-font-size);
-    font-weight: var(--font-weight-regular);
-    border: none;
-   }
-
-  .field-corporatetimageandnamepanel {
-    background: var(--color-interface-background-quinary);
-    padding: 20px;
-    border-radius: 10px;
-
-    img { border-radius: 10px; }
-
-    .field-nameoncarddropdown {
-      display: flex;
-      flex-direction: column-reverse;
-      label { margin: 13px; }
-
-      select { margin: 0; }
-    }
-  }
-
-  .field-cardbenefitsfeaturespanel {
-    display: grid;
-    padding-bottom: 20px;
-
-    .field-cardbenefitslabel { width: fit-content; }
-
-    .field-viewallcardbenefits {
-        position: absolute;
-        width: fit-content;
-        right: 0;
-        margin-top: 0 !important;
-
-        button {
-            background: var(--color-action-text-primary-default);
-            color: var(--color-action-background-primary-default);
-        }
-
-        :hover {
-            background: var(--color-action-text-primary-default) !important;
-            color: var(--color-action-background-primary-default);
-        }
-    }
-
-    .field-joiningrenewalfee {
-        display: flex;
-        border: solid 3px var(--color-interface-background-quinary);
-        border-radius: 10px;
-        padding: 0 15px;
-        height: 50px;
-        margin-top: -5px;
-
-        label {
-            width: 90%;
-            display: flex;
-            align-items: center;
-            font-weight: var(--font-weight-bold);
-            font-size: var(--body-sm-font-size);
-        }
-
-        input {
-            width: 30%;
-            text-align: right;
-            margin: 0;
-            padding: 0;
-            border: none;
-            height: 40px;
-            font-weight: var(--font-weight-bold);
-            font-size: var(--body-lg-font-size);
-        }
-    }
-  }
-
-  .field-cardbenefitsagreecheckbox { padding-top: 20px; }
-
-  /* End of Confirm Card Panel */
-
-  
-  .field-selectkycpaymentpanel {
-    fieldset { width: 100%; }
-
-    fieldset[class*='field-selectkycmethodoption'] {
-        border: solid 1px #D2D5DB;
-        border-radius: 16px;
-        padding: 0 13px;
-        margin-bottom: 20px;
-
-        fieldset {
-          transform: translateY(-10px);
-
-          legend {
-            font-weight: 400;
-            font-size: 12px;
-            line-height: 20px;
-            background-color: #D0DDFC;
-            width: fit-content;
-            padding: 0 6px;
-            border-radius: 12px;
-            color: #111827;
-          }
-          
-          input[type="radio"] {
-            position: absolute;
-            right: 0;
-          }
-          
-          label {
-            color: #111827;
-            font-weight: 600;
-            font-size: 14px !important;
-            padding: 0 0 0 3vw;
-          }
-        }
-
-        div[class*='field-identityverificationtext']{
-        padding: 0 1vw 0 3vw;
-        margin: -30px 0 19px;
-
-        p {
-          font-weight: 400;
-          font-size: 12px !important;
-          margin: 0 !important;
-        }
-        } 
-    }
-  }
-
-  .hdfc-accordion-style::after {
-    content: url('../../icons/accordion-expand-icon.svg');
-    display: inline;
-    position: absolute;
-    right: 1vw;
-    transition: transform 0s;
-  }
-
-  .accordion-collapse::after {
-    transform: rotate(-180deg);
-    margin-top: -9px;
-  }
+.accordion-collapse::after {
+  transform: rotate(-180deg);
+  margin-top: -9px;
+}
 }
 
 @media (width <= 960px) {
-  main .form form .field-corporatecardwizardview.wizard .field-cardbenefitsfeaturespanel {
-    padding-left: 28px;
-  }
+main .form form .field-corporatecardwizardview.wizard .field-cardbenefitsfeaturespanel {
+  padding-left: 28px;
+}
 }
 
 @media (width <= 767px) {
-  main .form form .field-corporatecardwizardview.wizard {
-    ul.wizard-menu-items { width: calc(300%); }
-    
-    li.wizard-menu-item { width: auto; }
+main .form form .field-corporatecardwizardview.wizard {
+  ul.wizard-menu-items { width: calc(300%); }
+  
+  li.wizard-menu-item { width: auto; }
 
-    fieldset {
-        width: 92vw;
-        display: block;
+  fieldset {
+      width: 92vw;
+      display: block;
 
-        .panel-wrapper.field-prefilledemploymentdetails { gap: 20px; }
-    }
+      .panel-wrapper.field-prefilledemploymentdetails { gap: 20px; }
+  }
 
-    :is([data-active='true'], [data-empty='false'], .date-wrapper):not(.field-joiningrenewalfee) > label {
-        margin-left: 5px;
-        font-weight: 400;
-        font-size: 12px;
-        padding: 0;
-    }
+  :is([data-active='true'], [data-empty='false'], .date-wrapper):not(.field-joiningrenewalfee) > label {
+      margin-left: 5px;
+      font-weight: 400;
+      font-size: 12px;
+      padding: 0;
+  }
 
-    .field-cardbenefitsfeaturespanel {
-      padding: 30px 0 0;
+  .field-cardtagline {
+    p { margin: 0 !important; }
+  }
 
-      img {
-        width: 253.44px;
-      }
+  .field-cardbenefitsfeaturespanel {
+    padding: 30px 0 0;
+
+    .field-viewallcardbenefits { padding: 40px 0; }
+
+    img {
+      width: 253.44px;
     }
   }
 }
+}
 
 @media (width <= 480px) {
-  main .form form .field-corporatecardwizardview.wizard {
-    .field-selectkycpaymentpanel {
-      fieldset { width: 100%; }
-    }
+main .form form .field-corporatecardwizardview.wizard {
+  .field-selectkycpaymentpanel {
+    fieldset { width: 100%; }
 
     div[class*='field-identityverificationtext']{
       margin: 7px 0 19px !important;
     }
   }
+}
 }

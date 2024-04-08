@@ -176,10 +176,7 @@ main .form select {
 }
 
 /* Base style for labels */
-main
-  .form
-  :not(.checkbox-wrapper, .radio-wrapper, .field-joiningrenewalfee)
-  > label {
+main .form :not(.checkbox-wrapper, .radio-wrapper, .field-joiningrenewalfee) > label {
   margin: 20px;
   position: absolute;
   transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
@@ -188,12 +185,8 @@ main
 }
 
 /* Style for labels when input is active or not empty */
-main
-  .form
-  :is([data-active='true'], [data-empty='false'], .date-wrapper):not(
-    .field-joiningrenewalfee
-  )
-  > label {
+main .form :is([data-active='true'], [data-empty='false'], .date-wrapper):not(.field-joiningrenewalfee) > label
+{
   color: var(--label-color);
   transform: translateY(-22px);
   z-index: 1;
@@ -387,13 +380,13 @@ main .form.block .field-otppanel {
   .field-otpnumber {
     margin-bottom: -10px;
 
-    input {
-      text-align: center;
-      margin-bottom: 0;
-      letter-spacing: 2vw;
-      caret-color: transparent;
-      border-radius: 12px;
-    }
+  input {
+    text-align: center;
+    margin-bottom: 0;
+    letter-spacing: 2vw;
+    caret-color: transparent;
+    border-radius: 12px;
+  }
   }
 
   .field-otpresend {
@@ -423,11 +416,11 @@ main .form.block .field-otppanel {
   }
 }
 
+
 /* Error/Success Result Panel */
 main .form .field-resultpanel {
   /* stylelint-disable-next-line no-descending-specificity */
-  p,
-  label {
+  p, label {
     font-weight: 400;
     font-size: 14px;
     line-height: 20px;
@@ -505,4 +498,9 @@ main .form .field-resultpanel {
     width: 100%;
     margin: 0 !important;
   }
+}
+
+.read-only-text {
+  pointer-events: none;
+  cursor: text;
 }
