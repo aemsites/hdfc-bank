@@ -153,15 +153,14 @@ const invalidFieldClass = 'pandob-invalid';
 const inputBorderErrClass = 'input-border-error';
 // 1. dob field validation
 const dobIpField = document.querySelector('[name="dateOfBirth"]');
-const dobParent = dobIpField.parentNode;
+const dobParent = dobIpField?.parentNode;
 const minAge = 21;
 const maxAge = 65;
 const dobErrorText = 'Age should be between 21 to 65';
 const radioDob = document.getElementById('pandobselection');
 
 dobIpField?.addEventListener('blur', async (e) => {
-  // debugger;
-  const ipDobValue = e.target.value;
+  const ipDobValue = e?.target?.value;
   if (ipDobValue) {
     const utils = await import('../common/formutils.js');
     const ageValid = utils.ageValidator(minAge, maxAge, ipDobValue);
@@ -169,73 +168,73 @@ dobIpField?.addEventListener('blur', async (e) => {
     if (!ageValid) {
       const pTag = dobErrorElement || document.createElement('p');
       pTag.innerText = dobErrorText;
-      pTag.classList.add(invalidFieldClass);
+      pTag?.classList.add(invalidFieldClass);
       if (!dobErrorElement) {
-        dobIpField.classList.add(inputBorderErrClass);
-        dobParent.appendChild(pTag);
+        dobIpField?.classList.add(inputBorderErrClass);
+        dobParent?.appendChild(pTag);
       }
     } else if (dobErrorElement) {
-      dobIpField.classList.remove(inputBorderErrClass);
-      dobParent.removeChild(dobErrorElement);
+      dobIpField?.classList.remove(inputBorderErrClass);
+      dobParent?.removeChild(dobErrorElement);
     }
   } else {
-    dobIpField.setAttribute('type', 'date');
-    dobIpField.setAttribute('edit-value', '');
-    dobIpField.setAttribute('display-value', '');
+    dobIpField?.setAttribute('type', 'date');
+    dobIpField?.setAttribute('edit-value', '');
+    dobIpField?.setAttribute('display-value', '');
   }
 });
 
 dobIpField?.addEventListener('input', () => {
-  const dobErrorElement = dobParent.querySelector(`.${invalidFieldClass}`);
+  const dobErrorElement = dobParent?.querySelector(`.${invalidFieldClass}`);
   if (dobErrorElement) {
-    dobParent.removeChild(dobErrorElement);
-    dobIpField.classList.remove(inputBorderErrClass);
+    dobParent?.removeChild(dobErrorElement);
+    dobIpField?.classList.remove(inputBorderErrClass);
   }
 });
 
-radioDob.addEventListener('click', () => {
-  const dobErrorElement = dobParent.querySelector(`.${invalidFieldClass}`);
-  const wrapper = dobParent.closest('.field-wrapper');
+radioDob?.addEventListener('click', () => {
+  const dobErrorElement = dobParent?.querySelector(`.${invalidFieldClass}`);
+  const wrapperDob = dobParent?.closest('.field-wrapper');
   if (dobErrorElement) {
-    dobParent.removeChild(dobErrorElement);
-    dobIpField.classList.remove(inputBorderErrClass);
+    dobParent?.removeChild(dobErrorElement);
+    dobIpField?.classList.remove(inputBorderErrClass);
   }
-  dobIpField.setAttribute('type', 'date');
-  dobIpField.setAttribute('edit-value', '');
-  dobIpField.setAttribute('display-value', '');
-  wrapper.dataset.empty = !'';
+  dobIpField?.setAttribute('type', 'date');
+  dobIpField?.setAttribute('edit-value', '');
+  dobIpField?.setAttribute('display-value', '');
+  wrapperDob.dataset.empty = !'';
 });
 
 // 2. pan field validation
 const panField = document.querySelector('[name="pan"]');
-const panParent = panField.parentNode;
+const panParent = panField?.parentNode;
 const panErrorFieldDesc = 'field-description';
 const radioPan = document.getElementById('pandobselection-1');
-const panWrapper = panParent.closest('.field-wrapper');
+const panWrapper = panParent?.closest('.field-wrapper');
 
 panField?.addEventListener('blur', async (e) => {
-  const ipValue = e.target.value.trim();
-  const panErrorElement = panParent.querySelector(`.${panErrorFieldDesc}`);
+  const ipValue = e?.target?.value;
+  const panErrorElement = panParent?.querySelector(`.${panErrorFieldDesc}`);
   if (panErrorElement && ipValue) {
-    panField.classList.add(inputBorderErrClass);
-    panErrorElement.classList.add(invalidFieldClass);
+    panField?.classList.add(inputBorderErrClass);
+    panErrorElement?.classList.add(invalidFieldClass);
   }
 });
 
-radioPan.addEventListener('click', () => {
-  const panError = panParent.querySelector(`.${panErrorFieldDesc}`);
+radioPan?.addEventListener('click', () => {
+  const panError = panParent?.querySelector(`.${panErrorFieldDesc}`);
   if (panError) {
-    panParent.removeChild(panError);
-    panField.classList.remove(inputBorderErrClass);
+    panParent?.removeChild(panError);
+    panField?.classList.remove(inputBorderErrClass);
   }
   panWrapper.dataset.empty = !'';
 });
 
-panField.addEventListener('input', () => {
-  const panErrorElement = panParent.querySelector(`.${panErrorFieldDesc}`);
+panField?.addEventListener('input', () => {
+  const panErrorElement = panParent?.querySelector(`.${panErrorFieldDesc}`);
   if (panErrorElement) {
-    panParent.removeChild(panErrorElement);
-    panField.classList.remove(inputBorderErrClass);
+    panParent?.removeChild(panErrorElement);
+    panField?.classList.remove(inputBorderErrClass);
   }
 });
 
