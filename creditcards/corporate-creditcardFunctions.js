@@ -73,7 +73,7 @@ function decoratePwdField() {
 const otpGenSuccess = (res, globals) => {
   const pannel = {
     // declare parent panel -- common name defining
-    welcome: globals.form.welcomeTextLabel,
+    welcome: globals.form.loginPanel.welcomeTextLabel,
     login: globals.form.loginPanel,
     otp: globals.form.otpPanel,
     otpButton: globals.form.getOTPbutton,
@@ -88,7 +88,7 @@ const otpGenSuccess = (res, globals) => {
   const otpBtn = formUtil(globals, pannel.otpButton);
   const loginPanel = formUtil(globals, pannel.login);
   const regMobNo = pannel.login.mobilePanel.registeredMobileNumber.$value;
-
+ debugger;
   const panWizardField = formUtil(globals, pannel.panWizardField);
   const dobWizardField = formUtil(globals, pannel.dobWizardField);
   const currentAddressNTB = formUtil(globals, pannel.currentAddressNTB);
@@ -319,7 +319,7 @@ const existingCustomerCheck = (res) => {
 const otpValSuccess = (res, globals) => {
   const pannel = {
     // declare parent panel -- common name defining
-    welcome: globals.form.welcomeTextLabel,
+    welcome: globals.form.loginPanel.welcomeTextLabel,
     login: globals.form.loginPanel,
     otp: globals.form.otpPanel,
     otpButton: globals.form.getOTPbutton,
