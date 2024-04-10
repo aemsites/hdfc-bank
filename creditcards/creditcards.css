@@ -12,6 +12,7 @@
       line-height: var(--font-linehight-regular) !important;
       margin: 0 !important;
       padding: 0 !important;
+      pointer-events: none !important;
       transform: none !important;
     }
 

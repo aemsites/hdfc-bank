@@ -79,7 +79,6 @@ const otpGenSuccess = (res, globals) => {
   const otpBtn = formUtil(globals, pannel.otpButton);
   const loginPanel = formUtil(globals, pannel.login);
   const regMobNo = pannel.login.mobilePanel.registeredMobileNumber.$value;
- debugger;
   const panWizardField = formUtil(globals, pannel.panWizardField);
   const dobWizardField = formUtil(globals, pannel.dobWizardField);
   const currentAddressNTB = formUtil(globals, pannel.currentAddressNTB);
