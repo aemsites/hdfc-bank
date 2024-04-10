@@ -51,11 +51,30 @@ main .form {
   }
 }
 
+/* Base style for labels */
+main
+  .form
+  :not(.checkbox-wrapper, .radio-wrapper, .field-joiningrenewalfee)
+  > label {
+  margin: 20px;
+  position: absolute;
+  transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
+  font-weight: 400;
+  font-size: 14px;
+}
+
 main .form form {
   padding: 40px;
 
   .label-disabled {
     background-color: var(--form-input-disable-color) !important;
+  }
+
+  .field-maskedmobilenumber {
+    input,
+    label {
+      background-color: var(--form-input-disable-color) !important;
+    }
   }
 
   .field-currentaddresstoggle {
@@ -183,18 +202,6 @@ main .form select {
   /* preLoading-gif-image */
   background: rgb(255 255 255 / 80%) var(--loader-image-url) no-repeat center
     center;
-}
-
-/* Base style for labels */
-main
-  .form
-  :not(.checkbox-wrapper, .radio-wrapper, .field-joiningrenewalfee)
-  > label {
-  margin: 20px;
-  position: absolute;
-  transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
-  font-weight: 400;
-  font-size: 14px;
 }
 
 /* Style for labels when input is active or not empty */
