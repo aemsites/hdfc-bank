@@ -8,7 +8,7 @@ export const defaultErrorMessages = {
   minItems: 'Specify a number of items equal to or greater than $0.',
 };
 
-let submitBaseUrl = '';
+let submitBaseUrl = 'https://applyonlinedev.hdfcbank.com';
 
 export function setSubmitBaseUrl(url) {
   submitBaseUrl = url;

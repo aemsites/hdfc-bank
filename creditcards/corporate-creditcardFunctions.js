@@ -625,3 +625,6 @@ export {
   currentFormContext,
   createPanValidationRequest,
 };
+export {
+  OTPGEN, OTPVAL, CHECKOFFER, RESENDOTP, getThisCard,
+};
