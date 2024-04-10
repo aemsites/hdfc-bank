@@ -94,7 +94,7 @@ main img {
             margin-top: 6px;
         }
 
-        .field-registeredmobilenumber{
+        .field-registeredmobilenumber, .field-maskedmobilenumber{
             margin-top: -19px;
             position: relative;
         }
