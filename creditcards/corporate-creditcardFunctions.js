@@ -565,23 +565,29 @@ const RESENDOTP = {
   loadingText: 'Please wait otp sending again...',
 };
 
+/**
+ * Creates a PAN validation request object and handles success and failure callbacks.
+ * @param {Object} globals - The global object containing necessary data for PAN validation.
+ * @returns {Object} - The PAN validation request object.
+ */
 const createPanValidationRequest = (globals) => {
   const panValidation = {
+    /**
+     * Sends a PAN validation request.
+     * @returns {Object} - The PAN validation request object.
+     */
     sendRequest() {
       try {
+        const personalDetails = globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.personalDetails;
         const reqObj = {
           journeyName: currentFormContext.journeyName,
           journeyID: currentFormContext.journeyID,
           mobileNumber: globals.form.loginPanel.mobilePanel.registeredMobileNumber.$value,
           panInfo: {
-            panNumber: 'HUTPP6068K',
+            panNumber: personalDetails.panNumberPersonalDetails.$value,
             panType: 'P',
-            dob: convertDateToDdMmYyyy(new Date('10/9/1992')),
-            name: 'Ranjit',
-          },
-          nameInfo: {
-            srcName: 'Ranjit',
-            trgName: 'Ranjit Vijay',
+            dob: convertDateToDdMmYyyy(new Date(personalDetails.dobPersonalDetails.$value)),
+            name: personalDetails.firstName.$value ? personalDetails.firstName.$value.split(' ')[0] : '',
           },
         };
         return reqObj;
@@ -590,14 +596,29 @@ const createPanValidationRequest = (globals) => {
         return errObj;
       }
     },
+    /**
+     * Event handlers for PAN validation.
+     */
     eventHandlers: {
+      /**
+       * Callback function for successful PAN validation response.
+       * @param {Object} responseObj - The response object containing PAN validation result.
+       */
       successCallBack(responseObj) {
         panValidation.handlePanSuccess(responseObj);
       },
+      /**
+       * Callback function for failed PAN validation response.
+       * @param {Object} errorObj - The error object containing details of the failure.
+       */
       failureCallBack(errorObj) {
         panValidation.handlePanFailure(errorObj);
       },
     },
+    /**
+     * Handles successful PAN validation response.
+     * @param {Object} respObj - The response object containing PAN validation result.
+     */
     handlePanSuccess(respObj) {
       try {
         console.log(respObj);
@@ -605,6 +626,10 @@ const createPanValidationRequest = (globals) => {
         console.log(errObj);
       }
     },
+    /**
+     * Handles failed PAN validation response.
+     * @param {Object} errorObj - The error object containing details of the failure.
+     */
     handlePanFailure(errorObj) {
       try {
         console.log(errorObj);
@@ -613,6 +638,7 @@ const createPanValidationRequest = (globals) => {
       }
     },
   };
+  // Call PANValidationAndNameMatchService with PAN validation request and event handlers
   PANValidationAndNameMatchService(panValidation.sendRequest(), panValidation.eventHandlers);
 };
 
