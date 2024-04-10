@@ -36,11 +36,12 @@ main .form {
     display: none;
   }
 
-  input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
     appearance: none;
     margin: 0;
   }
-  
+
   input[type='number'] {
     appearance: textfield;
   }
@@ -50,11 +51,30 @@ main .form {
   }
 }
 
+/* Base style for labels */
+main
+  .form
+  :not(.checkbox-wrapper, .radio-wrapper, .field-joiningrenewalfee)
+  > label {
+  margin: 20px;
+  position: absolute;
+  transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
+  font-weight: 400;
+  font-size: 14px;
+}
+
 main .form form {
   padding: 40px;
 
   .label-disabled {
     background-color: var(--form-input-disable-color) !important;
+  }
+
+  .field-maskedmobilenumber {
+    input,
+    label {
+      background-color: var(--form-input-disable-color) !important;
+    }
   }
 
   .field-currentaddresstoggle {
@@ -115,7 +135,6 @@ main .form form {
     margin-right: 21px;
   }
 
-
   .current-address-toggle__label {
     color: var(--color-interface-text-secondary);
     font-size: var(--body-sm-font-size);
@@ -125,7 +144,7 @@ main .form form {
 
   .field-prefilledcurrentadddress {
     margin-top: -18px !important;
-    
+
     input[type='text'] {
       border: none;
       pointer-events: none;
@@ -185,18 +204,13 @@ main .form select {
     center;
 }
 
-/* Base style for labels */
-main .form :not(.checkbox-wrapper, .radio-wrapper, .field-joiningrenewalfee) > label {
-  margin: 20px;
-  position: absolute;
-  transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
-  font-weight: 400;
-  font-size: 14px;
-}
-
 /* Style for labels when input is active or not empty */
-main .form :is([data-active='true'], [data-empty='false'], .date-wrapper):not(.field-joiningrenewalfee) > label
-{
+main
+  .form
+  :is([data-active='true'], [data-empty='false'], .date-wrapper):not(
+    .field-joiningrenewalfee
+  )
+  > label {
   color: var(--label-color);
   transform: translateY(-22px);
   z-index: 1;
@@ -390,13 +404,13 @@ main .form.block .field-otppanel {
   .field-otpnumber {
     margin-bottom: -10px;
 
-  input {
-    text-align: center;
-    margin-bottom: 0;
-    letter-spacing: 2vw;
-    caret-color: transparent;
-    border-radius: 12px;
-  }
+    input {
+      text-align: center;
+      margin-bottom: 0;
+      letter-spacing: 2vw;
+      caret-color: transparent;
+      border-radius: 12px;
+    }
   }
 
   .field-otpresend {
@@ -426,11 +440,11 @@ main .form.block .field-otppanel {
   }
 }
 
-
 /* Error/Success Result Panel */
 main .form .field-resultpanel {
   /* stylelint-disable-next-line no-descending-specificity */
-  p, label {
+  p,
+  label {
     font-weight: 400;
     font-size: 14px;
     line-height: 20px;
