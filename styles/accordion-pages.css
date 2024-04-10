@@ -1,3 +1,4 @@
+/* stylelint-disable no-descending-specificity */
 :root {
   --hdfc-stepper-margin-style: 24px;
   --hdfc-stepper-width: 42px;
@@ -19,7 +20,9 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
   margin: 0;
 }
 
-input[type='number'] { appearance: textfield; }
+input[type='number'] {
+  appearance: textfield;
+}
 
 .plain-text-wrapper b, legend {
   font-weight: 600;
@@ -67,6 +70,13 @@ li.wizard-menu-active-item::before {
   background: var(--color-action-stepper-style);
   margin-top: var(--hdfc-stepper-margin-style);
   margin-left: -19px;
+}
+
+.field-employmentdetails .field-officeaddresslabel {
+  p { 
+    margin: 0; 
+    h3 { margin: -20px 0 -10px; }
+  }
 }
 
 /* Accordion styling */
@@ -198,7 +208,6 @@ fieldset fieldset {
 
 
 .field-selectkycpaymentpanel {
-  /* stylelint-disable-next-line no-descending-specificity */
   .plain-text-wrapper b, legend { color: #111827; }
 
   fieldset { width: 100%; }
@@ -302,8 +311,10 @@ main .form form .field-corporatecardwizardview.wizard {
   li.wizard-menu-item { width: auto; }
 
   fieldset {
-      width: 92vw;
+      width: 90vw;
       display: block;
+
+      .field-employmentdetails .field-officeaddresslabel { h3 { margin: 0; } }
 
       .panel-wrapper.field-prefilledemploymentdetails { gap: 20px; }
   }
@@ -333,6 +344,8 @@ main .form form .field-corporatecardwizardview.wizard {
 
 @media (width <= 480px) {
 main .form form .field-corporatecardwizardview.wizard {
+  fieldset { width: 85vw; }
+
   .field-selectkycpaymentpanel {
     fieldset { width: 100%; }
 
