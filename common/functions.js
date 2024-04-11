@@ -3,6 +3,7 @@ import {
   OTPVAL,
   RESENDOTP,
   getThisCard,
+  prefillForm,
   createPanValidationRequest,
 } from '../creditcards/corporate-creditcardFunctions.js';
 
@@ -52,4 +53,5 @@ export {
   resendOTP,
   checkOffer,
   getThisCard,
+  prefillForm,
 };

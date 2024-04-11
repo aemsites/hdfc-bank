@@ -110,7 +110,7 @@ const otpGenSuccess = (res, globals) => {
 const otpGenFailure = (res, globals) => {
   const pannel = {
     // declare parent panel -- common name defining
-    welcome: globals.form.welcomeTextLabel,
+    welcome: globals.form.loginPanel.welcomeTextLabel,
     login: globals.form.loginPanel,
     otp: globals.form.otpPanel,
     otpButton: globals.form.getOTPbutton,
@@ -355,7 +355,7 @@ const otpValSuccess = (res, globals) => {
 const otpValFailure = (res, globals) => {
   const pannel = {
     // declare parent panel -- common name defining
-    welcome: globals.form.welcomeTextLabel,
+    welcome: globals.form.loginPanel.welcomeTextLabel,
     login: globals.form.loginPanel,
     otp: globals.form.otpPanel,
     otpButton: globals.form.getOTPbutton,
