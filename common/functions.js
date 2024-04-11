@@ -1,5 +1,9 @@
 import {
-  OTPGEN, OTPVAL, RESENDOTP, CHECKOFFER, getThisCard, createPanValidationRequest,
+  OTPGEN,
+  OTPVAL,
+  RESENDOTP,
+  getThisCard,
+  createPanValidationRequest,
 } from '../creditcards/corporate-creditcardFunctions.js';
 
 import { restAPICall } from './makeRestAPI.js';
@@ -43,5 +47,9 @@ function resendOTP(globals) {
 }
 
 export {
-  getOTP, otpValidation, resendOTP, checkOffer, getThisCard,
+  getOTP,
+  otpValidation,
+  resendOTP,
+  checkOffer,
+  getThisCard,
 };
