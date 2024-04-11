@@ -51,10 +51,6 @@ main img {
     background: var(--color-interface-background-tertiary);
 }
 
-.cmp-container-container {
-    height: 180px;
-}
-
 .cmp-container-wrapper {
     max-width: 100% !important;
 }

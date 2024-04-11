@@ -1,0 +1,149 @@
+body {
+    overflow-x: hidden;
+}
+
+/* Footer start */
+footer {
+    background: var(--color-interface-background-tertiary);
+
+    .cmp-container {
+        max-width: 960px;
+        margin: 0 auto;
+
+        div>div {
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 20px;
+            text-align: left;
+            padding: 10px;
+            color: var(--color-action-text-primary-default);
+            padding-left: 0;
+            padding-right: 0;
+        }
+    }
+
+    a {
+        float: right;
+        color: var(--color-interface-text-tertiary) !important;
+        text-decoration: underline !important;
+    }
+}
+
+/* header start */
+header {
+    height: 48px !important;
+    background: var(--color-interface-background-tertiary);
+
+    .cmp-container {
+        div:nth-child(1) {
+            height: 48px;
+            max-width: 960px;
+            margin: 0 auto;
+            position: relative;
+
+            p {
+                margin: 0;
+                padding: 0;
+                width: 19%;
+            }
+
+            picture {
+                img {
+                    margin-top: 10px;
+                }
+            }
+
+            div p:nth-child(2) {
+                position: absolute;
+                right: 0;
+                z-index: 10;
+                top: 0;
+                padding: 12px 10px;
+                font-size: 14px;
+                font-weight: 400;
+                line-height: 20px;
+                text-align: left;
+                color: var(--color-action-text-primary-default);
+            }
+        }
+
+        div:nth-child(2) {
+            display: none;
+        }
+    }
+}
+
+/* banner start */
+.cmp-container-wrapper {
+    padding: 0 !important;
+    border-bottom: none !important;
+    content: url('../../icons/header_banner_desktop.svg');
+    width: 100%;
+}
+
+/***** mobile large ********/
+@media (320px <=width <=480px) {
+    .cmp-container-wrapper {
+        content: url('../../icons/header_banner_smMobile.svg');
+        width: 100%;
+    }
+
+    div>div>p {
+        width: 100% !important;
+        text-align: center;
+    }
+
+    div p:nth-child(2) {
+        display: none;
+    }
+
+    footer .cmp-container div>div {
+        text-align: right;
+        padding-right: 10px;
+
+        a {
+            display: none;
+        }
+    }
+}
+
+@media (481px <=width <=768px) {
+    .cmp-container-wrapper {
+        content: url('../../icons/header_banner_mobile.svg');
+        width: 100%;
+    }
+
+    div>div>p {
+        width: 100% !important;
+        text-align: center;
+    }
+
+    div p:nth-child(2) {
+        display: none;
+    }
+
+    footer .cmp-container div>div {
+        text-align: right;
+        padding-right: 10px;
+
+        a {
+            display: none;
+        }
+    }
+}
+
+/******* Tablet *******/
+@media (769px <=width <=991px) {
+    .cmp-container-wrapper {
+        content: url('../../icons/header_banner_tab.svg');
+        width: 100%;
+    }
+
+    footer .cmp-container div>div {
+        text-align: right;
+
+        a {
+            display: none
+        }
+    }
+}
