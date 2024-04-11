@@ -519,6 +519,11 @@ const CHECKOFFER = {
 const getThisCard = () => moveCCWizardView('corporateCardWizardView', 'selectKycPaymentPanel');
 
 /**
+ * Moves the wizard view to the "confirmAndSubmitPanel" step.
+ */
+const getAddressDetails = () => moveCCWizardView('corporateCardWizardView', 'confirmAndSubmitPanel');
+
+/**
  * Resends OTP success handler.
  * @param {any} res  - The response object containing the OTP success generation response.
  * @param {Object} globals - globals variables object containing form configurations.
@@ -585,5 +590,5 @@ const prefillForm = (globals) => {
 };
 
 export {
-  OTPGEN, OTPVAL, CHECKOFFER, RESENDOTP, getThisCard, prefillForm,
+  OTPGEN, OTPVAL, CHECKOFFER, RESENDOTP, getThisCard, prefillForm, getAddressDetails,
 };
