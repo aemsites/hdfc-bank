@@ -555,6 +555,35 @@ const RESENDOTP = {
   loadingText: 'Please wait otp sending again...',
 };
 
+/**
+ * logic hanlding during prefiill of form.
+ * @param {Objec} globals - The global object containing necessary globals form data.
+ */
+
+const prefillForm = (globals) => {
+  const globalSchema = globals?.functions?.exportData();
+  const ccGlobals = globalSchema?.data?.CorporateCreditCard;
+  const ccData = {
+    companyName: ccGlobals?.companyName,
+    designation: ccGlobals?.designation,
+    employeeCode: ccGlobals?.employeeCode,
+    employmentType: ccGlobals?.employmentType,
+    maskedMobileNumber: ccGlobals?.maskedMobileNumber,
+    registeredMobileNumber: ccGlobals?.registeredMobileNumber,
+    relationshipNumber: ccGlobals?.relationshipNumber,
+    workEmailAddress: ccGlobals?.workEmailAddress,
+  };
+  const ccDetailsPresent = Object.values(ccData)?.every((el) => (el));
+  const resultErrorPannel = formUtil(globals, globals.form.resultPanel);
+  const loginPannel = formUtil(globals, globals.form.loginPanel);
+  const otpButton = formUtil(globals, globals.form.getOTPbutton);
+  if (!ccDetailsPresent) { // show error pannel if corporate credit card details not present
+    resultErrorPannel.visible(true);
+    loginPannel.visible(false);
+    otpButton.visible(false);
+  }
+};
+
 export {
-  OTPGEN, OTPVAL, CHECKOFFER, RESENDOTP, getThisCard,
+  OTPGEN, OTPVAL, CHECKOFFER, RESENDOTP, getThisCard, prefillForm,
 };
