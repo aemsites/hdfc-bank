@@ -48,6 +48,16 @@ const changeTextContent = (pannelName, innerContent) => {
 };
 
 /**
+ * removebanner from the landing screen by settin the display property to 'none' to remove the banner
+ */
+const removeBanner = () => {
+  const banner = document.querySelector('.cmp-container-container');
+  if (banner) {
+    banner.style.display = 'none';
+  }
+};
+
+/**
   * Decorates the password input to hide the text and display only bullets
   * @name decoratePasswordField Runs after user clicks on Get OTP
   */
@@ -91,6 +101,7 @@ const otpGenSuccess = (res, globals) => {
 
   appendMaskedNumber('field-otphelptext', regMobNo);
   decoratePwdField();
+  removeBanner();
 };
 
 /**
@@ -101,7 +112,7 @@ const otpGenSuccess = (res, globals) => {
 const otpGenFailure = (res, globals) => {
   const pannel = {
     // declare parent panel -- common name defining
-    welcome: globals.form.welcomeTextLabel,
+    welcome: globals.form.loginPanel.welcomeTextLabel,
     login: globals.form.loginPanel,
     otp: globals.form.otpPanel,
     otpButton: globals.form.getOTPbutton,
@@ -119,6 +130,7 @@ const otpGenFailure = (res, globals) => {
   loginPanel.visible(false);
   otpBtn.visible(false);
   failurePanel.visible(true);
+  removeBanner();
 };
 
 const OTPGEN = {
@@ -346,7 +358,7 @@ const otpValSuccess = (res, globals) => {
 const otpValFailure = (res, globals) => {
   const pannel = {
     // declare parent panel -- common name defining
-    welcome: globals.form.welcomeTextLabel,
+    welcome: globals.form.loginPanel.welcomeTextLabel,
     login: globals.form.loginPanel,
     otp: globals.form.otpPanel,
     otpButton: globals.form.getOTPbutton,
