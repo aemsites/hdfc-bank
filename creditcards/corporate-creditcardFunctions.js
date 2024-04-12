@@ -621,7 +621,6 @@ const createPanValidationRequest = (globals) => {
      */
     handlePanSuccess(respObj) {
       try {
-        console.log(respObj);
         PAN_VALIDATION_STATUS = respObj.panValidation.status.errorCode === '1';
         const panStatus = respObj.panValidation.panStatus;
         if (panStatus === 'E') {
@@ -629,8 +628,13 @@ const createPanValidationRequest = (globals) => {
         } else if (panStatus === 'F' || panStatus === 'X' || panStatus === 'D' || panStatus === 'ED') {
           console.log('Set message and terminate');
         } else {
+          const panNumberField = document.querySelector('.field-pannumberpersonaldetails');
           if (PAN_RETRY_COUNTER <= 3) {
             console.log('Retry');
+            panNumberField.classList.remove('wrapper-disabled');
+          } else {
+            panNumberField.classList.add('wrapper-disabled');
+            console.log('terminate');
           }
           PAN_RETRY_COUNTER += PAN_RETRY_COUNTER;
         }
