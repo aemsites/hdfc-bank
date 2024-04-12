@@ -1,4 +1,5 @@
 import { restAPICall } from './makeRestAPI.js';
+import { urlPath } from './formutils.js';
 
 const containsValue = (data) => typeof data !== 'undefined' && data !== null && data !== '';
 
@@ -51,11 +52,10 @@ const isEventHandlerProcessable = (eventHandlers) => (
 );
 const PANValidationAndNameMatchService = (reqPayload, eventHandlers) => {
   try {
-    const apiEndPoint = '/content/hdfc_forms_common_v2/api/panValNameMatch.json';
+    const apiEndPoint = urlPath('/content/hdfc_forms_common_v2/api/panValNameMatch.json');
 
     if (isRequestProcessable(reqPayload) && isEventHandlerProcessable(eventHandlers)) {
-      console.log(apiEndPoint);
-      restAPICall('', 'POST', reqPayload, apiEndPoint, eventHandlers.successCallback, eventHandlers.errorCallback, 'Loading');
+      restAPICall('', 'POST', reqPayload, apiEndPoint, eventHandlers.successCallBack, eventHandlers.errorCallBack, 'Loading');
     }
     throw new Error('argument error');
   } catch (e) {

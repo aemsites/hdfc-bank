@@ -21,7 +21,8 @@ const currentFormContext = {
   journeyID: createJourneyId('a', 'b', 'c'),
   journeyName,
 };
-const CUSTOMER_DATA = {};
+let PAN_VALIDATION_STATUS = false;
+let PAN_RETRY_COUNTER = 1;
 let resendOtpCount = 3;
 /**
  * Appends a masked number to the specified container element if the masked number is not present.
@@ -621,6 +622,18 @@ const createPanValidationRequest = (globals) => {
     handlePanSuccess(respObj) {
       try {
         console.log(respObj);
+        PAN_VALIDATION_STATUS = respObj.panValidation.status.errorCode === '1';
+        const panStatus = respObj.panValidation.panStatus;
+        if (panStatus === 'E') {
+          console.log('Proceed');
+        } else if (panStatus === 'F' || panStatus === 'X' || panStatus === 'D' || panStatus === 'ED') {
+          console.log('Set message and terminate');
+        } else {
+          if (PAN_RETRY_COUNTER <= 3) {
+            console.log('Retry');
+          }
+          PAN_RETRY_COUNTER += PAN_RETRY_COUNTER;
+        }
       } catch (errObj) {
         console.log(errObj);
       }
