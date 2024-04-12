@@ -8,7 +8,7 @@ import {
   formUtil, maskNumber, urlPath, clearString, getTimeStamp, convertDateToMmmDdYyyy, setDataAttributeOnClosestAncestor,
 } from '../common/formutils.js';
 
-const journeyName = 'CORPORATE_CREDIT_CARD';
+const journeyName = 'CORPORATE_CARD_JOURNEY';
 const currentFormContext = {
   journeyID: createJourneyId('a', 'b', 'c'),
   journeyName,
