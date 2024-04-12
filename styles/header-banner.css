@@ -2,6 +2,12 @@ body {
     overflow-x: hidden;
 }
 
+.cmp-container-container{
+    background: var( --color-interface-background-tertiary) !important;
+    display: flex;
+    justify-content: center;
+}
+
 /* Footer start */
 footer {
     background: var(--color-interface-background-tertiary);
@@ -78,7 +84,7 @@ header {
     padding: 0 !important;
     border-bottom: none !important;
     content: url('../../icons/header_banner_desktop.svg');
-    width: 100%;
+    max-width: fit-content !important;
 }
 
 /***** mobile large ********/
@@ -86,6 +92,7 @@ header {
     .cmp-container-wrapper {
         content: url('../../icons/header_banner_smMobile.svg');
         width: 100%;
+        max-width: 100% !important;
     }
 
     div>div>p {
@@ -111,6 +118,7 @@ header {
     .cmp-container-wrapper {
         content: url('../../icons/header_banner_mobile.svg');
         width: 100%;
+        max-width: 100% !important;
     }
 
     div>div>p {
@@ -137,6 +145,7 @@ header {
     .cmp-container-wrapper {
         content: url('../../icons/header_banner_tab.svg');
         width: 100%;
+        max-width: 100% !important;
     }
 
     footer .cmp-container div>div {
