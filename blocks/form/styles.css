@@ -77,6 +77,12 @@ main .form form {
     }
   }
 
+  .field-currentdetails {
+    .field-currentaddressetb {
+      row-gap: 8px !important;
+    }
+  }
+
   .field-currentaddresstoggle {
     flex-direction: row-reverse;
     width: fit-content;
@@ -143,9 +149,7 @@ main .form form {
   }
 
   .field-prefilledcurrentadddress {
-    margin-top: -18px !important;
-
-    input[type='text'] {
+    textarea {
       border: none;
       pointer-events: none;
       padding: 0;
@@ -154,6 +158,10 @@ main .form form {
       font-size: var(--body-md-font-size);
       line-height: var(--font-linehight-medium);
       color: var(--color-interface-text-primary);
+      min-height: auto !important;
+      height: auto !important;
+      font-family: var(--body-font-family) !important;
+      resize: none;
     }
   }
 }
