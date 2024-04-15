@@ -282,10 +282,6 @@ main .form form .panel-wrapper {
      }
 
      .field-consent2panelwrapper{
-        display: flex !important;
-        flex-wrap: nowrap !important;
-        flex-direction: unset !important;
-
         .field-checkbox2text{
             margin-left: -13px;
 
@@ -350,10 +346,6 @@ main .form form .panel-wrapper {
     }
 
     .field-consent2panelwrapper{
-        display: flex !important;
-        flex-wrap: nowrap !important;
-        flex-direction: unset !important;
-
         .field-checkbox2text{
             margin-left: -13px;
 
@@ -386,10 +378,6 @@ main .form form .panel-wrapper {
     }
 
     .field-consent2panelwrapper{
-        display: flex !important;
-        flex-wrap: nowrap !important;
-        flex-direction: unset !important;
-
         .field-checkbox2text{
             margin-left: -13px;
         }
