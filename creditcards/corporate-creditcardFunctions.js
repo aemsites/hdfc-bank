@@ -596,7 +596,19 @@ const terminateJourney = (panStatus) => {
   console.log(`pan Status: ${panStatus} and called terminateJourney()`);
 };
 
+const enableFormField = (...elemClassArr) => {
+  elemClassArr.forEach((elem) => {
+    const selectedElem = document.querySelector(`.${elem}`);
+    selectedElem.classList.remove('wrapper-disabled');
+    selectedElem.classList.add('error-field');
+  });
+};
+
 const checkUserProceedStatus = (panStatus, globals) => {
+  const errorFields = document.querySelectorAll('.error-field');
+  errorFields.forEach((field) => {
+    field.classList.remove('error-field');
+  });
   const personalDetails = globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.personalDetails;
   const customerInfo = {
     pan: personalDetails.panNumberPersonalDetails.$value,
@@ -619,21 +631,21 @@ const checkUserProceedStatus = (panStatus, globals) => {
     if (CUSTOMER_INPUT.mobileNumber) {
       if (CUSTOMER_INPUT.pan) {
         if (isMissing('dob', 'lastName')) {
-          console.log('DOB and last name missing');
+          enableFormField('field-lastname', 'field-dobpersonaldetails');
         } else if (!customerInfo.dob) {
-          console.log('DOB missing');
+          enableFormField('field-dobpersonaldetails');
         } else if (!customerInfo.lastName) {
-          console.log('Last name missing');
+          enableFormField('field-lastname');
         } else {
           executeCheck();
         }
       } else if (CUSTOMER_INPUT.dob) {
         if (isMissing('pan', 'lastName')) {
-          console.log('PAN and last name missing');
+          enableFormField('field-pannumberpersonaldetails', 'field-lastname');
         } else if (!customerInfo.pan) {
-          console.log('PAN missing');
+          enableFormField('field-pannumberpersonaldetails');
         } else if (!customerInfo.lastName) {
-          console.log('Last name missing');
+          enableFormField('field-lastname');
         } else if (!CUSTOMER_DEMOG_DATA.panNumberPersonalDetails || !CUSTOMER_DEMOG_DATA.lastName) {
           if (CUSTOMER_DEMOG_DATA.panNumberPersonalDetails) {
             executeCheck();
@@ -646,6 +658,7 @@ const checkUserProceedStatus = (panStatus, globals) => {
             if (PAN_RETRY_COUNTER > 3) {
               executeCheck();
             } else {
+              enableFormField('field-pannumberpersonaldetails');
               console.log('retry');
             }
           }
