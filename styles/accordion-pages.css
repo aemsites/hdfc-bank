@@ -96,6 +96,10 @@ fieldset fieldset {
         margin-bottom: 24px;
     }
   }
+
+  .field-checkofferbutton {
+    text-align: left;
+  }
 }
 
 > .wizard-button-wrapper { .field-back, .field-next { display: none; } }
@@ -310,6 +314,10 @@ main .form form .field-corporatecardwizardview.wizard {
   ul.wizard-menu-items { width: calc(300%); }
   
   li.wizard-menu-item { width: auto; }
+
+  .field-yourdetailspanel .field-checkofferbutton {
+    text-align: center;
+  }
 
   fieldset {
       width: 90vw;
