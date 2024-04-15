@@ -16,7 +16,7 @@ import {
   convertDateToDdMmYyyy,
 } from '../common/formutils.js';
 
-const journeyName = 'CORPORATE_CREDIT_CARD';
+const journeyName = 'CORPORATE_CARD_JOURNEY';
 const currentFormContext = {
   journeyID: createJourneyId('a', 'b', 'c'),
   journeyName,
@@ -529,6 +529,11 @@ const CHECKOFFER = {
 const getThisCard = () => moveCCWizardView('corporateCardWizardView', 'selectKycPaymentPanel');
 
 /**
+ * Moves the wizard view to the "confirmAndSubmitPanel" step.
+ */
+const getAddressDetails = () => moveCCWizardView('corporateCardWizardView', 'confirmAndSubmitPanel');
+
+/**
  * Resends OTP success handler.
  * @param {any} res  - The response object containing the OTP success generation response.
  * @param {Object} globals - globals variables object containing form configurations.
@@ -696,4 +701,5 @@ export {
   prefillForm,
   currentFormContext,
   createPanValidationRequest,
+  getAddressDetails,
 };

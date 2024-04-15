@@ -5,6 +5,7 @@ import {
   getThisCard,
   prefillForm,
   createPanValidationRequest,
+  getAddressDetails,
 } from '../creditcards/corporate-creditcardFunctions.js';
 
 import { restAPICall } from './makeRestAPI.js';
@@ -54,4 +55,5 @@ export {
   checkOffer,
   getThisCard,
   prefillForm,
+  getAddressDetails,
 };
