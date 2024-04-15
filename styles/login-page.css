@@ -51,10 +51,6 @@ main img {
     background: var(--color-interface-background-tertiary);
 }
 
-.cmp-container-container {
-    height: 180px;
-}
-
 .cmp-container-wrapper {
     max-width: 100% !important;
 }
@@ -166,6 +162,27 @@ main img {
 
     .checkbox-wrapper {
         align-items: unset !important;
+    }
+
+    .field-consent2panelwrapper{
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        flex-direction: unset !important;
+
+        .field-checkboxconsent2{
+            display: unset !important;
+            max-width: 21px;
+        }
+
+        .field-checkbox2text{
+            margin-left: -13px;
+
+            p{
+                font-size: var(--body-sm-font-size) !important;
+                font-weight: var(--font-weight-regular);
+                line-height: var(--font-linehight-regular);
+            }
+        }
     }
 }
 
@@ -288,6 +305,16 @@ main .form form .panel-wrapper {
         margin-top: 10px !important;
      }
 
+     .field-consent2panelwrapper{
+        .field-checkbox2text{
+            margin-left: -13px;
+
+            p{
+                margin-top: 1.6em;
+            }
+        }
+    }
+
     .pan-invalid, .pandob-invalid {
         margin-bottom: 8px !important;
     }
@@ -349,6 +376,16 @@ main .form form .panel-wrapper {
     .field-description{
         margin-bottom: 0;
     }
+
+    .field-consent2panelwrapper{
+        .field-checkbox2text{
+            margin-left: -13px;
+
+            p{
+                margin-top: 1.6em;
+            }
+        }
+    }
 }
 
 @media (768px <=width <=960px) {
@@ -372,5 +409,9 @@ main .form form .panel-wrapper {
         margin-right: 0 !important;
     }
 
-    
+    .field-consent2panelwrapper{
+        .field-checkbox2text{
+            margin-left: -13px;
+        }
+    }    
 }

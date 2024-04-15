@@ -139,6 +139,22 @@ inputs.forEach((input) => {
 
 /* End of code for floating field label */
 
+/* Code of disabling future dates */
+
+const dateInputs = document.querySelectorAll('input[id^="datepicker-"]');
+if (dateInputs) {
+  dateInputs.forEach((input) => {
+    const textInputValue = input.getAttribute('edit-value');
+    input.type = 'date';
+    input.value = textInputValue;
+    const today = new Date();
+    const currentDate = today.toISOString().split('T')[0];
+    input.setAttribute('max', currentDate);
+  });
+}
+
+/* End of code for disabling future dates */
+
 /* Script to set the maximum value dob fields - disabling the futures date */
 // const todayDate = new Date();
 // const allDateField = document.querySelectorAll('.date-wrapper');
