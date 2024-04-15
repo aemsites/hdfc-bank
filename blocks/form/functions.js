@@ -107,7 +107,22 @@ function days(endDate, startDate) {
   return Math.floor(diffInMs / (1000 * 60 * 60 * 24));
 }
 
+/**
+ * Masks telephone input
+ * @name maskTelephoneInput Masks telephone input
+ * @param {object} field field whose value to be masked
+ * @return {string}
+ */
+function maskTelephoneInput(field) {
+  const phoneNumber = field.$value;
+  if (phoneNumber) {
+    const maskedPhoneNumber = phoneNumber.replace(/.(?=.{4,}$)/g, '*');
+    return '+91 ' + maskedPhoneNumber;
+  }
+  return phoneNumber;
+}
+
 // eslint-disable-next-line import/prefer-default-export
 export {
-  getFullName, onWizardInit, getOTP, otpValidation, days, checkOffer, getThisCard, resendOTP, prefillForm, getAddressDetails,
+  getFullName, onWizardInit, getOTP, otpValidation, days, checkOffer, getThisCard, resendOTP, prefillForm, getAddressDetails, maskTelephoneInput
 };
