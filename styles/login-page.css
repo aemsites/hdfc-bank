@@ -153,6 +153,27 @@ main img {
     .checkbox-wrapper {
         align-items: unset !important;
     }
+
+    .field-consent2panelwrapper{
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        flex-direction: unset !important;
+
+        .field-checkboxconsent2{
+            display: unset !important;
+            max-width: 21px;
+        }
+
+        .field-checkbox2text{
+            margin-left: -13px;
+
+            p{
+                font-size: var(--body-sm-font-size) !important;
+                font-weight: var(--font-weight-regular);
+                line-height: var(--font-linehight-regular);
+            }
+        }
+    }
 }
 
 .field-pandobselection {
@@ -260,6 +281,20 @@ main .form form .panel-wrapper {
         margin-top: 10px !important;
      }
 
+     .field-consent2panelwrapper{
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        flex-direction: unset !important;
+
+        .field-checkbox2text{
+            margin-left: -13px;
+
+            p{
+                margin-top: 1.6em;
+            }
+        }
+    }
+
 }
 
 @media (481px <=width <=767px) {
@@ -313,6 +348,20 @@ main .form form .panel-wrapper {
     .field-description{
         margin-bottom: 0;
     }
+
+    .field-consent2panelwrapper{
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        flex-direction: unset !important;
+
+        .field-checkbox2text{
+            margin-left: -13px;
+
+            p{
+                margin-top: 1.6em;
+            }
+        }
+    }
 }
 
 @media (768px <=width <=960px) {
@@ -336,5 +385,13 @@ main .form form .panel-wrapper {
         margin-right: 0 !important;
     }
 
-    
+    .field-consent2panelwrapper{
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        flex-direction: unset !important;
+
+        .field-checkbox2text{
+            margin-left: -13px;
+        }
+    }    
 }
