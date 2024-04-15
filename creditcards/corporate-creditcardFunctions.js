@@ -8,7 +8,7 @@ import {
   formUtil, maskNumber, urlPath, clearString, getTimeStamp, convertDateToMmmDdYyyy, setDataAttributeOnClosestAncestor,
 } from '../common/formutils.js';
 
-const journeyName = 'CORPORATE_CREDIT_CARD';
+const journeyName = 'CORPORATE_CARD_JOURNEY';
 const currentFormContext = {
   journeyID: createJourneyId('a', 'b', 'c'),
   journeyName,
@@ -48,6 +48,16 @@ const changeTextContent = (pannelName, innerContent) => {
 };
 
 /**
+ * removebanner from the landing screen by settin the display property to 'none' to remove the banner
+ */
+const removeBanner = () => {
+  const banner = document.querySelector('.cmp-container-container');
+  if (banner) {
+    banner.style.display = 'none';
+  }
+};
+
+/**
   * Decorates the password input to hide the text and display only bullets
   * @name decoratePasswordField Runs after user clicks on Get OTP
   */
@@ -79,7 +89,6 @@ const otpGenSuccess = (res, globals) => {
   const otpBtn = formUtil(globals, pannel.otpButton);
   const loginPanel = formUtil(globals, pannel.login);
   const regMobNo = pannel.login.mobilePanel.registeredMobileNumber.$value;
- debugger;
   const panWizardField = formUtil(globals, pannel.panWizardField);
   const dobWizardField = formUtil(globals, pannel.dobWizardField);
   const currentAddressNTB = formUtil(globals, pannel.currentAddressNTB);
@@ -92,6 +101,7 @@ const otpGenSuccess = (res, globals) => {
 
   appendMaskedNumber('field-otphelptext', regMobNo);
   decoratePwdField();
+  removeBanner();
 };
 
 /**
@@ -102,7 +112,7 @@ const otpGenSuccess = (res, globals) => {
 const otpGenFailure = (res, globals) => {
   const pannel = {
     // declare parent panel -- common name defining
-    welcome: globals.form.welcomeTextLabel,
+    welcome: globals.form.loginPanel.welcomeTextLabel,
     login: globals.form.loginPanel,
     otp: globals.form.otpPanel,
     otpButton: globals.form.getOTPbutton,
@@ -120,6 +130,7 @@ const otpGenFailure = (res, globals) => {
   loginPanel.visible(false);
   otpBtn.visible(false);
   failurePanel.visible(true);
+  removeBanner();
 };
 
 const OTPGEN = {
@@ -347,7 +358,7 @@ const otpValSuccess = (res, globals) => {
 const otpValFailure = (res, globals) => {
   const pannel = {
     // declare parent panel -- common name defining
-    welcome: globals.form.welcomeTextLabel,
+    welcome: globals.form.loginPanel.welcomeTextLabel,
     login: globals.form.loginPanel,
     otp: globals.form.otpPanel,
     otpButton: globals.form.getOTPbutton,
@@ -520,6 +531,11 @@ const CHECKOFFER = {
 const getThisCard = () => moveCCWizardView('corporateCardWizardView', 'selectKycPaymentPanel');
 
 /**
+ * Moves the wizard view to the "confirmAndSubmitPanel" step.
+ */
+const getAddressDetails = () => moveCCWizardView('corporateCardWizardView', 'confirmAndSubmitPanel');
+
+/**
  * Resends OTP success handler.
  * @param {any} res  - The response object containing the OTP success generation response.
  * @param {Object} globals - globals variables object containing form configurations.
@@ -556,6 +572,35 @@ const RESENDOTP = {
   loadingText: 'Please wait otp sending again...',
 };
 
+/**
+ * logic hanlding during prefiill of form.
+ * @param {Objec} globals - The global object containing necessary globals form data.
+ */
+
+const prefillForm = (globals) => {
+  const globalSchema = globals?.functions?.exportData();
+  const ccGlobals = globalSchema?.data?.CorporateCreditCard;
+  const ccData = {
+    companyName: ccGlobals?.companyName,
+    designation: ccGlobals?.designation,
+    employeeCode: ccGlobals?.employeeCode,
+    employmentType: ccGlobals?.employmentType,
+    maskedMobileNumber: ccGlobals?.maskedMobileNumber,
+    registeredMobileNumber: ccGlobals?.registeredMobileNumber,
+    relationshipNumber: ccGlobals?.relationshipNumber,
+    workEmailAddress: ccGlobals?.workEmailAddress,
+  };
+  const ccDetailsPresent = Object.values(ccData)?.every((el) => (el));
+  const resultErrorPannel = formUtil(globals, globals.form.resultPanel);
+  const loginPannel = formUtil(globals, globals.form.loginPanel);
+  const otpButton = formUtil(globals, globals.form.getOTPbutton);
+  if (!ccDetailsPresent) { // show error pannel if corporate credit card details not present
+    resultErrorPannel.visible(true);
+    loginPannel.visible(false);
+    otpButton.visible(false);
+  }
+};
+
 export {
-  OTPGEN, OTPVAL, CHECKOFFER, RESENDOTP, getThisCard,
+  OTPGEN, OTPVAL, CHECKOFFER, RESENDOTP, getThisCard, prefillForm, getAddressDetails,
 };

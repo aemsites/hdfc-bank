@@ -51,10 +51,6 @@ main img {
     background: var(--color-interface-background-tertiary);
 }
 
-.cmp-container-container {
-    height: 180px;
-}
-
 .cmp-container-wrapper {
     max-width: 100% !important;
 }
@@ -94,8 +90,9 @@ main img {
             margin-top: 6px;
         }
 
-        .field-registeredmobilenumber{
+        .field-registeredmobilenumber, .field-maskedmobilenumber{
             margin-top: -19px;
+            position: relative;
         }
 
     }
@@ -180,6 +177,16 @@ main .form form .panel-wrapper {
     gap: var(--form-text-field-horz-gap) !important;
 }
 
+.field-description{
+    margin-top: -15px;
+    font-size: var(--body-sm-font-size) !important;
+    margin-bottom: -8px;
+}
+
+.field-checkboxconsent1 label, .field-checkboxconsent2 label{
+    margin-top: -4px;
+}
+
 /***** mobile large ********/
 @media (320px <=width <=480px) {
     .field-welcometextlabel {
@@ -245,6 +252,14 @@ main .form form .panel-wrapper {
         margin-bottom: -13px !important;
     }
 
+    .field-description{
+        margin-bottom: 0;
+    }
+
+    .field-checkboxconsent1{
+        margin-top: 10px !important;
+     }
+
 }
 
 @media (481px <=width <=767px) {
@@ -264,7 +279,11 @@ main .form form .panel-wrapper {
 
     .field-welcometextlabel {
         margin-bottom: 24px;
-    }
+     }
+
+     .field-checkboxconsent1{
+        margin-top: 10px !important;
+     }
 
      .field-checkboxconsent2 {
         margin-top: 1em !important;
@@ -289,6 +308,10 @@ main .form form .panel-wrapper {
 
     .form-container{
         box-shadow: none;
+    }
+
+    .field-description{
+        margin-bottom: 0;
     }
 }
 

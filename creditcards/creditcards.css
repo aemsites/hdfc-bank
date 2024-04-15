@@ -1,9 +1,12 @@
-.personaldetails-disabled {
+.personaldetails-disabled,
+.employmentdetails-disabled {
   legend.hdfc-accordion-style {
-    margin-bottom: 24px;
+    /* margin-bottom: 24px; */
   }
 
   .wrapper-disabled {
+    pointer-events: none !important;
+
     .field-label {
       color: var(--color-interface-text-secondary) !important;
       font-size: var(--body-sm-font-size) !important;
@@ -11,10 +14,12 @@
       line-height: var(--font-linehight-regular) !important;
       margin: 0 !important;
       padding: 0 !important;
+      pointer-events: none !important;
       transform: none !important;
     }
 
-    input[type='text'] {
+    input[type='text'],
+    input[type='email'] {
       border: 0;
       color: var(--color-interface-text-primary);
       font-size: var(--body-md-font-size);
