@@ -24,6 +24,10 @@ const currentFormContext = {
 let PAN_VALIDATION_STATUS = false;
 let PAN_RETRY_COUNTER = 1;
 let resendOtpCount = 3;
+let IS_ETB_USER = false;
+const CUSTOMER_INPUT = { mobileNumber: '', pan: '', dob: '' };
+const CUSTOMER_DEMOG_DATA = {};
+let APS_PAN_CHK_FLAG = '';
 /**
  * Appends a masked number to the specified container element if the masked number is not present.
  * @param {String} containerClass - The class name of the container element.
@@ -89,10 +93,6 @@ const otpGenSuccess = (res, globals) => {
   const otpBtn = formUtil(globals, pannel.otpButton);
   const loginPanel = formUtil(globals, pannel.login);
   const regMobNo = pannel.login.mobilePanel.registeredMobileNumber.$value;
-  const panWizardField = formUtil(globals, pannel.panWizardField);
-  const dobWizardField = formUtil(globals, pannel.dobWizardField);
-  const currentAddressNTB = formUtil(globals, pannel.currentAddressNTB);
-  const currentAddressETB = formUtil(globals, pannel.currentAddressETB);
 
   welcomeTxt.visible(false);
   otpBtn.visible(false);
@@ -230,7 +230,8 @@ const personalDetailsPreFillFromBRE = (res, globals) => {
     panNumberPersonalDetails: 'VDCUSTITNBR',
   };
   Object.entries(personalDetailsFields).forEach(([field, key]) => {
-    const value = breCheckAndFetchDemogResponse[key];
+    const value = breCheckAndFetchDemogResponse[key]?.split(' ')?.[0];
+    CUSTOMER_DEMOG_DATA[field] = value;
     if (value !== undefined && value !== null) {
       const formField = formUtil(globals, personalDetails[field]);
       formField.setValue(value, changeDataAttrObj);
@@ -240,6 +241,7 @@ const personalDetailsPreFillFromBRE = (res, globals) => {
   const custDate = breCheckAndFetchDemogResponse?.DDCUSTDATEOFBIRTH;
   if (custDate) {
     const dobField = document.getElementsByName('dobPersonalDetails')?.[0];
+    CUSTOMER_DEMOG_DATA.dobPersonalDetails = custDate;
     if (dobField) {
       // If the input field exists, change its type to 'text' to display date
       dobField.type = 'text';
@@ -338,8 +340,12 @@ const otpValSuccess = (res, globals) => {
   loginPanel.visible(false);
   otpPanel.visible(false);
   ccWizardPannel.visible(true);
+  CUSTOMER_INPUT.mobileNumber = pannel.login.mobilePanel.registeredMobileNumber.$value;
+  CUSTOMER_INPUT.dob = pannel.login.identifierPanel.dateOfBirth.$value;
+  CUSTOMER_INPUT.pan = pannel.login.identifierPanel.pan.$value;
   const existingCustomer = existingCustomerCheck(res);
   if (existingCustomer) {
+    IS_ETB_USER = true;
     personalDetailsPreFillFromBRE(res, globals);
   }
   (async () => {
@@ -570,6 +576,81 @@ const RESENDOTP = {
   loadingText: 'Please wait otp sending again...',
 };
 
+const executeInterfaceApi = () => {
+  console.log(`APS_PAN_CHK_FLAG: ${APS_PAN_CHK_FLAG} and called executeInterfaceApi()`);
+};
+
+const terminateJourney = (panStatus) => {
+  console.log(`pan Status: ${panStatus} and called terminateJourney()`);
+};
+
+const checkUserProceedStatus = (panStatus, globals) => {
+  const personalDetails = globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.personalDetails;
+  const customerInfo = {
+    pan: personalDetails.panNumberPersonalDetails.$value,
+    dob: personalDetails.dobPersonalDetails.$value,
+    lastName: personalDetails.lastName.$value,
+  };
+
+  const isMissing = (prop1, prop2) => !customerInfo[prop1] && !customerInfo[prop2];
+
+  const executeCheck = () => {
+    if (panStatus === 'E') {
+      executeInterfaceApi();
+    } else {
+      APS_PAN_CHK_FLAG = 'Y';
+      executeInterfaceApi();
+    }
+  };
+
+  if (IS_ETB_USER) {
+    if (CUSTOMER_INPUT.mobileNumber) {
+      if (CUSTOMER_INPUT.pan) {
+        if (isMissing('dob', 'lastName')) {
+          console.log('DOB and last name missing');
+        } else if (!customerInfo.dob) {
+          console.log('DOB missing');
+        } else if (!customerInfo.lastName) {
+          console.log('Last name missing');
+        } else {
+          executeCheck();
+        }
+      } else if (CUSTOMER_INPUT.dob) {
+        if (isMissing('pan', 'lastName')) {
+          console.log('PAN and last name missing');
+        } else if (!customerInfo.pan) {
+          console.log('PAN missing');
+        } else if (!customerInfo.lastName) {
+          console.log('Last name missing');
+        } else if (!CUSTOMER_DEMOG_DATA.panNumberPersonalDetails || !CUSTOMER_DEMOG_DATA.lastName) {
+          if (CUSTOMER_DEMOG_DATA.panNumberPersonalDetails) {
+            executeCheck();
+          } else if (panStatus === 'E') {
+            executeInterfaceApi();
+          } else if (panStatus === 'D' || panStatus === 'X' || panStatus === 'F' || panStatus === 'ED') {
+            terminateJourney(panStatus);
+          } else {
+            PAN_RETRY_COUNTER += 1;
+            if (PAN_RETRY_COUNTER > 3) {
+              executeCheck();
+            } else {
+              console.log('retry');
+            }
+          }
+        } else {
+          executeCheck();
+        }
+      }
+    }
+  } else if (CUSTOMER_INPUT.mobileNumber) {
+    if (panStatus === 'D' || panStatus === 'X' || panStatus === 'F' || panStatus === 'ED') {
+      terminateJourney(panStatus);
+    } else {
+      console.log('Back to login screen');
+    }
+  }
+};
+
 /**
  * Creates a PAN validation request object and handles success and failure callbacks.
  * @param {Object} globals - The global object containing necessary data for PAN validation.
@@ -627,21 +708,9 @@ const createPanValidationRequest = (globals) => {
     handlePanSuccess(respObj) {
       try {
         PAN_VALIDATION_STATUS = respObj.panValidation.status.errorCode === '1';
-        const panStatus = respObj.panValidation.panStatus;
-        if (panStatus === 'E') {
-          console.log('Proceed');
-        } else if (panStatus === 'F' || panStatus === 'X' || panStatus === 'D' || panStatus === 'ED') {
-          console.log('Set message and terminate');
-        } else {
-          const panNumberField = document.querySelector('.field-pannumberpersonaldetails');
-          if (PAN_RETRY_COUNTER <= 3) {
-            console.log('Retry');
-            panNumberField.classList.remove('wrapper-disabled');
-          } else {
-            panNumberField.classList.add('wrapper-disabled');
-            console.log('terminate');
-          }
-          PAN_RETRY_COUNTER += PAN_RETRY_COUNTER;
+        if (PAN_VALIDATION_STATUS) {
+          const panStatus = respObj.panValidation.panStatus;
+          checkUserProceedStatus(panStatus, globals);
         }
       } catch (errObj) {
         console.log(errObj);
