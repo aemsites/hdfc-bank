@@ -62,6 +62,16 @@ const changeTextContent = (pannelName, innerContent) => {
 };
 
 /**
+ * removebanner from the landing screen by settin the display property to 'none' to remove the banner
+ */
+const removeBanner = () => {
+  const banner = document.querySelector('.cmp-container-container');
+  if (banner) {
+    banner.style.display = 'none';
+  }
+};
+
+/**
   * Decorates the password input to hide the text and display only bullets
   * @name decoratePasswordField Runs after user clicks on Get OTP
   */
@@ -101,6 +111,7 @@ const otpGenSuccess = (res, globals) => {
 
   appendMaskedNumber('field-otphelptext', regMobNo);
   decoratePwdField();
+  removeBanner();
 };
 
 /**
@@ -129,6 +140,7 @@ const otpGenFailure = (res, globals) => {
   loginPanel.visible(false);
   otpBtn.visible(false);
   failurePanel.visible(true);
+  removeBanner();
 };
 
 const OTPGEN = {
