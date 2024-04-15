@@ -114,9 +114,8 @@ linkModalFunction(consent2Config);
 
 // second checkbox-2 otherProduct modal
 const consent2OtherProduct = document?.querySelector('.field-checkbox2text')?.querySelector('b');
-
-consent2OtherProduct.style.color = '#035fe6';
-consent2OtherProduct.style.cursor = 'pointer';
+const linkClass = 'link';
+consent2OtherProduct?.classList.add(linkClass);
 
 const consent2OtherProductTxtConfig = { // config to create modal for consent-2
   triggerElement: consent2OtherProduct, // trigger element for calling modalFunction
