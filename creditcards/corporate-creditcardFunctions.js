@@ -7,6 +7,7 @@ import createJourneyId from '../common/journey-utils.js';
 import {
   formUtil, maskNumber, urlPath, clearString, getTimeStamp, convertDateToMmmDdYyyy, setDataAttributeOnClosestAncestor,
 } from '../common/formutils.js';
+import { getJsonResponse } from '../common/makeRestAPI.js';
 
 const journeyName = 'CORPORATE_CARD_JOURNEY';
 const currentFormContext = {
@@ -67,6 +68,81 @@ function decoratePwdField() {
 }
 
 /**
+ * invokeJourneyApiCall to log on success and error call backs of api calls.
+ * @param {Object} globals - globals variables object containing form configurations.
+ */
+const invokeJourneyApiCall = async (globals) => {
+  const globalFormsJson = globals.functions.exportData();
+  console.log(globalFormsJson, 'globalFormsJson');
+  const payload = {
+    RequestPayload: {
+      leadProfile: {
+        addresses: [
+          {},
+        ],
+        card4Digits: '8888',
+        mobileNumber: '9857575757',
+        profile: {},
+      },
+      formData: {
+        journeyName: currentFormContext?.journeyName,
+        journeyStateInfo: [
+          {
+            stateInfo: {
+              last4digitsofCC: '8888',
+              RegisteredPhoneNum: 9857575757,
+              privacyPolicyCheckbox: '0',
+              AssistedByBankEmployee: '1',
+              errorDetails: {
+                errorCode: 'XFACE_INQ_VP_0003',
+                errorMessage: 'Hey, it seems like you have entered incorrect details. Request you to check & re-enter your registered mobile no. & last 4 digits of the card.',
+              },
+              casaUser: '',
+              auditData: {
+                clientIPAddress: '130.248.113.29',
+                sBrowser: 'Google Chrome',
+                OS: ' Win64',
+                params: {},
+              },
+            },
+            state: 'CUSTOMER_IDENTITY_INITIATED',
+            timeinfo: new Date().toISOString(),
+          },
+          {
+            stateInfo: {
+              last4digitsofCC: '8888',
+              RegisteredPhoneNum: 9857575757,
+              privacyPolicyCheckbox: '0',
+              AssistedByBankEmployee: '1',
+              errorDetails: {
+                errorCode: 'XFACE_INQ_VP_0003',
+                errorMessage: 'Hey, it seems like you have entered incorrect details. Request you to check & re-enter your registered mobile no. & last 4 digits of the card.',
+              },
+              casaUser: '',
+              auditData: {
+                clientIPAddress: '130.248.113.29',
+                sBrowser: 'Google Chrome',
+                OS: ' Win64',
+                params: {},
+              },
+            },
+            state: 'CUSTOMER_IDENTITY_UNRESOLVED',
+            timeinfo: '2024-04-12T09:03:40.426Z',
+          },
+        ],
+        channel: 'ADOBE WEBFORMS',
+        journeyID: '32fa9d2d-81d0-4314-9da2-e155ddba008e_00_LECC_U_WEB',
+      },
+    },
+
+  };
+  const url = 'https://applyonlinestage.hdfcbank.com/content/hdfc_commonforms/api/journeydropoff.json';
+  const method = 'POST';
+  const jsonApiCall = await getJsonResponse(url, payload, method);
+  console.log(jsonApiCall, 'jsonApiCall');
+};
+
+/**
  * Handles the success scenario for OTP generation.
  * @param {any} res  - The response object containing the OTP success generation response.
  * @param {Object} globals - globals variables object containing form configurations.
@@ -102,6 +178,7 @@ const otpGenSuccess = (res, globals) => {
   appendMaskedNumber('field-otphelptext', regMobNo);
   decoratePwdField();
   removeBanner();
+  invokeJourneyApiCall(globals);
 };
 
 /**
@@ -131,6 +208,7 @@ const otpGenFailure = (res, globals) => {
   otpBtn.visible(false);
   failurePanel.visible(true);
   removeBanner();
+  invokeJourneyApiCall(globals);
 };
 
 const OTPGEN = {
@@ -594,11 +672,11 @@ const prefillForm = (globals) => {
   const resultErrorPannel = formUtil(globals, globals.form.resultPanel);
   const loginPannel = formUtil(globals, globals.form.loginPanel);
   const otpButton = formUtil(globals, globals.form.getOTPbutton);
-  if (!ccDetailsPresent) { // show error pannel if corporate credit card details not present
-    resultErrorPannel.visible(true);
-    loginPannel.visible(false);
-    otpButton.visible(false);
-  }
+  // if (!ccDetailsPresent) { // show error pannel if corporate credit card details not present
+  //   resultErrorPannel.visible(true);
+  //   loginPannel.visible(false);
+  //   otpButton.visible(false);
+  // }
 };
 
 export {
