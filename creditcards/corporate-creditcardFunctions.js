@@ -73,7 +73,7 @@ function decoratePwdField() {
  */
 const invokeJourneyApiCall = async (globals) => {
   const globalFormsJson = globals.functions.exportData();
-  console.log(globalFormsJson, 'globalFormsJson');
+  // console.log(globalFormsJson, 'globalFormsJson');
   const payload = {
     RequestPayload: {
       leadProfile: {
@@ -138,8 +138,14 @@ const invokeJourneyApiCall = async (globals) => {
   };
   const url = 'https://applyonlinestage.hdfcbank.com/content/hdfc_commonforms/api/journeydropoff.json';
   const method = 'POST';
-  const jsonApiCall = await getJsonResponse(url, payload, method);
-  console.log(jsonApiCall, 'jsonApiCall');
+  try {
+    const jsonApiCall = await getJsonResponse(url, payload, method);
+    // success method proceed
+    // console.log(jsonApiCall, 'jsonApiCall');
+  } catch (error) {
+    // error method proceed
+    console.error(error);
+  }
 };
 
 /**
