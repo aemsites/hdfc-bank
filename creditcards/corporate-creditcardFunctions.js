@@ -127,11 +127,11 @@ const invokeJourneyApiCall = async (globals) => {
               },
             },
             state: 'CUSTOMER_IDENTITY_UNRESOLVED',
-            timeinfo: '2024-04-12T09:03:40.426Z',
+            timeinfo: new Date().toISOString(),
           },
         ],
         channel: 'ADOBE WEBFORMS',
-        journeyID: '32fa9d2d-81d0-4314-9da2-e155ddba008e_00_LECC_U_WEB',
+        journeyID: currentFormContext?.journeyID,
       },
     },
 
