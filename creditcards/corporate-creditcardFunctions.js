@@ -698,7 +698,9 @@ const checkUserProceedStatus = (panStatus, globals) => {
       }
     }
   } else if (CUSTOMER_INPUT.mobileNumber) {
-    if (panStatus === 'D' || panStatus === 'X' || panStatus === 'F' || panStatus === 'ED') {
+    if (panStatus === 'E') {
+      executeInterfaceApi();
+    } else if (panStatus === 'D' || panStatus === 'X' || panStatus === 'F' || panStatus === 'ED') {
       terminateJourney(panStatus);
     } else {
       console.log('Back to login screen');
