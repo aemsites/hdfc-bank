@@ -596,6 +596,12 @@ const terminateJourney = (panStatus) => {
   console.log(`pan Status: ${panStatus} and called terminateJourney()`);
 };
 
+/**
+ * Enables and highlights form fields by removing the 'wrapper-disabled' class
+ * and adding the 'error-field' class to specified elements.
+ *
+ * @param {...string} elemClassArr - Array of class names of form fields to enable and highlight.
+ */
 const enableFormField = (...elemClassArr) => {
   elemClassArr.forEach((elem) => {
     const selectedElem = document.querySelector(`.${elem}`);
@@ -604,20 +610,43 @@ const enableFormField = (...elemClassArr) => {
   });
 };
 
+/**
+ * Checks the user's proceed status based on PAN status and other conditions.
+ *
+ * @param {string} panStatus - The PAN status ('E', 'D', 'X', 'F', 'ED').
+ * @param {Object} globals - The global object containing form and other data.
+ */
 const checkUserProceedStatus = (panStatus, globals) => {
+  /**
+   * Removes error classes from all error fields.
+   */
   const errorFields = document.querySelectorAll('.error-field');
   errorFields.forEach((field) => {
     field.classList.remove('error-field');
   });
+
+  // Extract personal details from globals
   const personalDetails = globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.personalDetails;
+
+  // Create customer information object
   const customerInfo = {
     pan: personalDetails.panNumberPersonalDetails.$value,
     dob: personalDetails.dobPersonalDetails.$value,
     lastName: personalDetails.lastName.$value,
   };
 
+  /**
+   * Checks if two properties are missing or undefined.
+   *
+   * @param {string} prop1 - First property to check.
+   * @param {string} prop2 - Second property to check.
+   * @returns {boolean} Returns true if both properties are missing.
+   */
   const isMissing = (prop1, prop2) => !customerInfo[prop1] && !customerInfo[prop2];
 
+  /**
+   * Executes the check based on PAN status.
+   */
   const executeCheck = () => {
     if (panStatus === 'E') {
       executeInterfaceApi();
@@ -627,6 +656,7 @@ const checkUserProceedStatus = (panStatus, globals) => {
     }
   };
 
+  // Main logic to check user proceed status
   if (IS_ETB_USER) {
     if (CUSTOMER_INPUT.mobileNumber) {
       if (CUSTOMER_INPUT.pan) {
