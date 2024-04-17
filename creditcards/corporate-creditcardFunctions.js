@@ -5,6 +5,8 @@
 /* eslint no-unused-vars: ["error", { "args": "none" }] */
 import createJourneyId from '../common/journey-utils.js';
 import PANValidationAndNameMatchService from '../common/panvalidation.js';
+import executeCheck from '../common/panutils.js';
+import customerValidationHandler from '../common/executeinterfaceutils.js';
 import {
   formUtil,
   maskNumber,
@@ -27,7 +29,6 @@ let resendOtpCount = 3;
 let IS_ETB_USER = false;
 const CUSTOMER_INPUT = { mobileNumber: '', pan: '', dob: '' };
 const CUSTOMER_DEMOG_DATA = {};
-let APS_PAN_CHK_FLAG = '';
 /**
  * Appends a masked number to the specified container element if the masked number is not present.
  * @param {String} containerClass - The class name of the container element.
@@ -588,26 +589,83 @@ const RESENDOTP = {
   loadingText: 'Please wait otp sending again...',
 };
 
-const executeInterfaceApi = () => {
-  console.log(`APS_PAN_CHK_FLAG: ${APS_PAN_CHK_FLAG} and called executeInterfaceApi()`);
-};
-
-const terminateJourney = (panStatus) => {
-  console.log(`pan Status: ${panStatus} and called terminateJourney()`);
+/**
+ * Enables a form field by removing the 'wrapper-disabled' class and adding the 'error-field' class.
+ *
+ * @param {string} elementClassName - The class name of the form field element to enable.
+ * @returns {void}
+ */
+const enableFormField = (elementClassName) => {
+  const selectedElem = document.querySelector(`.${elementClassName}`);
+  selectedElem.classList.remove('wrapper-disabled');
+  selectedElem.classList.add('error-field');
 };
 
 /**
- * Enables and highlights form fields by removing the 'wrapper-disabled' class
- * and adding the 'error-field' class to specified elements.
+ * Validates form data based on the provided field object and global data.
+ * If any required field is missing in the customer information, it updates the corresponding
+ * form field with error styles.
  *
- * @param {...string} elemClassArr - Array of class names of form fields to enable and highlight.
+ * @param {Object} globals - Global object containing form data and structure.
+ * @param {Object} fieldObj - Object containing keys of required fields to validate.
+ * @returns {boolean} - Returns true if all required fields are present; otherwise, returns false.
  */
-const enableFormField = (...elemClassArr) => {
-  elemClassArr.forEach((elem) => {
-    const selectedElem = document.querySelector(`.${elem}`);
-    selectedElem.classList.remove('wrapper-disabled');
-    selectedElem.classList.add('error-field');
+const validateFormData = (globals, fieldObj) => {
+  let proceed = true;
+  const personalDetails = globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.personalDetails;
+  const customerInfo = {
+    pan: personalDetails.panNumberPersonalDetails.$value,
+    dob: personalDetails.dobPersonalDetails.$value,
+    lastName: personalDetails.lastName.$value,
+  };
+
+  // Validate each required field and enable form field which requires user input
+  Object.keys(fieldObj).forEach((key) => {
+    if (!customerInfo[key]) {
+      proceed = false;
+      const selectedElem = document.querySelector(`.${fieldObj[key]}`);
+      selectedElem.classList.remove('wrapper-disabled');
+      selectedElem.classList.add('error-field');
+    }
   });
+
+  return proceed;
+};
+
+/**
+ * Checks the demog data of a customer for PAN details and last name.
+ *
+ * @param {string} panStatus - The PAN status of the customer.
+ * @returns {Object} An object containing the check results.
+ * @property {boolean} proceed - Indicates whether the process can proceed.
+ * @property {boolean} terminationCheck - Indicates if a termination check is required.
+ */
+const demogDataCheck = (panStatus) => {
+  const result = { proceed: false, terminationCheck: false };
+
+  // Check if PAN number or last name is missing
+  if (!CUSTOMER_DEMOG_DATA.panNumberPersonalDetails || !CUSTOMER_DEMOG_DATA.lastName) {
+    if (CUSTOMER_DEMOG_DATA.panNumberPersonalDetails) {
+      result.proceed = true;
+    } else if (panStatus === 'E' || panStatus === 'D' || panStatus === 'X' || panStatus === 'F' || panStatus === 'ED') {
+      result.terminationCheck = true;
+      result.proceed = true;
+    } else {
+      PAN_RETRY_COUNTER += 1;
+      if (PAN_RETRY_COUNTER > 3) {
+        result.terminationCheck = true;
+        result.proceed = true;
+      } else {
+        // Enable PAN form field and log retry
+        enableFormField('field-pannumberpersonaldetails');
+        console.log('retry');
+      }
+    }
+  } else {
+    result.proceed = true;
+  }
+
+  return result;
 };
 
 /**
@@ -623,88 +681,49 @@ const checkUserProceedStatus = (panStatus, globals) => {
   const errorFields = document.querySelectorAll('.error-field');
   errorFields.forEach((field) => {
     field.classList.remove('error-field');
+    field.classList.add('wrapper-disabled');
   });
-
-  // Extract personal details from globals
-  const personalDetails = globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.personalDetails;
-
-  // Create customer information object
-  const customerInfo = {
-    pan: personalDetails.panNumberPersonalDetails.$value,
-    dob: personalDetails.dobPersonalDetails.$value,
-    lastName: personalDetails.lastName.$value,
-  };
-
-  /**
-   * Checks if two properties are missing or undefined.
-   *
-   * @param {string} prop1 - First property to check.
-   * @param {string} prop2 - Second property to check.
-   * @returns {boolean} Returns true if both properties are missing.
-   */
-  const isMissing = (prop1, prop2) => !customerInfo[prop1] && !customerInfo[prop2];
 
   /**
    * Executes the check based on PAN status.
    */
-  const executeCheck = () => {
-    if (panStatus === 'E') {
-      executeInterfaceApi();
-    } else {
-      APS_PAN_CHK_FLAG = 'Y';
-      executeInterfaceApi();
-    }
-  };
-
   // Main logic to check user proceed status
-  if (IS_ETB_USER) {
-    if (CUSTOMER_INPUT.mobileNumber) {
+
+  let customerJourneyType = 'ETB';
+  const terminationCheck = false;
+  switch (IS_ETB_USER) {
+    case true:
       if (CUSTOMER_INPUT.pan) {
-        if (isMissing('dob', 'lastName')) {
-          enableFormField('field-lastname', 'field-dobpersonaldetails');
-        } else if (!customerInfo.dob) {
-          enableFormField('field-dobpersonaldetails');
-        } else if (!customerInfo.lastName) {
-          enableFormField('field-lastname');
-        } else {
-          executeCheck();
+        const mandatefields = {
+          dob: 'field-dobpersonaldetails',
+          lastName: 'field-lastname',
+        };
+        if (validateFormData(globals, mandatefields)) {
+          executeCheck(customerJourneyType, panStatus, terminationCheck, customerValidationHandler);
         }
       } else if (CUSTOMER_INPUT.dob) {
-        if (isMissing('pan', 'lastName')) {
-          enableFormField('field-pannumberpersonaldetails', 'field-lastname');
-        } else if (!customerInfo.pan) {
-          enableFormField('field-pannumberpersonaldetails');
-        } else if (!customerInfo.lastName) {
-          enableFormField('field-lastname');
-        } else if (!CUSTOMER_DEMOG_DATA.panNumberPersonalDetails || !CUSTOMER_DEMOG_DATA.lastName) {
-          if (CUSTOMER_DEMOG_DATA.panNumberPersonalDetails) {
-            executeCheck();
-          } else if (panStatus === 'E') {
-            executeInterfaceApi();
-          } else if (panStatus === 'D' || panStatus === 'X' || panStatus === 'F' || panStatus === 'ED') {
-            terminateJourney(panStatus);
-          } else {
-            PAN_RETRY_COUNTER += 1;
-            if (PAN_RETRY_COUNTER > 3) {
-              executeCheck();
-            } else {
-              enableFormField('field-pannumberpersonaldetails');
-              console.log('retry');
+        const mandatefields = {
+          pan: 'field-pannumberpersonaldetails',
+          lastName: 'field-lastname',
+        };
+        if (validateFormData(globals, mandatefields)) {
+          if (!CUSTOMER_DEMOG_DATA.panNumberPersonalDetails || !CUSTOMER_DEMOG_DATA.lastName) {
+            const result = demogDataCheck(panStatus);
+            if (result.proceed) {
+              executeCheck(customerJourneyType, panStatus, result.terminationCheck, customerValidationHandler);
             }
+          } else {
+            executeCheck(customerJourneyType, panStatus, terminationCheck, customerValidationHandler);
           }
-        } else {
-          executeCheck();
         }
       }
-    }
-  } else if (CUSTOMER_INPUT.mobileNumber) {
-    if (panStatus === 'E') {
-      executeInterfaceApi();
-    } else if (panStatus === 'D' || panStatus === 'X' || panStatus === 'F' || panStatus === 'ED') {
-      terminateJourney(panStatus);
-    } else {
-      console.log('Back to login screen');
-    }
+      break;
+    case false:
+      customerJourneyType = 'NTB';
+      executeCheck(customerJourneyType, panStatus, terminationCheck, customerValidationHandler);
+      break;
+    default:
+      break;
   }
 };
 
@@ -716,10 +735,10 @@ const checkUserProceedStatus = (panStatus, globals) => {
 const createPanValidationRequest = (globals) => {
   const panValidation = {
     /**
-     * Sends a PAN validation request.
+     * Create pan validation request object.
      * @returns {Object} - The PAN validation request object.
      */
-    sendRequest() {
+    createRequestObj: () => {
       try {
         const personalDetails = globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.personalDetails;
         const reqObj = {
@@ -734,9 +753,8 @@ const createPanValidationRequest = (globals) => {
           },
         };
         return reqObj;
-      } catch (errObj) {
-        const errorCode = 'INVALID_INPUT_PAN_REQUEST';
-        return errObj;
+      } catch (ex) {
+        return ex;
       }
     },
     /**
@@ -747,46 +765,28 @@ const createPanValidationRequest = (globals) => {
        * Callback function for successful PAN validation response.
        * @param {Object} responseObj - The response object containing PAN validation result.
        */
-      successCallBack(responseObj) {
-        panValidation.handlePanSuccess(responseObj);
+      successCallBack: (responseObj) => {
+        try {
+          PAN_VALIDATION_STATUS = responseObj.panValidation.status.errorCode === '1';
+          if (PAN_VALIDATION_STATUS) {
+            const panStatus = responseObj.panValidation.panStatus;
+            checkUserProceedStatus(panStatus, globals);
+          }
+        } catch (ex) {
+          console.log(ex);
+        }
       },
       /**
        * Callback function for failed PAN validation response.
        * @param {Object} errorObj - The error object containing details of the failure.
        */
-      failureCallBack(errorObj) {
-        panValidation.handlePanFailure(errorObj);
-      },
-    },
-    /**
-     * Handles successful PAN validation response.
-     * @param {Object} respObj - The response object containing PAN validation result.
-     */
-    handlePanSuccess(respObj) {
-      try {
-        PAN_VALIDATION_STATUS = respObj.panValidation.status.errorCode === '1';
-        if (PAN_VALIDATION_STATUS) {
-          const panStatus = respObj.panValidation.panStatus;
-          checkUserProceedStatus(panStatus, globals);
-        }
-      } catch (errObj) {
-        console.log(errObj);
-      }
-    },
-    /**
-     * Handles failed PAN validation response.
-     * @param {Object} errorObj - The error object containing details of the failure.
-     */
-    handlePanFailure(errorObj) {
-      try {
+      errorCallBack: (errorObj) => {
         console.log(errorObj);
-      } catch (errObj) {
-        console.log(errObj);
-      }
+      },
     },
   };
   // Call PANValidationAndNameMatchService with PAN validation request and event handlers
-  PANValidationAndNameMatchService(panValidation.sendRequest(), panValidation.eventHandlers);
+  PANValidationAndNameMatchService(panValidation.createRequestObj(), panValidation.eventHandlers);
 };
 
 /*

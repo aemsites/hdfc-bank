@@ -48,7 +48,7 @@ const isEventHandlerProcessable = (eventHandlers) => (
   typeof eventHandlers !== 'undefined'
   && eventHandlers !== null
   && isReferenceOfTypeFunction(eventHandlers.successCallBack)
-  && isReferenceOfTypeFunction(eventHandlers.failureCallBack)
+  && isReferenceOfTypeFunction(eventHandlers.errorCallBack)
 );
 const PANValidationAndNameMatchService = (reqPayload, eventHandlers) => {
   try {
