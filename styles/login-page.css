@@ -159,12 +159,12 @@ main img {
         flex-wrap: nowrap !important;
         flex-direction: unset !important;
 
-        .field-checkboxconsent2{
+        .field-checkboxconsent2, .field-checkboxconsent1{
             display: unset !important;
             max-width: 21px;
         }
 
-        .field-checkbox2text{
+        .field-checkbox2text, .field-checkbox1text{
             margin-left: -13px;
 
             p{
@@ -173,7 +173,17 @@ main img {
                 line-height: var(--font-linehight-regular);
             }
         }
+
+        .field-checkbox1text p{
+            margin-bottom: -10px !important;
+            margin-top: 1px;
+        }
     }
+}
+
+.link{
+    color: var(--color-action-text-secondary-default);
+    cursor: pointer;
 }
 
 .field-pandobselection {
@@ -288,7 +298,13 @@ main .form form .panel-wrapper {
             p{
                 margin-top: 1.6em;
             }
+
+
         }
+
+        .field-checkbox1text p{
+            margin-top: 12px !important;
+     }
     }
 
 }
@@ -352,7 +368,12 @@ main .form form .panel-wrapper {
             p{
                 margin-top: 1.6em;
             }
+
         }
+        
+        .field-checkbox1text p{
+            margin-top: 12px !important;
+     }
     }
 }
 
