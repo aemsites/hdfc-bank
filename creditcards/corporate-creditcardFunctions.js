@@ -697,7 +697,7 @@ const checkUserProceedStatus = (panStatus, globals) => {
         }
       }
     }
-  } else if (CUSTOMER_INPUT.mobileNumber) {
+  } else {
     if (panStatus === 'E') {
       executeInterfaceApi();
     } else if (panStatus === 'D' || panStatus === 'X' || panStatus === 'F' || panStatus === 'ED') {
