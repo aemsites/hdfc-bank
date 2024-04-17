@@ -678,11 +678,11 @@ const prefillForm = (globals) => {
   const resultErrorPannel = formUtil(globals, globals.form.resultPanel);
   const loginPannel = formUtil(globals, globals.form.loginPanel);
   const otpButton = formUtil(globals, globals.form.getOTPbutton);
-  // if (!ccDetailsPresent) { // show error pannel if corporate credit card details not present
-  //   resultErrorPannel.visible(true);
-  //   loginPannel.visible(false);
-  //   otpButton.visible(false);
-  // }
+  if (!ccDetailsPresent) { // show error pannel if corporate credit card details not present
+    resultErrorPannel.visible(true);
+    loginPannel.visible(false);
+    otpButton.visible(false);
+  }
 };
 
 export {
