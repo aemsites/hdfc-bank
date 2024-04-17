@@ -140,6 +140,46 @@ const setDataAttributeOnClosestAncestor = (elementName, fieldValue, dataAttribut
   }
 };
 
+/**
+ * Generates an array of objects representing different name compositions based on the provided names.
+ * @param {string} fn - The first name.
+ * @param {string} mn - The middle name.
+ * @param {string} ln - The last name.
+ * @returns {Array<Object>} -  An array of objects representing different name compositions.
+ */
+const composeNameOption = (fn, mn, ln) => {
+  const arrayObj = [];
+  if (fn) {
+    arrayObj.push({ label: fn, value: fn });
+
+    if (ln) {
+      arrayObj.push({ label: `${fn} ${ln}`, value: `${fn} ${ln}` });
+
+      if (mn) {
+        arrayObj.push({ label: `${fn} ${ln} ${mn}`, value: `${fn} ${ln} ${mn}` });
+      }
+    }
+  }
+  return arrayObj;
+};
+
+/**
+ * Sets the options of a select element based on the provided option lists.
+ * @param {Array<object>} optionLists - An array of objects representing the options to be set.
+ * @param {string} elementName - The name attribute of the select element.
+ */
+const setSelectOptions = (optionLists, elementName) => {
+  const selectOption = document.querySelector(`[name=${elementName}]`);
+  optionLists?.forEach((option) => {
+    const optionElement = document.createElement('option');
+    optionElement.value = option?.value;
+    optionElement.textContent = option?.label;
+    const parent = selectOption?.parentNode;
+    selectOption?.appendChild(optionElement);
+    parent?.setAttribute('data-active', true);
+  });
+};
+
 export {
-  urlPath, maskNumber, clearString, formUtil, getTimeStamp, convertDateToMmmDdYyyy, setDataAttributeOnClosestAncestor,
+  urlPath, maskNumber, clearString, formUtil, getTimeStamp, convertDateToMmmDdYyyy, setDataAttributeOnClosestAncestor, setSelectOptions, composeNameOption,
 };

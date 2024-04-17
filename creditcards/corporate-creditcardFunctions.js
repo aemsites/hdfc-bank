@@ -6,6 +6,8 @@
 import createJourneyId from '../common/journey-utils.js';
 import {
   formUtil, maskNumber, urlPath, clearString, getTimeStamp, convertDateToMmmDdYyyy, setDataAttributeOnClosestAncestor,
+  setSelectOptions,
+  composeNameOption,
 } from '../common/formutils.js';
 
 const journeyName = 'CORPORATE_CARD_JOURNEY';
@@ -494,18 +496,34 @@ const moveCCWizardView = (source, target) => {
 };
 
 /**
+ * create a list of name to be dispayed on card dropdown in confirm card screen.
+ * @param {object} globals - globals variables object containing form configurations.
+ */
+const listNameOnCard = (globals) => {
+  const { firstName, middleName, lastName } = globals.functions.exportData();
+  const dropDownElementName = 'nameOnCardDropdown';
+  setSelectOptions(composeNameOption(firstName, middleName, lastName), dropDownElementName);
+};
+
+/**
  * Handles the success scenario on check offer.
  * @param {any} res - The response object containing the check offer success response.
  * @param {Object} globals - globals variables object containing form configurations.
  */
-const checkOfferSuccess = (res, globals) => moveCCWizardView('corporateCardWizardView', 'confirmCardPanel');
+const checkOfferSuccess = (res, globals) => {
+  listNameOnCard(globals);
+  moveCCWizardView('corporateCardWizardView', 'confirmCardPanel');
+};
 
 /**
  * Handles the failure scenario on check offer.
  * @param {any} err - The response object containing the check offer failure response.
  * @param {Object} globals - globals variables object containing form configurations.
  */
-const checkOfferFailure = (err, globals) => moveCCWizardView('corporateCardWizardView', 'confirmCardPanel');
+const checkOfferFailure = (err, globals) => {
+  listNameOnCard(globals);
+  moveCCWizardView('corporateCardWizardView', 'confirmCardPanel');
+};
 
 const CHECKOFFER = {
   getPayload(globals) {
