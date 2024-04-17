@@ -112,6 +112,32 @@ const consent2Config = { // config to create modal for consent-2
 };
 linkModalFunction(consent2Config);
 
+// second checkbox-2 otherProduct modal
+const consent2OtherProduct = document?.querySelector('.field-checkbox2text')?.querySelector('b');
+const linkClass = 'link';
+consent2OtherProduct?.classList.add(linkClass);
+
+const consent2OtherProductTxtConfig = { // config to create modal for consent-2
+  triggerElement: consent2OtherProduct, // trigger element for calling modalFunction
+  content: consent2Config?.content, // content to display in modal
+  actionWrapClass: 'button-wrapper', // wrapper class containing all the buttons
+  reqConsentAgree: false, // Indicates if consent agreement is needed; shows close icon if not.
+  /**
+   * Updates the UI based on received data.
+   * @param {Object} receivedData - Data received after the modal button trigger,contains name of the btn triggered which is used to update the UI.
+   */
+  updateUI(receivedData) {
+    const checkBox = consent2Config?.triggerElement;
+    if (receivedData?.iAgreeConsent2) { // iAgreeConsent2- name of the I agree btn.
+      checkBox.checked = true;
+    }
+    if (receivedData?.closeIcon) { // closeIcon - name of the Close x btn
+      checkBox.checked = false;
+    }
+  },
+};
+linkModalFunction(consent2OtherProductTxtConfig);
+
 /* cc wizard screen getCard-viewAll buttonn modalLinking */
 const viewAllBtnPannelConfig = { // linkModal for corporateCardWizard pannel view all in getThisCard screen.
   triggerElement: document.getElementsByName('viewAllCardBenefits')?.[0],
