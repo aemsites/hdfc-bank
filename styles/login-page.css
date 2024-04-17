@@ -154,7 +154,7 @@ main img {
         align-items: unset !important;
     }
 
-    .field-consent2panelwrapper{
+    .field-consent2panelwrapper, .field-consent1panelwrapper{
         display: flex !important;
         flex-wrap: nowrap !important;
         flex-direction: unset !important;
@@ -291,8 +291,8 @@ main .form form .panel-wrapper {
         margin-top: 10px !important;
      }
 
-     .field-consent2panelwrapper{
-        .field-checkbox2text{
+     .field-consent2panelwrapper, .field-consent1panelwrapper{
+        .field-checkbox2text, .field-checkbox1text{
             margin-left: -13px;
 
             p{
@@ -361,7 +361,7 @@ main .form form .panel-wrapper {
         margin-bottom: 0;
     }
 
-    .field-consent2panelwrapper{
+    .field-consent2panelwrapper, .field-consent1panelwrapper{
         .field-checkbox2text{
             margin-left: -13px;
 
@@ -398,7 +398,7 @@ main .form form .panel-wrapper {
         margin-right: 0 !important;
     }
 
-    .field-consent2panelwrapper{
+    .field-consent2panelwrapper,.field-consent1panelwrapper{
         .field-checkbox2text{
             margin-left: -13px;
         }
