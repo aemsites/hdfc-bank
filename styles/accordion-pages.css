@@ -99,6 +99,7 @@ fieldset fieldset {
 
   .field-checkofferbutton {
     text-align: left;
+    max-width: 260px;
   }
 }
 
