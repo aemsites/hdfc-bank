@@ -502,7 +502,10 @@ const moveCCWizardView = (source, target) => {
 const listNameOnCard = (globals) => {
   const { firstName, middleName, lastName } = globals.functions.exportData();
   const dropDownElementName = 'nameOnCardDropdown';
-  setSelectOptions(composeNameOption(firstName, middleName, lastName), dropDownElementName);
+  const pannelNameOnCard = globals.form.corporateCardWizardView.confirmCardPanel.cardBenefitsPanel.CorporatetImageAndNamePanel.nameOnCardDropdown;
+  const nameOnCard = formUtil(globals, pannelNameOnCard);
+  const initalLoadValue = setSelectOptions(composeNameOption(firstName, middleName, lastName), dropDownElementName);
+  nameOnCard.setValue(initalLoadValue); // initial load of screen, need to set the value to the globals field.
 };
 
 /**
@@ -546,7 +549,10 @@ const CHECKOFFER = {
 /**
  * Moves the wizard view to the "selectKycPaymentPanel" step.
  */
-const getThisCard = () => moveCCWizardView('corporateCardWizardView', 'selectKycPaymentPanel');
+const getThisCard = (globals) => {
+  const { nameOnCardDropdown } = globals.functions.exportData(); // nameOnCardDropdown - for usage of sending value to the api call.
+  moveCCWizardView('corporateCardWizardView', 'selectKycPaymentPanel');
+};
 
 /**
  * Moves the wizard view to the "confirmAndSubmitPanel" step.

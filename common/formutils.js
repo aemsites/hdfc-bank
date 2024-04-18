@@ -145,28 +145,42 @@ const setDataAttributeOnClosestAncestor = (elementName, fieldValue, dataAttribut
  * @param {string} fn - The first name.
  * @param {string} mn - The middle name.
  * @param {string} ln - The last name.
- * @returns {Array<Object>} -  An array of objects representing different name compositions.
+ * @returns {Array<Object>} -  An array of objects representing different combinations of names using the provided first name (fn), middle name (mn), and last name (ln).
  */
 const composeNameOption = (fn, mn, ln) => {
   const arrayObj = [];
-  if (fn) {
-    arrayObj.push({ label: fn, value: fn });
-
-    if (ln) {
-      arrayObj.push({ label: `${fn} ${ln}`, value: `${fn} ${ln}` });
-
-      if (mn) {
-        arrayObj.push({ label: `${fn} ${ln} ${mn}`, value: `${fn} ${ln} ${mn}` });
-      }
-    }
+  const initial = (str) => str?.charAt(0);
+  const addOption = (label, value) => {
+    arrayObj.push({ label, value });
+  };
+  const combination = (str1, str2) => {
+    addOption(`${str1} ${str2}`, `${str1} ${str2}`);
+  };
+  if (fn && mn) {
+    combination(fn, initial(mn)); // firsName + initial_middleName
+    combination(fn, mn); // firstName + middleName
+    combination(mn, fn); // middleName + firstName
+    combination(mn, initial(fn)); // middleName + initial_firstName
+    combination(initial(mn), fn); // initial_middleName + firstName
   }
-  return arrayObj;
+  if (fn && ln) {
+    combination(fn, ln); // firstName + lastName
+  }
+  if (mn && ln) {
+    combination(mn, ln); // middleName + lastName
+    combination(initial(mn), ln); // initial_middleName + lastName
+  }
+  const jsonObj = arrayObj?.map(JSON.stringify);
+  const uniqueSet = new Set(jsonObj);
+  const uniqueArrObj = Array.from(uniqueSet)?.map(JSON.parse);
+  return uniqueArrObj;
 };
 
 /**
  * Sets the options of a select element based on the provided option lists.
  * @param {Array<object>} optionLists - An array of objects representing the options to be set.
  * @param {string} elementName - The name attribute of the select element.
+ * @returns {string} - The value of the initially selected option.
  */
 const setSelectOptions = (optionLists, elementName) => {
   const selectOption = document.querySelector(`[name=${elementName}]`);
@@ -178,6 +192,8 @@ const setSelectOptions = (optionLists, elementName) => {
     selectOption?.appendChild(optionElement);
     parent?.setAttribute('data-active', true);
   });
+  const defSelctedValue = selectOption?.value;
+  return defSelctedValue;
 };
 
 export {
