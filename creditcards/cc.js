@@ -91,7 +91,8 @@ const linkModalFunction = (config) => {
 };
 /* endCode for creating Modal */
 
-/* login screen second checkbox modalLinking */
+/* modalLinking  in pages  */
+// 1.consent-2 checkbox - modal
 const consent2Config = { // config to create modal for consent-2
   triggerElement: document.getElementsByName('checkBoxConsent2')?.[0], // trigger element for calling modalFunction
   content: document.getElementsByName('consentPanel2')?.[0], // content to display in modal
@@ -111,8 +112,7 @@ const consent2Config = { // config to create modal for consent-2
   },
 };
 linkModalFunction(consent2Config);
-
-// second checkbox-2 otherProduct modal
+// 2.consent-2 otherProduct-text - modal
 const consent2OtherProduct = document?.querySelector('.field-checkbox2text')?.querySelector('b');
 const linkClass = 'link';
 consent2OtherProduct?.classList.add(linkClass);
@@ -137,7 +137,7 @@ const consent2OtherProductTxtConfig = { // config to create modal for consent-2
 };
 linkModalFunction(consent2OtherProductTxtConfig);
 
-// link modal first consent
+// 3.conset-1 checbox - modal
 const consent1Config = { // config to create modal for consent-1
   triggerElement: document.getElementsByName('checkBoxConsent1')?.[0], // trigger element for calling modalFunction
   content: document.getElementsByName('consentPanel1')?.[0], // content to display in modal
@@ -158,6 +158,7 @@ const consent1Config = { // config to create modal for consent-1
 };
 linkModalFunction(consent1Config);
 
+// 4.consent-1 requestProduct-text - modal
 const consent1RequestProduct = document?.querySelector('.field-checkbox1text')?.querySelector('b');
 consent1RequestProduct?.classList.add(linkClass);
 const consent2RequestProductTxtConfig = { // config to create modal for consent-2
@@ -181,7 +182,7 @@ const consent2RequestProductTxtConfig = { // config to create modal for consent-
 };
 linkModalFunction(consent2RequestProductTxtConfig);
 
-/* cc wizard screen getCard-viewAll buttonn modalLinking */
+// 5.wizard screen getCard-viewAll button - modal
 const viewAllBtnPannelConfig = { // linkModal for corporateCardWizard pannel view all in getThisCard screen.
   triggerElement: document.getElementsByName('viewAllCardBenefits')?.[0],
   content: document.getElementsByName('viewAllCardBenefitsPanel')?.[0],
