@@ -602,37 +602,6 @@ const enableFormField = (elementClassName) => {
 };
 
 /**
- * Validates form data based on the provided field object and global data.
- * If any required field is missing in the customer information, it updates the corresponding
- * form field with error styles.
- *
- * @param {Object} globals - Global object containing form data and structure.
- * @param {Object} fieldObj - Object containing keys of required fields to validate.
- * @returns {boolean} - Returns true if all required fields are present; otherwise, returns false.
- */
-const validateFormData = (globals, fieldObj) => {
-  let proceed = true;
-  const personalDetails = globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.personalDetails;
-  const customerInfo = {
-    pan: personalDetails.panNumberPersonalDetails.$value,
-    dob: personalDetails.dobPersonalDetails.$value,
-    lastName: personalDetails.lastName.$value,
-  };
-
-  // Validate each required field and enable form field which requires user input
-  Object.keys(fieldObj).forEach((key) => {
-    if (!customerInfo[key]) {
-      proceed = false;
-      const selectedElem = document.querySelector(`.${fieldObj[key]}`);
-      selectedElem.classList.remove('wrapper-disabled');
-      selectedElem.classList.add('error-field');
-    }
-  });
-
-  return proceed;
-};
-
-/**
  * Checks the demog data of a customer for PAN details and last name.
  *
  * @param {string} panStatus - The PAN status of the customer.
@@ -664,7 +633,6 @@ const demogDataCheck = (panStatus) => {
   } else {
     result.proceed = true;
   }
-
   return result;
 };
 
@@ -694,27 +662,15 @@ const checkUserProceedStatus = (panStatus, globals) => {
   switch (IS_ETB_USER) {
     case true:
       if (CUSTOMER_INPUT.pan) {
-        const mandatefields = {
-          dob: 'field-dobpersonaldetails',
-          lastName: 'field-lastname',
-        };
-        if (validateFormData(globals, mandatefields)) {
-          executeCheck(customerJourneyType, panStatus, terminationCheck, customerValidationHandler);
-        }
+        executeCheck(customerJourneyType, panStatus, terminationCheck, customerValidationHandler);
       } else if (CUSTOMER_INPUT.dob) {
-        const mandatefields = {
-          pan: 'field-pannumberpersonaldetails',
-          lastName: 'field-lastname',
-        };
-        if (validateFormData(globals, mandatefields)) {
-          if (!CUSTOMER_DEMOG_DATA.panNumberPersonalDetails || !CUSTOMER_DEMOG_DATA.lastName) {
-            const result = demogDataCheck(panStatus);
-            if (result.proceed) {
-              executeCheck(customerJourneyType, panStatus, result.terminationCheck, customerValidationHandler);
-            }
-          } else {
-            executeCheck(customerJourneyType, panStatus, terminationCheck, customerValidationHandler);
+        if (!CUSTOMER_DEMOG_DATA.panNumberPersonalDetails || !CUSTOMER_DEMOG_DATA.lastName) {
+          const result = demogDataCheck(panStatus);
+          if (result.proceed) {
+            executeCheck(customerJourneyType, panStatus, result.terminationCheck, customerValidationHandler);
           }
+        } else {
+          executeCheck(customerJourneyType, panStatus, terminationCheck, customerValidationHandler);
         }
       }
       break;
