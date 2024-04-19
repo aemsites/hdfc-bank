@@ -116,7 +116,6 @@ linkModalFunction(consent2Config);
 const consent2OtherProduct = document?.querySelector('.field-checkbox2text')?.querySelector('b');
 const linkClass = 'link';
 consent2OtherProduct?.classList.add(linkClass);
-
 const consent2OtherProductTxtConfig = { // config to create modal for consent-2
   triggerElement: consent2OtherProduct, // trigger element for calling modalFunction
   content: consent2Config?.content, // content to display in modal
@@ -137,6 +136,50 @@ const consent2OtherProductTxtConfig = { // config to create modal for consent-2
   },
 };
 linkModalFunction(consent2OtherProductTxtConfig);
+
+// link modal first consent
+const consent1Config = { // config to create modal for consent-1
+  triggerElement: document.getElementsByName('checkBoxConsent1')?.[0], // trigger element for calling modalFunction
+  content: document.getElementsByName('consentPanel1')?.[0], // content to display in modal
+  actionWrapClass: 'button-wrapper', // wrapper class containing all the buttons
+  reqConsentAgree: true, // Indicates if consent agreement is needed; shows close icon if not.
+  /**
+   * Updates the UI based on received data.
+   * @param {Object} receivedData - Data received after the modal button trigger,contains name of the btn triggered which is used to update the UI.
+   */
+  updateUI(receivedData) {
+    if (receivedData?.iAgreeConsent1) { // iAgreeConsent2- name of the I agree btn.
+      this.triggerElement.checked = true;
+    }
+    if (receivedData?.closeIcon) { // closeIcon - name of the Close x btn
+      this.triggerElement.checked = false;
+    }
+  },
+};
+linkModalFunction(consent1Config);
+
+const consent1RequestProduct = document?.querySelector('.field-checkbox1text')?.querySelector('b');
+consent1RequestProduct?.classList.add(linkClass);
+const consent2RequestProductTxtConfig = { // config to create modal for consent-2
+  triggerElement: consent1RequestProduct, // trigger element for calling modalFunction
+  content: consent1Config?.content, // content to display in modal
+  actionWrapClass: 'button-wrapper', // wrapper class containing all the buttons
+  reqConsentAgree: true, // Indicates if consent agreement is needed; shows close icon if not.
+  /**
+   * Updates the UI based on received data.
+   * @param {Object} receivedData - Data received after the modal button trigger,contains name of the btn triggered which is used to update the UI.
+   */
+  updateUI(receivedData) {
+    const checkBox = consent1Config?.triggerElement;
+    if (receivedData?.iAgreeConsent1) { // iAgreeConsent2- name of the I agree btn.
+      checkBox.checked = true;
+    }
+    if (receivedData?.closeIcon) { // closeIcon - name of the Close x btn
+      checkBox.checked = false;
+    }
+  },
+};
+linkModalFunction(consent2RequestProductTxtConfig);
 
 /* cc wizard screen getCard-viewAll buttonn modalLinking */
 const viewAllBtnPannelConfig = { // linkModal for corporateCardWizard pannel view all in getThisCard screen.

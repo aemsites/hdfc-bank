@@ -159,6 +159,10 @@ main img {
         flex-wrap: nowrap !important;
         flex-direction: unset !important;
 
+        a{
+            color: var(--color-action-text-secondary-default);
+        }
+
         .field-checkboxconsent2, .field-checkboxconsent1{
             display: unset !important;
             max-width: 21px;
@@ -184,6 +188,11 @@ main img {
 .link{
     color: var(--color-action-text-secondary-default);
     cursor: pointer;
+    font-weight: normal;
+    
+    &:hover{
+        text-decoration: underline;
+    }
 }
 
 .field-pandobselection {
