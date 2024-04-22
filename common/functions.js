@@ -1,5 +1,11 @@
 import {
-  OTPGEN, OTPVAL, RESENDOTP, CHECKOFFER, getThisCard, prefillForm, getAddressDetails,
+  OTPGEN,
+  OTPVAL,
+  RESENDOTP,
+  getThisCard,
+  prefillForm,
+  createPanValidationRequest,
+  getAddressDetails,
 } from '../creditcards/corporate-creditcardFunctions.js';
 
 import { restAPICall } from './makeRestAPI.js';
@@ -30,7 +36,7 @@ function otpValidation(globals) {
  * @param {object} globals - The global object containing necessary globals form data.
  */
 function checkOffer(globals) {
-  restAPICall(globals, 'POST', CHECKOFFER.getPayload(globals), CHECKOFFER.path, CHECKOFFER.successCallback, CHECKOFFER.errorCallback, CHECKOFFER.loadingText);
+  createPanValidationRequest(globals);
 }
 
 /**
@@ -43,5 +49,11 @@ function resendOTP(globals) {
 }
 
 export {
-  getOTP, otpValidation, resendOTP, checkOffer, getThisCard, prefillForm, getAddressDetails,
+  getOTP,
+  otpValidation,
+  resendOTP,
+  checkOffer,
+  getThisCard,
+  prefillForm,
+  getAddressDetails,
 };
