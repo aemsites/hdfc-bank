@@ -215,6 +215,26 @@ const parseCustomerAddress = (address) => {
   return substrings;
 };
 
+/**
+ * Splits a full name into its components: first name, middle name, and last name.
+ *
+ * @param {string} fullName - The full name to split.
+ * @returns {Object} An object containing the first name, middle name, and last name.
+ * @property {string} firstName - The first name extracted from the full name.
+ * @property {string} middleName - The middle name extracted from the full name.
+ * @property {string} lastName - The last name extracted from the full name.
+ */
+const splitName = (fullName) => {
+  const name = { firstName: '', middleName: '', lastName: '' };
+  if (fullName) {
+    const parts = fullName.split(' ');
+    name.firstName = parts.shift() || '';
+    name.lastName = parts.pop() || '';
+    name.middleName = parts.length > 0 ? parts[0] : '';
+  }
+  return name;
+};
+
 /* Automatically fills form fields based on response data.
  * @param {object} res - The response data object.
  * @param {object} globals - Global variables object.
@@ -236,9 +256,6 @@ const personalDetailsPreFillFromBRE = (res, globals) => {
   // Extract gender from response
   const personalDetailsFields = {
     gender: 'VDCUSTGENDER',
-    firstName: 'VDCUSTFIRSTNAME',
-    lastName: 'VDCUSTLASTNAME',
-    middleName: 'VDCUSTMIDDLENAME',
     personalEmailAddress: 'VDCUSTEMAILADD',
     panNumberPersonalDetails: 'VDCUSTITNBR',
   };
@@ -249,6 +266,13 @@ const personalDetailsPreFillFromBRE = (res, globals) => {
       const formField = formUtil(globals, personalDetails[field]);
       formField.setValue(value, changeDataAttrObj);
     }
+  });
+
+  const name = splitName(breCheckAndFetchDemogResponse?.VDCUSTFULLNAME);
+  // Set name fields
+  Object.entries(name).forEach(([field, key]) => {
+    const formField = formUtil(globals, personalDetails[field]);
+    formField.setValue(key, changeDataAttrObj);
   });
 
   const custDate = breCheckAndFetchDemogResponse?.DDCUSTDATEOFBIRTH;
