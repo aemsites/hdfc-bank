@@ -183,7 +183,7 @@ const addDisableClass = (selectedPanel) => {
   // Iterates over each input or select element
   panelInputs.forEach((panelInput) => {
     // Checks if the input or select element has a truthy value
-    if (panelInput.value) {
+    if (panelInput.value || panelInput.name === 'middleName') {
       // Adds the 'wrapper-disabled' class to the parent element
       panelInput.parentElement.classList.add('wrapper-disabled');
     }
