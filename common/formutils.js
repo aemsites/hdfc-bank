@@ -116,6 +116,20 @@ const convertDateToMmmDdYyyy = (date) => {
 };
 
 /**
+ * Converts a given date to the format dd/mm/yyyy.
+ * @param {Date} date - The date object to be converted.
+ * @returns {string} The date string in the format dd/mm/yyyy.
+ */
+const convertDateToDdMmYyyy = (date) => {
+  let day = date.getDate();
+  let month = date.getMonth() + 1;
+  const year = date.getFullYear();
+  day = day < 10 ? `0${day}` : day;
+  month = month < 10 ? `0${month}` : month;
+  return `${day}/${month}/${year}`;
+};
+
+/**
  * Sets data attribute and value on the closest ancestor element with the specified class name.
  * @param {string} elementName - The name of the element to search for.
  * @param {string} fieldValue - The value to check for existence before setting data.
@@ -197,5 +211,14 @@ const setSelectOptions = (optionLists, elementName) => {
 };
 
 export {
-  urlPath, maskNumber, clearString, formUtil, getTimeStamp, convertDateToMmmDdYyyy, setDataAttributeOnClosestAncestor, setSelectOptions, composeNameOption,
+  urlPath,
+  maskNumber,
+  clearString,
+  formUtil,
+  getTimeStamp,
+  convertDateToMmmDdYyyy,
+  setDataAttributeOnClosestAncestor,
+  convertDateToDdMmYyyy,
+  setSelectOptions,
+  composeNameOption,
 };
