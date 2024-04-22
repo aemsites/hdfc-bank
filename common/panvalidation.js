@@ -48,10 +48,10 @@ const isEventHandlerProcessable = (eventHandlers) => (
 const PANValidationAndNameMatchService = (reqPayload, eventHandlers) => {
   try {
     const apiEndPoint = urlPath('/content/hdfc_forms_common_v2/api/panValNameMatch.json');
-
     if (isRequestProcessable(reqPayload) && isEventHandlerProcessable(eventHandlers)) {
       restAPICall('', 'POST', reqPayload, apiEndPoint, eventHandlers.successCallBack, eventHandlers.errorCallBack, 'Loading');
     }
+    throw new Error('argument error');
   } catch (e) {
     const errorObj = {
       value: e,
