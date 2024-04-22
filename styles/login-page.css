@@ -307,6 +307,10 @@ main .form form .panel-wrapper {
      }
     }
 
+    .field-maskedmobilenumber {
+        margin-top: 0 !important;
+    }
+
 }
 
 @media (481px <=width <=767px) {
@@ -374,6 +378,10 @@ main .form form .panel-wrapper {
         .field-checkbox1text p{
             margin-top: 12px !important;
      }
+    }
+
+    .field-maskedmobilenumber {
+        margin-top: 0 !important;
     }
 }
 
