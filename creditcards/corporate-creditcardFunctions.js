@@ -712,7 +712,7 @@ const checkUserProceedStatus = (panStatus, globals) => {
  * @param {Object} globals - The global object containing necessary data for PAN validation.
  * @returns {Object} - The PAN validation request object.
  */
-const createPanValidationRequest = (globals) => {
+const createPanValidationRequest = (firstName, middleName, lastName, globals) => {
   const panValidation = {
     /**
      * Create pan validation request object.
@@ -726,7 +726,9 @@ const createPanValidationRequest = (globals) => {
           journeyID: currentFormContext.journeyID,
           mobileNumber: globals.form.loginPanel.mobilePanel.registeredMobileNumber.$value,
           panInfo: {
-            panNumber: personalDetails.panNumberPersonalDetails.$value,
+            panNumber: personalDetails.panNumberPersonalDetails.$value !== null
+              ? personalDetails.panNumberPersonalDetails.$value
+              : globals.form.loginPanel.identifierPanel.pan.$value,
             panType: 'P',
             dob: convertDateToDdMmYyyy(new Date(personalDetails.dobPersonalDetails.$value)),
             name: personalDetails.firstName.$value ? personalDetails.firstName.$value.split(' ')[0] : '',
