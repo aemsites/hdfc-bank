@@ -217,12 +217,10 @@ const parseCustomerAddress = (address) => {
 
 /**
  * Sanitizes the name for special characters.
- * @param {String} name 
+ * @param {String} name. 
  * @returns {String} sanitized name.
  */
-const sanitizeName = (name) => {
-  return name.replace(/[^a-zA-Z]/g, '');
-};
+const sanitizeName = (name) => name.replace(/[^a-zA-Z]/g, '');
 
 /**
  * Splits a full name into its components: first name, middle name, and last name.
