@@ -29,10 +29,6 @@ const isPanObjRequestProcessable = (panObj) => {
   return false;
 };
 
-const isNameMatchObjRequestProcessable = (nameMatchObj) => (
-  containsValue(nameMatchObj.srcName) && containsValue(nameMatchObj.trgName)
-);
-
 const isRequestProcessable = (reqObj) => (
   typeof reqObj !== 'undefined'
   && containsValue(reqObj.mobileNumber)
@@ -40,7 +36,6 @@ const isRequestProcessable = (reqObj) => (
   && containsValue(reqObj.journeyName)
   && (
     (reqObj.panInfo !== undefined && isPanObjRequestProcessable(reqObj.panInfo))
-    || (reqObj.nameInfo !== undefined && isNameMatchObjRequestProcessable(reqObj.nameInfo))
   )
 );
 
@@ -53,7 +48,6 @@ const isEventHandlerProcessable = (eventHandlers) => (
 const PANValidationAndNameMatchService = (reqPayload, eventHandlers) => {
   try {
     const apiEndPoint = urlPath('/content/hdfc_forms_common_v2/api/panValNameMatch.json');
-
     if (isRequestProcessable(reqPayload) && isEventHandlerProcessable(eventHandlers)) {
       restAPICall('', 'POST', reqPayload, apiEndPoint, eventHandlers.successCallBack, eventHandlers.errorCallBack, 'Loading');
     }
