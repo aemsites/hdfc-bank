@@ -216,6 +216,15 @@ const parseCustomerAddress = (address) => {
 };
 
 /**
+ * Sanitizes the name for special characters.
+ * @param {String} name 
+ * @returns {String} sanitized name.
+ */
+const sanitizeName = (name) => {
+  return name.replace(/[^a-zA-Z]/g, '');
+};
+
+/**
  * Splits a full name into its components: first name, middle name, and last name.
  *
  * @param {string} fullName - The full name to split.
@@ -228,9 +237,9 @@ const splitName = (fullName) => {
   const name = { firstName: '', middleName: '', lastName: '' };
   if (fullName) {
     const parts = fullName.split(' ');
-    name.firstName = parts.shift() || '';
-    name.lastName = parts.pop() || '';
-    name.middleName = parts.length > 0 ? parts[0] : '';
+    name.firstName = sanitizeName(parts.shift()) || '';
+    name.lastName = sanitizeName(parts.pop()) || '';
+    name.middleName = parts.length > 0 ? sanitizeName(parts[0]) : '';
   }
   return name;
 };
