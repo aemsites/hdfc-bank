@@ -217,7 +217,7 @@ const parseCustomerAddress = (address) => {
 
 /**
  * Sanitizes the name for special characters.
- * @param {String} name - The name token. 
+ * @param {String} name - The name token.
  * @returns {String} sanitized name.
  */
 const sanitizeName = (name) => name.replace(/[^a-zA-Z]/g, '');
