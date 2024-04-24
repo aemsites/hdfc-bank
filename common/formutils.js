@@ -154,6 +154,13 @@ const setDataAttributeOnClosestAncestor = (elementName, fieldValue, dataAttribut
   }
 };
 
+/**
+   * Filters out all defined values from the form data using the globals object.
+   * @param {object} globaObj- Globals variables object containing form configurations.
+   * @returns {object} -Object containing only defined values.
+   */
+const santizedFormData = (globaObj) => JSON.parse(JSON.stringify(globaObj.functions.exportData()));
+
 export {
   urlPath,
   maskNumber,
@@ -163,4 +170,5 @@ export {
   convertDateToMmmDdYyyy,
   setDataAttributeOnClosestAncestor,
   convertDateToDdMmYyyy,
+  santizedFormData,
 };

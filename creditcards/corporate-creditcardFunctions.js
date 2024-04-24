@@ -16,6 +16,7 @@ import {
   convertDateToMmmDdYyyy,
   setDataAttributeOnClosestAncestor,
   convertDateToDdMmYyyy,
+  santizedFormData,
 } from '../common/formutils.js';
 import { getJsonResponse } from '../common/makeRestAPI.js';
 
@@ -87,31 +88,29 @@ function decoratePwdField() {
  * @param {Object} globals - globals variables object containing form configurations.
  */
 const invokeJourneyApiCall = async (globals) => {
-  /**
-   * Filters out all defined values from the form data using the globals object.
-   * @param {object} globaObj- Globals variables object containing form configurations.
-   * @returns {object} -Object containing only defined values.
-   */
-  const santizedFormData = (globaObj) => JSON.parse(JSON.stringify(globaObj.functions.exportData()));
   const journeyJSONObj = {
-    RequestPayload: {},
+    RequestPayload: {
+      userAgent: window.navigator.userAgent,
+      leadProfile: {},
+      formData: {
+        channel: 'ADOBE WEBFORMS',
+        journeyName: currentFormContext.journeyName,
+        journeyID: currentFormContext.journeyID,
+        journeyStateInfo: [
+          {
+            state: 'CUSTOMER_IDENTITY_ACQUIRED',
+            stateInfo: JSON.stringify(santizedFormData(globals)),
+            timeinfo: new Date().toISOString(),
+          },
+          {
+            state: 'CUSTOMER_IDENTITY_UNRESOLVED',
+            stateInfo: JSON.stringify(santizedFormData(globals)),
+            timeinfo: new Date().toISOString(),
+          },
+        ],
+      },
+    },
   };
-  journeyJSONObj.RequestPayload.userAgent = window.navigator.userAgent;
-  journeyJSONObj.RequestPayload.leadProfile = {};
-  journeyJSONObj.RequestPayload.formData = {};
-  journeyJSONObj.RequestPayload.formData.channel = 'ADOBE WEBFORMS';
-  journeyJSONObj.RequestPayload.formData.journeyName = currentFormContext.journeyName;
-  journeyJSONObj.RequestPayload.formData.journeyID = currentFormContext.journeyID;
-  journeyJSONObj.RequestPayload.formData.journeyStateInfo = [];
-  journeyJSONObj.RequestPayload.formData.journeyStateInfo[0] = {};
-  journeyJSONObj.RequestPayload.formData.journeyStateInfo[0].state = 'CUSTOMER_IDENTITY_ACQUIRED';
-  journeyJSONObj.RequestPayload.formData.journeyStateInfo[0].stateInfo = JSON.stringify(santizedFormData(globals));
-  journeyJSONObj.RequestPayload.formData.journeyStateInfo[0].timeinfo = new Date().toISOString();
-  journeyJSONObj.RequestPayload.formData.journeyStateInfo[1] = {};
-  journeyJSONObj.RequestPayload.formData.journeyStateInfo[1].state = 'CUSTOMER_IDENTITY_UNRESOLVED';
-  journeyJSONObj.RequestPayload.formData.journeyStateInfo[1].stateInfo = JSON.stringify(santizedFormData(globals));
-  journeyJSONObj.RequestPayload.formData.journeyStateInfo[1].timeinfo = new Date().toISOString();
-
   const url = 'https://applyonlinedev.hdfcbank.com/content/hdfc_commonforms/api/journeydropoff.json';
   const method = 'POST';
   try {
