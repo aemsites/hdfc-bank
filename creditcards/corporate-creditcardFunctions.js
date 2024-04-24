@@ -4,8 +4,18 @@
 /* eslint no-console: ["error", { allow: ["warn", "error", "log"] }] */
 /* eslint no-unused-vars: ["error", { "args": "none" }] */
 import createJourneyId from '../common/journey-utils.js';
+import PANValidationAndNameMatchService from '../common/panvalidation.js';
+import executeCheck from '../common/panutils.js';
+import customerValidationHandler from '../common/executeinterfaceutils.js';
 import {
-  formUtil, maskNumber, urlPath, clearString, getTimeStamp, convertDateToMmmDdYyyy, setDataAttributeOnClosestAncestor,
+  formUtil,
+  maskNumber,
+  urlPath,
+  clearString,
+  getTimeStamp,
+  convertDateToMmmDdYyyy,
+  setDataAttributeOnClosestAncestor,
+  convertDateToDdMmYyyy,
 } from '../common/formutils.js';
 import { getJsonResponse } from '../common/makeRestAPI.js';
 
@@ -14,7 +24,12 @@ const currentFormContext = {
   journeyID: createJourneyId('a', 'b', 'c'),
   journeyName,
 };
+let PAN_VALIDATION_STATUS = false;
+let PAN_RETRY_COUNTER = 1;
 let resendOtpCount = 3;
+let IS_ETB_USER = false;
+const CUSTOMER_INPUT = { mobileNumber: '', pan: '', dob: '' };
+const CUSTOMER_DEMOG_DATA = {};
 /**
  * Appends a masked number to the specified container element if the masked number is not present.
  * @param {String} containerClass - The class name of the container element.
@@ -171,10 +186,6 @@ const otpGenSuccess = (res, globals) => {
   const otpBtn = formUtil(globals, pannel.otpButton);
   const loginPanel = formUtil(globals, pannel.login);
   const regMobNo = pannel.login.mobilePanel.registeredMobileNumber.$value;
-  const panWizardField = formUtil(globals, pannel.panWizardField);
-  const dobWizardField = formUtil(globals, pannel.dobWizardField);
-  const currentAddressNTB = formUtil(globals, pannel.currentAddressNTB);
-  const currentAddressETB = formUtil(globals, pannel.currentAddressETB);
 
   welcomeTxt.visible(false);
   otpBtn.visible(false);
@@ -256,7 +267,7 @@ const addDisableClass = (selectedPanel) => {
   // Iterates over each input or select element
   panelInputs.forEach((panelInput) => {
     // Checks if the input or select element has a truthy value
-    if (panelInput.value) {
+    if (panelInput.value || panelInput.name === 'middleName') {
       // Adds the 'wrapper-disabled' class to the parent element
       panelInput.parentElement.classList.add('wrapper-disabled');
     }
@@ -288,6 +299,33 @@ const parseCustomerAddress = (address) => {
   return substrings;
 };
 
+/**
+ * Sanitizes the name for special characters.
+ * @param {String} name - The name token.
+ * @returns {String} sanitized name.
+ */
+const sanitizeName = (name) => name.replace(/[^a-zA-Z]/g, '');
+
+/**
+ * Splits a full name into its components: first name, middle name, and last name.
+ *
+ * @param {string} fullName - The full name to split.
+ * @returns {Object} An object containing the first name, middle name, and last name.
+ * @property {string} firstName - The first name extracted from the full name.
+ * @property {string} middleName - The middle name extracted from the full name.
+ * @property {string} lastName - The last name extracted from the full name.
+ */
+const splitName = (fullName) => {
+  const name = { firstName: '', middleName: '', lastName: '' };
+  if (fullName) {
+    const parts = fullName.split(' ');
+    name.firstName = sanitizeName(parts.shift()) || '';
+    name.lastName = sanitizeName(parts.pop()) || '';
+    name.middleName = parts.length > 0 ? sanitizeName(parts[0]) : '';
+  }
+  return name;
+};
+
 /* Automatically fills form fields based on response data.
  * @param {object} res - The response data object.
  * @param {object} globals - Global variables object.
@@ -309,23 +347,29 @@ const personalDetailsPreFillFromBRE = (res, globals) => {
   // Extract gender from response
   const personalDetailsFields = {
     gender: 'VDCUSTGENDER',
-    firstName: 'VDCUSTFIRSTNAME',
-    lastName: 'VDCUSTLASTNAME',
-    middleName: 'VDCUSTMIDDLENAME',
     personalEmailAddress: 'VDCUSTEMAILADD',
     panNumberPersonalDetails: 'VDCUSTITNBR',
   };
   Object.entries(personalDetailsFields).forEach(([field, key]) => {
-    const value = breCheckAndFetchDemogResponse[key];
+    const value = breCheckAndFetchDemogResponse[key]?.split(' ')?.[0];
+    CUSTOMER_DEMOG_DATA[field] = value;
     if (value !== undefined && value !== null) {
       const formField = formUtil(globals, personalDetails[field]);
       formField.setValue(value, changeDataAttrObj);
     }
   });
 
+  const name = splitName(breCheckAndFetchDemogResponse?.VDCUSTFULLNAME);
+  // Set name fields
+  Object.entries(name).forEach(([field, key]) => {
+    const formField = formUtil(globals, personalDetails[field]);
+    formField.setValue(key, changeDataAttrObj);
+  });
+
   const custDate = breCheckAndFetchDemogResponse?.DDCUSTDATEOFBIRTH;
   if (custDate) {
     const dobField = document.getElementsByName('dobPersonalDetails')?.[0];
+    CUSTOMER_DEMOG_DATA.dobPersonalDetails = custDate;
     if (dobField) {
       // If the input field exists, change its type to 'text' to display date
       dobField.type = 'text';
@@ -424,8 +468,12 @@ const otpValSuccess = (res, globals) => {
   loginPanel.visible(false);
   otpPanel.visible(false);
   ccWizardPannel.visible(true);
+  CUSTOMER_INPUT.mobileNumber = pannel.login.mobilePanel.registeredMobileNumber.$value;
+  CUSTOMER_INPUT.dob = pannel.login.identifierPanel.dateOfBirth.$value;
+  CUSTOMER_INPUT.pan = pannel.login.identifierPanel.pan.$value;
   const existingCustomer = existingCustomerCheck(res);
   if (existingCustomer) {
+    IS_ETB_USER = true;
     personalDetailsPreFillFromBRE(res, globals);
   }
   (async () => {
@@ -657,6 +705,164 @@ const RESENDOTP = {
 };
 
 /**
+ * Enables a form field by removing the 'wrapper-disabled' class and adding the 'error-field' class.
+ *
+ * @param {string} elementClassName - The class name of the form field element to enable.
+ * @returns {void}
+ */
+const enableFormField = (elementClassName) => {
+  const selectedElem = document.querySelector(`.${elementClassName}`);
+  selectedElem.classList.remove('wrapper-disabled');
+  selectedElem.classList.add('error-field');
+};
+
+/**
+ * Checks the demog data of a customer for PAN details and last name.
+ *
+ * @param {string} panStatus - The PAN status of the customer.
+ * @returns {Object} An object containing the check results.
+ * @property {boolean} proceed - Indicates whether the process can proceed.
+ * @property {boolean} terminationCheck - Indicates if a termination check is required.
+ */
+const demogDataCheck = (panStatus) => {
+  const result = { proceed: false, terminationCheck: false };
+
+  // Check if PAN number or last name is missing
+  if (!CUSTOMER_DEMOG_DATA.panNumberPersonalDetails || !CUSTOMER_DEMOG_DATA.lastName) {
+    if (CUSTOMER_DEMOG_DATA.panNumberPersonalDetails) {
+      result.proceed = true;
+    } else if (panStatus === 'E' || panStatus === 'D' || panStatus === 'X' || panStatus === 'F' || panStatus === 'ED') {
+      result.terminationCheck = true;
+      result.proceed = true;
+    } else {
+      PAN_RETRY_COUNTER += 1;
+      if (PAN_RETRY_COUNTER > 3) {
+        result.terminationCheck = true;
+        result.proceed = true;
+      } else {
+        // Enable PAN form field and log retry
+        enableFormField('field-pannumberpersonaldetails');
+        console.log('retry');
+      }
+    }
+  } else {
+    result.proceed = true;
+  }
+  return result;
+};
+
+/**
+ * Checks the user's proceed status based on PAN status and other conditions.
+ *
+ * @param {string} panStatus - The PAN status ('E', 'D', 'X', 'F', 'ED').
+ * @param {Object} globals - The global object containing form and other data.
+ */
+const checkUserProceedStatus = (panStatus, globals) => {
+  /**
+   * Removes error classes from all error fields.
+   */
+  const errorFields = document.querySelectorAll('.error-field');
+  errorFields.forEach((field) => {
+    field.classList.remove('error-field');
+    field.classList.add('wrapper-disabled');
+  });
+
+  /**
+   * Executes the check based on PAN status.
+   */
+  // Main logic to check user proceed status
+
+  let customerJourneyType = 'ETB';
+  const terminationCheck = false;
+  switch (IS_ETB_USER) {
+    case true:
+      if (CUSTOMER_INPUT.pan) {
+        executeCheck(customerJourneyType, panStatus, terminationCheck, customerValidationHandler);
+      } else if (CUSTOMER_INPUT.dob) {
+        if (!CUSTOMER_DEMOG_DATA.panNumberPersonalDetails || !CUSTOMER_DEMOG_DATA.lastName) {
+          const result = demogDataCheck(panStatus);
+          if (result.proceed) {
+            executeCheck(customerJourneyType, panStatus, result.terminationCheck, customerValidationHandler);
+          }
+        } else {
+          executeCheck(customerJourneyType, panStatus, terminationCheck, customerValidationHandler);
+        }
+      }
+      break;
+    case false:
+      customerJourneyType = 'NTB';
+      executeCheck(customerJourneyType, panStatus, terminationCheck, customerValidationHandler);
+      break;
+    default:
+      break;
+  }
+};
+
+/**
+ * Creates a PAN validation request object and handles success and failure callbacks.
+ * @param {Object} globals - The global object containing necessary data for PAN validation.
+ * @returns {Object} - The PAN validation request object.
+ */
+const createPanValidationRequest = (firstName, middleName, lastName, globals) => {
+  const panValidation = {
+    /**
+     * Create pan validation request object.
+     * @returns {Object} - The PAN validation request object.
+     */
+    createRequestObj: () => {
+      try {
+        const personalDetails = globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.personalDetails;
+        const reqObj = {
+          journeyName: currentFormContext.journeyName,
+          journeyID: currentFormContext.journeyID,
+          mobileNumber: globals.form.loginPanel.mobilePanel.registeredMobileNumber.$value,
+          panInfo: {
+            panNumber: personalDetails.panNumberPersonalDetails.$value !== null
+              ? personalDetails.panNumberPersonalDetails.$value
+              : globals.form.loginPanel.identifierPanel.pan.$value,
+            panType: 'P',
+            dob: convertDateToDdMmYyyy(new Date(personalDetails.dobPersonalDetails.$value)),
+            name: personalDetails.firstName.$value ? personalDetails.firstName.$value.split(' ')[0] : '',
+          },
+        };
+        return reqObj;
+      } catch (ex) {
+        return ex;
+      }
+    },
+    /**
+     * Event handlers for PAN validation.
+     */
+    eventHandlers: {
+      /**
+       * Callback function for successful PAN validation response.
+       * @param {Object} responseObj - The response object containing PAN validation result.
+       */
+      successCallBack: (responseObj) => {
+        try {
+          PAN_VALIDATION_STATUS = responseObj.panValidation.status.errorCode === '1';
+          if (PAN_VALIDATION_STATUS) {
+            const panStatus = responseObj.panValidation.panStatus;
+            checkUserProceedStatus(panStatus, globals);
+          }
+        } catch (ex) {
+          console.log(ex);
+        }
+      },
+      /**
+       * Callback function for failed PAN validation response.
+       * @param {Object} errorObj - The error object containing details of the failure.
+       */
+      errorCallBack: (errorObj) => {
+        console.log(errorObj);
+      },
+    },
+  };
+  // Call PANValidationAndNameMatchService with PAN validation request and event handlers
+  PANValidationAndNameMatchService(panValidation.createRequestObj(), panValidation.eventHandlers);
+};
+
+/*
  * logic hanlding during prefiill of form.
  * @param {Objec} globals - The global object containing necessary globals form data.
  */
@@ -686,5 +892,13 @@ const prefillForm = (globals) => {
 };
 
 export {
-  OTPGEN, OTPVAL, CHECKOFFER, RESENDOTP, getThisCard, prefillForm, getAddressDetails,
+  OTPGEN,
+  OTPVAL,
+  CHECKOFFER,
+  RESENDOTP,
+  getThisCard,
+  prefillForm,
+  currentFormContext,
+  createPanValidationRequest,
+  getAddressDetails,
 };
