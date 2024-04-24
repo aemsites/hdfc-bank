@@ -87,76 +87,37 @@ function decoratePwdField() {
  * @param {Object} globals - globals variables object containing form configurations.
  */
 const invokeJourneyApiCall = async (globals) => {
-  const globalFormsJson = globals.functions.exportData();
-  // console.log(globalFormsJson, 'globalFormsJson');
-  const payload = {
-    RequestPayload: {
-      leadProfile: {
-        addresses: [
-          {},
-        ],
-        card4Digits: '8888',
-        mobileNumber: '9857575757',
-        profile: {},
-      },
-      formData: {
-        journeyName: currentFormContext?.journeyName,
-        journeyStateInfo: [
-          {
-            stateInfo: {
-              last4digitsofCC: '8888',
-              RegisteredPhoneNum: 9857575757,
-              privacyPolicyCheckbox: '0',
-              AssistedByBankEmployee: '1',
-              errorDetails: {
-                errorCode: 'XFACE_INQ_VP_0003',
-                errorMessage: 'Hey, it seems like you have entered incorrect details. Request you to check & re-enter your registered mobile no. & last 4 digits of the card.',
-              },
-              casaUser: '',
-              auditData: {
-                clientIPAddress: '130.248.113.29',
-                sBrowser: 'Google Chrome',
-                OS: ' Win64',
-                params: {},
-              },
-            },
-            state: 'CUSTOMER_IDENTITY_INITIATED',
-            timeinfo: new Date().toISOString(),
-          },
-          {
-            stateInfo: {
-              last4digitsofCC: '8888',
-              RegisteredPhoneNum: 9857575757,
-              privacyPolicyCheckbox: '0',
-              AssistedByBankEmployee: '1',
-              errorDetails: {
-                errorCode: 'XFACE_INQ_VP_0003',
-                errorMessage: 'Hey, it seems like you have entered incorrect details. Request you to check & re-enter your registered mobile no. & last 4 digits of the card.',
-              },
-              casaUser: '',
-              auditData: {
-                clientIPAddress: '130.248.113.29',
-                sBrowser: 'Google Chrome',
-                OS: ' Win64',
-                params: {},
-              },
-            },
-            state: 'CUSTOMER_IDENTITY_UNRESOLVED',
-            timeinfo: new Date().toISOString(),
-          },
-        ],
-        channel: 'ADOBE WEBFORMS',
-        journeyID: currentFormContext?.journeyID,
-      },
-    },
-
+  /**
+   * Filters out all defined values from the form data using the globals object.
+   * @param {object} globaObj- Globals variables object containing form configurations.
+   * @returns {object} -Object containing only defined values.
+   */
+  const santizedFormData = (globaObj) => JSON.parse(JSON.stringify(globaObj.functions.exportData()));
+  const journeyJSONObj = {
+    RequestPayload: {},
   };
-  const url = 'https://applyonlinestage.hdfcbank.com/content/hdfc_commonforms/api/journeydropoff.json';
+  journeyJSONObj.RequestPayload.userAgent = window.navigator.userAgent;
+  journeyJSONObj.RequestPayload.leadProfile = {};
+  journeyJSONObj.RequestPayload.formData = {};
+  journeyJSONObj.RequestPayload.formData.channel = 'ADOBE WEBFORMS';
+  journeyJSONObj.RequestPayload.formData.journeyName = currentFormContext.journeyName;
+  journeyJSONObj.RequestPayload.formData.journeyID = currentFormContext.journeyID;
+  journeyJSONObj.RequestPayload.formData.journeyStateInfo = [];
+  journeyJSONObj.RequestPayload.formData.journeyStateInfo[0] = {};
+  journeyJSONObj.RequestPayload.formData.journeyStateInfo[0].state = 'CUSTOMER_IDENTITY_ACQUIRED';
+  journeyJSONObj.RequestPayload.formData.journeyStateInfo[0].stateInfo = JSON.stringify(santizedFormData(globals));
+  journeyJSONObj.RequestPayload.formData.journeyStateInfo[0].timeinfo = new Date().toISOString();
+  journeyJSONObj.RequestPayload.formData.journeyStateInfo[1] = {};
+  journeyJSONObj.RequestPayload.formData.journeyStateInfo[1].state = 'CUSTOMER_IDENTITY_UNRESOLVED';
+  journeyJSONObj.RequestPayload.formData.journeyStateInfo[1].stateInfo = JSON.stringify(santizedFormData(globals));
+  journeyJSONObj.RequestPayload.formData.journeyStateInfo[1].timeinfo = new Date().toISOString();
+
+  const url = 'https://applyonlinedev.hdfcbank.com/content/hdfc_commonforms/api/journeydropoff.json';
   const method = 'POST';
   try {
-    const jsonApiCall = await getJsonResponse(url, payload, method);
+    const jsonApiCall = await getJsonResponse(url, journeyJSONObj, method);
     // success method proceed
-    // console.log(jsonApiCall, 'jsonApiCall');
+    console.log(jsonApiCall, 'journeyapicall_response');
   } catch (error) {
     // error method proceed
     console.error(error);
