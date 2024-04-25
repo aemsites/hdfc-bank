@@ -63,6 +63,10 @@ main .form {
   }
 }
 
+.passwordField .field-description {
+  display: none;
+}
+
 /* Base style for labels */
 main
   .form

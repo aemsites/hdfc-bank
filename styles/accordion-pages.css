@@ -323,7 +323,7 @@ fieldset fieldset {
 
 /* End of Confirm and Submit Panel */
 
-.hdfc-accordion-style::after {
+.hdfc-accordion-legend::after {
   content: url('../../icons/accordion-expand-icon.svg');
   display: inline;
   position: absolute;
