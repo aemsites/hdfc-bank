@@ -29,6 +29,7 @@ let resendOtpCount = 3;
 let IS_ETB_USER = false;
 const CUSTOMER_INPUT = { mobileNumber: '', pan: '', dob: '' };
 const CUSTOMER_DEMOG_DATA = {};
+let BRE_DEMOG_RESPONSE = {};
 /**
  * Appends a masked number to the specified container element if the masked number is not present.
  * @param {String} containerClass - The class name of the container element.
@@ -191,31 +192,6 @@ const addDisableClass = (selectedPanel) => {
 };
 
 /**
- * Parses the given address into substrings, each containing up to 30 characters.
- * @param {string} address - The address to parse.
- * @returns {string[]} An array of substrings, each containing up to 30 characters.
- */
-const parseCustomerAddress = (address) => {
-  const words = address.trim().split(' ');
-  const substrings = [];
-  let currentSubstring = '';
-
-  words.forEach((word) => {
-    if (substrings.length === 3) {
-      return; // Exit the loop if substrings length is equal to 3
-    }
-    if ((`${currentSubstring} ${word}`).length <= 30) {
-      currentSubstring += (currentSubstring === '' ? '' : ' ') + word;
-    } else {
-      substrings.push(currentSubstring);
-      currentSubstring = word;
-    }
-  });
-
-  return substrings;
-};
-
-/**
  * Sanitizes the name for special characters.
  * @param {String} name - The name token.
  * @returns {String} sanitized name.
@@ -259,7 +235,7 @@ const personalDetailsPreFillFromBRE = (res, globals) => {
   const breCheckAndFetchDemogResponse = res?.demogResponse?.BRECheckAndFetchDemogResponse;
 
   if (!breCheckAndFetchDemogResponse) return;
-
+  BRE_DEMOG_RESPONSE = breCheckAndFetchDemogResponse;
   // Extract gender from response
   const personalDetailsFields = {
     gender: 'VDCUSTGENDER',
@@ -310,10 +286,6 @@ const personalDetailsPreFillFromBRE = (res, globals) => {
   const personaldetails = document.querySelector('.field-personaldetails');
   personaldetails.classList.add('personaldetails-disabled');
   addDisableClass(personaldetails);
-  const customerFiller2 = breCheckAndFetchDemogResponse?.BREFILLER2?.toUpperCase();
-  if (customerFiller2 === 'D106') {
-    const customerValidAddress = parseCustomerAddress(`${breCheckAndFetchDemogResponse?.VDCUSTADD1} ${breCheckAndFetchDemogResponse?.VDCUSTADD2} ${breCheckAndFetchDemogResponse?.VDCUSTADD3}`);
-  }
 };
 
 /**
@@ -693,21 +665,21 @@ const checkUserProceedStatus = (panStatus, globals) => {
   switch (IS_ETB_USER) {
     case true:
       if (CUSTOMER_INPUT.pan) {
-        executeCheck(customerJourneyType, panStatus, terminationCheck, customerValidationHandler);
+        executeCheck(customerJourneyType, panStatus, terminationCheck, customerValidationHandler, globals, BRE_DEMOG_RESPONSE);
       } else if (CUSTOMER_INPUT.dob) {
         if (!CUSTOMER_DEMOG_DATA.panNumberPersonalDetails || !CUSTOMER_DEMOG_DATA.lastName) {
           const result = demogDataCheck(panStatus);
           if (result.proceed) {
-            executeCheck(customerJourneyType, panStatus, result.terminationCheck, customerValidationHandler);
+            executeCheck(customerJourneyType, panStatus, result.terminationCheck, customerValidationHandler, globals, BRE_DEMOG_RESPONSE);
           }
         } else {
-          executeCheck(customerJourneyType, panStatus, terminationCheck, customerValidationHandler);
+          executeCheck(customerJourneyType, panStatus, terminationCheck, customerValidationHandler, globals, BRE_DEMOG_RESPONSE);
         }
       }
       break;
     case false:
       customerJourneyType = 'NTB';
-      executeCheck(customerJourneyType, panStatus, terminationCheck, customerValidationHandler);
+      executeCheck(customerJourneyType, panStatus, terminationCheck, customerValidationHandler, globals, BRE_DEMOG_RESPONSE);
       break;
     default:
       break;

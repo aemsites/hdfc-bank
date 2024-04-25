@@ -154,6 +154,31 @@ const setDataAttributeOnClosestAncestor = (elementName, fieldValue, dataAttribut
   }
 };
 
+/**
+ * Parses the given address into substrings, each containing up to 30 characters.
+ * @param {string} address - The address to parse.
+ * @returns {string[]} An array of substrings, each containing up to 30 characters.
+ */
+const parseCustomerAddress = (address) => {
+  const words = address.trim().split(' ');
+  const substrings = [];
+  let currentSubstring = '';
+
+  words.forEach((word) => {
+    if (substrings.length === 3) {
+      return; // Exit the loop if substrings length is equal to 3
+    }
+    if ((`${currentSubstring} ${word}`).length <= 30) {
+      currentSubstring += (currentSubstring === '' ? '' : ' ') + word;
+    } else {
+      substrings.push(currentSubstring);
+      currentSubstring = word;
+    }
+  });
+
+  return substrings;
+};
+
 export {
   urlPath,
   maskNumber,
@@ -163,4 +188,5 @@ export {
   convertDateToMmmDdYyyy,
   setDataAttributeOnClosestAncestor,
   convertDateToDdMmYyyy,
+  parseCustomerAddress,
 };
