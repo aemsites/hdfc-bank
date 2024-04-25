@@ -666,21 +666,21 @@ const checkUserProceedStatus = (panStatus, globals) => {
   switch (IS_ETB_USER) {
     case true:
       if (CUSTOMER_INPUT.pan) {
-        executeCheck(customerJourneyType, panStatus, terminationCheck, customerValidationHandler, globals, BRE_DEMOG_RESPONSE);
+        executeCheck(customerJourneyType, panStatus, terminationCheck, customerValidationHandler, globals, BRE_DEMOG_RESPONSE, currentFormContext);
       } else if (CUSTOMER_INPUT.dob) {
         if (!CUSTOMER_DEMOG_DATA.panNumberPersonalDetails || !CUSTOMER_DEMOG_DATA.lastName) {
           const result = demogDataCheck(panStatus);
           if (result.proceed) {
-            executeCheck(customerJourneyType, panStatus, result.terminationCheck, customerValidationHandler, globals, BRE_DEMOG_RESPONSE);
+            executeCheck(customerJourneyType, panStatus, result.terminationCheck, customerValidationHandler, globals, BRE_DEMOG_RESPONSE, currentFormContext);
           }
         } else {
-          executeCheck(customerJourneyType, panStatus, terminationCheck, customerValidationHandler, globals, BRE_DEMOG_RESPONSE);
+          executeCheck(customerJourneyType, panStatus, terminationCheck, customerValidationHandler, globals, BRE_DEMOG_RESPONSE, currentFormContext);
         }
       }
       break;
     case false:
       customerJourneyType = 'NTB';
-      executeCheck(customerJourneyType, panStatus, terminationCheck, customerValidationHandler, globals, BRE_DEMOG_RESPONSE);
+      executeCheck(customerJourneyType, panStatus, terminationCheck, customerValidationHandler, globals, BRE_DEMOG_RESPONSE, currentFormContext);
       break;
     default:
       break;
