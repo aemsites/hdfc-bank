@@ -26,6 +26,10 @@ body.modal-open {
     text-align: left;
   }
 
+  legend{
+    display: none;
+  }
+
   .field-label {
     font-size: 18px;
     font-weight: 600;

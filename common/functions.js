@@ -35,8 +35,8 @@ function otpValidation(globals) {
  *
  * @param {object} globals - The global object containing necessary globals form data.
  */
-function checkOffer(globals) {
-  createPanValidationRequest(globals);
+function checkOffer(firstName, middleName, lastName, globals) {
+  createPanValidationRequest(firstName, middleName, lastName, globals);
 }
 
 /**

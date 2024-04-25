@@ -206,6 +206,13 @@ const parseCustomerAddress = (address) => {
 };
 
 /**
+ * Sanitizes the name for special characters.
+ * @param {String} name - The name token.
+ * @returns {String} sanitized name.
+ */
+const sanitizeName = (name) => name.replace(/[^a-zA-Z]/g, '');
+
+/**
  * Splits a full name into its components: first name, middle name, and last name.
  *
  * @param {string} fullName - The full name to split.
@@ -218,9 +225,9 @@ const splitName = (fullName) => {
   const name = { firstName: '', middleName: '', lastName: '' };
   if (fullName) {
     const parts = fullName.split(' ');
-    name.firstName = parts.shift() || '';
-    name.lastName = parts.pop() || '';
-    name.middleName = parts.length > 0 ? parts[0] : '';
+    name.firstName = sanitizeName(parts.shift()) || '';
+    name.lastName = sanitizeName(parts.pop()) || '';
+    name.middleName = parts.length > 0 ? sanitizeName(parts[0]) : '';
   }
   return name;
 };
@@ -702,7 +709,7 @@ const checkUserProceedStatus = (panStatus, globals) => {
  * @param {Object} globals - The global object containing necessary data for PAN validation.
  * @returns {Object} - The PAN validation request object.
  */
-const createPanValidationRequest = (globals) => {
+const createPanValidationRequest = (firstName, middleName, lastName, globals) => {
   const panValidation = {
     /**
      * Create pan validation request object.
@@ -716,7 +723,9 @@ const createPanValidationRequest = (globals) => {
           journeyID: currentFormContext.journeyID,
           mobileNumber: globals.form.loginPanel.mobilePanel.registeredMobileNumber.$value,
           panInfo: {
-            panNumber: personalDetails.panNumberPersonalDetails.$value,
+            panNumber: personalDetails.panNumberPersonalDetails.$value !== null
+              ? personalDetails.panNumberPersonalDetails.$value
+              : globals.form.loginPanel.identifierPanel.pan.$value,
             panType: 'P',
             dob: convertDateToDdMmYyyy(new Date(personalDetails.dobPersonalDetails.$value)),
             name: personalDetails.firstName.$value ? personalDetails.firstName.$value.split(' ')[0] : '',
