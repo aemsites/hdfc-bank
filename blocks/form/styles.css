@@ -194,15 +194,6 @@ main .form select {
   border-radius: var(--form-input-border-radius) !important;
 }
 
-/* Highlight error fields */
-/* main .form form .field-invalid:not(.checkbox-wrapper) label {
-  color: var(--form-error-color) !important;
-}
-
-main .form form .field-invalid input {
-  border: solid 1px var(--form-error-color);
-} */
-
 /* loader for app show hide on api call */
 .preloader::before,
 .preloader::after {
