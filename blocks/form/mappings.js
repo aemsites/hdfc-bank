@@ -24,10 +24,6 @@ export default async function componentDecorator(fd) {
     const module = await import('./components/dateField.js');
     return module.default;
   }
-  if (fd.appliedCssClassNames?.includes('radioButton-selectedStyle')) {
-    const module = await import('./components/radioSelectedStyles.js');
-    return module.default;
-  }
   if ((fieldType?.includes('input') || fieldType === 'drop-down') && fd.appliedCssClassNames !== 'passwordField') {
     const module = await import('./components/floatingFields.js');
     return module.default;
