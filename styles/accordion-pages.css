@@ -212,7 +212,7 @@ fieldset fieldset {
 
 /* End of Confirm Card Panel */
 
-
+/* Select KYC Panel */
 .field-selectkycpaymentpanel {
   .plain-text-wrapper b, legend { color: #111827; }
 
@@ -235,7 +235,7 @@ fieldset fieldset {
           width: fit-content;
           padding: 0 6px;
           border-radius: 12px;
-          color: #111827;
+          color: var(--color-interface-text-primary);
         }
         
         input[type="radio"] {
@@ -244,7 +244,7 @@ fieldset fieldset {
         }
         
         label {
-          color: #111827;
+          color: var(--color-interface-text-primary);
           font-weight: 600;
           font-size: 14px !important;
         }
@@ -289,6 +289,27 @@ fieldset fieldset {
     }
   }
 }
+
+/* End of Select KYC Panel */
+
+/* Confirm and Submit Panel */
+.field-confirmandsubmitpanel {
+  .field-addressdeclarationtext1 p {
+    margin-bottom: 0;
+    font-weight: var(--font-weight-bold);
+    font-size: var(--body-xx-lg-font-size);
+    color: var(--color-interface-text-primary);
+  }
+
+  .field-addressdeclarationtext2 p {
+    margin: -20px 0 0;
+    font-weight: var(--font-weight-regular);
+    font-size: var(--body-sm-font-size);
+    color: var(--color-interface-text-quaternary);
+  }
+}
+
+/* End of Confirm and Submit Panel */
 
 .hdfc-accordion-style::after {
   content: url('../../icons/accordion-expand-icon.svg');
@@ -347,6 +368,12 @@ main .form form .field-corporatecardwizardview.wizard {
 
     img {
       width: 253.44px;
+    }
+  }
+
+  .field-confirmandsubmitpanel {
+    .field-addressdeclarationtext2 p {
+      margin: var(--form-paragraph-margin);
     }
   }
 }

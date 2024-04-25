@@ -73,15 +73,6 @@ const removeBanner = () => {
 };
 
 /**
-  * Decorates the password input to hide the text and display only bullets
-  * @name decoratePasswordField Runs after user clicks on Get OTP
-  */
-function decoratePwdField() {
-  const pwdInput = document.querySelector('main .form .field-otppanel .field-otpnumber input');
-  pwdInput.type = 'password';
-}
-
-/**
  * Handles the success scenario for OTP generation.
  * @param {any} res  - The response object containing the OTP success generation response.
  * @param {Object} globals - globals variables object containing form configurations.
@@ -111,7 +102,6 @@ const otpGenSuccess = (res, globals) => {
   otpPanel.visible(true);
 
   appendMaskedNumber('field-otphelptext', regMobNo);
-  decoratePwdField();
   removeBanner();
 };
 

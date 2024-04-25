@@ -161,6 +161,7 @@ main .form form {
 
   .field-prefilledcurrentadddress {
     textarea {
+      background-color: var(--color-action-background-secondary-disabled);
       border: none;
       pointer-events: none;
       padding: 0;
