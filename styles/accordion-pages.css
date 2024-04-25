@@ -97,6 +97,18 @@ fieldset fieldset {
     }
   }
 
+  .field-yourdetailsconsent {
+    display: block;
+
+    label {
+      margin-left: 15px;
+    }
+    
+    .field-description {
+      margin-top: 7px;
+    }
+  }
+
   .field-checkofferbutton {
     text-align: left;
     max-width: 260px;

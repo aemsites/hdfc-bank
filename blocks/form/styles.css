@@ -1,3 +1,4 @@
+/* stylelint-disable no-descending-specificity */
 /* stylelint-disable selector-class-pattern */
 @import url('../../creditcards/creditcards.css');
 
@@ -193,6 +194,15 @@ main .form select {
   border-radius: var(--form-input-border-radius) !important;
 }
 
+/* Highlight error fields */
+/* main .form form .field-invalid:not(.checkbox-wrapper) label {
+  color: var(--form-error-color) !important;
+}
+
+main .form form .field-invalid input {
+  border: solid 1px var(--form-error-color);
+} */
+
 /* loader for app show hide on api call */
 .preloader::before,
 .preloader::after {
@@ -225,12 +235,7 @@ main .form select {
 }
 
 /* Style for labels when input is active or not empty */
-main
-  .form
-  :is([data-active='true'], [data-empty='false'], .date-wrapper):not(
-    .field-joiningrenewalfee
-  )
-  > label {
+main .form :is([data-active='true'], [data-empty='false'], .date-wrapper):not(.field-joiningrenewalfee) > label {
   color: var(--label-color);
   transform: translateY(-22px);
   z-index: 1;
@@ -462,7 +467,6 @@ main .form.block .field-otppanel {
 
 /* Error/Success Result Panel */
 main .form .field-resultpanel {
-  /* stylelint-disable-next-line no-descending-specificity */
   p,
   label {
     font-weight: 400;
