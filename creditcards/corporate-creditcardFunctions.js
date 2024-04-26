@@ -17,6 +17,7 @@ import {
   setDataAttributeOnClosestAncestor,
   convertDateToDdMmYyyy,
 } from '../common/formutils.js';
+import { getJsonResponse } from '../common/makeRestAPI.js';
 
 const journeyName = 'CORPORATE_CARD_JOURNEY';
 const currentFormContext = {
@@ -834,6 +835,30 @@ const prefillForm = (globals) => {
   }
 };
 
+const pinCodeMaster = async (globals) => {
+  const PIN_CODE_LENGTH = 6;
+  const changeDataAttrObj = { attrChange: true, value: false };
+  const ntbCurrentDetails = globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.currentDetails.currentAddressNTB;
+  const pincodeValNtb = ntbCurrentDetails.currentAddresPincodeNTB.$value;
+  const cityFieldNtb = ntbCurrentDetails.city;
+  const stateFieldNtb = ntbCurrentDetails.state;
+  const setCityField = formUtil(globals, cityFieldNtb);
+  const setStateField = formUtil(globals, stateFieldNtb);
+  const url = urlPath(`/content/hdfc_commonforms/api/mdm.CREDIT.SIX_DIGIT_PINCODE.PINCODE-${pincodeValNtb}.json`);
+  const method = 'GET';
+  try {
+    if (pincodeValNtb?.length < PIN_CODE_LENGTH) return;
+    const response = await getJsonResponse(url, null, method);
+    const [{ CITY, STATE }] = response;
+    setCityField.setValue(CITY, changeDataAttrObj);
+    setCityField.enabled(false);
+    setStateField.setValue(STATE, changeDataAttrObj);
+    setStateField.enabled(false);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export {
   OTPGEN,
   OTPVAL,
@@ -844,4 +869,5 @@ export {
   currentFormContext,
   createPanValidationRequest,
   getAddressDetails,
+  pinCodeMaster,
 };

@@ -6,6 +6,7 @@ import {
   prefillForm,
   createPanValidationRequest,
   getAddressDetails,
+  pinCodeMaster,
 } from '../creditcards/corporate-creditcardFunctions.js';
 
 import { restAPICall } from './makeRestAPI.js';
@@ -56,4 +57,5 @@ export {
   getThisCard,
   prefillForm,
   getAddressDetails,
+  pinCodeMaster,
 };
