@@ -1,5 +1,11 @@
 /* eslint-disable no-console */
-import { parseCustomerAddress, urlPath } from './formutils.js';
+import {
+  parseCustomerAddress,
+  urlPath,
+  moveWizardView,
+  formUtil,
+} from './formutils.js';
+import { currentFormContext } from './journey-utils.js';
 import { restAPICall } from './makeRestAPI.js';
 
 const GENDER_MAP = {
@@ -14,6 +20,7 @@ const GENDER_MAP = {
   Other: '3',
   T: '3',
 };
+let TOTAL_TIME = 0;
 const formatDate = (inputDate) => {
   const date = new Date(inputDate);
 
@@ -26,7 +33,7 @@ const formatDate = (inputDate) => {
   return formattedDate;
 };
 
-const createExecuteInterfaceRequestObj = (panCheckFlag, globals, journeyType, breDemogResponse, currentFormContext, JWT_TOKEN) => {
+const createExecuteInterfaceRequestObj = (panCheckFlag, globals, breDemogResponse) => {
   const {
     personalDetails,
     currentDetails,
@@ -47,7 +54,7 @@ const createExecuteInterfaceRequestObj = (panCheckFlag, globals, journeyType, br
     state: '',
   };
   let permanentAddress = { ...currentAddress };
-  if (journeyType === 'ETB') {
+  if (currentFormContext.journeyType === 'ETB') {
     if (breDemogResponse?.VDCUSTITNBR !== panNumber) {
       panEditFlag = 'Y';
     }
@@ -128,13 +135,13 @@ const createExecuteInterfaceRequestObj = (panCheckFlag, globals, journeyType, br
       permanentZipCode: String(permanentAddress.pincode),
       eReferenceNumber: breDemogResponse?.BREFILLER3,
       nameEditFlag,
-      mobileEditFlag: journeyType === 'ETB' ? 'N' : 'Y',
+      mobileEditFlag: currentFormContext.journeyType === 'ETB' ? 'N' : 'Y',
       resPhoneEditFlag: 'N',
       comAddressType: '2',
       comCityZip: String(currentAddress.pincode),
-      customerID: journeyType === 'ETB' ? breDemogResponse.FWCUSTID : '',
+      customerID: currentFormContext.journeyType === 'ETB' ? breDemogResponse.FWCUSTID : '',
       timeInfo: new Date().toISOString(),
-      Id_token_jwt: JWT_TOKEN,
+      Id_token_jwt: currentFormContext.jwtToken,
       communicationAddress3: currentAddress.address3,
       permanentAddress3: permanentAddress.address3,
       officeAddress1: employmentDetails.officeAddressLine1.$value,
@@ -174,17 +181,32 @@ const createExecuteInterfaceRequestObj = (panCheckFlag, globals, journeyType, br
       channel: '',
       apsDobEditFlag: 'N',
       apsEmailEditFlag: 'N',
-      journeyFlag: journeyType,
+      journeyFlag: currentFormContext.journeyType,
     },
   };
+  console.log(currentFormContext);
   return requestObj;
 };
 
-const sendIpaRequest = (ipaRequestObj) => {
+const sendIpaRequest = (ipaRequestObj, globals) => {
   const apiEndPoint = urlPath('/content/hdfc_etb_wo_pacc/api/ipa.json');
+  if (TOTAL_TIME >= currentFormContext.ipaDuration * 1000) {
+    console.log('Stopped after 60 seconds.');
+    return;
+  }
   const eventHandlers = {
     successCallBack: (response) => {
-      console.log(response);
+      if (response.ipa.ipaResult === '' || response.ipa.ipaResult === null) {
+        setTimeout(() => sendIpaRequest(ipaRequestObj, globals), currentFormContext.ipaTimer * 1000);
+        TOTAL_TIME += currentFormContext.ipaTimer * 1000;
+        console.log(TOTAL_TIME);
+      } else {
+        currentFormContext.productDetails = response.productEligibility.productDetails?.[0];
+        const { cardBenefitsTextBox } = globals.form.corporateCardWizardView.confirmCardPanel.cardBenefitsPanel.cardBenefitsFeaturesPanel;
+        const cardBenefitsTextField = formUtil(globals, cardBenefitsTextBox);
+        cardBenefitsTextField.setValue(response.productEligibility.productDetails[0].keyBenefits[0]);
+        moveWizardView('corporateCardWizardView', 'confirmCardPanel');
+      }
     },
     errorCallBack: (response) => {
       console.log(response);
@@ -194,13 +216,15 @@ const sendIpaRequest = (ipaRequestObj) => {
 };
 
 const customerValidationHandler = {
-  executeInterfaceApi: (APS_PAN_CHK_FLAG, globals, journeyType, breDemogResponse, currentFormContext, JWT_TOKEN) => {
+  executeInterfaceApi: (APS_PAN_CHK_FLAG, globals, breDemogResponse) => {
     console.log(`APS_PAN_CHK_FLAG: ${APS_PAN_CHK_FLAG} and called executeInterfaceApi()`);
-    const requestObj = createExecuteInterfaceRequestObj(APS_PAN_CHK_FLAG, globals, journeyType, breDemogResponse, currentFormContext, JWT_TOKEN);
+    const requestObj = createExecuteInterfaceRequestObj(APS_PAN_CHK_FLAG, globals, breDemogResponse);
     const apiEndPoint = urlPath('/content/hdfc_etb_wo_pacc/api/executeinterface.json');
     const eventHandlers = {
       successCallBack: (response) => {
         if (response.errorCode === '0000') {
+          currentFormContext.ipaDuration = response.ExecuteInterfaceResponse.ipaDuration;
+          currentFormContext.ipaTimer = response.ExecuteInterfaceResponse.ipaTimer;
           const ipaRequestObj = {
             requestString: {
               mobileNumber: globals.form.loginPanel.mobilePanel.registeredMobileNumber.$value,
@@ -210,9 +234,11 @@ const customerValidationHandler = {
               userAgent: navigator.userAgent,
               journeyID: currentFormContext.journeyID,
               journeyName: currentFormContext.journeyName,
+              productCode: currentFormContext.productCode,
             },
           };
-          sendIpaRequest(ipaRequestObj);
+          TOTAL_TIME = 0;
+          sendIpaRequest(ipaRequestObj, globals);
         } else {
           console.log('terminate journey');
         }

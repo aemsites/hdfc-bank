@@ -1,22 +1,24 @@
+import { currentFormContext } from './journey-utils.js';
+
 const DEAD_PAN_STATUS = ['D', 'X', 'F', 'ED'];
-const executeCheck = (journeyType, panStatus, terminationCheck, callback, globals, breDemogResponse, currentFormContext, JWT_TOKEN) => {
+const executeCheck = (panStatus, terminationCheck, callback, globals, breDemogResponse) => {
   let apsPanChkFlag = panStatus === 'E' ? 'N' : 'Y';
-  switch (journeyType) {
+  switch (currentFormContext.journeyType) {
     case 'ETB':
       if (!terminationCheck) {
-        callback.executeInterfaceApi(apsPanChkFlag, globals, journeyType, breDemogResponse, currentFormContext, JWT_TOKEN);
+        callback.executeInterfaceApi(apsPanChkFlag, globals, breDemogResponse);
       } else if (panStatus === 'E') {
-        callback.executeInterfaceApi(apsPanChkFlag, globals, journeyType, breDemogResponse, currentFormContext, JWT_TOKEN);
+        callback.executeInterfaceApi(apsPanChkFlag, globals, breDemogResponse);
       } else if (DEAD_PAN_STATUS.includes(panStatus)) {
         callback.terminateJourney(panStatus);
       } else {
         apsPanChkFlag = 'Y';
-        callback.executeInterfaceApi(apsPanChkFlag, globals, journeyType, breDemogResponse, currentFormContext, JWT_TOKEN);
+        callback.executeInterfaceApi(apsPanChkFlag, globals, breDemogResponse);
       }
       break;
     case 'NTB':
       if (panStatus === 'E') {
-        callback.executeInterfaceApi(apsPanChkFlag, globals, journeyType, breDemogResponse, currentFormContext, JWT_TOKEN);
+        callback.executeInterfaceApi(apsPanChkFlag, globals, breDemogResponse);
       } else if (DEAD_PAN_STATUS.includes(panStatus)) {
         callback.terminateJourney(panStatus);
       } else {

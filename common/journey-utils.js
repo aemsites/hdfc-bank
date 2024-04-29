@@ -19,4 +19,9 @@ function createJourneyId(visitMode, journeyAbbreviation, channel) {
   return journeyId;
 }
 
-export default createJourneyId;
+const currentFormContext = {};
+
+export {
+  createJourneyId,
+  currentFormContext,
+};
