@@ -180,15 +180,42 @@ const createExecuteInterfaceRequestObj = (panCheckFlag, globals, journeyType, br
   return requestObj;
 };
 
+const sendIpaRequest = (ipaRequestObj) => {
+  const apiEndPoint = urlPath('/content/hdfc_etb_wo_pacc/api/ipa.json');
+  const eventHandlers = {
+    successCallBack: (response) => {
+      console.log(response);
+    },
+    errorCallBack: (response) => {
+      console.log(response);
+    },
+  };
+  restAPICall('', 'POST', ipaRequestObj, apiEndPoint, eventHandlers.successCallBack, eventHandlers.errorCallBack, 'Loading');
+};
+
 const customerValidationHandler = {
   executeInterfaceApi: (APS_PAN_CHK_FLAG, globals, journeyType, breDemogResponse, currentFormContext, JWT_TOKEN) => {
     console.log(`APS_PAN_CHK_FLAG: ${APS_PAN_CHK_FLAG} and called executeInterfaceApi()`);
     const requestObj = createExecuteInterfaceRequestObj(APS_PAN_CHK_FLAG, globals, journeyType, breDemogResponse, currentFormContext, JWT_TOKEN);
-    console.log(requestObj);
     const apiEndPoint = urlPath('/content/hdfc_etb_wo_pacc/api/executeinterface.json');
     const eventHandlers = {
       successCallBack: (response) => {
-        console.log(response);
+        if (response.errorCode === '0000') {
+          const ipaRequestObj = {
+            requestString: {
+              mobileNumber: globals.form.loginPanel.mobilePanel.registeredMobileNumber.$value,
+              applRefNumber: response.ExecuteInterfaceResponse.applicationRefNumber,
+              eRefNumber: response.ExecuteInterfaceResponse.eRefNumber,
+              Id_token_jwt: response.Id_token_jwt,
+              userAgent: navigator.userAgent,
+              journeyID: currentFormContext.journeyID,
+              journeyName: currentFormContext.journeyName,
+            },
+          };
+          sendIpaRequest(ipaRequestObj);
+        } else {
+          console.log('terminate journey');
+        }
       },
       errorCallBack: (response) => {
         console.log(response);
