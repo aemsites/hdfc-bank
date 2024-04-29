@@ -218,6 +218,13 @@ const parseCustomerAddress = (address) => {
 };
 
 /**
+ * Sanitizes the name for special characters.
+ * @param {String} name - The name token.
+ * @returns {String} sanitized name.
+ */
+const sanitizeName = (name) => name.replace(/[^a-zA-Z]/g, '');
+
+/**
  * Splits a full name into its components: first name, middle name, and last name.
  *
  * @param {string} fullName - The full name to split.
@@ -230,9 +237,9 @@ const splitName = (fullName) => {
   const name = { firstName: '', middleName: '', lastName: '' };
   if (fullName) {
     const parts = fullName.split(' ');
-    name.firstName = parts.shift() || '';
-    name.lastName = parts.pop() || '';
-    name.middleName = parts.length > 0 ? parts[0] : '';
+    name.firstName = sanitizeName(parts.shift()) || '';
+    name.lastName = sanitizeName(parts.pop()) || '';
+    name.middleName = parts.length > 0 ? sanitizeName(parts[0]) : '';
   }
   return name;
 };
@@ -352,6 +359,18 @@ const existingCustomerCheck = (res) => {
   return null;
 };
 
+const showErrorPanel = (panels, errorText) => {
+  const errorTextPannelName = 'errorResultPanel';
+  changeTextContent(errorTextPannelName, errorText);
+  const { hidePanels, showPanels } = panels;
+  hidePanels.forEach((panel) => {
+    panel.visible(false);
+  });
+  showPanels.forEach((panel) => {
+    panel.visible(true);
+  });
+};
+
 /**
  * Handles the success scenario for OTP Validation.
  * @param {any} res  - The response object containing the OTP success generation response.
@@ -436,34 +455,23 @@ const otpValFailure = (res, globals) => {
       break;
     }
     case '04': { // incorrect otp attempt of 3 times.
-      incorectOtp.visible(false);
-      welcomeTxt.visible(false);
-      otpBtn.visible(false);
-      loginPanel.visible(false);
-      otpPanel.visible(false);
-      resultPanel.visible(true);
+      const panels = {
+        hidePanels: [incorectOtp, welcomeTxt, otpBtn, loginPanel, otpPanel, resultSetErrorText1, resultSetErrorText2],
+        showPanels: [resultPanel, tryAgainButtonErrorPanel],
+      };
       const errorText = 'You have entered invalid OTP for 3 consecutive attempts. Please try again later';
-      const errorTextPannelName = 'errorResultPanel';
-      changeTextContent(errorTextPannelName, errorText);
-      resultSetErrorText1.visible(false);
-      resultSetErrorText2.visible(false);
-      tryAgainButtonErrorPanel.visible(true);
+      showErrorPanel(panels, errorText);
       const reloadBtn = document.getElementsByName('tryAgainButtonErrorPanel')?.[0];
       reloadBtn.addEventListener('click', () => window.location.reload());
       break;
     }
-    case 'CZ_HTTP_0003': { // // Unfortunately, we were unable to process your request - happens when value is empty.
-      incorectOtp.visible(false);
-      welcomeTxt.visible(false);
-      otpBtn.visible(false);
-      loginPanel.visible(false);
-      otpPanel.visible(false);
-      resultPanel.visible(true);
+    case 'CZ_HTTP_0003': {
+      const panels = {
+        hidePanels: [incorectOtp, welcomeTxt, otpBtn, loginPanel, otpPanel, resultSetErrorText1, resultSetErrorText2],
+        showPanels: [resultPanel],
+      };
       const errorText = 'Unfortunately, we were unable to process your request';
-      const errorTextPannelName = 'errorResultPanel';
-      changeTextContent(errorTextPannelName, errorText);
-      resultSetErrorText1.visible(false);
-      resultSetErrorText2.visible(false);
+      changeTextContent(panels, errorText);
       break;
     }
     default: {
@@ -773,10 +781,36 @@ const createPanValidationRequest = (firstName, middleName, lastName, globals) =>
        */
       successCallBack: (responseObj) => {
         try {
-          PAN_VALIDATION_STATUS = responseObj.panValidation.status.errorCode === '1';
-          if (PAN_VALIDATION_STATUS) {
-            const panStatus = responseObj.panValidation.panStatus;
-            checkUserProceedStatus(panStatus, globals);
+          const ccWizardView = globals.form.corporateCardWizardView;
+          const resultPanel = globals.form.resultPanel;
+          const tryAgainButtonErrorPanel = globals.form.resultPanel.errorResultPanel.tryAgainButtonErrorPanel;
+          const ccWizardViewBlock = formUtil(globals, ccWizardView);
+          const resultPanelBlock = formUtil(globals, resultPanel);
+          const tryAgainButtonErrorPanelBlock = formUtil(globals, tryAgainButtonErrorPanel);
+          if (responseObj?.statusCode === 'FC00') {
+            PAN_VALIDATION_STATUS = responseObj.panValidation.status.errorCode === '1';
+            if (PAN_VALIDATION_STATUS) {
+              const panStatus = responseObj.panValidation.panStatus;
+              checkUserProceedStatus(panStatus, globals);
+            } else {
+              const panels = {
+                hidePanels: [ccWizardViewBlock],
+                showPanels: [resultPanelBlock, tryAgainButtonErrorPanelBlock],
+              };
+              const errorText = 'PAN validation unsuccessful.';
+              showErrorPanel(panels, errorText);
+              const reloadBtn = document.getElementsByName('tryAgainButtonErrorPanel')?.[0];
+              reloadBtn.addEventListener('click', () => window.location.reload());
+            }
+          } else {
+            const panels = {
+              hidePanels: [ccWizardViewBlock],
+              showPanels: [resultPanelBlock, tryAgainButtonErrorPanelBlock],
+            };
+            const errorText = 'PAN validation API error.';
+            showErrorPanel(panels, errorText);
+            const reloadBtn = document.getElementsByName('tryAgainButtonErrorPanel')?.[0];
+            reloadBtn.addEventListener('click', () => window.location.reload());
           }
         } catch (ex) {
           console.log(ex);
