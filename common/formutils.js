@@ -195,6 +195,57 @@ const setSelectOptions = (optionLists, elementName) => {
   });
 };
 
+/**
+ * Parses the given address into substrings, each containing up to 30 characters.
+ * @param {string} address - The address to parse.
+ * @returns {string[]} An array of substrings, each containing up to 30 characters.
+ */
+const parseCustomerAddress = (address) => {
+  const words = address.trim().split(' ');
+  const substrings = [];
+  let currentSubstring = '';
+
+  words.forEach((word) => {
+    if (substrings.length === 3) {
+      return; // Exit the loop if substrings length is equal to 3
+    }
+    if ((`${currentSubstring} ${word}`).length <= 30) {
+      currentSubstring += (currentSubstring === '' ? '' : ' ') + word;
+    } else {
+      substrings.push(currentSubstring);
+      currentSubstring = word;
+    }
+  });
+
+  return substrings;
+};
+
+/**
+ * Moves the corporate card wizard view from one step to the next step.
+ * @param {String} source - The name attribute of the source element (parent wizard panel).
+ * @param {String} target - The name attribute of the destination element.
+ */
+const moveWizardView = (source, target) => {
+  const navigateFrom = document.getElementsByName(source)?.[0];
+  const current = navigateFrom?.querySelector('.current-wizard-step');
+  const currentMenuItem = navigateFrom?.querySelector('.wizard-menu-active-item');
+  const navigateTo = document.getElementsByName(target)?.[0];
+  current?.classList?.remove('current-wizard-step');
+  navigateTo?.classList?.add('current-wizard-step');
+  // add/remove active class from menu item
+  const navigateToMenuItem = navigateFrom?.querySelector(`li[data-index="${navigateTo?.dataset?.index}"]`);
+  currentMenuItem?.classList?.remove('wizard-menu-active-item');
+  navigateToMenuItem?.classList?.add('wizard-menu-active-item');
+  const event = new CustomEvent('wizard:navigate', {
+    detail: {
+      prevStep: { id: current?.id, index: parseInt(current?.dataset?.index || 0, 10) },
+      currStep: { id: navigateTo?.id, index: parseInt(navigateTo?.dataset?.index || 0, 10) },
+    },
+    bubbles: false,
+  });
+  navigateFrom?.dispatchEvent(event);
+};
+
 export {
   urlPath,
   maskNumber,
@@ -206,4 +257,6 @@ export {
   convertDateToDdMmYyyy,
   setSelectOptions,
   composeNameOption,
+  parseCustomerAddress,
+  moveWizardView,
 };
