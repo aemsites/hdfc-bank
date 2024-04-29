@@ -229,6 +229,22 @@ main .form select {
     center;
 }
 
+/* Password view and hide icon */
+main .form .bi-eye {
+  content: url('../../icons/password-view-icon.png');
+  margin-left: -30px;
+  cursor: pointer;
+  width: 21px;
+  margin-bottom: -6px;
+}
+
+main .form .bi-eye-slash {
+  content: url('../../icons/password-hide-icon.png');
+  margin-left: -30px;
+  cursor: pointer;
+  width: 21px;
+}
+
 /* Style for labels when input is active or not empty */
 main .form :is([data-active='true'], [data-empty='false'], .date-wrapper):not(.field-joiningrenewalfee) > label {
   color: var(--label-color);
@@ -429,7 +445,10 @@ main .form.block .field-otppanel {
       margin-bottom: 0;
       letter-spacing: 2vw;
       caret-color: transparent;
+      height: 40px;
       border-radius: 12px;
+      padding: 15px 25px;
+      width: 98%;
     }
   }
 
