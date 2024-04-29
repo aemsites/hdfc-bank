@@ -2,7 +2,31 @@
 import { parseCustomerAddress, urlPath } from './formutils.js';
 import { restAPICall } from './makeRestAPI.js';
 
-const createExecuteInterfaceRequestObj = (globals, journeyType, breDemogResponse, currentFormContext, panCheckFlag) => {
+const GENDER_MAP = {
+  M: '1',
+  F: '2',
+  O: '3',
+  1: '1',
+  2: '2',
+  3: '3',
+  Male: '1',
+  Female: '2',
+  Other: '3',
+  T: '3',
+};
+const formatDate = (inputDate) => {
+  const date = new Date(inputDate);
+
+  const day = date.getDate();
+  const month = date.toLocaleString('default', { month: 'short' });
+  const year = date.getFullYear();
+
+  const formattedDate = `${day}-${month}-${year}`;
+
+  return formattedDate;
+};
+
+const createExecuteInterfaceRequestObj = (panCheckFlag, globals, journeyType, breDemogResponse, currentFormContext, JWT_TOKEN) => {
   const {
     personalDetails,
     currentDetails,
@@ -90,10 +114,10 @@ const createExecuteInterfaceRequestObj = (globals, journeyType, breDemogResponse
       communicationAddress1: currentAddress.address1,
       communicationAddress2: currentAddress.address1,
       communicationCity: currentAddress.city,
-      dateOfBirth: personalDetails.dobPersonalDetails.$value,
+      dateOfBirth: formatDate(personalDetails.dobPersonalDetails.$value),
       firstName: personalDetails.firstName.$value,
       lastName: personalDetails.lastName.$value,
-      gender: personalDetails.gender.$value,
+      gender: GENDER_MAP[personalDetails.gender.$value],
       occupation: '5',
       officialEmailId: prefilledEmploymentDetails.workEmailAddress.$value,
       panEditFlag,
@@ -101,16 +125,16 @@ const createExecuteInterfaceRequestObj = (globals, journeyType, breDemogResponse
       permanentAddress1: permanentAddress.address1,
       permanentAddress2: permanentAddress.address2,
       permanentCity: permanentAddress.city,
-      permanentZipCode: permanentAddress.pincode,
-      eReferenceNumber: 'AD0952400002',
+      permanentZipCode: String(permanentAddress.pincode),
+      eReferenceNumber: breDemogResponse?.BREFILLER3,
       nameEditFlag,
       mobileEditFlag: journeyType === 'ETB' ? 'N' : 'Y',
       resPhoneEditFlag: 'N',
       comAddressType: '2',
-      comCityZip: currentAddress.pincode,
+      comCityZip: String(currentAddress.pincode),
       customerID: journeyType === 'ETB' ? breDemogResponse.FWCUSTID : '',
       timeInfo: new Date().toISOString(),
-      Id_token_jwt: '',
+      Id_token_jwt: JWT_TOKEN,
       communicationAddress3: currentAddress.address3,
       permanentAddress3: permanentAddress.address3,
       officeAddress1: employmentDetails.officeAddressLine1.$value,
@@ -150,15 +174,16 @@ const createExecuteInterfaceRequestObj = (globals, journeyType, breDemogResponse
       channel: '',
       apsDobEditFlag: 'N',
       apsEmailEditFlag: 'N',
+      journeyFlag: journeyType,
     },
   };
   return requestObj;
 };
 
 const customerValidationHandler = {
-  executeInterfaceApi: (APS_PAN_CHK_FLAG, globals, journeyType, breDemogResponse, currentFormContext) => {
+  executeInterfaceApi: (APS_PAN_CHK_FLAG, globals, journeyType, breDemogResponse, currentFormContext, JWT_TOKEN) => {
     console.log(`APS_PAN_CHK_FLAG: ${APS_PAN_CHK_FLAG} and called executeInterfaceApi()`);
-    const requestObj = createExecuteInterfaceRequestObj(globals, journeyType, breDemogResponse, currentFormContext, APS_PAN_CHK_FLAG);
+    const requestObj = createExecuteInterfaceRequestObj(APS_PAN_CHK_FLAG, globals, journeyType, breDemogResponse, currentFormContext, JWT_TOKEN);
     console.log(requestObj);
     const apiEndPoint = urlPath('/content/hdfc_etb_wo_pacc/api/executeinterface.json');
     const eventHandlers = {

@@ -30,6 +30,8 @@ let IS_ETB_USER = false;
 const CUSTOMER_INPUT = { mobileNumber: '', pan: '', dob: '' };
 const CUSTOMER_DEMOG_DATA = {};
 let BRE_DEMOG_RESPONSE = {};
+let JWT_TOKEN = ''; const
+  E_REFERENCE_NUMBER = '';
 /**
  * Appends a masked number to the specified container element if the masked number is not present.
  * @param {String} containerClass - The class name of the container element.
@@ -371,6 +373,7 @@ const otpValSuccess = (res, globals) => {
   CUSTOMER_INPUT.mobileNumber = pannel.login.mobilePanel.registeredMobileNumber.$value;
   CUSTOMER_INPUT.dob = pannel.login.identifierPanel.dateOfBirth.$value;
   CUSTOMER_INPUT.pan = pannel.login.identifierPanel.pan.$value;
+  JWT_TOKEN = res?.demogResponse?.Id_token_jwt;
   const existingCustomer = existingCustomerCheck(res);
   if (existingCustomer) {
     IS_ETB_USER = true;
@@ -666,15 +669,15 @@ const checkUserProceedStatus = (panStatus, globals) => {
   switch (IS_ETB_USER) {
     case true:
       if (CUSTOMER_INPUT.pan) {
-        executeCheck(customerJourneyType, panStatus, terminationCheck, customerValidationHandler, globals, BRE_DEMOG_RESPONSE, currentFormContext);
+        executeCheck(customerJourneyType, panStatus, terminationCheck, customerValidationHandler, globals, BRE_DEMOG_RESPONSE, currentFormContext, JWT_TOKEN);
       } else if (CUSTOMER_INPUT.dob) {
         if (!CUSTOMER_DEMOG_DATA.panNumberPersonalDetails || !CUSTOMER_DEMOG_DATA.lastName) {
           const result = demogDataCheck(panStatus);
           if (result.proceed) {
-            executeCheck(customerJourneyType, panStatus, result.terminationCheck, customerValidationHandler, globals, BRE_DEMOG_RESPONSE, currentFormContext);
+            executeCheck(customerJourneyType, panStatus, result.terminationCheck, customerValidationHandler, globals, BRE_DEMOG_RESPONSE, currentFormContext, JWT_TOKEN);
           }
         } else {
-          executeCheck(customerJourneyType, panStatus, terminationCheck, customerValidationHandler, globals, BRE_DEMOG_RESPONSE, currentFormContext);
+          executeCheck(customerJourneyType, panStatus, terminationCheck, customerValidationHandler, globals, BRE_DEMOG_RESPONSE, currentFormContext, JWT_TOKEN);
         }
       }
       break;
