@@ -184,14 +184,13 @@ const createExecuteInterfaceRequestObj = (panCheckFlag, globals, breDemogRespons
       journeyFlag: currentFormContext.journeyType,
     },
   };
-  console.log(currentFormContext);
   return requestObj;
 };
 
 const sendIpaRequest = (ipaRequestObj, globals) => {
   const apiEndPoint = urlPath('/content/hdfc_etb_wo_pacc/api/ipa.json');
   if (TOTAL_TIME >= currentFormContext.ipaDuration * 1000) {
-    console.log('Stopped after 60 seconds.');
+    console.log('terminate journey');
     return;
   }
   const eventHandlers = {
@@ -199,7 +198,6 @@ const sendIpaRequest = (ipaRequestObj, globals) => {
       if (response.ipa.ipaResult === '' || response.ipa.ipaResult === null) {
         setTimeout(() => sendIpaRequest(ipaRequestObj, globals), currentFormContext.ipaTimer * 1000);
         TOTAL_TIME += currentFormContext.ipaTimer * 1000;
-        console.log(TOTAL_TIME);
       } else {
         currentFormContext.productDetails = response.productEligibility.productDetails?.[0];
         const { cardBenefitsTextBox } = globals.form.corporateCardWizardView.confirmCardPanel.cardBenefitsPanel.cardBenefitsFeaturesPanel;
@@ -217,7 +215,6 @@ const sendIpaRequest = (ipaRequestObj, globals) => {
 
 const customerValidationHandler = {
   executeInterfaceApi: (APS_PAN_CHK_FLAG, globals, breDemogResponse) => {
-    console.log(`APS_PAN_CHK_FLAG: ${APS_PAN_CHK_FLAG} and called executeInterfaceApi()`);
     const requestObj = createExecuteInterfaceRequestObj(APS_PAN_CHK_FLAG, globals, breDemogResponse);
     const apiEndPoint = urlPath('/content/hdfc_etb_wo_pacc/api/executeinterface.json');
     const eventHandlers = {
