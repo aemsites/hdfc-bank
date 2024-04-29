@@ -503,11 +503,11 @@ const OTPVAL = {
  */
 const listNameOnCard = (firstName, middleName, lastName, globals) => {
   const elementNameSelect = 'nameOnCardDropdown';
-  const dropDownSelectName = globals.form.corporateCardWizardView.confirmCardPanel.cardBenefitsPanel.CorporatetImageAndNamePanel.nameOnCardDropdown;
+  const dropDownSelectField = globals.form.corporateCardWizardView.confirmCardPanel.cardBenefitsPanel.CorporatetImageAndNamePanel.nameOnCardDropdown;
   const options = composeNameOption(firstName, middleName, lastName);
   const initialValue = options[0]?.value;
   setSelectOptions(options, elementNameSelect);
-  globals.functions.setProperty(dropDownSelectName, { enum: options, value: initialValue }); // setting initial value
+  globals.functions.setProperty(dropDownSelectField, { enum: options, value: initialValue }); // setting initial value
   moveWizardView('corporateCardWizardView', 'confirmCardPanel');
 };
 
