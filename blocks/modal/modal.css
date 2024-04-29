@@ -26,6 +26,10 @@ body.modal-open {
     text-align: left;
   }
 
+  legend{
+    display: none;
+  }
+
   .field-label {
     font-size: 18px;
     font-weight: 600;
@@ -113,3 +117,17 @@ body.modal-open {
   padding: 0;
 }
 
+
+.field-viewallcardbenefitspanel{
+  padding: 20px !important;
+
+  .field-backlinkcardbenefits{
+    text-align: left;
+
+    /* stylelint-disable-next-line no-descending-specificity */
+    button{
+      max-width: 100%;
+      border-radius: 6px;
+    }
+  }
+}

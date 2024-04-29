@@ -154,17 +154,21 @@ main img {
         align-items: unset !important;
     }
 
-    .field-consent2panelwrapper{
+    .field-consent2panelwrapper, .field-consent1panelwrapper{
         display: flex !important;
         flex-wrap: nowrap !important;
         flex-direction: unset !important;
 
-        .field-checkboxconsent2{
+        a{
+            color: var(--color-action-text-secondary-default);
+        }
+
+        .field-checkboxconsent2, .field-checkboxconsent1{
             display: unset !important;
             max-width: 21px;
         }
 
-        .field-checkbox2text{
+        .field-checkbox2text, .field-checkbox1text{
             margin-left: -13px;
 
             p{
@@ -173,6 +177,21 @@ main img {
                 line-height: var(--font-linehight-regular);
             }
         }
+
+        .field-checkbox1text p{
+            margin-bottom: -10px !important;
+            margin-top: 1px;
+        }
+    }
+}
+
+.link{
+    color: var(--color-action-text-secondary-default);
+    cursor: pointer;
+    font-weight: normal;
+    
+    &:hover{
+        text-decoration: underline;
     }
 }
 
@@ -281,14 +300,24 @@ main .form form .panel-wrapper {
         margin-top: 10px !important;
      }
 
-     .field-consent2panelwrapper{
-        .field-checkbox2text{
+     .field-consent2panelwrapper, .field-consent1panelwrapper{
+        .field-checkbox2text, .field-checkbox1text{
             margin-left: -13px;
 
             p{
                 margin-top: 1.6em;
             }
+
+
         }
+
+        .field-checkbox1text p{
+            margin-top: 12px !important;
+     }
+    }
+
+    .field-maskedmobilenumber {
+        margin-top: 0 !important;
     }
 
 }
@@ -345,14 +374,23 @@ main .form form .panel-wrapper {
         margin-bottom: 0;
     }
 
-    .field-consent2panelwrapper{
+    .field-consent2panelwrapper, .field-consent1panelwrapper{
         .field-checkbox2text{
             margin-left: -13px;
 
             p{
                 margin-top: 1.6em;
             }
+
         }
+        
+        .field-checkbox1text p{
+            margin-top: 12px !important;
+     }
+    }
+
+    .field-maskedmobilenumber {
+        margin-top: 0 !important;
     }
 }
 
@@ -377,7 +415,7 @@ main .form form .panel-wrapper {
         margin-right: 0 !important;
     }
 
-    .field-consent2panelwrapper{
+    .field-consent2panelwrapper,.field-consent1panelwrapper{
         .field-checkbox2text{
             margin-left: -13px;
         }
