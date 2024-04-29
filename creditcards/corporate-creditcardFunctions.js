@@ -508,7 +508,7 @@ const listNameOnCard = (firstName, middleName, lastName, globals) => {
   const initialValue = options[0]?.value;
   setSelectOptions(options, elementNameSelect);
   globals.functions.setProperty(dropDownSelectName, { enum: options, value: initialValue }); // setting initial value
-  moveCCWizardView('corporateCardWizardView', 'confirmCardPanel');
+  moveWizardView('corporateCardWizardView', 'confirmCardPanel');
 };
 
 /**
@@ -516,7 +516,7 @@ const listNameOnCard = (firstName, middleName, lastName, globals) => {
  */
 const getThisCard = (globals) => {
   const nameOnCardDropdown = globals.form.corporateCardWizardView.confirmCardPanel.cardBenefitsPanel.CorporatetImageAndNamePanel.nameOnCardDropdown.$value;
-  moveCCWizardView('corporateCardWizardView', 'selectKycPaymentPanel');
+  moveWizardView('corporateCardWizardView', 'selectKycPaymentPanel');
 };
 
 /**
