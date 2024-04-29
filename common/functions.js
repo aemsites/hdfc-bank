@@ -37,8 +37,8 @@ function otpValidation(globals) {
  * @param {string} lastName - The last name of the cardholder.
  * @param {object} globals - The global object containing necessary globals form data.
  */
-function checkOffer(firsName, middleName, lastName, globals) {
-  createPanValidationRequest(firsName, middleName, lastName, globals);
+function checkOffer(firstName, middleName, lastName, globals) {
+  createPanValidationRequest(firstName, middleName, lastName, globals);
 }
 
 /**
