@@ -76,6 +76,19 @@ const formUtil = (globalObj, panelName) => ({
       }
     }
   },
+  /**
+   *  Resets the field by setting its value to empty and resetting floating labels.
+   */
+  resetField: () => {
+    globalObj.functions.setProperty(panelName, { value: '' });
+    const element = document.getElementsByName(panelName._data.$_name)?.[0];
+    if (element) {
+      const closestAncestor = element.closest(`.${ANCESTOR_CLASS_NAME}`);
+      if (closestAncestor) {
+        closestAncestor.setAttribute(DATA_ATTRIBUTE_EMPTY, true);
+      }
+    }
+  },
 });
 
 /**

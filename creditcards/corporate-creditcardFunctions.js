@@ -836,27 +836,78 @@ const prefillForm = (globals) => {
 };
 
 const pinCodeMaster = async (globals) => {
+  const yourDetails = globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage;
+  const currentDetails = yourDetails.currentDetails;
+  const employeeDetails = yourDetails.employmentDetails;
+  const addressCurentNtb = currentDetails.currentAddressNTB;
+  const permanentAddressNtb = addressCurentNtb.permanentAddress.permanentAddressPanel;
+  const newAddressEtb = currentDetails.currentAddressETB.newCurentAddressPanel;
+  const pinMasterConstants = [
+    {
+      keyFlow: 'NTB_CURRENT_ADDRESS_FIELD',
+      pincodeField: addressCurentNtb.currentAddresPincodeNTB,
+      cityField: addressCurentNtb.city,
+      stateField: addressCurentNtb.state,
+    },
+    {
+      keyFlow: 'NTB_PERMANENT_ADDRESS_FIELD',
+      pincodeField: permanentAddressNtb.permanentAddressPincode,
+      cityField: permanentAddressNtb.permanentAddressCity,
+      stateField: permanentAddressNtb.permanentAddressState,
+    },
+    {
+      keyFlow: 'ETB_NEW_ADDRESS_FIELD',
+      pincodeField: newAddressEtb.newCurentAddressPin,
+      cityField: newAddressEtb.newCurentAddressCity,
+      stateField: newAddressEtb.newCurentAddressState,
+    },
+    {
+      keyFlow: 'OFFICE_ADDRESS_FIELD',
+      pincodeField: employeeDetails.officeAddressPincode,
+      cityField: employeeDetails.officeAddressCity,
+      stateField: employeeDetails.officeAddressState,
+    },
+  ];
   const PIN_CODE_LENGTH = 6;
   const changeDataAttrObj = { attrChange: true, value: false };
-  const ntbCurrentDetails = globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.currentDetails.currentAddressNTB;
-  const pincodeValNtb = ntbCurrentDetails.currentAddresPincodeNTB.$value;
-  const cityFieldNtb = ntbCurrentDetails.city;
-  const stateFieldNtb = ntbCurrentDetails.state;
-  const setCityField = formUtil(globals, cityFieldNtb);
-  const setStateField = formUtil(globals, stateFieldNtb);
-  const url = urlPath(`/content/hdfc_commonforms/api/mdm.CREDIT.SIX_DIGIT_PINCODE.PINCODE-${pincodeValNtb}.json`);
-  const method = 'GET';
-  try {
-    if (pincodeValNtb?.length < PIN_CODE_LENGTH) return;
-    const response = await getJsonResponse(url, null, method);
-    const [{ CITY, STATE }] = response;
-    setCityField.setValue(CITY, changeDataAttrObj);
-    setCityField.enabled(false);
-    setStateField.setValue(STATE, changeDataAttrObj);
-    setStateField.enabled(false);
-  } catch (error) {
-    console.log(error);
-  }
+
+  const pinmasterApi = async (globalObj, cityField, stateField, pinCodeVal) => {
+    const url = urlPath(`/content/hdfc_commonforms/api/mdm.CREDIT.SIX_DIGIT_PINCODE.PINCODE-${pinCodeVal}.json`);
+    const method = 'GET';
+    const setCityField = formUtil(globalObj, cityField);
+    const setStateField = formUtil(globalObj, stateField);
+    const resetStateCityFields = () => {
+      setCityField.resetField();
+      setStateField.resetField();
+      setCityField.enabled(false);
+      setStateField.enabled(false);
+    };
+    const pinMasterErrorHandler = (errCode, errMsg) => {
+      resetStateCityFields();
+      // reset in case if invalid pincode catched, reset the state, city field in case filled
+      // switch(errCode){
+      //   case '':
+      //   default:
+      // }
+    };
+    try {
+      if (pinCodeVal?.length < PIN_CODE_LENGTH) return;
+      const response = await getJsonResponse(url, null, method);
+      const [{ CITY, STATE }] = response;
+      const [{ errorCode, errorMessage }] = response;
+      if (CITY && STATE) {
+        setCityField.setValue(CITY, changeDataAttrObj);
+        setCityField.enabled(false);
+        setStateField.setValue(STATE, changeDataAttrObj);
+        setStateField.enabled(false);
+      } else if (errorCode) {
+        pinMasterErrorHandler({ errorCode, errorMessage });
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  pinMasterConstants?.forEach((field) => (field.pincodeField.$value && pinmasterApi(globals, field.cityField, field.stateField, field.pincodeField.$value)));
 };
 
 export {
