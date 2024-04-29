@@ -4,6 +4,8 @@ import {
   urlPath,
   moveWizardView,
   formUtil,
+  composeNameOption,
+  setSelectOptions,
 } from './formutils.js';
 import { currentFormContext } from './journey-utils.js';
 import { restAPICall } from './makeRestAPI.js';
@@ -187,6 +189,24 @@ const createExecuteInterfaceRequestObj = (panCheckFlag, globals, breDemogRespons
   return requestObj;
 };
 
+/**
+ * create a list of name to be dispayed on card dropdown in confirm card screen.
+ * @param {string} firstName - The first name of the cardholder.
+ * @param {string} middleName - The last name of the cardholder.
+ * @param {string} lastName - The last name of the cardholder.
+ * @param {object} globals - globals variables object containing form configurations.
+ */
+const listNameOnCard = (firstName, middleName, lastName, globals) => {
+  const elementNameSelect = 'nameOnCardDropdown';
+  const dropDownSelectField = globals.form.corporateCardWizardView.confirmCardPanel.cardBenefitsPanel.CorporatetImageAndNamePanel.nameOnCardDropdown;
+  const options = composeNameOption(firstName, middleName, lastName);
+  const initialValue = options[0]?.value;
+  setSelectOptions(options, elementNameSelect);
+  const setDropdownField = formUtil(globals, dropDownSelectField);
+  setDropdownField.setEnum(options, initialValue); // setting initial value
+  moveWizardView('corporateCardWizardView', 'confirmCardPanel');
+};
+
 const sendIpaRequest = (ipaRequestObj, globals) => {
   const apiEndPoint = urlPath('/content/hdfc_etb_wo_pacc/api/ipa.json');
   if (TOTAL_TIME >= currentFormContext.ipaDuration * 1000) {
@@ -203,7 +223,8 @@ const sendIpaRequest = (ipaRequestObj, globals) => {
         const { cardBenefitsTextBox } = globals.form.corporateCardWizardView.confirmCardPanel.cardBenefitsPanel.cardBenefitsFeaturesPanel;
         const cardBenefitsTextField = formUtil(globals, cardBenefitsTextBox);
         cardBenefitsTextField.setValue(response.productEligibility.productDetails[0].keyBenefits[0]);
-        moveWizardView('corporateCardWizardView', 'confirmCardPanel');
+        const { firsName, middleName, lastName } = currentFormContext.customerName;
+        listNameOnCard(firsName, middleName, lastName, globals);
       }
     },
     errorCallBack: (response) => {

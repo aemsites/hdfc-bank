@@ -76,6 +76,14 @@ const formUtil = (globalObj, panelName) => ({
       }
     }
   },
+  /**
+   * Sets the value of an enum field with the provided options and value.
+   * @param {Array} enumOptions - An array containing the options for the enum field.
+   * @param {String} val - The value to set for the enum field
+   */
+  setEnum: (enumOptions, val) => {
+    globalObj.functions.setProperty(panelName, { enum: enumOptions, value: val }); // setting initial value among enums options
+  },
 });
 
 /**

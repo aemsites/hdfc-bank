@@ -495,23 +495,6 @@ const OTPVAL = {
 };
 
 /**
- * create a list of name to be dispayed on card dropdown in confirm card screen.
- * @param {string} firstName - The first name of the cardholder.
- * @param {string} middleName - The last name of the cardholder.
- * @param {string} lastName - The last name of the cardholder.
- * @param {object} globals - globals variables object containing form configurations.
- */
-const listNameOnCard = (firstName, middleName, lastName, globals) => {
-  const elementNameSelect = 'nameOnCardDropdown';
-  const dropDownSelectField = globals.form.corporateCardWizardView.confirmCardPanel.cardBenefitsPanel.CorporatetImageAndNamePanel.nameOnCardDropdown;
-  const options = composeNameOption(firstName, middleName, lastName);
-  const initialValue = options[0]?.value;
-  setSelectOptions(options, elementNameSelect);
-  globals.functions.setProperty(dropDownSelectField, { enum: options, value: initialValue }); // setting initial value
-  moveWizardView('corporateCardWizardView', 'confirmCardPanel');
-};
-
-/**
  * Moves the wizard view to the "selectKycPaymentPanel" step.
  */
 const getThisCard = (globals) => {
@@ -662,7 +645,7 @@ const checkUserProceedStatus = (panStatus, globals) => {
  * @returns {Object} - The PAN validation request object.
  */
 const createPanValidationRequest = (firsName, middleName, lastName, globals) => {
-  listNameOnCard(firsName, middleName, lastName, globals); // to display list of names on card
+  currentFormContext.customerName = { firsName, middleName, lastName }; // required for listNameOnCard function.
   const panValidation = {
     /**
      * Create pan validation request object.
