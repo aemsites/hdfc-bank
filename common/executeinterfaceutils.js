@@ -191,13 +191,11 @@ const createExecuteInterfaceRequestObj = (panCheckFlag, globals, breDemogRespons
 
 /**
  * create a list of name to be dispayed on card dropdown in confirm card screen.
- * @param {string} firstName - The first name of the cardholder.
- * @param {string} middleName - The last name of the cardholder.
- * @param {string} lastName - The last name of the cardholder.
  * @param {object} globals - globals variables object containing form configurations.
  */
-const listNameOnCard = (firstName, middleName, lastName, globals) => {
+const listNameOnCard = (globals) => {
   const elementNameSelect = 'nameOnCardDropdown';
+  const { firstName, middleName, lastName } = currentFormContext.customerName;
   const dropDownSelectField = globals.form.corporateCardWizardView.confirmCardPanel.cardBenefitsPanel.CorporatetImageAndNamePanel.nameOnCardDropdown;
   const options = composeNameOption(firstName, middleName, lastName);
   const initialValue = options[0]?.value;
@@ -223,8 +221,7 @@ const sendIpaRequest = (ipaRequestObj, globals) => {
         const { cardBenefitsTextBox } = globals.form.corporateCardWizardView.confirmCardPanel.cardBenefitsPanel.cardBenefitsFeaturesPanel;
         const cardBenefitsTextField = formUtil(globals, cardBenefitsTextBox);
         cardBenefitsTextField.setValue(response.productEligibility.productDetails[0].keyBenefits[0]);
-        const { firsName, middleName, lastName } = currentFormContext.customerName;
-        listNameOnCard(firsName, middleName, lastName, globals);
+        listNameOnCard(globals); // to display list of name on card in get this card screen
       }
     },
     errorCallBack: (response) => {

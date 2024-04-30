@@ -644,8 +644,8 @@ const checkUserProceedStatus = (panStatus, globals) => {
  * @param {Object} globals - The global object containing necessary data for PAN validation.
  * @returns {Object} - The PAN validation request object.
  */
-const createPanValidationRequest = (firsName, middleName, lastName, globals) => {
-  currentFormContext.customerName = { firsName, middleName, lastName }; // required for listNameOnCard function.
+const createPanValidationRequest = (firstName, middleName, lastName, globals) => {
+  currentFormContext.customerName = { firstName, middleName, lastName }; // required for listNameOnCard function.
   const panValidation = {
     /**
      * Create pan validation request object.
