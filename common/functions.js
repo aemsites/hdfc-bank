@@ -6,6 +6,7 @@ import {
   prefillForm,
   createPanValidationRequest,
   getAddressDetails,
+  currentAddressToggleHandler,
 } from '../creditcards/corporate-creditcardFunctions.js';
 
 import { restAPICall } from './makeRestAPI.js';
@@ -58,4 +59,5 @@ export {
   getThisCard,
   prefillForm,
   getAddressDetails,
+  currentAddressToggleHandler,
 };

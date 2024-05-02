@@ -63,15 +63,16 @@ const createExecuteInterfaceRequestObj = (panCheckFlag, globals, breDemogRespons
     if (breDemogResponse.VDCUSTFULLNAME === fullName) {
       nameEditFlag = 'N';
     }
-    if (document.getElementsByName('currentAddressToggle')[0].checked) {
-      const { newcurentaddresspanel } = currentDetails.currentAddressETB;
-      currentAddress.address1 = newcurentaddresspanel.newCurentAddressLine1.$value;
-      currentAddress.address2 = newcurentaddresspanel.newCurentAddressLine2.$value;
-      currentAddress.address3 = newcurentaddresspanel.newCurentAddressLine3.$value;
-      currentAddress.city = newcurentaddresspanel.newCurentAddressCity.$value;
-      currentAddress.pincode = newcurentaddresspanel.newCurentAddressPin.$value;
-      currentAddress.state = newcurentaddresspanel.newCurentAddressState.$value;
+    if (currentDetails.currentAddressETB.currentAddressToggle.$value === 'on') {
+      const { newCurentAddressPanel } = currentDetails.currentAddressETB;
+      currentAddress.address1 = newCurentAddressPanel.newCurentAddressLine1.$value;
+      currentAddress.address2 = newCurentAddressPanel.newCurentAddressLine2.$value;
+      currentAddress.address3 = newCurentAddressPanel.newCurentAddressLine3.$value;
+      currentAddress.city = newCurentAddressPanel.newCurentAddressCity.$value;
+      currentAddress.pincode = newCurentAddressPanel.newCurentAddressPin.$value;
+      currentAddress.state = newCurentAddressPanel.newCurentAddressState.$value;
     } else {
+      isAddressEditFlag = 'N';
       const customerFiller2 = breDemogResponse?.BREFILLER2?.toUpperCase();
       if (customerFiller2 === 'D106') {
         const customerValidAddress = parseCustomerAddress(`${breDemogResponse?.VDCUSTADD1} ${breDemogResponse?.VDCUSTADD2} ${breDemogResponse?.VDCUSTADD3}`);
@@ -80,7 +81,6 @@ const createExecuteInterfaceRequestObj = (panCheckFlag, globals, breDemogRespons
         currentAddress.pincode = breDemogResponse.VDCUSTZIPCODE;
         currentAddress.state = breDemogResponse.VDCUSTSTATE;
       } else {
-        isAddressEditFlag = 'N';
         currentAddress.address1 = breDemogResponse?.VDCUSTADD1;
         currentAddress.address2 = breDemogResponse?.VDCUSTADD2;
         currentAddress.address3 = breDemogResponse?.VDCUSTADD3;
@@ -175,7 +175,7 @@ const createExecuteInterfaceRequestObj = (panCheckFlag, globals, breDemogRespons
       userAgent: navigator.userAgent,
       journeyID: currentFormContext.journeyID,
       journeyName: currentFormContext.journeyName,
-      nameOnCard: fullName,
+      nameOnCard: fullName.length > 19 ? '' : fullName,
       dsaValue: '',
       cardsData: '',
       channelSource: '',
@@ -234,6 +234,7 @@ const sendIpaRequest = (ipaRequestObj, globals) => {
 const customerValidationHandler = {
   executeInterfaceApi: (APS_PAN_CHK_FLAG, globals, breDemogResponse) => {
     const requestObj = createExecuteInterfaceRequestObj(APS_PAN_CHK_FLAG, globals, breDemogResponse);
+    currentFormContext.executeInterfaceReqObj = requestObj;
     const apiEndPoint = urlPath('/content/hdfc_etb_wo_pacc/api/executeinterface.json');
     const eventHandlers = {
       successCallBack: (response) => {
@@ -274,4 +275,22 @@ const customerValidationHandler = {
   },
 };
 
-export default customerValidationHandler;
+const executeInterfaceApiFinal = (globals) => {
+  const requestObj = currentFormContext.executeInterfaceReqObj;
+  currentFormContext.executeInterfaceReqObj.requestString.productCode = currentFormContext.productCode;
+  const apiEndPoint = urlPath('/content/hdfc_etb_wo_pacc/api/executeinterface.json');
+  const eventHandlers = {
+    successCallBack: (response) => {
+      console.log(response, globals);
+    },
+    errorCallBack: (response) => {
+      console.log(response);
+    },
+  };
+  restAPICall('', 'POST', requestObj, apiEndPoint, eventHandlers.successCallBack, eventHandlers.errorCallBack, 'Loading');
+};
+
+export {
+  customerValidationHandler,
+  executeInterfaceApiFinal,
+};

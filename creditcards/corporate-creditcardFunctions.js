@@ -6,7 +6,7 @@
 import { createJourneyId, currentFormContext } from '../common/journey-utils.js';
 import PANValidationAndNameMatchService from '../common/panvalidation.js';
 import executeCheck from '../common/panutils.js';
-import customerValidationHandler from '../common/executeinterfaceutils.js';
+import { customerValidationHandler, executeInterfaceApiFinal } from '../common/executeinterfaceutils.js';
 import {
   formUtil,
   maskNumber,
@@ -19,6 +19,7 @@ import {
   setSelectOptions,
   composeNameOption,
   moveWizardView,
+  parseCustomerAddress,
 } from '../common/formutils.js';
 
 const journeyName = 'CORPORATE_CARD_JOURNEY';
@@ -32,6 +33,7 @@ let IS_ETB_USER = false;
 const CUSTOMER_INPUT = { mobileNumber: '', pan: '', dob: '' };
 const CUSTOMER_DEMOG_DATA = {};
 let BRE_DEMOG_RESPONSE = {};
+let customerParsedAddress = [];
 /**
  * Appends a masked number to the specified container element if the masked number is not present.
  * @param {String} containerClass - The class name of the container element.
@@ -220,6 +222,55 @@ const splitName = (fullName) => {
   return name;
 };
 
+/**
+ * Handles toggling of the current address based on certain conditions.
+ *
+ * @param {Object} globals - Global object containing form and context information.
+ * @returns {void}
+ */
+const currentAddressToggleHandler = (globals) => {
+  if (currentFormContext.journeyType === 'ETB' && globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.currentDetails.currentAddressETB.currentAddressToggle.$value === 'on') {
+    const { newCurentAddressPanel } = globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.currentDetails.currentAddressETB;
+
+    const newCurentAddressLine1 = formUtil(globals, newCurentAddressPanel.newCurentAddressLine1);
+    const newCurentAddressLine2 = formUtil(globals, newCurentAddressPanel.newCurentAddressLine2);
+    const newCurentAddressLine3 = formUtil(globals, newCurentAddressPanel.newCurentAddressLine3);
+    const newCurentAddressCity = formUtil(globals, newCurentAddressPanel.newCurentAddressCity);
+    const newCurentAddressPin = formUtil(globals, newCurentAddressPanel.newCurentAddressPin);
+    const newCurentAddressState = formUtil(globals, newCurentAddressPanel.newCurentAddressState);
+
+    /**
+     * Sets the address fields with the parsed customer address data.
+     * If the customer address is not available, it parses and sets it from BRE_DEMOG_RESPONSE.
+     */
+    const setAddress = () => {
+      newCurentAddressLine1.setValue(customerParsedAddress[0], { attrChange: true, value: false });
+      newCurentAddressLine2.setValue(customerParsedAddress[1], { attrChange: true, value: false });
+      newCurentAddressLine3.setValue(customerParsedAddress[2], { attrChange: true, value: false });
+    };
+
+    // Check if BRE_DEMOG_RESPONSE exists and if the BREFILLER2 is 'D106'
+    if (BRE_DEMOG_RESPONSE?.BREFILLER2.toUpperCase() === 'D106') {
+      // Check if customerParsedAddress has data, if not, parse from BRE_DEMOG_RESPONSE
+      if (customerParsedAddress.length > 0) {
+        setAddress();
+      } else {
+        customerParsedAddress = parseCustomerAddress(`${BRE_DEMOG_RESPONSE?.VDCUSTADD1} ${BRE_DEMOG_RESPONSE?.VDCUSTADD2} ${BRE_DEMOG_RESPONSE?.VDCUSTADD3}`);
+        setAddress();
+      }
+    } else {
+      // Set address fields from BRE_DEMOG_RESPONSE if BREFILLER2 is not 'D106'
+      newCurentAddressLine1.setValue(BRE_DEMOG_RESPONSE?.VDCUSTADD1, { attrChange: true, value: false });
+      newCurentAddressLine2.setValue(BRE_DEMOG_RESPONSE?.VDCUSTADD2, { attrChange: true, value: false });
+      newCurentAddressLine3.setValue(BRE_DEMOG_RESPONSE?.VDCUSTADD3, { attrChange: true, value: false });
+    }
+
+    newCurentAddressCity.setValue(BRE_DEMOG_RESPONSE?.VDCUSTCITY, { attrChange: true, value: false });
+    newCurentAddressPin.setValue(BRE_DEMOG_RESPONSE?.VDCUSTZIPCODE, { attrChange: true, value: false });
+    newCurentAddressState.setValue(BRE_DEMOG_RESPONSE?.VDCUSTSTATE, { attrChange: true, value: false });
+  }
+};
+
 /* Automatically fills form fields based on response data.
  * @param {object} res - The response data object.
  * @param {object} globals - Global variables object.
@@ -285,6 +336,17 @@ const personalDetailsPreFillFromBRE = (res, globals) => {
   prefilledCurrentAdddress.setValue(completeAddress);
   const currentAddressETBUtil = formUtil(globals, currentAddressETB);
   currentAddressETBUtil.visible(true);
+  const fullAddress = [
+    breCheckAndFetchDemogResponse?.VDCUSTADD1,
+    breCheckAndFetchDemogResponse?.VDCUSTADD2,
+    breCheckAndFetchDemogResponse?.VDCUSTADD3,
+  ].filter(Boolean).join('');
+  if (fullAddress.length < 30) {
+    const currentAddressETBToggle = formUtil(globals, currentAddressETB.currentAddressToggle);
+    currentAddressETBToggle.setValue('on');
+    currentAddressETBToggle.enabled(false);
+    currentAddressToggleHandler(globals);
+  }
   const personaldetails = document.querySelector('.field-personaldetails');
   personaldetails.classList.add('personaldetails-disabled');
   addDisableClass(personaldetails);
@@ -499,6 +561,7 @@ const OTPVAL = {
  */
 const getThisCard = (globals) => {
   const nameOnCardDropdown = globals.form.corporateCardWizardView.confirmCardPanel.cardBenefitsPanel.CorporatetImageAndNamePanel.nameOnCardDropdown.$value;
+  executeInterfaceApiFinal(globals);
   moveWizardView('corporateCardWizardView', 'selectKycPaymentPanel');
 };
 
@@ -768,4 +831,5 @@ export {
   currentFormContext,
   createPanValidationRequest,
   getAddressDetails,
+  currentAddressToggleHandler,
 };
