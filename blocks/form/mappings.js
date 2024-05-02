@@ -20,7 +20,7 @@ export default async function componentDecorator(fd) {
     const module = await import('./components/passwordField.js');
     return module.default;
   }
-  if ((fieldType?.includes('input') || fieldType === 'drop-down') && fd.appliedCssClassNames !== 'passwordField') {
+  if ((fieldType?.includes('input') || fieldType === 'drop-down' || fieldType === 'email') && fd.appliedCssClassNames !== 'passwordField') {
     const module = await import('./components/floatingFields.js');
     return module.default;
   }
