@@ -1,3 +1,4 @@
+/* stylelint-disable selector-not-notation */
 /* stylelint-disable no-descending-specificity */
 /* stylelint-disable selector-class-pattern */
 @import url('../../creditcards/creditcards.css');
@@ -396,7 +397,7 @@ main .form .field-successresultpanel {
   }
 }
 
-main .form .field-errorresultpanel > div:not(.field-errorresulttextlabel),
+main .form .field-errorresultpanel > div.bulleted-paragraph,
 main
   .form
   .field-successresultpanel
@@ -430,10 +431,17 @@ main .form .field-successresultpanel .field-arnnumber {
 main
   .form
   .field-errorresultpanel
-  > div:not(.field-errorresulttextlabel)::before,
+  > .bulleted-paragraph::before,
 main .form .field-successresultpanel > div.field-arnnumber::before {
   content: url('../../icons/result-list-icon.svg');
   padding-right: 15px;
+}
+
+main
+  .form
+  .field-errorresultpanel
+  > div:not(.bulleted-paragraph) {
+    justify-content: center;
 }
 
 main .form.block .field-otppanel {

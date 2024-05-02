@@ -32,7 +32,8 @@ input[type='number'] {
 ul.wizard-menu-items {
   flex-wrap: nowrap;
   gap: 0;
-  margin-right: -35px;
+  margin-right: -111vw;
+  width: 110%;
 }
 
 li.wizard-menu-item {
@@ -338,14 +339,20 @@ fieldset fieldset {
 }
 
 @media (width <= 960px) {
-main .form form .field-corporatecardwizardview.wizard .field-cardbenefitsfeaturespanel {
-  padding-left: 28px;
-}
+  main .form form .field-corporatecardwizardview.wizard {
+    ul.wizard-menu-items {
+      width: calc(100vw);
+    }
+    
+    .field-cardbenefitsfeaturespanel {
+      padding-left: 28px;
+    }
+  }
 }
 
 @media (width <= 767px) {
 main .form form .field-corporatecardwizardview.wizard {
-  ul.wizard-menu-items { width: calc(300%); }
+  ul.wizard-menu-items {width: calc(120vw);}
   
   li.wizard-menu-item { width: auto; }
 
@@ -391,8 +398,15 @@ main .form form .field-corporatecardwizardview.wizard {
 }
 }
 
+@media (width <= 600px) {
+  main .form form .field-corporatecardwizardview.wizard {
+    ul.wizard-menu-items {width: calc(140vw);}
+  }
+}
+
 @media (width <= 480px) {
 main .form form .field-corporatecardwizardview.wizard {
+  ul.wizard-menu-items {width: calc(180vw);}
   fieldset { width: 85vw; }
 
   .field-selectkycpaymentpanel {
