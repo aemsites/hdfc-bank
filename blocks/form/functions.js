@@ -1,6 +1,13 @@
 /* eslint no-console: ["error", { allow: ["warn", "error"] }] */
 import {
-  getOTP, otpValidation, checkOffer, getThisCard, resendOTP, prefillForm, getAddressDetails,
+  getOTP,
+  otpValidation,
+  checkOffer,
+  getThisCard,
+  resendOTP,
+  prefillForm,
+  getAddressDetails,
+  currentAddressToggleHandler,
 } from '../../common/functions.js';
 
 /**
@@ -109,5 +116,15 @@ function days(endDate, startDate) {
 
 // eslint-disable-next-line import/prefer-default-export
 export {
-  getFullName, onWizardInit, getOTP, otpValidation, days, checkOffer, getThisCard, resendOTP, prefillForm, getAddressDetails,
+  getFullName,
+  onWizardInit,
+  getOTP,
+  otpValidation,
+  days,
+  checkOffer,
+  getThisCard,
+  resendOTP,
+  prefillForm,
+  getAddressDetails,
+  currentAddressToggleHandler,
 };

@@ -99,11 +99,6 @@ main .form form {
     }
   }
 
-  .field-currentaddresstoggle {
-    flex-direction: row-reverse;
-    width: fit-content;
-  }
-
   .field-permanentaddresstoggle,
   .field-ckyctoggle,
   .field-currentaddresstoggle {
@@ -131,6 +126,16 @@ main .form form {
       margin-right: 10px;
       transition: transform 0.3s;
       margin-left: 1px;
+    }
+  }
+
+  .field-currentaddresstoggle {
+    flex-direction: row-reverse;
+    width: fit-content;
+
+    input[disabled] + .field-label {
+      pointer-events: none;
+      cursor: not-allowed !important;
     }
   }
 

@@ -76,6 +76,14 @@ const formUtil = (globalObj, panelName) => ({
       }
     }
   },
+  /**
+   * Sets the value of an enum field with the provided options and value.
+   * @param {Array} enumOptions - An array containing the options for the enum field.
+   * @param {String} val - The value to set for the enum field
+   */
+  setEnum: (enumOptions, val) => {
+    globalObj.functions.setProperty(panelName, { enum: enumOptions, value: val }); // setting initial value among enums options
+  },
 });
 
 /**
@@ -154,6 +162,98 @@ const setDataAttributeOnClosestAncestor = (elementName, fieldValue, dataAttribut
   }
 };
 
+/**
+ * Generates an array of objects representing different name compositions based on the provided names.
+ * @param {string} fn - The first name.
+ * @param {string} mn - The middle name.
+ * @param {string} ln - The last name.
+ * @returns {Array<Object>} -  An array of objects representing different combinations of names using the provided first name (fn), middle name (mn), and last name (ln).
+ */
+const composeNameOption = (fn, mn, ln) => {
+  const initial = (str) => str?.charAt(0);
+  const stringify = ([a, b]) => (a && b ? `${a} ${b}` : '');
+  const toOption = (a) => ({ label: a, value: a });
+  const names = [
+    [fn, initial(mn)],
+    [fn, mn],
+    [mn, fn],
+    [mn, initial(fn)],
+    [initial(mn), fn],
+    [fn, ln],
+    [mn, ln],
+    [initial(mn), ln],
+  ]?.map(stringify)?.filter((el) => el?.length);
+  return [...new Set(names)]?.map(toOption);
+};
+
+/**
+ * Sets the options of a select element based on the provided option lists.
+ * @param {Array<object>} optionLists - An array of objects representing the options to be set.
+ * @param {string} elementName - The name attribute of the select element.
+ */
+const setSelectOptions = (optionLists, elementName) => {
+  const selectOption = document.querySelector(`[name=${elementName}]`);
+  optionLists?.forEach((option) => {
+    const optionElement = document.createElement('option');
+    optionElement.value = option?.value;
+    optionElement.textContent = option?.label;
+    const parent = selectOption?.parentNode;
+    selectOption?.appendChild(optionElement);
+    parent?.setAttribute('data-active', true);
+  });
+};
+
+/**
+ * Parses the given address into substrings, each containing up to 30 characters.
+ * @param {string} address - The address to parse.
+ * @returns {string[]} An array of substrings, each containing up to 30 characters.
+ */
+const parseCustomerAddress = (address) => {
+  const words = address.trim().split(' ');
+  const substrings = [];
+  let currentSubstring = '';
+
+  words.forEach((word) => {
+    if (substrings.length === 3) {
+      return; // Exit the loop if substrings length is equal to 3
+    }
+    if ((`${currentSubstring} ${word}`).length <= 30) {
+      currentSubstring += (currentSubstring === '' ? '' : ' ') + word;
+    } else {
+      substrings.push(currentSubstring);
+      currentSubstring = word;
+    }
+  });
+
+  return substrings;
+};
+
+/**
+ * Moves the corporate card wizard view from one step to the next step.
+ * @param {String} source - The name attribute of the source element (parent wizard panel).
+ * @param {String} target - The name attribute of the destination element.
+ */
+const moveWizardView = (source, target) => {
+  const navigateFrom = document.getElementsByName(source)?.[0];
+  const current = navigateFrom?.querySelector('.current-wizard-step');
+  const currentMenuItem = navigateFrom?.querySelector('.wizard-menu-active-item');
+  const navigateTo = document.getElementsByName(target)?.[0];
+  current?.classList?.remove('current-wizard-step');
+  navigateTo?.classList?.add('current-wizard-step');
+  // add/remove active class from menu item
+  const navigateToMenuItem = navigateFrom?.querySelector(`li[data-index="${navigateTo?.dataset?.index}"]`);
+  currentMenuItem?.classList?.remove('wizard-menu-active-item');
+  navigateToMenuItem?.classList?.add('wizard-menu-active-item');
+  const event = new CustomEvent('wizard:navigate', {
+    detail: {
+      prevStep: { id: current?.id, index: parseInt(current?.dataset?.index || 0, 10) },
+      currStep: { id: navigateTo?.id, index: parseInt(navigateTo?.dataset?.index || 0, 10) },
+    },
+    bubbles: false,
+  });
+  navigateFrom?.dispatchEvent(event);
+};
+
 export {
   urlPath,
   maskNumber,
@@ -163,4 +263,8 @@ export {
   convertDateToMmmDdYyyy,
   setDataAttributeOnClosestAncestor,
   convertDateToDdMmYyyy,
+  setSelectOptions,
+  composeNameOption,
+  parseCustomerAddress,
+  moveWizardView,
 };
