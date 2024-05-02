@@ -10,7 +10,7 @@ const executeCheck = (panStatus, terminationCheck, callback, globals, breDemogRe
       } else if (panStatus === 'E') {
         callback.executeInterfaceApi(apsPanChkFlag, globals, breDemogResponse);
       } else if (DEAD_PAN_STATUS.includes(panStatus)) {
-        callback.terminateJourney(panStatus);
+        callback.terminateJourney(panStatus, globals);
       } else {
         apsPanChkFlag = 'Y';
         callback.executeInterfaceApi(apsPanChkFlag, globals, breDemogResponse);
@@ -20,7 +20,7 @@ const executeCheck = (panStatus, terminationCheck, callback, globals, breDemogRe
       if (panStatus === 'E') {
         callback.executeInterfaceApi(apsPanChkFlag, globals, breDemogResponse);
       } else if (DEAD_PAN_STATUS.includes(panStatus)) {
-        callback.terminateJourney(panStatus);
+        callback.terminateJourney(panStatus, globals);
       } else {
         callback.restartJourney(panStatus);
       }

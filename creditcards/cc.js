@@ -190,39 +190,4 @@ const viewAllBtnPannelConfig = { // linkModal for corporateCardWizard pannel vie
   reqConsentAgree: true,
 };
 linkModalFunction(viewAllBtnPannelConfig);
-
-/* Code for floating field label, initialized after DOM is rendered */
-const inputs = document.querySelectorAll('input[type="text"], input[type="number"], input[type="date"], input[type="email"], .field-wrapper textarea, .field-wrapper select');
-
-inputs.forEach((input) => {
-  const wrapper = input.closest('.field-wrapper');
-  input.addEventListener('focus', () => {
-    wrapper.dataset.active = 'true';
-    wrapper.dataset.empty = !input.value;
-  });
-  input.addEventListener('blur', () => {
-    delete wrapper.dataset.active;
-    wrapper.dataset.empty = !input.value;
-  });
-  wrapper.dataset.empty = !input.value;
-});
-
-/* End of code for floating field label */
-
-/* Code of disabling future dates */
-
-const dateInputs = document.querySelectorAll('input[id^="datepicker-"]');
-if (dateInputs) {
-  dateInputs.forEach((input) => {
-    const textInputValue = input.getAttribute('edit-value');
-    input.type = 'date';
-    input.value = textInputValue;
-    const today = new Date();
-    const currentDate = today.toISOString().split('T')[0];
-    input.setAttribute('max', currentDate);
-  });
-}
-
-/* End of code for disabling future dates */
-
 export { decorateStepper, onWizardInit };
