@@ -2731,7 +2731,7 @@ class FunctionRuntimeImpl {
                         validation = interpreter.globals.form.getElement(element.$id).validate();
                     }
                     if (Array.isArray(validation) && validation.length) {
-                        interpreter.globals.form.logger.error('Form Validation Error');
+                        interpreter.globals.form.logger.warn('Form Validation Error');
                     }
                     return validation;
                 },
