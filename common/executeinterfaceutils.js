@@ -211,15 +211,11 @@ const terminateJourney = (globals) => {
 };
 const resumeJourney = (globals, response) => {
   currentFormContext.productDetails = response.productEligibility.productDetails?.[0];
-  //const { cardImage } = globals.form.corporateCardWizardView.confirmCardPanel.cardBenefitsPanel.CorporatetImageAndNamePanel;
-  //const cardImageField = formUtil(globals, cardImage);
-  //debugger;
   let imageEl = document.querySelector('.field-cardimage > picture');
-  const imagePath = "https://applyonlinedev.hdfcbank.com"+response.productEligibility.productDetails[0]?.cardTypePath+"?width=2000&optimize=medium";
-  imageEl.childNodes[5].setAttribute("src", imagePath);
-  imageEl.childNodes[3].setAttribute("srcset", imagePath);
-  imageEl.childNodes[1].setAttribute("srcset", imagePath);
-  //cardImageField.setValue("https://applyonlinedev.hdfcbank.com/"+response.productEligibility.productDetails[0]?.cardTypePath); 
+  const imagePath = 'https://applyonlinedev.hdfcbank.com'+response.productEligibility.productDetails[0]?.cardTypePath+'?width=2000&optimize=medium';
+  imageEl.childNodes[5].setAttribute('src', imagePath);
+  imageEl.childNodes[3].setAttribute('srcset', imagePath);
+  imageEl.childNodes[1].setAttribute('srcset', imagePath);
   const { cardBenefitsTextBox } = globals.form.corporateCardWizardView.confirmCardPanel.cardBenefitsPanel.cardBenefitsFeaturesPanel;
   const cardBenefitsTextField = formUtil(globals, cardBenefitsTextBox);
   cardBenefitsTextField.setValue(response.productEligibility.productDetails[0].keyBenefits[0]);
