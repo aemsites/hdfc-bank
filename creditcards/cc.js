@@ -105,9 +105,11 @@ const consent2Config = { // config to create modal for consent-2
   updateUI(receivedData) {
     if (receivedData?.iAgreeConsent2) { // iAgreeConsent2- name of the I agree btn.
       this.triggerElement.checked = true;
+      this.triggerElement.dispatchEvent(new Event('change', { bubbles: true }));
     }
     if (receivedData?.closeIcon) { // closeIcon - name of the Close x btn
       this.triggerElement.checked = false;
+      this.triggerElement.dispatchEvent(new Event('change', { bubbles: true }));
     }
   },
 };
@@ -150,9 +152,11 @@ const consent1Config = { // config to create modal for consent-1
   updateUI(receivedData) {
     if (receivedData?.iAgreeConsent1) { // iAgreeConsent2- name of the I agree btn.
       this.triggerElement.checked = true;
+      this.triggerElement.dispatchEvent(new Event('change', { bubbles: true }));
     }
     if (receivedData?.closeIcon) { // closeIcon - name of the Close x btn
       this.triggerElement.checked = false;
+      this.triggerElement.dispatchEvent(new Event('change', { bubbles: true }));
     }
   },
 };
