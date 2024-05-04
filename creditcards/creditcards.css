@@ -1,9 +1,24 @@
+@import url('../styles/color-palette.css');
+
+main {
+  form {
+    .field-corporatecardwizardview {
+      .field-yourdetailspanel {
+        .field-yourdetailspage {
+          input[disabled],
+          select[disabled] {
+            background-color: inherit;
+            color: var(--color-interface-text-primary) !important;
+            opacity: 1 !important;
+          }
+        }
+      }
+    }
+  }
+}
+
 .personaldetails-disabled,
 .employmentdetails-disabled {
-  legend.hdfc-accordion-style {
-    /* margin-bottom: 24px; */
-  }
-
   .wrapper-disabled {
     pointer-events: none !important;
 

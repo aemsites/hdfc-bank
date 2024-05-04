@@ -26,7 +26,7 @@ const formatDate = (inputDate) => {
   const date = new Date(inputDate);
 
   const day = date.getDate();
-  const month = date.toLocaleString('default', { month: 'short' });
+  const month = date.toLocaleString('default', { month: 'short' }).substring(0, 3);
   const year = date.getFullYear();
 
   const formattedDate = `${day}-${month}-${year}`;
@@ -62,50 +62,50 @@ const createExecuteInterfaceRequestObj = (panCheckFlag, globals, breDemogRespons
     if (breDemogResponse.VDCUSTFULLNAME === fullName) {
       nameEditFlag = 'N';
     }
+    const customerFiller2 = breDemogResponse?.BREFILLER2?.toUpperCase();
+    if (customerFiller2 === 'D106') {
+      [currentAddress.address1, currentAddress.address2, currentAddress.address3] = currentFormContext.customerParsedAddress;
+      currentAddress.city = breDemogResponse.VDCUSTCITY;
+      currentAddress.pincode = breDemogResponse.VDCUSTZIPCODE;
+      currentAddress.state = breDemogResponse.VDCUSTSTATE;
+    } else {
+      currentAddress.address1 = breDemogResponse?.VDCUSTADD1;
+      currentAddress.address2 = breDemogResponse?.VDCUSTADD2;
+      currentAddress.address3 = breDemogResponse?.VDCUSTADD3;
+      currentAddress.city = breDemogResponse.VDCUSTCITY;
+      currentAddress.pincode = breDemogResponse.VDCUSTZIPCODE;
+      currentAddress.state = breDemogResponse.VDCUSTSTATE;
+    }
     if (currentDetails.currentAddressETB.currentAddressToggle.$value === 'on') {
       const { newCurentAddressPanel } = currentDetails.currentAddressETB;
-      currentAddress.address1 = newCurentAddressPanel.newCurentAddressLine1.$value;
-      currentAddress.address2 = newCurentAddressPanel.newCurentAddressLine2.$value;
-      currentAddress.address3 = newCurentAddressPanel.newCurentAddressLine3.$value;
-      currentAddress.city = newCurentAddressPanel.newCurentAddressCity.$value;
-      currentAddress.pincode = newCurentAddressPanel.newCurentAddressPin.$value;
-      currentAddress.state = newCurentAddressPanel.newCurentAddressState.$value;
+      permanentAddress.address1 = newCurentAddressPanel.newCurentAddressLine1.$value;
+      permanentAddress.address2 = newCurentAddressPanel.newCurentAddressLine2.$value;
+      permanentAddress.address3 = newCurentAddressPanel.newCurentAddressLine3.$value;
+      permanentAddress.city = newCurentAddressPanel.newCurentAddressCity.$value;
+      permanentAddress.pincode = newCurentAddressPanel.newCurentAddressPin.$value;
+      permanentAddress.state = newCurentAddressPanel.newCurentAddressState.$value;
     } else {
       isAddressEditFlag = 'N';
-      const customerFiller2 = breDemogResponse?.BREFILLER2?.toUpperCase();
-      if (customerFiller2 === 'D106') {
-        [currentAddress.address1, currentAddress.address2, currentAddress.address3] = currentFormContext.customerParsedAddress;
-        currentAddress.city = breDemogResponse.VDCUSTCITY;
-        currentAddress.pincode = breDemogResponse.VDCUSTZIPCODE;
-        currentAddress.state = breDemogResponse.VDCUSTSTATE;
-      } else {
-        currentAddress.address1 = breDemogResponse?.VDCUSTADD1;
-        currentAddress.address2 = breDemogResponse?.VDCUSTADD2;
-        currentAddress.address3 = breDemogResponse?.VDCUSTADD3;
-        currentAddress.city = breDemogResponse.VDCUSTCITY;
-        currentAddress.pincode = breDemogResponse.VDCUSTZIPCODE;
-        currentAddress.state = breDemogResponse.VDCUSTSTATE;
-      }
       permanentAddress = { ...currentAddress };
     }
   } else {
     const { currentAddressNTB } = currentDetails;
-    const { permanentaddresspanel } = currentAddressNTB.permanentaddress;
+    const { permanentAddressPanel } = currentAddressNTB.permanentAddress;
     currentAddress.address1 = currentAddressNTB.addressLine1.$value;
     currentAddress.address2 = currentAddressNTB.addressLine2.$value;
     currentAddress.address3 = currentAddressNTB.addressLine3.$value;
     currentAddress.city = currentAddressNTB.city.$value;
-    currentAddress.pincode = currentAddressNTB.currentaddrespincodentb.$value;
+    currentAddress.pincode = currentAddressNTB.currentAddresPincodeNTB.$value;
     currentAddress.state = currentAddressNTB.state.$value;
-    if (document.getElementsByName('permanentAddressToggle')[0].checked) {
+    if (currentAddressNTB.permanentAddress.permanentAddressToggle.$value === 'on') {
       permanentAddress = { ...currentAddress };
     } else {
-      permanentAddress.address1 = permanentaddresspanel.permanentAddressLine1.$value;
-      permanentAddress.address2 = permanentaddresspanel.permanentAddressLine2.$value;
-      permanentAddress.address3 = permanentaddresspanel.permanentAddressLine3.$value;
-      permanentAddress.city = permanentaddresspanel.permanentAddressCity.$value;
-      permanentAddress.pincode = permanentaddresspanel.permanentAddressPincode.$value;
-      permanentAddress.state = permanentaddresspanel.permanentAddressState.$value;
+      permanentAddress.address1 = permanentAddressPanel.permanentAddressLine1.$value;
+      permanentAddress.address2 = permanentAddressPanel.permanentAddressLine2.$value;
+      permanentAddress.address3 = permanentAddressPanel.permanentAddressLine3.$value;
+      permanentAddress.city = permanentAddressPanel.permanentAddressCity.$value;
+      permanentAddress.pincode = permanentAddressPanel.permanentAddressPincode.$value;
+      permanentAddress.state = permanentAddressPanel.permanentAddressState.$value;
     }
   }
   const requestObj = {
@@ -211,6 +211,11 @@ const terminateJourney = (globals) => {
 };
 const resumeJourney = (globals, response) => {
   currentFormContext.productDetails = response.productEligibility.productDetails?.[0];
+  const imageEl = document.querySelector('.field-cardimage > picture');
+  const imagePath = `https://applyonlinedev.hdfcbank.com${response.productEligibility.productDetails[0]?.cardTypePath}?width=2000&optimize=medium`;
+  imageEl.childNodes[5].setAttribute('src', imagePath);
+  imageEl.childNodes[3].setAttribute('srcset', imagePath);
+  imageEl.childNodes[1].setAttribute('srcset', imagePath);
   const { cardBenefitsTextBox } = globals.form.corporateCardWizardView.confirmCardPanel.cardBenefitsPanel.cardBenefitsFeaturesPanel;
   const cardBenefitsTextField = formUtil(globals, cardBenefitsTextBox);
   cardBenefitsTextField.setValue(response.productEligibility.productDetails[0].keyBenefits[0]);

@@ -273,7 +273,8 @@ const currentAddressToggleHandler = (globals) => {
  * @param {object} panel - Panel object.
  */
 const personalDetailsPreFillFromBRE = (res, globals) => {
-  const changeDataAttrObj = { attrChange: true, value: false };
+  const changeDataAttrObj = { attrChange: true, value: false, disable: true };
+  const genderMap = { M: '1', F: '2', O: 'T' };
   // Extract personal details from globals
   const personalDetails = globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.personalDetails;
   const currentAddressNTB = globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.currentDetails.currentAddressNTB;
@@ -296,7 +297,11 @@ const personalDetailsPreFillFromBRE = (res, globals) => {
     CUSTOMER_DEMOG_DATA[field] = value;
     if (value !== undefined && value !== null) {
       const formField = formUtil(globals, personalDetails[field]);
-      formField.setValue(value, changeDataAttrObj);
+      if (field === 'gender') {
+        formField.setValue(genderMap[value], changeDataAttrObj);
+      } else {
+        formField.setValue(value, changeDataAttrObj);
+      }
     }
   });
 
@@ -316,7 +321,7 @@ const personalDetailsPreFillFromBRE = (res, globals) => {
       dobField.type = 'text';
     }
     const dobPersonalDetails = formUtil(globals, personalDetails.dobPersonalDetails);
-    dobPersonalDetails.setValue(convertDateToMmmDdYyyy(custDate.toString()));
+    dobPersonalDetails.setValue(convertDateToMmmDdYyyy(custDate.toString()), changeDataAttrObj);
   }
 
   // Create address string and set it to form field

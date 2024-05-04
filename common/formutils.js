@@ -74,6 +74,9 @@ const formUtil = (globalObj, panelName) => ({
           closestAncestor.setAttribute(DATA_ATTRIBUTE_EMPTY, changeDataAttr.value);
         }
       }
+      if (changeDataAttr?.disable && val) {
+        globalObj.functions.setProperty(panelName, { enabled: false });
+      }
     }
   },
   /**
