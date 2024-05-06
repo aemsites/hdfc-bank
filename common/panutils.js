@@ -1,24 +1,26 @@
+import { currentFormContext } from './journey-utils.js';
+
 const DEAD_PAN_STATUS = ['D', 'X', 'F', 'ED'];
-const executeCheck = (journeyType, panStatus, terminationCheck, callback) => {
-  switch (journeyType) {
+const executeCheck = (panStatus, terminationCheck, callback, globals, breDemogResponse) => {
+  let apsPanChkFlag = panStatus === 'E' ? 'N' : 'Y';
+  switch (currentFormContext.journeyType) {
     case 'ETB':
       if (!terminationCheck) {
-        const apsPanChkFlag = panStatus === 'E' ? undefined : 'Y';
-        callback.executeInterfaceApi(apsPanChkFlag);
+        callback.executeInterfaceApi(apsPanChkFlag, globals, breDemogResponse);
       } else if (panStatus === 'E') {
-        callback.executeInterfaceApi();
+        callback.executeInterfaceApi(apsPanChkFlag, globals, breDemogResponse);
       } else if (DEAD_PAN_STATUS.includes(panStatus)) {
-        callback.terminateJourney(panStatus);
+        callback.terminateJourney(panStatus, globals);
       } else {
-        const apsPanChkFlag = 'Y';
-        callback.executeInterfaceApi(apsPanChkFlag);
+        apsPanChkFlag = 'Y';
+        callback.executeInterfaceApi(apsPanChkFlag, globals, breDemogResponse);
       }
       break;
     case 'NTB':
       if (panStatus === 'E') {
-        callback.executeInterfaceApi();
+        callback.executeInterfaceApi(apsPanChkFlag, globals, breDemogResponse);
       } else if (DEAD_PAN_STATUS.includes(panStatus)) {
-        callback.terminateJourney(panStatus);
+        callback.terminateJourney(panStatus, globals);
       } else {
         callback.restartJourney(panStatus);
       }

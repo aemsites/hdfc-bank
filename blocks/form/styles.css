@@ -1,3 +1,5 @@
+/* stylelint-disable selector-not-notation */
+/* stylelint-disable no-descending-specificity */
 /* stylelint-disable selector-class-pattern */
 @import url('../../creditcards/creditcards.css');
 
@@ -62,6 +64,10 @@ main .form {
   }
 }
 
+.passwordField .field-description {
+  display: none;
+}
+
 /* Base style for labels */
 main
   .form
@@ -94,11 +100,6 @@ main .form form {
     }
   }
 
-  .field-currentaddresstoggle {
-    flex-direction: row-reverse;
-    width: fit-content;
-  }
-
   .field-permanentaddresstoggle,
   .field-ckyctoggle,
   .field-currentaddresstoggle {
@@ -126,6 +127,16 @@ main .form form {
       margin-right: 10px;
       transition: transform 0.3s;
       margin-left: 1px;
+    }
+  }
+
+  .field-currentaddresstoggle {
+    flex-direction: row-reverse;
+    width: fit-content;
+
+    input[disabled] + .field-label {
+      pointer-events: none;
+      cursor: not-allowed !important;
     }
   }
 
@@ -161,6 +172,7 @@ main .form form {
 
   .field-prefilledcurrentadddress {
     textarea {
+      background-color: var(--color-action-background-secondary-disabled);
       border: none;
       pointer-events: none;
       padding: 0;
@@ -223,13 +235,24 @@ main .form select {
     center;
 }
 
+/* Password view and hide icon */
+main .form .bi-eye {
+  content: url('../../icons/password-view-icon.png');
+  margin-left: -30px;
+  cursor: pointer;
+  width: 21px;
+  margin-bottom: -6px;
+}
+
+main .form .bi-eye-slash {
+  content: url('../../icons/password-hide-icon.png');
+  margin-left: -30px;
+  cursor: pointer;
+  width: 21px;
+}
+
 /* Style for labels when input is active or not empty */
-main
-  .form
-  :is([data-active='true'], [data-empty='false'], .date-wrapper):not(
-    .field-joiningrenewalfee
-  )
-  > label {
+main .form :is([data-active='true'], [data-empty='false'], .date-wrapper):not(.field-joiningrenewalfee) > label {
   color: var(--label-color);
   transform: translateY(-22px);
   z-index: 1;
@@ -374,7 +397,7 @@ main .form .field-successresultpanel {
   }
 }
 
-main .form .field-errorresultpanel > div:not(.field-errorresulttextlabel),
+main .form .field-errorresultpanel > div.bulleted-paragraph,
 main
   .form
   .field-successresultpanel
@@ -408,10 +431,17 @@ main .form .field-successresultpanel .field-arnnumber {
 main
   .form
   .field-errorresultpanel
-  > div:not(.field-errorresulttextlabel)::before,
+  > .bulleted-paragraph::before,
 main .form .field-successresultpanel > div.field-arnnumber::before {
   content: url('../../icons/result-list-icon.svg');
   padding-right: 15px;
+}
+
+main
+  .form
+  .field-errorresultpanel
+  > div:not(.bulleted-paragraph) {
+    justify-content: center;
 }
 
 main .form.block .field-otppanel {
@@ -428,7 +458,10 @@ main .form.block .field-otppanel {
       margin-bottom: 0;
       letter-spacing: 2vw;
       caret-color: transparent;
+      height: 40px;
       border-radius: 12px;
+      padding: 15px 25px;
+      width: 98%;
     }
   }
 
@@ -461,7 +494,6 @@ main .form.block .field-otppanel {
 
 /* Error/Success Result Panel */
 main .form .field-resultpanel {
-  /* stylelint-disable-next-line no-descending-specificity */
   p,
   label {
     font-weight: 400;
