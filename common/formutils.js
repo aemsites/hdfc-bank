@@ -289,6 +289,32 @@ const removeSpecialCharacters = (str, allowedChars) => {
   return str.replace(regex, '');
 };
 
+/**
+ * Makes a form field invalid by adding error message and styling.
+ * If the field already has an error message element, updates its content.
+ * If not, creates a new error message element.
+ * @param {string} fieldName - The name attribute of the field to make invalid.
+ * @param {string} [invalidMsg] - The error message to display. Optional, defaults to an empty string.
+ */
+const makeFieldInvalid = (fieldName, invalidMsg) => {
+  const fieldDescClass = 'field-description';
+  const invalidClass = 'field-invalid';
+  const invalidPin = document.querySelector(`[name=${fieldName}]`);
+  const parentElement = invalidPin?.parentElement;
+  if (parentElement) {
+    const fd = parentElement?.querySelector(`.${fieldDescClass}`);
+    if (fd) {
+      fd.textContent = invalidMsg || '';
+    } else {
+      parentElement?.classList.add(invalidClass);
+      const fieldDesc = document.createElement('div');
+      fieldDesc.textContent = invalidMsg || '';
+      fieldDesc.classList.add(fieldDescClass);
+      parentElement.appendChild(fieldDesc);
+    }
+  }
+};
+
 export {
   urlPath,
   maskNumber,
@@ -303,4 +329,5 @@ export {
   parseCustomerAddress,
   moveWizardView,
   removeSpecialCharacters,
+  makeFieldInvalid,
 };

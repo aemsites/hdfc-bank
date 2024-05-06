@@ -21,6 +21,7 @@ import {
   moveWizardView,
   parseCustomerAddress,
   removeSpecialCharacters,
+  makeFieldInvalid,
 } from '../common/formutils.js';
 import { getJsonResponse } from '../common/makeRestAPI.js';
 
@@ -824,6 +825,49 @@ const prefillForm = (globals) => {
   }
 };
 
+const pinmasterApi = async (globalObj, cityField, stateField, pincodeField) => {
+  const PIN_CODE_LENGTH = 6;
+  if (pincodeField?.$value?.length < PIN_CODE_LENGTH) return;
+  const url = urlPath(`/content/hdfc_commonforms/api/mdm.CREDIT.SIX_DIGIT_PINCODE.PINCODE-${pincodeField?.$value}.json`);
+  const method = 'GET';
+  const setCityField = formUtil(globalObj, cityField);
+  const setStateField = formUtil(globalObj, stateField);
+  const resetStateCityFields = () => {
+    setCityField.resetField();
+    setStateField.resetField();
+    setCityField.enabled(false);
+    setStateField.enabled(false);
+  };
+  const errorMethod = (errStack) => {
+    const { errorCode, errorMessage } = errStack;
+    const defErrMessage = 'Please enter a valid pincode';
+    if (errorCode === '500') {
+      makeFieldInvalid(pincodeField.$name, defErrMessage);
+      resetStateCityFields();
+    }
+  };
+  const successMethod = (value) => {
+    const changeDataAttrObj = { attrChange: true, value: false };
+    setCityField.setValue(value?.CITY, changeDataAttrObj);
+    setCityField.enabled(false);
+    setStateField.setValue(value?.STATE, changeDataAttrObj);
+    setStateField.enabled(false);
+  };
+  try {
+    const response = await getJsonResponse(url, null, method);
+    const [{ CITY, STATE }] = response;
+    const [{ errorCode, errorMessage }] = response;
+    if (CITY && STATE) {
+      successMethod({ CITY, STATE });
+    } else if (errorCode) {
+      const errStack = { errorCode, errorMessage };
+      throw errStack;
+    }
+  } catch (error) {
+    errorMethod(error);
+  }
+};
+
 const pinCodeMaster = async (globals) => {
   const yourDetails = globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage;
   const currentDetails = yourDetails.currentDetails;
@@ -857,46 +901,7 @@ const pinCodeMaster = async (globals) => {
       stateField: employeeDetails.officeAddressState,
     },
   ];
-  const PIN_CODE_LENGTH = 6;
-  const changeDataAttrObj = { attrChange: true, value: false };
-
-  const pinmasterApi = async (globalObj, cityField, stateField, pinCodeVal) => {
-    const url = urlPath(`/content/hdfc_commonforms/api/mdm.CREDIT.SIX_DIGIT_PINCODE.PINCODE-${pinCodeVal}.json`);
-    const method = 'GET';
-    const setCityField = formUtil(globalObj, cityField);
-    const setStateField = formUtil(globalObj, stateField);
-    const resetStateCityFields = () => {
-      setCityField.resetField();
-      setStateField.resetField();
-      setCityField.enabled(false);
-      setStateField.enabled(false);
-    };
-    const pinMasterErrorHandler = (errCode, errMsg) => {
-      resetStateCityFields();
-      // reset in case if invalid pincode catched, reset the state, city field in case filled
-      // switch(errCode){
-      //   case '':
-      //   default:
-      // }
-    };
-    try {
-      if (pinCodeVal?.length < PIN_CODE_LENGTH) return;
-      const response = await getJsonResponse(url, null, method);
-      const [{ CITY, STATE }] = response;
-      const [{ errorCode, errorMessage }] = response;
-      if (CITY && STATE) {
-        setCityField.setValue(CITY, changeDataAttrObj);
-        setCityField.enabled(false);
-        setStateField.setValue(STATE, changeDataAttrObj);
-        setStateField.enabled(false);
-      } else if (errorCode) {
-        pinMasterErrorHandler({ errorCode, errorMessage });
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  pinMasterConstants?.forEach((field) => (field.pincodeField.$value && pinmasterApi(globals, field.cityField, field.stateField, field.pincodeField.$value)));
+  pinMasterConstants?.forEach((field) => (field.pincodeField.$value && pinmasterApi(globals, field.cityField, field.stateField, field.pincodeField)));
 };
 
 export {
