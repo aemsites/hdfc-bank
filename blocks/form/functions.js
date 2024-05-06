@@ -8,6 +8,7 @@ import {
   prefillForm,
   getAddressDetails,
   pinCodeMaster,
+  validateEmailID,
   currentAddressToggleHandler,
 } from '../../common/functions.js';
 
@@ -128,5 +129,6 @@ export {
   prefillForm,
   getAddressDetails,
   pinCodeMaster,
+  validateEmailID,
   currentAddressToggleHandler,
 };

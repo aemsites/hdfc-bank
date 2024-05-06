@@ -7,6 +7,7 @@ import {
   createPanValidationRequest,
   getAddressDetails,
   pinCodeMaster,
+  validateEmailID,
   currentAddressToggleHandler,
 } from '../creditcards/corporate-creditcardFunctions.js';
 
@@ -61,5 +62,6 @@ export {
   prefillForm,
   getAddressDetails,
   pinCodeMaster,
+  validateEmailID,
   currentAddressToggleHandler,
 };

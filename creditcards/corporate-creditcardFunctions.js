@@ -796,11 +796,10 @@ const createPanValidationRequest = (firstName, middleName, lastName, globals) =>
   PANValidationAndNameMatchService(panValidation.createRequestObj(), panValidation.eventHandlers);
 };
 
-/*
- * logic hanlding during prefiill of form.
- * @param {Objec} globals - The global object containing necessary globals form data.
+/**
+ * logic hanlding during prefill of form.
+ * @param {object} globals - The global object containing necessary globals form data.
  */
-
 const prefillForm = (globals) => {
   const globalSchema = globals?.functions?.exportData();
   const ccGlobals = globalSchema?.data?.CorporateCreditCard;
@@ -825,6 +824,13 @@ const prefillForm = (globals) => {
   }
 };
 
+/**
+ * Handles API call for validating pinCode using the pinCodeMaster function.
+ * @param {object} globalObj - The global object containing necessary globals form data.
+ * @param {object} cityField - The City field object from the global object.
+ * @param {object} stateField - The State field object from the global object.
+ * @param {object} pincodeField - The PinCode field object from the global object.
+ */
 const pinmasterApi = async (globalObj, cityField, stateField, pincodeField) => {
   const PIN_CODE_LENGTH = 6;
   if (pincodeField?.$value?.length < PIN_CODE_LENGTH) return;
@@ -869,6 +875,10 @@ const pinmasterApi = async (globalObj, cityField, stateField, pincodeField) => {
   }
 };
 
+/**
+ * pincode validation in your details for NTB and ETB
+ * @param {object} globals - The global object containing necessary globals form data.
+ */
 const pinCodeMaster = async (globals) => {
   const yourDetails = globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage;
   const currentDetails = yourDetails.currentDetails;
@@ -905,6 +915,12 @@ const pinCodeMaster = async (globals) => {
   pinMasterConstants?.forEach((field) => (field.pincodeField.$value && pinmasterApi(globals, field.cityField, field.stateField, field.pincodeField)));
 };
 
+/**
+ * validate email id in personal details screen for the NTB
+ * @param {object} globals - The global object containing necessary globals form data.
+ */
+const validateEmailID = (globals) => {
+};
 export {
   OTPGEN,
   OTPVAL,
@@ -915,5 +931,6 @@ export {
   createPanValidationRequest,
   getAddressDetails,
   pinCodeMaster,
+  validateEmailID,
   currentAddressToggleHandler,
 };
