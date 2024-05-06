@@ -919,7 +919,24 @@ const pinCodeMaster = async (globals) => {
  * validate email id in personal details screen for the NTB
  * @param {object} globals - The global object containing necessary globals form data.
  */
-const validateEmailID = (globals) => {
+const validateEmailID = async (globals) => {
+  const emailField = globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.personalDetails.personalEmailAddress;
+  if (!emailField.$valid) return;
+  const url = urlPath('/content/hdfc_commonforms/api/emailid.json');
+  const setEmailField = formUtil(globals, emailField);
+  const invalidMsg = 'Please enter email id.';
+  const payload = {
+    email: emailField.$value,
+  };
+  const method = 'POST';
+  try {
+    const emailValid = await getJsonResponse(url, payload, method);
+    if (!emailValid) {
+      setEmailField.markInvalid(emailValid, invalidMsg);
+    }
+  } catch (error) {
+    console.error(error, 'NTB_email_error');
+  }
 };
 export {
   OTPGEN,
