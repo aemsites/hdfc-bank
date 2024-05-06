@@ -68,7 +68,7 @@ main img {
 }
 
 .field-welcometextlabel p p {
-    font-size: var(--body-extra-lg-font-size) !important;
+    font-size: var(--body-x-lg-font-size) !important;
     font-weight: var(--font-weight-extra-bold);
     line-height: var(--font-linehight-large);
     letter-spacing: -0.01em;

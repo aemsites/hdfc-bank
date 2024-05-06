@@ -7,6 +7,7 @@ import {
   createPanValidationRequest,
   getAddressDetails,
   pinCodeMaster,
+  currentAddressToggleHandler,
 } from '../creditcards/corporate-creditcardFunctions.js';
 
 import { restAPICall } from './makeRestAPI.js';
@@ -33,7 +34,9 @@ function otpValidation(globals) {
 
 /**
  * check offer
- *
+ * @param {string} firstName - The first name of the cardholder.
+ * @param {string} middleName - The last name of the cardholder.
+ * @param {string} lastName - The last name of the cardholder.
  * @param {object} globals - The global object containing necessary globals form data.
  */
 function checkOffer(firstName, middleName, lastName, globals) {
@@ -58,4 +61,5 @@ export {
   prefillForm,
   getAddressDetails,
   pinCodeMaster,
+  currentAddressToggleHandler,
 };
