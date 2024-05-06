@@ -832,6 +832,7 @@ const pinmasterApi = async (globalObj, cityField, stateField, pincodeField) => {
   const method = 'GET';
   const setCityField = formUtil(globalObj, cityField);
   const setStateField = formUtil(globalObj, stateField);
+  const setPincodeField = formUtil(globalObj, pincodeField);
   const resetStateCityFields = () => {
     setCityField.resetField();
     setStateField.resetField();
@@ -842,7 +843,7 @@ const pinmasterApi = async (globalObj, cityField, stateField, pincodeField) => {
     const { errorCode, errorMessage } = errStack;
     const defErrMessage = 'Please enter a valid pincode';
     if (errorCode === '500') {
-      makeFieldInvalid(pincodeField.$name, defErrMessage);
+      setPincodeField.markInvalid(false, defErrMessage);
       resetStateCityFields();
     }
   };

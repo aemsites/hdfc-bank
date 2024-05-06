@@ -33,6 +33,32 @@ const maskNumber = (number, digitsToMask) => {
 const clearString = (str) => (str ? str?.replace(/[\s~`!@#$%^&*(){}[\];:"'<,.>?/\\|_+=-]/g, '') : '');
 
 /**
+ * Makes a form field invalid by adding error message and styling through Dom api.
+ * If the field already has an error message element, updates its content.
+ * If not, creates a new error message element.
+ * @param {string} fieldName - The name attribute of the field to make invalid.
+ * @param {string} [invalidMsg] - The error message to display. Optional, defaults to an empty string.
+ */
+const makeFieldInvalid = (fieldName, invalidMsg) => {
+  const fieldDescClass = 'field-description';
+  const invalidClass = 'field-invalid';
+  const invalidPin = document.querySelector(`[name=${fieldName}]`);
+  const parentElement = invalidPin?.parentElement;
+  if (parentElement) {
+    const fd = parentElement?.querySelector(`.${fieldDescClass}`);
+    if (fd) {
+      fd.textContent = invalidMsg || '';
+    } else {
+      parentElement?.classList.add(invalidClass);
+      const fieldDesc = document.createElement('div');
+      fieldDesc.textContent = invalidMsg || '';
+      fieldDesc.classList.add(fieldDescClass);
+      parentElement.appendChild(fieldDesc);
+    }
+  }
+};
+
+/**
  * Utility function for managing properties of a panel.
  * @param {object} globalObj - The global object containing functions.
  * @param {object} panelName - The name of the panel to manipulate.
@@ -99,6 +125,18 @@ const formUtil = (globalObj, panelName) => ({
         closestAncestor.setAttribute(DATA_ATTRIBUTE_EMPTY, true);
       }
     }
+  },
+  /**
+  * Sets the fields as invalid.
+  * @param {boolean} val - A boolean value indicating whether the field is valid (true) or invalid (false).
+  * @param {string} [errorMsg] - An optional parameter representing the error message to be set if the field is invalid.
+   */
+  markInvalid: (val, errorMsg) => {
+    const dispatchLoad = {};
+    dispatchLoad.valid = val;
+    if (errorMsg) dispatchLoad.errorMessage = errorMsg;
+    globalObj.functions.setProperty(panelName, dispatchLoad);
+    makeFieldInvalid(panelName?.$name, errorMsg);
   },
 });
 
@@ -287,32 +325,6 @@ const removeSpecialCharacters = (str, allowedChars) => {
 
   // Remove special characters from the input string using the regex pattern
   return str.replace(regex, '');
-};
-
-/**
- * Makes a form field invalid by adding error message and styling.
- * If the field already has an error message element, updates its content.
- * If not, creates a new error message element.
- * @param {string} fieldName - The name attribute of the field to make invalid.
- * @param {string} [invalidMsg] - The error message to display. Optional, defaults to an empty string.
- */
-const makeFieldInvalid = (fieldName, invalidMsg) => {
-  const fieldDescClass = 'field-description';
-  const invalidClass = 'field-invalid';
-  const invalidPin = document.querySelector(`[name=${fieldName}]`);
-  const parentElement = invalidPin?.parentElement;
-  if (parentElement) {
-    const fd = parentElement?.querySelector(`.${fieldDescClass}`);
-    if (fd) {
-      fd.textContent = invalidMsg || '';
-    } else {
-      parentElement?.classList.add(invalidClass);
-      const fieldDesc = document.createElement('div');
-      fieldDesc.textContent = invalidMsg || '';
-      fieldDesc.classList.add(fieldDescClass);
-      parentElement.appendChild(fieldDesc);
-    }
-  }
 };
 
 export {
