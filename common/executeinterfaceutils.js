@@ -210,6 +210,7 @@ const terminateJourney = (globals) => {
   resultPanel.visible(true);
 };
 const resumeJourney = (globals, response) => {
+  currentFormContext.jwtToken = response.Id_token_jwt;
   currentFormContext.productDetails = response.productEligibility.productDetails?.[0];
   const imageEl = document.querySelector('.field-cardimage > picture');
   const imagePath = `https://applyonlinedev.hdfcbank.com${response.productEligibility.productDetails[0]?.cardTypePath}?width=2000&optimize=medium`;
@@ -260,6 +261,7 @@ const customerValidationHandler = {
         if (response.errorCode === '0000') {
           currentFormContext.ipaDuration = response.ExecuteInterfaceResponse.ipaDuration;
           currentFormContext.ipaTimer = response.ExecuteInterfaceResponse.ipaTimer;
+          currentFormContext.jwtToken = response.Id_token_jwt;
           const ipaRequestObj = {
             requestString: {
               mobileNumber: globals.form.loginPanel.mobilePanel.registeredMobileNumber.$value,
@@ -295,13 +297,120 @@ const customerValidationHandler = {
   },
 };
 
+const createDapRequestObj = (response, globals) => {
+  const {
+    personalDetails,
+    employmentDetails,
+  } = globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage;
+  const customerInfo = currentFormContext.executeInterfaceReqObj.requestString;
+  const { prefilledEmploymentDetails } = employmentDetails;
+  const dapRequestObj = {
+    requestString: {
+      APS_FIRST_NAME: personalDetails.firstName.$value,
+      APS_LAST_NAME: personalDetails.lastName.$value,
+      APS_MIDDLE_NAME: personalDetails.middleName.$value,
+      panNo: personalDetails.panNumberPersonalDetails.$value,
+      dateOfBirth: personalDetails.dobPersonalDetails.$value,
+      panNumber: '',
+      mobileNo: globals.form.loginPanel.mobilePanel.registeredMobileNumber.$value,
+      existingCustomer: currentFormContext.journeyType === 'ETB' ? 'Y' : 'N',
+      APS_NAME_AS_CARD: 'Ranjit Vijay Patil',
+      emailAddress: prefilledEmploymentDetails.workEmailAddress.$value,
+      APS_PER_ADDRESS_1: customerInfo.permanentAddress1,
+      APS_PER_ADDRESS_2: customerInfo.permanentAddress2,
+      APS_PER_ADDRESS_3: customerInfo.permanentAddress3,
+      APS_COM_ADDRESS_1: customerInfo.communicationAddress1,
+      APS_COM_ADDRESS_2: customerInfo.communicationAddress2,
+      APS_COM_ADDRESS_3: customerInfo.communicationAddress3,
+      APS_OFF_ADDRESS_1: customerInfo.officeAddress1,
+      APS_OFF_ADDRESS_2: customerInfo.officeAddress2,
+      APS_OFF_ADDRESS_3: customerInfo.officeAddress3,
+      APS_COM_ZIP: customerInfo.comCityZip,
+      APS_COM_STATE: customerInfo.communicationState,
+      APS_PER_ZIP: customerInfo.permanentZipCode,
+      APS_OFF_ZIP: customerInfo.officeZipCode,
+      APS_PER_CITY: customerInfo.permanentCity,
+      APS_COM_CITY: customerInfo.communicationCity,
+      APS_OFF_CITY: customerInfo.officeCity,
+      APS_OFF_STATE: customerInfo.officeState,
+      APS_PER_STATE: customerInfo.permanentState,
+      APS_DATE_OF_BIRTH: '1992-09-10 00:00:00',
+      APS_EDUCATION: '3',
+      APS_GENDER: 'M',
+      APS_OCCUPATION: '1',
+      APS_GROSS_MONTHLY_INCOME: '',
+      APS_COMPANY_NAME: customerInfo.companyName,
+      APS_PER_ADDR_TYPE: customerInfo.perAddressType,
+      APS_RESI_TYPE: '2',
+      APS_COM_ADDR_TYPE: '2',
+      APS_SELF_CONFIRMATION: customerInfo.selfConfirmation,
+      APS_MOBILE_EDIT_FLAG: 'N',
+      APS_EMAIL_EDIT_FLAG: 'N',
+      APS_PAN_EDIT_FLAG: 'N',
+      APS_ADDRESS_EDIT_FLAG: 'N',
+      APS_NAME_EDIT_FLAG: 'N',
+      APS_RESPHONE_EDIT_FLAG: 'N',
+      APS_OFFPHONE_EDIT_FLAG: 'N',
+      APS_EMP_CODE: '',
+      APS_DESIGNATION: 'Quality Engineer',
+      APS_DEPARTMENT: '',
+      APS_FILLER2: 'No',
+      APS_FILLER10: 'N',
+      APS_OFFER_5: '',
+      APS_CHANNEL: '',
+      APS_BRANCH_NAME: '',
+      APS_BRANCH_CITY: '',
+      APS_LEAD_GENERATER: '',
+      APS_LEAD_CLOSURES: '',
+      APS_APPLYING_BRANCH: '',
+      APS_FILLER6: '',
+      APS_SMCODE: '',
+      APS_DSE_CODE: '',
+      applicationERefNumber: 'AD1242400049',
+      SOA_REQUESTID: '0305245144',
+      nameOfDirector: '',
+      relationship: '',
+      product: 'Regalia Gold',
+      APS_TYPE_OF_INDUSTRY: '',
+      journeyID: '107a3831-28fd-4375-aba0-520f6b216bc2_01_PACC_R_WEB',
+      journeyName: 'PA_CC_JOURNEY',
+      userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 Edg/124.0.0.0',
+      timeInfo: '2024-05-03T13:56:52.495Z',
+      APS_OFF_EMAILID: 'patil@adobe.com',
+      APS_DIRECT_DEBIT: '',
+      customerId: 'XXXXX6832',
+      pricingDetails: '',
+      docUpload: '',
+      idcomEnabled: true,
+      APS_CAPTCHA: '',
+      applRefNo: '24E03D00180000W1',
+      txnRefNo: '',
+      pseudoID: '',
+      FILLER8: 'DCPINSUCCESS',
+      Id_token_jwt: currentFormContext.jwtToken,
+      IDCOM_Token: '',
+      JSCPAYLOAD: '',
+      BROWSERFINGERPRINT: 'ef3036d9e4872df7e5a5eb2fe49bc8ae',
+      HDIMPAYLOAD: '',
+    },
+
+  };
+  return dapRequestObj;
+};
+
+const finalDap = (response, globals) => {
+  const dapRequestObj = createDapRequestObj(response, globals);
+  console.log(dapRequestObj);
+};
+
 const executeInterfaceApiFinal = (globals) => {
   const requestObj = currentFormContext.executeInterfaceReqObj;
+  requestObj.requestString.Id_token_jwt = currentFormContext.jwtToken;
   currentFormContext.executeInterfaceReqObj.requestString.productCode = currentFormContext.productCode;
   const apiEndPoint = urlPath('/content/hdfc_etb_wo_pacc/api/executeinterface.json');
   const eventHandlers = {
     successCallBack: (response) => {
-      console.log(response, globals);
+      finalDap(response, globals);
     },
     errorCallBack: (response) => {
       console.log(response);
