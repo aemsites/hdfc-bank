@@ -10,7 +10,6 @@ import {
 import { currentFormContext } from './journey-utils.js';
 import {
   restAPICall,
-  displayLoader,
   getJsonResponse,
   hideLoader,
 } from './makeRestAPI.js';
@@ -248,8 +247,8 @@ const sendIpaRequest = async (ipaRequestObj, globals) => {
     }
   };
   const errorMethod = (err) => {
-    console.log(err);
     hideLoader();
+    console.log(err);
   };
   try {
     const response = await getJsonResponse(apiEndPoint, ipaRequestObj, method);
@@ -289,11 +288,10 @@ const customerValidationHandler = {
       }
     };
     const errorMethod = (err) => {
-      console.log(err);
       hideLoader();
+      console.log(err);
     };
     try {
-      displayLoader('Excecute interface started');
       const response = await getJsonResponse(apiEndPoint, requestObj, method);
       successMethod(response);
     } catch (error) {
@@ -303,10 +301,12 @@ const customerValidationHandler = {
 
   terminateJourney: (panStatus, globals) => {
     console.log(`pan Status: ${panStatus} and called terminateJourney()`);
+    hideLoader();
     terminateJourney(globals);
   },
 
   restartJourney: (panStatus) => {
+    hideLoader();
     console.log(`pan Status: ${panStatus} and called restartJourney()`);
   },
 };

@@ -1,4 +1,6 @@
-import { restAPICall } from './makeRestAPI.js';
+import {
+  displayLoader, getJsonResponse, hideLoader,
+} from './makeRestAPI.js';
 import { urlPath } from './formutils.js';
 
 const containsValue = (data) => typeof data !== 'undefined' && data !== null && data !== '';
@@ -45,19 +47,26 @@ const isEventHandlerProcessable = (eventHandlers) => (
   && isReferenceOfTypeFunction(eventHandlers.successCallBack)
   && isReferenceOfTypeFunction(eventHandlers.errorCallBack)
 );
-const PANValidationAndNameMatchService = (reqPayload, eventHandlers) => {
+const PANValidationAndNameMatchService = async (reqPayload, eventHandlers) => {
+  displayLoader('Please wait while we check your offer...');
+  const successMethod = (respData) => {
+    eventHandlers.successCallBack(respData);
+  };
+  const errorMethod = (errorData) => {
+    hideLoader();
+    eventHandlers.errorCallBack(errorData);
+  };
   try {
     const apiEndPoint = urlPath('/content/hdfc_forms_common_v2/api/panValNameMatch.json');
+    const method = 'POST';
     if (isRequestProcessable(reqPayload) && isEventHandlerProcessable(eventHandlers)) {
-      restAPICall('', 'POST', reqPayload, apiEndPoint, eventHandlers.successCallBack, eventHandlers.errorCallBack, 'Loading');
+      const response = await getJsonResponse(apiEndPoint, reqPayload, method);
+      return successMethod(response);
     }
-    throw new Error('argument error');
+    const errStack = 'argument error';
+    throw errStack;
   } catch (e) {
-    const errorObj = {
-      value: e,
-      status: false,
-    };
-    return errorObj;
+    return errorMethod(e);
   }
 };
 
