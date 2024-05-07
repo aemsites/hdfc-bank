@@ -558,11 +558,76 @@ const OTPVAL = {
 };
 
 /**
+ * Populate and set the users current and office address fields in confirm and submit screen.
+ * @param {Object} globals - The global object containing form and other data.
+ */
+const setConfirmScrAddressFields = (globalObj) => {
+  /**
+   * Concatenates the values of an object into a single string separated by commas.
+   * @param {Object} obj - The object whose values are to be concatenated.
+   * @returns {string} A string containing the concatenated values separated by commas.
+   */
+  const concatObjVals = (obj) => Object.values(obj)?.join(', ');
+  const ccWizard = globalObj.form.corporateCardWizardView;
+  const yourDetails = ccWizard.yourDetailsPanel.yourDetailsPage;
+  const currentDetails = yourDetails.currentDetails;
+  const etb = currentDetails.currentAddressETB;
+  const ntb = currentDetails.currentAddressNTB;
+  const employeeDetails = yourDetails.employmentDetails;
+  const confirmAddress = ccWizard.confirmAndSubmitPanel.AddressDeclarationPanel;
+  const ovdNtb = confirmAddress.addressDeclarationOVD.cardDeliveryNTBFlow;
+  const etbPrefilledAddress = etb.prefilledCurrentAdddress.$value;
+  const etbNewCurentAddress = concatObjVals({
+    addressLine1: etb.newCurentAddressPanel.newCurentAddressLine1.$value,
+    addressLine2: etb.newCurentAddressPanel.newCurentAddressLine2.$value,
+    addressLine3: etb.newCurentAddressPanel.newCurentAddressLine3.$value,
+    city: etb.newCurentAddressPanel.newCurentAddressCity.$value,
+    state: etb.newCurentAddressPanel.newCurentAddressState.$value,
+    pincode: etb.newCurentAddressPanel.newCurentAddressState.$value,
+  });
+  const etbCurentAddress = (currentFormContext.journeyType === 'ETB' && etb.currentAddressToggle.$value === 'off') ? etbPrefilledAddress : etbNewCurentAddress;
+  const ntbCurrentAddress = concatObjVals({
+    addressLine1: ntb.addressLine1.$value,
+    addressLine2: ntb.addressLine2.$value,
+    addressLine3: ntb.addressLine3.$value,
+    city: ntb.city.$value,
+    state: ntb.state.$value,
+    pincode: ntb.currentAddresPincodeNTB.$value,
+  });
+  const officeAddress = concatObjVals({
+    addressLine1: employeeDetails.officeAddressLine1.$value,
+    addressLine2: employeeDetails.officeAddressLine2.$value,
+    addressLine3: employeeDetails.officeAddressLine3.$value,
+    city: employeeDetails.officeAddressCity.$value,
+    state: employeeDetails.officeAddressState.$value,
+    pincode: employeeDetails.officeAddressPincode.$value,
+  });
+  const userCurrentAddress = (currentFormContext.journeyType === 'ETB') ? etbCurentAddress : ntbCurrentAddress;
+
+  const officeAddressFieldOVD = formUtil(globalObj, ovdNtb.officeAddressOVD.officeAddressOVDAddress);
+  const kycOfficeAddressField = formUtil(globalObj, confirmAddress.addressDeclarationOffice.officeAddressSelectKYC);
+  const currentAddressFieldOVD = formUtil(globalObj, ovdNtb.currentAddressOVD.currentAddressOVDAddress);
+  const residenceAddressField = formUtil(globalObj, confirmAddress.CurrentAddressDeclaration.currentResidenceAddress);
+  const biometricAddressField = formUtil(globalObj, confirmAddress.currentAddressBiometric.currentResidenceAddressBiometricText);
+
+  const fieldFill = {
+    officeAddress: [officeAddressFieldOVD, kycOfficeAddressField],
+    userCurrentAddress: [currentAddressFieldOVD, residenceAddressField, biometricAddressField],
+  };
+  Object.entries(fieldFill).forEach(([addressType, valueField]) => {
+    valueField?.forEach((field) => {
+      field?.setValue(addressType === 'officeAddress' ? officeAddress : userCurrentAddress);
+    });
+  });
+};
+
+/**
  * Moves the wizard view to the "selectKycPaymentPanel" step.
  */
 const getThisCard = (globals) => {
   const nameOnCardDropdown = globals.form.corporateCardWizardView.confirmCardPanel.cardBenefitsPanel.CorporatetImageAndNamePanel.nameOnCardDropdown.$value;
   executeInterfaceApiFinal(globals);
+  setConfirmScrAddressFields(globals);
   moveWizardView('corporateCardWizardView', 'selectKycPaymentPanel');
 };
 
