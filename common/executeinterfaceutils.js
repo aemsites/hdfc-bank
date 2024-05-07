@@ -207,14 +207,24 @@ const listNameOnCard = (globals) => {
   moveWizardView('corporateCardWizardView', 'confirmCardPanel');
 };
 
-const terminateJourney = (globals) => {
+/**
+ * Terminates the journey by displaying the error/result panel.
+ * @param {object} globals - globals variables object containing form configurations.
+ */
+const journeyTerminate = (globals) => {
   hideLoader();
   const resultPanel = formUtil(globals, globals.form.resultPanel);
   const wizardPanel = formUtil(globals, globals.form.corporateCardWizardView);
   wizardPanel.visible(false);
   resultPanel.visible(true);
 };
-const resumeJourney = (globals, response) => {
+
+/**
+ * Resumes the journey by allowing the user to proceed further.
+ * @param {object} globals - globals variables object containing form configurations.
+ * @param {object} response - object containing response from the previosu api call
+ */
+const journeyResume = (globals, response) => {
   currentFormContext.productDetails = response.productEligibility.productDetails?.[0];
   const imageEl = document.querySelector('.field-cardimage > picture');
   const imagePath = `https://applyonlinedev.hdfcbank.com${response.productEligibility.productDetails[0]?.cardTypePath}?width=2000&optimize=medium`;
@@ -228,6 +238,27 @@ const resumeJourney = (globals, response) => {
   listNameOnCard(globals);
 };
 
+/**
+ * Restart the journey.
+ * @param {object} globals - globals variables object containing form configurations.
+ */
+const journeyRestart = (globals) => {
+  hideLoader();
+  const { resultPanel, corporateCardWizardView, resultPanel: { errorResultPanel } } = globals.form;
+  const ccView = formUtil(globals, corporateCardWizardView);
+  const resultScr = formUtil(globals, resultPanel);
+  const tryAgainBtn = formUtil(globals, errorResultPanel.tryAgainButtonErrorPanel);
+  const errorText1 = formUtil(globals, errorResultPanel.resultSetErrorText1);
+  const errorText2 = formUtil(globals, errorResultPanel.resultSetErrorText2);
+  [resultScr, tryAgainBtn].forEach((item) => item.visible(true));
+  [ccView, errorText1, errorText2].forEach((item) => item.visible(false));
+  const reloadBtn = document.querySelector(`[name=${errorResultPanel.tryAgainButtonErrorPanel?.$name}]`);
+  reloadBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    window.location.reload();
+  });
+};
+
 const sendIpaRequest = async (ipaRequestObj, globals) => {
   const apiEndPoint = urlPath('/content/hdfc_etb_wo_pacc/api/ipa.json');
   const exceedTimeLimit = (TOTAL_TIME >= currentFormContext.ipaDuration * 1000);
@@ -237,21 +268,21 @@ const sendIpaRequest = async (ipaRequestObj, globals) => {
     const promoCode = currentFormContext?.promoCode;
     const ipaResNotPresent = (ipaResult === '' || ipaResult === 'null' || !ipaResult || ipaResult === 'undefined' || ipaResult === null);
     if (exceedTimeLimit) {
-      resumeJourney(globals, respData);
+      journeyResume(globals, respData);
       return;
     }
     if (ipaResNotPresent) {
       setTimeout(() => sendIpaRequest(ipaRequestObj, globals), currentFormContext.ipaTimer * 1000);
       TOTAL_TIME += currentFormContext.ipaTimer * 1000;
     } else if (promoCode === 'NA' && ipaResult === 'Y') {
-      terminateJourney(globals);
+      journeyTerminate(globals);
     } else {
-      resumeJourney(globals, respData);
+      journeyResume(globals, respData);
     }
   };
   const errorMethod = (err) => {
-    hideLoader();
-    console.log(err);
+    console.log(err); // api fail
+    journeyRestart(globals);
   };
   try {
     const response = await getJsonResponse(apiEndPoint, ipaRequestObj, method);
@@ -287,12 +318,12 @@ const customerValidationHandler = {
         sendIpaRequest(ipaRequestObj, globals);
       } else {
         console.log('terminate journey');
-        hideLoader();
+        journeyTerminate(globals);
       }
     };
     const errorMethod = (err) => {
-      hideLoader();
-      console.log(err);
+      console.log(err); // api fail
+      journeyRestart(globals);
     };
     try {
       const response = await getJsonResponse(apiEndPoint, requestObj, method);
@@ -304,12 +335,11 @@ const customerValidationHandler = {
 
   terminateJourney: (panStatus, globals) => {
     console.log(`pan Status: ${panStatus} and called terminateJourney()`);
-    hideLoader();
-    terminateJourney(globals);
+    journeyTerminate(globals);
   },
 
-  restartJourney: (panStatus) => {
-    hideLoader();
+  restartJourney: (panStatus, globals) => {
+    journeyRestart(globals);
     console.log(`pan Status: ${panStatus} and called restartJourney()`);
   },
 };

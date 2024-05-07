@@ -22,11 +22,11 @@ const executeCheck = (panStatus, terminationCheck, callback, globals, breDemogRe
       } else if (DEAD_PAN_STATUS.includes(panStatus)) {
         callback.terminateJourney(panStatus, globals);
       } else {
-        callback.restartJourney(panStatus);
+        callback.restartJourney(panStatus, globals);
       }
       break;
     default:
-      callback.restartJourney(panStatus);
+      callback.restartJourney(panStatus, globals);
   }
 };
 
