@@ -7,6 +7,8 @@ import {
   resendOTP,
   prefillForm,
   getAddressDetails,
+  pinCodeMaster,
+  validateEmailID,
   currentAddressToggleHandler,
 } from '../../common/functions.js';
 
@@ -126,5 +128,7 @@ export {
   resendOTP,
   prefillForm,
   getAddressDetails,
+  pinCodeMaster,
+  validateEmailID,
   currentAddressToggleHandler,
 };
