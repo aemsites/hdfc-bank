@@ -74,6 +74,9 @@ const formUtil = (globalObj, panelName) => ({
           closestAncestor.setAttribute(DATA_ATTRIBUTE_EMPTY, changeDataAttr.value);
         }
       }
+      if (changeDataAttr?.disable && val) {
+        globalObj.functions.setProperty(panelName, { enabled: false });
+      }
     }
   },
   /**
@@ -255,6 +258,24 @@ const moveWizardView = (source, target) => {
   navigateFrom?.dispatchEvent(event);
 };
 
+/**
+ * Removes special characters from a string, except those specified in the allowed characters string.
+ *
+ * @param {string} str - The input string from which special characters will be removed.
+ * @param {string} allowedChars - A string containing characters that are allowed to remain in the output string.
+ * @returns {string} The input string with all special characters removed, except those specified in allowedChars.
+ */
+const removeSpecialCharacters = (str, allowedChars) => {
+  // Escape special characters in the allowed characters string
+  const escapedAllowedChars = allowedChars.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+  // Construct regex pattern to match special characters except those in allowedChars
+  const regex = new RegExp(`[^a-zA-Z0-9,${escapedAllowedChars.replace('-', '\\-')}]`, 'g');
+
+  // Remove special characters from the input string using the regex pattern
+  return str.replace(regex, '');
+};
+
 export {
   urlPath,
   maskNumber,
@@ -268,4 +289,5 @@ export {
   composeNameOption,
   parseCustomerAddress,
   moveWizardView,
+  removeSpecialCharacters,
 };

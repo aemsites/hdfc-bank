@@ -20,6 +20,7 @@ import {
   composeNameOption,
   moveWizardView,
   parseCustomerAddress,
+  removeSpecialCharacters,
 } from '../common/formutils.js';
 
 const journeyName = 'CORPORATE_CARD_JOURNEY';
@@ -33,7 +34,7 @@ let IS_ETB_USER = false;
 const CUSTOMER_INPUT = { mobileNumber: '', pan: '', dob: '' };
 const CUSTOMER_DEMOG_DATA = {};
 let BRE_DEMOG_RESPONSE = {};
-let customerParsedAddress = [];
+const ALLOWED_CHARACTERS = '/ -,';
 /**
  * Appends a masked number to the specified container element if the masked number is not present.
  * @param {String} containerClass - The class name of the container element.
@@ -78,15 +79,6 @@ const removeBanner = () => {
 };
 
 /**
-  * Decorates the password input to hide the text and display only bullets
-  * @name decoratePasswordField Runs after user clicks on Get OTP
-  */
-function decoratePwdField() {
-  const pwdInput = document.querySelector('main .form .field-otppanel .field-otpnumber input');
-  pwdInput.type = 'password';
-}
-
-/**
  * Handles the success scenario for OTP generation.
  * @param {any} res  - The response object containing the OTP success generation response.
  * @param {Object} globals - globals variables object containing form configurations.
@@ -116,7 +108,6 @@ const otpGenSuccess = (res, globals) => {
   otpPanel.visible(true);
 
   appendMaskedNumber('field-otphelptext', regMobNo);
-  decoratePwdField();
   removeBanner();
 };
 
@@ -244,25 +235,30 @@ const currentAddressToggleHandler = (globals) => {
      * If the customer address is not available, it parses and sets it from BRE_DEMOG_RESPONSE.
      */
     const setAddress = () => {
-      newCurentAddressLine1.setValue(customerParsedAddress[0], { attrChange: true, value: false });
-      newCurentAddressLine2.setValue(customerParsedAddress[1], { attrChange: true, value: false });
-      newCurentAddressLine3.setValue(customerParsedAddress[2], { attrChange: true, value: false });
+      newCurentAddressLine1.setValue(currentFormContext.customerParsedAddress[0], { attrChange: true, value: false });
+      newCurentAddressLine2.setValue(currentFormContext.customerParsedAddress[1], { attrChange: true, value: false });
+      newCurentAddressLine3.setValue(currentFormContext.customerParsedAddress[2], { attrChange: true, value: false });
     };
 
     // Check if BRE_DEMOG_RESPONSE exists and if the BREFILLER2 is 'D106'
     if (BRE_DEMOG_RESPONSE?.BREFILLER2.toUpperCase() === 'D106') {
       // Check if customerParsedAddress has data, if not, parse from BRE_DEMOG_RESPONSE
-      if (customerParsedAddress.length > 0) {
+      if (currentFormContext?.customerParsedAddress.length > 0) {
         setAddress();
       } else {
-        customerParsedAddress = parseCustomerAddress(`${BRE_DEMOG_RESPONSE?.VDCUSTADD1} ${BRE_DEMOG_RESPONSE?.VDCUSTADD2} ${BRE_DEMOG_RESPONSE?.VDCUSTADD3}`);
+        const fullAddress = [
+          removeSpecialCharacters(BRE_DEMOG_RESPONSE?.VDCUSTADD1, ALLOWED_CHARACTERS),
+          removeSpecialCharacters(BRE_DEMOG_RESPONSE?.VDCUSTADD2, ALLOWED_CHARACTERS),
+          removeSpecialCharacters(BRE_DEMOG_RESPONSE?.VDCUSTADD3, ALLOWED_CHARACTERS),
+        ].filter(Boolean).join('');
+        currentFormContext.customerParsedAddress = parseCustomerAddress(fullAddress);
         setAddress();
       }
     } else {
       // Set address fields from BRE_DEMOG_RESPONSE if BREFILLER2 is not 'D106'
-      newCurentAddressLine1.setValue(BRE_DEMOG_RESPONSE?.VDCUSTADD1, { attrChange: true, value: false });
-      newCurentAddressLine2.setValue(BRE_DEMOG_RESPONSE?.VDCUSTADD2, { attrChange: true, value: false });
-      newCurentAddressLine3.setValue(BRE_DEMOG_RESPONSE?.VDCUSTADD3, { attrChange: true, value: false });
+      newCurentAddressLine1.setValue(removeSpecialCharacters(BRE_DEMOG_RESPONSE?.VDCUSTADD1, ALLOWED_CHARACTERS), { attrChange: true, value: false });
+      newCurentAddressLine2.setValue(removeSpecialCharacters(BRE_DEMOG_RESPONSE?.VDCUSTADD2, ALLOWED_CHARACTERS), { attrChange: true, value: false });
+      newCurentAddressLine3.setValue(removeSpecialCharacters(BRE_DEMOG_RESPONSE?.VDCUSTADD3, ALLOWED_CHARACTERS), { attrChange: true, value: false });
     }
 
     newCurentAddressCity.setValue(BRE_DEMOG_RESPONSE?.VDCUSTCITY, { attrChange: true, value: false });
@@ -277,7 +273,8 @@ const currentAddressToggleHandler = (globals) => {
  * @param {object} panel - Panel object.
  */
 const personalDetailsPreFillFromBRE = (res, globals) => {
-  const changeDataAttrObj = { attrChange: true, value: false };
+  const changeDataAttrObj = { attrChange: true, value: false, disable: true };
+  const genderMap = { M: '1', F: '2', O: 'T' };
   // Extract personal details from globals
   const personalDetails = globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.personalDetails;
   const currentAddressNTB = globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.currentDetails.currentAddressNTB;
@@ -300,7 +297,11 @@ const personalDetailsPreFillFromBRE = (res, globals) => {
     CUSTOMER_DEMOG_DATA[field] = value;
     if (value !== undefined && value !== null) {
       const formField = formUtil(globals, personalDetails[field]);
-      formField.setValue(value, changeDataAttrObj);
+      if (field === 'gender') {
+        formField.setValue(genderMap[value], changeDataAttrObj);
+      } else {
+        formField.setValue(value, changeDataAttrObj);
+      }
     }
   });
 
@@ -320,7 +321,7 @@ const personalDetailsPreFillFromBRE = (res, globals) => {
       dobField.type = 'text';
     }
     const dobPersonalDetails = formUtil(globals, personalDetails.dobPersonalDetails);
-    dobPersonalDetails.setValue(convertDateToMmmDdYyyy(custDate.toString()));
+    dobPersonalDetails.setValue(convertDateToMmmDdYyyy(custDate.toString()), changeDataAttrObj);
   }
 
   // Create address string and set it to form field
@@ -337,9 +338,9 @@ const personalDetailsPreFillFromBRE = (res, globals) => {
   const currentAddressETBUtil = formUtil(globals, currentAddressETB);
   currentAddressETBUtil.visible(true);
   const fullAddress = [
-    breCheckAndFetchDemogResponse?.VDCUSTADD1,
-    breCheckAndFetchDemogResponse?.VDCUSTADD2,
-    breCheckAndFetchDemogResponse?.VDCUSTADD3,
+    removeSpecialCharacters(breCheckAndFetchDemogResponse?.VDCUSTADD1, ALLOWED_CHARACTERS),
+    removeSpecialCharacters(breCheckAndFetchDemogResponse?.VDCUSTADD2, ALLOWED_CHARACTERS),
+    removeSpecialCharacters(breCheckAndFetchDemogResponse?.VDCUSTADD3, ALLOWED_CHARACTERS),
   ].filter(Boolean).join('');
   if (fullAddress.length < 30) {
     const currentAddressETBToggle = formUtil(globals, currentAddressETB.currentAddressToggle);

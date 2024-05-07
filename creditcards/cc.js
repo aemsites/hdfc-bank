@@ -105,9 +105,11 @@ const consent2Config = { // config to create modal for consent-2
   updateUI(receivedData) {
     if (receivedData?.iAgreeConsent2) { // iAgreeConsent2- name of the I agree btn.
       this.triggerElement.checked = true;
+      this.triggerElement.dispatchEvent(new Event('change', { bubbles: true }));
     }
     if (receivedData?.closeIcon) { // closeIcon - name of the Close x btn
       this.triggerElement.checked = false;
+      this.triggerElement.dispatchEvent(new Event('change', { bubbles: true }));
     }
   },
 };
@@ -150,9 +152,11 @@ const consent1Config = { // config to create modal for consent-1
   updateUI(receivedData) {
     if (receivedData?.iAgreeConsent1) { // iAgreeConsent2- name of the I agree btn.
       this.triggerElement.checked = true;
+      this.triggerElement.dispatchEvent(new Event('change', { bubbles: true }));
     }
     if (receivedData?.closeIcon) { // closeIcon - name of the Close x btn
       this.triggerElement.checked = false;
+      this.triggerElement.dispatchEvent(new Event('change', { bubbles: true }));
     }
   },
 };
@@ -190,39 +194,4 @@ const viewAllBtnPannelConfig = { // linkModal for corporateCardWizard pannel vie
   reqConsentAgree: true,
 };
 linkModalFunction(viewAllBtnPannelConfig);
-
-/* Code for floating field label, initialized after DOM is rendered */
-const inputs = document.querySelectorAll('input[type="text"], input[type="number"], input[type="date"], input[type="email"], .field-wrapper textarea, .field-wrapper select');
-
-inputs.forEach((input) => {
-  const wrapper = input.closest('.field-wrapper');
-  input.addEventListener('focus', () => {
-    wrapper.dataset.active = 'true';
-    wrapper.dataset.empty = !input.value;
-  });
-  input.addEventListener('blur', () => {
-    delete wrapper.dataset.active;
-    wrapper.dataset.empty = !input.value;
-  });
-  wrapper.dataset.empty = !input.value;
-});
-
-/* End of code for floating field label */
-
-/* Code of disabling future dates */
-
-const dateInputs = document.querySelectorAll('input[id^="datepicker-"]');
-if (dateInputs) {
-  dateInputs.forEach((input) => {
-    const textInputValue = input.getAttribute('edit-value');
-    input.type = 'date';
-    input.value = textInputValue;
-    const today = new Date();
-    const currentDate = today.toISOString().split('T')[0];
-    input.setAttribute('max', currentDate);
-  });
-}
-
-/* End of code for disabling future dates */
-
 export { decorateStepper, onWizardInit };
