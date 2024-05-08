@@ -33,6 +33,32 @@ const maskNumber = (number, digitsToMask) => {
 const clearString = (str) => (str ? str?.replace(/[\s~`!@#$%^&*(){}[\];:"'<,.>?/\\|_+=-]/g, '') : '');
 
 /**
+ * Makes a form field invalid by adding error message and styling through Dom api.
+ * If the field already has an error message element, updates its content.
+ * If not, creates a new error message element.
+ * @param {string} fieldName - The name attribute of the field to make invalid.
+ * @param {string} [invalidMsg] - The error message to display. Optional, defaults to an empty string.
+ */
+const makeFieldInvalid = (fieldName, invalidMsg) => {
+  const fieldDescClass = 'field-description';
+  const invalidClass = 'field-invalid';
+  const invalidPin = document.querySelector(`[name=${fieldName}]`);
+  const parentElement = invalidPin?.parentElement;
+  if (parentElement) {
+    const fd = parentElement?.querySelector(`.${fieldDescClass}`);
+    if (fd) {
+      fd.textContent = invalidMsg || '';
+    } else {
+      parentElement?.classList.add(invalidClass);
+      const fieldDesc = document.createElement('div');
+      fieldDesc.textContent = invalidMsg || '';
+      fieldDesc.classList.add(fieldDescClass);
+      parentElement.appendChild(fieldDesc);
+    }
+  }
+};
+
+/**
  * Utility function for managing properties of a panel.
  * @param {object} globalObj - The global object containing functions.
  * @param {object} panelName - The name of the panel to manipulate.
@@ -74,6 +100,9 @@ const formUtil = (globalObj, panelName) => ({
           closestAncestor.setAttribute(DATA_ATTRIBUTE_EMPTY, changeDataAttr.value);
         }
       }
+      if (changeDataAttr?.disable && val) {
+        globalObj.functions.setProperty(panelName, { enabled: false });
+      }
     }
   },
   /**
@@ -83,6 +112,31 @@ const formUtil = (globalObj, panelName) => ({
    */
   setEnum: (enumOptions, val) => {
     globalObj.functions.setProperty(panelName, { enum: enumOptions, value: val }); // setting initial value among enums options
+  },
+  /**
+   *  Resets the field by setting its value to empty and resetting floating labels.
+   */
+  resetField: () => {
+    globalObj.functions.setProperty(panelName, { value: '' });
+    const element = document.getElementsByName(panelName._data.$_name)?.[0];
+    if (element) {
+      const closestAncestor = element.closest(`.${ANCESTOR_CLASS_NAME}`);
+      if (closestAncestor) {
+        closestAncestor.setAttribute(DATA_ATTRIBUTE_EMPTY, true);
+      }
+    }
+  },
+  /**
+  * Sets the fields as invalid.
+  * @param {boolean} val - A boolean value indicating whether the field is valid (true) or invalid (false).
+  * @param {string} [errorMsg] - An optional parameter representing the error message to be set if the field is invalid.
+   */
+  markInvalid: (val, errorMsg) => {
+    const dispatchLoad = {};
+    dispatchLoad.valid = val;
+    if (errorMsg) dispatchLoad.errorMessage = errorMsg;
+    globalObj.functions.setProperty(panelName, dispatchLoad);
+    makeFieldInvalid(panelName?.$name, errorMsg);
   },
 });
 
@@ -173,6 +227,7 @@ const composeNameOption = (fn, mn, ln) => {
   const initial = (str) => str?.charAt(0);
   const stringify = ([a, b]) => (a && b ? `${a} ${b}` : '');
   const toOption = (a) => ({ label: a, value: a });
+  const MAX_LENGTH = 19;
   const names = [
     [fn, initial(mn)],
     [fn, mn],
@@ -182,7 +237,7 @@ const composeNameOption = (fn, mn, ln) => {
     [fn, ln],
     [mn, ln],
     [initial(mn), ln],
-  ]?.map(stringify)?.filter((el) => el?.length);
+  ]?.map(stringify)?.filter((el) => el?.length <= MAX_LENGTH);
   return [...new Set(names)]?.map(toOption);
 };
 
@@ -254,6 +309,24 @@ const moveWizardView = (source, target) => {
   navigateFrom?.dispatchEvent(event);
 };
 
+/**
+ * Removes special characters from a string, except those specified in the allowed characters string.
+ *
+ * @param {string} str - The input string from which special characters will be removed.
+ * @param {string} allowedChars - A string containing characters that are allowed to remain in the output string.
+ * @returns {string} The input string with all special characters removed, except those specified in allowedChars.
+ */
+const removeSpecialCharacters = (str, allowedChars) => {
+  // Escape special characters in the allowed characters string
+  const escapedAllowedChars = allowedChars.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+  // Construct regex pattern to match special characters except those in allowedChars
+  const regex = new RegExp(`[^a-zA-Z0-9,${escapedAllowedChars.replace('-', '\\-')}]`, 'g');
+
+  // Remove special characters from the input string using the regex pattern
+  return str.replace(regex, '');
+};
+
 export {
   urlPath,
   maskNumber,
@@ -267,4 +340,6 @@ export {
   composeNameOption,
   parseCustomerAddress,
   moveWizardView,
+  removeSpecialCharacters,
+  makeFieldInvalid,
 };

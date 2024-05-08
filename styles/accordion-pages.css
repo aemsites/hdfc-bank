@@ -32,7 +32,8 @@ input[type='number'] {
 ul.wizard-menu-items {
   flex-wrap: nowrap;
   gap: 0;
-  margin-right: -35px;
+  margin-right: -111vw;
+  width: 110%;
 }
 
 li.wizard-menu-item {
@@ -94,6 +95,18 @@ fieldset fieldset {
         padding: 16px 24px;
         border-radius: 12px;
         margin-bottom: 24px;
+    }
+  }
+
+  .field-yourdetailsconsent {
+    display: block;
+
+    label {
+      margin-left: 15px;
+    }
+    
+    .field-description {
+      margin-top: 7px;
     }
   }
 
@@ -212,7 +225,7 @@ fieldset fieldset {
 
 /* End of Confirm Card Panel */
 
-
+/* Select KYC Panel */
 .field-selectkycpaymentpanel {
   .plain-text-wrapper b, legend { color: #111827; }
 
@@ -235,7 +248,7 @@ fieldset fieldset {
           width: fit-content;
           padding: 0 6px;
           border-radius: 12px;
-          color: #111827;
+          color: var(--color-interface-text-primary);
         }
         
         input[type="radio"] {
@@ -244,7 +257,7 @@ fieldset fieldset {
         }
         
         label {
-          color: #111827;
+          color: var(--color-interface-text-primary);
           font-weight: 600;
           font-size: 14px !important;
         }
@@ -290,7 +303,28 @@ fieldset fieldset {
   }
 }
 
-.hdfc-accordion-style::after {
+/* End of Select KYC Panel */
+
+/* Confirm and Submit Panel */
+.field-confirmandsubmitpanel {
+  .field-addressdeclarationtext1 p {
+    margin-bottom: 0;
+    font-weight: var(--font-weight-bold);
+    font-size: var(--body-xx-lg-font-size);
+    color: var(--color-interface-text-primary);
+  }
+
+  .field-addressdeclarationtext2 p {
+    margin: -20px 0 0;
+    font-weight: var(--font-weight-regular);
+    font-size: var(--body-sm-font-size);
+    color: var(--color-interface-text-quaternary);
+  }
+}
+
+/* End of Confirm and Submit Panel */
+
+.hdfc-accordion-legend::after {
   content: url('../../icons/accordion-expand-icon.svg');
   display: inline;
   position: absolute;
@@ -305,14 +339,20 @@ fieldset fieldset {
 }
 
 @media (width <= 960px) {
-main .form form .field-corporatecardwizardview.wizard .field-cardbenefitsfeaturespanel {
-  padding-left: 28px;
-}
+  main .form form .field-corporatecardwizardview.wizard {
+    ul.wizard-menu-items {
+      width: calc(100vw);
+    }
+    
+    .field-cardbenefitsfeaturespanel {
+      padding-left: 28px;
+    }
+  }
 }
 
 @media (width <= 767px) {
 main .form form .field-corporatecardwizardview.wizard {
-  ul.wizard-menu-items { width: calc(300%); }
+  ul.wizard-menu-items {width: calc(120vw);}
   
   li.wizard-menu-item { width: auto; }
 
@@ -349,11 +389,24 @@ main .form form .field-corporatecardwizardview.wizard {
       width: 253.44px;
     }
   }
+
+  .field-confirmandsubmitpanel {
+    .field-addressdeclarationtext2 p {
+      margin: var(--form-paragraph-margin);
+    }
+  }
 }
+}
+
+@media (width <= 600px) {
+  main .form form .field-corporatecardwizardview.wizard {
+    ul.wizard-menu-items {width: calc(140vw);}
+  }
 }
 
 @media (width <= 480px) {
 main .form form .field-corporatecardwizardview.wizard {
+  ul.wizard-menu-items {width: calc(180vw);}
   fieldset { width: 85vw; }
 
   .field-selectkycpaymentpanel {
