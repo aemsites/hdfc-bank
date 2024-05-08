@@ -22,6 +22,28 @@ function hideLoader() {
 }
 
 /**
+* Initiates an http call with JSON payload to the specified URL using the specified method.
+*
+* @param {string} url - The URL to which the request is sent.
+* @param {string} [method='POST'] - The HTTP method to use for the request (default is 'POST').
+* @param {object} payload - The data payload to send with the request.
+* @returns {*} - The JSON response from the server.
+*/
+function fetchJsonResponse(url, payload, method) {
+  // apiCall-fetch
+  return fetch(url, {
+    method,
+    body: payload ? JSON.stringify(payload) : null,
+    mode: 'cors',
+    headers: {
+      'Content-type': 'text/plain',
+      Accept: 'application/json',
+    },
+  })
+    .then((res) => res.json());
+}
+
+/**
  * Initiates an http call with JSON payload to the specified URL using the specified method.
  *
  * @param {string} url - The URL to which the request is sent.
@@ -74,5 +96,5 @@ function restAPICall(globals, method, payload, path, successCallback, errorCallb
 }
 
 export {
-  restAPICall, getJsonResponse, displayLoader, hideLoader,
+  restAPICall, getJsonResponse, displayLoader, hideLoader, fetchJsonResponse,
 };
