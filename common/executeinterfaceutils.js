@@ -5,6 +5,7 @@ import {
   formUtil,
   composeNameOption,
   setSelectOptions,
+  dateFormat,
 } from './formutils.js';
 import { currentFormContext } from './journey-utils.js';
 import { restAPICall } from './makeRestAPI.js';
@@ -42,10 +43,10 @@ const createExecuteInterfaceRequestObj = (panCheckFlag, globals, breDemogRespons
   } = globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage;
   const { prefilledEmploymentDetails } = employmentDetails;
   const fullName = `${personalDetails.firstName.$value} ${personalDetails.middleName.$value} ${personalDetails.lastName.$value}`;
-  let isAddressEditFlag = 'Y';
-  let panEditFlag = 'Y';
+  let addressEditFlag = 'N';
+  let panEditFlag = 'N';
   const panNumber = personalDetails.panNumberPersonalDetails.$value;
-  let nameEditFlag = 'Y';
+  let nameEditFlag = 'N';
   const currentAddress = {
     address1: '',
     address2: '',
@@ -59,8 +60,8 @@ const createExecuteInterfaceRequestObj = (panCheckFlag, globals, breDemogRespons
     if (breDemogResponse?.VDCUSTITNBR !== panNumber) {
       panEditFlag = 'Y';
     }
-    if (breDemogResponse.VDCUSTFULLNAME === fullName) {
-      nameEditFlag = 'N';
+    if (breDemogResponse.VDCUSTFULLNAME !== fullName) {
+      nameEditFlag = 'Y';
     }
     const customerFiller2 = breDemogResponse?.BREFILLER2?.toUpperCase();
     if (customerFiller2 === 'D106') {
@@ -77,6 +78,7 @@ const createExecuteInterfaceRequestObj = (panCheckFlag, globals, breDemogRespons
       currentAddress.state = breDemogResponse.VDCUSTSTATE;
     }
     if (currentDetails.currentAddressETB.currentAddressToggle.$value === 'on') {
+      addressEditFlag = 'Y';
       const { newCurentAddressPanel } = currentDetails.currentAddressETB;
       permanentAddress.address1 = newCurentAddressPanel.newCurentAddressLine1.$value;
       permanentAddress.address2 = newCurentAddressPanel.newCurentAddressLine2.$value;
@@ -85,10 +87,12 @@ const createExecuteInterfaceRequestObj = (panCheckFlag, globals, breDemogRespons
       permanentAddress.pincode = newCurentAddressPanel.newCurentAddressPin.$value;
       permanentAddress.state = newCurentAddressPanel.newCurentAddressState.$value;
     } else {
-      isAddressEditFlag = 'N';
       permanentAddress = { ...currentAddress };
     }
   } else {
+    panEditFlag = 'Y';
+    nameEditFlag = 'Y';
+    addressEditFlag = 'Y';
     const { currentAddressNTB } = currentDetails;
     const { permanentAddressPanel } = currentAddressNTB.permanentAddress;
     currentAddress.address1 = currentAddressNTB.addressLine1.$value;
@@ -117,7 +121,7 @@ const createExecuteInterfaceRequestObj = (panCheckFlag, globals, breDemogRespons
       perAddressType: '2',
       personalEmailId: personalDetails.personalEmailAddress.$value,
       selfConfirmation: 'N',
-      addressEditFlag: isAddressEditFlag,
+      addressEditFlag,
       communicationAddress1: currentAddress.address1,
       communicationAddress2: currentAddress.address2,
       communicationCity: currentAddress.city,
@@ -210,8 +214,8 @@ const terminateJourney = (globals) => {
   resultPanel.visible(true);
 };
 const resumeJourney = (globals, response) => {
-  currentFormContext.jwtToken = response.Id_token_jwt;
   currentFormContext.productDetails = response.productEligibility.productDetails?.[0];
+  currentFormContext.ipaResponse = response;
   const imageEl = document.querySelector('.field-cardimage > picture');
   const imagePath = `https://applyonlinedev.hdfcbank.com${response.productEligibility.productDetails[0]?.cardTypePath}?width=2000&optimize=medium`;
   imageEl.childNodes[5].setAttribute('src', imagePath);
@@ -297,7 +301,7 @@ const customerValidationHandler = {
   },
 };
 
-const createDapRequestObj = (response, globals) => {
+const createDapRequestObj = (globals) => {
   const {
     personalDetails,
     employmentDetails,
@@ -310,11 +314,12 @@ const createDapRequestObj = (response, globals) => {
       APS_LAST_NAME: personalDetails.lastName.$value,
       APS_MIDDLE_NAME: personalDetails.middleName.$value,
       panNo: personalDetails.panNumberPersonalDetails.$value,
-      dateOfBirth: personalDetails.dobPersonalDetails.$value,
-      panNumber: '',
+      dateOfBirth: dateFormat(personalDetails.dobPersonalDetails.$value, 'YYYYMMDD'),
+      // duplicate
+      panNumber: personalDetails.panNumberPersonalDetails.$value,
       mobileNo: globals.form.loginPanel.mobilePanel.registeredMobileNumber.$value,
       existingCustomer: currentFormContext.journeyType === 'ETB' ? 'Y' : 'N',
-      APS_NAME_AS_CARD: 'Ranjit Vijay Patil',
+      APS_NAME_AS_CARD: currentFormContext.executeInterfaceReqObj.requestString.nameOnCard,
       emailAddress: prefilledEmploymentDetails.workEmailAddress.$value,
       APS_PER_ADDRESS_1: customerInfo.permanentAddress1,
       APS_PER_ADDRESS_2: customerInfo.permanentAddress2,
@@ -334,7 +339,8 @@ const createDapRequestObj = (response, globals) => {
       APS_OFF_CITY: customerInfo.officeCity,
       APS_OFF_STATE: customerInfo.officeState,
       APS_PER_STATE: customerInfo.permanentState,
-      APS_DATE_OF_BIRTH: '1992-09-10 00:00:00',
+      // duplicate
+      APS_DATE_OF_BIRTH: dateFormat(personalDetails.dobPersonalDetails.$value, 'YYYYMMDDWithTime'),
       APS_EDUCATION: '3',
       APS_GENDER: 'M',
       APS_OCCUPATION: '1',
@@ -344,15 +350,15 @@ const createDapRequestObj = (response, globals) => {
       APS_RESI_TYPE: '2',
       APS_COM_ADDR_TYPE: '2',
       APS_SELF_CONFIRMATION: customerInfo.selfConfirmation,
-      APS_MOBILE_EDIT_FLAG: 'N',
-      APS_EMAIL_EDIT_FLAG: 'N',
-      APS_PAN_EDIT_FLAG: 'N',
-      APS_ADDRESS_EDIT_FLAG: 'N',
-      APS_NAME_EDIT_FLAG: 'N',
-      APS_RESPHONE_EDIT_FLAG: 'N',
+      APS_MOBILE_EDIT_FLAG: currentFormContext.executeInterfaceReqObj.requestString.mobileEditFlag,
+      APS_EMAIL_EDIT_FLAG: currentFormContext.executeInterfaceReqObj.requestString.apsEmailEditFlag,
+      APS_PAN_EDIT_FLAG: currentFormContext.executeInterfaceReqObj.requestString.panEditFlag,
+      APS_ADDRESS_EDIT_FLAG: currentFormContext.executeInterfaceReqObj.requestString.addressEditFlag,
+      APS_NAME_EDIT_FLAG: currentFormContext.executeInterfaceReqObj.requestString.nameEditFlag,
+      APS_RESPHONE_EDIT_FLAG: currentFormContext.executeInterfaceReqObj.requestString.resPhoneEditFlag,
       APS_OFFPHONE_EDIT_FLAG: 'N',
       APS_EMP_CODE: '',
-      APS_DESIGNATION: 'Quality Engineer',
+      APS_DESIGNATION: prefilledEmploymentDetails.designation.$value,
       APS_DEPARTMENT: '',
       APS_FILLER2: 'No',
       APS_FILLER10: 'N',
@@ -366,41 +372,79 @@ const createDapRequestObj = (response, globals) => {
       APS_FILLER6: '',
       APS_SMCODE: '',
       APS_DSE_CODE: '',
-      applicationERefNumber: 'AD1242400049',
+      applicationERefNumber: currentFormContext.ipaResponse.ipa.eRefNumber,
       SOA_REQUESTID: '0305245144',
       nameOfDirector: '',
       relationship: '',
       product: 'Regalia Gold',
       APS_TYPE_OF_INDUSTRY: '',
-      journeyID: '107a3831-28fd-4375-aba0-520f6b216bc2_01_PACC_R_WEB',
-      journeyName: 'PA_CC_JOURNEY',
-      userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 Edg/124.0.0.0',
-      timeInfo: '2024-05-03T13:56:52.495Z',
-      APS_OFF_EMAILID: 'patil@adobe.com',
+      journeyID: currentFormContext.journeyID,
+      journeyName: currentFormContext.journeyName,
+      userAgent: navigator.userAgent,
+      timeInfo: new Date().toISOString(),
+      APS_OFF_EMAILID: prefilledEmploymentDetails.workEmailAddress.$value,
       APS_DIRECT_DEBIT: '',
-      customerId: 'XXXXX6832',
+      customerId: currentFormContext.executeInterfaceReqObj.requestString.customerID,
       pricingDetails: '',
       docUpload: '',
       idcomEnabled: true,
       APS_CAPTCHA: '',
-      applRefNo: '24E03D00180000W1',
+      applRefNo: currentFormContext.ipaResponse.ipa.applRefNumber,
       txnRefNo: '',
       pseudoID: '',
-      FILLER8: 'DCPINSUCCESS',
+      FILLER8: currentFormContext.ipaResponse.ipa.filler8,
       Id_token_jwt: currentFormContext.jwtToken,
       IDCOM_Token: '',
       JSCPAYLOAD: '',
       BROWSERFINGERPRINT: 'ef3036d9e4872df7e5a5eb2fe49bc8ae',
       HDIMPAYLOAD: '',
     },
-
   };
   return dapRequestObj;
 };
 
-const finalDap = (response, globals) => {
-  const dapRequestObj = createDapRequestObj(response, globals);
-  console.log(dapRequestObj);
+const finalDap = (globals) => {
+  const dapRequestObj = createDapRequestObj(globals);
+  const apiEndPoint = urlPath('/content/hdfc_ccforms/api/pacc/finaldapandpdfgen.json');
+  const eventHandlers = {
+    successCallBack: (response) => {
+      console.log(response);
+    },
+    errorCallBack: (response) => {
+      console.log(response);
+    },
+  };
+  restAPICall('', 'POST', dapRequestObj, apiEndPoint, eventHandlers.successCallBack, eventHandlers.errorCallBack, 'Loading');
+};
+
+const createIdComRequestObj = () => {
+  const idComObj = {
+    requestString: {
+      mobileNumber: currentFormContext.executeInterfaceReqObj.requestString.mobileNumber,
+      ProductCode: currentFormContext.productCode,
+      PANNo: currentFormContext.executeInterfaceReqObj.requestString.panNumber,
+      userAgent: navigator.userAgent,
+      journeyID: currentFormContext.journeyID,
+      journeyName: currentFormContext.journeyName,
+      scope: 'ADOBE_PACC',
+    },
+  };
+  return idComObj;
+};
+
+const fetchAuthCode = (globals) => {
+  const idComObj = createIdComRequestObj();
+  const apiEndPoint = urlPath('/content/hdfc_commonforms/api/fetchauthcode.json');
+  const eventHandlers = {
+    successCallBack: (response) => {
+      console.log(response);
+      finalDap(globals);
+    },
+    errorCallBack: (response) => {
+      console.log(response);
+    },
+  };
+  restAPICall('', 'POST', idComObj, apiEndPoint, eventHandlers.successCallBack, eventHandlers.errorCallBack, 'Loading');
 };
 
 const executeInterfaceApiFinal = (globals) => {
@@ -410,7 +454,8 @@ const executeInterfaceApiFinal = (globals) => {
   const apiEndPoint = urlPath('/content/hdfc_etb_wo_pacc/api/executeinterface.json');
   const eventHandlers = {
     successCallBack: (response) => {
-      finalDap(response, globals);
+      console.log(response);
+      fetchAuthCode(globals);
     },
     errorCallBack: (response) => {
       console.log(response);
