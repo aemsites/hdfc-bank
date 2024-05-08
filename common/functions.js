@@ -11,7 +11,7 @@ import {
   currentFormContext,
 } from '../creditcards/corporate-creditcardFunctions.js';
 import { urlPath } from './formutils.js';
-
+import { invokeJourneyApiCall } from './journey-utils.js';
 import { fetchJsonResponse, restAPICall } from './makeRestAPI.js';
 
 /**
@@ -79,4 +79,5 @@ export {
   pinCodeMaster,
   validateEmailID,
   currentAddressToggleHandler,
+  invokeJourneyApiCall,
 };

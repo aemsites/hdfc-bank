@@ -82,46 +82,6 @@ const removeBanner = () => {
 };
 
 /**
- * invokeJourneyApiCall to log on success and error call backs of api calls.
- * @param {Object} globals - globals variables object containing form configurations.
- */
-const invokeJourneyApiCall = async (globals) => {
-  const journeyJSONObj = {
-    RequestPayload: {
-      userAgent: window.navigator.userAgent,
-      leadProfile: {},
-      formData: {
-        channel: 'ADOBE WEBFORMS',
-        journeyName: currentFormContext.journeyName,
-        journeyID: currentFormContext.journeyID,
-        journeyStateInfo: [
-          {
-            state: 'CUSTOMER_IDENTITY_ACQUIRED',
-            stateInfo: JSON.stringify(santizedFormData(globals)),
-            timeinfo: new Date().toISOString(),
-          },
-          {
-            state: 'CUSTOMER_IDENTITY_UNRESOLVED',
-            stateInfo: JSON.stringify(santizedFormData(globals)),
-            timeinfo: new Date().toISOString(),
-          },
-        ],
-      },
-    },
-  };
-  const url = 'https://applyonlinedev.hdfcbank.com/content/hdfc_commonforms/api/journeydropoff.json';
-  const method = 'POST';
-  try {
-    const jsonApiCall = await getJsonResponse(url, journeyJSONObj, method);
-    // success method proceed
-    console.log(jsonApiCall, 'journeyapicall_response');
-  } catch (error) {
-    // error method proceed
-    console.error(error);
-  }
-};
-
-/**
  * Handles the success scenario for OTP generation.
  * @param {any} res  - The response object containing the OTP success generation response.
  * @param {Object} globals - globals variables object containing form configurations.
@@ -152,7 +112,6 @@ const otpGenSuccess = (res, globals) => {
 
   appendMaskedNumber('field-otphelptext', regMobNo);
   removeBanner();
-  invokeJourneyApiCall(globals);
 };
 
 /**
@@ -182,7 +141,6 @@ const otpGenFailure = (res, globals) => {
   otpBtn.visible(false);
   failurePanel.visible(true);
   removeBanner();
-  invokeJourneyApiCall(globals);
 };
 
 const OTPGEN = {
