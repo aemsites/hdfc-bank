@@ -21,7 +21,9 @@ import {
   moveWizardView,
   parseCustomerAddress,
   removeSpecialCharacters,
+  makeFieldInvalid,
 } from '../common/formutils.js';
+import { getJsonResponse } from '../common/makeRestAPI.js';
 
 const journeyName = 'CORPORATE_CARD_JOURNEY';
 currentFormContext.journeyID = createJourneyId('a', 'b', 'c');
@@ -859,11 +861,10 @@ const createPanValidationRequest = (firstName, middleName, lastName, globals) =>
   PANValidationAndNameMatchService(panValidation.createRequestObj(), panValidation.eventHandlers);
 };
 
-/*
- * logic hanlding during prefiill of form.
- * @param {Objec} globals - The global object containing necessary globals form data.
+/**
+ * logic hanlding during prefill of form.
+ * @param {object} globals - The global object containing necessary globals form data.
  */
-
 const prefillForm = (globals) => {
   const globalSchema = globals?.functions?.exportData();
   const ccGlobals = globalSchema?.data?.CorporateCreditCard;
@@ -888,6 +889,120 @@ const prefillForm = (globals) => {
   }
 };
 
+/**
+ * Handles API call for validating pinCode using the pinCodeMaster function.
+ * @param {object} globalObj - The global object containing necessary globals form data.
+ * @param {object} cityField - The City field object from the global object.
+ * @param {object} stateField - The State field object from the global object.
+ * @param {object} pincodeField - The PinCode field object from the global object.
+ */
+const pinmasterApi = async (globalObj, cityField, stateField, pincodeField) => {
+  const PIN_CODE_LENGTH = 6;
+  if (pincodeField?.$value?.length < PIN_CODE_LENGTH) return;
+  const url = urlPath(`/content/hdfc_commonforms/api/mdm.CREDIT.SIX_DIGIT_PINCODE.PINCODE-${pincodeField?.$value}.json`);
+  const method = 'GET';
+  const setCityField = formUtil(globalObj, cityField);
+  const setStateField = formUtil(globalObj, stateField);
+  const setPincodeField = formUtil(globalObj, pincodeField);
+  const resetStateCityFields = () => {
+    setCityField.resetField();
+    setStateField.resetField();
+    setCityField.enabled(false);
+    setStateField.enabled(false);
+  };
+  const errorMethod = (errStack) => {
+    const { errorCode, errorMessage } = errStack;
+    const defErrMessage = 'Please enter a valid pincode';
+    if (errorCode === '500') {
+      setPincodeField.markInvalid(false, defErrMessage);
+      resetStateCityFields();
+    }
+  };
+  const successMethod = (value) => {
+    const changeDataAttrObj = { attrChange: true, value: false };
+    setCityField.setValue(value?.CITY, changeDataAttrObj);
+    setCityField.enabled(false);
+    setStateField.setValue(value?.STATE, changeDataAttrObj);
+    setStateField.enabled(false);
+  };
+  try {
+    const response = await getJsonResponse(url, null, method);
+    const [{ CITY, STATE }] = response;
+    const [{ errorCode, errorMessage }] = response;
+    if (CITY && STATE) {
+      successMethod({ CITY, STATE });
+    } else if (errorCode) {
+      const errStack = { errorCode, errorMessage };
+      throw errStack;
+    }
+  } catch (error) {
+    errorMethod(error);
+  }
+};
+
+/**
+ * pincode validation in your details for NTB and ETB
+ * @param {object} globals - The global object containing necessary globals form data.
+ */
+const pinCodeMaster = async (globals) => {
+  const yourDetails = globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage;
+  const currentDetails = yourDetails.currentDetails;
+  const employeeDetails = yourDetails.employmentDetails;
+  const addressCurentNtb = currentDetails.currentAddressNTB;
+  const permanentAddressNtb = addressCurentNtb.permanentAddress.permanentAddressPanel;
+  const newAddressEtb = currentDetails.currentAddressETB.newCurentAddressPanel;
+  const pinMasterConstants = [
+    {
+      keyFlow: 'NTB_CURRENT_ADDRESS_FIELD',
+      pincodeField: addressCurentNtb.currentAddresPincodeNTB,
+      cityField: addressCurentNtb.city,
+      stateField: addressCurentNtb.state,
+    },
+    {
+      keyFlow: 'NTB_PERMANENT_ADDRESS_FIELD',
+      pincodeField: permanentAddressNtb.permanentAddressPincode,
+      cityField: permanentAddressNtb.permanentAddressCity,
+      stateField: permanentAddressNtb.permanentAddressState,
+    },
+    {
+      keyFlow: 'ETB_NEW_ADDRESS_FIELD',
+      pincodeField: newAddressEtb.newCurentAddressPin,
+      cityField: newAddressEtb.newCurentAddressCity,
+      stateField: newAddressEtb.newCurentAddressState,
+    },
+    {
+      keyFlow: 'OFFICE_ADDRESS_FIELD',
+      pincodeField: employeeDetails.officeAddressPincode,
+      cityField: employeeDetails.officeAddressCity,
+      stateField: employeeDetails.officeAddressState,
+    },
+  ];
+  pinMasterConstants?.forEach((field) => (field.pincodeField.$value && pinmasterApi(globals, field.cityField, field.stateField, field.pincodeField)));
+};
+
+/**
+ * validate email id in personal details screen for the NTB
+ * @param {object} globals - The global object containing necessary globals form data.
+ */
+const validateEmailID = async (globals) => {
+  const emailField = globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.personalDetails.personalEmailAddress;
+  if (!emailField.$valid) return;
+  const url = urlPath('/content/hdfc_commonforms/api/emailid.json');
+  const setEmailField = formUtil(globals, emailField);
+  const invalidMsg = 'Please enter email id.';
+  const payload = {
+    email: emailField.$value,
+  };
+  const method = 'POST';
+  try {
+    const emailValid = await getJsonResponse(url, payload, method);
+    if (!emailValid) {
+      setEmailField.markInvalid(emailValid, invalidMsg);
+    }
+  } catch (error) {
+    console.error(error, 'NTB_email_error');
+  }
+};
 export {
   OTPGEN,
   OTPVAL,
@@ -897,5 +1012,7 @@ export {
   currentFormContext,
   createPanValidationRequest,
   getAddressDetails,
+  pinCodeMaster,
+  validateEmailID,
   currentAddressToggleHandler,
 };
