@@ -491,6 +491,7 @@ const fetchAuthCode = (globals) => {
  */
 const executeInterfaceApiFinal = (globals) => {
   const requestObj = currentFormContext.executeInterfaceReqObj;
+  requestObj.requestString.nameOnCard = globals.form.corporateCardWizardView.confirmCardPanel.cardBenefitsPanel.CorporatetImageAndNamePanel.nameOnCardDropdown.$value;
   requestObj.requestString.Id_token_jwt = currentFormContext.jwtToken;
   currentFormContext.executeInterfaceReqObj.requestString.productCode = currentFormContext.productCode;
   const apiEndPoint = urlPath('/content/hdfc_etb_wo_pacc/api/executeinterface.json');
