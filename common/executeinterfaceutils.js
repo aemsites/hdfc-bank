@@ -35,6 +35,11 @@ const formatDate = (inputDate) => {
   return formattedDate;
 };
 
+/**
+ * Creates an Execute Interface request object based on the provided global data.
+ * @param {Object} globals - The global object containing necessary data for ExecuteInterface request.
+ * @returns {Object} - The ExecuteInterface request object.
+ */
 const createExecuteInterfaceRequestObj = (panCheckFlag, globals, breDemogResponse) => {
   const {
     personalDetails,
@@ -227,6 +232,12 @@ const resumeJourney = (globals, response) => {
   listNameOnCard(globals);
 };
 
+/**
+ * Sends an IPA request and handles the response.
+ * @param {Object} ipaRequestObj - The IPA request object containing necessary data.
+ * @param {Object} globals - The global object containing necessary data for the request.
+ * @returns {void}
+ */
 const sendIpaRequest = (ipaRequestObj, globals) => {
   const apiEndPoint = urlPath('/content/hdfc_etb_wo_pacc/api/ipa.json');
   const exceedTimeLimit = (TOTAL_TIME >= currentFormContext.ipaDuration * 1000);
@@ -282,6 +293,7 @@ const customerValidationHandler = {
           sendIpaRequest(ipaRequestObj, globals);
         } else {
           console.log('terminate journey');
+          terminateJourney(globals);
         }
       },
       errorCallBack: (response) => {
@@ -301,7 +313,17 @@ const customerValidationHandler = {
   },
 };
 
+/**
+ * Creates a DAP request object based on the provided global data.
+ * @param {Object} globals - The global object containing necessary data for DAP request.
+ * @returns {Object} - The DAP request object.
+ */
 const createDapRequestObj = (globals) => {
+  const genderMap = {
+    1: 'M',
+    2: 'F',
+    3: 'T',
+  };
   const {
     personalDetails,
     employmentDetails,
@@ -342,7 +364,7 @@ const createDapRequestObj = (globals) => {
       // duplicate
       APS_DATE_OF_BIRTH: dateFormat(personalDetails.dobPersonalDetails.$value, 'YYYYMMDDWithTime'),
       APS_EDUCATION: '3',
-      APS_GENDER: 'M',
+      APS_GENDER: genderMap[customerInfo.gender],
       APS_OCCUPATION: '1',
       APS_GROSS_MONTHLY_INCOME: '',
       APS_COMPANY_NAME: customerInfo.companyName,
@@ -403,6 +425,11 @@ const createDapRequestObj = (globals) => {
   return dapRequestObj;
 };
 
+/**
+ * Initiates a final DAP process by making a REST API call.
+ * @param {Object} globals - The global object containing necessary data for DAP request.
+ * @returns {void}
+ */
 const finalDap = (globals) => {
   const dapRequestObj = createDapRequestObj(globals);
   const apiEndPoint = urlPath('/content/hdfc_ccforms/api/pacc/finaldapandpdfgen.json');
@@ -417,6 +444,11 @@ const finalDap = (globals) => {
   restAPICall('', 'POST', dapRequestObj, apiEndPoint, eventHandlers.successCallBack, eventHandlers.errorCallBack, 'Loading');
 };
 
+/**
+ * Creates an IdCom request object based on the provided global data.
+ * @param {Object} globals - The global object containing necessary data for IdCom request.
+ * @returns {Object} - The IdCom request object.
+ */
 const createIdComRequestObj = () => {
   const idComObj = {
     requestString: {
@@ -432,6 +464,11 @@ const createIdComRequestObj = () => {
   return idComObj;
 };
 
+/**
+ * Fetches an authentication code and initiates the final DAP process upon success.
+ * @param {Object} globals - The global object containing necessary data for the request.
+ * @returns {void}
+ */
 const fetchAuthCode = (globals) => {
   const idComObj = createIdComRequestObj();
   const apiEndPoint = urlPath('/content/hdfc_commonforms/api/fetchauthcode.json');
@@ -447,6 +484,11 @@ const fetchAuthCode = (globals) => {
   restAPICall('', 'POST', idComObj, apiEndPoint, eventHandlers.successCallBack, eventHandlers.errorCallBack, 'Loading');
 };
 
+/**
+ * Executes the final interface API call and fetches authentication code upon success.
+ * @param {Object} globals - The global object containing necessary data for the request.
+ * @returns {void}
+ */
 const executeInterfaceApiFinal = (globals) => {
   const requestObj = currentFormContext.executeInterfaceReqObj;
   requestObj.requestString.Id_token_jwt = currentFormContext.jwtToken;
