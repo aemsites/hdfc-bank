@@ -405,7 +405,14 @@ const executeInterfaceApiFinal = (globals) => {
   const requestObj = currentFormContext.executeInterfaceReqObj;
   requestObj.requestString.nameOnCard = globals.form.corporateCardWizardView.confirmCardPanel.cardBenefitsPanel.CorporatetImageAndNamePanel.nameOnCardDropdown.$value;
   requestObj.requestString.Id_token_jwt = currentFormContext.jwtToken;
-  currentFormContext.executeInterfaceReqObj.requestString.productCode = currentFormContext.productDetails.cardProductCode;
+  requestObj.requestString.productCode = currentFormContext.productDetails.cardProductCode;
+  requestObj.requestString.addressEditFlag = 'N';
+  requestObj.requestString.panEditFlag = 'N';
+  requestObj.requestString.nameEditFlag = 'N';
+  requestObj.requestString.mobileEditFlag = 'N';
+  requestObj.requestString.resPhoneEditFlag = 'N';
+  requestObj.requestString.apsDobEditFlag = 'N';
+  requestObj.requestString.apsEmailEditFlag = 'N';
   const apiEndPoint = urlPath('/content/hdfc_etb_wo_pacc/api/executeinterface.json');
   const eventHandlers = {
     successCallBack: (response) => {
