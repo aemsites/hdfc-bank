@@ -70,7 +70,7 @@ const invokeJourneyDropOff = async (state, mobileNumber, globals) => {
  * @param {string} payload.
  */
 function journeyResponseHandler(payload) {
-  console.log(payload);
+
 }
 
 export {
