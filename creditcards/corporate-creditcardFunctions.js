@@ -575,7 +575,6 @@ const OTPVAL = {
     jsonObj.requestString.journeyID = currentFormContext.journeyID;
     jsonObj.requestString.journeyName = currentFormContext.journeyName;
     jsonObj.requestString.userAgent = window.navigator.userAgent;
-    jsonObj.requestString.existingCustomer = currentFormContext.isCustomerIdentified ?? '';
     return jsonObj;
   },
   successCallback(res, globals) {
