@@ -9,6 +9,7 @@ import {
   pinCodeMaster,
   validateEmailID,
   currentAddressToggleHandler,
+  finalDap,
 } from '../creditcards/corporate-creditcardFunctions.js';
 
 import { restAPICall } from './makeRestAPI.js';
@@ -64,4 +65,5 @@ export {
   pinCodeMaster,
   validateEmailID,
   currentAddressToggleHandler,
+  finalDap,
 };

@@ -10,6 +10,7 @@ import {
   pinCodeMaster,
   validateEmailID,
   currentAddressToggleHandler,
+  finalDap,
 } from '../../common/functions.js';
 
 /**
@@ -131,4 +132,5 @@ export {
   pinCodeMaster,
   validateEmailID,
   currentAddressToggleHandler,
+  finalDap,
 };
