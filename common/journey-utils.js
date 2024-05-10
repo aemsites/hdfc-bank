@@ -25,24 +25,23 @@ function createJourneyId(visitMode, journeyAbbreviation, channel) {
 const currentFormContext = {};
 
 /**
- * invokeJourneyApiCall to log on success and error call backs of api calls.
+ * @name invokeJourneyDropOff to log on success and error call backs of api calls.
+ * @param {string} state
+ * @param {string} mobileNumber
  * @param {Object} globals - globals variables object containing form configurations.
  */
-const invokeJourneyApiCall = async (state, globals) => {
+const invokeJourneyDropOff = async (state, mobileNumber, globals) => {
   const journeyJSONObj = {
     RequestPayload: {
       userAgent: window.navigator.userAgent,
-      leadProfile: {},
+      leadProfile: {
+        mobileNumber,
+      },
       formData: {
-        channel: 'ADOBE WEBFORMS',
+        channel: 'ADOBE_WEBFORMS',
         journeyName: currentFormContext.journeyName,
         journeyID: currentFormContext.journeyID,
         journeyStateInfo: [
-          {
-            state,
-            stateInfo: JSON.stringify(santizedFormData(globals)),
-            timeinfo: new Date().toISOString(),
-          },
           {
             state,
             stateInfo: JSON.stringify(santizedFormData(globals)),
@@ -66,8 +65,14 @@ const invokeJourneyApiCall = async (state, globals) => {
   }
 };
 
+/**
+ * @name printPayload
+ * @param {string} payload.
+ */
+function journeyResponseHandler(payload) {
+  console.log(payload);
+}
+
 export {
-  createJourneyId,
-  currentFormContext,
-  invokeJourneyApiCall,
+  createJourneyId, currentFormContext, invokeJourneyDropOff, journeyResponseHandler,
 };

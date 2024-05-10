@@ -10,8 +10,10 @@ import {
   pinCodeMaster,
   validateEmailID,
   currentAddressToggleHandler,
-  invokeJourneyApiCall,
 } from '../../common/functions.js';
+
+import { setPageDetails } from '../../common/analytics.js';
+import { invokeJourneyDropOff, journeyResponseHandler } from '../../common/journey-utils.js';
 
 /**
  * Get Full Name
@@ -37,28 +39,29 @@ function getFullName(firstname, lastname) {
  */
 const createLabelInElement = (elementSelector, labelClass) => {
   /**
-   * The main element in the DOM where the form resides.
-   * @type {HTMLElement}
-   */
+* The main element in the DOM where the form resides.
+* @type {HTMLElement}
+*/
   const mainEl = document.getElementsByTagName('main')[0];
   /**
-   * The form element containing the target element.
-   * @type {HTMLElement}
-   */
+* The form element containing the target element.
+* @type {HTMLElement}
+*/
   const formEl = mainEl.querySelector('form');
   /**
-   * The target element to which the label will be appended.
-   * @type {HTMLElement}
-   */
+* The target element to which the label will be appended.
+* @type {HTMLElement}
+*/
   const element = formEl.querySelector(elementSelector);
   if (!element) {
     console.error(`Element with selector '${elementSelector}' not found.`);
     return;
   }
+
   /**
-   * The text content of the label element.
-   * @type {string}
-   */
+* The text content of the label element.
+* @type {string}
+*/
   const labelText = element.getElementsByTagName('label')[0].innerHTML;
   element.getElementsByTagName('label')[0].innerHTML = '';
   if (!labelText) {
@@ -67,9 +70,9 @@ const createLabelInElement = (elementSelector, labelClass) => {
   }
 
   /**
-   * The newly created label element.
-   * @type {HTMLLabelElement}
-   */
+* The newly created label element.
+* @type {HTMLLabelElement}
+*/
   const labelElement = document.createElement('label');
   labelElement.classList.add(labelClass);
   labelElement.textContent = labelText;
@@ -132,5 +135,7 @@ export {
   pinCodeMaster,
   validateEmailID,
   currentAddressToggleHandler,
-  invokeJourneyApiCall,
+  setPageDetails,
+  invokeJourneyDropOff,
+  journeyResponseHandler,
 };
