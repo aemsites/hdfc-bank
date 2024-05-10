@@ -7,7 +7,11 @@ import {
   setSelectOptions,
 } from './formutils.js';
 import { currentFormContext } from './journey-utils.js';
-import { restAPICall } from './makeRestAPI.js';
+import {
+  restAPICall,
+  getJsonResponse,
+  hideLoader,
+} from './makeRestAPI.js';
 
 const GENDER_MAP = {
   M: '1',
@@ -211,13 +215,24 @@ const listNameOnCard = (globals) => {
   moveWizardView('corporateCardWizardView', 'confirmCardPanel');
 };
 
-const terminateJourney = (globals) => {
+/**
+ * Terminates the journey by displaying the error/result panel.
+ * @param {object} globals - globals variables object containing form configurations.
+ */
+const journeyTerminate = (globals) => {
+  hideLoader();
   const resultPanel = formUtil(globals, globals.form.resultPanel);
   const wizardPanel = formUtil(globals, globals.form.corporateCardWizardView);
   wizardPanel.visible(false);
   resultPanel.visible(true);
 };
-const resumeJourney = (globals, response) => {
+
+/**
+ * Resumes the journey by allowing the user to proceed further.
+ * @param {object} globals - globals variables object containing form configurations.
+ * @param {object} response - object containing response from the previosu api call
+ */
+const journeyResume = (globals, response) => {
   currentFormContext.productDetails = response.productEligibility.productDetails?.[0];
   currentFormContext.ipaResponse = response;
   const imageEl = document.querySelector('.field-cardimage > picture');
@@ -228,7 +243,29 @@ const resumeJourney = (globals, response) => {
   const { cardBenefitsTextBox } = globals.form.corporateCardWizardView.confirmCardPanel.cardBenefitsPanel.cardBenefitsFeaturesPanel;
   const cardBenefitsTextField = formUtil(globals, cardBenefitsTextBox);
   cardBenefitsTextField.setValue(response.productEligibility.productDetails[0].keyBenefits[0]);
+  hideLoader();
   listNameOnCard(globals);
+};
+
+/**
+ * Restart the journey.
+ * @param {object} globals - globals variables object containing form configurations.
+ */
+const journeyRestart = (globals) => {
+  hideLoader();
+  const { resultPanel, corporateCardWizardView, resultPanel: { errorResultPanel } } = globals.form;
+  const ccView = formUtil(globals, corporateCardWizardView);
+  const resultScr = formUtil(globals, resultPanel);
+  const tryAgainBtn = formUtil(globals, errorResultPanel.tryAgainButtonErrorPanel);
+  const errorText1 = formUtil(globals, errorResultPanel.resultSetErrorText1);
+  const errorText2 = formUtil(globals, errorResultPanel.resultSetErrorText2);
+  [resultScr, tryAgainBtn].forEach((item) => item.visible(true));
+  [ccView, errorText1, errorText2].forEach((item) => item.visible(false));
+  const reloadBtn = document.querySelector(`[name=${errorResultPanel.tryAgainButtonErrorPanel?.$name}]`);
+  reloadBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    window.location.reload();
+  });
 };
 
 /**
@@ -237,78 +274,86 @@ const resumeJourney = (globals, response) => {
  * @param {Object} globals - The global object containing necessary data for the request.
  * @returns {void}
  */
-const sendIpaRequest = (ipaRequestObj, globals) => {
+const sendIpaRequest = async (ipaRequestObj, globals) => {
   const apiEndPoint = urlPath('/content/hdfc_etb_wo_pacc/api/ipa.json');
   const exceedTimeLimit = (TOTAL_TIME >= currentFormContext.ipaDuration * 1000);
-  const eventHandlers = {
-    successCallBack: (response) => {
-      const ipaResult = response?.ipa?.ipaResult;
-      const promoCode = currentFormContext?.promoCode;
-      const ipaResNotPresent = (ipaResult === '' || ipaResult === 'null' || !ipaResult || ipaResult === 'undefined' || ipaResult === null);
-      if (exceedTimeLimit) {
-        resumeJourney(globals, response);
-        return;
-      }
-      if (ipaResNotPresent) {
-        setTimeout(() => sendIpaRequest(ipaRequestObj, globals), currentFormContext.ipaTimer * 1000);
-        TOTAL_TIME += currentFormContext.ipaTimer * 1000;
-      } else if (promoCode === 'NA' && ipaResult === 'Y') {
-        terminateJourney(globals);
-      } else {
-        resumeJourney(globals, response);
-      }
-    },
-    errorCallBack: (response) => {
-      console.log(response);
-    },
+  const method = 'POST';
+  const successMethod = (respData) => {
+    const ipaResult = respData?.ipa?.ipaResult;
+    const promoCode = currentFormContext?.promoCode;
+    const ipaResNotPresent = (ipaResult === '' || ipaResult === 'null' || !ipaResult || ipaResult === 'undefined' || ipaResult === null);
+    if (exceedTimeLimit) {
+      journeyResume(globals, respData);
+      return;
+    }
+    if (ipaResNotPresent) {
+      setTimeout(() => sendIpaRequest(ipaRequestObj, globals), currentFormContext.ipaTimer * 1000);
+      TOTAL_TIME += currentFormContext.ipaTimer * 1000;
+    } else if (promoCode === 'NA' && ipaResult === 'Y') {
+      journeyTerminate(globals);
+    } else {
+      journeyResume(globals, respData);
+    }
   };
-  restAPICall('', 'POST', ipaRequestObj, apiEndPoint, eventHandlers.successCallBack, eventHandlers.errorCallBack, 'Loading');
+  const errorMethod = (err) => {
+    console.log(err); // api fail
+    journeyRestart(globals);
+  };
+  try {
+    const response = await getJsonResponse(apiEndPoint, ipaRequestObj, method);
+    successMethod(response);
+  } catch (error) {
+    errorMethod(error);
+  }
 };
 
 const customerValidationHandler = {
-  executeInterfaceApi: (APS_PAN_CHK_FLAG, globals, breDemogResponse) => {
+  executeInterfaceApi: async (APS_PAN_CHK_FLAG, globals, breDemogResponse) => {
     const requestObj = createExecuteInterfaceRequestObj(APS_PAN_CHK_FLAG, globals, breDemogResponse);
-    currentFormContext.executeInterfaceReqObj = requestObj;
+    currentFormContext.executeInterfaceReqObj = { ...requestObj };
     const apiEndPoint = urlPath('/content/hdfc_etb_wo_pacc/api/executeinterface.json');
-    const eventHandlers = {
-      successCallBack: (response) => {
-        if (response.errorCode === '0000') {
-          currentFormContext.ipaDuration = response.ExecuteInterfaceResponse.ipaDuration;
-          currentFormContext.ipaTimer = response.ExecuteInterfaceResponse.ipaTimer;
-          currentFormContext.jwtToken = response.Id_token_jwt;
-          const ipaRequestObj = {
-            requestString: {
-              mobileNumber: globals.form.loginPanel.mobilePanel.registeredMobileNumber.$value,
-              applRefNumber: response.ExecuteInterfaceResponse.applicationRefNumber,
-              eRefNumber: response.ExecuteInterfaceResponse.eRefNumber,
-              Id_token_jwt: response.Id_token_jwt,
-              userAgent: navigator.userAgent,
-              journeyID: currentFormContext.journeyID,
-              journeyName: currentFormContext.journeyName,
-              productCode: currentFormContext.productCode,
-            },
-          };
-          TOTAL_TIME = 0;
-          sendIpaRequest(ipaRequestObj, globals);
-        } else {
-          console.log('terminate journey');
-          terminateJourney(globals);
-        }
-      },
-      errorCallBack: (response) => {
-        console.log(response);
-      },
+    const method = 'POST';
+    const successMethod = (respData) => {
+      if (respData.errorCode === '0000') {
+        currentFormContext.ipaDuration = respData.ExecuteInterfaceResponse.ipaDuration;
+        currentFormContext.ipaTimer = respData.ExecuteInterfaceResponse.ipaTimer;
+        currentFormContext.jwtToken = respData.Id_token_jwt;
+        const ipaRequestObj = {
+          requestString: {
+            mobileNumber: globals.form.loginPanel.mobilePanel.registeredMobileNumber.$value,
+            applRefNumber: respData.ExecuteInterfaceResponse.applicationRefNumber,
+            eRefNumber: respData.ExecuteInterfaceResponse.eRefNumber,
+            Id_token_jwt: respData.Id_token_jwt,
+            userAgent: navigator.userAgent,
+            journeyID: currentFormContext.journeyID,
+            journeyName: currentFormContext.journeyName,
+            productCode: currentFormContext.productCode,
+          },
+        };
+        TOTAL_TIME = 0;
+        sendIpaRequest(ipaRequestObj, globals);
+      } else {
+        journeyTerminate(globals);
+      }
     };
-    restAPICall('', 'POST', requestObj, apiEndPoint, eventHandlers.successCallBack, eventHandlers.errorCallBack, 'Loading');
+    const errorMethod = (err) => {
+      console.log(err); // api fail
+      journeyRestart(globals);
+    };
+    try {
+      const response = await getJsonResponse(apiEndPoint, requestObj, method);
+      successMethod(response);
+    } catch (error) {
+      errorMethod(error);
+    }
   },
 
   terminateJourney: (panStatus, globals) => {
-    console.log(`pan Status: ${panStatus} and called terminateJourney()`);
-    terminateJourney(globals);
+    journeyTerminate(globals);
   },
 
-  restartJourney: (panStatus) => {
-    console.log(`pan Status: ${panStatus} and called restartJourney()`);
+  restartJourney: (panStatus, globals) => {
+    journeyRestart(globals);
   },
 };
 
@@ -321,7 +366,7 @@ const createIdComRequestObj = () => {
   const idComObj = {
     requestString: {
       mobileNumber: currentFormContext.executeInterfaceReqObj.requestString.mobileNumber,
-      ProductCode: currentFormContext.productDetails.cardProductCode,
+      ProductCode: currentFormContext.productCode,
       PANNo: currentFormContext.executeInterfaceReqObj.requestString.panNumber,
       userAgent: navigator.userAgent,
       journeyID: currentFormContext.journeyID,
