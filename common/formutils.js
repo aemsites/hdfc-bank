@@ -192,6 +192,26 @@ const convertDateToDdMmYyyy = (date) => {
 };
 
 /**
+ * Formats a given date string according to the specified format.
+ * @param {string} dateString - The date string to be formatted.
+ * @param {string} format - The format to apply to the date string. Possible values are 'YYYYMMDD' and 'YYYYMMDDWithTime'.
+ * @returns {string} The formatted date string based on the specified format. If the format is not recognized, returns the original dateString.
+ */
+const dateFormat = (dateString, format) => {
+  const date = new Date(dateString);
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const day = date.getDate().toString().padStart(2, '0');
+
+  if (format === 'YYYYMMDD') {
+    return `${year}${month}${day}`;
+  } if (format === 'YYYYMMDDWithTime') {
+    return `${year}-${month}-${day} 00:00:00`;
+  }
+  return dateString;
+};
+
+/**
  * Sets data attribute and value on the closest ancestor element with the specified class name.
  * @param {string} elementName - The name of the element to search for.
  * @param {string} fieldValue - The value to check for existence before setting data.
@@ -341,5 +361,6 @@ export {
   parseCustomerAddress,
   moveWizardView,
   removeSpecialCharacters,
+  dateFormat,
   makeFieldInvalid,
 };
