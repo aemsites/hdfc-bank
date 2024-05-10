@@ -347,6 +347,13 @@ const removeSpecialCharacters = (str, allowedChars) => {
   return str.replace(regex, '');
 };
 
+/**
+   * Filters out all defined values from the form data using the globals object.
+   * @param {object} globaObj- Globals variables object containing form configurations.
+   * @returns {object} -Object containing only defined values.
+   */
+const santizedFormData = (globaObj) => JSON.parse(JSON.stringify(globaObj.functions.exportData()));
+
 export {
   urlPath,
   maskNumber,
@@ -363,4 +370,5 @@ export {
   removeSpecialCharacters,
   dateFormat,
   makeFieldInvalid,
+  santizedFormData,
 };
