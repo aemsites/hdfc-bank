@@ -70,7 +70,8 @@ const invokeJourneyDropOff = async (state, mobileNumber, globals) => {
  * @param {string} payload.
  */
 function journeyResponseHandler(payload) {
-
+  // eslint-disable-next-line no-console
+  console.log(payload, 'payload');
 }
 
 export {
