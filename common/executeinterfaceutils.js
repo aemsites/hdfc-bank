@@ -334,7 +334,6 @@ const customerValidationHandler = {
         TOTAL_TIME = 0;
         sendIpaRequest(ipaRequestObj, globals);
       } else {
-        console.log('terminate journey');
         journeyTerminate(globals);
       }
     };
@@ -351,13 +350,11 @@ const customerValidationHandler = {
   },
 
   terminateJourney: (panStatus, globals) => {
-    console.log(`pan Status: ${panStatus} and called terminateJourney()`);
     journeyTerminate(globals);
   },
 
   restartJourney: (panStatus, globals) => {
     journeyRestart(globals);
-    console.log(`pan Status: ${panStatus} and called restartJourney()`);
   },
 };
 
