@@ -110,13 +110,13 @@ const otpGenSuccess = (res, globals) => {
     dobWizardField: globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.personalDetails.panNumberPersonalDetails,
   };
   currentFormContext.isCustomerIdentified =		res?.customerIdentificationResponse?.CustomerIdentificationResponse?.errorCode === '0' ? 'Y' : 'N';
-  const welcomeTxt = formUtil(globals, pannel.welcome);
+  // const welcomeTxt = formUtil(globals, pannel.welcome);
   const otpPanel = formUtil(globals, pannel.otp);
   const otpBtn = formUtil(globals, pannel.otpButton);
   const loginPanel = formUtil(globals, pannel.login);
   const regMobNo = pannel.login.mobilePanel.registeredMobileNumber.$value;
 
-  welcomeTxt.visible(false);
+  // welcomeTxt.visible(false);
   otpBtn.visible(false);
   loginPanel.visible(false);
   otpPanel.visible(true);
@@ -140,13 +140,13 @@ const otpGenFailure = (res, globals) => {
     resultPanel: globals.form.resultPanel,
   };
 
-  const welcomeTxt = formUtil(globals, pannel.welcome);
+  // const welcomeTxt = formUtil(globals, pannel.welcome);
   const otpPanel = formUtil(globals, pannel.otp);
   const loginPanel = formUtil(globals, pannel.login);
   const otpBtn = formUtil(globals, pannel.otpButton);
   const failurePanel = formUtil(globals, pannel.resultPanel);
 
-  welcomeTxt.visible(false);
+  // welcomeTxt.visible(false);
   otpPanel.visible(false);
   loginPanel.visible(false);
   otpBtn.visible(false);
@@ -448,7 +448,7 @@ const showErrorPanel = (panels, errorText) => {
 const otpValSuccess = (res, globals) => {
   const pannel = {
     // declare parent panel -- common name defining
-    welcome: globals.form.loginPanel.welcomeTextLabel,
+    // welcome: globals.form.loginPanel.welcomeTextLabel,
     login: globals.form.loginPanel,
     otp: globals.form.otpPanel,
     otpButton: globals.form.getOTPbutton,
@@ -458,13 +458,13 @@ const otpValSuccess = (res, globals) => {
   currentFormContext.isCustomerIdentified =		res?.customerIdentificationResponse?.CustomerIdentificationResponse?.errorCode === '0' ? 'Y' : 'N';
   currentFormContext.productCode = globals.functions.exportData().data.CorporateCreditCard.productCode;
   currentFormContext.promoCode = globals.functions.exportData().data.CorporateCreditCard.promoCode;
-  const welcomeTxt = formUtil(globals, pannel.welcome);
+  // const welcomeTxt = formUtil(globals, pannel.welcome);
   const otpPanel = formUtil(globals, pannel.otp);
   const otpBtn = formUtil(globals, pannel.otpButton);
   const loginPanel = formUtil(globals, pannel.login);
   const ccWizardPannel = formUtil(globals, pannel.ccWizardView);
 
-  welcomeTxt.visible(false);
+  // welcomeTxt.visible(false);
   otpBtn.visible(false);
   loginPanel.visible(false);
   otpPanel.visible(false);
@@ -503,7 +503,7 @@ const otpValFailure = (res, globals) => {
     errorPanelLabel: globals.form.resultPanel.errorResultPanel,
   };
   currentFormContext.isCustomerIdentified =		res?.customerIdentificationResponse?.CustomerIdentificationResponse?.errorCode === '0' ? 'Y' : 'N';
-  const welcomeTxt = formUtil(globals, pannel.welcome);
+  // const welcomeTxt = formUtil(globals, pannel.welcome);
   const otpPanel = formUtil(globals, pannel.otp);
   const otpBtn = formUtil(globals, pannel.otpButton);
   const loginPanel = formUtil(globals, pannel.login);
@@ -530,8 +530,12 @@ const otpValFailure = (res, globals) => {
     }
     case '04': {
       // incorrect otp attempt of 3 times.
+      // const panels = {
+      //   hidePanels: [incorectOtp, welcomeTxt, otpBtn, loginPanel, otpPanel, resultSetErrorText1, resultSetErrorText2],
+      //   showPanels: [resultPanel, tryAgainButtonErrorPanel],
+      // };
       const panels = {
-        hidePanels: [incorectOtp, welcomeTxt, otpBtn, loginPanel, otpPanel, resultSetErrorText1, resultSetErrorText2],
+        hidePanels: [incorectOtp, otpBtn, loginPanel, otpPanel, resultSetErrorText1, resultSetErrorText2],
         showPanels: [resultPanel, tryAgainButtonErrorPanel],
       };
       const errorText = 'You have entered invalid OTP for 3 consecutive attempts. Please try again later';
@@ -541,8 +545,12 @@ const otpValFailure = (res, globals) => {
       break;
     }
     case 'CZ_HTTP_0003': {
+      // const panels = {
+      //   hidePanels: [incorectOtp, welcomeTxt, otpBtn, loginPanel, otpPanel, resultSetErrorText1, resultSetErrorText2],
+      //   showPanels: [resultPanel],
+      // };
       const panels = {
-        hidePanels: [incorectOtp, welcomeTxt, otpBtn, loginPanel, otpPanel, resultSetErrorText1, resultSetErrorText2],
+        hidePanels: [incorectOtp, otpBtn, loginPanel, otpPanel, resultSetErrorText1, resultSetErrorText2],
         showPanels: [resultPanel],
       };
       const errorText = 'Unfortunately, we were unable to process your request';
@@ -551,7 +559,7 @@ const otpValFailure = (res, globals) => {
     }
     default: {
       incorectOtp.visible(false);
-      welcomeTxt.visible(false);
+      // welcomeTxt.visible(false);
       otpBtn.visible(false);
       loginPanel.visible(false);
       otpPanel.visible(false);

@@ -417,7 +417,9 @@ const executeInterfaceApiFinal = (globals) => {
   const eventHandlers = {
     successCallBack: (response) => {
       console.log(response);
-      fetchAuthCode();
+      if (currentFormContext.journeyType === 'ETB') {
+        fetchAuthCode();
+      }
     },
     errorCallBack: (response) => {
       console.log(response);
