@@ -1119,6 +1119,24 @@ const createDapRequestObj = (globals) => {
   return dapRequestObj;
 };
 
+const updatePanelVisibility = (response, globals) => {
+  const corporateCardWizardView = formUtil(globals, globals.form.corporateCardWizardView);
+  const confirmAndSubmitPanel = formUtil(globals, globals.form.corporateCardWizardView.confirmAndSubmitPanel);
+  const successResultPanel = formUtil(globals, globals.form.resultPanel.successResultPanel);
+  const errorResultPanel = formUtil(globals, globals.form.resultPanel.errorResultPanel);
+  const resultPanel = formUtil(globals, globals.form.resultPanel);
+  corporateCardWizardView.visible(false);
+  confirmAndSubmitPanel.visible(false);
+  resultPanel.visible(true);
+
+  if (response?.finalDap?.errorCode === '0000') {
+    successResultPanel.visible(true);
+    errorResultPanel.visible(false);
+  } else {
+    errorResultPanel.visible(true);
+  }
+};
+
 /**
  * Initiates a final DAP process by making a REST API call.
  * @param {Object} globals - The global object containing necessary data for DAP request.
@@ -1130,9 +1148,11 @@ const finalDap = (globals) => {
   const eventHandlers = {
     successCallBack: (response) => {
       console.log(response);
+      updatePanelVisibility(response, globals);
     },
     errorCallBack: (response) => {
       console.log(response);
+      updatePanelVisibility(response, globals);
     },
   };
   restAPICall('', 'POST', dapRequestObj, apiEndPoint, eventHandlers.successCallBack, eventHandlers.errorCallBack, 'Loading');
