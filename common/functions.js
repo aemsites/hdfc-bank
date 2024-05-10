@@ -1,5 +1,4 @@
 import {
-  OTPGEN,
   OTPVAL,
   RESENDOTP,
   getThisCard,
@@ -10,23 +9,37 @@ import {
   validateEmailID,
   currentAddressToggleHandler,
   finalDap,
+  currentFormContext,
 } from '../creditcards/corporate-creditcardFunctions.js';
-
-import { restAPICall } from './makeRestAPI.js';
+import { urlPath } from './formutils.js';
+import { fetchJsonResponse, restAPICall } from './makeRestAPI.js';
 
 /**
  * generates the otp
- *
- * @param {object} globals - The global object containing necessary globals form data.
+ * @param {object} mobileNumber
+ * @param {object} pan
+ * @param {object} dob
+ * @return {PROMISE}
  */
-function getOTP(globals) {
-  const payload = OTPGEN.getPayload(globals);
-  restAPICall(globals, 'POST', payload, OTPGEN.path, OTPGEN.successCallback, OTPGEN.errorCallback, OTPGEN.loadingText);
+function getOTP(mobileNumber, pan, dob) {
+  const jsonObj = {
+    requestString: {
+      mobileNumber: mobileNumber.$value,
+      dateOfBith: dob.$value || '',
+      panNumber: pan.$value || '',
+      journeyID: currentFormContext.journeyID,
+      journeyName: currentFormContext.journeyName,
+      userAgent: window.navigator.userAgent,
+      identifierValue: pan.$value || dob.$value,
+      identifierName: pan.$value ? 'PAN' : 'DOB',
+    },
+  };
+  const path = urlPath('/content/hdfc_ccforms/api/customeridentificationV4.json');
+  return fetchJsonResponse(path, jsonObj, 'POST');
 }
 
 /**
  * otp validation
- *
  * @param {object} globals - The global object containing necessary globals form data.
  */
 function otpValidation(globals) {
@@ -51,7 +64,15 @@ function checkOffer(firstName, middleName, lastName, globals) {
  * @param {object} globals - The global object containing necessary globals form data.
  */
 function resendOTP(globals) {
-  restAPICall(globals, 'POST', RESENDOTP.getPayload(globals), RESENDOTP.path, RESENDOTP.successCallback, RESENDOTP.errorCallback, RESENDOTP.loadingText);
+  restAPICall(
+    globals,
+    'POST',
+    RESENDOTP.getPayload(globals),
+    RESENDOTP.path,
+    RESENDOTP.successCallback,
+    RESENDOTP.errorCallback,
+    RESENDOTP.loadingText,
+  );
 }
 
 export {
