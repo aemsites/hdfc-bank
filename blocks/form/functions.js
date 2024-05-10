@@ -12,6 +12,7 @@ import {
   currentAddressToggleHandler,
 } from '../../common/functions.js';
 
+import { invokeJourneyDropOff } from '../../common/journey-utils.js';
 /**
  * Get Full Name
  * @name getFullName Concats first name and last name
@@ -131,4 +132,5 @@ export {
   pinCodeMaster,
   validateEmailID,
   currentAddressToggleHandler,
+  invokeJourneyDropOff,
 };
