@@ -12,7 +12,6 @@ import {
   currentAddressToggleHandler,
 } from '../../common/functions.js';
 
-import { setPageDetails } from '../../common/analytics.js';
 import { invokeJourneyDropOff, journeyResponseHandler } from '../../common/journey-utils.js';
 
 /**
@@ -135,7 +134,6 @@ export {
   pinCodeMaster,
   validateEmailID,
   currentAddressToggleHandler,
-  setPageDetails,
   invokeJourneyDropOff,
   journeyResponseHandler,
 };
