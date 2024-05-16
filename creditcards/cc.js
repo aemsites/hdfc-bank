@@ -1,30 +1,31 @@
+/* eslint-disable no-tabs */
 /* eslint no-console: ["error", { allow: ["warn", "error", "debug"] }] */
 import openModal from '../blocks/modal/modal.js';
 
 const createLabelInElement = (elementSelector, labelClass) => {
   /**
-  * The main element in the DOM where the form resides.
-  * @type {HTMLElement}
-  */
+	 * The main element in the DOM where the form resides.
+	 * @type {HTMLElement}
+	 */
   const mainEl = document.getElementsByTagName('main')[0];
   /**
-  * The form element containing the target element.
-  * @type {HTMLElement}
-   */
+	 * The form element containing the target element.
+	 * @type {HTMLElement}
+	 */
   const formEl = mainEl.querySelector('form');
   /**
-  * The target element to which the label will be appended.
-  * @type {HTMLElement}
-  */
+	 * The target element to which the label will be appended.
+	 * @type {HTMLElement}
+	 */
   const element = formEl.querySelector(elementSelector);
   if (!element) {
     console.debug(`Element with selector '${elementSelector}' not found.`);
     return;
   }
   /**
-  * The text content of the label element.
-  * @type {string}
-  */
+	 * The text content of the label element.
+	 * @type {string}
+	 */
   const labelText = element.getElementsByTagName('label')[0].innerHTML;
   element.getElementsByTagName('label')[0].innerHTML = '';
   if (!labelText) {
@@ -33,18 +34,18 @@ const createLabelInElement = (elementSelector, labelClass) => {
   }
 
   /**
-  * The newly created label element.
-   * @type {HTMLLabelElement}
-   */
+	 * The newly created label element.
+	 * @type {HTMLLabelElement}
+	 */
   const labelElement = document.createElement('label');
   labelElement.classList.add(labelClass);
   labelElement.textContent = labelText;
   element.appendChild(labelElement);
 };
 /**
-  * Decorates the stepper for CC yourDetails panel
-  * @name decorateStepper Runs after yourDetails panel is initialized
-   */
+ * Decorates the stepper for CC yourDetails panel
+ * @name decorateStepper Runs after yourDetails panel is initialized
+ */
 function decorateStepper() {
   const totalIndex = document.querySelector('.field-corporatecardwizardview.wizard').style.getPropertyValue('--wizard-step-count');
   const ccDetailsWizard = document.querySelector('.field-corporatecardwizardview.wizard ul');
@@ -56,9 +57,9 @@ function decorateStepper() {
 }
 
 /**
-  * On Wizard Init.
-  * @name onWizardInit Runs on initialization of wizard
-  */
+ * On Wizard Init.
+ * @name onWizardInit Runs on initialization of wizard
+ */
 function onWizardInit() {
   createLabelInElement('.field-permanentaddresstoggle', 'permanent-address-toggle__label');
   createLabelInElement('.field-currentaddresstoggle', 'current-address-toggle__label');
@@ -93,21 +94,24 @@ const linkModalFunction = (config) => {
 
 /* modalLinking  in pages  */
 // 1.consent-2 checkbox - modal
-const consent2Config = { // config to create modal for consent-2
+const consent2Config = {
+  // config to create modal for consent-2
   triggerElement: document.getElementsByName('checkBoxConsent2')?.[0], // trigger element for calling modalFunction
   content: document.getElementsByName('consentPanel2')?.[0], // content to display in modal
   actionWrapClass: 'button-wrapper', // wrapper class containing all the buttons
   reqConsentAgree: false, // Indicates if consent agreement is needed; shows close icon if not.
   /**
-   * Updates the UI based on received data.
-   * @param {Object} receivedData - Data received after the modal button trigger,contains name of the btn triggered which is used to update the UI.
-   */
+	 * Updates the UI based on received data.
+	 * @param {Object} receivedData - Data received after the modal button trigger,contains name of the btn triggered which is used to update the UI.
+	 */
   updateUI(receivedData) {
-    if (receivedData?.iAgreeConsent2) { // iAgreeConsent2- name of the I agree btn.
+    if (receivedData?.iAgreeConsent2) {
+      // iAgreeConsent2- name of the I agree btn.
       this.triggerElement.checked = true;
       this.triggerElement.dispatchEvent(new Event('change', { bubbles: true }));
     }
-    if (receivedData?.closeIcon) { // closeIcon - name of the Close x btn
+    if (receivedData?.closeIcon) {
+      // closeIcon - name of the Close x btn
       this.triggerElement.checked = false;
       this.triggerElement.dispatchEvent(new Event('change', { bubbles: true }));
     }
@@ -118,21 +122,24 @@ linkModalFunction(consent2Config);
 const consent2OtherProduct = document?.querySelector('.field-checkbox2text')?.querySelector('b');
 const linkClass = 'link';
 consent2OtherProduct?.classList.add(linkClass);
-const consent2OtherProductTxtConfig = { // config to create modal for consent-2
+const consent2OtherProductTxtConfig = {
+  // config to create modal for consent-2
   triggerElement: consent2OtherProduct, // trigger element for calling modalFunction
   content: consent2Config?.content, // content to display in modal
   actionWrapClass: 'button-wrapper', // wrapper class containing all the buttons
   reqConsentAgree: false, // Indicates if consent agreement is needed; shows close icon if not.
   /**
-   * Updates the UI based on received data.
-   * @param {Object} receivedData - Data received after the modal button trigger,contains name of the btn triggered which is used to update the UI.
-   */
+	 * Updates the UI based on received data.
+	 * @param {Object} receivedData - Data received after the modal button trigger,contains name of the btn triggered which is used to update the UI.
+	 */
   updateUI(receivedData) {
     const checkBox = consent2Config?.triggerElement;
-    if (receivedData?.iAgreeConsent2) { // iAgreeConsent2- name of the I agree btn.
+    if (receivedData?.iAgreeConsent2) {
+      // iAgreeConsent2- name of the I agree btn.
       checkBox.checked = true;
     }
-    if (receivedData?.closeIcon) { // closeIcon - name of the Close x btn
+    if (receivedData?.closeIcon) {
+      // closeIcon - name of the Close x btn
       checkBox.checked = false;
     }
   },
@@ -140,21 +147,24 @@ const consent2OtherProductTxtConfig = { // config to create modal for consent-2
 linkModalFunction(consent2OtherProductTxtConfig);
 
 // 3.conset-1 checbox - modal
-const consent1Config = { // config to create modal for consent-1
+const consent1Config = {
+  // config to create modal for consent-1
   triggerElement: document.getElementsByName('checkBoxConsent1')?.[0], // trigger element for calling modalFunction
   content: document.getElementsByName('consentPanel1')?.[0], // content to display in modal
   actionWrapClass: 'button-wrapper', // wrapper class containing all the buttons
   reqConsentAgree: true, // Indicates if consent agreement is needed; shows close icon if not.
   /**
-   * Updates the UI based on received data.
-   * @param {Object} receivedData - Data received after the modal button trigger,contains name of the btn triggered which is used to update the UI.
-   */
+	 * Updates the UI based on received data.
+	 * @param {Object} receivedData - Data received after the modal button trigger,contains name of the btn triggered which is used to update the UI.
+	 */
   updateUI(receivedData) {
-    if (receivedData?.iAgreeConsent1) { // iAgreeConsent2- name of the I agree btn.
+    if (receivedData?.iAgreeConsent1) {
+      // iAgreeConsent2- name of the I agree btn.
       this.triggerElement.checked = true;
       this.triggerElement.dispatchEvent(new Event('change', { bubbles: true }));
     }
-    if (receivedData?.closeIcon) { // closeIcon - name of the Close x btn
+    if (receivedData?.closeIcon) {
+      // closeIcon - name of the Close x btn
       this.triggerElement.checked = false;
       this.triggerElement.dispatchEvent(new Event('change', { bubbles: true }));
     }
@@ -165,21 +175,24 @@ linkModalFunction(consent1Config);
 // 4.consent-1 requestProduct-text - modal
 const consent1RequestProduct = document?.querySelector('.field-checkbox1text')?.querySelector('b');
 consent1RequestProduct?.classList.add(linkClass);
-const consent2RequestProductTxtConfig = { // config to create modal for consent-2
+const consent2RequestProductTxtConfig = {
+  // config to create modal for consent-2
   triggerElement: consent1RequestProduct, // trigger element for calling modalFunction
   content: consent1Config?.content, // content to display in modal
   actionWrapClass: 'button-wrapper', // wrapper class containing all the buttons
   reqConsentAgree: true, // Indicates if consent agreement is needed; shows close icon if not.
   /**
-   * Updates the UI based on received data.
-   * @param {Object} receivedData - Data received after the modal button trigger,contains name of the btn triggered which is used to update the UI.
-   */
+	 * Updates the UI based on received data.
+	 * @param {Object} receivedData - Data received after the modal button trigger,contains name of the btn triggered which is used to update the UI.
+	 */
   updateUI(receivedData) {
     const checkBox = consent1Config?.triggerElement;
-    if (receivedData?.iAgreeConsent1) { // iAgreeConsent2- name of the I agree btn.
+    if (receivedData?.iAgreeConsent1) {
+      // iAgreeConsent2- name of the I agree btn.
       checkBox.checked = true;
     }
-    if (receivedData?.closeIcon) { // closeIcon - name of the Close x btn
+    if (receivedData?.closeIcon) {
+      // closeIcon - name of the Close x btn
       checkBox.checked = false;
     }
   },
@@ -187,11 +200,40 @@ const consent2RequestProductTxtConfig = { // config to create modal for consent-
 linkModalFunction(consent2RequestProductTxtConfig);
 
 // 5.wizard screen getCard-viewAll button - modal
-const viewAllBtnPannelConfig = { // linkModal for corporateCardWizard pannel view all in getThisCard screen.
+const viewAllBtnPannelConfig = {
+  // linkModal for corporateCardWizard pannel view all in getThisCard screen.
   triggerElement: document.getElementsByName('viewAllCardBenefits')?.[0],
   content: document.getElementsByName('viewAllCardBenefitsPanel')?.[0],
   actionWrapClass: 'button-wrapper',
   reqConsentAgree: true,
 };
 linkModalFunction(viewAllBtnPannelConfig);
+
+const queryStrings = window.location.search.split('?')[1].split('&');
+for (const queryString of queryStrings) {
+  debugger
+  const [key, value] = queryString.split('=');
+  if (value === 'EKYC_AUTH') {
+    debugger
+    const navigateFrom = document.getElementsByName('corporateCardWizardView')?.[0];
+    const current = navigateFrom?.querySelector('.current-wizard-step');
+    const currentMenuItem = navigateFrom?.querySelector('.wizard-menu-active-item');
+    const navigateTo = document.getElementsByName('confirmAndSubmitPanel')?.[0];
+    current?.classList?.remove('current-wizard-step');
+    navigateTo?.classList?.add('current-wizard-step');
+    // add/remove active class from menu item
+    const navigateToMenuItem = navigateFrom?.querySelector(`li[data-index="${navigateTo?.dataset?.index}"]`);
+    currentMenuItem?.classList?.remove('wizard-menu-active-item');
+    navigateToMenuItem?.classList?.add('wizard-menu-active-item');
+    const event = new CustomEvent('wizard:navigate', {
+      detail: {
+        prevStep: { id: current?.id, index: parseInt(current?.dataset?.index || 0, 10) },
+        currStep: { id: navigateTo?.id, index: parseInt(navigateTo?.dataset?.index || 0, 10) },
+      },
+      bubbles: false,
+    });
+    navigateFrom?.dispatchEvent(event);
+  }
+}
+
 export { decorateStepper, onWizardInit };

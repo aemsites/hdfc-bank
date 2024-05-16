@@ -5,7 +5,6 @@ import {
   formUtil,
   composeNameOption,
   setSelectOptions,
-  dateFormat,
 } from './formutils.js';
 import { currentFormContext } from './journey-utils.js';
 import {
@@ -311,7 +310,7 @@ const sendIpaRequest = async (ipaRequestObj, globals) => {
 const customerValidationHandler = {
   executeInterfaceApi: async (APS_PAN_CHK_FLAG, globals, breDemogResponse) => {
     const requestObj = createExecuteInterfaceRequestObj(APS_PAN_CHK_FLAG, globals, breDemogResponse);
-    currentFormContext.executeInterfaceReqObj = requestObj;
+    currentFormContext.executeInterfaceReqObj = { ...requestObj };
     const apiEndPoint = urlPath('/content/hdfc_etb_wo_pacc/api/executeinterface.json');
     const method = 'POST';
     const successMethod = (respData) => {
@@ -359,137 +358,6 @@ const customerValidationHandler = {
 };
 
 /**
- * Creates a DAP request object based on the provided global data.
- * @param {Object} globals - The global object containing necessary data for DAP request.
- * @returns {Object} - The DAP request object.
- */
-const createDapRequestObj = (globals) => {
-  const genderMap = {
-    1: 'M',
-    2: 'F',
-    3: 'T',
-  };
-  const {
-    personalDetails,
-    employmentDetails,
-  } = globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage;
-  const customerInfo = currentFormContext.executeInterfaceReqObj.requestString;
-  const { prefilledEmploymentDetails } = employmentDetails;
-  const dapRequestObj = {
-    requestString: {
-      APS_FIRST_NAME: personalDetails.firstName.$value,
-      APS_LAST_NAME: personalDetails.lastName.$value,
-      APS_MIDDLE_NAME: personalDetails.middleName.$value,
-      panNo: personalDetails.panNumberPersonalDetails.$value,
-      dateOfBirth: dateFormat(personalDetails.dobPersonalDetails.$value, 'YYYYMMDD'),
-      // duplicate
-      panNumber: personalDetails.panNumberPersonalDetails.$value,
-      mobileNo: globals.form.loginPanel.mobilePanel.registeredMobileNumber.$value,
-      existingCustomer: currentFormContext.journeyType === 'ETB' ? 'Y' : 'N',
-      APS_NAME_AS_CARD: currentFormContext.executeInterfaceReqObj.requestString.nameOnCard,
-      emailAddress: prefilledEmploymentDetails.workEmailAddress.$value,
-      APS_PER_ADDRESS_1: customerInfo.permanentAddress1,
-      APS_PER_ADDRESS_2: customerInfo.permanentAddress2,
-      APS_PER_ADDRESS_3: customerInfo.permanentAddress3,
-      APS_COM_ADDRESS_1: customerInfo.communicationAddress1,
-      APS_COM_ADDRESS_2: customerInfo.communicationAddress2,
-      APS_COM_ADDRESS_3: customerInfo.communicationAddress3,
-      APS_OFF_ADDRESS_1: customerInfo.officeAddress1,
-      APS_OFF_ADDRESS_2: customerInfo.officeAddress2,
-      APS_OFF_ADDRESS_3: customerInfo.officeAddress3,
-      APS_COM_ZIP: customerInfo.comCityZip,
-      APS_COM_STATE: customerInfo.communicationState,
-      APS_PER_ZIP: customerInfo.permanentZipCode,
-      APS_OFF_ZIP: customerInfo.officeZipCode,
-      APS_PER_CITY: customerInfo.permanentCity,
-      APS_COM_CITY: customerInfo.communicationCity,
-      APS_OFF_CITY: customerInfo.officeCity,
-      APS_OFF_STATE: customerInfo.officeState,
-      APS_PER_STATE: customerInfo.permanentState,
-      // duplicate
-      APS_DATE_OF_BIRTH: dateFormat(personalDetails.dobPersonalDetails.$value, 'YYYYMMDDWithTime'),
-      APS_EDUCATION: '3',
-      APS_GENDER: genderMap[customerInfo.gender],
-      APS_OCCUPATION: '1',
-      APS_GROSS_MONTHLY_INCOME: '',
-      APS_COMPANY_NAME: customerInfo.companyName,
-      APS_PER_ADDR_TYPE: customerInfo.perAddressType,
-      APS_RESI_TYPE: '2',
-      APS_COM_ADDR_TYPE: '2',
-      APS_SELF_CONFIRMATION: customerInfo.selfConfirmation,
-      APS_MOBILE_EDIT_FLAG: currentFormContext.executeInterfaceReqObj.requestString.mobileEditFlag,
-      APS_EMAIL_EDIT_FLAG: currentFormContext.executeInterfaceReqObj.requestString.apsEmailEditFlag,
-      APS_PAN_EDIT_FLAG: currentFormContext.executeInterfaceReqObj.requestString.panEditFlag,
-      APS_ADDRESS_EDIT_FLAG: currentFormContext.executeInterfaceReqObj.requestString.addressEditFlag,
-      APS_NAME_EDIT_FLAG: currentFormContext.executeInterfaceReqObj.requestString.nameEditFlag,
-      APS_RESPHONE_EDIT_FLAG: currentFormContext.executeInterfaceReqObj.requestString.resPhoneEditFlag,
-      APS_OFFPHONE_EDIT_FLAG: 'N',
-      APS_EMP_CODE: '',
-      APS_DESIGNATION: prefilledEmploymentDetails.designation.$value,
-      APS_DEPARTMENT: '',
-      APS_FILLER2: 'No',
-      APS_FILLER10: 'N',
-      APS_OFFER_5: '',
-      APS_CHANNEL: '',
-      APS_BRANCH_NAME: '',
-      APS_BRANCH_CITY: '',
-      APS_LEAD_GENERATER: '',
-      APS_LEAD_CLOSURES: '',
-      APS_APPLYING_BRANCH: '',
-      APS_FILLER6: '',
-      APS_SMCODE: '',
-      APS_DSE_CODE: '',
-      applicationERefNumber: currentFormContext.ipaResponse.ipa.eRefNumber,
-      SOA_REQUESTID: '0305245144',
-      nameOfDirector: '',
-      relationship: '',
-      product: 'Regalia Gold',
-      APS_TYPE_OF_INDUSTRY: '',
-      journeyID: currentFormContext.journeyID,
-      journeyName: currentFormContext.journeyName,
-      userAgent: navigator.userAgent,
-      timeInfo: new Date().toISOString(),
-      APS_OFF_EMAILID: prefilledEmploymentDetails.workEmailAddress.$value,
-      APS_DIRECT_DEBIT: '',
-      customerId: currentFormContext.executeInterfaceReqObj.requestString.customerID,
-      pricingDetails: '',
-      docUpload: '',
-      idcomEnabled: true,
-      APS_CAPTCHA: '',
-      applRefNo: currentFormContext.ipaResponse.ipa.applRefNumber,
-      txnRefNo: '',
-      pseudoID: '',
-      FILLER8: currentFormContext.ipaResponse.ipa.filler8,
-      Id_token_jwt: currentFormContext.jwtToken,
-      IDCOM_Token: '',
-      JSCPAYLOAD: '',
-      BROWSERFINGERPRINT: 'ef3036d9e4872df7e5a5eb2fe49bc8ae',
-      HDIMPAYLOAD: '',
-    },
-  };
-  return dapRequestObj;
-};
-
-/**
- * Initiates a final DAP process by making a REST API call.
- * @param {Object} globals - The global object containing necessary data for DAP request.
- * @returns {void}
- */
-const finalDap = (globals) => {
-  const dapRequestObj = createDapRequestObj(globals);
-  const apiEndPoint = urlPath('/content/hdfc_ccforms/api/pacc/finaldapandpdfgen.json');
-  const eventHandlers = {
-    successCallBack: (response) => {
-      console.log(response);
-    },
-    errorCallBack: (response) => {
-      console.log(response);
-    },
-  };
-  restAPICall('', 'POST', dapRequestObj, apiEndPoint, eventHandlers.successCallBack, eventHandlers.errorCallBack, 'Loading');
-};
-
-/**
  * Creates an IdCom request object based on the provided global data.
  * @param {Object} globals - The global object containing necessary data for IdCom request.
  * @returns {Object} - The IdCom request object.
@@ -514,13 +382,12 @@ const createIdComRequestObj = () => {
  * @param {Object} globals - The global object containing necessary data for the request.
  * @returns {void}
  */
-const fetchAuthCode = (globals) => {
+const fetchAuthCode = () => {
   const idComObj = createIdComRequestObj();
   const apiEndPoint = urlPath('/content/hdfc_commonforms/api/fetchauthcode.json');
   const eventHandlers = {
     successCallBack: (response) => {
       console.log(response);
-      finalDap(globals);
     },
     errorCallBack: (response) => {
       console.log(response);
@@ -535,15 +402,25 @@ const fetchAuthCode = (globals) => {
  * @returns {void}
  */
 const executeInterfaceApiFinal = (globals) => {
-  const requestObj = currentFormContext.executeInterfaceReqObj;
+  const formCallBackContext = globals.functions.exportData()?.currentFormContext;
+  const requestObj = currentFormContext.executeInterfaceReqObj || formCallBackContext?.executeInterfaceReqObj;
   requestObj.requestString.nameOnCard = globals.form.corporateCardWizardView.confirmCardPanel.cardBenefitsPanel.CorporatetImageAndNamePanel.nameOnCardDropdown.$value;
-  requestObj.requestString.Id_token_jwt = currentFormContext.jwtToken;
-  currentFormContext.executeInterfaceReqObj.requestString.productCode = currentFormContext.productCode;
+  requestObj.requestString.Id_token_jwt = currentFormContext.jwtToken || formCallBackContext?.currentFormContext?.jwtToken;
+  requestObj.requestString.productCode = currentFormContext.productDetails.cardProductCode || formCallBackContext?.currentFormContext?.productDetails?.cardProductCode;
+  requestObj.requestString.addressEditFlag = 'N';
+  requestObj.requestString.panEditFlag = 'N';
+  requestObj.requestString.nameEditFlag = 'N';
+  requestObj.requestString.mobileEditFlag = 'N';
+  requestObj.requestString.resPhoneEditFlag = 'N';
+  requestObj.requestString.apsDobEditFlag = 'N';
+  requestObj.requestString.apsEmailEditFlag = 'N';
   const apiEndPoint = urlPath('/content/hdfc_etb_wo_pacc/api/executeinterface.json');
   const eventHandlers = {
     successCallBack: (response) => {
       console.log(response);
-      fetchAuthCode(globals);
+      if (currentFormContext.journeyType === 'ETB') {
+        fetchAuthCode();
+      }
     },
     errorCallBack: (response) => {
       console.log(response);
