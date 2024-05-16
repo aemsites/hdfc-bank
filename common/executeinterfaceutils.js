@@ -240,9 +240,15 @@ const journeyResume = (globals, response) => {
   imageEl.childNodes[5].setAttribute('src', imagePath);
   imageEl.childNodes[3].setAttribute('srcset', imagePath);
   imageEl.childNodes[1].setAttribute('srcset', imagePath);
-  const { cardBenefitsTextBox } = globals.form.corporateCardWizardView.confirmCardPanel.cardBenefitsPanel.cardBenefitsFeaturesPanel;
-  const cardBenefitsTextField = formUtil(globals, cardBenefitsTextBox);
-  cardBenefitsTextField.setValue(response.productEligibility.productDetails[0].keyBenefits[0]);
+  const { keyBenefitsText0 } = globals.form.corporateCardWizardView.confirmCardPanel.cardBenefitsPanel.cardBenefitsFeaturesPanel;
+  const cardBenefitsTextField0 = formUtil(globals, keyBenefitsText0);
+  const { keyBenefitsText1 } = globals.form.corporateCardWizardView.confirmCardPanel.cardBenefitsPanel.cardBenefitsFeaturesPanel;
+  const cardBenefitsTextField1 = formUtil(globals, keyBenefitsText1);
+  const { keyBenefitsText2 } = globals.form.corporateCardWizardView.confirmCardPanel.cardBenefitsPanel.cardBenefitsFeaturesPanel;
+  const cardBenefitsTextField2 = formUtil(globals, keyBenefitsText2);
+  cardBenefitsTextField0.setValue(response.productEligibility.productDetails[0].keyBenefits[0]);
+  cardBenefitsTextField1.setValue(response.productEligibility.productDetails[0].keyBenefits[1]);
+  cardBenefitsTextField2.setValue(response.productEligibility.productDetails[0].keyBenefits[2]);
   hideLoader();
   listNameOnCard(globals);
 };
