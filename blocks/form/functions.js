@@ -12,10 +12,10 @@ import {
   currentAddressToggleHandler,
   finalDap,
   aadharInit,
-  checkMode
+  checkMode,
 } from '../../common/functions.js';
 
-import { invokeJourneyDropOff, journeyResponseHandler, invokeJourneyDropOffUpdate, } from '../../common/journey-utils.js';
+import { invokeJourneyDropOff, journeyResponseHandler, invokeJourneyDropOffUpdate } from '../../common/journey-utils.js';
 import { moveWizardView } from '../../common/formutils.js';
 
 /**

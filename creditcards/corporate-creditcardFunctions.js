@@ -864,7 +864,6 @@ const createPanValidationRequest = (firstName, middleName, lastName, globals) =>
           const resultPanelBlock = formUtil(globals, resultPanel);
           const tryAgainButtonErrorPanelBlock = formUtil(globals, tryAgainButtonErrorPanel);
           if (responseObj?.statusCode === 'FC00') {
-            debugger;
             PAN_VALIDATION_STATUS = responseObj.panValidation.status.errorCode === '1';
             if (PAN_VALIDATION_STATUS) {
               const panStatus = responseObj.panValidation.panStatus;
@@ -1067,7 +1066,7 @@ const createDapRequestObj = (globals) => {
     personalDetails,
     employmentDetails,
   } = globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage;
-  const formContextCallbackData = globals.functions.exportData()?.currentFormContext 
+  const formContextCallbackData = globals.functions.exportData()?.currentFormContext;
   const customerInfo = currentFormContext?.executeInterfaceReqObj?.requestString || formContextCallbackData?.executeInterfaceReqObj?.requestString;
   const { prefilledEmploymentDetails } = employmentDetails;
   const dapRequestObj = {

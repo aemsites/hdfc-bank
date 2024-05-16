@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import {
   OTPVAL,
   RESENDOTP,
@@ -19,12 +20,8 @@ import { fetchJsonResponse, restAPICall } from './makeRestAPI.js';
  * @param {object} globals -
  */
 function checkMode(globals) {
-  debugger;
   const formData = globals.functions.exportData();
   if (formData.aadhaar_otp_val_data.result.Address1) {
-    currentFormContext.jwtToken = formData?.currentFormContext?.jwtToken
-    currentFormContext.productDetails = formData?.currentFormContext?.productDetails?.[0];
-    currentFormContext.executeInterfaceReqObj = formData?.currentFormContext?.executeInterfaceReqObj
     globals.functions.setProperty(globals.form.corporateCardWizardView, { visible: true });
     globals.functions.setProperty(globals.form.otpPanel, { visible: false });
     globals.functions.setProperty(globals.form.loginPanel, { visible: false });
@@ -58,6 +55,64 @@ function getOTP(mobileNumber, pan, dob) {
   return fetchJsonResponse(path, jsonObj, 'POST');
 }
 
+function getOS() {
+  const { userAgent } = window.navigator;
+  const { platform } = window.navigator;
+  const macosPlatforms = ['Macintosh', 'MacIntel', 'MacPPC', 'Mac68K'];
+  const windowsPlatforms = ['Win32', 'Win64', 'Windows', 'WinCE'];
+  const iosPlatforms = ['iPhone', 'iPad', 'iPod'];
+  let os = null;
+
+  if (macosPlatforms.indexOf(platform) !== -1) {
+    os = 'Mac OS';
+  } else if (iosPlatforms.indexOf(platform) !== -1) {
+    os = 'iOS';
+  } else if (windowsPlatforms.indexOf(platform) !== -1) {
+    os = 'Windows';
+  } else if (/Android/.test(userAgent)) {
+    os = 'Android';
+  } else if (!os && /Linux/.test(platform)) {
+    os = 'Linux';
+  }
+
+  return os;
+}
+
+function getDevice() {
+  if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+    return 'mobile';
+  }
+  return 'desktop';
+}
+
+function getBrowser() {
+  const ua = navigator.userAgent; let tem; let M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
+  if (/trident/i.test(M[1])) {
+    tem = /\brv[ :]+(\d+)/g.exec(ua) || [];
+    return { name: 'IE', version: (tem[1] || '') };
+  }
+  if (M[1] === 'Chrome') {
+    tem = ua.match(/\bOPR|Edge\/(\d+)/);
+    if (tem != null) { return { name: 'Opera', version: tem[1] }; }
+  }
+  M = M[2] ? [M[1], M[2]] : [navigator.appName, navigator.appVersion, '-?'];
+  // eslint-disable-next-line no-cond-assign
+  if ((tem = ua.match(/version\/(\d+)/i)) != null) { M.splice(1, 1, tem[1]); }
+  return {
+    name: M[0],
+    version: M[1],
+    majver: '',
+  };
+}
+
+function updateFormElement(form, key, value) {
+  const field = document.createElement('input');
+  field.setAttribute('type', 'hidden');
+  field.setAttribute('name', key);
+  field.setAttribute('value', value);
+  form.appendChild(field);
+}
+
 /**
  * aadharInit
  * @param {object} mobileNumber
@@ -67,8 +122,6 @@ function getOTP(mobileNumber, pan, dob) {
  * @return {PROMISE}
  */
 async function aadharInit(mobileNumber, pan, dob, globals) {
-  debugger;
-  
   const jsonObj = {
     requestString: {
       initParameters: {
@@ -103,7 +156,7 @@ async function aadharInit(mobileNumber, pan, dob, globals) {
         journeyStateInfo: {
           state: 'CUSTOMER_AADHAR_VALIDATION',
           stateInfo: 'CORPORATE_CARD_JOURNEY',
-          formData: santizedFormData(globals)
+          formData: santizedFormData(globals),
         },
         auditData: {
           action: 'CUSTOMER_AADHAR_VALIDATION',
@@ -121,7 +174,7 @@ async function aadharInit(mobileNumber, pan, dob, globals) {
         filler10: 'filler10',
       },
       client_info: {
-        browser: get_browser(),
+        browser: getBrowser(),
         cookie: {
           source: 'AdobeForms',
           name: 'NTBCC',
@@ -129,9 +182,9 @@ async function aadharInit(mobileNumber, pan, dob, globals) {
         },
         client_ip: '',
         device: {
-          type: get_device(),
+          type: getDevice(),
           name: 'Samsung G5',
-          os: get_OS(),
+          os: getOS(),
           os_ver: '637.38383',
         },
         isp: {
@@ -157,86 +210,14 @@ async function aadharInit(mobileNumber, pan, dob, globals) {
       const aadharValidationForm = document.createElement('form');
       aadharValidationForm.setAttribute('action', res.RedirectUrl);
       aadharValidationForm.setAttribute('method', 'POST');
+      // eslint-disable-next-line guard-for-in, no-restricted-syntax
       for (const key in res) {
         updateFormElement(aadharValidationForm, key, res[key]);
       }
       document.querySelector('body').append(aadharValidationForm);
       // aadharValidationForm.appendTo('body');
-      debugger;
       aadharValidationForm.submit();
     }).catch((err) => console.log(err));
-}
-
-function get_OS() {
-  const { userAgent } = window.navigator;
-  const { platform } = window.navigator;
-  const macosPlatforms = ['Macintosh', 'MacIntel', 'MacPPC', 'Mac68K'];
-  const windowsPlatforms = ['Win32', 'Win64', 'Windows', 'WinCE'];
-  const iosPlatforms = ['iPhone', 'iPad', 'iPod'];
-  let os = null;
-
-  if (macosPlatforms.indexOf(platform) !== -1) {
-    os = 'Mac OS';
-  } else if (iosPlatforms.indexOf(platform) !== -1) {
-    os = 'iOS';
-  } else if (windowsPlatforms.indexOf(platform) !== -1) {
-    os = 'Windows';
-  } else if (/Android/.test(userAgent)) {
-    os = 'Android';
-  } else if (!os && /Linux/.test(platform)) {
-    os = 'Linux';
-  }
-
-  return os;
-}
-
-function get_device() {
-  if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-    return 'mobile';
-  }
-  return 'desktop';
-}
-
-function get_browser() {
-  const ua = navigator.userAgent; let tem; let M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
-  if (/trident/i.test(M[1])) {
-    tem = /\brv[ :]+(\d+)/g.exec(ua) || [];
-    return { name: 'IE', version: (tem[1] || '') };
-  }
-  if (M[1] === 'Chrome') {
-    tem = ua.match(/\bOPR|Edge\/(\d+)/);
-    if (tem != null) { return { name: 'Opera', version: tem[1] }; }
-  }
-  M = M[2] ? [M[1], M[2]] : [navigator.appName, navigator.appVersion, '-?'];
-  if ((tem = ua.match(/version\/(\d+)/i)) != null) { M.splice(1, 1, tem[1]); }
-  return {
-    name: M[0],
-    version: M[1],
-    majver: '',
-  };
-}
-
-function updateFormElement(form, key, value) {
-  const field = document.createElement('input');
-  field.setAttribute('type', 'hidden');
-  field.setAttribute('name', key);
-  field.setAttribute('value', value);
-  form.appendChild(field);
-}
-
-async function callJourneyDropffparams(journey_id, lead_profile_id) {
-  const payLoad = {
-    RequestPayload: {
-      journeyInfo: {
-        journeyID: journey_id,
-      },
-      leadProfile: {
-        leadProfileId: lead_profile_id,
-      },
-    },
-  };
-  const path = urlPath('/content/hdfc_commonforms/api/journeydropoffparam.json');
-  return fetchJsonResponse(path, payLoad, 'POST');
 }
 
 /**
