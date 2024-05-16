@@ -856,40 +856,19 @@ const createPanValidationRequest = (firstName, middleName, lastName, globals) =>
 			 * @param {Object} responseObj - The response object containing PAN validation result.
 			 */
       successCallBack: (responseObj) => {
-        try {
-          const ccWizardView = globals.form.corporateCardWizardView;
-          const resultPanel = globals.form.resultPanel;
-          const tryAgainButtonErrorPanel = globals.form.resultPanel.errorResultPanel.tryAgainButtonErrorPanel;
-          const ccWizardViewBlock = formUtil(globals, ccWizardView);
-          const resultPanelBlock = formUtil(globals, resultPanel);
-          const tryAgainButtonErrorPanelBlock = formUtil(globals, tryAgainButtonErrorPanel);
-          if (responseObj?.statusCode === 'FC00') {
-            PAN_VALIDATION_STATUS = responseObj.panValidation.status.errorCode === '1';
-            if (PAN_VALIDATION_STATUS) {
-              const panStatus = responseObj.panValidation.panStatus;
-              checkUserProceedStatus(panStatus, globals);
-            } else {
-              const panels = {
-                hidePanels: [ccWizardViewBlock],
-                showPanels: [resultPanelBlock, tryAgainButtonErrorPanelBlock],
-              };
-              const errorText = 'PAN validation unsuccessful.';
-              showErrorPanel(panels, errorText);
-              const reloadBtn = document.getElementsByName('tryAgainButtonErrorPanel')?.[0];
-              reloadBtn.addEventListener('click', () => window.location.reload());
-            }
+        const errStack = {};
+        if (responseObj?.statusCode === 'FC00') {
+          PAN_VALIDATION_STATUS = responseObj.panValidation.status.errorCode === '1';
+          if (PAN_VALIDATION_STATUS) {
+            const panStatus = responseObj.panValidation.panStatus;
+            checkUserProceedStatus(panStatus, globals);
           } else {
-            const panels = {
-              hidePanels: [ccWizardViewBlock],
-              showPanels: [resultPanelBlock, tryAgainButtonErrorPanelBlock],
-            };
-            const errorText = 'PAN validation API error.';
-            showErrorPanel(panels, errorText);
-            const reloadBtn = document.getElementsByName('tryAgainButtonErrorPanel')?.[0];
-            reloadBtn.addEventListener('click', () => window.location.reload());
+            errStack.errorText = 'PAN validation unsuccessful.';
+            throw errStack;
           }
-        } catch (ex) {
-          console.log(ex);
+        } else {
+          errStack.errorText = 'PAN validation API error.';
+          throw errStack;
         }
       },
       /**
@@ -897,7 +876,19 @@ const createPanValidationRequest = (firstName, middleName, lastName, globals) =>
 			 * @param {Object} errorObj - The error object containing details of the failure.
 			 */
       errorCallBack: (errorObj) => {
-        console.log(errorObj);
+        const ccWizardView = globals.form.corporateCardWizardView;
+        const resultPanel = globals.form.resultPanel;
+        const tryAgainButtonErrorPanel = globals.form.resultPanel.errorResultPanel.tryAgainButtonErrorPanel;
+        const ccWizardViewBlock = formUtil(globals, ccWizardView);
+        const resultPanelBlock = formUtil(globals, resultPanel);
+        const tryAgainButtonErrorPanelBlock = formUtil(globals, tryAgainButtonErrorPanel);
+        const panels = {
+          hidePanels: [ccWizardViewBlock],
+          showPanels: [resultPanelBlock, tryAgainButtonErrorPanelBlock],
+        };
+        showErrorPanel(panels, errorObj?.errorText);
+        const reloadBtn = document.getElementsByName('tryAgainButtonErrorPanel')?.[0];
+        reloadBtn.addEventListener('click', () => window.location.reload());
       },
     },
   };
