@@ -391,6 +391,15 @@ fieldset fieldset {
       }
     }
 
+    .field-currentaddressovdaddress, .field-officeaddressovdaddress {
+      padding-left: 39px;
+      
+      p { 
+        margin: 0; 
+        font-size: 14px;
+      }
+    }
+
     .radio-highlight-selected {
       border: solid 1px #D2D5DB;
       padding: 16px;
@@ -400,6 +409,7 @@ fieldset fieldset {
         flex-basis: 100%; 
         font-weight: 600;
         color: #111827;
+        font-size: 16px !important;
       }
 
       input[type='radio'] {
