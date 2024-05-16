@@ -190,6 +190,13 @@ fieldset fieldset {
       }
   }
 
+  .field-cardbenefitstextbox {
+    margin: -15px 0 0 !important;
+    font-size: var(--body-lg-font-size);
+    font-weight: var(--font-weight-regular);
+    padding-left: 32px;
+  }
+
   .field-joiningrenewalfee {
       display: flex;
       border: solid 3px var(--color-interface-background-quinary);
@@ -197,6 +204,10 @@ fieldset fieldset {
       padding: 0 15px;
       height: 50px;
       margin-top: -5px;
+      width: 94%;
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
 
       label {
           width: 90%;
@@ -307,6 +318,8 @@ fieldset fieldset {
 
 /* Confirm and Submit Panel */
 .field-confirmandsubmitpanel {
+  a { text-decoration: underline; }
+
   .field-addressdeclarationtext1 p {
     margin-bottom: 0;
     font-weight: var(--font-weight-bold);
@@ -327,7 +340,7 @@ fieldset fieldset {
     padding: 32px;
   }
 
- .field-aadharaddressckyc, .field-aadharaddressselectkyc, .field-currentresidenceaddressckyc, .field-currentresidenceaddressbiometriclabel, .field-officeaddresslabelckyc {
+ .field-aadharaddressckyc, .field-currentresidenceaddressckyc, .field-currentresidenceaddressbiometriclabel, .field-officeaddresslabelckyc {
     display: flex;
     font-weight: 600;
     font-size: 20px;
@@ -344,33 +357,26 @@ fieldset fieldset {
 
   .field-aadharaddressselectkyc, .field-currentresidenceaddress, .field-currentresidenceaddressbiometrictext, .field-officeaddressselectkyc {
     margin: -25px 0 0 50px;
-
-    input {
-      margin: 0;
-      padding: 0;
-      font-weight: 400;
-      font-size: 13px;
-      border: none;
-      height: fit-content;
-    }
-  }
-
-  .field-currentresidenceaddress, .field-currentresidenceaddressbiometrictext {
-    margin: -35px 0 0 50px;
   }
 
   .radio-group-wrapper {
-    display: flex;
+    display: flex !important;
 
     .radio-wrapper { 
-      margin-right: 15px;
+      margin-right: 15px !important;
     }
   }
 
-  .checkbox-wrapper label, .radio-group-wrapper legend {
+  .checkbox-wrapper label, .checkbox-wrapper label p, .radio-group-wrapper legend, .field-tccheckbox1, .field-tccheckbox2 {
     font-weight: 400;
-    font-size: 14px;
+    font-size: 18px;
     color: #374151;
+  }
+
+  .field-tccheckbox1 {
+    p, ul {
+      margin: 0;
+    }
   }
 
   .field-carddeliveryntbflow, .field-carddeliveryaddresspanel {
@@ -381,7 +387,7 @@ fieldset fieldset {
         margin: 0;
         font-weight: 600;
         font-size: 20px;
-        color: #111827;
+        color: var(--color-interface-background-quaternary);
       }
     }
 
@@ -480,15 +486,25 @@ main .form form .field-corporatecardwizardview.wizard {
     padding: 30px 0 0;
 
     .field-viewallcardbenefits { padding: 40px 0; }
-
-    img {
-      width: 253.44px;
-    }
+    img { width: 253.44px; }
   }
 
   .field-confirmandsubmitpanel {
-    .field-addressdeclarationtext2 p {
-      margin: var(--form-paragraph-margin);
+    fieldset {
+      display: grid !important;
+      margin-bottom: 0 !important;
+    }
+
+    .field-addressdeclarationtext2 p { margin: var(--form-paragraph-margin); }
+    .field-carddeliveryntbflow .radio-highlight-selected input[type='radio'] { right: 38px; }
+    .field-carddeliveryaddresslabelovd, .field-carddeliveryaddresslabel, .field-tandcpanelconfirmandsubmit legend { margin: 20px 0 10px; }
+
+    .field-carddeliveryntbflow, .field-carddeliveryaddresspanel { 
+      display: block !important; 
+
+      fieldset {
+        margin: 10px 0;
+      }
     }
   }
 }
