@@ -374,8 +374,6 @@ fieldset fieldset {
   }
 
   .field-carddeliveryntbflow, .field-carddeliveryaddresspanel {
-    display: flex;
-
     .field-carddeliveryaddresslabelovd, .field-carddeliveryaddresslabel {
       width: 100%;
 
@@ -387,8 +385,7 @@ fieldset fieldset {
       }
     }
 
-    .hdfc-radio {
-      width: 48%;
+    .radio-highlight-selected {
       border: solid 1px #D2D5DB;
       padding: 16px;
       border-radius: 16px;
@@ -405,15 +402,19 @@ fieldset fieldset {
       }
     }
 
-    .field-carddeliveryaddressoption1 label::before {
+    .field-carddeliveryaddressoption1 label::before, .field-currentaddressovdoption label::before {
       content: url('../icons/select-address-current.svg');
-      margin-right: 18px;
+      margin: 0 18px 0 4px;
     }
 
-    .field-carddeliveryaddressoption2 label::before {
+    .field-carddeliveryaddressoption2 label::before, .field-officeaddressovdoption label::before {
       content: url('../icons/select-address-office.svg');
-      margin-right: 18px;
+      margin: 0 18px 0 4px;
     }
+  }
+
+  .field-carddeliveryntbflow .radio-highlight-selected input[type='radio'] {
+    right: 0;
   }
 }
 
