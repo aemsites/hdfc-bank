@@ -3586,7 +3586,8 @@ class Field extends Scriptable {
     }
     set valid(e) {
         const validity = {
-            valid: e
+            valid: e,
+            ...(e ? {} : { customConstraint: true })
         };
         this._setProperty('valid', e);
         this._setProperty('validity', validity);
@@ -4077,7 +4078,7 @@ class Field extends Scriptable {
             'validationMessage': message,
             'validity': {
                 valid: false,
-                ...(constraint != null ? { [constraintKeys[constraint]]: true } : {})
+                ...(constraint != null ? { [constraintKeys[constraint]]: true } : { customConstraint: true })
             }
         };
         const updates = this._applyUpdates(['valid', 'errorMessage', 'validationMessage', 'validity'], changes);
