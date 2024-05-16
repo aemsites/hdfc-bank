@@ -96,7 +96,7 @@ const linkModalFunction = (config) => {
 // 1.consent-2 checkbox - modal
 const consent2Config = {
   // config to create modal for consent-2
-  triggerElement: document.getElementsByName('checkBoxConsent2')?.[0], // trigger element for calling modalFunction
+  triggerElement: document.getElementsByName('checkboxConsent2Label')?.[0], // trigger element for calling modalFunction
   content: document.getElementsByName('consentPanel2')?.[0], // content to display in modal
   actionWrapClass: 'button-wrapper', // wrapper class containing all the buttons
   reqConsentAgree: false, // Indicates if consent agreement is needed; shows close icon if not.
@@ -105,7 +105,7 @@ const consent2Config = {
 	 * @param {Object} receivedData - Data received after the modal button trigger,contains name of the btn triggered which is used to update the UI.
 	 */
   updateUI(receivedData) {
-    if (receivedData?.iAgreeConsent2) {
+    if (receivedData?.checkboxConsent2CTA) {
       // iAgreeConsent2- name of the I agree btn.
       this.triggerElement.checked = true;
       this.triggerElement.dispatchEvent(new Event('change', { bubbles: true }));
@@ -119,7 +119,7 @@ const consent2Config = {
 };
 linkModalFunction(consent2Config);
 // 2.consent-2 otherProduct-text - modal
-const consent2OtherProduct = document?.querySelector('.field-checkbox2text')?.querySelector('b');
+const consent2OtherProduct = document?.querySelector('.field-checkboxconsent2label')?.querySelector('b');
 const linkClass = 'link';
 consent2OtherProduct?.classList.add(linkClass);
 const consent2OtherProductTxtConfig = {
@@ -134,7 +134,7 @@ const consent2OtherProductTxtConfig = {
 	 */
   updateUI(receivedData) {
     const checkBox = consent2Config?.triggerElement;
-    if (receivedData?.iAgreeConsent2) {
+    if (receivedData?.checkboxConsent2CTA) {
       // iAgreeConsent2- name of the I agree btn.
       checkBox.checked = true;
     }
@@ -149,7 +149,7 @@ linkModalFunction(consent2OtherProductTxtConfig);
 // 3.conset-1 checbox - modal
 const consent1Config = {
   // config to create modal for consent-1
-  triggerElement: document.getElementsByName('checkBoxConsent1')?.[0], // trigger element for calling modalFunction
+  triggerElement: document.getElementsByName('checkboxConsent1Label')?.[0], // trigger element for calling modalFunction
   content: document.getElementsByName('consentPanel1')?.[0], // content to display in modal
   actionWrapClass: 'button-wrapper', // wrapper class containing all the buttons
   reqConsentAgree: true, // Indicates if consent agreement is needed; shows close icon if not.
@@ -158,7 +158,7 @@ const consent1Config = {
 	 * @param {Object} receivedData - Data received after the modal button trigger,contains name of the btn triggered which is used to update the UI.
 	 */
   updateUI(receivedData) {
-    if (receivedData?.iAgreeConsent1) {
+    if (receivedData?.checkboxConsent1CTA) {
       // iAgreeConsent2- name of the I agree btn.
       this.triggerElement.checked = true;
       this.triggerElement.dispatchEvent(new Event('change', { bubbles: true }));
@@ -173,7 +173,7 @@ const consent1Config = {
 linkModalFunction(consent1Config);
 
 // 4.consent-1 requestProduct-text - modal
-const consent1RequestProduct = document?.querySelector('.field-checkbox1text')?.querySelector('b');
+const consent1RequestProduct = document?.querySelector('.field-checkboxconsent1label')?.querySelector('b');
 consent1RequestProduct?.classList.add(linkClass);
 const consent2RequestProductTxtConfig = {
   // config to create modal for consent-2
@@ -187,7 +187,7 @@ const consent2RequestProductTxtConfig = {
 	 */
   updateUI(receivedData) {
     const checkBox = consent1Config?.triggerElement;
-    if (receivedData?.iAgreeConsent1) {
+    if (receivedData?.checkboxConsent1CTA) {
       // iAgreeConsent2- name of the I agree btn.
       checkBox.checked = true;
     }
