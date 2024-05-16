@@ -1,6 +1,6 @@
 /* eslint no-bitwise: ["error", { "allow": ["^", ">>", "&"] }] */
 
-import { santizedFormData, santizedFormDataWithContext } from './formutils.js';
+import { santizedFormDataWithContext } from './formutils.js';
 import { fetchJsonResponse } from './makeRestAPI.js';
 
 function generateUUID() {
@@ -31,7 +31,6 @@ const currentFormContext = {};
  * @param {Object} globals - globals variables object containing form configurations.
  */
 const invokeJourneyDropOff = async (state, mobileNumber, globals) => {
-  debugger;
   const journeyJSONObj = {
     RequestPayload: {
       userAgent: window.navigator.userAgent,
@@ -65,13 +64,12 @@ const invokeJourneyDropOff = async (state, mobileNumber, globals) => {
  * @returns {Promise}
  */
 const invokeJourneyDropOffUpdate = async (state, mobileNumber, globals) => {
-  debugger;
   const journeyJSONObj = {
     RequestPayload: {
       userAgent: window.navigator.userAgent,
       leadProfile: {
         mobileNumber,
-        leadProfileId: currentFormContext.leadProfile
+        leadProfileId: currentFormContext.leadProfile,
       },
       formData: {
         channel: 'ADOBE_WEBFORMS',
@@ -93,36 +91,13 @@ const invokeJourneyDropOffUpdate = async (state, mobileNumber, globals) => {
 };
 
 /**
- * @name invokeJourneyDropOffParams to log on success and error call backs of api calls.
- * @param {Object} globals - globals variables object containing form configurations.
- */
-const invokeJourneyDropOffParams = async (globals) => {
-  const journeyJSONObj = {
-    RequestPayload: {
-        journeyInfo: {
-            journeyID: currentFormContext.journeyID
-        },
-        leadProfile: {
-            leadProfileId: currentFormContext.leadProfile
-        }
-    }
-}
-  const url = 'https://applyonlinedev.hdfcbank.com/content/hdfc_commonforms/api/journeydropoffparam.json';
-  const method = 'POST';
-  return fetchJsonResponse(url, journeyJSONObj, method);
-};
-
-/**
  * @name printPayload
  * @param {string} payload.
  */
 function journeyResponseHandler(payload) {
-  debugger;
-  // eslint-disable-next-line no-console
   currentFormContext.leadProfile = String(payload.leadProfileId);
-  console.log('message from here', payload);
 }
 
 export {
-  createJourneyId, currentFormContext, invokeJourneyDropOff, journeyResponseHandler,invokeJourneyDropOffUpdate,
+  createJourneyId, currentFormContext, invokeJourneyDropOff, journeyResponseHandler, invokeJourneyDropOffUpdate,
 };

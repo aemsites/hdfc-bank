@@ -210,11 +210,11 @@ const viewAllBtnPannelConfig = {
 linkModalFunction(viewAllBtnPannelConfig);
 
 const queryStrings = window.location.search.split('?')[1].split('&');
+// eslint-disable-next-line no-restricted-syntax
 for (const queryString of queryStrings) {
-  debugger
+  // eslint-disable-next-line no-unused-vars
   const [key, value] = queryString.split('=');
   if (value === 'EKYC_AUTH') {
-    debugger
     const navigateFrom = document.getElementsByName('corporateCardWizardView')?.[0];
     const current = navigateFrom?.querySelector('.current-wizard-step');
     const currentMenuItem = navigateFrom?.querySelector('.wizard-menu-active-item');
