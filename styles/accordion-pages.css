@@ -55,7 +55,7 @@ li.wizard-menu-item::before {
 }
 
 li.wizard-menu-active-item::before {
-  background-image: url('../../icons/current-step-indicator.svg');
+  background-image: url('../icons/current-step-indicator.svg');
   content: '';
   background-size: cover;
   background-color: unset;
@@ -320,12 +320,107 @@ fieldset fieldset {
     font-size: var(--body-sm-font-size);
     color: var(--color-interface-text-quaternary);
   }
+
+  .field-addressdeclarationaadhar, .field-currentaddressdeclaration, .field-currentaddressbiometric, .field-addressdeclarationoffice {
+    border: solid 1px #D2D5DB;
+    border-radius: 24px;
+    padding: 32px;
+  }
+
+ .field-aadharaddressckyc, .field-aadharaddressselectkyc, .field-currentresidenceaddressckyc, .field-currentresidenceaddressbiometriclabel, .field-officeaddresslabelckyc {
+    display: flex;
+    font-weight: 600;
+    font-size: 20px;
+
+    p {
+      margin: 0 0 0 10px;
+      color: #111827;
+    }
+  }
+
+  .field-aadharaddressckyc::before { content: url('../icons/address-aadhar-icon.svg'); }
+  .field-currentresidenceaddressckyc::before, .field-currentresidenceaddressbiometriclabel::before { content: url('../icons/address-current-icon.svg'); }
+  .field-officeaddresslabelckyc::before { content: url('../icons/address-office-icon.svg'); }
+
+  .field-aadharaddressselectkyc, .field-currentresidenceaddress, .field-currentresidenceaddressbiometrictext, .field-officeaddressselectkyc {
+    margin: -25px 0 0 50px;
+
+    input {
+      margin: 0;
+      padding: 0;
+      font-weight: 400;
+      font-size: 13px;
+      border: none;
+      height: fit-content;
+    }
+  }
+
+  .field-currentresidenceaddress, .field-currentresidenceaddressbiometrictext {
+    margin: -35px 0 0 50px;
+  }
+
+  .radio-group-wrapper {
+    display: flex;
+
+    .radio-wrapper { 
+      margin-right: 15px;
+    }
+  }
+
+  .checkbox-wrapper label, .radio-group-wrapper legend {
+    font-weight: 400;
+    font-size: 14px;
+    color: #374151;
+  }
+
+  .field-carddeliveryntbflow, .field-carddeliveryaddresspanel {
+    display: flex;
+
+    .field-carddeliveryaddresslabelovd, .field-carddeliveryaddresslabel {
+      width: 100%;
+
+      p {
+        margin: 0;
+        font-weight: 600;
+        font-size: 20px;
+        color: #111827;
+      }
+    }
+
+    .hdfc-radio {
+      width: 48%;
+      border: solid 1px #D2D5DB;
+      padding: 16px;
+      border-radius: 16px;
+
+      label { 
+        flex-basis: 100%; 
+        font-weight: 600;
+        color: #111827;
+      }
+
+      input[type='radio'] {
+        position: absolute;
+        right: 15px;
+      }
+    }
+
+    .field-carddeliveryaddressoption1 label::before {
+      content: url('../icons/select-address-current.svg');
+      margin-right: 18px;
+    }
+
+    .field-carddeliveryaddressoption2 label::before {
+      content: url('../icons/select-address-office.svg');
+      margin-right: 18px;
+    }
+  }
 }
 
 /* End of Confirm and Submit Panel */
 
 .hdfc-accordion-legend::after {
-  content: url('../../icons/accordion-expand-icon.svg');
+  content: url('../icons/accordion-expand-icon.svg');
   display: inline;
   position: absolute;
   right: 1vw;
