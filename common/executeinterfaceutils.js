@@ -253,7 +253,6 @@ const journeyResume = (globals, response) => {
   currentFormContext.ipaResponse.ipa = response?.ipa;
   hideLoader();
   listNameOnCard(globals);
-  //passResponsetoContext();
 };
 
 /**
