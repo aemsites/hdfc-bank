@@ -418,6 +418,7 @@ const existingCustomerCheck = (res) => {
   if (customerFiller2 === 'D101' || customerFiller2 === 'D106') {
     // Case where customerFiller2 is 'D101' or 'D106'
     const segment = customerInfo?.SEGMENT?.toLowerCase();
+    currentFormContext.segment = segment;
     const customerType = customerCategory[segment];
 
     // Check customer type and return accordingly

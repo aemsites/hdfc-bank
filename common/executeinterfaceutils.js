@@ -368,7 +368,7 @@ const customerValidationHandler = {
  * @param {Object} globals - The global object containing necessary data for IdCom request.
  * @returns {Object} - The IdCom request object.
  */
-const createIdComRequestObj = () => {
+const createIdComRequestObj = (fintechId) => {
   const idComObj = {
     requestString: {
       mobileNumber: currentFormContext.executeInterfaceReqObj.requestString.mobileNumber,
@@ -378,6 +378,7 @@ const createIdComRequestObj = () => {
       journeyID: currentFormContext.journeyID,
       journeyName: currentFormContext.journeyName,
       scope: 'ADOBE_PACC',
+      fintechId,
     },
   };
   return idComObj;
@@ -388,8 +389,8 @@ const createIdComRequestObj = () => {
  * @param {Object} globals - The global object containing necessary data for the request.
  * @returns {void}
  */
-const fetchAuthCode = () => {
-  const idComObj = createIdComRequestObj();
+const fetchAuthCode = (fintechId) => {
+  const idComObj = createIdComRequestObj(fintechId);
   const apiEndPoint = urlPath('/content/hdfc_commonforms/api/fetchauthcode.json');
   const eventHandlers = {
     successCallBack: (response) => {
@@ -402,6 +403,31 @@ const fetchAuthCode = () => {
   restAPICall('', 'POST', idComObj, apiEndPoint, eventHandlers.successCallBack, eventHandlers.errorCallBack, 'Loading');
 };
 
+const getFintechId = (requestObj) => {
+  const addressEditFlag = requestObj.requestString.addressEditFlag === 'Y' ? 'yes' : 'no';
+  const mapping = {
+    only_casa: {
+      no: 'AACC',
+      yes: 'PACC',
+    },
+    casa_asset: {
+      no: 'AACC',
+      yes: 'PACC',
+    },
+    casa_cc: 'PADC',
+    only_cc: 'OYCC',
+    casa_asset_cc: 'PADC',
+    cc_asset: 'OYCC',
+  };
+  if (currentFormContext.segment in mapping) {
+    if (typeof mapping[currentFormContext.segment] === 'object') {
+      return mapping[currentFormContext.segment][addressEditFlag];
+    }
+    return mapping[currentFormContext.segment];
+  }
+  return null;
+};
+
 /**
  * Executes the final interface API call and fetches authentication code upon success.
  * @param {Object} globals - The global object containing necessary data for the request.
@@ -410,6 +436,10 @@ const fetchAuthCode = () => {
 const executeInterfaceApiFinal = (globals) => {
   const formCallBackContext = globals.functions.exportData()?.currentFormContext;
   const requestObj = currentFormContext.executeInterfaceReqObj || formCallBackContext?.executeInterfaceReqObj;
+  let fintechId = '';
+  if (currentFormContext.journeyType === 'ETB') {
+    fintechId = getFintechId(requestObj);
+  }
   requestObj.requestString.nameOnCard = globals.form.corporateCardWizardView.confirmCardPanel.cardBenefitsPanel.CorporatetImageAndNamePanel.nameOnCardDropdown.$value;
   requestObj.requestString.Id_token_jwt = currentFormContext.jwtToken || formCallBackContext?.currentFormContext?.jwtToken;
   requestObj.requestString.productCode = currentFormContext.productDetails.cardProductCode || formCallBackContext?.currentFormContext?.productDetails?.cardProductCode;
@@ -425,7 +455,7 @@ const executeInterfaceApiFinal = (globals) => {
     successCallBack: (response) => {
       console.log(response);
       if (currentFormContext.journeyType === 'ETB') {
-        fetchAuthCode();
+        fetchAuthCode(fintechId);
       }
     },
     errorCallBack: (response) => {
