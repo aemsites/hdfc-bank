@@ -361,7 +361,7 @@ const santizedFormData = (globaObj) => JSON.parse(JSON.stringify(globaObj.functi
    * @returns {object} -Object containing only defined values.
    */
 const santizedFormDataWithContext = (globaObj, currentFormContext) => {
-  const formDataPayload = globaObj.functions.exportData();
+  const formDataPayload = globaObj.functions.exportData()?.form;
   formDataPayload.currentFormContext = currentFormContext;
   return JSON.parse(JSON.stringify(formDataPayload));
 };

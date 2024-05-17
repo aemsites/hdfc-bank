@@ -233,12 +233,8 @@ const journeyTerminate = (globals) => {
  * @param {object} response - object containing response from the previosu api call
  */
 const journeyResume = (globals, response) => {
-  currentFormContext.productDetails = response.productEligibility.productDetails?.[0];
-  currentFormContext.productDetails.features = '';
-  currentFormContext.productDetails.keyBenefits = '';
-  currentFormContext.ipaResponse = response;
-  currentFormContext.ipaResponse.productEligibility.productDetails[0].features = '';
-  currentFormContext.ipaResponse.productEligibility.productDetails[0].keyBenefits = '';
+  currentFormContext.productDetails = {};
+  currentFormContext.productDetails.cardProductCode = response.productEligibility.productDetails?.[0]?.cardProductCode;
   const imageEl = document.querySelector('.field-cardimage > picture');
   const imagePath = `https://applyonlinedev.hdfcbank.com${response.productEligibility.productDetails[0]?.cardTypePath}?width=2000&optimize=medium`;
   imageEl.childNodes[5].setAttribute('src', imagePath);
@@ -253,6 +249,8 @@ const journeyResume = (globals, response) => {
   cardBenefitsTextField0.setValue(response.productEligibility.productDetails[0].keyBenefits[0]);
   cardBenefitsTextField1.setValue(response.productEligibility.productDetails[0].keyBenefits[1]);
   cardBenefitsTextField2.setValue(response.productEligibility.productDetails[0].keyBenefits[2]);
+  currentFormContext.ipaResponse = {};
+  currentFormContext.ipaResponse.ipa = response?.ipa;
   hideLoader();
   listNameOnCard(globals);
   //passResponsetoContext();
