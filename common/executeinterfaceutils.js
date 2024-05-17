@@ -233,7 +233,10 @@ const journeyTerminate = (globals) => {
  * @param {object} response - object containing response from the previosu api call
  */
 const journeyResume = (globals, response) => {
-  currentFormContext.productDetails = response.productEligibility.productDetails?.[0];
+  let productDetailsData = response.productEligibility.productDetails?.[0];
+  productDetailsData?.keyBenefits = '';
+  productDetailsData?.features = '';
+  currentFormContext.productDetails = productDetailsData; 
   currentFormContext.ipaResponse = response;
   const imageEl = document.querySelector('.field-cardimage > picture');
   const imagePath = `https://applyonlinedev.hdfcbank.com${response.productEligibility.productDetails[0]?.cardTypePath}?width=2000&optimize=medium`;
