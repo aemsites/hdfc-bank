@@ -156,7 +156,7 @@ async function aadharInit(mobileNumber, pan, dob, globals) {
         journeyStateInfo: {
           state: 'CUSTOMER_AADHAR_VALIDATION',
           stateInfo: 'CORPORATE_CARD_JOURNEY',
-          formData: santizedFormData(globals),
+          formData: santizedFormData(globals)?.form,
         },
         auditData: {
           action: 'CUSTOMER_AADHAR_VALIDATION',

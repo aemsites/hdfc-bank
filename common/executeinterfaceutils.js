@@ -372,7 +372,7 @@ const createIdComRequestObj = (fintechId) => {
   const idComObj = {
     requestString: {
       mobileNumber: currentFormContext.executeInterfaceReqObj.requestString.mobileNumber,
-      ProductCode: currentFormContext.productCode,
+      ProductCode: 'CCPREISS',
       PANNo: currentFormContext.executeInterfaceReqObj.requestString.panNumber,
       userAgent: navigator.userAgent,
       journeyID: currentFormContext.journeyID,
