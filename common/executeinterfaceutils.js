@@ -233,6 +233,12 @@ const journeyTerminate = (globals) => {
  * @param {object} response - object containing response from the previosu api call
  */
 const journeyResume = (globals, response) => {
+  currentFormContext.productDetails = response.productEligibility.productDetails?.[0];
+  currentFormContext.productDetails.features = '';
+  currentFormContext.productDetails.keyBenefits = '';
+  currentFormContext.ipaResponse = response;
+  currentFormContext.ipaResponse.productEligibility.productDetails[0].features = '';
+  currentFormContext.ipaResponse.productEligibility.productDetails[0].keyBenefits = '';
   const imageEl = document.querySelector('.field-cardimage > picture');
   const imagePath = `https://applyonlinedev.hdfcbank.com${response.productEligibility.productDetails[0]?.cardTypePath}?width=2000&optimize=medium`;
   imageEl.childNodes[5].setAttribute('src', imagePath);
@@ -249,14 +255,7 @@ const journeyResume = (globals, response) => {
   cardBenefitsTextField2.setValue(response.productEligibility.productDetails[0].keyBenefits[2]);
   hideLoader();
   listNameOnCard(globals);
-  passResponsetoContext();
-};
-
-const passResponsetoContext = (response) => {
-  response.productEligibility.productDetails?.[0]?.features = '';
-  response.productEligibility.productDetails?.[0]?.keyBenefits = ''; 
-  currentFormContext.productDetails = response.productEligibility.productDetails?.[0]; 
-  currentFormContext.ipaResponse = response;
+  //passResponsetoContext();
 };
 
 /**
