@@ -480,15 +480,34 @@ main .form.block .field-otppanel {
     }
   }
 
-  .field-maxattempttext {
-    input {
-      text-align: right;
-      border: none;
-      cursor: text;
-      pointer-events: none;
-      margin-top: 0;
-      padding: 0;
+  .field-otpsubpanel {
+    display: flex;
+    flex-direction: row;
+
+    .plain-text-wrapper {
+      width: fit-content;
+
+      p {
+        margin-top: 0.9em;
+        font-size: 14px;
+      }
     }
+
+    .field-numretries {
+      text-align: right;
+      direction: rtl;
+      margin: 1px -10px 0 -26px;
+
+      input {
+        padding: 0;
+        width: 24px;
+        margin: 0;
+        border: none;
+        background: transparent;
+      }
+    }
+
+    .field-remaining { margin-left: -10px; }
   }
 }
 
@@ -529,6 +548,11 @@ main .form .field-resultpanel {
     .field-otpresend {
       margin: 0 !important;
     }
+
+    .field-otpsubpanel {
+      display: flex;
+      flex-direction: row;
+    }
   }
 
   main .form .field-errorresultpanel,
@@ -551,11 +575,6 @@ main .form .field-resultpanel {
   main .form.block .field-otppanel {
     display: grid;
 
-    .field-maxattempttext input {
-      text-align: right;
-      margin-bottom: 0;
-    }
-
     .field-otpnumber {
       input {
         letter-spacing: 6vw;
@@ -572,6 +591,13 @@ main .form .field-resultpanel {
   main .section.form-container {
     width: 100%;
     margin: 0 !important;
+  }
+
+  main .form.block .field-otppanel {
+    .field-otpsubpanel {
+      display: flex;
+      flex-direction: row;
+    }
   }
 }
 

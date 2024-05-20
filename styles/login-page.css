@@ -421,24 +421,3 @@ main .form form .panel-wrapper {
         }
     }    
 }
-
-.field-otpsubpanel{
-    display: flex;
-    flex-direction: row;
-    input{
-        border: none !important;
-        padding: 0px !important;
-        margin: 0px !important;
-     }
-    input[name="maximum"]{
-        width: 84px !important;
-    }
-   
-    input[name="numRetries"]{
-        width: 25px !important;
-    }
-    input[name="attempts"]{
-        width: 55px !important;    
-    }
- 
-}
