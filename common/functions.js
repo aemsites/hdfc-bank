@@ -21,7 +21,7 @@ import { fetchJsonResponse, restAPICall } from './makeRestAPI.js';
  */
 function checkMode(globals) {
   const formData = globals.functions.exportData();
-  if (formData.aadhaar_otp_val_data.result.Address1) {
+  if (formData?.aadhaar_otp_val_data?.result?.Address1) {
     globals.functions.setProperty(globals.form.corporateCardWizardView, { visible: true });
     globals.functions.setProperty(globals.form.otpPanel, { visible: false });
     globals.functions.setProperty(globals.form.loginPanel, { visible: false });
