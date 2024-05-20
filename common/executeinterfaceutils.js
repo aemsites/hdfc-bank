@@ -194,7 +194,8 @@ const createExecuteInterfaceRequestObj = (panCheckFlag, globals, breDemogRespons
       apsDobEditFlag: 'N',
       apsEmailEditFlag: 'N',
       journeyFlag: currentFormContext.journeyType,
-      annualIncomeOrItrAmount:'100000'
+      annualIncomeOrItrAmount:'100000',
+      comResidenceType:'2'
     },
   };
   return requestObj;
