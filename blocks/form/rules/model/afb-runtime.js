@@ -879,7 +879,7 @@ const checkNumber = (inputVal) => {
     };
 };
 const checkInteger = (inputVal) => {
-    if (inputVal == '' || inputVal == null) {
+    if (inputVal === '' || inputVal == null) {
         return {
             value: '', valid: true
         };
