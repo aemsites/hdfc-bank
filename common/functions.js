@@ -65,7 +65,7 @@ function getOTP(mobileNumber, pan, dob) {
     requestString: {
       mobileNumber: mobileNumber.$value,
       dateOfBith: dob.$value || '',
-      panNumber: pan.$value || '',
+      panNumber: pan.$value || String(null),
       journeyID: currentFormContext.journeyID,
       journeyName: currentFormContext.journeyName,
       userAgent: window.navigator.userAgent,
@@ -91,7 +91,7 @@ function otpValidation(mobileNumber, pan, dob, otpNumber) {
       mobileNumber: mobileNumber.$value,
       passwordValue: otpNumber,
       dateOfBith: dob.$value || '',
-      panNumber: pan.$value || '',
+      panNumber: pan.$value || String(null),
       channelSource: '',
       journeyID: currentFormContext.journeyID,
       journeyName: currentFormContext.journeyName,
