@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 function displayMobileNumber(){
   // only numeric 10 digits
   // will be already prefilled from some source . To get more details about this 
@@ -89,28 +91,6 @@ function getFormContext(){
 function panAPISuccesHandler(panStatus) {
 }
 
-/**
-* Invokes journey APIs
-* @name invokeJourneyDropOffCall
-* @param {string} state
-* @param {string} mobileNumber
-* @param {string} linkName
-* @param {string} operation
-* @param {object} globals
-* @return {PROMISE}
-*/
-function invokeJourneyDropOffCall(state, mobileNumber, linkName, operation){
-}
-
-/**
-* Invokes journey A
-* @name invokeJourneyDropOffA
-* @param {string} mobileNumber
-* @param {object} globals
-* @return {object}
-*/
-function invokeJourneyDropOffA(mobileNumber){
-}
 
 /**
 * generates the journeyId
@@ -127,8 +107,6 @@ function createJourneyId(visitMode, journeyAbbreviation, channel) {
 function pinCodeMaster(){
 }
 
-function validateEmailID(){
-}
 function currentAddressToggleHandler(){
 }
 
@@ -168,7 +146,6 @@ function idcomRedirection(){
 function finalDap(){
 }
 
-
 /**
 * @name aadharInit aadhar init call
 * @param {object} mobileNumber
@@ -179,16 +156,6 @@ function finalDap(){
 */
 function aadharInit(mobileNumber, pan, dob){
 }
-
-
-
-/**
-* @name invokeJourneyDropOffParams - to log on success and error call backs of api calls.
-* @param {Object} globals - globals variables object containing form configurations.
-*/
-function invokeJourneyDropOffParams(){
-}
-
 
 
 /**
@@ -221,7 +188,6 @@ function kycNextAction(arg1, arg2, arg3) {
 * @return {PROMISE}
 */
 function checkMode(){
-
 }
 
 
@@ -250,6 +216,7 @@ function crmJourneyStateOnLoad(mobileNumber){
 * @param {object} mobileNumber
 * @param {object} pan
 * @param {object} dob
+* @param {object} otpNumber
 * @return {PROMISE}
 */
 function otpValidation(mobileNumber, pan, dob, otpNumber) {
@@ -257,11 +224,10 @@ function otpValidation(mobileNumber, pan, dob, otpNumber) {
 }
 
 /**
-* Handles the success scenario for OTP Validation.
-* @param {string} res  - The response object containing the OTP success generation response.
+* @name otpValHandler
+* @param {string} res
 */
 function otpValHandler(res) {
-
 }
 
 
@@ -326,4 +292,50 @@ function executeInterfaceApi(showLoader, hideLoader, globals){
 * @return {PROMISE}
 */
 function hideLoader() {
+}
+
+
+/**
+* @name invokeJourneyDropOffByParam
+* @param {string} mobileNumber
+* @param {string} leadProfileId
+* @param {string} journeyId
+* @return {PROMISE}
+*/
+function invokeJourneyDropOffByParam(mobileNumber, leadProfileId, journeyId){
+}
+
+/**
+ * @name invokeJourneyDropOffUpdate
+ * @param {string} state
+ * @param {string} mobileNumber
+ * @param {string} leadProfileId
+ * @param {string} journeyId
+ * @param {Object} globals - globals variables object containing form configurations.
+ * @return {PROMISE}
+ */
+function invokeJourneyDropOffUpdate(state, mobileNumber, leadProfileId, journeyId){
+}
+
+/**
+ * @name invokeJourneyDropOff
+ * @param {string} state
+ * @param {string} mobileNumber
+ * @return {PROMISE}
+ */
+function invokeJourneyDropOff(state, mobileNumber){
+}
+
+
+/**
+* sendAnalytics
+* @param {string} payload
+*/
+function sendAnalytics(payload){
+}
+
+/**
+ * @name invokeRestAPIWithDataSecurity
+ */
+function initRestAPIDataSecurityServiceES6() {
 }

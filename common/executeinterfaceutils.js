@@ -517,6 +517,11 @@ const ipaSuccessHandler = (ipa, productEligibility, globals) => {
     const benefitsTextField = formUtil(globals, benefitsPanel[key]);
     benefitsTextField.setValue(firstProductDetail.keyBenefits[index]);
   });
+  if (currentFormContext.executeInterfaceReqObj.requestString.addressEditFlag === 'N') {
+    const { selectKycPanel } = globals.form.corporateCardWizardView;
+    const selectKycPanelUtil = formUtil(globals, selectKycPanel);
+    selectKycPanelUtil.visible(false);
+  }
   hideLoaderGif();
   listNameOnCard(globals);
 };
