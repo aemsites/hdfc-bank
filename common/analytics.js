@@ -26,7 +26,7 @@ const digitalDataPageLoad = {
  * @param {string} linkName - linkName
  * @param {string} linkType - linkName
  * @param {object} formContext - currentFormContext.
- * @param {object} digitalData 
+ * @param {object} digitalData
  */
 
 function sendGenericClickEvent(linkName, linkType, formContext, digitalData) {
@@ -56,7 +56,7 @@ const getValidationMethod = (formContext) => {
  * @param {string} validationType
  * @param {string} linkName
  * @param {object} formContext
- * @param {object} digitalData 
+ * @param {object} digitalData
  */
 function sendSubmitClickEvent(phone, linkName, linkType, formContext, currentFormContext, digitalData) {
   const digitalDataEvent = digitalData || {
