@@ -377,6 +377,14 @@ fieldset fieldset {
     font-weight: 400;
     font-size: 18px;
     color: #374151;
+
+    .field-description {
+      padding-top: 15px;
+    }
+  }
+
+  .field-tccheckbox1:has(.field-description), .field-tccheckbox2:has(.field-description) {
+    display: inline-grid;
   }
 
   .field-tccheckbox1 {
@@ -385,7 +393,7 @@ fieldset fieldset {
     }
   }
 
-  .field-carddeliveryntbflow, .field-carddeliveryaddresspanel {
+  .field-addressdeclarationovd, .field-carddeliveryaddresspanel {
     .field-carddeliveryaddresslabelovd, .field-carddeliveryaddresslabel {
       width: 100%;
 
@@ -512,10 +520,10 @@ main .form form .field-corporatecardwizardview.wizard {
     }
 
     .field-addressdeclarationtext2 p { margin: var(--form-paragraph-margin); }
-    .field-carddeliveryntbflow .radio-highlight-selected input[type='radio'] { right: 38px; }
+    .field-addressdeclarationovd .radio-highlight-selected input[type='radio'] { right: 38px; }
     .field-carddeliveryaddresslabelovd, .field-carddeliveryaddresslabel, .field-tandcpanelconfirmandsubmit legend { margin: 20px 0 10px; }
 
-    .field-carddeliveryntbflow, .field-carddeliveryaddresspanel { 
+    .field-addressdeclarationovd, .field-carddeliveryaddresspanel { 
       display: block !important; 
 
       fieldset {
