@@ -16,7 +16,7 @@ const digitalDataPageLoad = {
     casa: '',
   },
   form: {
-    name: 'CORPORATE_CARD_JOURNEY',
+    name: 'Corporate credit card',
   },
 };
 
@@ -77,7 +77,7 @@ function sendSubmitClickEvent(phone, linkName, linkType, formContext, currentFor
       email: '',
     },
     form: {
-      name: 'CORPORATE_CARD_JOURNEY',
+      name: 'Corporate credit card',
     },
     link: {
       linkName: '',
@@ -138,7 +138,7 @@ function sendPageloadEvent(formContext) {
   _satellite.track('pageload');
 }
 
-function populateResponse(action, digitalDataEvent, payload = {}) {
+function populateResponse(payload, action, digitalDataEvent) {
   switch (action) {
     case 'getOTP': {
       digitalDataEvent.page.pageInfo.errorCode = payload?.status?.errorCode;
@@ -175,7 +175,7 @@ function sendAnalyticsEvent(payload, formData, currentFormContext) {
       email: '',
     },
     form: {
-      name: 'CORPORATE_CARD_JOURNEY',
+      name: 'Corporate credit card',
     },
     link: {
       linkName: '',
@@ -207,7 +207,6 @@ function sendAnalyticsEvent(payload, formData, currentFormContext) {
       annualFee: '',
     },
   };
-  debugger;
   const apiResponse = JSON.parse(payload || {});
   const action = currentFormContext?.action;
   const attributes = data[action];
