@@ -395,10 +395,10 @@ const otpValHandler = (response, globals) => {
  */
 const setConfirmScrAddressFields = (globalObj) => {
   /**
-   * Concatenates the values of an object into a single string separated by commas.
-   * @param {Object} obj - The object whose values are to be concatenated.
-   * @returns {string} A string containing the concatenated values separated by commas.
-   */
+	 * Concatenates the values of an object into a single string separated by commas.
+	 * @param {Object} obj - The object whose values are to be concatenated.
+	 * @returns {string} A string containing the concatenated values separated by commas.
+	 */
   const concatObjVals = (obj) => Object.values(obj)?.join(', ');
   const ccWizard = globalObj.form.corporateCardWizardView;
   const yourDetails = ccWizard.yourDetailsPanel.yourDetailsPage;
@@ -406,8 +406,8 @@ const setConfirmScrAddressFields = (globalObj) => {
   const etb = currentDetails.currentAddressETB;
   const ntb = currentDetails.currentAddressNTB;
   const employeeDetails = yourDetails.employmentDetails;
-  const confirmAddress = ccWizard.confirmAndSubmitPanel.AddressDeclarationPanel;
-  const ovdNtb = confirmAddress.addressDeclarationOVD.cardDeliveryNTBFlow;
+  const confirmAddress = ccWizard.confirmAndSubmitPanel.addressDeclarationPanel;
+  const addressDeclaration = confirmAddress.addressDeclarationOVD;
   const etbPrefilledAddress = etb.prefilledCurrentAdddress.$value;
   const etbNewCurentAddress = concatObjVals({
     addressLine1: etb.newCurentAddressPanel.newCurentAddressLine1.$value,
@@ -436,9 +436,9 @@ const setConfirmScrAddressFields = (globalObj) => {
   });
   const userCurrentAddress = currentFormContext.journeyType === 'ETB' ? etbCurentAddress : ntbCurrentAddress;
 
-  const officeAddressFieldOVD = formUtil(globalObj, ovdNtb.officeAddressOVD.officeAddressOVDAddress);
+  const officeAddressFieldOVD = formUtil(globalObj, addressDeclaration.officeAddressOVD.officeAddressOVDAddress);
   const kycOfficeAddressField = formUtil(globalObj, confirmAddress.addressDeclarationOffice.officeAddressSelectKYC);
-  const currentAddressFieldOVD = formUtil(globalObj, ovdNtb.currentAddressOVD.currentAddressOVDAddress);
+  const currentAddressFieldOVD = formUtil(globalObj, addressDeclaration.currentAddressOVD.currentAddressOVDAddress);
   const residenceAddressField = formUtil(globalObj, confirmAddress.CurrentAddressDeclaration.currentResidenceAddress);
   const biometricAddressField = formUtil(globalObj, confirmAddress.currentAddressBiometric.currentResidenceAddressBiometricText);
 
