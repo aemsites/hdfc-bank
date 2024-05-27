@@ -364,7 +364,7 @@ const showErrorPanel = (panels, errorText) => {
 
 /**
  * @name otpValHandler
- * @param {string} res
+ * @param {Object} response
  * @param {Object} globals
  * @return {PROMISE}
  */
