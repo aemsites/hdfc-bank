@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 function displayMobileNumber(){
   // only numeric 10 digits
   // will be already prefilled from some source . To get more details about this 
@@ -127,8 +129,6 @@ function createJourneyId(visitMode, journeyAbbreviation, channel) {
 function pinCodeMaster(){
 }
 
-function validateEmailID(){
-}
 function currentAddressToggleHandler(){
 }
 
