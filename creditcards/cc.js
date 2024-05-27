@@ -80,14 +80,20 @@ function onWizardInit() {
 
 const linkModalFunction = (config) => {
   config?.triggerElement?.addEventListener('click', async (e) => {
-    e.preventDefault();
-    await openModal(config);
-    config?.content?.addEventListener('modalTriggerValue', (event) => {
-      const receivedData = event.detail;
-      if (config?.updateUI) {
-        config?.updateUI(receivedData);
-      }
-    });
+    const { checked, type } = e.target;
+    const checkBoxElement = (type === 'checkbox') && checked;
+    const otherElement = true;
+    const elementType = (type === 'checkbox') ? checkBoxElement : otherElement;
+    if (elementType) {
+      e.preventDefault();
+      await openModal(config);
+      config?.content?.addEventListener('modalTriggerValue', (event) => {
+        const receivedData = event.detail;
+        if (config?.updateUI) {
+          config?.updateUI(receivedData);
+        }
+      });
+    }
   });
 };
 /* endCode for creating Modal */

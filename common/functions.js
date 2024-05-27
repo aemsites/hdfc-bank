@@ -9,9 +9,10 @@ import {
   finalDap,
   currentFormContext,
   otpValHandler,
+  journeyResponseHandler,
+  createJourneyId,
+  sendAnalytics,
 } from '../creditcards/corporate-creditcardFunctions.js';
-import { urlPath, santizedFormData, getTimeStamp } from './formutils.js';
-import { fetchJsonResponse } from './makeRestAPI.js';
 import {
   validatePan,
   panAPISuccesHandler,
@@ -21,6 +22,8 @@ import {
   ipaRequestApi,
   ipaSuccessHandler,
 } from './executeinterfaceutils.js';
+import { urlPath, santizedFormData, getTimeStamp } from './formutils.js';
+import { fetchJsonResponse } from './makeRestAPI.js';
 
 /**
  * @name checkMode - check the location
@@ -58,16 +61,21 @@ function customSetFocus(errorMessage, numRetries, globals) {
  * @param {object} mobileNumber
  * @param {object} pan
  * @param {object} dob
+ * @param {object} globals
  * @return {PROMISE}
  */
-function getOTP(mobileNumber, pan, dob) {
+function getOTP(mobileNumber, pan, dob, globals) {
+  currentFormContext.action = 'getOTP';
+  currentFormContext.journeyID = globals.form.runtime.journeyId.$value;
+  console.log(currentFormContext);
+  // currentFormContext.leadProfile = {};
   const jsonObj = {
     requestString: {
       mobileNumber: mobileNumber.$value,
       dateOfBith: dob.$value || '',
       panNumber: pan.$value || '',
-      journeyID: currentFormContext.journeyID,
-      journeyName: currentFormContext.journeyName,
+      journeyID: globals.form.runtime.journeyId.$value,
+      journeyName: 'CORPORATE_CARD_JOURNEY',
       userAgent: window.navigator.userAgent,
       identifierValue: pan.$value || dob.$value,
       identifierName: pan.$value ? 'PAN' : 'DOB',
@@ -89,7 +97,7 @@ function otpValidation(mobileNumber, pan, dob, otpNumber) {
   const jsonObj = {
     requestString: {
       mobileNumber: mobileNumber.$value,
-      passwordValue: otpNumber,
+      passwordValue: otpNumber.$value,
       dateOfBith: dob.$value || '',
       panNumber: pan.$value || '',
       channelSource: '',
@@ -284,9 +292,13 @@ export {
   checkMode,
   otpValHandler,
   customSetFocus,
+  journeyResponseHandler,
+  currentFormContext,
+  createJourneyId,
   validatePan,
   panAPISuccesHandler,
   executeInterfaceApi,
   ipaRequestApi,
   ipaSuccessHandler,
+  sendAnalytics,
 };

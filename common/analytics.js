@@ -1,53 +1,4 @@
-const digitalDataEvent = {
-  page: {
-    pageInfo: {
-      pageName: 'CORPORATE_CARD_JOURNEY',
-      errorCode: '',
-      errorMessage: '',
-    },
-  },
-  user: {
-    pseudoID: 'TBD',
-    journeyID: '',
-    journeyName: 'CORPORATE_CARD_JOURNEY',
-    journeyState: '',
-    casa: '',
-    gender: '',
-    email: '',
-  },
-  form: {
-    name: 'CORPORATE_CARD_JOURNEY',
-  },
-  link: {
-    linkName: '',
-    linkType: '',
-    linkPosition: '',
-  },
-  event: {
-    phone: '',
-    validationMethod: '',
-    status: '',
-    rating: '',
-  },
-  formDetails: {
-    employmentType: '',
-    companyName: '',
-    designation: '',
-    relationshipNumber: '',
-    pincode: '',
-    city: '',
-    state: '',
-    KYCVerificationMethod: '',
-    languageSelected: '',
-    reference: '',
-    isVideoKYC: '',
-  },
-  card: {
-    selectedCard: '',
-    eligibleCard: '',
-    annualFee: '',
-  },
-};
+import data from './analyticsConstants.js';
 
 const digitalDataPageLoad = {
   page: {
@@ -65,7 +16,7 @@ const digitalDataPageLoad = {
     casa: '',
   },
   form: {
-    name: 'CORPORATE_CARD_JOURNEY',
+    name: 'Corporate credit card',
   },
 };
 
@@ -75,9 +26,11 @@ const digitalDataPageLoad = {
  * @param {string} linkName - linkName
  * @param {string} linkType - linkName
  * @param {object} formContext - currentFormContext.
+ * @param {object} digitalData
  */
 
-function sendGenericClickEvent(linkName, linkType, formContext) {
+function sendGenericClickEvent(linkName, linkType, formContext, digitalData) {
+  const digitalDataEvent = digitalData || {};
   digitalDataEvent.link = {
     linkName,
     linkType,
@@ -103,12 +56,60 @@ const getValidationMethod = (formContext) => {
  * @param {string} validationType
  * @param {string} linkName
  * @param {object} formContext
+ * @param {object} digitalData
  */
-function sendSubmitClickEvent(phone, linkName, formContext) {
-  const buttonMapping = {
-    getOTP: 'button',
+function sendSubmitClickEvent(phone, linkName, linkType, formContext, currentFormContext, digitalData) {
+  const digitalDataEvent = digitalData || {
+    page: {
+      pageInfo: {
+        pageName: 'CORPORATE_CARD_JOURNEY',
+        errorCode: '',
+        errorMessage: '',
+      },
+    },
+    user: {
+      pseudoID: 'TBD',
+      journeyID: '',
+      journeyName: 'CORPORATE_CARD_JOURNEY',
+      journeyState: '',
+      casa: '',
+      gender: '',
+      email: '',
+    },
+    form: {
+      name: 'Corporate credit card',
+    },
+    link: {
+      linkName: '',
+      linkType: '',
+      linkPosition: 'form',
+    },
+    event: {
+      phone: '',
+      validationMethod: '',
+      status: '',
+      rating: '',
+    },
+    formDetails: {
+      employmentType: '',
+      companyName: '',
+      designation: '',
+      relationshipNumber: '',
+      pincode: '',
+      city: '',
+      state: '',
+      KYCVerificationMethod: '',
+      languageSelected: '',
+      reference: '',
+      isVideoKYC: '',
+    },
+    card: {
+      selectedCard: '',
+      eligibleCard: '',
+      annualFee: '',
+    },
   };
-  sendGenericClickEvent(linkName, buttonMapping[linkName], formContext);
+  sendGenericClickEvent(linkName, linkType, currentFormContext, digitalDataEvent);
   digitalDataEvent.event = {
     phone,
     validationMethod: getValidationMethod(formContext),
@@ -137,10 +138,86 @@ function sendPageloadEvent(formContext) {
   _satellite.track('pageload');
 }
 
+function populateResponse(payload, action, digitalDataEvent) {
+  switch (action) {
+    case 'getOTP': {
+      digitalDataEvent.page.pageInfo.errorCode = payload?.status?.errorCode;
+      digitalDataEvent.page.pageInfo.errorMessage = payload?.status?.errorMsg;
+      break;
+    }
+    default: {
+      /* empty */
+    }
+  }
+}
+
+/**
+ * Send analytics events.
+ * @param {object} payload
+ * @param {object} formData
+ */
+function sendAnalyticsEvent(payload, formData, currentFormContext) {
+  const digitalDataEvent = {
+    page: {
+      pageInfo: {
+        pageName: 'CORPORATE_CARD_JOURNEY',
+        errorCode: '',
+        errorMessage: '',
+      },
+    },
+    user: {
+      pseudoID: 'TBD',
+      journeyID: '',
+      journeyName: 'CORPORATE_CARD_JOURNEY',
+      journeyState: '',
+      casa: '',
+      gender: '',
+      email: '',
+    },
+    form: {
+      name: 'Corporate credit card',
+    },
+    link: {
+      linkName: '',
+      linkType: '',
+      linkPosition: 'form',
+    },
+    event: {
+      phone: '',
+      validationMethod: '',
+      status: '',
+      rating: '',
+    },
+    formDetails: {
+      employmentType: '',
+      companyName: '',
+      designation: '',
+      relationshipNumber: '',
+      pincode: '',
+      city: '',
+      state: '',
+      KYCVerificationMethod: '',
+      languageSelected: '',
+      reference: '',
+      isVideoKYC: '',
+    },
+    card: {
+      selectedCard: '',
+      eligibleCard: '',
+      annualFee: '',
+    },
+  };
+  const apiResponse = JSON.parse(payload || {});
+  const action = currentFormContext?.action;
+  const attributes = data[action];
+  populateResponse(apiResponse, action, digitalDataEvent);
+  sendSubmitClickEvent(formData?.login?.registeredMobileNumber, action, attributes?.linkType, formData, currentFormContext, digitalDataEvent);
+}
+
 export {
-  digitalDataEvent,
   digitalDataPageLoad,
   sendPageloadEvent,
   sendSubmitClickEvent,
   sendGenericClickEvent,
+  sendAnalyticsEvent,
 };

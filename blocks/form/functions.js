@@ -13,22 +13,24 @@ import {
   checkMode,
   otpValHandler,
   customSetFocus,
+  journeyResponseHandler,
+  currentFormContext,
+  createJourneyId,
   validatePan,
   panAPISuccesHandler,
   executeInterfaceApi,
   ipaRequestApi,
   ipaSuccessHandler,
+  sendAnalytics,
 } from '../../common/functions.js';
 
-import {
-  invokeJourneyDropOff, journeyResponseHandler, invokeJourneyDropOffUpdate, currentFormContext,
-} from '../../common/journey-utils.js';
 import { moveWizardView } from '../../common/formutils.js';
 import {
   sendSubmitClickEvent,
   sendGenericClickEvent,
 } from '../../common/analytics.js';
 import { hideLoaderGif } from '../../common/makeRestAPI.js';
+import { invokeJourneyDropOff, invokeJourneyDropOffByParam, invokeJourneyDropOffUpdate } from '../../common/journey-utils.js';
 
 /**
  * Get Full Name
@@ -168,22 +170,25 @@ export {
   validateEmailID,
   currentAddressToggleHandler,
   finalDap,
-  invokeJourneyDropOff,
   journeyResponseHandler,
   aadharInit,
   moveWizardView,
   checkMode,
-  invokeJourneyDropOffUpdate,
   otpValHandler,
   customSetFocus,
-  validatePan,
   getFormContext,
-  panAPISuccesHandler,
-  executeInterfaceApi,
-  ipaRequestApi,
   sendGenericClickEvent,
   sendSubmitClickEvent,
   getWrappedFormContext,
   hideLoaderGif,
+  createJourneyId,
+  validatePan,
+  panAPISuccesHandler,
+  executeInterfaceApi,
+  ipaRequestApi,
   ipaSuccessHandler,
+  invokeJourneyDropOff,
+  invokeJourneyDropOffByParam,
+  invokeJourneyDropOffUpdate,
+  sendAnalytics,
 };

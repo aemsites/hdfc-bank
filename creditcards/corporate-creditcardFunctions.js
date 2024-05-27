@@ -6,7 +6,7 @@
 /* eslint no-console: ["error", { allow: ["warn", "error", "log"] }] */
 /* eslint no-unused-vars: ["error", { "args": "none" }] */
 import {
-  createJourneyId, currentFormContext, invokeJourneyDropOff, journeyResponseHandler,
+  invokeJourneyDropOff, invokeJourneyDropOffUpdate, journeyResponseHandlerUtil, currentFormContext, createJourneyId, invokeJourneyDropOffByParam,
 } from '../common/journey-utils.js';
 import executeCheck from '../common/panutils.js';
 import { customerValidationHandler, executeInterfaceApiFinal } from '../common/executeinterfaceutils.js';
@@ -27,26 +27,25 @@ import {
   santizedFormData,
   makeFieldInvalid,
   dateFormat,
+  santizedFormDataWithContext,
 } from '../common/formutils.js';
 import {
   getJsonResponse,
   restAPICall,
   displayLoader, hideLoaderGif,
 } from '../common/makeRestAPI.js';
-
-import { sendPageloadEvent } from '../common/analytics.js';
+import { sendAnalyticsEvent } from '../common/analytics.js';
 
 // Initialize all Corporate Card Journey Context Variables.
 const journeyName = 'CORPORATE_CARD_JOURNEY';
-currentFormContext.journeyID = createJourneyId('a', 'b', 'c');
 currentFormContext.journeyName = journeyName;
 currentFormContext.journeyType = 'NTB';
 currentFormContext.formName = 'CorporateCreditCard';
 currentFormContext.errorCode = '';
 currentFormContext.errorMessage = '';
 currentFormContext.eligibleOffers = '';
-currentFormContext.getOtpLoader = (typeof window !== 'undefined') ? displayLoader : false;
-currentFormContext.otpValLoader = (typeof window !== 'undefined') ? displayLoader : false;
+currentFormContext.getOtpLoader = currentFormContext.getOtpLoader || (typeof window !== 'undefined') ? displayLoader : false;
+currentFormContext.otpValLoader = currentFormContext.otpValLoader || (typeof window !== 'undefined') ? displayLoader : false;
 currentFormContext.validatePanLoader = (typeof window !== 'undefined') ? displayLoader : false;
 currentFormContext.executeInterface = (typeof window !== 'undefined') ? displayLoader : false;
 currentFormContext.ipa = (typeof window !== 'undefined') ? displayLoader : false;
@@ -158,10 +157,10 @@ const splitName = (fullName) => {
 const currentAddressToggleHandler = (globals) => {
   if (
     currentFormContext.journeyType === 'ETB'
-		&& globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.currentDetails.currentAddressETB.currentAddressToggle.$value
-			=== 'on'
+    && globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.currentDetails.currentAddressETB.currentAddressToggle.$value
+    === 'on'
   ) {
-    const { newCurentAddressPanel } =			globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.currentDetails.currentAddressETB;
+    const { newCurentAddressPanel } = globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.currentDetails.currentAddressETB;
 
     const newCurentAddressLine1 = formUtil(globals, newCurentAddressPanel.newCurentAddressLine1);
     const newCurentAddressLine2 = formUtil(globals, newCurentAddressPanel.newCurentAddressLine2);
@@ -171,10 +170,10 @@ const currentAddressToggleHandler = (globals) => {
     const newCurentAddressState = formUtil(globals, newCurentAddressPanel.newCurentAddressState);
 
     /**
-	* Sets the address fields with the parsed customer address data.
-	* If the customer address is not available, it parses and sets it from BRE_DEMOG_RESPONSE.
-	// eslint-disable-next-line no-tabs
-	*/
+  * Sets the address fields with the parsed customer address data.
+  * If the customer address is not available, it parses and sets it from BRE_DEMOG_RESPONSE.
+  // eslint-disable-next-line no-tabs
+  */
     const setAddress = () => {
       newCurentAddressLine1.setValue(currentFormContext.customerParsedAddress[0], { attrChange: true, value: false });
       newCurentAddressLine2.setValue(currentFormContext.customerParsedAddress[1], { attrChange: true, value: false });
@@ -364,14 +363,15 @@ const showErrorPanel = (panels, errorText) => {
 };
 
 /**
- * Handles the success scenario for OTP Validation.
- * @param {any} res  - The response object containing the OTP success generation response.
- * @param {Object} globals - globals variables object containing form configurations.
+ * @name otpValHandler
+ * @param {Object} response
+ * @param {Object} globals
+ * @return {PROMISE}
  */
 const otpValHandler = (response, globals) => {
   const res = {};
   res.demogResponse = response;
-  currentFormContext.isCustomerIdentified =		res?.demogResponse?.errorCode === '0' ? 'Y' : 'N';
+  currentFormContext.isCustomerIdentified = res?.demogResponse?.errorCode === '0' ? 'Y' : 'N';
   currentFormContext.productCode = globals.functions.exportData().form.productCode;
   currentFormContext.promoCode = globals.functions.exportData().form.promoCode;
   currentFormContext.jwtToken = res?.demogResponse?.Id_token_jwt;
@@ -385,6 +385,7 @@ const otpValHandler = (response, globals) => {
   (async () => {
     const myImportedModule = await import('./cc.js');
     myImportedModule.onWizardInit();
+    return true;
   })();
 };
 
@@ -405,8 +406,8 @@ const setConfirmScrAddressFields = (globalObj) => {
   const etb = currentDetails.currentAddressETB;
   const ntb = currentDetails.currentAddressNTB;
   const employeeDetails = yourDetails.employmentDetails;
-  const confirmAddress = ccWizard.confirmAndSubmitPanel.AddressDeclarationPanel;
-  const ovdNtb = confirmAddress.addressDeclarationOVD.cardDeliveryNTBFlow;
+  const confirmAddress = ccWizard.confirmAndSubmitPanel.addressDeclarationPanel;
+  const addressDeclaration = confirmAddress.addressDeclarationOVD;
   const etbPrefilledAddress = etb.prefilledCurrentAdddress.$value;
   const etbNewCurentAddress = concatObjVals({
     addressLine1: etb.newCurentAddressPanel.newCurentAddressLine1.$value,
@@ -416,7 +417,7 @@ const setConfirmScrAddressFields = (globalObj) => {
     state: etb.newCurentAddressPanel.newCurentAddressState.$value,
     pincode: etb.newCurentAddressPanel.newCurentAddressState.$value,
   });
-  const etbCurentAddress =		currentFormContext.journeyType === 'ETB' && etb.currentAddressToggle.$value === 'off' ? etbPrefilledAddress : etbNewCurentAddress;
+  const etbCurentAddress = currentFormContext.journeyType === 'ETB' && etb.currentAddressToggle.$value === 'off' ? etbPrefilledAddress : etbNewCurentAddress;
   const ntbCurrentAddress = concatObjVals({
     addressLine1: ntb.addressLine1.$value,
     addressLine2: ntb.addressLine2.$value,
@@ -435,9 +436,9 @@ const setConfirmScrAddressFields = (globalObj) => {
   });
   const userCurrentAddress = currentFormContext.journeyType === 'ETB' ? etbCurentAddress : ntbCurrentAddress;
 
-  const officeAddressFieldOVD = formUtil(globalObj, ovdNtb.officeAddressOVD.officeAddressOVDAddress);
+  const officeAddressFieldOVD = formUtil(globalObj, addressDeclaration.officeAddressOVD.officeAddressOVDAddress);
   const kycOfficeAddressField = formUtil(globalObj, confirmAddress.addressDeclarationOffice.officeAddressSelectKYC);
-  const currentAddressFieldOVD = formUtil(globalObj, ovdNtb.currentAddressOVD.currentAddressOVDAddress);
+  const currentAddressFieldOVD = formUtil(globalObj, addressDeclaration.currentAddressOVD.currentAddressOVDAddress);
   const residenceAddressField = formUtil(globalObj, confirmAddress.CurrentAddressDeclaration.currentResidenceAddress);
   const biometricAddressField = formUtil(globalObj, confirmAddress.currentAddressBiometric.currentResidenceAddressBiometricText);
 
@@ -453,13 +454,46 @@ const setConfirmScrAddressFields = (globalObj) => {
 };
 
 /**
- * Moves the wizard view to the "selectKycPaymentPanel" step.
+ * Moves the wizard view to the "selectKycPanel" step.
  */
 const getThisCard = (globals) => {
   const nameOnCardDropdown =		globals.form.corporateCardWizardView.confirmCardPanel.cardBenefitsPanel.CorporatetImageAndNamePanel.nameOnCardDropdown.$value;
+  const isAddressChanged = currentFormContext.executeInterfaceReqObj.requestString.addressEditFlag === 'Y';
   executeInterfaceApiFinal(globals);
   setConfirmScrAddressFields(globals);
-  moveWizardView('corporateCardWizardView', 'selectKycPaymentPanel');
+  if (!isAddressChanged) {
+    moveWizardView('corporateCardWizardView', 'confirmAndSubmitPanel');
+    const { addressDeclarationPanel } = globals.form.corporateCardWizardView.confirmAndSubmitPanel;
+    const {
+      cardDeliveryAddressPanel,
+      AddressDeclarationAadhar,
+      addressDeclarationOffice,
+      addressDeclarationText1,
+      addressDeclarationText2,
+      addressDeclarationOVD,
+    } = addressDeclarationPanel;
+    const { confirmAndSubmitTC2, continueToIDCOM, confirmAndSubmitButton } = addressDeclarationPanel.tandCPanelConfirmAndSubmit;
+    const cardDeliveryAddressPanelUtil = formUtil(globals, cardDeliveryAddressPanel);
+    const AddressDeclarationAadharUtil = formUtil(globals, AddressDeclarationAadhar);
+    const addressDeclarationOfficeUtil = formUtil(globals, addressDeclarationOffice);
+    const addressDeclarationText1Util = formUtil(globals, addressDeclarationText1);
+    const addressDeclarationText2Util = formUtil(globals, addressDeclarationText2);
+    const addressDeclarationOVDUtil = formUtil(globals, addressDeclarationOVD);
+    const confirmAndSubmitTC2Util = formUtil(globals, confirmAndSubmitTC2);
+    const continueToIDCOMUtil = formUtil(globals, continueToIDCOM);
+    const confirmAndSubmitButtonUtil = formUtil(globals, confirmAndSubmitButton);
+    cardDeliveryAddressPanelUtil.visible(false);
+    AddressDeclarationAadharUtil.visible(false);
+    addressDeclarationOfficeUtil.visible(false);
+    addressDeclarationText1Util.visible(false);
+    addressDeclarationText2Util.visible(false);
+    addressDeclarationOVDUtil.visible(true);
+    confirmAndSubmitTC2Util.visible(false);
+    continueToIDCOMUtil.visible(true);
+    confirmAndSubmitButtonUtil.visible(false);
+  } else {
+    moveWizardView('corporateCardWizardView', 'selectKycPanel');
+  }
 };
 
 /**
@@ -522,8 +556,8 @@ const demogDataCheck = (panStatus) => {
  */
 const checkUserProceedStatus = (panStatus, globals) => {
   /**
-	 * Removes error classes from all error fields.
-	 */
+   * Removes error classes from all error fields.
+   */
   const errorFields = document.querySelectorAll('.error-field');
   errorFields.forEach((field) => {
     field.classList.remove('error-field');
@@ -531,8 +565,8 @@ const checkUserProceedStatus = (panStatus, globals) => {
   });
 
   /**
-	 * Executes the check based on PAN status.
-	 */
+   * Executes the check based on PAN status.
+   */
   // Main logic to check user proceed status
 
   const terminationCheck = false;
@@ -571,9 +605,9 @@ const createPanValidationRequest = (firstName, middleName, lastName, globals) =>
   currentFormContext.customerName = { firstName, middleName, lastName }; // required for listNameOnCard function.
   const panValidation = {
     /**
-		 * Create pan validation request object.
-		 * @returns {Object} - The PAN validation request object.
-		 */
+     * Create pan validation request object.
+     * @returns {Object} - The PAN validation request object.
+     */
     createRequestObj: () => {
       try {
         const personalDetails = globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.personalDetails;
@@ -583,9 +617,9 @@ const createPanValidationRequest = (firstName, middleName, lastName, globals) =>
           mobileNumber: globals.form.loginPanel.mobilePanel.registeredMobileNumber.$value,
           panInfo: {
             panNumber:
-							personalDetails.panNumberPersonalDetails.$value !== null
-							  ? personalDetails.panNumberPersonalDetails.$value
-							  : globals.form.loginPanel.identifierPanel.pan.$value,
+              personalDetails.panNumberPersonalDetails.$value !== null
+                ? personalDetails.panNumberPersonalDetails.$value
+                : globals.form.loginPanel.identifierPanel.pan.$value,
             panType: 'P',
             dob: convertDateToDdMmYyyy(new Date(personalDetails.dobPersonalDetails.$value)),
             name: personalDetails.firstName.$value ? personalDetails.firstName.$value.split(' ')[0] : '',
@@ -597,13 +631,13 @@ const createPanValidationRequest = (firstName, middleName, lastName, globals) =>
       }
     },
     /**
-		 * Event handlers for PAN validation.
-		 */
+     * Event handlers for PAN validation.
+     */
     eventHandlers: {
       /**
-			 * Callback function for successful PAN validation response.
-			 * @param {Object} responseObj - The response object containing PAN validation result.
-			 */
+       * Callback function for successful PAN validation response.
+       * @param {Object} responseObj - The response object containing PAN validation result.
+       */
       successCallBack: (responseObj) => {
         const errStack = {};
         if (responseObj?.statusCode === 'FC00') {
@@ -621,9 +655,9 @@ const createPanValidationRequest = (firstName, middleName, lastName, globals) =>
         }
       },
       /**
-			 * Callback function for failed PAN validation response.
-			 * @param {Object} errorObj - The error object containing details of the failure.
-			 */
+       * Callback function for failed PAN validation response.
+       * @param {Object} errorObj - The error object containing details of the failure.
+       */
       errorCallBack: (errorObj) => {
         const ccWizardView = globals.form.corporateCardWizardView;
         const resultPanel = globals.form.resultPanel;
@@ -643,41 +677,6 @@ const createPanValidationRequest = (firstName, middleName, lastName, globals) =>
   };
   // Call PANValidationAndNameMatchService with PAN validation request and event handlers
   // PANValidationAndNameMatchService(panValidation.createRequestObj(), panValidation.eventHandlers);
-};
-
-/**
- * logic hanlding during prefill of form.
- * @param {object} globals - The global object containing necessary globals form data.
- */
-const prefillForm = (globals) => {
-  const formData = globals?.functions?.exportData();
-  const {
-    welcomeText,
-    resultPanel,
-    loginPanel,
-    consentFragment,
-    getOTPbutton,
-    resultPanel: {
-      errorResultPanel: {
-        errorMessageText,
-        resultSetErrorText1,
-        resultSetErrorText2,
-      },
-    },
-  } = globals.form;
-  const showPanel = [resultPanel, errorMessageText, resultSetErrorText1, resultSetErrorText2]?.map((fieldName) => formUtil(globals, fieldName));
-  const hidePanel = [loginPanel, welcomeText, consentFragment, getOTPbutton]?.map((fieldName) => formUtil(globals, fieldName));
-  if (!formData?.form?.login?.registeredMobileNumber) {
-    // show error pannel if corporate credit card details not present
-    showPanel?.forEach((panel) => panel.visible(true));
-    hidePanel?.forEach((panel) => panel.visible(false));
-    const response = invokeJourneyDropOff('CRM_LEAD_FAILURE', '9999999999', globals);
-  } else {
-    invokeJourneyDropOff('CRM_LEAD_SUCCESS', formData?.form?.login?.registeredMobileNumber, globals)
-      .then((res) => {
-        journeyResponseHandler(res.lead_profile_info);
-      });
-  }
 };
 
 /**
@@ -949,6 +948,54 @@ const finalDap = (globals) => {
   restAPICall('', 'POST', dapRequestObj, apiEndPoint, eventHandlers.successCallBack, eventHandlers.errorCallBack, 'Loading');
 };
 
+/**
+ * @name journeyResponseHandler
+ * @param {string} payload.
+ */
+function journeyResponseHandler(payload) {
+  currentFormContext.leadProfile = journeyResponseHandlerUtil(String(payload.leadProfileId), currentFormContext)?.leadProfile;
+}
+
+/**
+ * logic hanlding during prefill of form.
+ * @param {object} globals - The global object containing necessary globals form data.
+ */
+const prefillForm = (globals) => {
+  const formData = globals?.functions?.exportData();
+  const {
+    welcomeText,
+    resultPanel,
+    loginPanel,
+    consentFragment,
+    getOTPbutton,
+    resultPanel: {
+      errorResultPanel: {
+        errorMessageText,
+        resultSetErrorText1,
+        resultSetErrorText2,
+      },
+    },
+  } = globals.form;
+  const showPanel = [resultPanel, errorMessageText, resultSetErrorText1, resultSetErrorText2]?.map((fieldName) => formUtil(globals, fieldName));
+  const hidePanel = [loginPanel, welcomeText, consentFragment, getOTPbutton]?.map((fieldName) => formUtil(globals, fieldName));
+  if (!formData?.form?.login?.registeredMobileNumber) {
+    // show error pannel if corporate credit card details not present
+    showPanel?.forEach((panel) => panel.visible(true));
+    hidePanel?.forEach((panel) => panel.visible(false));
+    const response = invokeJourneyDropOff('CRM_LEAD_FAILURE', '9999999999', '', 'create', globals);
+  }
+};
+
+/**
+* sendAnalytics
+* @param {string} payload
+* @param {object} globals
+*/
+// eslint-disable-next-line no-unused-vars
+function sendAnalytics(payload, globals) {
+  sendAnalyticsEvent(payload, santizedFormDataWithContext(globals), currentFormContext);
+}
+
 export {
   getThisCard,
   prefillForm,
@@ -960,4 +1007,7 @@ export {
   currentAddressToggleHandler,
   finalDap,
   otpValHandler,
+  journeyResponseHandler,
+  createJourneyId,
+  sendAnalytics,
 };
