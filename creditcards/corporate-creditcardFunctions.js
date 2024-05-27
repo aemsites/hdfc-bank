@@ -454,13 +454,13 @@ const setConfirmScrAddressFields = (globalObj) => {
 };
 
 /**
- * Moves the wizard view to the "selectKycPaymentPanel" step.
+ * Moves the wizard view to the "selectKycPanel" step.
  */
 const getThisCard = (globals) => {
   const nameOnCardDropdown = globals.form.corporateCardWizardView.confirmCardPanel.cardBenefitsPanel.CorporatetImageAndNamePanel.nameOnCardDropdown.$value;
   executeInterfaceApiFinal(globals);
   setConfirmScrAddressFields(globals);
-  moveWizardView('corporateCardWizardView', 'selectKycPaymentPanel');
+  moveWizardView('corporateCardWizardView', 'selectKycPanel');
 };
 
 /**
