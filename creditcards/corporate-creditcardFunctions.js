@@ -364,7 +364,7 @@ const showErrorPanel = (panels, errorText) => {
 
 /**
  * @name otpValHandler
- * @param {string} res
+ * @param {Object} response
  * @param {Object} globals
  * @return {PROMISE}
  */
@@ -395,10 +395,10 @@ const otpValHandler = (response, globals) => {
  */
 const setConfirmScrAddressFields = (globalObj) => {
   /**
-   * Concatenates the values of an object into a single string separated by commas.
-   * @param {Object} obj - The object whose values are to be concatenated.
-   * @returns {string} A string containing the concatenated values separated by commas.
-   */
+	 * Concatenates the values of an object into a single string separated by commas.
+	 * @param {Object} obj - The object whose values are to be concatenated.
+	 * @returns {string} A string containing the concatenated values separated by commas.
+	 */
   const concatObjVals = (obj) => Object.values(obj)?.join(', ');
   const ccWizard = globalObj.form.corporateCardWizardView;
   const yourDetails = ccWizard.yourDetailsPanel.yourDetailsPage;
@@ -406,8 +406,8 @@ const setConfirmScrAddressFields = (globalObj) => {
   const etb = currentDetails.currentAddressETB;
   const ntb = currentDetails.currentAddressNTB;
   const employeeDetails = yourDetails.employmentDetails;
-  const confirmAddress = ccWizard.confirmAndSubmitPanel.AddressDeclarationPanel;
-  const ovdNtb = confirmAddress.addressDeclarationOVD.cardDeliveryNTBFlow;
+  const confirmAddress = ccWizard.confirmAndSubmitPanel.addressDeclarationPanel;
+  const addressDeclaration = confirmAddress.addressDeclarationOVD;
   const etbPrefilledAddress = etb.prefilledCurrentAdddress.$value;
   const etbNewCurentAddress = concatObjVals({
     addressLine1: etb.newCurentAddressPanel.newCurentAddressLine1.$value,
@@ -436,9 +436,9 @@ const setConfirmScrAddressFields = (globalObj) => {
   });
   const userCurrentAddress = currentFormContext.journeyType === 'ETB' ? etbCurentAddress : ntbCurrentAddress;
 
-  const officeAddressFieldOVD = formUtil(globalObj, ovdNtb.officeAddressOVD.officeAddressOVDAddress);
+  const officeAddressFieldOVD = formUtil(globalObj, addressDeclaration.officeAddressOVD.officeAddressOVDAddress);
   const kycOfficeAddressField = formUtil(globalObj, confirmAddress.addressDeclarationOffice.officeAddressSelectKYC);
-  const currentAddressFieldOVD = formUtil(globalObj, ovdNtb.currentAddressOVD.currentAddressOVDAddress);
+  const currentAddressFieldOVD = formUtil(globalObj, addressDeclaration.currentAddressOVD.currentAddressOVDAddress);
   const residenceAddressField = formUtil(globalObj, confirmAddress.CurrentAddressDeclaration.currentResidenceAddress);
   const biometricAddressField = formUtil(globalObj, confirmAddress.currentAddressBiometric.currentResidenceAddressBiometricText);
 
@@ -454,13 +454,46 @@ const setConfirmScrAddressFields = (globalObj) => {
 };
 
 /**
- * Moves the wizard view to the "selectKycPaymentPanel" step.
+ * Moves the wizard view to the "selectKycPanel" step.
  */
 const getThisCard = (globals) => {
-  const nameOnCardDropdown = globals.form.corporateCardWizardView.confirmCardPanel.cardBenefitsPanel.CorporatetImageAndNamePanel.nameOnCardDropdown.$value;
+  const nameOnCardDropdown =		globals.form.corporateCardWizardView.confirmCardPanel.cardBenefitsPanel.CorporatetImageAndNamePanel.nameOnCardDropdown.$value;
+  const isAddressChanged = currentFormContext.executeInterfaceReqObj.requestString.addressEditFlag === 'Y';
   executeInterfaceApiFinal(globals);
   setConfirmScrAddressFields(globals);
-  moveWizardView('corporateCardWizardView', 'selectKycPaymentPanel');
+  if (!isAddressChanged) {
+    moveWizardView('corporateCardWizardView', 'confirmAndSubmitPanel');
+    const { addressDeclarationPanel } = globals.form.corporateCardWizardView.confirmAndSubmitPanel;
+    const {
+      cardDeliveryAddressPanel,
+      AddressDeclarationAadhar,
+      addressDeclarationOffice,
+      addressDeclarationText1,
+      addressDeclarationText2,
+      addressDeclarationOVD,
+    } = addressDeclarationPanel;
+    const { confirmAndSubmitTC2, continueToIDCOM, confirmAndSubmitButton } = addressDeclarationPanel.tandCPanelConfirmAndSubmit;
+    const cardDeliveryAddressPanelUtil = formUtil(globals, cardDeliveryAddressPanel);
+    const AddressDeclarationAadharUtil = formUtil(globals, AddressDeclarationAadhar);
+    const addressDeclarationOfficeUtil = formUtil(globals, addressDeclarationOffice);
+    const addressDeclarationText1Util = formUtil(globals, addressDeclarationText1);
+    const addressDeclarationText2Util = formUtil(globals, addressDeclarationText2);
+    const addressDeclarationOVDUtil = formUtil(globals, addressDeclarationOVD);
+    const confirmAndSubmitTC2Util = formUtil(globals, confirmAndSubmitTC2);
+    const continueToIDCOMUtil = formUtil(globals, continueToIDCOM);
+    const confirmAndSubmitButtonUtil = formUtil(globals, confirmAndSubmitButton);
+    cardDeliveryAddressPanelUtil.visible(false);
+    AddressDeclarationAadharUtil.visible(false);
+    addressDeclarationOfficeUtil.visible(false);
+    addressDeclarationText1Util.visible(false);
+    addressDeclarationText2Util.visible(false);
+    addressDeclarationOVDUtil.visible(true);
+    confirmAndSubmitTC2Util.visible(false);
+    continueToIDCOMUtil.visible(true);
+    confirmAndSubmitButtonUtil.visible(false);
+  } else {
+    moveWizardView('corporateCardWizardView', 'selectKycPanel');
+  }
 };
 
 /**
