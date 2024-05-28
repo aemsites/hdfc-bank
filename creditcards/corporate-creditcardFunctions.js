@@ -456,8 +456,8 @@ const otpValSuccess = (res, globals) => {
     resultPanel: globals.form.resultPanel,
   };
   currentFormContext.isCustomerIdentified =		res?.customerIdentificationResponse?.CustomerIdentificationResponse?.errorCode === '0' ? 'Y' : 'N';
-  currentFormContext.productCode = globals.functions.exportData().data.CorporateCreditCard.productCode;
-  currentFormContext.promoCode = globals.functions.exportData().data.CorporateCreditCard.promoCode;
+  currentFormContext.productCode = globals.functions.exportData().form.productCode;
+  currentFormContext.promoCode = globals.functions.exportData().form.promoCode;
   // const welcomeTxt = formUtil(globals, pannel.welcome);
   const otpPanel = formUtil(globals, pannel.otp);
   const otpBtn = formUtil(globals, pannel.otpButton);
