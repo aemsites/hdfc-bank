@@ -13,6 +13,7 @@ import {
   createJourneyId,
   sendAnalytics,
   aadharConsent123,
+  resendOTP,
 } from '../creditcards/corporate-creditcardFunctions.js';
 import {
   validatePan,
@@ -23,7 +24,9 @@ import {
   ipaRequestApi,
   ipaSuccessHandler,
 } from './executeinterfaceutils.js';
-import { urlPath, santizedFormData, getTimeStamp } from './formutils.js';
+import {
+  urlPath, santizedFormData, getTimeStamp,
+} from './formutils.js';
 import { fetchJsonResponse } from './makeRestAPI.js';
 
 /**
@@ -103,7 +106,7 @@ function getOTP(mobileNumber, pan, dob, globals) {
  */
 function otpValidation(mobileNumber, pan, dob, otpNumber) {
   const referenceNumber = `AD${getTimeStamp(new Date())}` ?? '';
-  currentFormContext.referenceNumber = referenceNumber; 
+  currentFormContext.referenceNumber = referenceNumber;
   const jsonObj = {
     requestString: {
       mobileNumber: mobileNumber.$value,
@@ -312,4 +315,5 @@ export {
   ipaSuccessHandler,
   sendAnalytics,
   aadharConsent123,
+  resendOTP,
 };

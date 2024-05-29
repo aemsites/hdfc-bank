@@ -23,6 +23,7 @@ import {
   ipaSuccessHandler,
   sendAnalytics,
   aadharConsent123,
+  resendOTP,
 } from '../../common/functions.js';
 
 import { moveWizardView } from '../../common/formutils.js';
@@ -193,4 +194,5 @@ export {
   invokeJourneyDropOffUpdate,
   sendAnalytics,
   aadharConsent123,
+  resendOTP,
 };
