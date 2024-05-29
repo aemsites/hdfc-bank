@@ -1043,17 +1043,18 @@ const resendOTP = (globals) => {
 
   const errorResendOtp = (err, objectGlobals) => {
     const {
-      otpPanel, submitOTP, resultPanel, resultPanel: { errorResultPanel, errorMessageText },
+      otpPanel, submitOTP, resultPanel,
     } = objectGlobals.form;
 
     const hidePanel = [otpPanel, submitOTP]?.map((panel) => formUtil(objectGlobals, panel));
-    const showPanel = [resultPanel, errorResultPanel, errorMessageText]?.map((panel) => formUtil(objectGlobals, panel));
+    const showPanel = [resultPanel]?.map((panel) => formUtil(objectGlobals, panel));
     hidePanel.forEach((item) => item.visible(false));
     showPanel.forEach((item) => item.visible(true));
   };
 
   const successResendOtp = (res, objectGlobals) => {
     RESEND_OTP_COUNT -= 1;
+    invokeJourneyDropOffUpdate('ResendOtp', mobileNo, globals?.form.runtime.leadProifileId.$value, currentFormContext.journeyID, globals);
     if (!RESEND_OTP_COUNT) errorResendOtp(res, objectGlobals);
   };
 
