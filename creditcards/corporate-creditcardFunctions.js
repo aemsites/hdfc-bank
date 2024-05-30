@@ -973,8 +973,8 @@ const aadharConsent123 = async (globals) => {
         if (receivedData?.aadharConsentAgree) {
           globals.functions.setProperty(globals.form.corporateCardWizardView.selectKycPanel.selectKYCOptionsPanel.triggerAadharAPI, { value: 1 });
         }
-        if (receivedData?.closeIcon) {
-          globals.functions.setProperty(globals.form.corporateCardWizardView.selectKycPanel.selectKYCOptionsPanel.triggerAadharAPI, { value: null });
+        if (receivedData?.aadharConsentAgree) {
+          globals.functions.setProperty(globals.form.corporateCardWizardView.selectKycPanel.selectKYCOptionsPanel.ckycDetailsContinueETBPanel.triggerAadharAPI, { value: 1 });
         }
       });
     }

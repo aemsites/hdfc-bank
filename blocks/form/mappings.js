@@ -5,6 +5,7 @@
 export default async function componentDecorator(fd) {
   const { ':type': type = '', fieldType } = fd;
   if (fieldType === 'file-input') {
+    console.log(fd);
     const module = await import('./components/file.js');
     return module.default;
   }
