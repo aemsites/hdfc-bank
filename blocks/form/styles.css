@@ -425,10 +425,14 @@ main .form .field-successresultpanel .field-arnnumber {
   margin: 0 auto;
   padding: 10px;
   border-bottom: 1px solid rgb(236 237 243);
+  display: flex;
+  justify-content: end;
+
+  label { margin: 25px 10px; }
 
   input {
     max-width: 45vw;
-    margin: 0 0 0 55px;
+    margin: 15px 0 0 -10px;
     border: none;
     font-weight: 600;
     font-size: 18px;
@@ -529,6 +533,12 @@ main .form .field-resultpanel {
     font-size: 14px;
     line-height: 20px;
     margin: 4px;
+  }
+}
+
+@media (width <= 767px) {
+  main .form .field-successresultpanel .field-arnnumber {
+    justify-content: center;
   }
 }
 
