@@ -242,7 +242,39 @@ for (const queryString of queryStrings) {
   }
 }
 
+/**
+ * Changes the language of the Aadhar content to the specified language.
+ * @param {Object} content - The content configuration for Aadhar.
+ * @param {string} defaultLang - The language to show us default.
+ */
+// select dropdow-aadhar
+const aadharLangChange = (adharContentDom, defaultLang) => {
+  const selectOp = adharContentDom.querySelector(`[name= ${'selectLanguage'}]`);
+  const findFieldSet = adharContentDom?.querySelectorAll('fieldset');
+  const selectedClass = 'selected-language';
+  const defaultOptionClass = `field-aadharconsent-${defaultLang}`;
+  const applySelected = (fieldNode, optionClass, nameClass) => {
+    fieldNode?.forEach((element) => {
+      if (element?.classList?.contains(optionClass)) {
+        element.style.display = 'block';
+        element?.classList.add(nameClass);
+      } else {
+        element.style.display = 'none';
+        element?.classList.remove(nameClass);
+      }
+    });
+  };
+  applySelected(findFieldSet, defaultOptionClass, selectedClass);
+  selectOp?.addEventListener('change', (e) => {
+    e.preventDefault();
+    const { value: valueSelected } = e.target;
+    const optionClass = `field-aadharconsent-${valueSelected?.toLowerCase()}`;
+    applySelected(findFieldSet, optionClass, selectedClass);
+  });
+};
+
 export {
   decorateStepper,
   onWizardInit,
+  aadharLangChange,
 };

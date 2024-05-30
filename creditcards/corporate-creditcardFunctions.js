@@ -957,24 +957,23 @@ const aadharConsent123 = async (globals) => {
   try {
     if (typeof window !== 'undefined') {
       const openModal = (await import('../blocks/modal/modal.js')).default;
+      const { aadharLangChange } = await import('./cc.js');
       const contentDomName = 'aadharConsentPopup';
       const btnWrapClassName = 'button-wrapper';
       const config = {
         content: document.querySelector(`[name = ${contentDomName}]`),
         actionWrapClass: btnWrapClassName,
-        reqConsentAgree: false,
+        reqConsentAgree: true,
       };
       if (typeof formInitailzeData.aadharConfig === 'undefined') {
         formInitailzeData.aadharConfig = config;
       }
       await openModal(formInitailzeData.aadharConfig);
+      aadharLangChange(formInitailzeData.aadharConfig?.content, 'english');
       config?.content?.addEventListener('modalTriggerValue', (event) => {
         const receivedData = event.detail;
         if (receivedData?.aadharConsentAgree) {
           globals.functions.setProperty(globals.form.corporateCardWizardView.selectKycPanel.selectKYCOptionsPanel.triggerAadharAPI, { value: 1 });
-        }
-        if (receivedData?.closeIcon) {
-          globals.functions.setProperty(globals.form.corporateCardWizardView.selectKycPanel.selectKYCOptionsPanel.triggerAadharAPI, { value: null });
         }
       });
     }
