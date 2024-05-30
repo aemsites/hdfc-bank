@@ -1,3 +1,4 @@
+/* stylelint-disable selector-class-pattern */
 /* stylelint-disable no-descending-specificity */
 :root {
   --hdfc-stepper-margin-style: 24px;
@@ -99,15 +100,9 @@ fieldset fieldset {
   }
 
   .field-yourdetailsconsent {
-    display: block;
+    display: flex;
 
-    label {
-      margin-left: 15px;
-    }
-    
-    .field-description {
-      margin-top: 7px;
-    }
+    label { margin-left: 15px; }
   }
 
   .field-checkofferbutton {
@@ -214,6 +209,7 @@ fieldset fieldset {
       margin-top: -5px;
       width: 100%;
       left: 20px;
+      pointer-events: none;
 
       label {
           width: 90%;
@@ -236,6 +232,11 @@ fieldset fieldset {
           color: var(--color-interface-text-primary);
       }
   }
+}
+
+.field-getthiscardbutton {
+  text-align: left;
+  max-width: 260px;
 }
 
 .field-cardbenefitsagreecheckbox { padding-top: 20px; }
@@ -312,15 +313,57 @@ fieldset fieldset {
       flex-direction: row-reverse;
       width: fit-content;
 
-      /* stylelint-disable-next-line selector-class-pattern */
       label.ckyctoggle__label {
         font-size: 14px;
       }
     }
   }
+
+  .field-ckycdetailscontinueetbpanel, .field-ckycdetailscontinuentbaadhar, .field-docuploadovdbutton { 
+    text-align: left;
+    max-width: 260px;
+  }
 }
 
 /* End of Select KYC Panel */
+
+/* Doc upload screen */
+.field-docuploadetbflow {
+  .field-docuploadlabel {
+    p {
+      font-size: var(--body-md-font-size);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-interface-text-primary);
+      margin: 0;
+    }
+  }
+
+  .file-drag-area {
+    border: 2px dashed #030612;
+    border-radius: 15px;
+    padding: 30px 5px 5px;
+  }
+  .field-documenttype select { width: 49%; }
+
+  .field-description { 
+    margin-top: 10px; 
+
+    p { font-size: 14px; }
+  }
+  .file-dragText { display: none; }
+  .file-dragIcon { content: url('../icons/doc-upload-icon.svg'); }
+  .field-docuploaddropdown { width: 49%; }
+
+  .file-attachButton {
+    background: var(--color-interface-background-primary);
+    color: var(--color-interface-icon-highlight);
+    padding-top: 0;
+    margin-top: 0;
+  }
+}
+
+/* End of doc upload screen */
+
 
 /* Confirm and Submit Panel */
 .field-confirmandsubmitpanel {
@@ -348,8 +391,8 @@ fieldset fieldset {
 
  .field-aadharaddressckyc, .field-currentresidenceaddressckyc, .field-currentresidenceaddressbiometriclabel, .field-officeaddresslabelckyc {
     display: flex;
-    font-weight: 600;
-    font-size: 20px;
+    font-weight: var(--font-weight-bold);
+    font-size: var(--body-x-lg-font-size);
 
     p {
       margin: 0 0 0 10px;
@@ -363,6 +406,14 @@ fieldset fieldset {
 
   .field-aadharaddressselectkyc, .field-currentresidenceaddress, .field-currentresidenceaddressbiometrictext, .field-officeaddressselectkyc {
     margin: -25px 0 0 50px;
+    font-size: var(--body-sm-font-size);
+    font-weight: var(--font-weight-regular);
+
+    p {
+      margin-top: -3px;
+      font-size: var(--body-sm-font-size);
+      font-weight: var(--font-weight-regular);
+    }
   }
 
   .radio-group-wrapper {
@@ -373,14 +424,14 @@ fieldset fieldset {
     }
   }
 
-  .checkbox-wrapper label, .checkbox-wrapper label p, .radio-group-wrapper legend, .field-tccheckbox1, .field-tccheckbox2 {
-    font-weight: 400;
-    font-size: 18px;
+  .checkbox-wrapper label, .checkbox-wrapper label p, .checkbox-wrapper label ul, .radio-group-wrapper legend, .field-tccheckbox1 label, .field-tccheckbox2 label {
+    font-weight: var(--font-weight-regular);
+    font-size: var(--body-sm-font-size);
     color: #374151;
-  }
+    width: fit-content;
+    margin: 0;
 
-  .field-tccheckbox1 {
-    p, ul {
+    .field-description {
       margin: 0;
     }
   }
@@ -432,12 +483,21 @@ fieldset fieldset {
     }
   }
 
-  .field-carddeliveryntbflow .radio-highlight-selected input[type='radio'] {
+  .field-addressdeclarationovd .radio-highlight-selected input[type='radio'] {
     right: 0;
   }
 }
 
 /* End of Confirm and Submit Panel */
+
+/* Consent checkboxes */
+.field-yourdetailsconsent:has(.field-description), .field-tccheckbox1:has(.field-description), .field-tccheckbox2:has(.field-description) { 
+  display: inline-grid;
+
+  .field-description { margin-top: 7px; }
+}
+
+/* End of style for consent checkboxes */
 
 .hdfc-accordion-legend::after {
   content: url('../icons/accordion-expand-icon.svg');
@@ -471,8 +531,10 @@ main .form form .field-corporatecardwizardview.wizard {
   
   li.wizard-menu-item { width: auto; }
 
-  .field-yourdetailspanel .field-checkofferbutton {
+  .field-yourdetailspanel .field-checkofferbutton, .field-confirmcardpanel .field-getthiscardbutton,
+  .field-selectkycpanel .field-ckycdetailscontinueetbpanel, .field-selectkycpanel .field-ckycdetailscontinuentbaadhar, .field-selectkycpanel .field-docuploadovdbutton {
     text-align: center;
+    max-width: initial;
   }
 
   fieldset {
@@ -509,15 +571,19 @@ main .form form .field-corporatecardwizardview.wizard {
     }
 
     .field-addressdeclarationtext2 p { margin: var(--form-paragraph-margin); }
-    .field-carddeliveryntbflow .radio-highlight-selected input[type='radio'] { right: 38px; }
+    .field-carddeliveryaddresslabelovd .radio-highlight-selected input[type='radio'] { right: 38px; }
     .field-carddeliveryaddresslabelovd, .field-carddeliveryaddresslabel, .field-tandcpanelconfirmandsubmit legend { margin: 20px 0 10px; }
 
-    .field-carddeliveryntbflow, .field-carddeliveryaddresspanel { 
-      display: block !important; 
+    .field-addressdeclarationovd, .field-carddeliveryaddresspanel { 
+      display: block !important;
 
       fieldset {
         margin: 10px 0;
       }
+    }
+
+    .field-addressdeclarationovd .radio-highlight-selected input[type='radio'] {
+      right: 35px;
     }
   }
 }

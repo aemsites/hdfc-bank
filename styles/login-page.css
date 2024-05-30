@@ -83,10 +83,10 @@ main img {
         p,
         .field-pandobselection legend {
             font-size: var(--body-md-font-size) !important;
-            font-weight: var(--font-weight-medium);
+            font-weight: var(--font-weight-bold);
             line-height: var(--font-linehight-regular);
             text-align: left;
-            color: var(--color-interface-text-quaternary) !important;
+            color: var(--color-interface-text-primary) !important;
             margin-top: 6px;
         }
 
@@ -110,10 +110,10 @@ main img {
                 margin-right: 22px;
                 margin-bottom: 0;
                 font-size: var(--body-md-font-size) !important;
-                font-weight: var(--font-weight-medium);
+                font-weight: var(--font-weight-bold);
                 line-height: var(--font-linehight-regular);
                 text-align: left;
-                color: var(--color-interface-text-quaternary) !important;
+                color: var(--color-interface-text-primary) !important;
             }
 
             .radio-wrapper {

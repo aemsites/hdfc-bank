@@ -15,6 +15,7 @@ body.modal-open {
 
 .modal dialog:has(.field-aadharconsentpopup) {
   width: 525px;
+  padding: 0;
 
   .field-aadharconsentlabel { display: flex;
     p, h3 { margin: 0 0 8px; }
@@ -36,22 +37,36 @@ body.modal-open {
     
     select {
       height: 42px;
-      width: 178px;
+      width: 330px;
       padding: var(--form-input-padding) !important;
       border: 1px solid var(--color-input-border-default) !important;
       border-radius: var(--form-input-border-radius) !important;
     }
   }
-  .field-aadharconsenttext { padding-left: 24px; }
 
-  .field-aadharconsenthelp p {
-    color: var(--color-interface-text-secondary);
-    font-size: 12px;
+  fieldset[class*='field-aadharconsent-'] {
+    padding: 0;
+
+    div[class*='field-aadharconsenttext-'] { 
+      padding: 20px 0 0 24px; 
+
+      p { 
+        color: var(--color-input-text-default); 
+        font-weight: 500;
+      }      
+    }
+    .panel-wrapper { padding: 0; }
+    
+    div[class*='field-aadharconsenthelp-'] p {
+      color: var(--color-interface-text-secondary);
+      font-size: 12px;
+    }
   }
 
   .field-aadharconsentagree {
     text-align: left;
     max-width: 167px;
+    margin-top: 10px !important;
   }
 }
 
@@ -96,21 +111,19 @@ body.modal-open {
     display: none;
   }
 
-  .field-viewallcardbenefitspanel .field-label{
-    display: none;
-  }
+  .field-viewallcardbenefitspanel {
+    p { margin: 3px;}
+    .field-label { display: none; }
 
-  .field-viewallcardbenefitspanel button{
-    text-align: justify;
-    background: var(--color-interface-background-quinary);
-    color:var(--color-action-background-primary-default);
-    padding-left: 10px !important;
-  }
+    button{
+      text-align: justify;
+      background: var(--color-interface-background-quinary);
+      color:var(--color-action-background-primary-default);
+      padding-left: 10px !important;
+    }
 
-  .field-viewallcardbenefitspanel button:hover{
-    background: var(--color-interface-background-quinary) !important;
+    button:hover{ background: var(--color-interface-background-quinary) !important; }
   }
-  
 }
 
 .modal dialog .modal-content {
@@ -172,6 +185,7 @@ body.modal-open {
 
   .field-backlinkcardbenefits{
     text-align: left;
+    padding-bottom: 20px;
 
     button{
       max-width: 100%;
