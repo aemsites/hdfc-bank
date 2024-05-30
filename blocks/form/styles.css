@@ -414,6 +414,7 @@ main
   max-width: 506px;
   margin: 0 auto;
   text-align: center;
+  pointer-events: none;
 
   p > p:not(:first-child) {
     padding-top: 15px;
