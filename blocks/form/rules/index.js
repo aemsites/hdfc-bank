@@ -142,9 +142,10 @@ async function fieldChanged(payload, form, generateFormRendition) {
           generateFormRendition({ items: [currentValue] }, field?.querySelector('.repeat-wrapper'));
         }
         break;
-        case 'valid': if(valid === true) {
+        case 'valid': if(currentValue === true) {
           removeInvalidMsg(field);
         }
+        break;
       default:
         break;
     }
