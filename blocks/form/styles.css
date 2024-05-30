@@ -14,6 +14,7 @@ body,
 
 main {
   overflow: hidden;
+  padding-bottom: 30px;
 }
 
 main .form {
@@ -69,15 +70,19 @@ main .form {
 }
 
 /* Base style for labels */
-main
-  .form
-  :not(.checkbox-wrapper, .radio-wrapper, .field-joiningrenewalfee)
-  > label {
+main .form :not(.checkbox-wrapper, .radio-wrapper, .field-joiningrenewalfee) > label{
   margin: 20px;
   position: absolute;
   transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
-  font-weight: 400;
-  font-size: 14px;
+  font-weight: var(--font-weight-regular);
+  font-size: var(--body-sm-font-size);
+  width: max-content;
+}
+
+main .form :not(.checkbox-wrapper, .radio-wrapper, .field-joiningrenewalfee) > label:has(p) p {
+  margin: 1px 0;
+  font-weight: var(--font-weight-regular);
+  font-size: var(--body-sm-font-size);
 }
 
 main .form form {
@@ -204,6 +209,12 @@ main .form select {
   border-radius: var(--form-input-border-radius) !important;
 }
 
+main .form .field-welcometext p {
+  font-size: var(--body-x-lg-font-size);
+  font-weight: var(--font-weight-extra-bold);
+  color: var(--color-interface-text-primary);
+}
+
 /* loader for app show hide on api call */
 .preloader::before,
 .preloader::after {
@@ -252,13 +263,13 @@ main .form .bi-eye-slash {
 }
 
 /* Style for labels when input is active or not empty */
-main .form :is([data-active='true'], [data-empty='false'], .date-wrapper):not(.field-joiningrenewalfee) > label {
+main .form :is([data-active='true'], [data-empty='false'], .date-wrapper):not(.field-joiningrenewalfee) > label{
   color: var(--label-color);
   transform: translateY(-22px);
   z-index: 1;
   background-color: var(--color-interface-background-primary);
   padding: 0 4px;
-  font-weight: 600;
+  font-weight: var(--font-weight-bold);
   font-size: 13px;
   line-height: 20px;
   display: -webkit-box;
@@ -266,6 +277,10 @@ main .form :is([data-active='true'], [data-empty='false'], .date-wrapper):not(.f
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+main .form :is([data-active='true'], [data-empty='false'], .date-wrapper):not(.field-joiningrenewalfee) > label:has(p) p {
+  font-weight: var(--font-weight-bold);
 }
 
 /* Button Styling */
@@ -326,16 +341,9 @@ main .form :is([data-active='true'], [data-empty='false'], .date-wrapper):not(.f
   display: block;
 }
 
-.text-center {
-  text-align: center;
-}
-
-.text-left {
-  text-align: left;
-}
-
-.text-right {
-  text-align: right;
+main .form .field-otphelptext p {
+  font-size: var(--body-sm-font-size);
+  margin: 0;
 }
 
 main .field-incorrectotptext {
@@ -483,6 +491,7 @@ main .form.block .field-otppanel {
   .field-otpsubpanel {
     display: flex;
     flex-direction: row;
+    justify-content: end;
 
     .plain-text-wrapper {
       width: fit-content;
@@ -496,7 +505,7 @@ main .form.block .field-otppanel {
     .field-numretries {
       text-align: right;
       direction: rtl;
-      margin: 1px -10px 0 -26px;
+      margin: 0 -14px 0 -30px;
 
       input {
         padding: 0;
@@ -504,10 +513,11 @@ main .form.block .field-otppanel {
         margin: 0;
         border: none;
         background: transparent;
+        pointer-events: none;
       }
     }
 
-    .field-remaining { margin-left: -10px; }
+    .field-remaining { margin-left: -15px; }
   }
 }
 

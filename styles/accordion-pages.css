@@ -99,15 +99,9 @@ fieldset fieldset {
   }
 
   .field-yourdetailsconsent {
-    display: block;
+    display: flex;
 
-    label {
-      margin-left: 15px;
-    }
-    
-    .field-description {
-      margin-top: 7px;
-    }
+    label { margin-left: 15px; }
   }
 
   .field-checkofferbutton {
@@ -377,11 +371,9 @@ fieldset fieldset {
     font-weight: 400;
     font-size: 18px;
     color: #374151;
-  }
 
-  .field-tccheckbox1 {
-    p, ul {
-      margin: 0;
+    .field-description {
+      padding-top: 15px;
     }
   }
 
@@ -438,6 +430,16 @@ fieldset fieldset {
 }
 
 /* End of Confirm and Submit Panel */
+
+/* Consent checkboxes */
+.field-yourdetailsconsent:has(.field-description), .field-tccheckbox1:has(.field-description).field-tccheckbox2:has(.field-description) { 
+  display: inline-grid;
+  width: 942px;
+
+  .field-description { margin-top: 7px; }
+}
+
+/* End of style for consent checkboxes */
 
 .hdfc-accordion-legend::after {
   content: url('../icons/accordion-expand-icon.svg');
