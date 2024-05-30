@@ -1,4 +1,4 @@
-export const fileAttachmentText = 'Attach';
+export const fileAttachmentText = 'Upload';
 export const dragDropText = 'Drag and Drop To Upload';
 
 export const defaultErrorMessages = {
