@@ -158,6 +158,16 @@ function getWrappedFormContext() {
   return formContext;
 }
 
+/**
+* @name showElement
+* @param {string} elementName
+*/
+function showElement(elementName) {
+  const elm = document.querySelector(elementName);
+  if (elm) {
+    elm.style.display = 'block';
+  }
+}
 // eslint-disable-next-line import/prefer-default-export
 export {
   getFullName,
@@ -195,4 +205,5 @@ export {
   sendAnalytics,
   aadharConsent123,
   resendOTP,
+  showElement,
 };

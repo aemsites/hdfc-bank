@@ -273,6 +273,21 @@ const aadharLangChange = (adharContentDom, defaultLang) => {
   });
 };
 
+/**
+ * Hides the incorrect OTP text message when the user starts typing in the OTP input field.
+ */
+const removeIncorrectOtpText = () => {
+  const otpNumFormName = 'otpNumber';// constantName-otpNumberfieldName
+  const otpNumbrQry = document.getElementsByName(otpNumFormName)?.[0];
+  const incorectOtp = document.querySelector('.field-incorrectotptext');
+  otpNumbrQry?.addEventListener('input', (e) => {
+    if (e.target.value) {
+      incorectOtp.style.display = 'none';
+    }
+  });
+};
+removeIncorrectOtpText();
+
 export {
   decorateStepper,
   onWizardInit,
