@@ -103,7 +103,7 @@ function getOTP(mobileNumber, pan, dob, globals) {
  */
 function otpValidation(mobileNumber, pan, dob, otpNumber) {
   const referenceNumber = `AD${getTimeStamp(new Date())}` ?? '';
-  currentFormContext.referenceNumber = referenceNumber; 
+  currentFormContext.referenceNumber = referenceNumber;
   const jsonObj = {
     requestString: {
       mobileNumber: mobileNumber.$value,
