@@ -973,7 +973,7 @@ const aadharConsent123 = async (globals) => {
       config?.content?.addEventListener('modalTriggerValue', (event) => {
         const receivedData = event.detail;
         if (receivedData?.aadharConsentAgree) {
-          globals.functions.setProperty(globals.form.corporateCardWizardView.selectKycPanel.selectKYCOptionsPanel.triggerAadharAPI, { value: 1 });
+          globals.functions.setProperty(globals.form.corporateCardWizardView.selectKycPanel.selectKYCOptionsPanel.ckycDetailsContinueETBPanel.triggerAadharAPI, { value: 1 });
         }
       });
     }
