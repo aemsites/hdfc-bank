@@ -1,6 +1,6 @@
 import { submitSuccess, submitFailure } from '../submit.js';
 import {
-  createHelpText, createLabel, updateOrCreateInvalidMsg, getCheckboxGroupValue, removeInvalidMsg
+  createHelpText, createLabel, updateOrCreateInvalidMsg, getCheckboxGroupValue,
 } from '../util.js';
 import registerCustomFunctions from './functionRegistration.js';
 import { externalize } from './functions.js';
@@ -143,7 +143,7 @@ async function fieldChanged(payload, form, generateFormRendition) {
         }
         break;
         case 'valid': if(currentValue === true) {
-          removeInvalidMsg(field);
+          updateOrCreateInvalidMsg(fieldElement, '');
         }
         break;
       default:

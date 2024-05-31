@@ -166,7 +166,7 @@ export function updateOrCreateInvalidMsg(fieldElement, msg) {
   return element;
 }
 
-export function removeInvalidMsg(fieldElement) {
+function removeInvalidMsg(fieldElement) {
   return updateOrCreateInvalidMsg(fieldElement, '');
 }
 
