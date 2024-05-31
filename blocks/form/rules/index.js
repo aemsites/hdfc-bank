@@ -1,6 +1,6 @@
 import { submitSuccess, submitFailure } from '../submit.js';
 import {
-  createHelpText, createLabel, updateOrCreateInvalidMsg, getCheckboxGroupValue,
+  createHelpText, createLabel, updateOrCreateInvalidMsg, getCheckboxGroupValue, removeInvalidMsg,
 } from '../util.js';
 import registerCustomFunctions from './functionRegistration.js';
 import { externalize } from './functions.js';
@@ -140,6 +140,11 @@ async function fieldChanged(payload, form, generateFormRendition) {
           field?.querySelector(`#${removeId}`)?.remove();
         } else {
           generateFormRendition({ items: [currentValue] }, field?.querySelector('.repeat-wrapper'));
+        }
+        break;
+      case 'valid':
+        if (currentValue === true) {
+          removeInvalidMsg(field);
         }
         break;
       default:

@@ -252,7 +252,7 @@ const aadharLangChange = (adharContentDom, defaultLang) => {
   const selectOp = adharContentDom.querySelector(`[name= ${'selectLanguage'}]`);
   const findFieldSet = adharContentDom?.querySelectorAll('fieldset');
   const selectedClass = 'selected-language';
-  const defaultOptionClass = `field-aadharconsent-${defaultLang}`;
+  const defaultOptionClass = `field-aadharconsent-${defaultLang?.toLowerCase()}`;
   const applySelected = (fieldNode, optionClass, nameClass) => {
     fieldNode?.forEach((element) => {
       if (element?.classList?.contains(optionClass)) {
@@ -265,9 +265,11 @@ const aadharLangChange = (adharContentDom, defaultLang) => {
     });
   };
   applySelected(findFieldSet, defaultOptionClass, selectedClass);
+  selectOp.value = defaultLang;
   selectOp?.addEventListener('change', (e) => {
     e.preventDefault();
     const { value: valueSelected } = e.target;
+    selectOp.value = valueSelected;
     const optionClass = `field-aadharconsent-${valueSelected?.toLowerCase()}`;
     applySelected(findFieldSet, optionClass, selectedClass);
   });

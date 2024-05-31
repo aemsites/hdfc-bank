@@ -711,6 +711,7 @@ const pinmasterApi = async (globalObj, cityField, stateField, pincodeField) => {
   };
   const successMethod = (value) => {
     const changeDataAttrObj = { attrChange: true, value: false };
+    setPincodeField.markInvalid(true, '');
     setCityField.setValue(value?.CITY, changeDataAttrObj);
     setCityField.enabled(false);
     setStateField.setValue(value?.STATE, changeDataAttrObj);
@@ -777,23 +778,24 @@ const pinCodeMaster = async (globals) => {
  * validate email id in personal details screen for the NTB
  * @param {object} globals - The global object containing necessary globals form data.
  */
-const validateEmailID = async (globals) => {
+const validateEmailID = async (email, globals) => {
   const emailField = globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.personalDetails.personalEmailAddress;
-  if (!emailField.$valid) return;
   const url = urlPath('/content/hdfc_commonforms/api/emailid.json');
   const setEmailField = formUtil(globals, emailField);
-  const invalidMsg = 'Please enter email id.';
+  const invalidMsg = 'Please enter valid email id.';
   const payload = {
-    email: emailField.$value,
+    email,
   };
   const method = 'POST';
   try {
     const emailValid = await getJsonResponse(url, payload, method);
-    if (!emailValid) {
-      setEmailField.markInvalid(emailValid, invalidMsg);
+    if (emailValid) {
+      setEmailField.markInvalid(true);
+    } else {
+      setEmailField.markInvalid(false, invalidMsg);
     }
   } catch (error) {
-    console.error(error, 'NTB_email_error');
+    console.error(error, 'error in emailValid');
   }
 };
 
@@ -969,7 +971,7 @@ const aadharConsent123 = async (globals) => {
         formInitailzeData.aadharConfig = config;
       }
       await openModal(formInitailzeData.aadharConfig);
-      aadharLangChange(formInitailzeData.aadharConfig?.content, 'english');
+      aadharLangChange(formInitailzeData.aadharConfig?.content, 'English');
       config?.content?.addEventListener('modalTriggerValue', (event) => {
         const receivedData = event.detail;
         if (receivedData?.aadharConsentAgree) {

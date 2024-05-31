@@ -257,7 +257,7 @@ const composeNameOption = (fn, mn, ln) => {
     [fn, ln],
     [mn, ln],
     [initial(mn), ln],
-  ]?.map(stringify)?.filter((el) => el?.length <= MAX_LENGTH);
+  ]?.map(stringify)?.filter((el) => el && el?.length <= MAX_LENGTH);
   return [...new Set(names)]?.map(toOption);
 };
 
