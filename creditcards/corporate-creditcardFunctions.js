@@ -307,7 +307,9 @@ const personalDetailsPreFillFromBRE = (res, globals) => {
   }
   const personaldetails = document.querySelector('.field-personaldetails');
   personaldetails.classList.add('personaldetails-disabled');
-  addDisableClass(personaldetails);
+  setTimeout(() => {
+    addDisableClass(personaldetails);
+  }, 10);
 };
 
 /**
