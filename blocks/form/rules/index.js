@@ -143,7 +143,7 @@ async function fieldChanged(payload, form, generateFormRendition) {
         }
         break;
         case 'valid': if(currentValue === true) {
-          updateOrCreateInvalidMsg(fieldElement, '');
+          updateOrCreateInvalidMsg(field, '');
         }
         break;
       default:
