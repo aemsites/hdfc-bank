@@ -129,10 +129,8 @@ function days(endDate, startDate) {
  * @return {PROMISE}
  */
 function localiseKycContent(globals) {
-  const localeDropdownQualifiedName = '$form.locale';
-  const locale = globals.functions.resolveQualifiedName(localeDropdownQualifiedName)?.$value;
+  const locale = globals.form.locale.$value;
   const url = `/content/experience-fragments/consent/ekyc/${locale}/master.plain.html`;
-
   fetch(url)
     .then((response) => response.text())
     .then((content) => {
