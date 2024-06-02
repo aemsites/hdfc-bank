@@ -136,7 +136,7 @@ function localiseKycContent(globals) {
   fetch(url)
     .then((response) => response.text())
     .then((content) => {
-      globals.functions.setProperty(localeDropdownQualifiedName, { value: content });
+      globals.functions.setProperty(globals.form.text, { value: content });
     })
     .catch((error) => {
       console.error('Error fetching content:', error);
