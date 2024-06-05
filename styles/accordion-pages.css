@@ -101,8 +101,6 @@ fieldset fieldset {
 
   .field-yourdetailsconsent {
     display: flex;
-
-    label { margin-left: 15px; }
   }
 
   .field-checkofferbutton {
@@ -584,6 +582,10 @@ main .form form .field-corporatecardwizardview.wizard {
 
     .field-addressdeclarationovd .radio-highlight-selected input[type='radio'] {
       right: 35px;
+    }
+
+    [data-visible='false'] {
+      display: none !important;
     }
   }
 }

@@ -85,6 +85,14 @@ main .form :not(.checkbox-wrapper, .radio-wrapper, .field-joiningrenewalfee) > l
   font-size: var(--body-sm-font-size);
 }
 
+main .form form .checkbox-wrapper {
+  align-items: flex-start !important;
+}
+
+main .form form fieldset > .checkbox-wrapper:not(:first-of-type) {
+  margin-top: 15px;
+}
+
 main .form form {
   padding: 40px;
 
