@@ -23,6 +23,7 @@ import {
   ipaSuccessHandler,
   sendAnalytics,
   aadharConsent123,
+  resendOTP,
 } from '../../common/functions.js';
 
 import { moveWizardView } from '../../common/formutils.js';
@@ -157,6 +158,16 @@ function getWrappedFormContext() {
   return formContext;
 }
 
+/**
+* @name showElement
+* @param {string} elementName
+*/
+function showElement(elementName) {
+  const elm = document.querySelector(elementName);
+  if (elm) {
+    elm.style.display = 'block';
+  }
+}
 // eslint-disable-next-line import/prefer-default-export
 export {
   getFullName,
@@ -193,4 +204,6 @@ export {
   invokeJourneyDropOffUpdate,
   sendAnalytics,
   aadharConsent123,
+  resendOTP,
+  showElement,
 };

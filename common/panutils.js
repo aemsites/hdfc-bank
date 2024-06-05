@@ -1,6 +1,7 @@
 import { currentFormContext } from './journey-utils.js';
+import corpCreditCard from './constants.js';
 
-const DEAD_PAN_STATUS = ['D', 'X', 'F', 'ED'];
+const { deadPanStatus } = corpCreditCard;
 const executeCheck = (panStatus, terminationCheck, callback, globals) => {
   currentFormContext.apsPanChkFlag = panStatus === 'E' ? 'N' : 'Y';
   switch (currentFormContext.journeyType) {
@@ -9,7 +10,7 @@ const executeCheck = (panStatus, terminationCheck, callback, globals) => {
         callback.executeInterfaceApi(globals);
       } else if (panStatus === 'E') {
         callback.executeInterfaceApi(globals);
-      } else if (DEAD_PAN_STATUS.includes(panStatus)) {
+      } else if (deadPanStatus.includes(panStatus)) {
         callback.terminateJourney(panStatus, globals);
       } else {
         currentFormContext.apsPanChkFlag = 'Y';
@@ -19,7 +20,7 @@ const executeCheck = (panStatus, terminationCheck, callback, globals) => {
     case 'NTB':
       if (panStatus === 'E') {
         callback.executeInterfaceApi(globals);
-      } else if (DEAD_PAN_STATUS.includes(panStatus)) {
+      } else if (deadPanStatus.includes(panStatus)) {
         callback.terminateJourney(panStatus, globals);
       } else {
         callback.restartJourney(panStatus, globals);

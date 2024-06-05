@@ -1,7 +1,13 @@
 /* eslint no-bitwise: ["error", { "allow": ["^", ">>", "&"] }] */
 
-import { santizedFormDataWithContext } from './formutils.js';
+import {
+  santizedFormDataWithContext,
+  urlPath,
+} from './formutils.js';
 import { fetchJsonResponse } from './makeRestAPI.js';
+import corpCreditCard from './constants.js';
+
+const { endpoints } = corpCreditCard;
 
 function generateUUID() {
   return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) => (c ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))).toString(16));
@@ -47,8 +53,8 @@ const invokeJourneyDropOff = async (state, mobileNumber, globals) => {
         mobileNumber,
       },
       formData: {
-        channel: 'ADOBE_WEBFORMS',
-        journeyName: 'CORPORATE_CARD_JOURNEY',
+        channel: corpCreditCard.channel,
+        journeyName: corpCreditCard.journeyName,
         journeyID: globals.form.runtime.journeyId.$value,
         journeyStateInfo: [
           {
@@ -60,7 +66,7 @@ const invokeJourneyDropOff = async (state, mobileNumber, globals) => {
       },
     },
   };
-  const url = 'https://applyonlinedev.hdfcbank.com/content/hdfc_commonforms/api/journeydropoff.json';
+  const url = urlPath(endpoints.journeyDropOff);
   const method = 'POST';
   return fetchJsonResponse(url, journeyJSONObj, method);
 };
@@ -84,7 +90,7 @@ const invokeJourneyDropOffUpdate = async (state, mobileNumber, leadProfileId, jo
         leadProfileId: leadProfileId.toString(),
       },
       formData: {
-        channel: 'ADOBE_WEBFORMS',
+        channel: corpCreditCard.channel,
         journeyName: currentFormContext.journeyName,
         journeyID: journeyId,
         journeyStateInfo: [
@@ -98,7 +104,7 @@ const invokeJourneyDropOffUpdate = async (state, mobileNumber, leadProfileId, jo
     },
   };
   // sendSubmitClickEvent(mobileNumber, linkName, sanitizedFormData);
-  const url = 'https://applyonlinedev.hdfcbank.com/content/hdfc_commonforms/api/journeydropoffupdate.json';
+  const url = urlPath(endpoints.journeyDropOffUpdate);
   const method = 'POST';
   return fetchJsonResponse(url, journeyJSONObj, method);
 };
@@ -133,7 +139,7 @@ const invokeJourneyDropOffByParam = async (mobileNumber, leadProfileId, journeyI
       },
     },
   };
-  const url = 'https://applyonlinedev.hdfcbank.com/content/hdfc_commonforms/api//journeydropoffparam.json';
+  const url = urlPath(endpoints.journeyDropOffParam);
   const method = 'POST';
   return fetchJsonResponse(url, journeyJSONObj, method);
 };

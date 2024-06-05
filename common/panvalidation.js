@@ -4,6 +4,9 @@ import {
   convertDateToDdMmYyyy,
 } from './formutils.js';
 import { currentFormContext } from './journey-utils.js';
+import corpCreditCard from './constants.js';
+
+const { endpoints, deadPanStatus } = corpCreditCard;
 
 /**
  * validatePan - creates PAN validation request and executes API.
@@ -28,7 +31,7 @@ const validatePan = (mobileNumber, panNumber, dob, firstName, showLoader, hideLo
     },
   };
   if (showLoader) currentFormContext?.validatePanLoader();
-  const apiEndPoint = urlPath('/content/hdfc_forms_common_v2/api/panValNameMatch.json');
+  const apiEndPoint = urlPath(endpoints.panValNameMatch);
   return fetchJsonResponse(apiEndPoint, validatePanRequest, 'POST', hideLoader);
 };
 
@@ -40,10 +43,9 @@ const validatePan = (mobileNumber, panNumber, dob, firstName, showLoader, hideLo
 function panAPISuccesHandler(panStatus) {
   let panSuccess = false;
   const journeyType = currentFormContext?.journeyType;
-  const restrictedStatus = ['D', 'ED', 'X', 'F'];
   if (panStatus === 'E') {
     panSuccess = true;
-  } else if (journeyType === 'ETB' && !restrictedStatus.includes(panStatus)) {
+  } else if (journeyType === 'ETB' && !deadPanStatus.includes(panStatus)) {
     panSuccess = true;
   }
 

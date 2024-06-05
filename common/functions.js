@@ -13,6 +13,7 @@ import {
   createJourneyId,
   sendAnalytics,
   aadharConsent123,
+  resendOTP,
 } from '../creditcards/corporate-creditcardFunctions.js';
 import {
   validatePan,
@@ -23,8 +24,13 @@ import {
   ipaRequestApi,
   ipaSuccessHandler,
 } from './executeinterfaceutils.js';
-import { urlPath, santizedFormData, getTimeStamp } from './formutils.js';
+import {
+  urlPath, santizedFormData, getTimeStamp,
+} from './formutils.js';
 import { fetchJsonResponse } from './makeRestAPI.js';
+import corpCreditCard from './constants.js';
+
+const { endpoints } = corpCreditCard;
 
 /**
  * @name checkMode - check the location
@@ -60,7 +66,7 @@ function customSetFocus(errorMessage, numRetries, globals) {
     globals.functions.setProperty(globals.form.otpPanel, { visible: false });
     globals.functions.setProperty(globals.form.submitOTP, { visible: false });
     globals.functions.setProperty(globals.form.resultPanel, { visible: true });
-    globals.functions.setProperty(globals.form.errorResultPanel, { visible: true });
+    globals.functions.setProperty(globals.form.resultPanel.errorMessageText, { value: errorMessage });
   }
 }
 
@@ -83,13 +89,13 @@ function getOTP(mobileNumber, pan, dob, globals) {
       dateOfBith: dob.$value || '',
       panNumber: pan.$value || '',
       journeyID: globals.form.runtime.journeyId.$value,
-      journeyName: 'CORPORATE_CARD_JOURNEY',
+      journeyName: corpCreditCard.journeyName,
       userAgent: window.navigator.userAgent,
       identifierValue: pan.$value || dob.$value,
       identifierName: pan.$value ? 'PAN' : 'DOB',
     },
   };
-  const path = urlPath('/content/hdfc_ccforms/api/customeridentificationV4.json');
+  const path = urlPath(endpoints.otpGen);
   currentFormContext?.getOtpLoader();
   return fetchJsonResponse(path, jsonObj, 'POST', true);
 }
@@ -118,7 +124,7 @@ function otpValidation(mobileNumber, pan, dob, otpNumber) {
       referenceNumber: referenceNumber ?? '',
     },
   };
-  const path = urlPath('/content/hdfc_cc_unified/api/otpValFetchAssetDemog.json');
+  const path = urlPath(endpoints.otpValFetchAssetDemog);
   currentFormContext?.otpValLoader();
   return fetchJsonResponse(path, jsonObj, 'POST', true);
 }
@@ -195,7 +201,7 @@ async function aadharInit(mobileNumber, pan, dob, globals) {
       initParameters: {
         journeyId: currentFormContext.journeyID,
         transactionId: currentFormContext.journeyID.replace(/-/g, '').replace(/_/g, ''),
-        journeyName: 'CORPORATE_CARD_JOURNEY',
+        journeyName: corpCreditCard.journeyName,
         userAgent: window.navigator.userAgent,
         mobileNumber: mobileNumber.$value,
         leadProfileId: globals?.form.runtime.leadProifileId.$value,
@@ -215,7 +221,7 @@ async function aadharInit(mobileNumber, pan, dob, globals) {
       data_app: {
         journey_id: currentFormContext.journeyID,
         lead_profile_id: globals?.form.runtime.leadProifileId.$value,
-        callback: 'https://applyonlinedev.hdfcbank.com/content/hdfc_etb_wo_pacc/api/aadharCallback.json',
+        callback: urlPath(endpoints.aadharCallback),
         lead_profile: {
           leadProfileId: globals?.form.runtime.leadProifileId.$value,
           mobileNumber: mobileNumber.$value,
@@ -223,7 +229,7 @@ async function aadharInit(mobileNumber, pan, dob, globals) {
         },
         journeyStateInfo: {
           state: 'CUSTOMER_AADHAR_VALIDATION',
-          stateInfo: 'CORPORATE_CARD_JOURNEY',
+          stateInfo: corpCreditCard.journeyName,
           formData: santizedFormData(globals)?.form,
         },
         auditData: {
@@ -269,7 +275,7 @@ async function aadharInit(mobileNumber, pan, dob, globals) {
       },
     },
   };
-  const path = 'https://applyonlinedev.hdfcbank.com/content/hdfc_etb_wo_pacc/api/aadharInit.json';
+  const path = urlPath(endpoints.aadharInit);
   const response = fetchJsonResponse(path, jsonObj, 'POST');
   response
     .then((res) => {
@@ -312,4 +318,5 @@ export {
   ipaSuccessHandler,
   sendAnalytics,
   aadharConsent123,
+  resendOTP,
 };

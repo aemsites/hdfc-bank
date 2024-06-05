@@ -396,6 +396,7 @@ main .form .field-successresultpanel {
   .field-successresulttextlabel {
     background-color: var(--color-interface-background-quaternary);
     margin: -40px -40px 0;
+    padding: 0 15px;
 
     p {
       padding: 20px 0 10px;
@@ -462,6 +463,7 @@ main
   .form
   .field-errorresultpanel
   > div:not(.bulleted-paragraph) {
+    display: flex;
     justify-content: center;
 }
 
@@ -586,7 +588,7 @@ main .form .field-resultpanel {
 
   main .form .field-errorresultpanel,
   main .form .field-successresultpanel {
-    > div:not(.field-errormessagetext) {
+    > div:not(.field-errormessagetext):not(.field-successresulttextlabel) {
       max-width: 100%;
     }
 
@@ -613,6 +615,10 @@ main .form .field-resultpanel {
     .field-otpresend {
       margin: 0 !important;
     }
+  }
+
+  main .form form .field-successresultpanel {
+    margin-left: -17px;
   }
 }
 
