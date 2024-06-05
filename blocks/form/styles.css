@@ -85,6 +85,14 @@ main .form :not(.checkbox-wrapper, .radio-wrapper, .field-joiningrenewalfee) > l
   font-size: var(--body-sm-font-size);
 }
 
+main .form form .checkbox-wrapper {
+  align-items: flex-start !important;
+}
+
+main .form form fieldset > .checkbox-wrapper:not(:first-of-type) {
+  margin-top: 15px;
+}
+
 main .form form {
   padding: 40px;
 
@@ -388,6 +396,7 @@ main .form .field-successresultpanel {
   .field-successresulttextlabel {
     background-color: var(--color-interface-background-quaternary);
     margin: -40px -40px 0;
+    padding: 0 15px;
 
     p {
       padding: 20px 0 10px;
@@ -455,6 +464,7 @@ main
   .field-errorresultpanel
   > div:not(.bulleted-paragraph) {
     justify-content: center;
+    display: flex;
 }
 
 main .form.block .field-otppanel {
@@ -578,7 +588,7 @@ main .form .field-resultpanel {
 
   main .form .field-errorresultpanel,
   main .form .field-successresultpanel {
-    > div:not(.field-errormessagetext) {
+    > div:not(.field-errormessagetext):not(.field-successresulttextlabel) {
       max-width: 100%;
     }
 
@@ -605,6 +615,10 @@ main .form .field-resultpanel {
     .field-otpresend {
       margin: 0 !important;
     }
+  }
+  
+  main .form form .field-successresultpanel {
+    margin-left: -17px;
   }
 }
 
