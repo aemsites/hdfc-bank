@@ -499,7 +499,7 @@ main .form.block .field-otppanel {
     }
 
     :hover {
-      background: white !important;
+      background: var(--color-interface-background-primary) !important;
     }
   }
 
