@@ -217,7 +217,6 @@ function createFileHandler(allFiles, input) {
 
 // eslint-disable-next-line no-unused-vars
 export default async function decorate(fieldDiv, field, htmlForm) {
-  console.log(field);
   const allFiles = [];
   const dragArea = createDragAndDropArea(fieldDiv, field);
   const input = fieldDiv.querySelector('input');
