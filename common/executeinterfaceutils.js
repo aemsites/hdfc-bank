@@ -9,7 +9,6 @@ import {
 import { currentFormContext, formRuntime } from './journey-utils.js';
 import {
   restAPICall,
-  getJsonResponse,
   fetchJsonResponse,
   fetchIPAResponse,
   hideLoaderGif,
@@ -29,7 +28,6 @@ const GENDER_MAP = {
   Other: '3',
   T: '3',
 };
-let TOTAL_TIME = 0;
 const formatDate = (inputDate) => {
   const date = new Date(inputDate);
 
@@ -225,156 +223,6 @@ const listNameOnCard = (globals) => {
 };
 
 /**
- * Terminates the journey by displaying the error/result panel.
- * @param {object} globals - globals variables object containing form configurations.
- */
-const journeyTerminate = (globals) => {
-  hideLoaderGif();
-  const resultPanel = formUtil(globals, globals.form.resultPanel);
-  const wizardPanel = formUtil(globals, globals.form.corporateCardWizardView);
-  wizardPanel.visible(false);
-  resultPanel.visible(true);
-};
-
-/**
- * Resumes the journey by allowing the user to proceed further.
- * @param {object} globals - globals variables object containing form configurations.
- * @param {object} response - object containing response from the previosu api call
- */
-const journeyResume = (globals, response) => {
-  formRuntime.productDetails = response.productEligibility.productDetails?.[0];
-  formRuntime.eRefNumber = response.ipa.eRefNumber;
-  formRuntime.applRefNumber = response.ipa.applRefNumber;
-  formRuntime.filler8 = response.ipa.filler8;
-  const imageEl = document.querySelector('.field-cardimage > picture');
-  const imagePath = `${baseUrl}${response.productEligibility.productDetails[0]?.cardTypePath}?width=2000&optimize=medium`;
-  imageEl.childNodes[5].setAttribute('src', imagePath);
-  imageEl.childNodes[3].setAttribute('srcset', imagePath);
-  imageEl.childNodes[1].setAttribute('srcset', imagePath);
-  const { keyBenefitsText0 } = globals.form.corporateCardWizardView.confirmCardPanel.cardBenefitsPanel.cardBenefitsFeaturesPanel;
-  const cardBenefitsTextField0 = formUtil(globals, keyBenefitsText0);
-  const { keyBenefitsText1 } = globals.form.corporateCardWizardView.confirmCardPanel.cardBenefitsPanel.cardBenefitsFeaturesPanel;
-  const cardBenefitsTextField1 = formUtil(globals, keyBenefitsText1);
-  const { keyBenefitsText2 } = globals.form.corporateCardWizardView.confirmCardPanel.cardBenefitsPanel.cardBenefitsFeaturesPanel;
-  const cardBenefitsTextField2 = formUtil(globals, keyBenefitsText2);
-  cardBenefitsTextField0.setValue(response.productEligibility.productDetails[0].keyBenefits[0]);
-  cardBenefitsTextField1.setValue(response.productEligibility.productDetails[0].keyBenefits[1]);
-  cardBenefitsTextField2.setValue(response.productEligibility.productDetails[0].keyBenefits[2]);
-  hideLoaderGif();
-  listNameOnCard(globals);
-};
-
-/**
- * Restart the journey.
- * @param {object} globals - globals variables object containing form configurations.
- */
-const journeyRestart = (globals) => {
-  hideLoaderGif();
-  const { resultPanel, corporateCardWizardView, resultPanel: { errorResultPanel } } = globals.form;
-  const ccView = formUtil(globals, corporateCardWizardView);
-  const resultScr = formUtil(globals, resultPanel);
-  const tryAgainBtn = formUtil(globals, errorResultPanel.tryAgainButtonErrorPanel);
-  const errorText1 = formUtil(globals, errorResultPanel.resultSetErrorText1);
-  const errorText2 = formUtil(globals, errorResultPanel.resultSetErrorText2);
-  [resultScr, tryAgainBtn].forEach((item) => item.visible(true));
-  [ccView, errorText1, errorText2].forEach((item) => item.visible(false));
-  const reloadBtn = document.querySelector(`[name=${errorResultPanel.tryAgainButtonErrorPanel?.$name}]`);
-  reloadBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    window.location.reload();
-  });
-};
-
-/**
- * Sends an IPA request and handles the response.
- * @param {Object} ipaRequestObj - The IPA request object containing necessary data.
- * @param {Object} globals - The global object containing necessary data for the request.
- * @returns {void}
- */
-const sendIpaRequest = async (ipaRequestObj, globals) => {
-  const apiEndPoint = urlPath(endpoints.ipa);
-  const exceedTimeLimit = (TOTAL_TIME >= formRuntime.ipaDuration * 1000);
-  const method = 'POST';
-  const successMethod = (respData) => {
-    const ipaResult = respData?.ipa?.ipaResult;
-    const promoCode = currentFormContext?.promoCode;
-    const ipaResNotPresent = (ipaResult === '' || ipaResult === 'null' || !ipaResult || ipaResult === 'undefined' || ipaResult === null);
-    if (exceedTimeLimit) {
-      journeyResume(globals, respData);
-      return;
-    }
-    if (ipaResNotPresent) {
-      setTimeout(() => sendIpaRequest(ipaRequestObj, globals), formRuntime.ipaTimer * 1000);
-      TOTAL_TIME += formRuntime.ipaTimer * 1000;
-    } else if (promoCode === 'NA' && ipaResult === 'Y') {
-      journeyTerminate(globals);
-    } else {
-      journeyResume(globals, respData);
-    }
-  };
-  const errorMethod = (err) => {
-    console.log(err); // api fail
-    journeyRestart(globals);
-  };
-  try {
-    const response = await getJsonResponse(apiEndPoint, ipaRequestObj, method);
-    successMethod(response);
-  } catch (error) {
-    errorMethod(error);
-  }
-};
-
-const customerValidationHandler = {
-  executeInterfaceApi: async (globals) => {
-    const requestObj = createExecuteInterfaceRequestObj(globals);
-    currentFormContext.executeInterfaceReqObj = { ...requestObj };
-    const apiEndPoint = urlPath(endpoints.executeInterface);
-    const method = 'POST';
-    const successMethod = (respData) => {
-      if (respData.errorCode === '0000') {
-        formRuntime.ipaDuration = respData.ExecuteInterfaceResponse.ipaDuration;
-        formRuntime.ipaTimer = respData.ExecuteInterfaceResponse.ipaTimer;
-        currentFormContext.jwtToken = respData.Id_token_jwt;
-        const ipaRequestObj = {
-          requestString: {
-            mobileNumber: globals.form.loginPanel.mobilePanel.registeredMobileNumber.$value,
-            applRefNumber: respData.ExecuteInterfaceResponse.applicationRefNumber,
-            eRefNumber: respData.ExecuteInterfaceResponse.eRefNumber,
-            Id_token_jwt: respData.Id_token_jwt,
-            userAgent: navigator.userAgent,
-            journeyID: currentFormContext.journeyID,
-            journeyName: currentFormContext.journeyName,
-            productCode: formRuntime.productCode,
-          },
-        };
-        TOTAL_TIME = 0;
-        sendIpaRequest(ipaRequestObj, globals);
-      } else {
-        journeyTerminate(globals);
-      }
-    };
-    const errorMethod = (err) => {
-      console.log(err); // api fail
-      journeyRestart(globals);
-    };
-    try {
-      const response = await getJsonResponse(apiEndPoint, requestObj, method);
-      successMethod(response);
-    } catch (error) {
-      errorMethod(error);
-    }
-  },
-
-  terminateJourney: (panStatus, globals) => {
-    journeyTerminate(globals);
-  },
-
-  restartJourney: (panStatus, globals) => {
-    journeyRestart(globals);
-  },
-};
-
-/**
  * Creates an IdCom request object based on the provided global data.
  * @param {Object} globals - The global object containing necessary data for IdCom request.
  * @returns {Object} - The IdCom request object.
@@ -422,7 +270,6 @@ const executeInterfaceApiFinal = (globals) => {
   const formCallBackContext = globals.functions.exportData()?.currentFormContext;
   const requestObj = currentFormContext.executeInterfaceReqObj || formCallBackContext?.executeInterfaceReqObj;
   requestObj.requestString.nameOnCard = globals.form.corporateCardWizardView.confirmCardPanel.cardBenefitsPanel.CorporatetImageAndNamePanel.nameOnCardDropdown.$value;
-  // requestObj.requestString.Id_token_jwt = currentFormContext.jwtToken || formCallBackContext?.currentFormContext?.jwtToken;
   requestObj.requestString.productCode = formRuntime.productCode || formCallBackContext?.formRuntime?.productCode;
   requestObj.requestString.addressEditFlag = 'N';
   requestObj.requestString.panEditFlag = 'N';
@@ -487,7 +334,6 @@ const ipaRequestApi = (eRefNumber, mobileNumber, applicationRefNumber, idTokenJw
       productCode: formRuntime.productCode,
     },
   };
-  TOTAL_TIME = 0;
   const apiEndPoint = urlPath(endpoints.ipa);
   if (showLoader) formRuntime?.ipa.dispalyLoader();
   return fetchIPAResponse(apiEndPoint, ipaRequestObj, 'POST', ipaDuration, ipaTimer, hideLoader);
@@ -532,7 +378,6 @@ const ipaSuccessHandler = (ipa, productEligibility, globals) => {
 };
 
 export {
-  customerValidationHandler,
   executeInterfaceApiFinal,
   executeInterfaceApi,
   ipaRequestApi,
