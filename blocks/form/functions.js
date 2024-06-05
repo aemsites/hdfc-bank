@@ -130,7 +130,8 @@ function days(endDate, startDate) {
  */
 function localiseKycContent(globals) {
   const locale = globals.form.locale.$value;
-  const url = `/content/experience-fragments/consent/ekyc/${locale}/master.plain.html`;
+  const url = `/content/experience-fragments/consent/aadhar/${locale}/ekyc/master.plain.html`;
+
   fetch(url)
     .then((response) => response.text())
     .then((content) => {
