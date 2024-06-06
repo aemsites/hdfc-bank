@@ -57,7 +57,7 @@ function checkMode(globals) {
 }
 
 /**
- * does the custom show hide of panel or screens .
+ * does the custom show hide of panel or screens in resend otp.
  * @param {string} errorMessage
  * @param {number} numRetries
  * @param {object} globals
@@ -67,7 +67,7 @@ function customSetFocus(errorMessage, numRetries, globals) {
     globals.functions.setProperty(globals.form.otpPanel, { visible: false });
     globals.functions.setProperty(globals.form.submitOTP, { visible: false });
     globals.functions.setProperty(globals.form.resultPanel, { visible: true });
-    globals.functions.setProperty(globals.form.resultPanel.errorMessageText, { value: errorMessage });
+    globals.functions.setProperty(globals.form.resultPanel.errorResultPanel.errorMessageText, { value: errorMessage });
   }
 }
 

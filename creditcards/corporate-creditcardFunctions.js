@@ -1011,12 +1011,10 @@ const prefillForm = (globals) => {
     resultPanel: {
       errorResultPanel: {
         errorMessageText,
-        resultSetErrorText1,
-        resultSetErrorText2,
       },
     },
   } = globals.form;
-  const showPanel = [resultPanel, errorMessageText, resultSetErrorText1, resultSetErrorText2]?.map((fieldName) => formUtil(globals, fieldName));
+  const showPanel = [resultPanel, errorMessageText]?.map((fieldName) => formUtil(globals, fieldName));
   const hidePanel = [loginPanel, welcomeText, consentFragment, getOTPbutton]?.map((fieldName) => formUtil(globals, fieldName));
   if (!formData?.form?.login?.registeredMobileNumber) {
     // show error pannel if corporate credit card details not present

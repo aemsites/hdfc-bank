@@ -230,8 +230,9 @@ const listNameOnCard = (globals) => {
  */
 const journeyTerminate = (globals) => {
   hideLoaderGif();
-  const resultPanel = formUtil(globals, globals.form.resultPanel);
-  const wizardPanel = formUtil(globals, globals.form.corporateCardWizardView);
+  const { corporateCardWizardView, resultPanel: { errorResultPanel } } = globals.form;
+  const resultPanel = formUtil(globals, errorResultPanel);
+  const wizardPanel = formUtil(globals, corporateCardWizardView);
   wizardPanel.visible(false);
   resultPanel.visible(true);
 };
@@ -270,19 +271,21 @@ const journeyResume = (globals, response) => {
  */
 const journeyRestart = (globals) => {
   hideLoaderGif();
-  const { resultPanel, corporateCardWizardView, resultPanel: { errorResultPanel } } = globals.form;
-  const ccView = formUtil(globals, corporateCardWizardView);
-  const resultScr = formUtil(globals, resultPanel);
-  const tryAgainBtn = formUtil(globals, errorResultPanel.tryAgainButtonErrorPanel);
-  const errorText1 = formUtil(globals, errorResultPanel.resultSetErrorText1);
-  const errorText2 = formUtil(globals, errorResultPanel.resultSetErrorText2);
-  [resultScr, tryAgainBtn].forEach((item) => item.visible(true));
-  [ccView, errorText1, errorText2].forEach((item) => item.visible(false));
-  const reloadBtn = document.querySelector(`[name=${errorResultPanel.tryAgainButtonErrorPanel?.$name}]`);
-  reloadBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    window.location.reload();
-  });
+  const {
+    resultPanel,
+    errorResultPanel,
+    corporateCardWizardView,
+    resultPanel: {
+      errorResultPanel: {
+        errorMessageText,
+        tryAgainButtonErrorPanel,
+      },
+    },
+  } = globals.form;
+  // show
+  [resultPanel, errorResultPanel, tryAgainButtonErrorPanel]?.map((panel) => formUtil(globals, panel))?.forEach((item) => item.visible(true));
+  // hide
+  [errorMessageText, corporateCardWizardView]?.map((panel) => formUtil(globals, panel))?.forEach((item) => item.visible(false));
 };
 
 /**
