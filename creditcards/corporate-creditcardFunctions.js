@@ -1,31 +1,21 @@
-/* eslint-disable no-mixed-spaces-and-tabs */
 /* eslint-disable no-tabs */
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable prefer-destructuring */
-/* eslint-disable no-unused-vars */
-/* eslint no-console: ["error", { allow: ["warn", "error", "log"] }] */
-/* eslint no-unused-vars: ["error", { "args": "none" }] */
 import {
-  invokeJourneyDropOff, invokeJourneyDropOffUpdate, journeyResponseHandlerUtil, currentFormContext, createJourneyId, invokeJourneyDropOffByParam, formRuntime,
+  invokeJourneyDropOff,
+  invokeJourneyDropOffUpdate,
+  journeyResponseHandlerUtil,
+  currentFormContext,
+  createJourneyId,
+  formRuntime,
 } from '../common/journey-utils.js';
-import executeCheck from '../common/panutils.js';
-import { customerValidationHandler, executeInterfaceApiFinal } from '../common/executeinterfaceutils.js';
+import { executeInterfaceApiFinal } from '../common/executeinterfaceutils.js';
 import {
   formUtil,
-  maskNumber,
   urlPath,
   clearString,
-  getTimeStamp,
   convertDateToMmmDdYyyy,
-  setDataAttributeOnClosestAncestor,
-  convertDateToDdMmYyyy,
-  setSelectOptions,
-  composeNameOption,
   moveWizardView,
   parseCustomerAddress,
   removeSpecialCharacters,
-  santizedFormData,
-  makeFieldInvalid,
   dateFormat,
   santizedFormDataWithContext,
 } from '../common/formutils.js';
@@ -55,56 +45,10 @@ formRuntime.ipa = (typeof window !== 'undefined') ? displayLoader : false;
 formRuntime.aadharInit = (typeof window !== 'undefined') ? displayLoader : false;
 formRuntime.hideLoader = (typeof window !== 'undefined') ? hideLoaderGif : false;
 
-let PAN_VALIDATION_STATUS = false;
-let PAN_RETRY_COUNTER = 1;
 let RESEND_OTP_COUNT = 3;
-let IS_ETB_USER = false;
-const CUSTOMER_INPUT = { mobileNumber: '', pan: '', dob: '' };
 const CUSTOMER_DEMOG_DATA = {};
 let BRE_DEMOG_RESPONSE = {};
 const ALLOWED_CHARACTERS = '/ -,';
-/**
- * Appends a masked number to the specified container element if the masked number is not present.
- * @param {String} containerClass - The class name of the container element.
- * @param {String} number - The number to be masked and appended to the container element.
- * @returns {void}
- */
-const appendMaskedNumber = (containerClass, number) => {
-  const otpHelpText = document.getElementsByClassName(containerClass)?.[0];
-  const pElement = otpHelpText?.querySelector('p');
-  const nestedPElement = pElement?.querySelector('p');
-  const maskedNo = `${maskNumber(number, 6)}.`;
-  const newText = document.createTextNode(maskedNo);
-  if (!nestedPElement?.textContent?.includes(maskedNo)) {
-    nestedPElement?.appendChild(newText);
-  }
-};
-
-/**
- * Changes the text content of a <p> element inside a pannel with the specified name.
- * @param {String} pannelName - The name of the panel containing the <p> element.
- * @param {String} innerContent - The new text content to set for the <p> element.
- */
-const changeTextContent = (pannelName, innerContent) => {
-  const panel = document.getElementsByName(pannelName)?.[0];
-  if (panel) {
-    const pElement = panel.querySelector('p');
-    const nestedPElement = pElement?.querySelector('p');
-    if (nestedPElement) {
-      nestedPElement.textContent = innerContent;
-    }
-  }
-};
-
-/**
- * removebanner from the landing screen by settin the display property to 'none' to remove the banner
- */
-const removeBanner = () => {
-  const banner = document.querySelector('.cmp-container-container');
-  if (banner) {
-    banner.style.display = 'none';
-  }
-};
 
 /**
  * Adds the 'wrapper-disabled' class to the parent elements of inputs or selects within the given panel
@@ -230,9 +174,9 @@ const personalDetailsPreFillFromBRE = (res, globals) => {
   const changeDataAttrObj = { attrChange: true, value: false, disable: true };
   const genderMap = { M: '1', F: '2', O: 'T' };
   // Extract personal details from globals
-  const personalDetails = globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.personalDetails;
-  const currentAddressNTB = globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.currentDetails.currentAddressNTB;
-  const currentAddressETB = globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.currentDetails.currentAddressETB;
+  const { personalDetails } = globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage;
+  const { currentAddressNTB } = globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.currentDetails;
+  const { currentAddressETB } = globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.currentDetails;
   const currentAddressNTBUtil = formUtil(globals, currentAddressNTB);
   currentAddressNTBUtil.visible(false);
   // Extract breCheckAndFetchDemogResponse from res
@@ -355,18 +299,6 @@ const existingCustomerCheck = (res) => {
   return null;
 };
 
-const showErrorPanel = (panels, errorText) => {
-  const errorTextPannelName = 'errorResultPanel';
-  changeTextContent(errorTextPannelName, errorText);
-  const { hidePanels, showPanels } = panels;
-  hidePanels.forEach((panel) => {
-    panel.visible(false);
-  });
-  showPanels.forEach((panel) => {
-    panel.visible(true);
-  });
-};
-
 /**
  * @name otpValHandler
  * @param {Object} response
@@ -383,7 +315,6 @@ const otpValHandler = (response, globals) => {
   currentFormContext.panFromDemog = res?.demogResponse?.BRECheckAndFetchDemogResponse?.VDCUSTITNBR;
   const existingCustomer = existingCustomerCheck(res);
   if (existingCustomer) {
-    IS_ETB_USER = true;
     currentFormContext.journeyType = 'ETB';
     personalDetailsPreFillFromBRE(res, globals);
   }
@@ -407,7 +338,7 @@ const setConfirmScrAddressFields = (globalObj) => {
   const concatObjVals = (obj) => Object.values(obj)?.join(', ');
   const ccWizard = globalObj.form.corporateCardWizardView;
   const yourDetails = ccWizard.yourDetailsPanel.yourDetailsPage;
-  const currentDetails = yourDetails.currentDetails;
+  const { currentDetails } = yourDetails;
   const etb = currentDetails.currentAddressETB;
   const ntb = currentDetails.currentAddressNTB;
   const employeeDetails = yourDetails.employmentDetails;
@@ -462,7 +393,6 @@ const setConfirmScrAddressFields = (globalObj) => {
  * Moves the wizard view to the "selectKycPanel" step.
  */
 const getThisCard = (globals) => {
-  const nameOnCardDropdown =		globals.form.corporateCardWizardView.confirmCardPanel.cardBenefitsPanel.CorporatetImageAndNamePanel.nameOnCardDropdown.$value;
   const isAddressChanged = currentFormContext.executeInterfaceReqObj.requestString.addressEditFlag === 'Y';
   executeInterfaceApiFinal(globals);
   setConfirmScrAddressFields(globals);
@@ -507,184 +437,6 @@ const getThisCard = (globals) => {
 const getAddressDetails = () => moveWizardView('corporateCardWizardView', 'confirmAndSubmitPanel');
 
 /**
- * Enables a form field by removing the 'wrapper-disabled' class and adding the 'error-field' class.
- *
- * @param {string} elementClassName - The class name of the form field element to enable.
- * @returns {void}
- */
-const enableFormField = (elementClassName) => {
-  const selectedElem = document.querySelector(`.${elementClassName}`);
-  selectedElem.classList.remove('wrapper-disabled');
-  selectedElem.classList.add('error-field');
-};
-
-/**
- * Checks the demog data of a customer for PAN details and last name.
- *
- * @param {string} panStatus - The PAN status of the customer.
- * @returns {Object} An object containing the check results.
- * @property {boolean} proceed - Indicates whether the process can proceed.
- * @property {boolean} terminationCheck - Indicates if a termination check is required.
- */
-const demogDataCheck = (panStatus) => {
-  const result = { proceed: false, terminationCheck: false };
-
-  // Check if PAN number or last name is missing
-  if (!CUSTOMER_DEMOG_DATA.panNumberPersonalDetails || !CUSTOMER_DEMOG_DATA.lastName) {
-    if (CUSTOMER_DEMOG_DATA.panNumberPersonalDetails) {
-      result.proceed = true;
-    } else if (panStatus === 'E' || panStatus === 'D' || panStatus === 'X' || panStatus === 'F' || panStatus === 'ED') {
-      result.terminationCheck = true;
-      result.proceed = true;
-    } else {
-      PAN_RETRY_COUNTER += 1;
-      if (PAN_RETRY_COUNTER > 3) {
-        result.terminationCheck = true;
-        result.proceed = true;
-      } else {
-        // Enable PAN form field and log retry
-        enableFormField('field-pannumberpersonaldetails');
-        console.log('retry');
-      }
-    }
-  } else {
-    result.proceed = true;
-  }
-  return result;
-};
-
-/**
- * Checks the user's proceed status based on PAN status and other conditions.
- *
- * @param {string} panStatus - The PAN status ('E', 'D', 'X', 'F', 'ED').
- * @param {Object} globals - The global object containing form and other data.
- */
-const checkUserProceedStatus = (panStatus, globals) => {
-  /**
-   * Removes error classes from all error fields.
-   */
-  const errorFields = document.querySelectorAll('.error-field');
-  errorFields.forEach((field) => {
-    field.classList.remove('error-field');
-    field.classList.add('wrapper-disabled');
-  });
-
-  /**
-   * Executes the check based on PAN status.
-   */
-  // Main logic to check user proceed status
-
-  const terminationCheck = false;
-  switch (IS_ETB_USER) {
-    case true:
-      if (CUSTOMER_INPUT.pan) {
-        executeCheck(panStatus, terminationCheck, customerValidationHandler, globals);
-      } else if (CUSTOMER_INPUT.dob) {
-        if (!CUSTOMER_DEMOG_DATA.panNumberPersonalDetails || !CUSTOMER_DEMOG_DATA.lastName) {
-          const result = demogDataCheck(panStatus);
-          if (result.proceed) {
-            executeCheck(panStatus, result.terminationCheck, customerValidationHandler, globals);
-          }
-        } else {
-          executeCheck(panStatus, terminationCheck, customerValidationHandler, globals);
-        }
-      }
-      break;
-    case false:
-      executeCheck(panStatus, terminationCheck, customerValidationHandler, globals);
-      break;
-    default:
-      break;
-  }
-};
-
-/**
- * Creates a PAN validation request object and handles success and failure callbacks.
- * @param {string} firstName - The first name of the cardholder.
- * @param {string} middleName - The last name of the cardholder.
- * @param {string} lastName - The last name of the cardholder.
- * @param {Object} globals - The global object containing necessary data for PAN validation.
- * @returns {Object} - The PAN validation request object.
- */
-const createPanValidationRequest = (firstName, middleName, lastName, globals) => {
-  currentFormContext.customerName = { firstName, middleName, lastName }; // required for listNameOnCard function.
-  const panValidation = {
-    /**
-     * Create pan validation request object.
-     * @returns {Object} - The PAN validation request object.
-     */
-    createRequestObj: () => {
-      try {
-        const personalDetails = globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.personalDetails;
-        const reqObj = {
-          journeyName: currentFormContext.journeyName,
-          journeyID: currentFormContext.journeyID,
-          mobileNumber: globals.form.loginPanel.mobilePanel.registeredMobileNumber.$value,
-          panInfo: {
-            panNumber:
-              personalDetails.panNumberPersonalDetails.$value !== null
-                ? personalDetails.panNumberPersonalDetails.$value
-                : globals.form.loginPanel.identifierPanel.pan.$value,
-            panType: 'P',
-            dob: convertDateToDdMmYyyy(new Date(personalDetails.dobPersonalDetails.$value)),
-            name: personalDetails.firstName.$value ? personalDetails.firstName.$value.split(' ')[0] : '',
-          },
-        };
-        return reqObj;
-      } catch (ex) {
-        return ex;
-      }
-    },
-    /**
-     * Event handlers for PAN validation.
-     */
-    eventHandlers: {
-      /**
-       * Callback function for successful PAN validation response.
-       * @param {Object} responseObj - The response object containing PAN validation result.
-       */
-      successCallBack: (responseObj) => {
-        const errStack = {};
-        if (responseObj?.statusCode === 'FC00') {
-          PAN_VALIDATION_STATUS = responseObj.panValidation.status.errorCode === '1';
-          if (PAN_VALIDATION_STATUS) {
-            const panStatus = responseObj.panValidation.panStatus;
-            checkUserProceedStatus(panStatus, globals);
-          } else {
-            errStack.errorText = 'PAN validation unsuccessful.';
-            throw errStack;
-          }
-        } else {
-          errStack.errorText = 'PAN validation API error.';
-          throw errStack;
-        }
-      },
-      /**
-       * Callback function for failed PAN validation response.
-       * @param {Object} errorObj - The error object containing details of the failure.
-       */
-      errorCallBack: (errorObj) => {
-        const ccWizardView = globals.form.corporateCardWizardView;
-        const resultPanel = globals.form.resultPanel;
-        const tryAgainButtonErrorPanel = globals.form.resultPanel.errorResultPanel.tryAgainButtonErrorPanel;
-        const ccWizardViewBlock = formUtil(globals, ccWizardView);
-        const resultPanelBlock = formUtil(globals, resultPanel);
-        const tryAgainButtonErrorPanelBlock = formUtil(globals, tryAgainButtonErrorPanel);
-        const panels = {
-          hidePanels: [ccWizardViewBlock],
-          showPanels: [resultPanelBlock, tryAgainButtonErrorPanelBlock],
-        };
-        showErrorPanel(panels, errorObj?.errorText);
-        const reloadBtn = document.getElementsByName('tryAgainButtonErrorPanel')?.[0];
-        reloadBtn.addEventListener('click', () => window.location.reload());
-      },
-    },
-  };
-  // Call PANValidationAndNameMatchService with PAN validation request and event handlers
-  // PANValidationAndNameMatchService(panValidation.createRequestObj(), panValidation.eventHandlers);
-};
-
-/**
  * Handles API call for validating pinCode using the pinCodeMaster function.
  * @param {object} globalObj - The global object containing necessary globals form data.
  * @param {object} cityField - The City field object from the global object.
@@ -706,7 +458,7 @@ const pinmasterApi = async (globalObj, cityField, stateField, pincodeField) => {
     setStateField.enabled(false);
   };
   const errorMethod = (errStack) => {
-    const { errorCode, errorMessage } = errStack;
+    const { errorCode } = errStack;
     const defErrMessage = 'Please enter a valid pincode';
     if (errorCode === '500') {
       setPincodeField.markInvalid(false, defErrMessage);
@@ -742,7 +494,7 @@ const pinmasterApi = async (globalObj, cityField, stateField, pincodeField) => {
  */
 const pinCodeMaster = async (globals) => {
   const yourDetails = globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage;
-  const currentDetails = yourDetails.currentDetails;
+  const { currentDetails } = yourDetails;
   const employeeDetails = yourDetails.employmentDetails;
   const addressCurentNtb = currentDetails.currentAddressNTB;
   const permanentAddressNtb = addressCurentNtb.permanentAddress.permanentAddressPanel;
@@ -944,11 +696,9 @@ const finalDap = (globals) => {
   const apiEndPoint = urlPath(endpoints.finalDapAndPdfGen);
   const eventHandlers = {
     successCallBack: (response) => {
-      console.log(response);
       updatePanelVisibility(response, globals);
     },
     errorCallBack: (response) => {
-      console.log(response);
       updatePanelVisibility(response, globals);
     },
   };
@@ -984,7 +734,7 @@ const aadharConsent123 = async (globals) => {
       });
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 
@@ -1020,7 +770,7 @@ const prefillForm = (globals) => {
     // show error pannel if corporate credit card details not present
     showPanel?.forEach((panel) => panel.visible(true));
     hidePanel?.forEach((panel) => panel.visible(false));
-    const response = invokeJourneyDropOff('CRM_LEAD_FAILURE', '9999999999', '', 'create', globals);
+    invokeJourneyDropOff('CRM_LEAD_FAILURE', '9999999999', '', 'create', globals);
   }
 };
 
@@ -1081,7 +831,7 @@ const resendOTP = (globals) => {
   try {
     restAPICall(globals, method, payload, path, successCallback, errorCallback, loadingText);
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 
@@ -1090,7 +840,6 @@ export {
   prefillForm,
   currentFormContext,
   formRuntime,
-  createPanValidationRequest,
   getAddressDetails,
   pinCodeMaster,
   validateEmailID,

@@ -103,7 +103,7 @@ const formUtil = (globalObj, panelName) => ({
         }
       }
       if (changeDataAttr?.disable && val) {
-        globalObj.functions.setProperty(panelName, { enabled: false });
+        globalObj.functions.setProperty(panelName, { readOnly: true });
       }
     }
   },
