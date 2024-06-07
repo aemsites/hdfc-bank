@@ -376,11 +376,7 @@ main .field-incorrectotptext {
   }
 }
 
-main .form .field-errormessagetext > p::before {
-  background-image: url('../../icons/hdfc-error-icon.svg');
-}
-
-main .form .field-resultpanel .field-errormessagetext::before {
+main .form .field-resultpanel .field-errormessagetext:not(:has(p))::before {
   content: '';
   display: block;
   position: relative;
@@ -391,6 +387,10 @@ main .form .field-resultpanel .field-errormessagetext::before {
   background-size: contain;
   background-repeat: no-repeat;
   padding-bottom: 24px;
+}
+
+main .form .field-resultpanel .field-errormessagetext p::before {
+  background-image: url('../../icons/hdfc-error-icon.svg');
 }
 
 main .form .field-successresultpanel .field-successresulttextlabel > p::before {
@@ -405,7 +405,7 @@ main .form .field-successresultpanel {
     border-radius: var(--form-border-radius) var(--form-border-radius) 0 0;
   }
 
-  .field-errormessagetext {
+  .field-errormessagetext:not(:has(p)) {
     display: grid;
     text-align: center;
     background-color: var(--color-interface-background-quaternary);
@@ -417,7 +417,7 @@ main .form .field-successresultpanel {
     margin: -40px -40px 0;
   }
 
-  .field-successresulttextlabel {
+  .field-errormessagetext:has(p), .field-successresulttextlabel {
     background-color: var(--color-interface-background-quaternary);
     margin: -40px -40px 0;
     padding: 0 15px;
@@ -707,7 +707,7 @@ main .form .field-resultpanel {
 
     .field-arnrefnumpanel::before { left: 14%; }
     .field-arnrefnumlabel { left: 32%; }
-    
+
     .field-arnnumber {
       left: 32%; 
       top: 43px;
