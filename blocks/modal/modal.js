@@ -3,11 +3,11 @@ import {
   buildBlock, decorateBlock, loadBlock,
 } from '../../scripts/aem.js';
 
+// eslint-disable-next-line no-unused-vars
 async function createMainModal(content, actionWrapClass, reqConsentAgree) {
   if (!content) {
     return null;
   }
-  const resultScope = {};
   const dialog = document.createElement('dialog');
   const dialogContent = document.createElement('div');
   dialogContent.classList.add('modal-content');
@@ -19,9 +19,10 @@ async function createMainModal(content, actionWrapClass, reqConsentAgree) {
   closeButton.type = 'button';
   closeButton.innerHTML = '<span class="icon icon-close">X</span>';
   closeButton.addEventListener('click', () => {
+    const resultScope = {};
     resultScope[`${'closeIcon'}`] = true;
     dialog.close();
-    const customEvent = new CustomEvent('modalTriggerValue', { detail: resultScope });
+    const customEvent = new CustomEvent('modalTriggerValue', { detail: resultScope, bubbles: false });
     content?.dispatchEvent(customEvent);
   });
   if (!reqConsentAgree) {
@@ -36,9 +37,10 @@ async function createMainModal(content, actionWrapClass, reqConsentAgree) {
       // providing close functionalities to all the btns available
       button?.addEventListener('click', (e) => {
         const nameOfBtn = e?.target?.name;
+        const resultScope = {};
         resultScope[`${nameOfBtn}`] = true;
         dialog.close();
-        const customEvent = new CustomEvent('modalTriggerValue', { detail: resultScope });
+        const customEvent = new CustomEvent('modalTriggerValue', { detail: resultScope, bubbles: false });
         content?.dispatchEvent(customEvent);
       });
     });

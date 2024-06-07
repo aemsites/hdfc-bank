@@ -5,8 +5,9 @@
 /* eslint-disable no-unused-vars */
 /* eslint no-console: ["error", { allow: ["warn", "error", "log"] }] */
 /* eslint no-unused-vars: ["error", { "args": "none" }] */
-import { createJourneyId, currentFormContext } from '../common/journey-utils.js';
-import PANValidationAndNameMatchService from '../common/panvalidation.js';
+import {
+  invokeJourneyDropOff, invokeJourneyDropOffUpdate, journeyResponseHandlerUtil, currentFormContext, createJourneyId, invokeJourneyDropOffByParam, formRuntime,
+} from '../common/journey-utils.js';
 import executeCheck from '../common/panutils.js';
 import { customerValidationHandler, executeInterfaceApiFinal } from '../common/executeinterfaceutils.js';
 import {
@@ -26,24 +27,37 @@ import {
   santizedFormData,
   makeFieldInvalid,
   dateFormat,
+  santizedFormDataWithContext,
 } from '../common/formutils.js';
 import {
   getJsonResponse,
   restAPICall,
+  displayLoader, hideLoaderGif,
 } from '../common/makeRestAPI.js';
+import { sendAnalyticsEvent } from '../common/analytics.js';
+import corpCreditCard from '../common/constants.js';
 
-const journeyName = 'CORPORATE_CARD_JOURNEY';
-currentFormContext.journeyID = createJourneyId('a', 'b', 'c');
-currentFormContext.journeyName = journeyName;
+const { endpoints } = corpCreditCard;
+
+// Initialize all Corporate Card Journey Context Variables.
+currentFormContext.journeyName = corpCreditCard.journeyName;
 currentFormContext.journeyType = 'NTB';
 currentFormContext.formName = 'CorporateCreditCard';
 currentFormContext.errorCode = '';
 currentFormContext.errorMessage = '';
 currentFormContext.eligibleOffers = '';
 
+formRuntime.getOtpLoader = currentFormContext.getOtpLoader || (typeof window !== 'undefined') ? displayLoader : false;
+formRuntime.otpValLoader = currentFormContext.otpValLoader || (typeof window !== 'undefined') ? displayLoader : false;
+formRuntime.validatePanLoader = (typeof window !== 'undefined') ? displayLoader : false;
+formRuntime.executeInterface = (typeof window !== 'undefined') ? displayLoader : false;
+formRuntime.ipa = (typeof window !== 'undefined') ? displayLoader : false;
+formRuntime.aadharInit = (typeof window !== 'undefined') ? displayLoader : false;
+formRuntime.hideLoader = (typeof window !== 'undefined') ? hideLoaderGif : false;
+
 let PAN_VALIDATION_STATUS = false;
 let PAN_RETRY_COUNTER = 1;
-let resendOtpCount = 3;
+let RESEND_OTP_COUNT = 3;
 let IS_ETB_USER = false;
 const CUSTOMER_INPUT = { mobileNumber: '', pan: '', dob: '' };
 const CUSTOMER_DEMOG_DATA = {};
@@ -90,96 +104,6 @@ const removeBanner = () => {
   if (banner) {
     banner.style.display = 'none';
   }
-};
-
-/**
- * Handles the success scenario for OTP generation.
- * @param {any} res  - The response object containing the OTP success generation response.
- * @param {Object} globals - globals variables object containing form configurations.
- */
-const otpGenSuccess = (res, globals) => {
-  const pannel = {
-    // declare parent panel -- common name defining
-    welcome: globals.form.loginPanel.welcomeTextLabel,
-    login: globals.form.loginPanel,
-    otp: globals.form.otpPanel,
-    otpButton: globals.form.getOTPbutton,
-    currentAddressNTB: globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.currentDetails.currentAddressNTB,
-    currentAddressETB: globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.currentDetails.currentAddressETB,
-    panWizardField: globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.personalDetails.dobPersonalDetails,
-    dobWizardField: globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.personalDetails.panNumberPersonalDetails,
-  };
-  currentFormContext.isCustomerIdentified =		res?.customerIdentificationResponse?.CustomerIdentificationResponse?.errorCode === '0' ? 'Y' : 'N';
-  // const welcomeTxt = formUtil(globals, pannel.welcome);
-  const otpPanel = formUtil(globals, pannel.otp);
-  const otpBtn = formUtil(globals, pannel.otpButton);
-  const loginPanel = formUtil(globals, pannel.login);
-  const regMobNo = pannel.login.mobilePanel.registeredMobileNumber.$value;
-
-  // welcomeTxt.visible(false);
-  otpBtn.visible(false);
-  loginPanel.visible(false);
-  otpPanel.visible(true);
-
-  appendMaskedNumber('field-otphelptext', regMobNo);
-  removeBanner();
-};
-
-/**
- * Handles the failure scenario for OTP generation.
- * @param {any} res  - The response object containing the OTP failure generation response.
- * @param {Object} globals - globals variables object containing form configurations.
- */
-const otpGenFailure = (res, globals) => {
-  const pannel = {
-    // declare parent panel -- common name defining
-    welcome: globals.form.loginPanel.welcomeTextLabel,
-    login: globals.form.loginPanel,
-    otp: globals.form.otpPanel,
-    otpButton: globals.form.getOTPbutton,
-    resultPanel: globals.form.resultPanel,
-  };
-
-  // const welcomeTxt = formUtil(globals, pannel.welcome);
-  const otpPanel = formUtil(globals, pannel.otp);
-  const loginPanel = formUtil(globals, pannel.login);
-  const otpBtn = formUtil(globals, pannel.otpButton);
-  const failurePanel = formUtil(globals, pannel.resultPanel);
-
-  // welcomeTxt.visible(false);
-  otpPanel.visible(false);
-  loginPanel.visible(false);
-  otpBtn.visible(false);
-  failurePanel.visible(true);
-  removeBanner();
-};
-
-const OTPGEN = {
-  getPayload(globals) {
-    const mobileNo = globals.form.loginPanel.mobilePanel.registeredMobileNumber.$value;
-    const panNo = globals.form.loginPanel.identifierPanel.pan.$value;
-    const dob = clearString(globals.form.loginPanel.identifierPanel.dateOfBirth.$value);
-    const jsonObj = {};
-    jsonObj.requestString = {};
-    jsonObj.requestString.mobileNumber = String(mobileNo);
-    jsonObj.requestString.dateOfBith = dob ?? '';
-    jsonObj.requestString.panNumber = panNo ?? '';
-    jsonObj.requestString.journeyID = currentFormContext.journeyID;
-    jsonObj.requestString.journeyName = currentFormContext.journeyName;
-    jsonObj.requestString.userAgent = window.navigator.userAgent;
-    jsonObj.requestString.identifierValue = panNo || dob;
-    jsonObj.requestString.identifierName = panNo ? 'PAN' : 'DOB';
-    return jsonObj;
-  },
-  successCallback(res, globals) {
-    return res?.otpGenResponse?.status?.errorCode === '0' ? otpGenSuccess(res, globals) : otpGenFailure(res, globals);
-  },
-  errorCallback(err, globals) {
-    otpGenFailure(err, globals);
-    console.log(`I am in errorCallbackOtpGen ${globals}`);
-  },
-  path: urlPath('/content/hdfc_ccforms/api/customeridentificationV4.json'),
-  loadingText: 'Please wait while we are authenticating you',
 };
 
 /**
@@ -236,10 +160,10 @@ const splitName = (fullName) => {
 const currentAddressToggleHandler = (globals) => {
   if (
     currentFormContext.journeyType === 'ETB'
-		&& globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.currentDetails.currentAddressETB.currentAddressToggle.$value
-			=== 'on'
+    && globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.currentDetails.currentAddressETB.currentAddressToggle.$value
+    === 'on'
   ) {
-    const { newCurentAddressPanel } =			globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.currentDetails.currentAddressETB;
+    const { newCurentAddressPanel } = globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.currentDetails.currentAddressETB;
 
     const newCurentAddressLine1 = formUtil(globals, newCurentAddressPanel.newCurentAddressLine1);
     const newCurentAddressLine2 = formUtil(globals, newCurentAddressPanel.newCurentAddressLine2);
@@ -249,10 +173,10 @@ const currentAddressToggleHandler = (globals) => {
     const newCurentAddressState = formUtil(globals, newCurentAddressPanel.newCurentAddressState);
 
     /**
-	* Sets the address fields with the parsed customer address data.
-	* If the customer address is not available, it parses and sets it from BRE_DEMOG_RESPONSE.
-	// eslint-disable-next-line no-tabs
-	*/
+  * Sets the address fields with the parsed customer address data.
+  * If the customer address is not available, it parses and sets it from BRE_DEMOG_RESPONSE.
+  // eslint-disable-next-line no-tabs
+  */
     const setAddress = () => {
       newCurentAddressLine1.setValue(currentFormContext.customerParsedAddress[0], { attrChange: true, value: false });
       newCurentAddressLine2.setValue(currentFormContext.customerParsedAddress[1], { attrChange: true, value: false });
@@ -316,6 +240,7 @@ const personalDetailsPreFillFromBRE = (res, globals) => {
 
   if (!breCheckAndFetchDemogResponse) return;
   BRE_DEMOG_RESPONSE = breCheckAndFetchDemogResponse;
+  currentFormContext.breDemogResponse = breCheckAndFetchDemogResponse;
   // Extract gender from response
   const personalDetailsFields = {
     gender: 'VDCUSTGENDER',
@@ -384,7 +309,9 @@ const personalDetailsPreFillFromBRE = (res, globals) => {
   }
   const personaldetails = document.querySelector('.field-personaldetails');
   personaldetails.classList.add('personaldetails-disabled');
-  addDisableClass(personaldetails);
+  setTimeout(() => {
+    addDisableClass(personaldetails);
+  }, 10);
 };
 
 /**
@@ -441,38 +368,19 @@ const showErrorPanel = (panels, errorText) => {
 };
 
 /**
- * Handles the success scenario for OTP Validation.
- * @param {any} res  - The response object containing the OTP success generation response.
- * @param {Object} globals - globals variables object containing form configurations.
+ * @name otpValHandler
+ * @param {Object} response
+ * @param {Object} globals
+ * @return {PROMISE}
  */
-const otpValSuccess = (res, globals) => {
-  const pannel = {
-    // declare parent panel -- common name defining
-    // welcome: globals.form.loginPanel.welcomeTextLabel,
-    login: globals.form.loginPanel,
-    otp: globals.form.otpPanel,
-    otpButton: globals.form.getOTPbutton,
-    ccWizardView: globals.form.corporateCardWizardView,
-    resultPanel: globals.form.resultPanel,
-  };
-  currentFormContext.isCustomerIdentified =		res?.customerIdentificationResponse?.CustomerIdentificationResponse?.errorCode === '0' ? 'Y' : 'N';
-  currentFormContext.productCode = globals.functions.exportData().data.CorporateCreditCard.productCode;
-  currentFormContext.promoCode = globals.functions.exportData().data.CorporateCreditCard.promoCode;
-  // const welcomeTxt = formUtil(globals, pannel.welcome);
-  const otpPanel = formUtil(globals, pannel.otp);
-  const otpBtn = formUtil(globals, pannel.otpButton);
-  const loginPanel = formUtil(globals, pannel.login);
-  const ccWizardPannel = formUtil(globals, pannel.ccWizardView);
-
-  // welcomeTxt.visible(false);
-  otpBtn.visible(false);
-  loginPanel.visible(false);
-  otpPanel.visible(false);
-  ccWizardPannel.visible(true);
-  CUSTOMER_INPUT.mobileNumber = pannel.login.mobilePanel.registeredMobileNumber.$value;
-  CUSTOMER_INPUT.dob = pannel.login.identifierPanel.dateOfBirth.$value;
-  CUSTOMER_INPUT.pan = pannel.login.identifierPanel.pan.$value;
+const otpValHandler = (response, globals) => {
+  const res = {};
+  res.demogResponse = response;
+  currentFormContext.isCustomerIdentified = res?.demogResponse?.errorCode === '0' ? 'Y' : 'N';
+  formRuntime.productCode = globals.functions.exportData().form.productCode;
+  currentFormContext.promoCode = globals.functions.exportData().form.promoCode;
   currentFormContext.jwtToken = res?.demogResponse?.Id_token_jwt;
+  currentFormContext.panFromDemog = res?.demogResponse?.BRECheckAndFetchDemogResponse?.VDCUSTITNBR;
   const existingCustomer = existingCustomerCheck(res);
   if (existingCustomer) {
     IS_ETB_USER = true;
@@ -482,124 +390,8 @@ const otpValSuccess = (res, globals) => {
   (async () => {
     const myImportedModule = await import('./cc.js');
     myImportedModule.onWizardInit();
+    return true;
   })();
-};
-
-/**
- * Handles the failure scenario for OTP Validation.
- * @param {any} res  - The response object containing the OTP success generation response.
- * @param {Object} globals - globals variables object containing form configurations.
- */
-const otpValFailure = (res, globals) => {
-  const pannel = {
-    // declare parent panel -- common name defining
-    welcome: globals.form.loginPanel.welcomeTextLabel,
-    login: globals.form.loginPanel,
-    otp: globals.form.otpPanel,
-    otpButton: globals.form.getOTPbutton,
-    ccWizardView: globals.form.corporateCardWizardView,
-    resultPanel: globals.form.resultPanel,
-    incorrectOtpText: globals.form.incorrectOTPText,
-    errorPanelLabel: globals.form.resultPanel.errorResultPanel,
-  };
-  currentFormContext.isCustomerIdentified =		res?.customerIdentificationResponse?.CustomerIdentificationResponse?.errorCode === '0' ? 'Y' : 'N';
-  // const welcomeTxt = formUtil(globals, pannel.welcome);
-  const otpPanel = formUtil(globals, pannel.otp);
-  const otpBtn = formUtil(globals, pannel.otpButton);
-  const loginPanel = formUtil(globals, pannel.login);
-  const resultPanel = formUtil(globals, pannel.resultPanel);
-  const incorectOtp = formUtil(globals, pannel.incorrectOtpText);
-  const otpNumFormName = 'otpNumber'; // constantName-otpNumberfieldName
-  const otpFieldinp = formUtil(globals, pannel.otp?.[`${otpNumFormName}`]);
-  const resultSetErrorText1 = formUtil(globals, pannel.errorPanelLabel.resultSetErrorText1);
-  const resultSetErrorText2 = formUtil(globals, pannel.errorPanelLabel.resultSetErrorText2);
-  const tryAgainButtonErrorPanel = formUtil(globals, pannel.errorPanelLabel.tryAgainButtonErrorPanel);
-  /* startCode- switchCase otp-error-scenarios- */
-  switch (res?.otpValidationResponse?.errorCode) {
-    case '02': {
-      // incorrect otp
-      otpFieldinp.setValue('');
-      incorectOtp.visible(true);
-      const otpNumbrQry = document.getElementsByName(otpNumFormName)?.[0];
-      otpNumbrQry?.addEventListener('input', (e) => {
-        if (e.target.value) {
-          incorectOtp.visible(false);
-        }
-      });
-      break;
-    }
-    case '04': {
-      // incorrect otp attempt of 3 times.
-      // const panels = {
-      //   hidePanels: [incorectOtp, welcomeTxt, otpBtn, loginPanel, otpPanel, resultSetErrorText1, resultSetErrorText2],
-      //   showPanels: [resultPanel, tryAgainButtonErrorPanel],
-      // };
-      const panels = {
-        hidePanels: [incorectOtp, otpBtn, loginPanel, otpPanel, resultSetErrorText1, resultSetErrorText2],
-        showPanels: [resultPanel, tryAgainButtonErrorPanel],
-      };
-      const errorText = 'You have entered invalid OTP for 3 consecutive attempts. Please try again later';
-      showErrorPanel(panels, errorText);
-      const reloadBtn = document.getElementsByName('tryAgainButtonErrorPanel')?.[0];
-      reloadBtn.addEventListener('click', () => window.location.reload());
-      break;
-    }
-    case 'CZ_HTTP_0003': {
-      // const panels = {
-      //   hidePanels: [incorectOtp, welcomeTxt, otpBtn, loginPanel, otpPanel, resultSetErrorText1, resultSetErrorText2],
-      //   showPanels: [resultPanel],
-      // };
-      const panels = {
-        hidePanels: [incorectOtp, otpBtn, loginPanel, otpPanel, resultSetErrorText1, resultSetErrorText2],
-        showPanels: [resultPanel],
-      };
-      const errorText = 'Unfortunately, we were unable to process your request';
-      changeTextContent(panels, errorText);
-      break;
-    }
-    default: {
-      incorectOtp.visible(false);
-      // welcomeTxt.visible(false);
-      otpBtn.visible(false);
-      loginPanel.visible(false);
-      otpPanel.visible(false);
-      resultPanel.visible(true);
-    }
-  }
-  /* endCode- switchCase otp-error-scenarios- */
-};
-
-const OTPVAL = {
-  getPayload(globals) {
-    const mobileNo = globals.form.loginPanel.mobilePanel.registeredMobileNumber.$value;
-    const panNo = globals.form.loginPanel.identifierPanel.pan.$value;
-    const passwordValue = globals.form.otpPanel.otpNumber.$value;
-    const dob = clearString(globals.form.loginPanel.identifierPanel.dateOfBirth.$value);
-    const jsonObj = {};
-    jsonObj.requestString = {};
-    jsonObj.requestString.mobileNumber = String(mobileNo);
-    jsonObj.requestString.panNumber = String(panNo) ?? '';
-    jsonObj.requestString.dateOfBirth = String(dob) ?? '';
-    jsonObj.requestString.channelSource = '';
-    jsonObj.requestString.dedupeFlag = 'N';
-    jsonObj.requestString.passwordValue = String(passwordValue) ?? '';
-    jsonObj.requestString.referenceNumber = `AD${getTimeStamp(new Date())}` ?? '';
-    jsonObj.requestString.journeyID = currentFormContext.journeyID;
-    jsonObj.requestString.journeyName = currentFormContext.journeyName;
-    jsonObj.requestString.userAgent = window.navigator.userAgent;
-    return jsonObj;
-  },
-  successCallback(res, globals) {
-    return res?.demogResponse?.errorCode === '0' && res?.otpValidationResponse?.errorCode === '0'
-      ? otpValSuccess(res, globals)
-      : otpValFailure(res, globals);
-  },
-  errorCallback(err, globals) {
-    otpValFailure(err, globals);
-    console.log(`I am in errorCallback_OtpFailure ${globals}`);
-  },
-  path: urlPath('/content/hdfc_cc_unified/api/otpValFetchAssetDemog.json'),
-  loadingText: 'Please wait while we are authenticating you',
 };
 
 /**
@@ -619,8 +411,8 @@ const setConfirmScrAddressFields = (globalObj) => {
   const etb = currentDetails.currentAddressETB;
   const ntb = currentDetails.currentAddressNTB;
   const employeeDetails = yourDetails.employmentDetails;
-  const confirmAddress = ccWizard.confirmAndSubmitPanel.AddressDeclarationPanel;
-  const ovdNtb = confirmAddress.addressDeclarationOVD.cardDeliveryNTBFlow;
+  const confirmAddress = ccWizard.confirmAndSubmitPanel.addressDeclarationPanel;
+  const addressDeclaration = confirmAddress.addressDeclarationOVD;
   const etbPrefilledAddress = etb.prefilledCurrentAdddress.$value;
   const etbNewCurentAddress = concatObjVals({
     addressLine1: etb.newCurentAddressPanel.newCurentAddressLine1.$value,
@@ -630,7 +422,7 @@ const setConfirmScrAddressFields = (globalObj) => {
     state: etb.newCurentAddressPanel.newCurentAddressState.$value,
     pincode: etb.newCurentAddressPanel.newCurentAddressState.$value,
   });
-  const etbCurentAddress =		currentFormContext.journeyType === 'ETB' && etb.currentAddressToggle.$value === 'off' ? etbPrefilledAddress : etbNewCurentAddress;
+  const etbCurentAddress = currentFormContext.journeyType === 'ETB' && etb.currentAddressToggle.$value === 'off' ? etbPrefilledAddress : etbNewCurentAddress;
   const ntbCurrentAddress = concatObjVals({
     addressLine1: ntb.addressLine1.$value,
     addressLine2: ntb.addressLine2.$value,
@@ -649,9 +441,9 @@ const setConfirmScrAddressFields = (globalObj) => {
   });
   const userCurrentAddress = currentFormContext.journeyType === 'ETB' ? etbCurentAddress : ntbCurrentAddress;
 
-  const officeAddressFieldOVD = formUtil(globalObj, ovdNtb.officeAddressOVD.officeAddressOVDAddress);
+  const officeAddressFieldOVD = formUtil(globalObj, addressDeclaration.officeAddressOVD.officeAddressOVDAddress);
   const kycOfficeAddressField = formUtil(globalObj, confirmAddress.addressDeclarationOffice.officeAddressSelectKYC);
-  const currentAddressFieldOVD = formUtil(globalObj, ovdNtb.currentAddressOVD.currentAddressOVDAddress);
+  const currentAddressFieldOVD = formUtil(globalObj, addressDeclaration.currentAddressOVD.currentAddressOVDAddress);
   const residenceAddressField = formUtil(globalObj, confirmAddress.CurrentAddressDeclaration.currentResidenceAddress);
   const biometricAddressField = formUtil(globalObj, confirmAddress.currentAddressBiometric.currentResidenceAddressBiometricText);
 
@@ -667,56 +459,52 @@ const setConfirmScrAddressFields = (globalObj) => {
 };
 
 /**
- * Moves the wizard view to the "selectKycPaymentPanel" step.
+ * Moves the wizard view to the "selectKycPanel" step.
  */
 const getThisCard = (globals) => {
   const nameOnCardDropdown =		globals.form.corporateCardWizardView.confirmCardPanel.cardBenefitsPanel.CorporatetImageAndNamePanel.nameOnCardDropdown.$value;
+  const isAddressChanged = currentFormContext.executeInterfaceReqObj.requestString.addressEditFlag === 'Y';
   executeInterfaceApiFinal(globals);
   setConfirmScrAddressFields(globals);
-  moveWizardView('corporateCardWizardView', 'selectKycPaymentPanel');
+  if (!isAddressChanged) {
+    moveWizardView('corporateCardWizardView', 'confirmAndSubmitPanel');
+    const { addressDeclarationPanel } = globals.form.corporateCardWizardView.confirmAndSubmitPanel;
+    const {
+      cardDeliveryAddressPanel,
+      AddressDeclarationAadhar,
+      addressDeclarationOffice,
+      addressDeclarationText1,
+      addressDeclarationText2,
+      addressDeclarationOVD,
+    } = addressDeclarationPanel;
+    const { confirmAndSubmitTC2, continueToIDCOM, confirmAndSubmitButton } = addressDeclarationPanel.tandCPanelConfirmAndSubmit;
+    const cardDeliveryAddressPanelUtil = formUtil(globals, cardDeliveryAddressPanel);
+    const AddressDeclarationAadharUtil = formUtil(globals, AddressDeclarationAadhar);
+    const addressDeclarationOfficeUtil = formUtil(globals, addressDeclarationOffice);
+    const addressDeclarationText1Util = formUtil(globals, addressDeclarationText1);
+    const addressDeclarationText2Util = formUtil(globals, addressDeclarationText2);
+    const addressDeclarationOVDUtil = formUtil(globals, addressDeclarationOVD);
+    const confirmAndSubmitTC2Util = formUtil(globals, confirmAndSubmitTC2);
+    const continueToIDCOMUtil = formUtil(globals, continueToIDCOM);
+    const confirmAndSubmitButtonUtil = formUtil(globals, confirmAndSubmitButton);
+    cardDeliveryAddressPanelUtil.visible(false);
+    AddressDeclarationAadharUtil.visible(false);
+    addressDeclarationOfficeUtil.visible(false);
+    addressDeclarationText1Util.visible(false);
+    addressDeclarationText2Util.visible(false);
+    addressDeclarationOVDUtil.visible(true);
+    confirmAndSubmitTC2Util.visible(false);
+    continueToIDCOMUtil.visible(true);
+    confirmAndSubmitButtonUtil.visible(false);
+  } else {
+    moveWizardView('corporateCardWizardView', 'selectKycPanel');
+  }
 };
 
 /**
  * Moves the wizard view to the "confirmAndSubmitPanel" step.
  */
 const getAddressDetails = () => moveWizardView('corporateCardWizardView', 'confirmAndSubmitPanel');
-
-/**
- * Resends OTP success handler.
- * @param {any} res  - The response object containing the OTP success generation response.
- * @param {Object} globals - globals variables object containing form configurations.
- */
-const resendOtpSuccess = (res, globals) => {
-  const pannel = globals.form.otpPanel;
-  const resendBtn = formUtil(globals, pannel.otpResend);
-  const maxAttemptText = formUtil(globals, pannel.maxAttemptText);
-  OTPGEN.successCallback(res, globals);
-  resendOtpCount -= 1;
-  const existCountString = 3;
-  const attemptLeft = pannel.maxAttemptText.$value?.replace(/\d\/\d|\d/, `${resendOtpCount}/${existCountString}`);
-  maxAttemptText.setValue(attemptLeft);
-  if (!resendOtpCount) {
-    // resendBtn.enabled(false); // disabling functionality button willl exist in DOM
-    resendBtn.visible(false); // button will not exist in DOM
-    const errMsg = document.querySelector('.field-maxattempttext');
-    errMsg.classList.remove('col-6');
-    errMsg.classList.add('col-12');
-  }
-};
-
-const RESENDOTP = {
-  getPayload(globals) {
-    return OTPGEN.getPayload(globals);
-  },
-  successCallback(res, globals) {
-    return resendOtpSuccess(res, globals);
-  },
-  errorCallback(err, globals) {
-    return OTPGEN.errorCallback(err, globals);
-  },
-  path: OTPGEN.path,
-  loadingText: 'Please wait otp sending again...',
-};
 
 /**
  * Enables a form field by removing the 'wrapper-disabled' class and adding the 'error-field' class.
@@ -773,8 +561,8 @@ const demogDataCheck = (panStatus) => {
  */
 const checkUserProceedStatus = (panStatus, globals) => {
   /**
-	 * Removes error classes from all error fields.
-	 */
+   * Removes error classes from all error fields.
+   */
   const errorFields = document.querySelectorAll('.error-field');
   errorFields.forEach((field) => {
     field.classList.remove('error-field');
@@ -782,28 +570,28 @@ const checkUserProceedStatus = (panStatus, globals) => {
   });
 
   /**
-	 * Executes the check based on PAN status.
-	 */
+   * Executes the check based on PAN status.
+   */
   // Main logic to check user proceed status
 
   const terminationCheck = false;
   switch (IS_ETB_USER) {
     case true:
       if (CUSTOMER_INPUT.pan) {
-        executeCheck(panStatus, terminationCheck, customerValidationHandler, globals, BRE_DEMOG_RESPONSE);
+        executeCheck(panStatus, terminationCheck, customerValidationHandler, globals);
       } else if (CUSTOMER_INPUT.dob) {
         if (!CUSTOMER_DEMOG_DATA.panNumberPersonalDetails || !CUSTOMER_DEMOG_DATA.lastName) {
           const result = demogDataCheck(panStatus);
           if (result.proceed) {
-            executeCheck(panStatus, result.terminationCheck, customerValidationHandler, globals, BRE_DEMOG_RESPONSE);
+            executeCheck(panStatus, result.terminationCheck, customerValidationHandler, globals);
           }
         } else {
-          executeCheck(panStatus, terminationCheck, customerValidationHandler, globals, BRE_DEMOG_RESPONSE);
+          executeCheck(panStatus, terminationCheck, customerValidationHandler, globals);
         }
       }
       break;
     case false:
-      executeCheck(panStatus, terminationCheck, customerValidationHandler, globals, BRE_DEMOG_RESPONSE);
+      executeCheck(panStatus, terminationCheck, customerValidationHandler, globals);
       break;
     default:
       break;
@@ -822,9 +610,9 @@ const createPanValidationRequest = (firstName, middleName, lastName, globals) =>
   currentFormContext.customerName = { firstName, middleName, lastName }; // required for listNameOnCard function.
   const panValidation = {
     /**
-		 * Create pan validation request object.
-		 * @returns {Object} - The PAN validation request object.
-		 */
+     * Create pan validation request object.
+     * @returns {Object} - The PAN validation request object.
+     */
     createRequestObj: () => {
       try {
         const personalDetails = globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.personalDetails;
@@ -834,9 +622,9 @@ const createPanValidationRequest = (firstName, middleName, lastName, globals) =>
           mobileNumber: globals.form.loginPanel.mobilePanel.registeredMobileNumber.$value,
           panInfo: {
             panNumber:
-							personalDetails.panNumberPersonalDetails.$value !== null
-							  ? personalDetails.panNumberPersonalDetails.$value
-							  : globals.form.loginPanel.identifierPanel.pan.$value,
+              personalDetails.panNumberPersonalDetails.$value !== null
+                ? personalDetails.panNumberPersonalDetails.$value
+                : globals.form.loginPanel.identifierPanel.pan.$value,
             panType: 'P',
             dob: convertDateToDdMmYyyy(new Date(personalDetails.dobPersonalDetails.$value)),
             name: personalDetails.firstName.$value ? personalDetails.firstName.$value.split(' ')[0] : '',
@@ -848,90 +636,52 @@ const createPanValidationRequest = (firstName, middleName, lastName, globals) =>
       }
     },
     /**
-		 * Event handlers for PAN validation.
-		 */
+     * Event handlers for PAN validation.
+     */
     eventHandlers: {
       /**
-			 * Callback function for successful PAN validation response.
-			 * @param {Object} responseObj - The response object containing PAN validation result.
-			 */
+       * Callback function for successful PAN validation response.
+       * @param {Object} responseObj - The response object containing PAN validation result.
+       */
       successCallBack: (responseObj) => {
-        try {
-          const ccWizardView = globals.form.corporateCardWizardView;
-          const resultPanel = globals.form.resultPanel;
-          const tryAgainButtonErrorPanel = globals.form.resultPanel.errorResultPanel.tryAgainButtonErrorPanel;
-          const ccWizardViewBlock = formUtil(globals, ccWizardView);
-          const resultPanelBlock = formUtil(globals, resultPanel);
-          const tryAgainButtonErrorPanelBlock = formUtil(globals, tryAgainButtonErrorPanel);
-          if (responseObj?.statusCode === 'FC00') {
-            PAN_VALIDATION_STATUS = responseObj.panValidation.status.errorCode === '1';
-            if (PAN_VALIDATION_STATUS) {
-              const panStatus = responseObj.panValidation.panStatus;
-              checkUserProceedStatus(panStatus, globals);
-            } else {
-              const panels = {
-                hidePanels: [ccWizardViewBlock],
-                showPanels: [resultPanelBlock, tryAgainButtonErrorPanelBlock],
-              };
-              const errorText = 'PAN validation unsuccessful.';
-              showErrorPanel(panels, errorText);
-              const reloadBtn = document.getElementsByName('tryAgainButtonErrorPanel')?.[0];
-              reloadBtn.addEventListener('click', () => window.location.reload());
-            }
+        const errStack = {};
+        if (responseObj?.statusCode === 'FC00') {
+          PAN_VALIDATION_STATUS = responseObj.panValidation.status.errorCode === '1';
+          if (PAN_VALIDATION_STATUS) {
+            const panStatus = responseObj.panValidation.panStatus;
+            checkUserProceedStatus(panStatus, globals);
           } else {
-            const panels = {
-              hidePanels: [ccWizardViewBlock],
-              showPanels: [resultPanelBlock, tryAgainButtonErrorPanelBlock],
-            };
-            const errorText = 'PAN validation API error.';
-            showErrorPanel(panels, errorText);
-            const reloadBtn = document.getElementsByName('tryAgainButtonErrorPanel')?.[0];
-            reloadBtn.addEventListener('click', () => window.location.reload());
+            errStack.errorText = 'PAN validation unsuccessful.';
+            throw errStack;
           }
-        } catch (ex) {
-          console.log(ex);
+        } else {
+          errStack.errorText = 'PAN validation API error.';
+          throw errStack;
         }
       },
       /**
-			 * Callback function for failed PAN validation response.
-			 * @param {Object} errorObj - The error object containing details of the failure.
-			 */
+       * Callback function for failed PAN validation response.
+       * @param {Object} errorObj - The error object containing details of the failure.
+       */
       errorCallBack: (errorObj) => {
-        console.log(errorObj);
+        const ccWizardView = globals.form.corporateCardWizardView;
+        const resultPanel = globals.form.resultPanel;
+        const tryAgainButtonErrorPanel = globals.form.resultPanel.errorResultPanel.tryAgainButtonErrorPanel;
+        const ccWizardViewBlock = formUtil(globals, ccWizardView);
+        const resultPanelBlock = formUtil(globals, resultPanel);
+        const tryAgainButtonErrorPanelBlock = formUtil(globals, tryAgainButtonErrorPanel);
+        const panels = {
+          hidePanels: [ccWizardViewBlock],
+          showPanels: [resultPanelBlock, tryAgainButtonErrorPanelBlock],
+        };
+        showErrorPanel(panels, errorObj?.errorText);
+        const reloadBtn = document.getElementsByName('tryAgainButtonErrorPanel')?.[0];
+        reloadBtn.addEventListener('click', () => window.location.reload());
       },
     },
   };
   // Call PANValidationAndNameMatchService with PAN validation request and event handlers
-  PANValidationAndNameMatchService(panValidation.createRequestObj(), panValidation.eventHandlers);
-};
-
-/**
- * logic hanlding during prefill of form.
- * @param {object} globals - The global object containing necessary globals form data.
- */
-const prefillForm = (globals) => {
-  const globalSchema = globals?.functions?.exportData();
-  const ccGlobals = globalSchema?.data?.CorporateCreditCard;
-  const ccData = {
-    companyName: ccGlobals?.companyName,
-    designation: ccGlobals?.designation,
-    employeeCode: ccGlobals?.employeeCode,
-    employmentType: ccGlobals?.employmentType,
-    maskedMobileNumber: ccGlobals?.maskedMobileNumber,
-    registeredMobileNumber: ccGlobals?.registeredMobileNumber,
-    relationshipNumber: ccGlobals?.relationshipNumber,
-    workEmailAddress: ccGlobals?.workEmailAddress,
-  };
-  const ccDetailsPresent = Object.values(ccData)?.every((el) => el);
-  const resultErrorPannel = formUtil(globals, globals.form.resultPanel);
-  const loginPannel = formUtil(globals, globals.form.loginPanel);
-  const otpButton = formUtil(globals, globals.form.getOTPbutton);
-  if (!ccDetailsPresent) {
-    // show error pannel if corporate credit card details not present
-    resultErrorPannel.visible(true);
-    loginPannel.visible(false);
-    otpButton.visible(false);
-  }
+  // PANValidationAndNameMatchService(panValidation.createRequestObj(), panValidation.eventHandlers);
 };
 
 /**
@@ -965,6 +715,7 @@ const pinmasterApi = async (globalObj, cityField, stateField, pincodeField) => {
   };
   const successMethod = (value) => {
     const changeDataAttrObj = { attrChange: true, value: false };
+    setPincodeField.markInvalid(true, '');
     setCityField.setValue(value?.CITY, changeDataAttrObj);
     setCityField.enabled(false);
     setStateField.setValue(value?.STATE, changeDataAttrObj);
@@ -1031,23 +782,24 @@ const pinCodeMaster = async (globals) => {
  * validate email id in personal details screen for the NTB
  * @param {object} globals - The global object containing necessary globals form data.
  */
-const validateEmailID = async (globals) => {
+const validateEmailID = async (email, globals) => {
   const emailField = globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage.personalDetails.personalEmailAddress;
-  if (!emailField.$valid) return;
-  const url = urlPath('/content/hdfc_commonforms/api/emailid.json');
+  const url = urlPath(endpoints.emailId);
   const setEmailField = formUtil(globals, emailField);
-  const invalidMsg = 'Please enter email id.';
+  const invalidMsg = 'Please enter valid email id.';
   const payload = {
-    email: emailField.$value,
+    email,
   };
   const method = 'POST';
   try {
     const emailValid = await getJsonResponse(url, payload, method);
-    if (!emailValid) {
-      setEmailField.markInvalid(emailValid, invalidMsg);
+    if (emailValid) {
+      setEmailField.markInvalid(true);
+    } else {
+      setEmailField.markInvalid(false, invalidMsg);
     }
   } catch (error) {
-    console.error(error, 'NTB_email_error');
+    console.error(error, 'error in emailValid');
   }
 };
 
@@ -1066,7 +818,8 @@ const createDapRequestObj = (globals) => {
     personalDetails,
     employmentDetails,
   } = globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage;
-  const customerInfo = currentFormContext.executeInterfaceReqObj.requestString;
+  const formContextCallbackData = globals.functions.exportData()?.currentFormContext;
+  const customerInfo = currentFormContext?.executeInterfaceReqObj?.requestString || formContextCallbackData?.executeInterfaceReqObj?.requestString;
   const { prefilledEmploymentDetails } = employmentDetails;
   const dapRequestObj = {
     requestString: {
@@ -1079,7 +832,7 @@ const createDapRequestObj = (globals) => {
       panNumber: personalDetails.panNumberPersonalDetails.$value,
       mobileNo: globals.form.loginPanel.mobilePanel.registeredMobileNumber.$value,
       existingCustomer: currentFormContext.journeyType === 'ETB' ? 'Y' : 'N',
-      APS_NAME_AS_CARD: currentFormContext.executeInterfaceReqObj.requestString.nameOnCard,
+      APS_NAME_AS_CARD: customerInfo.nameOnCard,
       emailAddress: prefilledEmploymentDetails.workEmailAddress.$value,
       APS_PER_ADDRESS_1: customerInfo.permanentAddress1,
       APS_PER_ADDRESS_2: customerInfo.permanentAddress2,
@@ -1110,12 +863,12 @@ const createDapRequestObj = (globals) => {
       APS_RESI_TYPE: '2',
       APS_COM_ADDR_TYPE: '2',
       APS_SELF_CONFIRMATION: customerInfo.selfConfirmation,
-      APS_MOBILE_EDIT_FLAG: currentFormContext.executeInterfaceReqObj.requestString.mobileEditFlag,
-      APS_EMAIL_EDIT_FLAG: currentFormContext.executeInterfaceReqObj.requestString.apsEmailEditFlag,
-      APS_PAN_EDIT_FLAG: currentFormContext.executeInterfaceReqObj.requestString.panEditFlag,
-      APS_ADDRESS_EDIT_FLAG: currentFormContext.executeInterfaceReqObj.requestString.addressEditFlag,
-      APS_NAME_EDIT_FLAG: currentFormContext.executeInterfaceReqObj.requestString.nameEditFlag,
-      APS_RESPHONE_EDIT_FLAG: currentFormContext.executeInterfaceReqObj.requestString.resPhoneEditFlag,
+      APS_MOBILE_EDIT_FLAG: customerInfo.mobileEditFlag,
+      APS_EMAIL_EDIT_FLAG: customerInfo.apsEmailEditFlag,
+      APS_PAN_EDIT_FLAG: customerInfo.panEditFlag,
+      APS_ADDRESS_EDIT_FLAG: customerInfo.addressEditFlag,
+      APS_NAME_EDIT_FLAG: customerInfo.nameEditFlag,
+      APS_RESPHONE_EDIT_FLAG: customerInfo.resPhoneEditFlag,
       APS_OFFPHONE_EDIT_FLAG: 'N',
       APS_EMP_CODE: '',
       APS_DESIGNATION: prefilledEmploymentDetails.designation.$value,
@@ -1132,11 +885,11 @@ const createDapRequestObj = (globals) => {
       APS_FILLER6: '',
       APS_SMCODE: '',
       APS_DSE_CODE: '',
-      applicationERefNumber: currentFormContext.ipaResponse.ipa.eRefNumber,
+      applicationERefNumber: formRuntime?.eRefNumber || formContextCallbackData?.eRefNumber,
       SOA_REQUESTID: '0305245144',
       nameOfDirector: '',
       relationship: '',
-      product: currentFormContext.productDetails.product,
+      product: formRuntime?.productCode || formContextCallbackData?.productCode,
       APS_TYPE_OF_INDUSTRY: '',
       journeyID: currentFormContext.journeyID,
       journeyName: currentFormContext.journeyName,
@@ -1144,16 +897,16 @@ const createDapRequestObj = (globals) => {
       timeInfo: new Date().toISOString(),
       APS_OFF_EMAILID: prefilledEmploymentDetails.workEmailAddress.$value,
       APS_DIRECT_DEBIT: '',
-      customerId: currentFormContext.executeInterfaceReqObj.requestString.customerID,
+      customerId: customerInfo.customerID,
       pricingDetails: '',
       docUpload: '',
       idcomEnabled: true,
       APS_CAPTCHA: '',
-      applRefNo: currentFormContext.ipaResponse.ipa.applRefNumber,
+      applRefNo: formRuntime?.applRefNumber || formContextCallbackData?.applRefNumber,
       txnRefNo: '',
       pseudoID: '',
-      FILLER8: currentFormContext.ipaResponse.ipa.filler8,
-      Id_token_jwt: currentFormContext.jwtToken,
+      FILLER8: formRuntime?.filler8 || formContextCallbackData?.filler8,
+      Id_token_jwt: currentFormContext.jwtToken || formContextCallbackData.jwtToken,
       IDCOM_Token: '',
       JSCPAYLOAD: '',
       BROWSERFINGERPRINT: 'ef3036d9e4872df7e5a5eb2fe49bc8ae',
@@ -1188,7 +941,7 @@ const updatePanelVisibility = (response, globals) => {
  */
 const finalDap = (globals) => {
   const dapRequestObj = createDapRequestObj(globals);
-  const apiEndPoint = urlPath('/content/hdfc_ccforms/api/pacc/finaldapandpdfgen.json');
+  const apiEndPoint = urlPath(endpoints.finalDapAndPdfGen);
   const eventHandlers = {
     successCallBack: (response) => {
       console.log(response);
@@ -1202,17 +955,153 @@ const finalDap = (globals) => {
   restAPICall('', 'POST', dapRequestObj, apiEndPoint, eventHandlers.successCallBack, eventHandlers.errorCallBack, 'Loading');
 };
 
+/**
+ * @name aadharConsent123
+ * @param {Object} globals - The global object containing necessary data for DAP request.
+ */
+const aadharConsent123 = async (globals) => {
+  try {
+    if (typeof window !== 'undefined') {
+      const openModal = (await import('../blocks/modal/modal.js')).default;
+      const { aadharLangChange } = await import('./cc.js');
+      const contentDomName = 'aadharConsentPopup';
+      const btnWrapClassName = 'button-wrapper';
+      const config = {
+        content: document.querySelector(`[name = ${contentDomName}]`),
+        actionWrapClass: btnWrapClassName,
+        reqConsentAgree: true,
+      };
+      if (typeof formRuntime.aadharConfig === 'undefined') {
+        formRuntime.aadharConfig = config;
+      }
+      await openModal(formRuntime.aadharConfig);
+      aadharLangChange(formRuntime.aadharConfig?.content, 'English');
+      config?.content?.addEventListener('modalTriggerValue', (event) => {
+        const receivedData = event.detail;
+        if (receivedData?.aadharConsentAgree) {
+          globals.functions.setProperty(globals.form.corporateCardWizardView.selectKycPanel.selectKYCOptionsPanel.ckycDetailsContinueETBPanel.triggerAadharAPI, { value: 1 });
+        }
+      });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+/**
+ * @name journeyResponseHandler
+ * @param {string} payload.
+ */
+function journeyResponseHandler(payload) {
+  currentFormContext.leadProfile = journeyResponseHandlerUtil(String(payload.leadProfileId), currentFormContext)?.leadProfile;
+}
+
+/**
+ * logic hanlding during prefill of form.
+ * @param {object} globals - The global object containing necessary globals form data.
+ */
+const prefillForm = (globals) => {
+  const formData = globals?.functions?.exportData();
+  const {
+    welcomeText,
+    resultPanel,
+    loginPanel,
+    consentFragment,
+    getOTPbutton,
+    resultPanel: {
+      errorResultPanel: {
+        errorMessageText,
+        resultSetErrorText1,
+        resultSetErrorText2,
+      },
+    },
+  } = globals.form;
+  const showPanel = [resultPanel, errorMessageText, resultSetErrorText1, resultSetErrorText2]?.map((fieldName) => formUtil(globals, fieldName));
+  const hidePanel = [loginPanel, welcomeText, consentFragment, getOTPbutton]?.map((fieldName) => formUtil(globals, fieldName));
+  if (!formData?.form?.login?.registeredMobileNumber) {
+    // show error pannel if corporate credit card details not present
+    showPanel?.forEach((panel) => panel.visible(true));
+    hidePanel?.forEach((panel) => panel.visible(false));
+    const response = invokeJourneyDropOff('CRM_LEAD_FAILURE', '9999999999', '', 'create', globals);
+  }
+};
+
+/**
+* sendAnalytics
+* @param {string} payload
+* @param {object} globals
+*/
+// eslint-disable-next-line no-unused-vars
+function sendAnalytics(payload, globals) {
+  sendAnalyticsEvent(payload, santizedFormDataWithContext(globals), currentFormContext);
+}
+
+/**
+ * @name resendOTP
+ * @param {Object} globals - The global object containing necessary data for DAP request.
+ */
+const resendOTP = (globals) => {
+  const { mobilePanel: { registeredMobileNumber }, identifierPanel: { pan, dateOfBirth } } = globals.form.loginPanel;
+  const mobileNo = registeredMobileNumber.$value;
+  const panNo = pan.$value;
+  const dob = clearString(dateOfBirth.$value);
+
+  const errorResendOtp = (err, objectGlobals) => {
+    const {
+      otpPanel, submitOTP, resultPanel,
+    } = objectGlobals.form;
+
+    const hidePanel = [otpPanel, submitOTP]?.map((panel) => formUtil(objectGlobals, panel));
+    const showPanel = [resultPanel]?.map((panel) => formUtil(objectGlobals, panel));
+    hidePanel.forEach((item) => item.visible(false));
+    showPanel.forEach((item) => item.visible(true));
+  };
+
+  const successResendOtp = (res, objectGlobals) => {
+    RESEND_OTP_COUNT -= 1;
+    invokeJourneyDropOffUpdate('ResendOtp', mobileNo, globals?.form.runtime.leadProifileId.$value, currentFormContext.journeyID, globals);
+    if (!RESEND_OTP_COUNT) errorResendOtp(res, objectGlobals);
+  };
+
+  const payload = {
+    requestString: {
+      mobileNumber: String(mobileNo),
+      dateOfBith: dob || '',
+      panNumber: panNo || '',
+      journeyID: globals.form.runtime.journeyId.$value,
+      journeyName: corpCreditCard.journeyName,
+      userAgent: window.navigator.userAgent,
+      identifierValue: panNo || dob.$value,
+      identifierName: panNo ? 'PAN' : 'DOB',
+    },
+  };
+  const successCallback = (res, globalObj) => ((res?.otpGenResponse?.status?.errorCode === '0') ? successResendOtp(res, globalObj) : errorResendOtp(res, globalObj));
+  const errorCallback = (err, globalObj) => errorResendOtp(err, globalObj);
+  const loadingText = 'Please wait otp sending again...';
+  const method = 'POST';
+  const path = urlPath(endpoints.otpGen);
+  try {
+    restAPICall(globals, method, payload, path, successCallback, errorCallback, loadingText);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export {
-  OTPGEN,
-  OTPVAL,
-  RESENDOTP,
   getThisCard,
   prefillForm,
   currentFormContext,
+  formRuntime,
   createPanValidationRequest,
   getAddressDetails,
   pinCodeMaster,
   validateEmailID,
   currentAddressToggleHandler,
   finalDap,
+  otpValHandler,
+  journeyResponseHandler,
+  createJourneyId,
+  sendAnalytics,
+  aadharConsent123,
+  resendOTP,
 };

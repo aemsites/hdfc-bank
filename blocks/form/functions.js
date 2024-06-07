@@ -2,18 +2,37 @@
 import {
   getOTP,
   otpValidation,
-  checkOffer,
   getThisCard,
-  resendOTP,
   prefillForm,
   getAddressDetails,
   pinCodeMaster,
   validateEmailID,
   currentAddressToggleHandler,
   finalDap,
+  aadharInit,
+  checkMode,
+  otpValHandler,
+  customSetFocus,
+  journeyResponseHandler,
+  currentFormContext,
+  createJourneyId,
+  validatePan,
+  panAPISuccesHandler,
+  executeInterfaceApi,
+  ipaRequestApi,
+  ipaSuccessHandler,
+  sendAnalytics,
+  aadharConsent123,
+  resendOTP,
 } from '../../common/functions.js';
 
-import { invokeJourneyDropOff, journeyResponseHandler } from '../../common/journey-utils.js';
+import { moveWizardView } from '../../common/formutils.js';
+import {
+  sendSubmitClickEvent,
+  sendGenericClickEvent,
+} from '../../common/analytics.js';
+import { hideLoaderGif } from '../../common/makeRestAPI.js';
+import { invokeJourneyDropOff, invokeJourneyDropOffByParam, invokeJourneyDropOffUpdate } from '../../common/journey-utils.js';
 
 /**
  * Get Full Name
@@ -120,6 +139,35 @@ function days(endDate, startDate) {
   return Math.floor(diffInMs / (1000 * 60 * 60 * 24));
 }
 
+/**
+ * getFormContext - returns form context.
+ * @returns {Promise} currentFormContext
+ */
+function getFormContext() {
+  return currentFormContext;
+}
+
+/**
+ * getWrappedFormContext - returns form context.
+ * @returns {Promise} currentFormContext
+ */
+function getWrappedFormContext() {
+  const formContext = {
+    formContext: currentFormContext,
+  };
+  return formContext;
+}
+
+/**
+* @name showElement
+* @param {string} elementName
+*/
+function showElement(elementName) {
+  const elm = document.querySelector(elementName);
+  if (elm) {
+    elm.style.display = 'block';
+  }
+}
 // eslint-disable-next-line import/prefer-default-export
 export {
   getFullName,
@@ -127,15 +175,35 @@ export {
   getOTP,
   otpValidation,
   days,
-  checkOffer,
   getThisCard,
-  resendOTP,
   prefillForm,
   getAddressDetails,
   pinCodeMaster,
   validateEmailID,
   currentAddressToggleHandler,
   finalDap,
-  invokeJourneyDropOff,
   journeyResponseHandler,
+  aadharInit,
+  moveWizardView,
+  checkMode,
+  otpValHandler,
+  customSetFocus,
+  getFormContext,
+  sendGenericClickEvent,
+  sendSubmitClickEvent,
+  getWrappedFormContext,
+  hideLoaderGif,
+  createJourneyId,
+  validatePan,
+  panAPISuccesHandler,
+  executeInterfaceApi,
+  ipaRequestApi,
+  ipaSuccessHandler,
+  invokeJourneyDropOff,
+  invokeJourneyDropOffByParam,
+  invokeJourneyDropOffUpdate,
+  sendAnalytics,
+  aadharConsent123,
+  resendOTP,
+  showElement,
 };

@@ -14,6 +14,7 @@ body,
 
 main {
   overflow: hidden;
+  padding-bottom: 30px;
 }
 
 main .form {
@@ -58,10 +59,10 @@ main .form {
   input[type='number'] {
     appearance: textfield;
   }
+}
 
-  .date-wrapper .field-description {
-    display: none;
-  }
+.date-wrapper .field-description {
+  display: none;
 }
 
 .passwordField .field-description {
@@ -69,15 +70,27 @@ main .form {
 }
 
 /* Base style for labels */
-main
-  .form
-  :not(.checkbox-wrapper, .radio-wrapper, .field-joiningrenewalfee)
-  > label {
+main .form :not(.checkbox-wrapper, .radio-wrapper, .field-joiningrenewalfee) > label{
   margin: 20px;
   position: absolute;
   transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
-  font-weight: 400;
-  font-size: 14px;
+  font-weight: var(--font-weight-regular);
+  font-size: var(--body-sm-font-size);
+  width: max-content;
+}
+
+main .form :not(.checkbox-wrapper, .radio-wrapper, .field-joiningrenewalfee) > label:has(p) p {
+  margin: 1px 0;
+  font-weight: var(--font-weight-regular);
+  font-size: var(--body-sm-font-size);
+}
+
+main .form form .checkbox-wrapper {
+  align-items: flex-start !important;
+}
+
+main .form form fieldset > .checkbox-wrapper:not(:first-of-type) {
+  margin-top: 15px;
 }
 
 main .form form {
@@ -204,6 +217,12 @@ main .form select {
   border-radius: var(--form-input-border-radius) !important;
 }
 
+main .form .field-welcometext p {
+  font-size: var(--body-x-lg-font-size);
+  font-weight: var(--font-weight-extra-bold);
+  color: var(--color-interface-text-primary);
+}
+
 /* loader for app show hide on api call */
 .preloader::before,
 .preloader::after {
@@ -252,13 +271,13 @@ main .form .bi-eye-slash {
 }
 
 /* Style for labels when input is active or not empty */
-main .form :is([data-active='true'], [data-empty='false'], .date-wrapper):not(.field-joiningrenewalfee) > label {
+main .form :is([data-active='true'], [data-empty='false'], .date-wrapper):not(.field-joiningrenewalfee) > label{
   color: var(--label-color);
   transform: translateY(-22px);
   z-index: 1;
   background-color: var(--color-interface-background-primary);
   padding: 0 4px;
-  font-weight: 600;
+  font-weight: var(--font-weight-bold);
   font-size: 13px;
   line-height: 20px;
   display: -webkit-box;
@@ -266,6 +285,10 @@ main .form :is([data-active='true'], [data-empty='false'], .date-wrapper):not(.f
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+main .form :is([data-active='true'], [data-empty='false'], .date-wrapper):not(.field-joiningrenewalfee) > label:has(p) p {
+  font-weight: var(--font-weight-bold);
 }
 
 /* Button Styling */
@@ -326,16 +349,9 @@ main .form :is([data-active='true'], [data-empty='false'], .date-wrapper):not(.f
   display: block;
 }
 
-.text-center {
-  text-align: center;
-}
-
-.text-left {
-  text-align: left;
-}
-
-.text-right {
-  text-align: right;
+main .form .field-otphelptext p {
+  font-size: var(--body-sm-font-size);
+  margin: 0;
 }
 
 main .field-incorrectotptext {
@@ -360,7 +376,7 @@ main .field-incorrectotptext {
   }
 }
 
-main .form .field-errorresultpanel .field-errorresulttextlabel > p::before {
+main .form .field-errorresultpanel .field-errormessagetext > p::before {
   background-image: url('../../icons/hdfc-error-icon.svg');
 }
 
@@ -376,10 +392,11 @@ main .form .field-successresultpanel {
     border-radius: var(--form-border-radius) var(--form-border-radius) 0 0;
   }
 
-  .field-errorresulttextlabel,
+  .field-errormessagetext,
   .field-successresulttextlabel {
     background-color: var(--color-interface-background-quaternary);
     margin: -40px -40px 0;
+    padding: 0 15px;
 
     p {
       padding: 20px 0 10px;
@@ -406,6 +423,7 @@ main
   max-width: 506px;
   margin: 0 auto;
   text-align: center;
+  pointer-events: none;
 
   p > p:not(:first-child) {
     padding-top: 15px;
@@ -417,10 +435,14 @@ main .form .field-successresultpanel .field-arnnumber {
   margin: 0 auto;
   padding: 10px;
   border-bottom: 1px solid rgb(236 237 243);
+  display: flex;
+  justify-content: end;
+
+  label { margin: 25px 10px; }
 
   input {
     max-width: 45vw;
-    margin: 0 0 0 55px;
+    margin: 15px 0 0 -10px;
     border: none;
     font-weight: 600;
     font-size: 18px;
@@ -442,6 +464,7 @@ main
   .field-errorresultpanel
   > div:not(.bulleted-paragraph) {
     justify-content: center;
+    display: flex;
 }
 
 main .form.block .field-otppanel {
@@ -480,15 +503,36 @@ main .form.block .field-otppanel {
     }
   }
 
-  .field-maxattempttext {
-    input {
-      text-align: right;
-      border: none;
-      cursor: text;
-      pointer-events: none;
-      margin-top: 0;
-      padding: 0;
+  .field-otpsubpanel {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+
+    .plain-text-wrapper {
+      width: fit-content;
+
+      p {
+        margin-top: 0.9em;
+        font-size: 14px;
+      }
     }
+
+    .field-numretries {
+      text-align: right;
+      direction: rtl;
+      margin: 0 -14px 0 -30px;
+
+      input {
+        padding: 0;
+        width: 24px;
+        margin: 0;
+        border: none;
+        background: transparent;
+        pointer-events: none;
+      }
+    }
+
+    .field-remaining { margin-left: -15px; }
   }
 }
 
@@ -500,6 +544,12 @@ main .form .field-resultpanel {
     font-size: 14px;
     line-height: 20px;
     margin: 4px;
+  }
+}
+
+@media (width <= 767px) {
+  main .form .field-successresultpanel .field-arnnumber {
+    justify-content: center;
   }
 }
 
@@ -529,11 +579,16 @@ main .form .field-resultpanel {
     .field-otpresend {
       margin: 0 !important;
     }
+
+    .field-otpsubpanel {
+      display: flex;
+      flex-direction: row;
+    }
   }
 
   main .form .field-errorresultpanel,
   main .form .field-successresultpanel {
-    > div:not(.field-errorresulttextlabel) {
+    > div:not(.field-errormessagetext):not(.field-successresulttextlabel) {
       max-width: 100%;
     }
 
@@ -551,11 +606,6 @@ main .form .field-resultpanel {
   main .form.block .field-otppanel {
     display: grid;
 
-    .field-maxattempttext input {
-      text-align: right;
-      margin-bottom: 0;
-    }
-
     .field-otpnumber {
       input {
         letter-spacing: 6vw;
@@ -566,12 +616,23 @@ main .form .field-resultpanel {
       margin: 0 !important;
     }
   }
+  
+  main .form form .field-successresultpanel {
+    margin-left: -17px;
+  }
 }
 
 @media (width <=960px) {
   main .section.form-container {
     width: 100%;
     margin: 0 !important;
+  }
+
+  main .form.block .field-otppanel {
+    .field-otpsubpanel {
+      display: flex;
+      flex-direction: row;
+    }
   }
 }
 

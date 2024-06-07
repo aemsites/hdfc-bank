@@ -1,3 +1,4 @@
+/* stylelint-disable no-descending-specificity */
 @import url('../../styles/color-palette.css');
 
 body.modal-open {
@@ -10,6 +11,63 @@ body.modal-open {
   overscroll-behavior: none;
   border: 1px solid #ccc;
   border-radius: var(--dialog-border-radius);
+}
+
+.modal dialog:has(.field-aadharconsentpopup) {
+  width: 525px;
+  padding: 0;
+
+  .field-aadharconsentlabel { display: flex;
+    p, h3 { margin: 0 0 8px; }
+    b { font-size: var(--body-x-lg-font-size); }
+  }
+  
+  .field-aadharconsentlabel b::before { 
+    content: url('../../icons/aadhar-icon.svg'); 
+    padding-right: 10px;
+  }
+  
+  .field-selectlanguage { display: inline-grid; 
+    
+    label {
+      padding-top: 7px;
+      font-size: var(--body-sm-font-size);
+      text-align: justify;
+    }
+    
+    select {
+      height: 42px;
+      width: 330px;
+      padding: var(--form-input-padding) !important;
+      border: 1px solid var(--color-input-border-default) !important;
+      border-radius: var(--form-input-border-radius) !important;
+    }
+  }
+
+  fieldset[class*='field-aadharconsent-'] {
+    padding: 0;
+
+    div[class*='field-aadharconsenttext-'] { 
+      padding: 20px 0 0 24px; 
+
+      p { 
+        color: var(--color-input-text-default); 
+        font-weight: 500;
+      }      
+    }
+    .panel-wrapper { padding: 0; }
+    
+    div[class*='field-aadharconsenthelp-'] p {
+      color: var(--color-interface-text-secondary);
+      font-size: 12px;
+    }
+  }
+
+  .field-aadharconsentagree {
+    text-align: left;
+    max-width: 167px;
+    margin-top: 10px !important;
+  }
 }
 
 .modal-content {
@@ -53,21 +111,23 @@ body.modal-open {
     display: none;
   }
 
-  .field-viewallcardbenefitspanel .field-label{
-    display: none;
-  }
+  .field-viewallcardbenefitspanel {
+    p { margin: 3px;}
+    .field-label { display: none; }
 
-  .field-viewallcardbenefitspanel button{
-    text-align: justify;
-    background: var(--color-interface-background-quinary);
-    color:var(--color-action-background-primary-default);
-    padding-left: 10px !important;
-  }
+    .field-cardbenefitstext {
+      p:has(b):not(:first-of-type) {margin-top: 16px;}
+    }
 
-  .field-viewallcardbenefitspanel button:hover{
-    background: var(--color-interface-background-quinary) !important;
+    button{
+      text-align: justify;
+      background: var(--color-interface-background-quinary);
+      color:var(--color-action-background-primary-default);
+      padding-left: 10px !important;
+    }
+
+    button:hover{ background: var(--color-interface-background-quinary) !important; }
   }
-  
 }
 
 .modal dialog .modal-content {
@@ -91,6 +151,12 @@ body.modal-open {
 
   .modal dialog .modal-content {
     max-height: calc(100vh - 90px);
+  }
+}
+
+@media (width <= 540px) {
+  .modal dialog:has(.field-aadharconsentpopup) {
+    width: 100%;
   }
 }
 
@@ -123,8 +189,8 @@ body.modal-open {
 
   .field-backlinkcardbenefits{
     text-align: left;
+    padding-bottom: 20px;
 
-    /* stylelint-disable-next-line no-descending-specificity */
     button{
       max-width: 100%;
       border-radius: 6px;

@@ -1,22 +1,22 @@
 /*************************************************************************
-* ADOBE CONFIDENTIAL
-* ___________________
-*
-* Copyright 2022 Adobe
-* All Rights Reserved.
-*
-* NOTICE: All information contained herein is, and remains
-* the property of Adobe and its suppliers, if any. The intellectual
-* and technical concepts contained herein are proprietary to Adobe
-* and its suppliers and are protected by all applicable intellectual
-* property laws, including trade secret and copyright laws.
-* Dissemination of this information or reproduction of this material
-* is strictly forbidden unless prior written permission is obtained
-* from Adobe.
+ * ADOBE CONFIDENTIAL
+ * ___________________
+ *
+ * Copyright 2022 Adobe
+ * All Rights Reserved.
+ *
+ * NOTICE: All information contained herein is, and remains
+ * the property of Adobe and its suppliers, if any. The intellectual
+ * and technical concepts contained herein are proprietary to Adobe
+ * and its suppliers and are protected by all applicable intellectual
+ * property laws, including trade secret and copyright laws.
+ * Dissemination of this information or reproduction of this material
+ * is strictly forbidden unless prior written permission is obtained
+ * from Adobe.
 
-* Adobe permits you to use and modify this file solely in accordance with
-* the terms of the Adobe license agreement accompanying it.
-*************************************************************************/
+ * Adobe permits you to use and modify this file solely in accordance with
+ * the terms of the Adobe license agreement accompanying it.
+ *************************************************************************/
 
 class ActionImpl {
     _metadata;
@@ -130,6 +130,11 @@ class Submit extends ActionImpl {
         super(payload, 'submit', { dispatch });
     }
 }
+class Save extends ActionImpl {
+    constructor(payload, dispatch = false) {
+        super(payload, 'save', { dispatch });
+    }
+}
 class SubmitSuccess extends ActionImpl {
     constructor(payload, dispatch = false) {
         super(payload, 'submitSuccess', { dispatch });
@@ -187,4 +192,4 @@ class RemoveInstance extends ActionImpl {
     }
 }
 
-export { AddInstance, AddItem, Blur, Change, Click, CustomEvent, ExecuteRule, FieldChanged, Focus, FormLoad, Initialize, Invalid, RemoveInstance, RemoveItem, Reset, Submit, SubmitError, SubmitFailure, SubmitSuccess, Valid, ValidationComplete, propertyChange };
+export { AddInstance, AddItem, Blur, Change, Click, CustomEvent, ExecuteRule, FieldChanged, Focus, FormLoad, Initialize, Invalid, RemoveInstance, RemoveItem, Reset, Save, Submit, SubmitError, SubmitFailure, SubmitSuccess, Valid, ValidationComplete, propertyChange };

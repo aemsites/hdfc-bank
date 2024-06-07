@@ -6,13 +6,17 @@ import {
   composeNameOption,
   setSelectOptions,
 } from './formutils.js';
-import { currentFormContext } from './journey-utils.js';
+import { currentFormContext, formRuntime } from './journey-utils.js';
 import {
   restAPICall,
   getJsonResponse,
-  hideLoader,
+  fetchJsonResponse,
+  fetchIPAResponse,
+  hideLoaderGif,
 } from './makeRestAPI.js';
+import corpCreditCard from './constants.js';
 
+const { endpoints, baseUrl } = corpCreditCard;
 const GENDER_MAP = {
   M: '1',
   F: '2',
@@ -43,7 +47,8 @@ const formatDate = (inputDate) => {
  * @param {Object} globals - The global object containing necessary data for ExecuteInterface request.
  * @returns {Object} - The ExecuteInterface request object.
  */
-const createExecuteInterfaceRequestObj = (panCheckFlag, globals, breDemogResponse) => {
+const createExecuteInterfaceRequestObj = (globals) => {
+  const { breDemogResponse } = currentFormContext;
   const {
     personalDetails,
     currentDetails,
@@ -72,7 +77,16 @@ const createExecuteInterfaceRequestObj = (panCheckFlag, globals, breDemogRespons
       nameEditFlag = 'Y';
     }
     const customerFiller2 = breDemogResponse?.BREFILLER2?.toUpperCase();
-    if (customerFiller2 === 'D106') {
+    if (currentDetails.currentAddressETB.currentAddressToggle.$value === 'on') {
+      addressEditFlag = 'Y';
+      const { newCurentAddressPanel } = currentDetails.currentAddressETB;
+      currentAddress.address1 = newCurentAddressPanel.newCurentAddressLine1.$value;
+      currentAddress.address2 = newCurentAddressPanel.newCurentAddressLine2.$value;
+      currentAddress.address3 = newCurentAddressPanel.newCurentAddressLine3.$value;
+      currentAddress.city = newCurentAddressPanel.newCurentAddressCity.$value;
+      currentAddress.pincode = newCurentAddressPanel.newCurentAddressPin.$value;
+      currentAddress.state = newCurentAddressPanel.newCurentAddressState.$value;
+    } else if (customerFiller2 === 'D106') {
       [currentAddress.address1, currentAddress.address2, currentAddress.address3] = currentFormContext.customerParsedAddress;
       currentAddress.city = breDemogResponse.VDCUSTCITY;
       currentAddress.pincode = breDemogResponse.VDCUSTZIPCODE;
@@ -85,18 +99,8 @@ const createExecuteInterfaceRequestObj = (panCheckFlag, globals, breDemogRespons
       currentAddress.pincode = breDemogResponse.VDCUSTZIPCODE;
       currentAddress.state = breDemogResponse.VDCUSTSTATE;
     }
-    if (currentDetails.currentAddressETB.currentAddressToggle.$value === 'on') {
-      addressEditFlag = 'Y';
-      const { newCurentAddressPanel } = currentDetails.currentAddressETB;
-      permanentAddress.address1 = newCurentAddressPanel.newCurentAddressLine1.$value;
-      permanentAddress.address2 = newCurentAddressPanel.newCurentAddressLine2.$value;
-      permanentAddress.address3 = newCurentAddressPanel.newCurentAddressLine3.$value;
-      permanentAddress.city = newCurentAddressPanel.newCurentAddressCity.$value;
-      permanentAddress.pincode = newCurentAddressPanel.newCurentAddressPin.$value;
-      permanentAddress.state = newCurentAddressPanel.newCurentAddressState.$value;
-    } else {
-      permanentAddress = { ...currentAddress };
-    }
+
+    permanentAddress = { ...currentAddress };
   } else {
     panEditFlag = 'Y';
     nameEditFlag = 'Y';
@@ -112,7 +116,7 @@ const createExecuteInterfaceRequestObj = (panCheckFlag, globals, breDemogRespons
     if (currentAddressNTB.permanentAddress.permanentAddressToggle.$value === 'on') {
       permanentAddress = { ...currentAddress };
     } else {
-      permanentAddress.address1 = permanentAddressPanel.permanentAddressLine1.$value;
+      permanentAddress.address1 = permanentAddressPanel.permanentAddressAddress1.$value;
       permanentAddress.address2 = permanentAddressPanel.permanentAddressLine2.$value;
       permanentAddress.address3 = permanentAddressPanel.permanentAddressLine3.$value;
       permanentAddress.city = permanentAddressPanel.permanentAddressCity.$value;
@@ -125,7 +129,7 @@ const createExecuteInterfaceRequestObj = (panCheckFlag, globals, breDemogRespons
       bankEmployee: 'N',
       mobileNumber: globals.form.loginPanel.mobilePanel.registeredMobileNumber.$value,
       fullName,
-      panCheckFlag,
+      panCheckFlag: 'Y',
       perAddressType: '2',
       personalEmailId: personalDetails.personalEmailAddress.$value,
       selfConfirmation: 'N',
@@ -145,7 +149,7 @@ const createExecuteInterfaceRequestObj = (panCheckFlag, globals, breDemogRespons
       permanentAddress2: permanentAddress.address2,
       permanentCity: permanentAddress.city,
       permanentZipCode: String(permanentAddress.pincode),
-      eReferenceNumber: breDemogResponse?.BREFILLER3,
+      eReferenceNumber: breDemogResponse?.BREFILLER3 || currentFormContext.referenceNumber,
       nameEditFlag,
       mobileEditFlag: currentFormContext.journeyType === 'ETB' ? 'N' : 'Y',
       resPhoneEditFlag: 'N',
@@ -163,12 +167,12 @@ const createExecuteInterfaceRequestObj = (panCheckFlag, globals, breDemogRespons
       officeZipCode: employmentDetails.officeAddressPincode.$value,
       officeState: employmentDetails.officeAddressState.$value,
       productCode: '',
-      leadClosures: '',
-      leadGenerater: '',
+      leadClosures: globals.functions.exportData().form.leadClosures,
+      leadGenerater: globals.functions.exportData().form.leadGenerator,
       applyingBranch: 'N',
       smCode: '',
       dseCode: '',
-      lc2: '',
+      lc2: globals.functions.exportData().form.lc2,
       filler6: '',
       branchName: '',
       branchCity: '',
@@ -194,6 +198,8 @@ const createExecuteInterfaceRequestObj = (panCheckFlag, globals, breDemogRespons
       apsDobEditFlag: 'N',
       apsEmailEditFlag: 'N',
       journeyFlag: currentFormContext.journeyType,
+      annualIncomeOrItrAmount: '100000',
+      comResidenceType: '2',
     },
   };
   return requestObj;
@@ -205,7 +211,10 @@ const createExecuteInterfaceRequestObj = (panCheckFlag, globals, breDemogRespons
  */
 const listNameOnCard = (globals) => {
   const elementNameSelect = 'nameOnCardDropdown';
-  const { firstName, middleName, lastName } = currentFormContext.customerName;
+  const { personalDetails } = globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage;
+  const firstName = personalDetails.firstName.$value;
+  const middleName = personalDetails.middleName.$value;
+  const lastName = personalDetails.lastName.$value;
   const dropDownSelectField = globals.form.corporateCardWizardView.confirmCardPanel.cardBenefitsPanel.CorporatetImageAndNamePanel.nameOnCardDropdown;
   const options = composeNameOption(firstName, middleName, lastName);
   const initialValue = options[0]?.value;
@@ -220,7 +229,7 @@ const listNameOnCard = (globals) => {
  * @param {object} globals - globals variables object containing form configurations.
  */
 const journeyTerminate = (globals) => {
-  hideLoader();
+  hideLoaderGif();
   const resultPanel = formUtil(globals, globals.form.resultPanel);
   const wizardPanel = formUtil(globals, globals.form.corporateCardWizardView);
   wizardPanel.visible(false);
@@ -233,17 +242,25 @@ const journeyTerminate = (globals) => {
  * @param {object} response - object containing response from the previosu api call
  */
 const journeyResume = (globals, response) => {
-  currentFormContext.productDetails = response.productEligibility.productDetails?.[0];
-  currentFormContext.ipaResponse = response;
+  formRuntime.productDetails = response.productEligibility.productDetails?.[0];
+  formRuntime.eRefNumber = response.ipa.eRefNumber;
+  formRuntime.applRefNumber = response.ipa.applRefNumber;
+  formRuntime.filler8 = response.ipa.filler8;
   const imageEl = document.querySelector('.field-cardimage > picture');
-  const imagePath = `https://applyonlinedev.hdfcbank.com${response.productEligibility.productDetails[0]?.cardTypePath}?width=2000&optimize=medium`;
+  const imagePath = `${baseUrl}${response.productEligibility.productDetails[0]?.cardTypePath}?width=2000&optimize=medium`;
   imageEl.childNodes[5].setAttribute('src', imagePath);
   imageEl.childNodes[3].setAttribute('srcset', imagePath);
   imageEl.childNodes[1].setAttribute('srcset', imagePath);
-  const { cardBenefitsTextBox } = globals.form.corporateCardWizardView.confirmCardPanel.cardBenefitsPanel.cardBenefitsFeaturesPanel;
-  const cardBenefitsTextField = formUtil(globals, cardBenefitsTextBox);
-  cardBenefitsTextField.setValue(response.productEligibility.productDetails[0].keyBenefits[0]);
-  hideLoader();
+  const { keyBenefitsText0 } = globals.form.corporateCardWizardView.confirmCardPanel.cardBenefitsPanel.cardBenefitsFeaturesPanel;
+  const cardBenefitsTextField0 = formUtil(globals, keyBenefitsText0);
+  const { keyBenefitsText1 } = globals.form.corporateCardWizardView.confirmCardPanel.cardBenefitsPanel.cardBenefitsFeaturesPanel;
+  const cardBenefitsTextField1 = formUtil(globals, keyBenefitsText1);
+  const { keyBenefitsText2 } = globals.form.corporateCardWizardView.confirmCardPanel.cardBenefitsPanel.cardBenefitsFeaturesPanel;
+  const cardBenefitsTextField2 = formUtil(globals, keyBenefitsText2);
+  cardBenefitsTextField0.setValue(response.productEligibility.productDetails[0].keyBenefits[0]);
+  cardBenefitsTextField1.setValue(response.productEligibility.productDetails[0].keyBenefits[1]);
+  cardBenefitsTextField2.setValue(response.productEligibility.productDetails[0].keyBenefits[2]);
+  hideLoaderGif();
   listNameOnCard(globals);
 };
 
@@ -252,7 +269,7 @@ const journeyResume = (globals, response) => {
  * @param {object} globals - globals variables object containing form configurations.
  */
 const journeyRestart = (globals) => {
-  hideLoader();
+  hideLoaderGif();
   const { resultPanel, corporateCardWizardView, resultPanel: { errorResultPanel } } = globals.form;
   const ccView = formUtil(globals, corporateCardWizardView);
   const resultScr = formUtil(globals, resultPanel);
@@ -275,8 +292,8 @@ const journeyRestart = (globals) => {
  * @returns {void}
  */
 const sendIpaRequest = async (ipaRequestObj, globals) => {
-  const apiEndPoint = urlPath('/content/hdfc_etb_wo_pacc/api/ipa.json');
-  const exceedTimeLimit = (TOTAL_TIME >= currentFormContext.ipaDuration * 1000);
+  const apiEndPoint = urlPath(endpoints.ipa);
+  const exceedTimeLimit = (TOTAL_TIME >= formRuntime.ipaDuration * 1000);
   const method = 'POST';
   const successMethod = (respData) => {
     const ipaResult = respData?.ipa?.ipaResult;
@@ -287,8 +304,8 @@ const sendIpaRequest = async (ipaRequestObj, globals) => {
       return;
     }
     if (ipaResNotPresent) {
-      setTimeout(() => sendIpaRequest(ipaRequestObj, globals), currentFormContext.ipaTimer * 1000);
-      TOTAL_TIME += currentFormContext.ipaTimer * 1000;
+      setTimeout(() => sendIpaRequest(ipaRequestObj, globals), formRuntime.ipaTimer * 1000);
+      TOTAL_TIME += formRuntime.ipaTimer * 1000;
     } else if (promoCode === 'NA' && ipaResult === 'Y') {
       journeyTerminate(globals);
     } else {
@@ -308,15 +325,15 @@ const sendIpaRequest = async (ipaRequestObj, globals) => {
 };
 
 const customerValidationHandler = {
-  executeInterfaceApi: async (APS_PAN_CHK_FLAG, globals, breDemogResponse) => {
-    const requestObj = createExecuteInterfaceRequestObj(APS_PAN_CHK_FLAG, globals, breDemogResponse);
+  executeInterfaceApi: async (globals) => {
+    const requestObj = createExecuteInterfaceRequestObj(globals);
     currentFormContext.executeInterfaceReqObj = { ...requestObj };
-    const apiEndPoint = urlPath('/content/hdfc_etb_wo_pacc/api/executeinterface.json');
+    const apiEndPoint = urlPath(endpoints.executeInterface);
     const method = 'POST';
     const successMethod = (respData) => {
       if (respData.errorCode === '0000') {
-        currentFormContext.ipaDuration = respData.ExecuteInterfaceResponse.ipaDuration;
-        currentFormContext.ipaTimer = respData.ExecuteInterfaceResponse.ipaTimer;
+        formRuntime.ipaDuration = respData.ExecuteInterfaceResponse.ipaDuration;
+        formRuntime.ipaTimer = respData.ExecuteInterfaceResponse.ipaTimer;
         currentFormContext.jwtToken = respData.Id_token_jwt;
         const ipaRequestObj = {
           requestString: {
@@ -327,7 +344,7 @@ const customerValidationHandler = {
             userAgent: navigator.userAgent,
             journeyID: currentFormContext.journeyID,
             journeyName: currentFormContext.journeyName,
-            productCode: currentFormContext.productCode,
+            productCode: formRuntime.productCode,
           },
         };
         TOTAL_TIME = 0;
@@ -366,7 +383,7 @@ const createIdComRequestObj = () => {
   const idComObj = {
     requestString: {
       mobileNumber: currentFormContext.executeInterfaceReqObj.requestString.mobileNumber,
-      ProductCode: currentFormContext.productCode,
+      ProductCode: formRuntime.productCode,
       PANNo: currentFormContext.executeInterfaceReqObj.requestString.panNumber,
       userAgent: navigator.userAgent,
       journeyID: currentFormContext.journeyID,
@@ -384,7 +401,7 @@ const createIdComRequestObj = () => {
  */
 const fetchAuthCode = () => {
   const idComObj = createIdComRequestObj();
-  const apiEndPoint = urlPath('/content/hdfc_commonforms/api/fetchauthcode.json');
+  const apiEndPoint = urlPath(endpoints.fetchAuthCode);
   const eventHandlers = {
     successCallBack: (response) => {
       console.log(response);
@@ -402,10 +419,11 @@ const fetchAuthCode = () => {
  * @returns {void}
  */
 const executeInterfaceApiFinal = (globals) => {
-  const requestObj = currentFormContext.executeInterfaceReqObj;
+  const formCallBackContext = globals.functions.exportData()?.currentFormContext;
+  const requestObj = currentFormContext.executeInterfaceReqObj || formCallBackContext?.executeInterfaceReqObj;
   requestObj.requestString.nameOnCard = globals.form.corporateCardWizardView.confirmCardPanel.cardBenefitsPanel.CorporatetImageAndNamePanel.nameOnCardDropdown.$value;
-  requestObj.requestString.Id_token_jwt = currentFormContext.jwtToken;
-  requestObj.requestString.productCode = currentFormContext.productDetails.cardProductCode;
+  // requestObj.requestString.Id_token_jwt = currentFormContext.jwtToken || formCallBackContext?.currentFormContext?.jwtToken;
+  requestObj.requestString.productCode = formRuntime.productCode || formCallBackContext?.formRuntime?.productCode;
   requestObj.requestString.addressEditFlag = 'N';
   requestObj.requestString.panEditFlag = 'N';
   requestObj.requestString.nameEditFlag = 'N';
@@ -413,7 +431,7 @@ const executeInterfaceApiFinal = (globals) => {
   requestObj.requestString.resPhoneEditFlag = 'N';
   requestObj.requestString.apsDobEditFlag = 'N';
   requestObj.requestString.apsEmailEditFlag = 'N';
-  const apiEndPoint = urlPath('/content/hdfc_etb_wo_pacc/api/executeinterface.json');
+  const apiEndPoint = urlPath(endpoints.executeInterface);
   const eventHandlers = {
     successCallBack: (response) => {
       console.log(response);
@@ -428,7 +446,95 @@ const executeInterfaceApiFinal = (globals) => {
   restAPICall('', 'POST', requestObj, apiEndPoint, eventHandlers.successCallBack, eventHandlers.errorCallBack, 'Loading');
 };
 
+/**
+ * @name executeInterfaceApi
+ * @param {boolean} showLoader
+ * @param {boolean} hideLoader
+ * @param {object} globals
+ * @return {PROMISE}
+ */
+const executeInterfaceApi = (showLoader, hideLoader, globals) => {
+  const executeInterfaceRequest = createExecuteInterfaceRequestObj(globals);
+  currentFormContext.executeInterfaceReqObj = { ...executeInterfaceRequest };
+  const apiEndPoint = urlPath(endpoints.executeInterface);
+  if (showLoader) formRuntime.executeInterface();
+  return fetchJsonResponse(apiEndPoint, executeInterfaceRequest, 'POST', hideLoader);
+};
+
+/**
+ * @name ipaRequestApi ipaRequestApi
+ * @param {string} eRefNumber
+ * @param {string} mobileNumber
+ * @param {string} applicationRefNumber
+ * @param {string} idTokenJwt
+ * @param {string} ipaDuration
+ * @param {string} ipaTimer
+ * @param {boolean} showLoader
+ * @param {boolean} hideLoader
+ * @return {PROMISE}
+ */
+const ipaRequestApi = (eRefNumber, mobileNumber, applicationRefNumber, idTokenJwt, ipaDuration, ipaTimer, showLoader, hideLoader) => {
+  currentFormContext.jwtToken = idTokenJwt;
+  const ipaRequestObj = {
+    requestString: {
+      mobileNumber,
+      applRefNumber: applicationRefNumber,
+      eRefNumber,
+      Id_token_jwt: idTokenJwt,
+      userAgent: navigator.userAgent,
+      journeyID: currentFormContext.journeyID,
+      journeyName: currentFormContext.journeyName,
+      productCode: formRuntime.productCode,
+    },
+  };
+  TOTAL_TIME = 0;
+  const apiEndPoint = urlPath(endpoints.ipa);
+  if (showLoader) formRuntime?.ipa.dispalyLoader();
+  return fetchIPAResponse(apiEndPoint, ipaRequestObj, 'POST', ipaDuration, ipaTimer, hideLoader);
+};
+
+/**
+ * Handles the successful response for IPA.
+ *
+ * @param {Object} ipa - The ipa prop in response object.
+ * @param {Object} productEligibility - The product eligibility prop in response object.
+ * @param {Object} globals - The global context object containing form and view configurations.
+ */
+const ipaSuccessHandler = (ipa, productEligibility, globals) => {
+  const { productDetails } = productEligibility;
+  const [firstProductDetail] = productDetails;
+
+  formRuntime.productCode = firstProductDetail.cardProductCode;
+  formRuntime.eRefNumber = ipa.eRefNumber;
+  formRuntime.applRefNumber = ipa.applRefNumber;
+  formRuntime.filler8 = ipa.filler8;
+
+  const imageEl = document.querySelector('.field-cardimage > picture');
+  const imagePath = `${baseUrl}${firstProductDetail?.cardTypePath}?width=2000&optimize=medium`;
+
+  imageEl.childNodes[5].setAttribute('src', imagePath);
+  imageEl.childNodes[3].setAttribute('srcset', imagePath);
+  imageEl.childNodes[1].setAttribute('srcset', imagePath);
+
+  const benefitsPanel = globals.form.corporateCardWizardView.confirmCardPanel.cardBenefitsPanel.cardBenefitsFeaturesPanel;
+
+  ['keyBenefitsText0', 'keyBenefitsText1', 'keyBenefitsText2'].forEach((key, index) => {
+    const benefitsTextField = formUtil(globals, benefitsPanel[key]);
+    benefitsTextField.setValue(firstProductDetail.keyBenefits[index]);
+  });
+  if (currentFormContext.executeInterfaceReqObj.requestString.addressEditFlag === 'N') {
+    const { selectKycPanel } = globals.form.corporateCardWizardView;
+    const selectKycPanelUtil = formUtil(globals, selectKycPanel);
+    selectKycPanelUtil.visible(false);
+  }
+  hideLoaderGif();
+  listNameOnCard(globals);
+};
+
 export {
   customerValidationHandler,
   executeInterfaceApiFinal,
+  executeInterfaceApi,
+  ipaRequestApi,
+  ipaSuccessHandler,
 };

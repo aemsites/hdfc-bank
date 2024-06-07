@@ -1,6 +1,8 @@
 /* eslint-disable no-underscore-dangle */
+
+import corpCreditCard from './constants.js';
+
 // declare-CONSTANTS
-const DEFAULT_BASE_PATH = 'https://applyonlinedev.hdfcbank.com'; // baseApiUrl for default
 const DATA_ATTRIBUTE_EMPTY = 'data-empty';
 const ANCESTOR_CLASS_NAME = 'field-wrapper';
 
@@ -10,7 +12,7 @@ const ANCESTOR_CLASS_NAME = 'field-wrapper';
  * @returns {string} - The complete API URL including the base URL and the provided endpoint.
  */
 
-const urlPath = (path) => `${DEFAULT_BASE_PATH}${path}`;
+const urlPath = (path) => `${corpCreditCard.baseUrl}${path}`;
 
 /**
  * Masks a number by replacing the specified number of leading digits with asterisks.
@@ -257,7 +259,7 @@ const composeNameOption = (fn, mn, ln) => {
     [fn, ln],
     [mn, ln],
     [initial(mn), ln],
-  ]?.map(stringify)?.filter((el) => el?.length <= MAX_LENGTH);
+  ]?.map(stringify)?.filter((el) => el && el?.length <= MAX_LENGTH);
   return [...new Set(names)]?.map(toOption);
 };
 
@@ -354,6 +356,18 @@ const removeSpecialCharacters = (str, allowedChars) => {
    */
 const santizedFormData = (globaObj) => JSON.parse(JSON.stringify(globaObj.functions.exportData()));
 
+/**
+   * Filters out all defined values from the form data using the globals object.
+   * @param {object} globaObj- Globals variables object containing form configurations.
+   * * @param {object} currentFormContext - additional data variables object containing form configurations.
+   * @returns {object} -Object containing only defined values.
+   */
+const santizedFormDataWithContext = (globaObj, currentFormContext) => {
+  const formDataPayload = globaObj.functions.exportData();
+  formDataPayload.currentFormContext = currentFormContext;
+  return JSON.parse(JSON.stringify(formDataPayload));
+};
+
 export {
   urlPath,
   maskNumber,
@@ -371,4 +385,5 @@ export {
   santizedFormData,
   dateFormat,
   makeFieldInvalid,
+  santizedFormDataWithContext,
 };

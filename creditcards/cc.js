@@ -80,14 +80,20 @@ function onWizardInit() {
 
 const linkModalFunction = (config) => {
   config?.triggerElement?.addEventListener('click', async (e) => {
-    e.preventDefault();
-    await openModal(config);
-    config?.content?.addEventListener('modalTriggerValue', (event) => {
-      const receivedData = event.detail;
-      if (config?.updateUI) {
-        config?.updateUI(receivedData);
-      }
-    });
+    const { checked, type } = e.target;
+    const checkBoxElement = (type === 'checkbox') && checked;
+    const otherElement = true;
+    const elementType = (type === 'checkbox') ? checkBoxElement : otherElement;
+    if (elementType) {
+      e.preventDefault();
+      await openModal(config);
+      config?.content?.addEventListener('modalTriggerValue', (event) => {
+        const receivedData = event.detail;
+        if (config?.updateUI) {
+          config?.updateUI(receivedData);
+        }
+      });
+    }
   });
 };
 /* endCode for creating Modal */
@@ -96,7 +102,7 @@ const linkModalFunction = (config) => {
 // 1.consent-2 checkbox - modal
 const consent2Config = {
   // config to create modal for consent-2
-  triggerElement: document.getElementsByName('checkBoxConsent2')?.[0], // trigger element for calling modalFunction
+  triggerElement: document.getElementsByName('checkboxConsent2Label')?.[0], // trigger element for calling modalFunction
   content: document.getElementsByName('consentPanel2')?.[0], // content to display in modal
   actionWrapClass: 'button-wrapper', // wrapper class containing all the buttons
   reqConsentAgree: false, // Indicates if consent agreement is needed; shows close icon if not.
@@ -105,7 +111,7 @@ const consent2Config = {
 	 * @param {Object} receivedData - Data received after the modal button trigger,contains name of the btn triggered which is used to update the UI.
 	 */
   updateUI(receivedData) {
-    if (receivedData?.iAgreeConsent2) {
+    if (receivedData?.checkboxConsent2CTA) {
       // iAgreeConsent2- name of the I agree btn.
       this.triggerElement.checked = true;
       this.triggerElement.dispatchEvent(new Event('change', { bubbles: true }));
@@ -119,7 +125,7 @@ const consent2Config = {
 };
 linkModalFunction(consent2Config);
 // 2.consent-2 otherProduct-text - modal
-const consent2OtherProduct = document?.querySelector('.field-checkbox2text')?.querySelector('b');
+const consent2OtherProduct = document?.querySelector('.field-checkboxconsent2label')?.querySelector('b');
 const linkClass = 'link';
 consent2OtherProduct?.classList.add(linkClass);
 const consent2OtherProductTxtConfig = {
@@ -134,7 +140,7 @@ const consent2OtherProductTxtConfig = {
 	 */
   updateUI(receivedData) {
     const checkBox = consent2Config?.triggerElement;
-    if (receivedData?.iAgreeConsent2) {
+    if (receivedData?.checkboxConsent2CTA) {
       // iAgreeConsent2- name of the I agree btn.
       checkBox.checked = true;
     }
@@ -149,7 +155,7 @@ linkModalFunction(consent2OtherProductTxtConfig);
 // 3.conset-1 checbox - modal
 const consent1Config = {
   // config to create modal for consent-1
-  triggerElement: document.getElementsByName('checkBoxConsent1')?.[0], // trigger element for calling modalFunction
+  triggerElement: document.getElementsByName('checkboxConsent1Label')?.[0], // trigger element for calling modalFunction
   content: document.getElementsByName('consentPanel1')?.[0], // content to display in modal
   actionWrapClass: 'button-wrapper', // wrapper class containing all the buttons
   reqConsentAgree: true, // Indicates if consent agreement is needed; shows close icon if not.
@@ -158,7 +164,7 @@ const consent1Config = {
 	 * @param {Object} receivedData - Data received after the modal button trigger,contains name of the btn triggered which is used to update the UI.
 	 */
   updateUI(receivedData) {
-    if (receivedData?.iAgreeConsent1) {
+    if (receivedData?.checkboxConsent1CTA) {
       // iAgreeConsent2- name of the I agree btn.
       this.triggerElement.checked = true;
       this.triggerElement.dispatchEvent(new Event('change', { bubbles: true }));
@@ -173,7 +179,7 @@ const consent1Config = {
 linkModalFunction(consent1Config);
 
 // 4.consent-1 requestProduct-text - modal
-const consent1RequestProduct = document?.querySelector('.field-checkbox1text')?.querySelector('b');
+const consent1RequestProduct = document?.querySelector('.field-checkboxconsent1label')?.querySelector('b');
 consent1RequestProduct?.classList.add(linkClass);
 const consent2RequestProductTxtConfig = {
   // config to create modal for consent-2
@@ -187,7 +193,7 @@ const consent2RequestProductTxtConfig = {
 	 */
   updateUI(receivedData) {
     const checkBox = consent1Config?.triggerElement;
-    if (receivedData?.iAgreeConsent1) {
+    if (receivedData?.checkboxConsent1CTA) {
       // iAgreeConsent2- name of the I agree btn.
       checkBox.checked = true;
     }
@@ -209,4 +215,83 @@ const viewAllBtnPannelConfig = {
 };
 linkModalFunction(viewAllBtnPannelConfig);
 
-export { decorateStepper, onWizardInit };
+const queryStrings = window.location.search.split('?')[1].split('&');
+// eslint-disable-next-line no-restricted-syntax
+for (const queryString of queryStrings) {
+  // eslint-disable-next-line no-unused-vars
+  const [key, value] = queryString.split('=');
+  if (value === 'EKYC_AUTH') {
+    const navigateFrom = document.getElementsByName('corporateCardWizardView')?.[0];
+    const current = navigateFrom?.querySelector('.current-wizard-step');
+    const currentMenuItem = navigateFrom?.querySelector('.wizard-menu-active-item');
+    const navigateTo = document.getElementsByName('confirmAndSubmitPanel')?.[0];
+    current?.classList?.remove('current-wizard-step');
+    navigateTo?.classList?.add('current-wizard-step');
+    // add/remove active class from menu item
+    const navigateToMenuItem = navigateFrom?.querySelector(`li[data-index="${navigateTo?.dataset?.index}"]`);
+    currentMenuItem?.classList?.remove('wizard-menu-active-item');
+    navigateToMenuItem?.classList?.add('wizard-menu-active-item');
+    const event = new CustomEvent('wizard:navigate', {
+      detail: {
+        prevStep: { id: current?.id, index: parseInt(current?.dataset?.index || 0, 10) },
+        currStep: { id: navigateTo?.id, index: parseInt(navigateTo?.dataset?.index || 0, 10) },
+      },
+      bubbles: false,
+    });
+    navigateFrom?.dispatchEvent(event);
+  }
+}
+
+/**
+ * Changes the language of the Aadhar content to the specified language.
+ * @param {Object} content - The content configuration for Aadhar.
+ * @param {string} defaultLang - The language to show us default.
+ */
+// select dropdow-aadhar
+const aadharLangChange = (adharContentDom, defaultLang) => {
+  const selectOp = adharContentDom.querySelector(`[name= ${'selectLanguage'}]`);
+  const findFieldSet = adharContentDom?.querySelectorAll('fieldset');
+  const selectedClass = 'selected-language';
+  const defaultOptionClass = `field-aadharconsent-${defaultLang?.toLowerCase()}`;
+  const applySelected = (fieldNode, optionClass, nameClass) => {
+    fieldNode?.forEach((element) => {
+      if (element?.classList?.contains(optionClass)) {
+        element.style.display = 'block';
+        element?.classList.add(nameClass);
+      } else {
+        element.style.display = 'none';
+        element?.classList.remove(nameClass);
+      }
+    });
+  };
+  applySelected(findFieldSet, defaultOptionClass, selectedClass);
+  selectOp.value = defaultLang;
+  selectOp?.addEventListener('change', (e) => {
+    e.preventDefault();
+    const { value: valueSelected } = e.target;
+    selectOp.value = valueSelected;
+    const optionClass = `field-aadharconsent-${valueSelected?.toLowerCase()}`;
+    applySelected(findFieldSet, optionClass, selectedClass);
+  });
+};
+
+/**
+ * Hides the incorrect OTP text message when the user starts typing in the OTP input field.
+ */
+const removeIncorrectOtpText = () => {
+  const otpNumFormName = 'otpNumber';// constantName-otpNumberfieldName
+  const otpNumbrQry = document.getElementsByName(otpNumFormName)?.[0];
+  const incorectOtp = document.querySelector('.field-incorrectotptext');
+  otpNumbrQry?.addEventListener('input', (e) => {
+    if (e.target.value) {
+      incorectOtp.style.display = 'none';
+    }
+  });
+};
+removeIncorrectOtpText();
+
+export {
+  decorateStepper,
+  onWizardInit,
+  aadharLangChange,
+};

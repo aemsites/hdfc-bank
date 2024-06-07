@@ -55,12 +55,12 @@ main img {
     max-width: 100% !important;
 }
 
-.field-checkboxconsent1 {
+.field-checkboxconsent1label {
     margin-bottom: -1em !important;
 }
 
-.field-checkboxconsent1 p,
-.field-checkboxconsent2 label p {
+.field-checkboxconsent1label p,
+.field-checkboxconsent2label label p {
     font-size: var(--body-sm-font-size) !important;
     font-weight: var(--font-weight-regular);
     line-height: var(--font-linehight-regular);
@@ -83,10 +83,10 @@ main img {
         p,
         .field-pandobselection legend {
             font-size: var(--body-md-font-size) !important;
-            font-weight: var(--font-weight-medium);
+            font-weight: var(--font-weight-bold);
             line-height: var(--font-linehight-regular);
             text-align: left;
-            color: var(--color-interface-text-quaternary) !important;
+            color: var(--color-interface-text-primary) !important;
             margin-top: 6px;
         }
 
@@ -110,10 +110,10 @@ main img {
                 margin-right: 22px;
                 margin-bottom: 0;
                 font-size: var(--body-md-font-size) !important;
-                font-weight: var(--font-weight-medium);
+                font-weight: var(--font-weight-bold);
                 line-height: var(--font-linehight-regular);
                 text-align: left;
-                color: var(--color-interface-text-quaternary) !important;
+                color: var(--color-interface-text-primary) !important;
             }
 
             .radio-wrapper {
@@ -163,7 +163,7 @@ main img {
             color: var(--color-action-text-secondary-default);
         }
 
-        .field-checkboxconsent2, .field-checkboxconsent1{
+        .field-checkboxconsent2label, .field-checkboxconsent1label{
             display: unset !important;
             max-width: 21px;
         }
@@ -223,7 +223,7 @@ main .form form .panel-wrapper {
     margin-bottom: -8px;
 }
 
-.field-checkboxconsent1 label, .field-checkboxconsent2 label{
+.field-checkboxconsent1label label, .field-checkboxconsent2label label{
     margin-top: -4px;
 }
 
@@ -280,7 +280,7 @@ main .form form .panel-wrapper {
         letter-spacing: 17px !important;
     }
 
-    .field-checkboxconsent2 {
+    .field-checkboxconsent2label {
         margin-top: 1em !important;
     }
 
@@ -296,7 +296,7 @@ main .form form .panel-wrapper {
         margin-bottom: 0;
     }
 
-    .field-checkboxconsent1{
+    .field-checkboxconsent1label{
         margin-top: 10px !important;
      }
 
@@ -341,11 +341,11 @@ main .form form .panel-wrapper {
         margin-bottom: 24px;
      }
 
-     .field-checkboxconsent1{
+     .field-checkboxconsent1label{
         margin-top: 10px !important;
      }
 
-     .field-checkboxconsent2 {
+     .field-checkboxconsent2label {
         margin-top: 1em !important;
     }
 

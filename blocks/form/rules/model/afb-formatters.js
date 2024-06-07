@@ -1,22 +1,22 @@
 /*************************************************************************
-* ADOBE CONFIDENTIAL
-* ___________________
-*
-* Copyright 2022 Adobe
-* All Rights Reserved.
-*
-* NOTICE: All information contained herein is, and remains
-* the property of Adobe and its suppliers, if any. The intellectual
-* and technical concepts contained herein are proprietary to Adobe
-* and its suppliers and are protected by all applicable intellectual
-* property laws, including trade secret and copyright laws.
-* Dissemination of this information or reproduction of this material
-* is strictly forbidden unless prior written permission is obtained
-* from Adobe.
+ * ADOBE CONFIDENTIAL
+ * ___________________
+ *
+ * Copyright 2022 Adobe
+ * All Rights Reserved.
+ *
+ * NOTICE: All information contained herein is, and remains
+ * the property of Adobe and its suppliers, if any. The intellectual
+ * and technical concepts contained herein are proprietary to Adobe
+ * and its suppliers and are protected by all applicable intellectual
+ * property laws, including trade secret and copyright laws.
+ * Dissemination of this information or reproduction of this material
+ * is strictly forbidden unless prior written permission is obtained
+ * from Adobe.
 
-* Adobe permits you to use and modify this file solely in accordance with
-* the terms of the Adobe license agreement accompanying it.
-*************************************************************************/
+ * Adobe permits you to use and modify this file solely in accordance with
+ * the terms of the Adobe license agreement accompanying it.
+ *************************************************************************/
 
 const DATE_TIME_REGEX =
     /(?:[Eec]{1,6}|G{1,5}|[Qq]{1,5}|(?:[yYur]+|U{1,5})|[ML]{1,5}|d{1,2}|D{1,3}|F{1}|[abB]{1,5}|[hkHK]{1,2}|w{1,2}|W{1}|m{1,2}|s{1,2}|[zZOvV]{1,5}|[zZOvVxX]{1,3}|S{1,3}|'(?:[^']|'')*')|[^a-zA-Z']+/g;
@@ -492,38 +492,38 @@ function parseDefaultDate(dateString, language, bUseUTC) {
     return parseDate(dateString, language, 'yyyy-MM-dd', null, bUseUTC);
 }
 const currencies = {
-  'da-DK': 'DKK',
-  'de-DE': 'EUR',
-  'en-US': 'USD',
-  'en-GB': 'GBP',
-  'es-ES': 'EUR',
-  'fi-FI': 'EUR',
-  'fr-FR': 'EUR',
-  'it-IT': 'EUR',
-  'ja-JP': 'JPY',
-  'nb-NO': 'NOK',
-  'nl-NL': 'EUR',
-  'pt-BR': 'BRL',
-  'sv-SE': 'SEK',
-  'zh-CN': 'CNY',
-  'zh-TW': 'TWD',
-  'ko-KR': 'KRW',
-  'cs-CZ': 'CZK',
-  'pl-PL': 'PLN',
-  'ru-RU': 'RUB',
-  'tr-TR': 'TRY'
+    'da-DK': 'DKK',
+    'de-DE': 'EUR',
+    'en-US': 'USD',
+    'en-GB': 'GBP',
+    'es-ES': 'EUR',
+    'fi-FI': 'EUR',
+    'fr-FR': 'EUR',
+    'it-IT': 'EUR',
+    'ja-JP': 'JPY',
+    'nb-NO': 'NOK',
+    'nl-NL': 'EUR',
+    'pt-BR': 'BRL',
+    'sv-SE': 'SEK',
+    'zh-CN': 'CNY',
+    'zh-TW': 'TWD',
+    'ko-KR': 'KRW',
+    'cs-CZ': 'CZK',
+    'pl-PL': 'PLN',
+    'ru-RU': 'RUB',
+    'tr-TR': 'TRY'
 };
 const locales = Object.keys(currencies);
 const getCurrency = function (locale) {
-  if (locales.indexOf(locale) > -1) {
-    return currencies[locale]
-  } else {
-    const matchingLocale = locales.find(x => x.startsWith(locale));
-    if (matchingLocale) {
-      return currencies[matchingLocale]
+    if (locales.indexOf(locale) > -1) {
+        return currencies[locale]
+    } else {
+        const matchingLocale = locales.find(x => x.startsWith(locale));
+        if (matchingLocale) {
+            return currencies[matchingLocale]
+        }
     }
-  }
-  return ''
+    return ''
 };
 const NUMBER_REGEX =
     /(?:[#]+|[@]+(#+)?|[0]+|[,]|[.]|[-]|[+]|[%]|[¤]{1,4}(?:\/([a-zA-Z]{3}))?|[;]|[K]{1,2}|E{1,2}[+]?|'(?:[^']|'')*')|[^a-zA-Z']+/g;
