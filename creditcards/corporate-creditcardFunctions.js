@@ -6,6 +6,10 @@
 /* eslint no-console: ["error", { allow: ["warn", "error", "log"] }] */
 /* eslint no-unused-vars: ["error", { "args": "none" }] */
 import {
+  analyticsTrackOtpClicks,
+} from '../scripts/lib-analytics.js';
+
+import {
   invokeJourneyDropOff, invokeJourneyDropOffUpdate, journeyResponseHandlerUtil, currentFormContext, createJourneyId, invokeJourneyDropOffByParam, formRuntime,
 } from '../common/journey-utils.js';
 import executeCheck from '../common/panutils.js';
@@ -1087,6 +1091,16 @@ const resendOTP = (globals) => {
   }
 };
 
+/**
+ * sends data to rum server.
+ * @param {object} payload
+ * @param {object} globals
+ */
+const sendDataToRum = (eventName, data, globals) => {
+  console.log('Event Payload: ', data);
+  analyticsTrackOtpClicks(eventName, data, santizedFormDataWithContext(globals), currentFormContext);
+};
+
 export {
   getThisCard,
   prefillForm,
@@ -1104,4 +1118,5 @@ export {
   sendAnalytics,
   aadharConsent123,
   resendOTP,
+  sendDataToRum,
 };

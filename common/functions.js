@@ -15,6 +15,7 @@ import {
   aadharConsent123,
   resendOTP,
   formRuntime,
+  sendDataToRum,
 } from '../creditcards/corporate-creditcardFunctions.js';
 import {
   validatePan,
@@ -320,4 +321,5 @@ export {
   sendAnalytics,
   aadharConsent123,
   resendOTP,
+  sendDataToRum,
 };

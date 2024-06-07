@@ -24,6 +24,7 @@ import {
   sendAnalytics,
   aadharConsent123,
   resendOTP,
+  sendDataToRum,
 } from '../../common/functions.js';
 
 import { moveWizardView } from '../../common/formutils.js';
@@ -206,4 +207,5 @@ export {
   aadharConsent123,
   resendOTP,
   showElement,
+  sendDataToRum,
 };
