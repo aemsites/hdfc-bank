@@ -380,6 +380,19 @@ main .form .field-errormessagetext > p::before {
   background-image: url('../../icons/hdfc-error-icon.svg');
 }
 
+main .form .field-resultpanel .field-errormessagetext::before {
+  content: '';
+  display: block;
+  position: relative;
+  left: 45%;
+  width: 80px;
+  height: 80px;
+  background-image: url('../../icons/hdfc-error-icon.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  padding-bottom: 24px;
+}
+
 main .form .field-successresultpanel .field-successresulttextlabel > p::before {
   background-image: url('../../icons/hdfc-success-icon.svg');
 }
@@ -392,11 +405,23 @@ main .form .field-successresultpanel {
     border-radius: var(--form-border-radius) var(--form-border-radius) 0 0;
   }
 
-  .field-errormessagetext,
+  .field-errormessagetext {
+    display: grid;
+    text-align: center;
+    background-color: var(--color-interface-background-quaternary);
+    padding: 40px 0;
+    color: var(--color-interface-text-tertiary);
+    font-weight: var(--font-weight-medium);
+    font-size: var(--body-md-font-size);
+    border-radius: 20px 20px 0 0;
+    margin: -40px -40px 0;
+  }
+
   .field-successresulttextlabel {
     background-color: var(--color-interface-background-quaternary);
     margin: -40px -40px 0;
     padding: 0 15px;
+    border-radius: 20px 20px 0 0;
 
     p {
       padding: 20px 0 10px;
@@ -477,6 +502,11 @@ main .form .field-successresultpanel {
         color: var(--color-interface-text-primary);
       }
     }
+  }
+
+  .field-vkycconfirmationtext {
+    font-size: 13px;
+    margin-top: 27px;
   }
 
   .field-offerslink {
@@ -603,6 +633,7 @@ main .form .field-resultpanel {
     .field-successresulttextlabel { margin-bottom: 12px; }
     .field-arnrefnumpanel::before { left: 24%; }
     .field-arnrefnumlabel, .field-arnnumber { left: 36%; }
+    .field-vkycconfirmationtext { justify-content: center; }
   }
 }
 
@@ -675,7 +706,12 @@ main .form .field-resultpanel {
     display: grid;
 
     .field-arnrefnumpanel::before { left: 14%; }
-    .field-arnrefnumlabel, .field-arnnumber { left: 32%; }
+    .field-arnrefnumlabel { left: 32%; }
+    
+    .field-arnnumber {
+      left: 32%; 
+      top: 43px;
+    }
 
     .field-vkycconfirmationtext, .field-offerslink, .field-vkyccameraconfirmation {
       width: 100%;
