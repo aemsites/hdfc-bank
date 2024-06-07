@@ -796,11 +796,10 @@ const resendOTP = (globals) => {
 
   const errorResendOtp = (err, objectGlobals) => {
     const {
-      otpPanel, submitOTP, resultPanel,
+      otpPanel, submitOTP, resultPanel, resultPanel: { errorResultPanel },
     } = objectGlobals.form;
-
     const hidePanel = [otpPanel, submitOTP]?.map((panel) => formUtil(objectGlobals, panel));
-    const showPanel = [resultPanel]?.map((panel) => formUtil(objectGlobals, panel));
+    const showPanel = [resultPanel, errorResultPanel]?.map((panel) => formUtil(objectGlobals, panel));
     hidePanel.forEach((item) => item.visible(false));
     showPanel.forEach((item) => item.visible(true));
   };
