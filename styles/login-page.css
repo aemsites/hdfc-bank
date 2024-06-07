@@ -242,6 +242,8 @@ main .form form .panel-wrapper {
         display: block;
     }
 
+    main .form .field-successresultpanel { display: grid; }
+
     .field-dateofbirth,
     .field-pan {
         margin-top: -12px !important;
