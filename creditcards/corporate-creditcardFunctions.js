@@ -1,4 +1,4 @@
-/* eslint-disable no-tabs */
+/* eslint no-console: ["error", { allow: ["warn", "error"] }] */
 import {
   invokeJourneyDropOff,
   invokeJourneyDropOffUpdate,
@@ -331,10 +331,10 @@ const otpValHandler = (response, globals) => {
  */
 const setConfirmScrAddressFields = (globalObj) => {
   /**
-	 * Concatenates the values of an object into a single string separated by commas.
-	 * @param {Object} obj - The object whose values are to be concatenated.
-	 * @returns {string} A string containing the concatenated values separated by commas.
-	 */
+ * Concatenates the values of an object into a single string separated by commas.
+ * @param {Object} obj - The object whose values are to be concatenated.
+ * @returns {string} A string containing the concatenated values separated by commas.
+ */
   const concatObjVals = (obj) => Object.values(obj)?.join(', ');
   const ccWizard = globalObj.form.corporateCardWizardView;
   const yourDetails = ccWizard.yourDetailsPanel.yourDetailsPage;
