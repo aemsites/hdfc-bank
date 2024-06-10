@@ -1,24 +1,24 @@
 /*************************************************************************
-* ADOBE CONFIDENTIAL
-* ___________________
-*
-* Copyright 2022 Adobe
-* All Rights Reserved.
-*
-* NOTICE: All information contained herein is, and remains
-* the property of Adobe and its suppliers, if any. The intellectual
-* and technical concepts contained herein are proprietary to Adobe
-* and its suppliers and are protected by all applicable intellectual
-* property laws, including trade secret and copyright laws.
-* Dissemination of this information or reproduction of this material
-* is strictly forbidden unless prior written permission is obtained
-* from Adobe.
+ * ADOBE CONFIDENTIAL
+ * ___________________
+ *
+ * Copyright 2022 Adobe
+ * All Rights Reserved.
+ *
+ * NOTICE: All information contained herein is, and remains
+ * the property of Adobe and its suppliers, if any. The intellectual
+ * and technical concepts contained herein are proprietary to Adobe
+ * and its suppliers and are protected by all applicable intellectual
+ * property laws, including trade secret and copyright laws.
+ * Dissemination of this information or reproduction of this material
+ * is strictly forbidden unless prior written permission is obtained
+ * from Adobe.
 
-* Adobe permits you to use and modify this file solely in accordance with
-* the terms of the Adobe license agreement accompanying it.
-*************************************************************************/
+ * Adobe permits you to use and modify this file solely in accordance with
+ * the terms of the Adobe license agreement accompanying it.
+ *************************************************************************/
 
-import { propertyChange, ExecuteRule, Initialize, RemoveItem, Change, FormLoad, FieldChanged, ValidationComplete, Valid, Invalid, SubmitSuccess, CustomEvent, SubmitError, SubmitFailure, Submit, RemoveInstance, AddInstance, Reset, AddItem, Click } from './afb-events.js';
+import { propertyChange, ExecuteRule, Initialize, RemoveItem, Change, FormLoad, FieldChanged, ValidationComplete, Valid, Invalid, SubmitSuccess, CustomEvent, SubmitError, SubmitFailure, Submit, Save, Reset, RemoveInstance, AddInstance, AddItem, Click } from './afb-events.js';
 import Formula from '../formula/index.js';
 import { format, parseDefaultDate, datetimeToNumber, parseDateSkeleton, formatDate, numberToDatetime } from './afb-formatters.min.js';
 
@@ -140,8 +140,8 @@ const getProperty = (data, key, def) => {
 };
 const isFile = function (item) {
     return (item?.type === 'file' || item?.type === 'file[]') ||
-        ((item?.type === 'string' || item?.type === 'string[]') &&
-            (item?.format === 'binary' || item?.format === 'data-url'));
+      ((item?.type === 'string' || item?.type === 'string[]') &&
+        (item?.format === 'binary' || item?.format === 'data-url'));
 };
 const isCheckbox = function (item) {
     const fieldType = item?.fieldType || defaultFieldTypes(item);
@@ -162,6 +162,9 @@ const isDateField = function (item) {
 const isCaptcha = function (item) {
     const fieldType = item?.fieldType || defaultFieldTypes(item);
     return fieldType === 'captcha';
+};
+const isButton = function (item) {
+    return item?.fieldType === 'button';
 };
 function deepClone(obj, idGenerator) {
     let result;
@@ -188,11 +191,11 @@ const jsonString = (obj) => {
 };
 const isRepeatable$1 = (obj) => {
     return ((obj.repeatable &&
-        ((obj.minOccur === undefined && obj.maxOccur === undefined) ||
-            (obj.minOccur !== undefined && obj.maxOccur !== undefined && obj.maxOccur !== 0) ||
-            (obj.minOccur !== undefined && obj.maxOccur !== undefined && obj.minOccur !== 0 && obj.maxOccur !== 0) ||
-            (obj.minOccur !== undefined && obj.minOccur >= 0) ||
-            (obj.maxOccur !== undefined && obj.maxOccur !== 0))) || false);
+      ((obj.minOccur === undefined && obj.maxOccur === undefined) ||
+        (obj.minOccur !== undefined && obj.maxOccur !== undefined && obj.maxOccur !== 0) ||
+        (obj.minOccur !== undefined && obj.maxOccur !== undefined && obj.minOccur !== 0 && obj.maxOccur !== 0) ||
+        (obj.minOccur !== undefined && obj.minOccur >= 0) ||
+        (obj.maxOccur !== undefined && obj.maxOccur !== 0))) || false);
 };
 class DataValue {
     $_name;
@@ -385,9 +388,9 @@ const repeatable = () => {
 };
 const isAlphaNum = function (ch) {
     return (ch >= 'a' && ch <= 'z')
-        || (ch >= 'A' && ch <= 'Z')
-        || (ch >= '0' && ch <= '9')
-        || ch === '_';
+      || (ch >= 'A' && ch <= 'Z')
+      || (ch >= '0' && ch <= '9')
+      || ch === '_';
 };
 const isGlobal = (prev, stream, pos) => {
     return prev === null && stream[pos] === globalStartToken;
@@ -401,8 +404,8 @@ const isIdentifier = (stream, pos) => {
         return stream.length > pos && isAlphaNum(stream[pos + 1]);
     }
     return (ch >= 'a' && ch <= 'z')
-        || (ch >= 'A' && ch <= 'Z')
-        || ch === '_';
+      || (ch >= 'A' && ch <= 'Z')
+      || ch === '_';
 };
 const isNum = (ch) => {
     return (ch >= '0' && ch <= '9');
@@ -439,7 +442,7 @@ class Tokenizer {
         while (stream[this._current] !== '"' && this._current < maxLength) {
             let current = this._current;
             if (stream[current] === '\\' && (stream[current + 1] === '\\'
-                || stream[current + 1] === '"')) {
+              || stream[current + 1] === '"')) {
                 current += 2;
             }
             else {
@@ -538,8 +541,8 @@ const resolveData = (data, input, create) => {
     let i = 0;
     const createIntermediateNode = (token, nextToken, create) => {
         return nextToken === null ? create :
-            (nextToken.type === TOK_BRACKET) ? new DataGroup(token.value, [], 'array') :
-                new DataGroup(token.value, {});
+          (nextToken.type === TOK_BRACKET) ? new DataGroup(token.value, [], 'array') :
+            new DataGroup(token.value, {});
     };
     while (i < tokens.length && result != null) {
         const token = tokens[i];
@@ -600,6 +603,9 @@ class FileObject {
     get type() {
         return this.mediaType;
     }
+    set type(type) {
+        this.mediaType = type;
+    }
     toJSON() {
         return {
             'name': this.name,
@@ -610,9 +616,9 @@ class FileObject {
     }
     equals(obj) {
         return (this.data === obj.data &&
-            this.mediaType === obj.mediaType &&
-            this.name === obj.name &&
-            this.size === obj.size);
+          this.mediaType === obj.mediaType &&
+          this.name === obj.name &&
+          this.size === obj.size);
     }
 }
 const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_'.split('');
@@ -646,8 +652,8 @@ const getAttachments = (input, excludeUnbound = false) => {
                 ret = {};
                 const name = item.name || '';
                 const dataRef = (item.dataRef != null)
-                    ? item.dataRef
-                    : (name.length > 0 ? item.name : undefined);
+                  ? item.dataRef
+                  : (name.length > 0 ? item.name : undefined);
                 if (item.value instanceof Array) {
                     ret[item.id] = item.value.map((x) => {
                         return { ...x, 'dataRef': dataRef };
@@ -879,7 +885,7 @@ const checkNumber = (inputVal) => {
     };
 };
 const checkInteger = (inputVal) => {
-    if (inputVal == '' || inputVal == null) {
+    if (inputVal === '' || inputVal == null) {
         return {
             value: '', valid: true
         };
@@ -918,8 +924,8 @@ const matchMediaType = (mediaType, accepts) => {
         const prefixAccept = trimmedAccept.split('/')[0];
         const suffixAccept = trimmedAccept.split('.')[1];
         return ((trimmedAccept.includes('*') && mediaType.startsWith(prefixAccept)) ||
-            (trimmedAccept.includes('.') && mediaType.endsWith(suffixAccept)) ||
-            (trimmedAccept === mediaType));
+          (trimmedAccept.includes('.') && mediaType.endsWith(suffixAccept)) ||
+          (trimmedAccept === mediaType));
     });
 };
 const partitionArray = (inputVal, validatorFn) => {
@@ -1025,7 +1031,7 @@ const Constraints = {
                     const [nMonth, nDate] = [+month, +date];
                     const leapYear = isLeapYear(+year);
                     valid = (nMonth >= 1 && nMonth <= 12) &&
-                        (nDate >= 1 && nDate <= daysInMonth(leapYear, nMonth));
+                      (nDate >= 1 && nDate <= daysInMonth(leapYear, nMonth));
                 }
                 else {
                     valid = false;
@@ -1445,7 +1451,7 @@ class BaseNode {
         const oldValue = this._jsonModel[prop];
         let isValueSame = false;
         if (newValue !== null && oldValue !== null &&
-            typeof newValue === 'object' && typeof oldValue === 'object') {
+          typeof newValue === 'object' && typeof oldValue === 'object') {
             isValueSame = JSON.stringify(newValue) === JSON.stringify(oldValue);
         }
         else {
@@ -1945,9 +1951,9 @@ class Container extends Scriptable {
                         ...(value?.id ? { id: this.form.getUniqueId() } : {})
                     };
                     return [key, {
-                            ...value,
-                            ...newObjWithId
-                        }
+                        ...value,
+                        ...newObjWithId
+                    }
                     ];
                 }
                 else {
@@ -2022,7 +2028,7 @@ class Container extends Scriptable {
     _canHaveRepeatingChildren(mode = 'create') {
         const items = this._jsonModel.items;
         return this._jsonModel.type == 'array' && this.getDataNode() != null &&
-            (items.length === 1 || (items[0].repeatable == true && mode === 'restore'));
+          (items.length === 1 || (items[0].repeatable == true && mode === 'restore'));
     }
     _initialize(mode) {
         super._initialize(mode);
@@ -2287,9 +2293,14 @@ class FormMetaData extends Node {
 class SubmitMetaData {
     lang;
     captchaInfo;
-    constructor(lang = '', captchaInfo) {
-        this.lang = lang;
-        this.captchaInfo = captchaInfo;
+    constructor(options = {}) {
+        this.lang = options.lang || 'en';
+        this.captchaInfo = options.captchaInfo || {};
+        Object.keys(options).forEach(key => {
+            if (key !== 'lang' && key !== 'captchaInfo') {
+                this[key] = options[key];
+            }
+        });
     }
 }
 const levels = {
@@ -2544,6 +2555,24 @@ const urlEncoded = (data) => {
     });
     return formData;
 };
+const submit = async (context, success, error, submitAs = 'multipart/form-data', input_data = null, action = '', metadata = null) => {
+    const endpoint = action || context.form.action;
+    let data = input_data;
+    if (typeof data != 'object' || data == null) {
+        data = context.form.exportData();
+    }
+    const attachments = getAttachments(context.form, true);
+    let submitContentType = submitAs;
+    const submitDataAndMetaData = { 'data': data, ...metadata };
+    let formData = submitDataAndMetaData;
+    if (Object.keys(attachments).length > 0 || submitAs === 'multipart/form-data') {
+        formData = multipartFormData(submitDataAndMetaData, attachments);
+        submitContentType = 'multipart/form-data';
+    }
+    await request(context, endpoint, 'POST', formData, success, error, {
+        'Content-Type': submitContentType
+    });
+};
 const multipartFormData = (data, attachments) => {
     const formData = new FormData();
     Object.entries(data).forEach(([key, value]) => {
@@ -2576,30 +2605,14 @@ const multipartFormData = (data, attachments) => {
     }
     return formData;
 };
-const submit = async (context, success, error, submitAs = 'multipart/form-data', input_data = null) => {
-    const endpoint = context.form.action;
-    let data = input_data;
-    if (typeof data != 'object' || data == null) {
-        data = context.form.exportData();
-    }
-    const attachments = getAttachments(context.form, true);
-    let submitContentType = submitAs;
-    const submitDataAndMetaData = { 'data': data, 'submitMetadata': context.form.exportSubmitMetaData() };
-    let formData = submitDataAndMetaData;
-    if (Object.keys(attachments).length > 0 || submitAs === 'multipart/form-data') {
-        formData = multipartFormData(submitDataAndMetaData, attachments);
-        submitContentType = 'multipart/form-data';
-    }
-    await request(context, endpoint, 'POST', formData, success, error, {
-        'Content-Type': submitContentType
-    });
-};
 const createAction = (name, payload = {}) => {
     switch (name) {
         case 'change':
             return new Change(payload);
         case 'submit':
             return new Submit(payload);
+        case 'save':
+            return new Save(payload);
         case 'click':
             return new Click(payload);
         case 'addItem':
@@ -2647,11 +2660,16 @@ class FunctionRuntimeImpl {
                                     const eventName = 'reset';
                                     target = target || 'reset';
                                     const args = [target, eventName];
+                                    interpreter.globals.form.logger.warn('This usage of reset is deprecated. Please see the documentation and update.');
                                     return FunctionRuntimeImpl.getInstance().getFunctions().dispatchEvent._func.call(undefined, args, data, interpreter);
                                 },
                                 validate: (target) => {
                                     const args = [target];
                                     return FunctionRuntimeImpl.getInstance().getFunctions().validate._func.call(undefined, args, data, interpreter);
+                                },
+                                importData: (inputData) => {
+                                    const args = [inputData];
+                                    return FunctionRuntimeImpl.getInstance().getFunctions().importData._func.call(undefined, args, data, interpreter);
                                 },
                                 exportData: () => {
                                     return FunctionRuntimeImpl.getInstance().getFunctions().exportData._func.call(undefined, args, data, interpreter);
@@ -2675,6 +2693,29 @@ class FunctionRuntimeImpl {
                                     else if (option && option.useQualifiedName) {
                                         interpreter.globals.form.resolveQualifiedName(fieldIdentifier)?.markAsInvalid(validationMessage);
                                     }
+                                },
+                                setFocus: (target, flag) => {
+                                    const args = [target, flag];
+                                    return FunctionRuntimeImpl.getInstance().getFunctions().setFocus._func.call(undefined, args, data, interpreter);
+                                },
+                                dispatchEvent: (target, eventName, payload) => {
+                                    const args = [target, eventName, payload];
+                                    return FunctionRuntimeImpl.getInstance().getFunctions().dispatchEvent._func.call(undefined, args, data, interpreter);
+                                },
+                                getFiles: (qualifiedName) => {
+                                    const filesMap = {};
+                                    if (!qualifiedName) {
+                                        interpreter.globals.form.visit(function callback(f) {
+                                            if (f.fieldType === 'file-input' && f.value) {
+                                                filesMap[f.qualifiedName] = f.serialize();
+                                            }
+                                        });
+                                    }
+                                    const field = interpreter.globals.form.resolveQualifiedName(qualifiedName);
+                                    if (field?.fieldType === 'file-input' && field?.value) {
+                                        filesMap[qualifiedName] = field.serialize();
+                                    }
+                                    return filesMap;
                                 }
                             }
                         };
@@ -2775,7 +2816,7 @@ class FunctionRuntimeImpl {
                 _signature: []
             },
             submitForm: {
-                _func: (args, data, interpreter) => {
+                _func: async (args, data, interpreter) => {
                     let success = null;
                     let error = null;
                     let submit_data;
@@ -2794,12 +2835,42 @@ class FunctionRuntimeImpl {
                         submit_data = args.length > 3 ? valueOf(args[3]) : null;
                         validate_form = args.length > 4 ? valueOf(args[4]) : true;
                     }
+                    const form = interpreter.globals.form;
+                    if (form.captcha && form.captcha.properties['fd:captcha'].config.version === 'enterprise'
+                      && form.captcha.properties['fd:captcha'].config.keyType === 'score') {
+                        if (typeof interpreter.runtime.functionTable.fetchCaptchaToken?._func !== 'function') {
+                            interpreter.globals.form.logger.error('fetchCaptchaToken is not defined');
+                            interpreter.globals.form.dispatch(new SubmitError({ type: 'FetchCaptchaTokenNotDefined' }));
+                            return {};
+                        }
+                        try {
+                            const token = await interpreter.runtime.functionTable.fetchCaptchaToken._func([], data, interpreter);
+                            form.captcha.value = token;
+                        }
+                        catch (e) {
+                            interpreter.globals.form.logger.error('Error while fetching captcha token');
+                            interpreter.globals.form.dispatch(new SubmitError({ type: 'FetchCaptchaTokenFailed' }));
+                            return {};
+                        }
+                    }
                     interpreter.globals.form.dispatch(new Submit({
                         success,
                         error,
                         submit_as,
                         validate_form: validate_form,
                         data: submit_data
+                    }));
+                    return {};
+                },
+                _signature: []
+            },
+            saveForm: {
+                _func: (args, data, interpreter) => {
+                    const action = toString(args[0]);
+                    const validate_form = args[2] || false;
+                    interpreter.globals.form.dispatch(new Save({
+                        action,
+                        validate_form
                     }));
                     return {};
                 },
@@ -2822,24 +2893,6 @@ class FunctionRuntimeImpl {
                         error = valueOf(args[5]);
                     }
                     request(interpreter.globals, uri, httpVerb, payload, success, error, headers);
-                    return {};
-                },
-                _signature: []
-            },
-            awaitFn: {
-                _func: async (args, data, interpreter) => {
-                    const success = args[1];
-                    const currentField = interpreter.globals.$field;
-                    try {
-                        const result = await args[0];
-                        defaultFunctions.dispatchEvent._func([currentField, success, result], data, interpreter);
-                    }
-                    catch (err) {
-                        const error = args[2];
-                        if (error) {
-                            defaultFunctions.dispatchEvent._func([currentField, error, err], data, interpreter);
-                        }
-                    }
                     return {};
                 },
                 _signature: []
@@ -2939,8 +2992,8 @@ class Version {
     }
     completeMatch(v) {
         return this.major === v.major &&
-            this.minor === v.minor &&
-            this.#subVersion === v.subversion;
+          this.minor === v.minor &&
+          this.#subVersion === v.subversion;
     }
     lessThan(v) {
         return this.major < v.major || (this.major === v.major && (this.minor < v.minor)) || (this.major === v.major && this.minor === v.minor && this.#subVersion < v.subversion);
@@ -2957,9 +3010,11 @@ const changeEventVersion = new Version('0.13');
 class Form extends Container {
     _ruleEngine;
     _eventQueue;
+    additionalSubmitMetadata = {};
     _fields = {};
     _ids;
     _invalidFields = [];
+    _captcha = null;
     constructor(n, fieldFactory, _ruleEngine, _eventQueue = new EventQueue(), logLevel = 'off', mode = 'create') {
         super(n, { fieldFactory: fieldFactory, mode });
         this._ruleEngine = _ruleEngine;
@@ -2985,12 +3040,22 @@ class Form extends Container {
     _applyDefaultsInModel() {
         const current = this.specVersion;
         this._jsonModel.properties = this._jsonModel.properties || {};
+        this._jsonModel.fieldType = this._jsonModel.fieldType || 'form';
         if (current.lessThan(changeEventVersion) ||
-            typeof this._jsonModel.properties['fd:changeEventBehaviour'] !== 'string') {
+          typeof this._jsonModel.properties['fd:changeEventBehaviour'] !== 'string') {
             this._jsonModel.properties['fd:changeEventBehaviour'] = 'self';
         }
     }
     _logger;
+    get activeField() {
+        return this._findActiveField(this);
+    }
+    _findActiveField(field) {
+        if (!field?.isContainer) {
+            return field;
+        }
+        return this._findActiveField(field?.activeChild);
+    }
     get logger() {
         return this._logger;
     }
@@ -3012,6 +3077,9 @@ class Form extends Container {
     }
     exportData() {
         return this.getDataNode()?.$value;
+    }
+    setAdditionalSubmitMetadata(metadata) {
+        this.additionalSubmitMetadata = { ...this.additionalSubmitMetadata, ...metadata };
     }
     get specVersion() {
         if (typeof this._jsonModel.adaptiveform === 'string') {
@@ -3038,21 +3106,18 @@ class Form extends Container {
         return foundFormElement;
     }
     exportSubmitMetaData() {
-        let submitMetaInstance = null;
         const captchaInfoObj = {};
-        function addCaptchaField(fieldName, fieldValue) {
-            if (captchaInfoObj[fieldName]) {
-                return;
-            }
-            captchaInfoObj[fieldName] = fieldValue;
-        }
         this.visit(field => {
             if (field.fieldType === 'captcha') {
-                addCaptchaField(field.qualifiedName, field.value);
+                captchaInfoObj[field.qualifiedName] = field.value;
             }
         });
-        submitMetaInstance = new SubmitMetaData(this.form.lang, captchaInfoObj);
-        return submitMetaInstance;
+        const options = {
+            lang: this.lang,
+            captchaInfo: captchaInfoObj,
+            ...this.additionalSubmitMetadata
+        };
+        return new SubmitMetaData(options);
     }
     #getNavigableChildren(children) {
         return children.filter(child => child.visible === true);
@@ -3153,6 +3218,9 @@ class Form extends Container {
         return this._ids.next().value;
     }
     fieldAdded(field) {
+        if (field.fieldType === 'captcha' && !this._captcha) {
+            this._captcha = field;
+        }
         this._fields[field.id] = field;
         field.subscribe((action) => {
             if (this._invalidFields.indexOf(action.target.id) === -1) {
@@ -3225,7 +3293,35 @@ class Form extends Container {
             const payload = action?.payload || {};
             const successEventName = payload?.success ? payload?.success : 'submitSuccess';
             const failureEventName = payload?.error ? payload?.error : 'submitError';
-            submit(context, successEventName, failureEventName, payload?.submit_as, payload?.data);
+            const formAction = payload.action || this.action;
+            const metadata = payload.metadata || {
+                'submitMetadata': this.exportSubmitMetaData()
+            };
+            const contentType = payload?.save_as || payload?.submit_as;
+            submit(context, successEventName, failureEventName, contentType, payload?.data, formAction, metadata);
+        }
+    }
+    save(action, context) {
+        const payload = action?.payload || {};
+        payload.save_as = 'multipart/form-data';
+        payload.metadata = {
+            'draftMetadata': {
+                'lang': this.lang,
+                'draftId': this.properties?.draftId || ''
+            }
+        };
+        payload.success = 'custom:saveSuccess';
+        payload.error = 'custom:saveError';
+        this.submit(action, context);
+        this.subscribe((action) => {
+            this._saveSuccess(action);
+        }, 'saveSuccess');
+    }
+    _saveSuccess(action) {
+        const draftId = action?.payload?.body?.draftId || '';
+        const properties = this.properties;
+        if (draftId && properties) {
+            properties.draftId = draftId;
         }
     }
     reset() {
@@ -3255,6 +3351,9 @@ class Form extends Container {
     }
     get title() {
         return this._jsonModel.title || '';
+    }
+    get captcha() {
+        return this._captcha;
     }
 }
 function stringToNumber(str, language) {
@@ -3359,7 +3458,7 @@ class Fieldset extends Container {
         return undefined;
     }
     get items() {
-        return super.items;
+        return super.items ? super.items : [];
     }
     get value() {
         return null;
@@ -3755,6 +3854,9 @@ class Field extends Scriptable {
     }
     reset() {
         const changes = this.updateDataNodeAndTypedValue(this.default);
+        if (!changes) {
+            return;
+        }
         const validationStateChanges = {
             'valid': undefined,
             'errorMessage': '',
@@ -3803,7 +3905,7 @@ class Field extends Scriptable {
         const html5ConstraintType = constraintKeys[afConstraintKey];
         const constraintTypeMessages = getConstraintTypeMessages();
         return this._jsonModel.constraintMessages?.[afConstraintKey]
-            || replaceTemplatePlaceholders(constraintTypeMessages[html5ConstraintType], [this._jsonModel[afConstraintKey]]);
+          || replaceTemplatePlaceholders(constraintTypeMessages[html5ConstraintType], [this._jsonModel[afConstraintKey]]);
     }
     get errorMessage() {
         return this._jsonModel.errorMessage;
@@ -3963,7 +4065,7 @@ class Field extends Scriptable {
         let valid = true;
         if (valid) {
             valid = Constraints.required(this.required, value).valid &&
-                (this.isArrayType() && this.required ? value.length > 0 : true);
+              (this.isArrayType() && this.required ? value.length > 0 : true);
             constraint = 'required';
         }
         if (valid && this.isNotEmpty(value)) {
@@ -4214,7 +4316,7 @@ class FileUpload extends Field {
         }
         return dataNodeValue;
     }
-    async _serialize() {
+    async serialize() {
         const val = this._jsonModel.value;
         if (val === undefined) {
             return null;
@@ -4379,6 +4481,22 @@ class Captcha extends Field {
     getDataNode() {
         return undefined;
     }
+    custom_setProperty(action) {
+        this.applyUpdates(action.payload);
+    }
+}
+class Button extends Field {
+    click() {
+        if (this._events?.click || !this._jsonModel.buttonType) {
+            return;
+        }
+        if (this._jsonModel.buttonType === 'submit') {
+            return this.form.dispatch(new Submit());
+        }
+        if (this._jsonModel.buttonType === 'reset') {
+            return this.form.dispatch(new Reset());
+        }
+    }
 }
 const alternateFieldTypeMapping = {
     'text': 'text-input',
@@ -4397,7 +4515,7 @@ class FormFieldFactoryImpl {
         };
         child.fieldType = child.fieldType ? (child.fieldType in alternateFieldTypeMapping ?
             alternateFieldTypeMapping[child.fieldType] : child.fieldType)
-            : 'text-input';
+          : 'text-input';
         if (isRepeatable$1(child)) {
             const newChild = {
                 ...child,
@@ -4422,7 +4540,7 @@ class FormFieldFactoryImpl {
             };
             retVal = new InstanceManager(newJson, options);
         }
-        else if ('items' in child) {
+        else if ('items' in child || child.fieldType === 'panel') {
             retVal = new Fieldset(child, options);
         }
         else {
@@ -4443,6 +4561,9 @@ class FormFieldFactoryImpl {
             }
             else if (isCaptcha(child)) {
                 retVal = new Captcha(child, options);
+            }
+            else if (isButton(child)) {
+                retVal = new Button(child, options);
             }
             else {
                 retVal = new Field(child, options);
