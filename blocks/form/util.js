@@ -220,3 +220,13 @@ export function checkValidation(fieldElement) {
   || fieldElement.validationMessage;
   updateOrCreateInvalidMsg(fieldElement, message);
 }
+
+export function updateDragDropTextForFileInput(field, dragDropText) {
+  const fileDragArea = field.closest('.file-drag-area');
+  if (fileDragArea) {
+    const fileDragTextElement = fileDragArea.querySelector('.file-dragText');
+    if (fileDragTextElement) {
+      fileDragTextElement.textContent = dragDropText;
+    }
+  }
+}

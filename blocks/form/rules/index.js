@@ -1,6 +1,6 @@
 import { submitSuccess, submitFailure } from '../submit.js';
 import {
-  createHelpText, createLabel, updateOrCreateInvalidMsg, getCheckboxGroupValue, removeInvalidMsg,
+  createHelpText, createLabel, updateOrCreateInvalidMsg, getCheckboxGroupValue, removeInvalidMsg, updateDragDropTextForFileInput,
 } from '../util.js';
 import registerCustomFunctions from './functionRegistration.js';
 import { externalize } from './functions.js';
@@ -33,6 +33,11 @@ async function fieldChanged(payload, form, generateFormRendition) {
       return;
     }
     switch (propertyName) {
+      case 'properties':
+        if (fieldType === 'file-input') {
+          updateDragDropTextForFileInput(field, currentValue.dragDropText);
+        }
+        break;
       case 'required':
         if (currentValue === true) {
           field.closest('.field-wrapper').dataset.required = '';

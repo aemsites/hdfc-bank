@@ -45,6 +45,7 @@ import corpCreditCard from './constants.js';
 
 const { endpoints } = corpCreditCard;
 const { currentFormContext } = corpCreditCardContext;
+let defaultDragDropText;
 
 /**
  * @name checkMode - check the location
@@ -350,6 +351,20 @@ function redirect(redirectUrl) {
   window.location.href = redirectUrl;
 }
 
+/**
+* @name updateDragDropText
+* @param {object} fileInput
+* @param {object} dropdownValue
+* @param {object} globals
+*/
+function updateDragDropText(fileInput, dropdownValue, globals) {
+  if (defaultDragDropText === undefined) {
+    defaultDragDropText = fileInput.$properties.dragDropText;
+  }
+  const updatedText = `${dropdownValue.$value} ${defaultDragDropText}`;
+  globals.functions.setProperty(fileInput, { properties: { dragDropText: updatedText } });
+}
+
 export {
   getOTP,
   otpValidation,
@@ -379,4 +394,5 @@ export {
   hideLoaderGif,
   executeInterfacePostRedirect,
   executeInterfaceApiFinal,
+  updateDragDropText,
 };
