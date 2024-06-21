@@ -32,6 +32,8 @@ import {
   executeInterfaceResponseHandler,
 } from './executeinterfaceutils.js';
 
+import documentUpload from './docuploadutils.js';
+
 import fetchAuthCode from './idcomutil.js';
 
 import {
@@ -382,4 +384,5 @@ export {
   executeInterfacePostRedirect,
   executeInterfaceApiFinal,
   executeInterfaceResponseHandler,
+  documentUpload,
 };
