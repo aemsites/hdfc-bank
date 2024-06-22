@@ -1,4 +1,5 @@
 /* eslint-disable no-underscore-dangle */
+/* eslint no-bitwise: ["error", { "allow": ["^", ">>", "&"] }] */
 
 import corpCreditCard from './constants.js';
 
@@ -383,6 +384,12 @@ const santizedFormDataWithContext = (globaObj, currentFormContext) => {
   return JSON.parse(JSON.stringify(formDataPayload));
 };
 
+/**
+ * Generates a Version 4 UUID (Universally Unique Identifier) using a cryptographically secure method.
+ * @returns {string} The generated UUID string.
+ */
+const generateUUID = () => ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) => (c ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))).toString(16));
+
 export {
   urlPath,
   maskNumber,
@@ -401,4 +408,5 @@ export {
   dateFormat,
   makeFieldInvalid,
   santizedFormDataWithContext,
+  generateUUID,
 };
