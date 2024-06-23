@@ -137,6 +137,43 @@ function restAPICall(globals, method, payload, path, successCallback, errorCallb
     });
 }
 
+/**
+ * Executes a series of chained asynchronous fetch requests.
+ *
+ * @param {string} apiUrl - The URL endpoint for the API.
+ * @param {string} method - The HTTP method for the requests (e.g., 'POST', 'PUT').
+ * @param {Array<any>} payloadArray - Array of payloads to send in the requests.
+ * @param {string} payloadType - Type of payload, accepts'formData' to send as FormData (without stringify) or 'json'(with stringify).
+ * @returns {Promise<Array<{ status: 'fulfilled' | 'rejected', value?: any, reason?: any }>>}
+ * A promise that resolves to an array of promise settlement records.
+ */
+const chainedFetchAsyncCall = async (apiUrl, method, payloadArray, payloadType) => {
+  const promises = payloadArray?.map(async (dataLoad) => {
+    const jsonContentType = {
+      mode: 'cors',
+      headers: {
+        'Content-type': 'text/plain', // Adjusted content-type based on payloadType,
+        Accept: 'application/json',
+      },
+    };
+    const typeFormData = (payloadType === 'formData');
+    const formDataContentType = {
+      method,
+      body: typeFormData ? dataLoad : JSON.stringify(dataLoad),
+    };
+    const contentType = typeFormData ? formDataContentType : ({ ...formDataContentType, ...jsonContentType });
+    try {
+      const response = await fetch(apiUrl, contentType);
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      return error;
+    }
+  });
+  const fileResponses = await Promise.allSettled(promises);
+  return fileResponses;
+};
+
 export {
   restAPICall,
   getJsonResponse,
@@ -144,4 +181,5 @@ export {
   hideLoaderGif,
   fetchJsonResponse,
   fetchIPAResponse,
+  chainedFetchAsyncCall,
 };

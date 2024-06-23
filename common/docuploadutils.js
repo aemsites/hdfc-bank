@@ -4,34 +4,9 @@ import { corpCreditCardContext } from './journey-utils.js';
 import {
   displayLoader,
   hideLoaderGif,
+  chainedFetchAsyncCall,
 } from './makeRestAPI.js';
 import { urlPath, generateUUID } from './formutils.js';
-
-/**
- * Uploads multiple files asynchronously and returns an array of responses.
- * @param {Array} uploadFiles - Array of files to upload.
- * @param {string} apiUrl - The API endpoint URL for file upload.
- * @param {string} method - The HTTP method ('GET', 'POST', etc.) for the API request.
- * @returns {Promise<Array>} - Promise that resolves to an array of responses from each file upload.
- */
-const uploadMultipleFileCall = async (uploadFiles, apiUrl, method) => {
-  displayLoader();
-  const promises = uploadFiles?.map(async (formData) => {
-    try {
-      const response = await fetch(apiUrl, {
-        method,
-        body: formData,
-      });
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      return error;
-    }
-  });
-  const fileResponses = await Promise.allSettled(promises);
-  hideLoaderGif();
-  return fileResponses;
-};
 
 /**
  * Creates a FormData payload for document upload.
@@ -78,7 +53,7 @@ const createDocPayload = async ({ docValue, docType, fileId }) => {
     Object.entries(payloadKeyValuePairs).forEach(([key, value]) => formData.append(key?.toString(), value));
     return formData;
   } catch (error) {
-    throw new Error('Failed to create document payload');
+    throw new Error('Failed to create document payload', error);
   }
 };
 
@@ -108,16 +83,24 @@ const documentUpload = async (globals) => {
   const apiEndPoint = urlPath(corpCreditCard.endpoints.docUpload);
   const method = 'POST';
   try {
+    displayLoader();
     const fsFilePayload = await createDocPayload(frontDoc);
     const bsFilePayload = await createDocPayload(backDoc);
-    const [fsFileResponse, bsFileResponse] = await uploadMultipleFileCall(
-      [fsFilePayload, bsFilePayload],
-      apiEndPoint,
-      method,
-    );
-    console.log(fsFileResponse, 'fs-file-1-response');
-    console.log(bsFileResponse, 'bs-file-1-response');
+    if (fsFilePayload && bsFilePayload) {
+      const [fsFileResponse, bsFileResponse] = await chainedFetchAsyncCall(
+        apiEndPoint,
+        method,
+        [fsFilePayload, bsFilePayload],
+        'formData',
+      );
+      console.log(fsFileResponse, 'fs-file-1-response');
+      console.log(bsFileResponse, 'bs-file-1-response');
+      hideLoaderGif();
+    } else {
+      throw new Error('missing payload');
+    }
   } catch (error) {
+    hideLoaderGif();
     console.log('errorInFilePayload');
   }
 };
