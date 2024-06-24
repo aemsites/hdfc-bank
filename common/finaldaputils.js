@@ -59,8 +59,8 @@ const fetchFiller4 = (mobileMatch, kycStatus, journeyType) => {
  */
 const createDapRequestObj = (globals) => {
   debugger
-  const formContextCallbackData = globals.functions.exportData()?.currentFormContext;
-  const segment = formContextCallbackData?.breDemogResponse?.SEGMENT;
+  const formContextCallbackData = globals.functions.exportData()?.currentFormContext || currentFormContext;
+  const segment = formContextCallbackData?.breDemogResponse?.SEGMENT || currentFormContext;
   const customerInfo = currentFormContext?.executeInterfaceReqObj?.requestString || formContextCallbackData?.executeInterfaceReqObj?.requestString;
   // const { prefilledEmploymentDetails } = employmentDetails;
   const { selectKYCMethodOption1: { aadharEKYCVerification }, selectKYCMethodOption2: { aadharBiometricVerification }, selectKYCMethodOption3: { officiallyValidDocumentsMethod } } = globals.form.corporateCardWizardView.selectKycPanel.selectKYCOptionsPanel;
@@ -121,33 +121,58 @@ const updatePanelVisibility = (response, globals) => {
   }
 };
 
+const throughDomSetArnNum = (arnNumRef)=>{
+  const nameOfArnRefPanel = 'arnRefNumPanel';
+  const classNamefieldArnNo = '.field-arnnumber';
+  const arnRefNumPanel = document?.querySelector(`[name= ${nameOfArnRefPanel}]`);
+  const arnNumberElement = arnRefNumPanel.querySelector(classNamefieldArnNo);
+  if (arnNumberElement) {
+    // Manipulate the content of the <p> tag inside '.field-arnnumber'
+    arnNumberElement.querySelector('p').textContent = arnNumRef;
+  }
+};
+
 const finalDap = (globals) => {
   debugger
   const apiEndPoint = urlPath(corpCreditCard.endpoints.finalDap);
   const payload = createDapRequestObj(globals);
-  const formContextCallbackData = globals.functions.exportData()?.currentFormContext;
-  const mobileNumber = globals.functions.exportData().form.login.registeredMobileNumber;
-  const leadProfileId = globals.functions.exportData().leadProifileId;
+  const formContextCallbackData = globals.functions.exportData()?.currentFormContext || currentFormContext;
+  const mobileNumber = globals.functions.exportData().form.login.registeredMobileNumber || globals.form.loginPanel.mobilePanel.registeredMobileNumber.$value;
+  const leadProfileId = globals.functions.exportData().leadProifileId || globals.form.runtime.leadProifileId.$value;
   const journeyId = formContextCallbackData.journeyID;
   const eventHandlers = {
-    successCallBack: (response) => {
+    successCallBack: (response, globalObj) => {
       if (response?.errorCode === '0000') {
         currentFormContext.VKYC_URL = response.vkycUrl;
-        currentFormContext.ARN_NUM = response.erefNumber;
+        currentFormContext.ARN_NUM = response.applicationNumber;
         currentFormContext.finalDapResponse = response;
-        invokeJourneyDropOffUpdate('FINAL_DAP_SUCCESS', mobileNumber, leadProfileId, journeyId, globals);
+        globalObj.functions.setProperty(globalObj.form.corporateCardWizardView, { visible: false });
+        globalObj.functions.setProperty(globalObj.form.resultPanel, { visible: true });
+        globalObj.functions.setProperty(globalObj.form.resultPanel.errorResultPanel, { visible: false });
+        globalObj.functions.setProperty(globalObj.form.resultPanel.successResultPanel, { visible: true });
+        // 👇 it is not setting the value.
+        globalObj.functions.setProperty(globalObj.form.resultPanel.successResultPanel.arnRefNumPanel.arnNumber, { value: response.applicationNumber });
+        // setting through DomApi
+        throughDomSetArnNum(response.applicationNumber);
+        invokeJourneyDropOffUpdate('FINAL_DAP_SUCCESS', mobileNumber, leadProfileId, journeyId, globalObj);
       } else {
-        invokeJourneyDropOffUpdate('FINAL_DAP_FAILURE', mobileNumber, leadProfileId, journeyId, globals);
+        globalObj.functions.setProperty(globalObj.form.corporateCardWizardView, { visible: false });
+        globalObj.functions.setProperty(globalObj.form.resultPanel, { visible: true });
+        globalObj.functions.setProperty(globalObj.form.resultPanel.errorResultPanel, { visible: true });
+        invokeJourneyDropOffUpdate('FINAL_DAP_FAILURE', mobileNumber, leadProfileId, journeyId, globalObj);
       }
     },
-    errorCallback: (response) => {
-      invokeJourneyDropOffUpdate('FINAL_DAP_FAILURE', mobileNumber, leadProfileId, journeyId, globals);
+    errorCallback: (response, globalObj) => {
+      globalObj.functions.setProperty(globalObj.form.corporateCardWizardView, { visible: false });
+      globalObj.functions.setProperty(globalObj.form.resultPanel, { visible: true });
+      globalObj.functions.setProperty(globalObj.form.resultPanel.errorResultPanel, { visible: true });
+      invokeJourneyDropOffUpdate('FINAL_DAP_FAILURE', mobileNumber, leadProfileId, journeyId, globalObj);
       console.log(response);
     },
   };
   // const res = {};
   // updatePanelVisibility(res, globals);
 
-  restAPICall('', 'POST', payload, apiEndPoint, eventHandlers.successCallBack, eventHandlers.errorCallback);
+  restAPICall(globals, 'POST', payload, apiEndPoint, eventHandlers.successCallBack, eventHandlers.errorCallback);
 };
 export { finalDap, updatePanelVisibility };
