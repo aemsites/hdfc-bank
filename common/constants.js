@@ -13,6 +13,7 @@ const corpCreditCard = {
     otpGen: '/content/hdfc_haf/api/otpgenerationccV4.json',
     otpValFetchAssetDemog: '/content/hdfc_haf/api/otpvaldemogV4.json',
     panValNameMatch: '/content/hdfc_forms_common_v2/api/panValNameMatch.json',
+    docUpload: '/content/hdfc_etb_wo_pacc/api/documentUpload.json',
   },
   idCom: {
     productCode: 'CORPCC',

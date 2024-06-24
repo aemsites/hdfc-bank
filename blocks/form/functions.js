@@ -29,6 +29,7 @@ import {
   executeInterfacePostRedirect,
   executeInterfaceApiFinal,
   executeInterfaceResponseHandler,
+  documentUpload,
 } from '../../common/functions.js';
 
 import { moveWizardView } from '../../common/formutils.js';
@@ -216,4 +217,5 @@ export {
   executeInterfacePostRedirect,
   executeInterfaceApiFinal,
   executeInterfaceResponseHandler,
+  documentUpload,
 };
