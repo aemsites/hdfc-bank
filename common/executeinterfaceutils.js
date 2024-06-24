@@ -348,7 +348,7 @@ const ipaSuccessHandler = (ipa, productEligibility, globals) => {
  * @param {object} source - The source object (unused in the current implementation).
  * @param {object} globals - An object containing global variables and functions.
  */
-const executeInterfacePostRedirect = async (source, globals) => {
+const executeInterfacePostRedirect = async (source, userRedirected, globals) => {
   // const corporateCardWizardView = formUtil(globals, globals.form.corporateCardWizardView);
   // const confirmAndSubmitPanel = formUtil(globals, globals.form.corporateCardWizardView.confirmAndSubmitPanel);
 
@@ -374,7 +374,7 @@ const executeInterfacePostRedirect = async (source, globals) => {
     successCallBack: (response) => {
       if (response?.errorCode === '0000') {
         currentFormContext.jwtToken = response.Id_token_jwt;
-        finalDap(globals);
+        finalDap(userRedirected, globals);
       } else {
         const formContextCallbackData = globals.functions.exportData()?.currentFormContext;
         const mobileNumber = globals.functions.exportData().form.login.registeredMobileNumber;

@@ -132,8 +132,7 @@ const throughDomSetArnNum = (arnNumRef) => {
   }
 };
 
-const finalDap = (globals) => {
-  debugger;
+const finalDap = (userRedirected, globals) => {
   const apiEndPoint = urlPath(corpCreditCard.endpoints.finalDap);
   const payload = createDapRequestObj(globals);
   const formContextCallbackData = globals.functions.exportData()?.currentFormContext || currentFormContext;
@@ -141,28 +140,28 @@ const finalDap = (globals) => {
   const leadProfileId = globals.functions.exportData().leadProifileId || globals.form.runtime.leadProifileId.$value;
   const journeyId = formContextCallbackData.journeyID;
   const eventHandlers = {
-    successCallBack: (response, globalObj) => {
+    successCallBack: (response) => {
       if (response?.errorCode === '0000') {
         currentFormContext.VKYC_URL = response.vkycUrl;
         currentFormContext.ARN_NUM = response.applicationNumber;
         currentFormContext.finalDapResponse = response;
-        invokeJourneyDropOffUpdate('FINAL_DAP_SUCCESS', mobileNumber, leadProfileId, journeyId, globalObj);
-        if (document) {
-          globalObj.functions.setProperty(globalObj.form.corporateCardWizardView, { visible: false });
-          globalObj.functions.setProperty(globalObj.form.resultPanel, { visible: true });
-          globalObj.functions.setProperty(globalObj.form.resultPanel.errorResultPanel, { visible: false });
-          globalObj.functions.setProperty(globalObj.form.resultPanel.successResultPanel, { visible: true });
+        invokeJourneyDropOffUpdate('FINAL_DAP_SUCCESS', mobileNumber, leadProfileId, journeyId, globals);
+        if (!userRedirected) {
+          globals.functions.setProperty(globals.form.corporateCardWizardView, { visible: false });
+          globals.functions.setProperty(globals.form.resultPanel, { visible: true });
+          globals.functions.setProperty(globals.form.resultPanel.errorResultPanel, { visible: false });
+          globals.functions.setProperty(globals.form.resultPanel.successResultPanel, { visible: true });
           // 👇 it is not setting the value.
-          globalObj.functions.setProperty(globalObj.form.resultPanel.successResultPanel.arnRefNumPanel.arnNumber, { value: response.applicationNumber });
+          globals.functions.setProperty(globals.form.resultPanel.successResultPanel.arnRefNumPanel.arnNumber, { value: response.applicationNumber });
           // setting through DomApi
           throughDomSetArnNum(response.applicationNumber);
         }
       } else {
-        invokeJourneyDropOffUpdate('FINAL_DAP_FAILURE', mobileNumber, leadProfileId, journeyId, globalObj);
-        if (document) {
-          globalObj.functions.setProperty(globalObj.form.corporateCardWizardView, { visible: false });
-          globalObj.functions.setProperty(globalObj.form.resultPanel, { visible: true });
-          globalObj.functions.setProperty(globalObj.form.resultPanel.errorResultPanel, { visible: true });
+        invokeJourneyDropOffUpdate('FINAL_DAP_FAILURE', mobileNumber, leadProfileId, journeyId, globals);
+        if (!userRedirected) {
+          globals.functions.setProperty(globals.form.corporateCardWizardView, { visible: false });
+          globals.functions.setProperty(globals.form.resultPanel, { visible: true });
+          globals.functions.setProperty(globals.form.resultPanel.errorResultPanel, { visible: true });
         }
       }
     },
@@ -171,12 +170,10 @@ const finalDap = (globals) => {
       globalObj.functions.setProperty(globalObj.form.resultPanel, { visible: true });
       globalObj.functions.setProperty(globalObj.form.resultPanel.errorResultPanel, { visible: true });
       invokeJourneyDropOffUpdate('FINAL_DAP_FAILURE', mobileNumber, leadProfileId, journeyId, globalObj);
-      console.log(response);
     },
   };
   // const res = {};
   // updatePanelVisibility(res, globals);
-  const loader = document ? 'Please wait while we are checking ' : '';
-  restAPICall(globals, 'POST', payload, apiEndPoint, eventHandlers.successCallBack, eventHandlers.errorCallback, loader);
+  restAPICall(globals, 'POST', payload, apiEndPoint, eventHandlers.successCallBack, eventHandlers.errorCallback);
 };
 export { finalDap, updatePanelVisibility };

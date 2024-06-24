@@ -98,7 +98,8 @@ function checkMode(globals) {
     globals.functions.setProperty(globals.form.resultPanel.successResultPanel, { visible: false });
     globals.functions.setProperty(globals.form.resultPanel.errorResultPanel, { visible: false });
     globals.functions.setProperty(globals.form.confirmResult, { visible: false });
-    executeInterfacePostRedirect('idCom', globals);
+    const userRedirected = true;
+    executeInterfacePostRedirect('idCom', userRedirected, globals);
   }
 }
 
