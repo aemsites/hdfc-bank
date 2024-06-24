@@ -176,7 +176,7 @@ const finalDap = (globals) => {
   };
   // const res = {};
   // updatePanelVisibility(res, globals);
-
-  restAPICall(globals, 'POST', payload, apiEndPoint, eventHandlers.successCallBack, eventHandlers.errorCallback);
+  const loader = document ? 'Please wait while we are checking ' : '';
+  restAPICall(globals, 'POST', payload, apiEndPoint, eventHandlers.successCallBack, eventHandlers.errorCallback, loader);
 };
 export { finalDap, updatePanelVisibility };
