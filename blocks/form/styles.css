@@ -443,7 +443,7 @@ main .form .field-resultpanel > div.bulleted-paragraph,
 main
   .form
   .field-successresultpanel
-  > div:not(.field-successresulttextlabel, .field-arnnumber) {
+  > div:not(.field-successresulttextlabel, .field-newarnnumber) {
   display: flex;
   max-width: 506px;
   margin: 0 auto;
@@ -489,7 +489,7 @@ main .form .field-successresultpanel {
       left: 40%;
     }
 
-    .field-arnnumber {
+    .field-newarnnumber {
       position: absolute;
       top: 30px;
       left: 40%;
@@ -632,7 +632,7 @@ main .form .field-resultpanel {
   
     .field-successresulttextlabel { margin-bottom: 12px; }
     .field-arnrefnumpanel::before { left: 24%; }
-    .field-arnrefnumlabel, .field-arnnumber { left: 36%; }
+    .field-arnrefnumlabel, .field-newarnnumber { left: 36%; }
     .field-vkycconfirmationtext { justify-content: center; }
   }
 }
@@ -708,7 +708,7 @@ main .form .field-resultpanel {
     .field-arnrefnumpanel::before { left: 14%; }
     .field-arnrefnumlabel { left: 32%; }
 
-    .field-arnnumber {
+    .field-newarnnumber {
       left: 32%; 
       top: 43px;
     }

@@ -240,11 +240,11 @@ const errorPannelMethod = () => {
 
 const setArnNumberInResult = (arnNumRef) => {
   const nameOfArnRefPanel = 'arnRefNumPanel';
-  const classNamefieldArnNo = '.field-arnnumber';
+  const classNamefieldArnNo = '.field-newarnnumber';
   const arnRefNumPanel = document.querySelector(`[name= ${nameOfArnRefPanel}]`);
   const arnNumberElement = arnRefNumPanel.querySelector(classNamefieldArnNo);
   if (arnNumberElement) {
-    // Manipulate the content of the <p> tag inside '.field-arnnumber'
+    // Manipulate the content of the <p> tag inside '.field-newarnnumber'
     arnNumberElement.querySelector('p').textContent = arnNumRef;
   }
 };

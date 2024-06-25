@@ -123,11 +123,11 @@ const updatePanelVisibility = (response, globals) => {
 
 const throughDomSetArnNum = (arnNumRef) => {
   const nameOfArnRefPanel = 'arnRefNumPanel';
-  const classNamefieldArnNo = '.field-arnnumber';
+  const classNamefieldArnNo = '.field-newarnnumber';
   const arnRefNumPanel = document?.querySelector(`[name= ${nameOfArnRefPanel}]`);
   const arnNumberElement = arnRefNumPanel.querySelector(classNamefieldArnNo);
   if (arnNumberElement) {
-    // Manipulate the content of the <p> tag inside '.field-arnnumber'
+    // Manipulate the content of the <p> tag inside '.field-newarnnumber'
     arnNumberElement.querySelector('p').textContent = arnNumRef;
   }
 };
@@ -152,7 +152,7 @@ const finalDap = (userRedirected, globals) => {
           globals.functions.setProperty(globals.form.resultPanel.errorResultPanel, { visible: false });
           globals.functions.setProperty(globals.form.resultPanel.successResultPanel, { visible: true });
           // 👇 it is not setting the value.
-          globals.functions.setProperty(globals.form.resultPanel.successResultPanel.arnRefNumPanel.arnNumber, { value: response.applicationNumber });
+          globals.functions.setProperty(globals.form.resultPanel.successResultPanel.arnRefNumPanel.newARNNumber, { value: response.applicationNumber });
           // setting through DomApi
           throughDomSetArnNum(response.applicationNumber);
         }
