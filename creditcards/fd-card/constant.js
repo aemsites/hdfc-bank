@@ -15,7 +15,7 @@ const ERROR_MSG = {
   dobLabel: 'DOB',
   panError: 'Please enter a valid PAN Number',
   mobileError: 'Enter valid mobile number',
-  ageLimit: `Age should be between ${AGE_LIMIT.min} to ${AGE_LIMIT.max}`,
+  ageLimit: `Customers with age below ${AGE_LIMIT.min} years and above ${AGE_LIMIT.max} years are not allowed`,
 };
 
 const FD_ENDPOINTS = {

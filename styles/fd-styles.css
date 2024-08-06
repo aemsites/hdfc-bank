@@ -83,18 +83,6 @@ body.fdlien:has(.fd-form-wrapper .field-fdbasedcreditcardwizard:not([data-visibl
       .field-bannerimagepanel {
           background: var(--color-interface-fd-background-secondary) url('../icons/side_bar_banner.png') no-repeat center center / cover;
           min-height: 648px;
-  
-          /* .field-bannerimagefdlien {
-              background: url('../icons/side_bar_banner.png');
-              display: flex;
-              align-items: flex-end;
-          }
-  
-          .field-bannerimagefdlien picture,
-          .field-bannerimagefdlien img {
-              max-width: 100%;
-              height: 100%;
-          } */
       }
 
       .field-loginmainpanel {
@@ -354,6 +342,14 @@ body.fdlien:has(.fd-form-wrapper .field-fdbasedcreditcardwizard:not([data-visibl
       }
 
   }    
+}
+
+.fdlien .field-loginpanel:has(.field-identifierpanel .field-dateofbirth .field-description) {
+    .field-mobilepanel {
+        .field-countrycode, .field-registeredmobilenumber {
+            margin-bottom: 21px !important;
+        }
+    }
 }
 
 /* Multiple Customer Id  */
