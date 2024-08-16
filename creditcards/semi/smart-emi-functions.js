@@ -69,6 +69,7 @@ function otpValV1(mobileNumber, cardDigits, otpNumber) {
       proCode: PRO_CODE,
       journeyID: currentFormContext.journeyID,
       journeyName: currentFormContext.journeyName,
+      channel: 'WhatsApp',
     },
   };
   const path = semiEndpoints.otpVal;
@@ -94,42 +95,37 @@ const cardDisplay = (globals, response) => {
   imageEl?.childNodes[1].setAttribute('srcset', imagePath);
 };
 
+const setTxnListPanelData = (dataList, pannel, globals) => {
+  if (dataList?.length) {
+    dataList?.forEach((txn, i) => {
+      if (i === 0) { /* empty */ } else {
+        setTimeout(() => {
+          globals.functions.setProperty(pannel[i - 1]?.aem_TxnAmt, { value: txn?.amount });
+          globals.functions.setProperty(pannel[i - 1]?.aem_TxnDate, { value: txn?.date });
+          globals.functions.setProperty(pannel[i - 1]?.aem_TxnID, { value: txn?.id });
+          globals.functions.setProperty(pannel[i - 1]?.billed_TxnName, { value: txn?.name });
+          globals.functions.dispatchEvent(pannel, 'addItem');
+        }, 20 * (2 * i));
+      }
+    });
+  }
+};
+
 /**
 * @param {resPayload} Object - checkEligibility response.
 * @return {PROMISE}
 */
 // eslint-disable-next-line no-unused-vars
 function checkELigibilityHandler(resPayload, globals) {
-  const ccBilledData = resPayload.ccBilledTxnResponse.responseString;
-  const ccUnBilledData = resPayload.ccUnBilledTxnResponse.responseString;
+  const ccBilledData = resPayload?.ccBilledTxnResponse?.responseString;
+  const ccUnBilledData = resPayload?.ccUnBilledTxnResponse?.responseString;
   // AUTH_CODE, LOGICMOD, PLANNO, STS, amount, date, id, lasttxnseqno, name
   moveWizardView(domElements.semiWizard, domElements.chooseTransaction);
   cardDisplay(globals, resPayload);
-  // didn't works if try to make dynamic.
   const billedTxnPanel = globals.form.aem_semiWizard.aem_chooseTransactions.billedTxnFragment.aem_chooseTransactions.aem_TxnsList;
   const unBilledTxnPanel = globals.form.aem_semiWizard.aem_chooseTransactions.unbilledTxnFragment.aem_chooseTransactions.aem_TxnsList;
-  const billed_txnList = globals.form.aem_semiWizard.aem_chooseTransactions.billedTxnFragment.aem_chooseTransactions.aem_TxnsList;
-  const unbilled_txnList = globals.form.aem_semiWizard.aem_chooseTransactions.billedTxnFragment.aem_chooseTransactions.aem_TxnsList;
-  if (ccBilledData?.length) {
-    ccBilledData?.forEach(async (txn, i) => {
-      debugger;
-      if (i === 0) {
-        globals.functions.setProperty(billedTxnPanel[i]?.aem_TxnAmt, { value: txn?.amount });
-        // globals.functions.setProperty(billedTxnPanel[i]?.aem_TxnDate, { value: txn?.date });
-        globals.functions.setProperty(billedTxnPanel[i]?.aem_TxnID, { value: txn?.id });
-        globals.functions.setProperty(billedTxnPanel[i]?.billed_TxnName, { value: txn?.name });
-      } else {
-        await globals.functions.dispatchEvent(billedTxnPanel, 'addItem');
-      }
-    });
-  }
-  if (ccUnBilledData?.length) {
-    ccUnBilledData?.forEach(async (txn, i) => {
-      if (i > 1) {
-        await globals.functions.dispatchEvent(unBilledTxnPanel, 'addItem');
-      }
-    });
-  }
+  setTxnListPanelData(ccBilledData, billedTxnPanel, globals);
+  setTxnListPanelData(ccUnBilledData, unBilledTxnPanel, globals);
 }
 export {
   getOTPV1,
