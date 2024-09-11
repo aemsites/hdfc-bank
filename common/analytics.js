@@ -202,8 +202,14 @@ function sendSubmitClickEvent(phone, eventType, linkType, formData, journeyState
       // const formData = globals.functions.exportData();
       // const idcomVisit = formData?.queryParams?.authmode; // "DebitCard"
       digitalData.event = {
-        status: formData?.form?.cardDeliveryAddressOption1 || formData?.form?.cardDeliveryAddressOption2,
-        validationMethod: '', // Netbanking or Debit card - validationMethod - authmode will be getting only after idcom redirected - how to use that value
+        status: '1', // 'it will be always '1' since button getting enabled only after click decleration.'
+        validationMethod: '', // Netbanking or Debit card or creditCard - validationMethod - authmode will be getting only after idcom redirected - how to use that value
+        // validation method can't be captured as it is in different portal.
+      };
+
+      const cardDeliveryAddress = formData?.form?.cardDeliveryAddressOption2 ? 'Office Address||||' : 'Current Address||||';
+      digitalData.formDetails = {
+        nomineeRelation: cardDeliveryAddress, // Capture Card Delivery Address (Office or Current Address)
       };
       if (window) {
         window.digitalData = digitalData || {};
@@ -212,6 +218,16 @@ function sendSubmitClickEvent(phone, eventType, linkType, formData, journeyState
       break;
     }
 
+    case 'i agree': {
+      digitalData.formDetails = {
+        languageSelected: currentFormContext.languageSelected,
+      };
+      if (window) {
+        window.digitalData = digitalData || {};
+      }
+      _satellite.track('submit');
+      break;
+    }
     case 'kyc continue': {
       const kyc = (formData?.form?.aadharEKYCVerification && 'Ekyc') || (formData?.form?.aadharBiometricVerification && 'Biometric') || (formData?.form?.officiallyValidDocumentsMethod && 'Other Docs');
       digitalData.formDetails = {
@@ -290,6 +306,7 @@ function populateResponse(payload, eventType, digitalData) {
     case 'get this card':
     case 'submit review':
     case 'address continue':
+    case 'i agree':
     case 'start kyc': {
       digitalData.page.pageInfo.errorCode = payload?.errorCode;
       digitalData.page.pageInfo.errorMessage = payload?.errorMessage;
