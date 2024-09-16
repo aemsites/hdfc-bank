@@ -589,7 +589,7 @@ main .form.block .field-otppanel {
   margin: 0 auto;
   text-align: center;
 
-  legend, p, b { width: 100%; }
+  legend, p, b { width: fit-content; }
 
   .field-otpnumber {
     margin-bottom: -10px;
@@ -772,7 +772,7 @@ main .form .field-resultpanel {
   }
 
   main .form.block .field-otppanel { display: grid;
-    
+
     .field-otpsubpanel {
       display: flex;
       flex-direction: row;
