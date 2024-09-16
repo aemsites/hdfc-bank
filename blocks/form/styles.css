@@ -589,7 +589,9 @@ main .form.block .field-otppanel {
   margin: 0 auto;
   text-align: center;
 
-  legend, p, b { width: 265px; }
+  > legend { width: 265px;
+    p, b { width: 265px; }
+  }
 
   .field-otpnumber {
     margin-bottom: -10px;
@@ -697,7 +699,10 @@ main .form .field-resultpanel {
   }
 
   main .form .field-otppanel { display: grid;
-    legend, p, b { width: 265px; }
+
+    > legend { width: 265px;
+      p, b { width: 265px; }
+    }
 
     .field-otpnumber {
       input {
@@ -733,9 +738,11 @@ main .form .field-resultpanel {
     padding: 20px;
   }
 
-  main .form.block .field-otppanel {
-    display: grid;
-    legend, p, b { width: 265px; }
+  main .form.block .field-otppanel { display: grid;
+    
+    > legend { width: 265px;
+      p, b { width: 265px; }
+    }
 
     .field-otpnumber {
       input {
@@ -774,7 +781,10 @@ main .form .field-resultpanel {
   }
 
   main .form.block .field-otppanel { display: grid;
-    legend, p, b { width: 265px; }
+
+    > legend { width: 265px;
+      p, b { width: 265px; }
+    }
 
     .field-otpsubpanel {
       display: flex;
