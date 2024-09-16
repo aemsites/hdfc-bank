@@ -589,7 +589,10 @@ main .form.block .field-otppanel {
   margin: 0 auto;
   text-align: center;
 
-  legend, p, b { width: fit-content; }
+  legend, p, b { 
+    display: grid;
+    width: fit-content; 
+  }
 
   .field-otpnumber {
     margin-bottom: -10px;
