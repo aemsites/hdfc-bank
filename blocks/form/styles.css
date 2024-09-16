@@ -696,7 +696,8 @@ main .form .field-resultpanel {
     padding: 28px;
   }
 
-  main .form .field-otppanel {
+  main .form .field-otppanel { display: grid;
+
     .field-otpnumber {
       input {
         padding: 0 0 0 2vw;
@@ -770,7 +771,8 @@ main .form .field-resultpanel {
     margin: 0 !important;
   }
 
-  main .form.block .field-otppanel {
+  main .form.block .field-otppanel { display: grid;
+    
     .field-otpsubpanel {
       display: flex;
       flex-direction: row;
