@@ -40,6 +40,7 @@ const {
   MISC,
   DATA_LIMITS,
   CHANNELS,
+  FLOWS_ERROR_MESSAGES,
   // eslint-disable-next-line no-unused-vars
   RESPONSE_PAYLOAD,
 } = SEMI_CONSTANT;
@@ -168,6 +169,7 @@ function preExecution(mobileNumber, cardDigits, globals) {
   } else {
     globals.functions.setProperty(otpPanel.secondsPanel, { visible: false });
   }
+  const currentFormContext = getCurrentFormContext(globals);
   const jsonObj = {
     requestString: {
       mobileNo: mobileNumber,
@@ -266,7 +268,7 @@ function addTransactions(allTxn, globals) {
     }
   });
   // eslint-disable-next-line no-undef
-  const als = isNodeEnv ? [] : getContextStorage('promises');
+  const als = isNodeEnv ? getContextStorage('promises') : [];
   // eslint-disable-next-line no-unused-vars
   const promise = new Promise((resolve, reject) => {
     setTimeout(() => {
@@ -400,7 +402,7 @@ const getLoanOptionsInfo = (responseStringJsonObj) => {
       period: responseStringJsonObj[0][periodKey],
       interest: responseStringJsonObj[0][interestKey],
       tid: responseStringJsonObj[0][tidKey],
-      processingFee: responseStringJsonObj[0].memoLine1,
+      processingFee: responseStringJsonObj[0].processingFee,
     };
   });
   return loanoptions;
@@ -439,7 +441,7 @@ const tenureOption = (loanOptions, loanAmt) => {
     const roiAnnually = currencyUtil(parseFloat(option?.interest), 2);
     const monthlyEMI = nfObject.format(calculateEMI(loanAmt, roiMonthly, parseInt(option.period, 10)));
     const period = `${parseInt(option.period, 10)} Months`;
-    const procesingFee = nfObject.format(option.processingFee);
+    const procesingFee = nfObject.format(parseInt(option.processingFee, 10));
     const emiSubStance = option;
     return ({
       ...option,
@@ -502,7 +504,7 @@ const tenureDisplay = (globals) => {
   // setting data to display on whatsapp flow
   const procesFees = tenureArrayOption[0]?.procesingFee;
   globals.functions.setProperty(globals.form.aem_semiWizard.aem_selectTenure.aem_flow_processingFees, { value: `${MISC.rupeesUnicode} ${nfObject.format(procesFees)}` });
-  globals.functions.setProperty(globals.form.aem_semiWizard.aem_selectTenure.aem_flowDisplayTotalAmountSelected, { value: DISPLAY_TOTAL_AMT });
+  globals.functions.setProperty(globals.form.aem_semiWizard.aem_selectTenure.aem_flowDisplayTotalAmountSelected, { value: `Rs ${nfObject.format(totalAmountSelected)}/-` });
 };
 
 /**
@@ -519,9 +521,11 @@ function selectTenure(globals) {
     globals.functions.setProperty(globals.form.aem_semiWizard.aem_chooseTransactions.aem_txtSelectionPopupWrapper, { visible: true });
     globals.functions.setProperty(globals.form.aem_semiWizard.aem_chooseTransactions.aem_txtSelectionPopupWrapper.aem_txtSelectionPopup, { visible: true });
     globals.functions.setProperty(globals.form.aem_semiWizard.aem_chooseTransactions.aem_txtSelectionPopupWrapper.aem_txtSelectionPopup.aem_txtSelectionConfirmation, { value: MSG });
-  } else if (!isNodeEnv) {
-    moveWizardView(domElements.semiWizard, domElements.selectTenure);
-    handleMdmUtmParam(globals);
+  } else{
+    if(!isNodeEnv) {
+      moveWizardView(domElements.semiWizard, domElements.selectTenure);
+      handleMdmUtmParam(globals);
+    }
     tenureDisplay(globals);
   }
 }
@@ -587,6 +591,7 @@ const enableAllTxnFields = (txnList, globals) => txnList?.forEach((list) => glob
  */
 function txnSelectHandler(checkboxVal, txnType, globals) {
   /* enable-popup once it reaches BILLED-MAX-AMT-LIMIT */
+  const currentFormContext = getCurrentFormContext(globals);
   const totalSelectBilledTxnAmt = globals.functions.exportData().smartemi.aem_billedTxn.aem_billedTxnSelection.filter((el) => el.aem_Txn_checkBox).map((el) => (Number((String(el?.aem_TxnAmt))?.replace(/[^\d]/g, '')) / 100)).reduce((prev, acc) => prev + acc, 0);
   if (totalSelectBilledTxnAmt > currentFormContext.billedMaxSelect) {
     /* popup alert hanldles */
@@ -595,8 +600,12 @@ function txnSelectHandler(checkboxVal, txnType, globals) {
     globals.functions.setProperty(globals.form.aem_semiWizard.aem_chooseTransactions.aem_txtSelectionPopupWrapper.aem_txtSelectionPopup, { visible: true });
     globals.functions.setProperty(globals.form.aem_semiWizard.aem_chooseTransactions.aem_txtSelectionPopupWrapper.aem_txtSelectionPopup.aem_txtSelectionConfirmation, { value: SELECTED_MAX_BILL });
     globals.functions.setProperty(globals.form.aem_semiWizard.aem_chooseTransactions.aem_txnSelectionContinue, { enabled: false });
+
+    // display error message in whatsapp flow
+    customDispatchEvent('showErrorSnackbar', { errorMessage: SELECTED_MAX_BILL }, globals);
     return;
   }
+  customDispatchEvent('showErrorSnackbar', { errorMessage: undefined }, globals);
   // null || ON
   if (selectTopTenFlag || isUserSelection) return;
   const MAX_SELECT = 10;
@@ -841,6 +850,7 @@ const getCCSmartEmi = (mobileNum, cardNum, otpNum, globals) => {
   const eligibiltyResponse = _context.EligibilityResponse;
   const tenurePlan = globals.functions.exportData().aem_tenureSelectionRepeatablePanel;
   const selectedTenurePlan = tenurePlan?.find((emiPlan) => emiPlan.aem_tenureSelection === '0');
+  console.log('selectedTenurePlan', selectedTenurePlan);
   const emiSubData = JSON.parse(selectedTenurePlan?.aem_tenureRawData);
   const PROC_FEES = String(currencyStrToNum(selectedTenurePlan?.aem_tenureSelectionProcessing));
   const INTEREST = emiSubData?.interest; // '030888'
@@ -886,6 +896,7 @@ const getCCSmartEmi = (mobileNum, cardNum, otpNum, globals) => {
  * @param {object} globals - global form object
  */
 const otpTimerV1 = (pannelName, globals) => {
+  if(isNodeEnv) return;
   let sec = DATA_LIMITS.otpTimeLimit;
   let dispSec = DATA_LIMITS.otpTimeLimit;
   const FIRST_PANNEL_OTP = 'firstotp';
@@ -967,14 +978,26 @@ const resendOTPV1 = async (pannelName, globals) => {
     panelOtp.maxLimitOtp = otp2.aem_maxlimitOTP2;
     resendOtpCount2 += 1;
     panelOtp.resendOtpCount = resendOtpCount2;
+    if(isNodeEnv) {
+      panelOtp.resendOtpCountField = otp2.aem_resendOtpCount2;
+      panelOtp.limitCheck =  otp2.aem_resendOtpCount2.$value < DATA_LIMITS.maxOtpResendLimit;
+      panelOtp.resendOtpCount = otp2.aem_resendOtpCount2.$value + 1
+    }
   }
   const mobileNumber = globals.form.aem_semiWizard.aem_identifierPanel.aem_loginPanel.mobilePanel.aem_mobileNum.$value;
   const cardDigits = globals.form.aem_semiWizard.aem_identifierPanel.aem_loginPanel.aem_cardNo.$value;
+  if(panelOtp.resendOtpCountField) {
+    globals.functions.setProperty(panelOtp.resendOtpCountField, { value: panelOtp.resendOtpCount });
+  }
+  globals.functions.setProperty(panelOtp.otpTimerPanel, { visible: true });
   if (panelOtp.limitCheck) {
     if (panelOtp.resendOtpCount === DATA_LIMITS.maxOtpResendLimit) {
       globals.functions.setProperty(panelOtp.otpTimerPanel, { visible: false });
       globals.functions.setProperty(panelOtp.resendOtp, { visible: false });
       globals.functions.setProperty(panelOtp.maxLimitOtp, { visible: true });
+      // flow specific
+      const properties = panelOtp.resendOtp.$properties;
+      globals.functions.setProperty(panelOtp.resendOtp, { properties: {...properties, "flow:setVisible": false} });
     }
     if (pannelName === FIRST_PANNEL_OTP) {
       return getOTPV1(mobileNumber, cardDigits, channel, globals);
@@ -1003,7 +1026,13 @@ const tAndCNavigation = () => {
  * @param {scope} globals - globals
  */
 function customDispatchEvent(eventName, payload, globals) {
-  globals.functions.dispatchEvent(globals.form, `custom:${eventName}`, payload);
+  let evtPayload = payload
+  if(isNodeEnv && payload?.errorCode) {
+    if(FLOWS_ERROR_MESSAGES[payload.errorCode]) {
+      evtPayload = { ...evtPayload, errorMsg: FLOWS_ERROR_MESSAGES[payload.errorCode] }
+    }
+  }
+  globals.functions.dispatchEvent(globals.form, `custom:${eventName}`, evtPayload);
 }
 
 export {

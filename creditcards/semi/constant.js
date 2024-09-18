@@ -4,6 +4,12 @@ const ERROR_MSG = {
   mobileError: 'Enter valid mobile number',
 };
 
+const FLOWS_ERROR_MESSAGES = {
+  "XFACE_INQ_VP_0003": "Hey, it seems like you have entered incorrect details. Request you to check & re-enter your last 4 digits of the card.",
+  "XFACE_E2FA_02": "Incorrect OTP code. Please try again.", // For this case error message is hardcoded in rule
+  "XFACE_E2FA_04": "Oops! you have entered wrong otp too many times please try again later"
+}
+
 const CHANNELS = {
   adobeWeb: 'ADOBE_WEB',
   adobeWhatsApp: 'ADOBE_WHATSAPP',
@@ -1405,4 +1411,5 @@ export {
   MISC,
   RESPONSE_PAYLOAD,
   DATA_LIMITS,
+  FLOWS_ERROR_MESSAGES
 };
