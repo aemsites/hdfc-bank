@@ -10,8 +10,13 @@ import {
   parseName,
   removeSpecialCharacters,
 } from '../../common/formutils.js';
-import { getJsonResponse, displayLoader } from '../../common/makeRestAPI.js';
-import { addDisableClass, setSelectOptions } from '../domutils/domutils.js';
+import { getJsonResponse } from '../../common/makeRestAPI.js';
+import {
+  addDisableClass,
+  hideLoaderGif,
+  displayLoader,
+  setSelectOptions,
+} from '../domutils/domutils.js';
 import {
   FD_ENDPOINTS, NAME_ON_CARD_LENGTH, AGE_LIMIT, ERROR_MSG,
   MIN_ADDRESS_LENGTH,
@@ -19,6 +24,7 @@ import {
   OCCUPATION_MAP,
   ALLOWED_CHARACTERS,
 } from './constant.js';
+import { fdWizardSwitch } from './fd-journey-util.js';
 
 let CUSTOMER_DATA_BINDING_CHECK = true;
 
@@ -43,8 +49,8 @@ const initializeNameOnCardDdOptions = (globals, personalDetails, customerFirstNa
  * @name bindEmployeeAssistanceField
  * @returns {Promise<Object>} - A promise that resolves with the JSON response from the provided URL.
  */
-const bindEmployeeAssistanceField = async (globals) => {
-  const { resultPanel, fdBasedCreditCardWizard } = globals.form;
+const bindEmployeeAssistanceField = (response, globals) => {
+  const { fdBasedCreditCardWizard } = globals.form;
   const { employeeAssistancePanel, employeeAssistanceToggle, inPersonBioKYCPanel } = fdBasedCreditCardWizard.basicDetails.reviewDetailsView.employeeAssistance;
   const defaultChannel = getUrlParamCaseInsensitive('channel');
   const inPersonBioKYC = getUrlParamCaseInsensitive('InpersonBioKYC');
@@ -65,13 +71,7 @@ const bindEmployeeAssistanceField = async (globals) => {
       globals.functions.setProperty(inPersonBioKYCPanel, { visible: true });
       globals.functions.setProperty(inPersonBioKYCPanel.inPersonBioKYCOptions, { value: 0 });
     }
-    const response = await getJsonResponse(FD_ENDPOINTS.masterchannel, null, 'GET');
     if (!response) return;
-    if (response?.[0].errorCode === '500') {
-      globals.functions.setProperty(resultPanel, { visible: true });
-      globals.functions.setProperty(fdBasedCreditCardWizard, { visible: false });
-      globals.functions.setProperty(resultPanel.errorResultPanel, { visible: true });
-    }
     const dropDownSelectField = employeeAssistancePanel.channel;
     const channelOptions = ['Website Download'];
     const options = channelOptions.map((channel) => ({ label: channel, value: channel }));
@@ -97,6 +97,21 @@ const bindEmployeeAssistanceField = async (globals) => {
     });
   } catch (error) {
     console.log(error);
+  }
+};
+
+const fetchChannels = async (globals) => {
+  displayLoader();
+  const { resultPanel, fdBasedCreditCardWizard } = globals.form;
+  const response = await getJsonResponse(FD_ENDPOINTS.masterchannel, null, 'GET');
+  hideLoaderGif();
+  if (response.length > 0 && Object.keys(response[0]).some((key) => key.toLowerCase() === 'channel')) {
+    bindEmployeeAssistanceField(response, globals);
+    fdWizardSwitch('fdBasedCreditCardWizard', 'basicDetails');
+  } else {
+    globals.functions.setProperty(resultPanel, { visible: true });
+    globals.functions.setProperty(fdBasedCreditCardWizard, { visible: false });
+    globals.functions.setProperty(resultPanel.errorResultPanel, { visible: true });
   }
 };
 
@@ -129,7 +144,7 @@ const bindCustomerDetails = (globals) => {
   };
   CUSTOMER_DATA_BINDING_CHECK = false;
   formRuntime.validatePanLoader = (typeof window !== 'undefined') ? displayLoader : false;
-  bindEmployeeAssistanceField(globals);
+  fetchChannels(globals);
   const { customerInfo } = CURRENT_FORM_CONTEXT;
 
   const { firstName, middleName, lastName } = parseName(customerInfo.customerFullName);

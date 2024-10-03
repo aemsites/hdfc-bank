@@ -9,7 +9,8 @@ import {
 } from '../../common/formutils.js';
 import * as FD_CONSTANT from './constant.js';
 import * as CONSTANT from '../../common/constants.js';
-import { displayLoader, fetchJsonResponse } from '../../common/makeRestAPI.js';
+import { displayLoader } from '../domutils/domutils.js';
+import { fetchJsonResponse } from '../../common/makeRestAPI.js';
 import { addGaps } from './fd-dom-functions.js';
 import { executeInterfacePostRedirect } from './executeinterfaceutil.js';
 import creditCardSummary from './creditcardsumaryutil.js';

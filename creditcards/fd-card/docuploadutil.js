@@ -1,10 +1,12 @@
 /* eslint no-console: ["error", { allow: ["warn", "error", "log"] }] */
 import { invokeJourneyDropOffUpdate } from './fd-journey-util.js';
 import {
-  displayLoader,
-  hideLoaderGif,
   chainedFetchAsyncCall,
 } from '../../common/makeRestAPI.js';
+import {
+  displayLoader,
+  hideLoaderGif,
+} from '../domutils/domutils.js';
 import { urlPath, generateUUID } from '../../common/formutils.js';
 import { ENDPOINTS, CURRENT_FORM_CONTEXT } from '../../common/constants.js';
 import { finalPagePanelVisibility } from './thankyouutil.js';
