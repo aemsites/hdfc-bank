@@ -598,6 +598,40 @@ function applicableCards(employmentTypeMap, employmentType, cardMap, applicableC
   return matchingCard ? matchingCard.card : [];
 }
 
+const pincodeCheck = async (pincode, city, state) => {
+  const url = urlPath(`/content/hdfc_commonforms/api/mdm.CREDIT.SIX_DIGIT_PINCODE.PINCODE-${pincode}.json`);
+
+  // Define the error handling method
+  const errorMethod = () => Promise.resolve(false);
+
+  // Define the success method
+  const successMethod = (value) => {
+    if (value?.CITY?.toLowerCase() === city?.toLowerCase() && value?.STATE?.toLowerCase() === state?.toLowerCase()) {
+      return Promise.resolve(true);
+    }
+    return Promise.resolve(false);
+  };
+
+  try {
+    const response = await getJsonResponse(url, null, 'GET');
+
+    if (response && Array.isArray(response)) {
+      const [{
+        CITY, STATE, errorCode, errorMessage,
+      }] = response;
+
+      if (CITY && STATE) {
+        return successMethod({ CITY, STATE });
+      } if (errorCode) {
+        throw new Error(`Error ${errorCode}: ${errorMessage}`);
+      }
+    }
+    return Promise.resolve(false); // Fallback in case the response structure isn't valid.
+  } catch (error) {
+    return errorMethod();
+  }
+};
+
 const fetchFiller3 = (authMode) => {
   if (authMode?.toLowerCase() === 'debitcard') {
     return 'DCPINSUCCESS';
@@ -645,5 +679,6 @@ export {
   applicableCards,
   parseName,
   sanitizeName,
+  pincodeCheck,
   fetchFiller3,
 };

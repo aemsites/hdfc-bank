@@ -4,6 +4,8 @@ import {
   clearString,
   getTimeStamp,
   maskNumber,
+  parseCustomerAddress,
+  pincodeCheck,
   pinCodeMasterCheck,
   urlPath,
 } from '../../common/formutils.js';
@@ -168,8 +170,8 @@ const getOTP = (mobileNumber, pan, dob, globals) => {
   const jsonObj = {
     requestString: {
       dateOfBirth: clearString(dob.$value) || '',
-      // mobileNumber: FD_CONSTANT.MODE === 'dev' ? '9810558449' : mobileNumber.$value,
-      // panNumber: FD_CONSTANT.MODE === 'dev' ? 'OJSPS6821J' : panValue || '',
+      // mobileNumber: FD_CONSTANT.MODE === 'dev' ? '7666220352' : mobileNumber.$value,
+      // panNumber: FD_CONSTANT.MODE === 'dev' ? 'KGFPD6067D' : panValue || '',
       mobileNumber: mobileNumber.$value,
       panNumber: panValue || '',
       journeyID: globals.form.runtime.journeyId.$value,
@@ -182,8 +184,8 @@ const getOTP = (mobileNumber, pan, dob, globals) => {
   formRuntime?.getOtpLoader();
 
   // if (FD_CONSTANT.MODE === 'dev') {
-  //   globals.functions.setProperty(mobileNumber, { value: '9810558449' });
-  //   globals.functions.setProperty(pan, { value: 'OJSPS6821J' });
+  //   globals.functions.setProperty(mobileNumber, { value: '7666220352' });
+  //   globals.functions.setProperty(pan, { value: 'KGFPD6067D' });
   // }
 
   return fetchJsonResponse(path, jsonObj, 'POST', true);
@@ -286,7 +288,7 @@ const pincodeChangeHandler = (pincode, globals) => {
  * @name checkModeFd
  * @param {object} globals
  */
-const checkModeFd = (globals) => {
+const checkModeFd = async (globals) => {
   const formData = globals.functions.exportData();
   const { authmode: idcomVisit, visitType: aadhaarVisit } = formData?.queryParams || {};
   const { addressDeclarationPanel } = globals.form;
@@ -314,8 +316,27 @@ const checkModeFd = (globals) => {
         communicationAddress1, communicationAddress2, communicationAddress3,
         communicationCity, communicationState, comCityZip,
       } = formData?.currentFormContext?.executeInterfaceRequest?.requestString || {};
+      const isValidAadhaarPincode = await pincodeCheck(Zipcode, City, State);
+      let aadhaarAddress = '';
+      let parsedAadhaarAddress = '';
+      let fullAadhaarAddress = [Address1, Address2, Address3, City, State, Zipcode].filter(Boolean).join(', ');
+      if (isValidAadhaarPincode) {
+        aadhaarAddress = [Address1, Address2, Address3].filter(Boolean).join(' ');
+        if (aadhaarAddress.length < FD_CONSTANT.MIN_ADDRESS_LENGTH) {
+          aadhaarAddress.Address2 = City;
+        } else {
+          parsedAadhaarAddress = parseCustomerAddress(aadhaarAddress);
+          const [permanentAddress1, permanentAddress2, permanentAddress3] = parsedAadhaarAddress;
 
-      const aadharAddress = [Address1, Address2, Address3, City, State, Zipcode].filter(Boolean).join(', ');
+          Object.assign(formData.currentFormContext.executeInterfaceRequest.requestString, {
+            permanentAddress1,
+            permanentAddress2,
+            permanentAddress3,
+            perAddressType: '4',
+          });
+        }
+        fullAadhaarAddress = `${parsedAadhaarAddress.join(', ')} ${City} ${State} ${Zipcode}`;
+      }
       const communicationAddress = [communicationAddress1, communicationAddress2, communicationAddress3, communicationCity, communicationState, comCityZip].filter(Boolean).join(', ');
 
       const {
@@ -323,7 +344,7 @@ const checkModeFd = (globals) => {
         TnCAadhaarNoMobMatchLabel, TnCAadhaarNoMobMatch, proceedFromAddressDeclarationIdcom, proceedFromAddressDeclaration,
       } = addressDeclarationPanel;
 
-      globals.functions.setProperty(aadhaarAddressDeclaration, { value: aadharAddress, visible: true });
+      globals.functions.setProperty(aadhaarAddressDeclaration, { value: fullAadhaarAddress, visible: true });
       globals.functions.setProperty(currentAddressDeclarationAadhar.currentResidenceAddressAadhaar, { value: communicationAddress });
       globals.functions.setProperty(currentResidenceAddressBiometricOVD.currentResAddressBiometricOVD, { value: communicationAddress });
       globals.functions.setProperty(addressDeclarationPanel, { visible: true });
@@ -340,17 +361,17 @@ const checkModeFd = (globals) => {
 
       invokeJourneyDropOffUpdate(
         'AADHAAR_REDIRECTION_SUCCESS',
-        formData?.loginPanel?.mobilePanel?.registeredMobileNumber,
-        formData?.runtime?.leadProifileId,
-        formData?.runtime?.leadProifileId?.journeyId,
+        formData?.form?.login?.registeredMobileNumber,
+        formData?.leadProifileId,
+        formData?.journeyId,
         globals,
       );
     } catch (ex) {
       invokeJourneyDropOffUpdate(
         'AADHAAR_REDIRECTION_FAILURE',
-        formData?.loginPanel?.mobilePanel?.registeredMobileNumber,
-        formData?.runtime?.leadProifileId,
-        formData?.runtime?.leadProifileId?.journeyId,
+        formData?.form?.login?.registeredMobileNumber,
+        formData?.leadProifileId,
+        formData?.journeyId,
         globals,
       );
     }
