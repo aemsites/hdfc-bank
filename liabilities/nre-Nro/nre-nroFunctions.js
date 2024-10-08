@@ -1,4 +1,3 @@
-/* eslint no-console: ["error", { allow: ["warn", "error"] }] */
 import {
   createJourneyId,
 } from './nre-nro-journey-utils.js';
@@ -52,8 +51,15 @@ formRuntime.hideLoader = (typeof window !== 'undefined') ? hideLoaderGif : false
  */
 const maskedEmail = (email) => {
   const [localPart, domain] = email.split('@');
+  let maskedLocalPart;
 
-  const maskedLocalPart = `${localPart.substring(0, 2)}****${localPart[localPart.length - 1]}`;
+  if (localPart.length === 1) {
+    maskedLocalPart = '****';
+  } else if (localPart.length < 5) {
+    maskedLocalPart = `${localPart.slice(0, localPart.length - 2)}****${localPart.slice(-1)}`;
+  } else {
+    maskedLocalPart = `${localPart.slice(0, 3)}****${localPart.slice(-1)}`;
+  }
 
   return `${maskedLocalPart}@${domain}`;
 };
@@ -146,6 +152,13 @@ const validateLogin = (globals) => {
   }
 };
 
+/**
+ * Send the otp
+ * @param {object} mobileNumber
+ * @param {object} pan
+ * @param {object} dob
+ * @return {PROMISE}
+ */
 const getOtpNRE = (mobileNumber, pan, dob, globals) => {
   /* jidTemporary  temporarily added for FD development it has to be removed completely once runtime create journey id is done with FD */
   const jidTemporary = createJourneyId(VISIT_MODE, JOURNEY_NAME, CHANNEL, globals);
@@ -212,6 +225,7 @@ const getCountryCodes = (dropdown) => {
     });
     dropdown.dispatchEvent(event);
   }).catch((error) => {
+    // eslint-disable-next-line no-console
     console.error('Promise rejected:', error); // Handle any error (failure case)
   });
 };
@@ -276,6 +290,11 @@ function otpValidationNRE(mobileNumber, pan, dob, otpNumber, globals) {
   return fetchJsonResponse(path, jsonObj, 'POST', true);
 }
 
+/**
+* logic hanlding during prefill of form.
+* @param {object} globals - The global object containing necessary globals form data.
+* @param {object} response - The response object containing fatca api response.
+*/
 function prefillCustomerDetails(response, globals) {
   const {
     customerName,
@@ -292,9 +311,9 @@ function prefillCustomerDetails(response, globals) {
   };
 
   setFormValue(customerName, response.customerShortName);
-  setFormValue(accountNumber, response.accountNumber);
-  setFormValue(customerID, response.customerId);
-  setFormValue(singleAccount.accountType, response.prodTypeDesc);
+  setFormValue(accountNumber, maskNumber(response.accountNumber, 10));
+  setFormValue(customerID, maskNumber(response.customerId, 4));
+  setFormValue(singleAccount.accountType, response.productName);
   setFormValue(singleAccount.branch, response.branchName);
   setFormValue(singleAccount.ifsc, response.ifscCode);
 }

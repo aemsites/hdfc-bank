@@ -1,5 +1,3 @@
-/* eslint no-bitwise: ["error", { "allow": ["^", ">>", "&"] }] */
-
 import {
   santizedFormDataWithContext,
   urlPath,
