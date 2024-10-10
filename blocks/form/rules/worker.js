@@ -1,4 +1,3 @@
-import { generateFormRendition } from '../form.js';
 import { fieldChanged } from './index.js';
 
 export default async function initializeRuleEngineWorker(formDef, renderHTMLForm) {
@@ -22,10 +21,8 @@ export default async function initializeRuleEngineWorker(formDef, renderHTMLForm
         // myWorker.terminate();
         resolve(form);
       } else if (e.data.name === 'fieldChanged' && form) {
-      // invoke index.js
-      // htmlform
-      // payload
-      await fieldChanged(e.data.payload, form, generateFormRendition);
+        const { generateFormRendition } = await import('../form.js');
+        await fieldChanged(e.data.payload, form, generateFormRendition);
     }
     });
   });
