@@ -8,6 +8,12 @@ export default class RuleEngine {
 
   constructor(formDef) {
     this.form = createFormInstance(formDef);
+    this.form.subscribe((e) => {
+      postMessage({
+        name: 'fieldChanged',
+        payload: e._action.payload,
+      });
+    }, 'fieldChanged');
   }
 
   getState() {
