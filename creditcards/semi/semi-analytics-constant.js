@@ -33,6 +33,7 @@ const ANALYTICS_PAGE_NAME = {
   'confirm tenure': 'Step 4 - Confirm with OTP',
   'resendOtp confirmTenure': 'Step 4 - Confirm with OTP',
   'thank you': 'Step 5 - Confirmation',
+  'submit review': 'Step 5 - Confirmation',
   'Error Page': 'Error Page',
 };
 
