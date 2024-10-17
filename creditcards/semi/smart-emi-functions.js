@@ -36,7 +36,7 @@ import {
   sendAnalytics,
   sendErrorAnalytics,
 } from './semi-analytics.js';
-import { ANALYTICS_EVENT_NAME, ANALYTICS_JOURNEY_STATE } from './semi-analytics-constant.js';
+import { ANALYTICS_JOURNEY_STATE } from './semi-analytics-constant.js';
 
 const {
   CURRENT_FORM_CONTEXT: currentFormContext,
@@ -1348,21 +1348,6 @@ const resendOTPV1 = async (pannelName, globals) => {
       return getOTPV1(mobileNumber, cardDigits, channel, globals);
     }
     if (pannelName === SECOND_PANNEL_OTP) {
-      /* success resend otp2 */
-      Promise.resolve(sendAnalytics(
-        ANALYTICS_EVENT_NAME['resendOtp confirmTenure'],
-        'resendOtp2Response',
-        ANALYTICS_JOURNEY_STATE['resendOtp confirmTenure'],
-        globals,
-      ));
-
-      /* failure */
-      Promise.resolve(sendErrorAnalytics(
-        'XFACE_INQ_VP_0003',
-        'Hey, it seem',
-        ANALYTICS_JOURNEY_STATE['resendOtp confirmTenure'],
-        globals,
-      ));
       return preExecution(mobileNumber, cardDigits, globals);
     }
   }
