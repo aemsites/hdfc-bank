@@ -218,11 +218,26 @@ const sendSubmitClickEvent = async (eventType, linkType, formData, journeyState,
       digitalData.assisted.lg = formData?.aem_lgCode ?? '';
       digitalData.assisted.lc = formData?.aem_lcCode ?? '';
       const EMI_CATEGORY = (formData?.smartemi?.TransactionType === 'Both') ? 'Billed / Unbilled ' : formData?.smartemi?.TransactionType;
+      const ccBilledData = currentFormContext?.EligibilityResponse?.ccBilledTxnResponse?.responseString ? currentFormContext?.EligibilityResponse?.ccBilledTxnResponse?.responseString : [];
+      const ccUnBilledData = currentFormContext?.EligibilityResponse?.ccUnBilledTxnResponse?.responseString ? currentFormContext?.EligibilityResponse?.ccUnBilledTxnResponse?.responseString : [];
+      const errorMessages = {
+        noBilled: 'No transactions available in billed category',
+        noUnBilled: 'No transactions available in unbilled category',
+        noTransactions: 'No transactions to convert',
+      };
+      if ((ccUnBilledData?.length === 0) && (ccBilledData?.length === 0)) {
+        digitalData.page.pageInfo.errorMessage = errorMessages.noTransactions;
+      } else if ((ccUnBilledData?.length === 0)) {
+        digitalData.page.pageInfo.errorMessage = errorMessages.noUnBilled;
+      } else if ((ccBilledData?.length === 0)) {
+        digitalData.page.pageInfo.errorMessage = errorMessages.noBilled;
+      }
       digitalData.form.emiCategory = EMI_CATEGORY;
       if (window) {
         window.digitalData = digitalData || {};
       }
-      _satellite.track('submit');
+      const trackingEvent = ((ccUnBilledData?.length === 0) && (ccBilledData?.length === 0)) ? 'unbilled_clicked' : 'submit';
+      _satellite.track(trackingEvent);
       setTimeout(() => {
         sendPageloadEvent(ANALYTICS_JOURNEY_STATE['tenure page'], formData, ANALYTICS_PAGE_NAME['confirm tenure']);
       }, 1000);
@@ -281,8 +296,8 @@ const populateResponse = (payload, eventType, digitalData) => {
         digitalData.page.pageInfo.errorCode = '0';
         digitalData.page.pageInfo.errorMessage = 'success';
       } else {
-        digitalData.page.pageInfo.errorCode = payload?.errorCode;
-        digitalData.page.pageInfo.errorMessage = payload?.errorMsg;
+        digitalData.page.pageInfo.errorCode = payload?.errorCode ?? '';
+        digitalData.page.pageInfo.errorMessage = payload?.errorMsg ?? '';
       }
       break;
     case 'confirm tenure':
@@ -290,8 +305,8 @@ const populateResponse = (payload, eventType, digitalData) => {
     case 'resendOtp confirmTenure':
     case 'submit review':
     case 'submit otp': {
-      digitalData.page.pageInfo.errorCode = payload?.errorCode;
-      digitalData.page.pageInfo.errorMessage = payload?.errorMsg;
+      digitalData.page.pageInfo.errorCode = payload?.errorCode ?? '';
+      digitalData.page.pageInfo.errorMessage = payload?.errorMsg ?? '';
       break;
     }
     default:

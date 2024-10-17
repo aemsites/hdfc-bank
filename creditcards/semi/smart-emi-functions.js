@@ -455,8 +455,8 @@ function checkELigibilityHandler(resPayload1, globals) {
     formContext.tadMinusMadValue = ((parseFloat(resPayload.blockCode.tad) / 100) - (parseFloat(resPayload.blockCode.mad) / 100));
     /* continue btn disabling code added temorary, can be removed after form authoring */
     globals.functions.setProperty(globals.form.aem_semiWizard.aem_chooseTransactions.aem_txnSelectionContinue, { enabled: false });
-    let ccBilledData = resPayload?.ccBilledTxnResponse?.responseString || [];
-    let ccUnBilledData = resPayload?.ccUnBilledTxnResponse?.responseString || [];
+    let ccBilledData = resPayload?.ccBilledTxnResponse?.responseString ? resPayload?.ccBilledTxnResponse?.responseString : [];
+    let ccUnBilledData = resPayload?.ccUnBilledTxnResponse?.responseString ? resPayload?.ccUnBilledTxnResponse?.responseString : [];
     if (isNodeEnv) {
       ccBilledData = resPayload?.ccBilledTxnResponse || [];
       if (ccBilledData.length === 0) {
@@ -490,15 +490,15 @@ function checkELigibilityHandler(resPayload1, globals) {
     }
     response.nextscreen = 'success';
     // show txn summery text value
-    if ((resPayload?.ccBilledTxnResponse?.responseString.length) || (resPayload?.ccUnBilledTxnResponse?.responseString.length)) {
+    if ((ccUnBilledData.length) || (ccUnBilledData.length)) {
       globals.functions.setProperty(globals.form.aem_semiWizard.aem_chooseTransactions.aem_txnsSummaryText, { visible: true });
     }
     // hide the unbilled / unbillled accordian if the response payload of txn is not present
-    if (resPayload?.ccBilledTxnResponse?.responseString.length === 0) {
+    if (ccBilledData.length === 0) {
       globals.functions.setProperty(globals.form.aem_semiWizard.aem_chooseTransactions.billedTxnFragment, { visible: false });
       globals.functions.setProperty(globals.form.aem_semiWizard.aem_chooseTransactions.billedTxnFragment.aem_chooseTransactions.aem_TxnsList, { visible: false });
     }
-    if (resPayload?.ccUnBilledTxnResponse?.responseString?.length === 0) {
+    if (ccUnBilledData?.length === 0) {
       globals.functions.setProperty(globals.form.aem_semiWizard.aem_chooseTransactions.unbilledTxnFragment, { visible: false });
       globals.functions.setProperty(globals.form.aem_semiWizard.aem_chooseTransactions.unbilledTxnFragment.aem_chooseTransactions.aem_TxnsList, { visible: false });
     }
