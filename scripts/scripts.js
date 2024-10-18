@@ -17,13 +17,23 @@ const LCP_BLOCKS = []; // add your LCP blocks to the list
 const FORM_CONSTANT = [
   {
     // SEMI
-    form: 'semi',
+    formPath: ['semi', 'smart-emi', 'smart emi', 'smart_emi'],
     class: 'semi-form',
     urlKey: ['semi', 'smart-emi', 'smart emi'],
     launchScript: {
       dev: 'https://assets.adobedtm.com/80673311e435/029b16140ccd/launch-94203efd95a9-staging.min.js',
       prod: 'https://assets.adobedtm.com/80673311e435/029b16140ccd/launch-94203efd95a9-staging.js',
       loadTime: 0,
+    },
+  },
+  {
+    // CC
+    formPath: ['corporate-credit-card', 'corporate_credit_cards', 'corporate credit cards', 'corporatecreditcard'],
+    urlKey: ['corporate-credit-card', 'corporate_credit_cards', 'corporate credit cards', 'corporatecreditcard'],
+    launchScript: {
+      dev: 'https://assets.adobedtm.com/80673311e435/029b16140ccd/launch-39d52f236cd6.min.js',
+      prod: 'https://assets.adobedtm.com/80673311e435/029b16140ccd/launch-39d52f236cd6.min.js',
+      loadTime: 3600,
     },
   },
 ];
@@ -101,10 +111,10 @@ async function loadEager(doc) {
     if (window.innerWidth >= 900 || sessionStorage.getItem('fonts-loaded')) {
       loadFonts();
     }
-    const currentUrl = window.location.href;
-    FORM_CONSTANT.some((item) => {
-      if (currentUrl.includes(item.form)) {
-        document.body.classList.add(item.class);
+    const pathName = window.location.pathname;
+    FORM_CONSTANT.some((form) => {
+      if (form.formPath.some((el) => pathName.includes(el))) {
+        document.body.classList.add(form.class);
         return true;
       }
       return false;
