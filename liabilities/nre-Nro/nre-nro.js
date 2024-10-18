@@ -10,6 +10,8 @@ import {
   resendOTP,
   customFocus,
   switchWizard,
+  setupBankUseSection,
+  idComRedirection,
   addPageNameClassInBody,
 } from './nre-nroFunctions.js';
 
@@ -31,5 +33,7 @@ export {
   customFocus,
   otpValidationNRE,
   switchWizard,
+  setupBankUseSection,
+  idComRedirection,
   addPageNameClassInBody,
 };
