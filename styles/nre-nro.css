@@ -69,7 +69,7 @@
     }
   }
 
-  
+
 
   &.wizardPanelBody {
     & .cmp-container-container {
@@ -148,7 +148,6 @@
     }
 
     &>.cmp-container-container {
-      background-color: white !important;
       display: initial;
       background-color: var(--color-interface-fd-background-secondary) !important;
 
@@ -161,12 +160,13 @@
         padding: 0 !important;
         border-bottom: none !important;
         content: url("../icons/nre_nro_desktop_banner.png");
-        width: 100% !important;
+        width: 100%;
         margin: inherit;
 
         @media (768px <=width <=991px) {
           content: url("../icons/nre-tablet-banner.png");
         }
+
         @media (320px <=width <=600px) {
           content: url("../icons/nre_mobile_page_banner.png")
         }
@@ -180,17 +180,17 @@
       border-radius: 0;
     }
 
-    & .field-invalid:has(.field-description) {
+   /*  & .field-invalid:has(.field-description) {
       input {
         border-color: var(--color-interface-border-secondary) !important;
         box-shadow: 0 0 0 2px var(--color-input-box-shadow-error-default);
         outline: none;
       }
-    }
+    } */
 
     .form {
       &.block {
-        border-radius: 0 !important;
+        border-radius: 0;
       }
 
       form {
@@ -210,7 +210,7 @@
             }
 
             .field-loginfragmentnrenro {
-              
+
               @media screen and (min-width: 768px) {
                 padding-top: 30px;
                 border-top: 1px dashed var(--color-interface-border-secondary);
@@ -237,10 +237,6 @@
                   width: 352px;
                   border-radius: 12px;
 
-                  /*  @media (768px <=width <=991px) {
-                    grid-column: span 6 !important;
-                  } */
-
                   @media (320px <=width <=480px) {
                     width: 100%;
                   }
@@ -263,7 +259,7 @@
                     border-color: var(--color-interface-border-secondary) !important;
                     max-width: 75px;
                     width: 75px;
-                    border-right: 0 !important;
+                    border-right: 0;
                     -moz-appearance: none;
                     -webkit-appearance: none;
                     appearance: none;
@@ -322,7 +318,7 @@
                     letter-spacing: 9px;
                     border-color: var(--color-interface-border-secondary);
                     /*   border-left: 0;*/
-                    padding-left: 0px; 
+                    padding-left: 0px;
                     margin: 0;
                     border: none;
                     background-color: #fff;
@@ -496,13 +492,14 @@
                       top: 12px;
                       font-size: 14px;
                       line-height: 20px;
+
                       @media (320px <=width <=600px) {
                         top: 45px;
                         padding-left: 0;
                       }
                     }
 
-                    input[name="dateOfBirth"]{
+                    input[name="dateOfBirth"] {
                       background: url("../icons//cal_icon.png") no-repeat 97.2%;
                       font-weight: 500;
                       color: var(--color-interface-text-primary);
@@ -519,13 +516,15 @@
                       top: 12px;
                       font-size: 14px;
                       line-height: 20px;
+
                       @media (320px <=width <=600px) {
                         top: 45px;
                         padding-left: 0;
                       }
                     }
 
-                    input[name="dateOfBirth"], input[type="date"] {
+                    input[name="dateOfBirth"],
+                    input[type="date"] {
                       word-spacing: 20px;
                     }
                   }
@@ -533,7 +532,7 @@
 
                 .field-pan {
                   position: relative;
-                  
+
                   @media (320px <=width <=600px) {
                     margin-top: 25px !important;
                   }
@@ -641,8 +640,9 @@
                   line-height: 20px;
                   font-weight: 400;
                   color: #1F2937;
+
                   @media (320px <=width <=600px) {
-                  margin-bottom: 10px;
+                    margin-bottom: 10px;
                   }
                 }
 
@@ -659,7 +659,7 @@
               .field-checkboxconsent2label {
                 label {
                   p {
-                    color: var(--color-input-text-primary);                   
+                    color: var(--color-input-text-primary);
                   }
                 }
               }
@@ -1000,11 +1000,11 @@
                 grid-column: span 6;
                 margin: 5px 0 0;
 
-                .field-numretries {
+                /*   .field-numretries {
                   input {
-                    margin-top: 7px;
+                    margin-top: -2px;
                   }
-                }
+                } */
               }
 
               .field-otpresend {
@@ -1017,7 +1017,7 @@
 
                 @media (320px <=width <=600px) {
                   grid-column: span 6;
-                  margin-top: 5px !important;
+                  margin-top: 1px !important;
                 }
 
                 &~.field-otpsubpanel {
@@ -1052,7 +1052,7 @@
             legend {
               text-align: left;
 
-              b {
+              p {
                 color: var(--color-interface-background-quaternary);
                 font-size: 28px;
                 line-height: 36px;
@@ -1060,15 +1060,15 @@
               }
             }
 
-            .field-attempts p p {
-              margin-top: -7px;
-              color: #6b7280 !important;
-              font-size: var(--body-sm-font-size) !important;
+            .field-attempts p {
+              margin-top: 11px;
+              color: var(--color-interface-text-secondary);
+              font-size: var(--body-sm-font-size);
               font-weight: 400;
 
               @media (320px <=width <=600px) {
-                margin-left: 38px;
-                margin-top: 17px !important;
+                /*  margin-left: 38px; */
+                margin-top: 17px;
               }
             }
 
@@ -1086,9 +1086,9 @@
                 font-weight: 400;
                 display: inline-block;
 
-                @media (320px <=width <=600px) {
+                /* @media (320px <=width <=600px) {
                   margin-right: 0px;
-                }
+                } */
               }
             }
 
@@ -1105,6 +1105,10 @@
                 max-width: 100%;
                 letter-spacing: 65px !important;
                 height: 60px !important;
+                font-size: 41px;
+                font-weight: 500;
+                line-height: 40px;
+                color: var(--color-interface-text-primary);
               }
 
               input::placeholder {
@@ -1125,8 +1129,12 @@
 
               .field-numretries {
                 input {
+                  color: var(--color-interface-text-secondary);
+                  font-size: var(--body-sm-font-size);
+                  font-weight: 400;
+
                   @media (320px <=width <=600px) {
-                    margin-top: 4px !important;
+                    margin-top: 5px;
                   }
                 }
               }
@@ -1146,8 +1154,8 @@
                   border: none;
                   padding-left: 0;
                   width: 55px;
-                  font-size: var(--body-sm-font-size) !important;
-                  color: var(--color-interface-background-quaternary) !important;
+                  font-size: var(--body-sm-font-size);
+                  color: var(--color-interface-background-quaternary);
                   font-weight: 600;
                   margin-top: 6px;
 
@@ -1202,7 +1210,9 @@
               }
 
               p {
-                font-size: var(--body-fd-sm-font-size);
+                font-size: var(--body-sm-font-size);
+                color: var(--color-interface-background-quaternary);
+                font-weight: 600;
               }
             }
 
@@ -1250,11 +1260,11 @@
           }
 
           .field-submitotp {
-            padding: 0 20px 40px;
+            /*   padding: 0 20px 40px;
             margin-left: 100px;
             margin-top: 0 !important;
-            width: 100% !important;
-            text-align: center !important;
+            width: 100% !important; */
+            text-align: center;
 
             @media (320px <=width <=600px) {
               width: 100% !important;
@@ -1326,11 +1336,6 @@
             }
           }
         }
-
-
-
-
-
 
 
         /* personal details */
@@ -2274,7 +2279,7 @@
     @media (320px <=width <=991px) {
       display: flex;
       align-items: center;
-      height: 90vh;
+      height: 85vh;
     }
 
     @media (320px <=width <=600px) {
