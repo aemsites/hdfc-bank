@@ -12,7 +12,7 @@ import {
  * @returns {void}
  */
 const validateOtpInput = () => {
-  const otpInputField = document.querySelector('.field-otpnumber input');
+  const otpInputField = document?.querySelector('.field-otpnumber input');
   otpInputField.placeholder = '••••••';
   otpInputField.addEventListener('input', () => {
     if (!/^\d+$/.test(otpInputField.value)) {
@@ -22,7 +22,7 @@ const validateOtpInput = () => {
 };
 
 const addGaps = (elSelector) => {
-  const panInputField = document.querySelector(elSelector);
+  const panInputField = document?.querySelector(elSelector);
   panInputField?.addEventListener('input', () => {
     const vaildInput = validatePanInput(panInputField.value.replace(/\s+/g, ''));
     if (!vaildInput) {
@@ -37,7 +37,7 @@ const addGaps = (elSelector) => {
 
 const addMobileValidation = () => {
   const validFirstDigits = ['6', '7', '8', '9'];
-  const inputField = document.querySelector('.field-registeredmobilenumber input');
+  const inputField = document?.querySelector('.field-registeredmobilenumber input');
   inputField.addEventListener('input', () => validatePhoneNumber(inputField, validFirstDigits));
 };
 
@@ -48,7 +48,7 @@ const addMobileValidation = () => {
  * @returns {void}
  */
 const updateElementAttr = () => {
-  const custIdRadioButtons = Array.from(document.querySelectorAll('.field-multiplecustidselect input'));
+  const custIdRadioButtons = Array.from(document?.querySelectorAll('.field-multiplecustidselect input'));
   custIdRadioButtons.forEach((radioButton) => {
     radioButton.setAttribute('name', 'cust-id-radio');
   });
@@ -64,11 +64,6 @@ const changeCheckboxToToggle = () => {
   createLabelInElement('.field-employeeassistancetoggle', 'employee-assistance-toggle__label');
   createLabelInElement('.field-mailingaddresstoggle', 'mailing-address-toggle__label');
 };
-
-setTimeout(() => {
-  addGaps('.field-pan.char-gap-4 input');
-  addMobileValidation();
-}, 1200);
 
 export {
   addGaps,

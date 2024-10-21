@@ -409,6 +409,7 @@ const dobChangeHandler = (globals) => {
 };
 
 const fullNameChangeHandler = (globals) => {
+  if (typeof document === 'undefined') return;
   const { customerInfo } = CURRENT_FORM_CONTEXT;
   const { personalDetails } = globals.form.fdBasedCreditCardWizard.basicDetails.reviewDetailsView;
   const customerFullName = personalDetails.fullName._data.$_value || '';

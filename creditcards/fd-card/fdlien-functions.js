@@ -5,7 +5,7 @@ import {
   getTimeStamp,
   maskNumber,
   parseCustomerAddress,
-  // pincodeCheck,
+  pincodeCheck,
   pinCodeMasterCheck,
   urlPath,
 } from '../../common/formutils.js';
@@ -51,6 +51,7 @@ const validFDPan = (val) => {
  * @param {Object} globals - The global object containing necessary data for DAP request.
 */
 const validateLogin = (globals) => {
+  if (typeof document === 'undefined') return;
   const dobValue = globals.form.loginMainPanel.loginPanel.identifierPanel.dateOfBirth.$value;
   const panValue = (globals.form.loginMainPanel.loginPanel.identifierPanel.pan.$value)?.replace(/\s+/g, ''); // remove white space
   const panDobSelection = globals.form.loginMainPanel.loginPanel.identifierPanel.panDobSelection.$value;
@@ -274,6 +275,7 @@ function reloadPage() {
  * @param {object} globals
  */
 const pincodeChangeHandler = (pincode, globals) => {
+  if (typeof document === 'undefined') return;
   const {
     newCurentAddressPin,
     newCurentAddressCity,
@@ -324,8 +326,8 @@ const checkModeFd = async (globals) => {
         communicationCity, communicationState, comCityZip,
       } = formData?.currentFormContext?.executeInterfaceRequest?.requestString || {};
 
-      const isValidAadhaarPincode = { result: true };
-      // const isValidAadhaarPincode = await pincodeCheck(Zipcode, City, State);
+      // const isValidAadhaarPincode = { result: true };
+      const isValidAadhaarPincode = await pincodeCheck(Zipcode, City, State);
       let aadhaarAddress = '';
       let parsedAadhaarAddress = '';
       let fullAadhaarAddress = [Address1, Address2, Address3, City, State, Zipcode].filter(Boolean).join(', ');

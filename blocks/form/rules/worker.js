@@ -1,3 +1,5 @@
+import { fieldChanged } from './index.js';
+
 import('./index.js');
 export default async function initializeRuleEngineWorker(formDef, renderHTMLForm) {
   if (typeof Worker === 'undefined') {

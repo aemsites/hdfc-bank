@@ -6,6 +6,7 @@ import { invokeJourneyDropOffByJourneyId } from './common-journeyutil.js';
 import { ANALYTICS, IDCOM } from './constant.js';
 import { invokeJourneyDropOffUpdate } from './fd-journey-util.js';
 import sendFDAnalytics from './analytics.js';
+import { addGaps, addMobileValidation } from './fd-dom-functions.js';
 
 const delayedUtilState = {
   visitType: '',
@@ -98,6 +99,8 @@ const finalDapFetchRes = async () => {
 
 const pageRedirected = () => {
   if (!delayedUtilState.aadharRedirect && !delayedUtilState.idComRedirect) {
+    addGaps('.field-pan.char-gap-4 input');
+    addMobileValidation();
     const { formLoad } = ANALYTICS.event;
     const journeyData = {};
     // eslint-disable-next-line no-underscore-dangle, no-undef
@@ -118,6 +121,7 @@ const pageRedirected = () => {
 };
 
 (() => {
+  if (typeof window === 'undefined') return;
   const searchParam = new URLSearchParams(window.location.search);
   delayedUtilState.visitType = searchParam.get('visitType');
   delayedUtilState.authMode = searchParam.get('authmode');
