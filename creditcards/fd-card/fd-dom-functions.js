@@ -23,7 +23,7 @@ const validateOtpInput = () => {
 
 const addGaps = (elSelector) => {
   const panInputField = document.querySelector(elSelector);
-  panInputField.addEventListener('input', () => {
+  panInputField?.addEventListener('input', () => {
     const vaildInput = validatePanInput(panInputField.value.replace(/\s+/g, ''));
     if (!vaildInput) {
       panInputField.value = panInputField.value.slice(0, -1);
