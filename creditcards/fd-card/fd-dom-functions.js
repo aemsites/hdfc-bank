@@ -12,7 +12,7 @@ import {
  * @returns {void}
  */
 const validateOtpInput = () => {
-  const otpInputField = document.querySelector('.field-otpnumber input');
+  const otpInputField = document?.querySelector('.field-otpnumber input');
   otpInputField.placeholder = '••••••';
   otpInputField.addEventListener('input', () => {
     if (!/^\d+$/.test(otpInputField.value)) {
@@ -23,7 +23,7 @@ const validateOtpInput = () => {
 
 const addGaps = (elSelector) => {
   const panInputField = document.querySelector(elSelector);
-  panInputField.addEventListener('input', () => {
+  panInputField?.addEventListener('input', () => {
     const vaildInput = validatePanInput(panInputField.value.replace(/\s+/g, ''));
     if (!vaildInput) {
       panInputField.value = panInputField.value.slice(0, -1);
@@ -37,7 +37,7 @@ const addGaps = (elSelector) => {
 
 const addMobileValidation = () => {
   const validFirstDigits = ['6', '7', '8', '9'];
-  const inputField = document.querySelector('.field-registeredmobilenumber input');
+  const inputField = document?.querySelector('.field-registeredmobilenumber input');
   inputField.addEventListener('input', () => validatePhoneNumber(inputField, validFirstDigits));
 };
 
@@ -66,7 +66,7 @@ const changeCheckboxToToggle = () => {
 };
 
 setTimeout(() => {
-  addGaps('.field-pan.char-gap-4 input');
+  addGaps('.field-identifierpanel .field-pan input');
   addMobileValidation();
 }, 1200);
 
