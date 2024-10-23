@@ -8,3 +8,4 @@ export const formIdPathMapping = {
 export default function getCustomFunctionPath(id) {
   return id ? formIdPathMapping[atob(id)] : null;
 }
+

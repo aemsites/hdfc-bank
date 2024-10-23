@@ -6,7 +6,7 @@ let customFunctionRegistered = false;
 export default class RuleEngine {
   rulesOrder = {};
 
-  async createFormInstance(formDef) {
+  createFormInstance(formDef) {
     this.form = createFormInstance(formDef);
   }
 
@@ -43,9 +43,9 @@ onmessage = (e) => {
 
   if (!customFunctionRegistered) {
     const { id } = e.data.payload;
-    registerCustomFunctions(id).then(async () => {
+    registerCustomFunctions(id).then(() => {
       customFunctionRegistered = true;
-      await handleMessageEvent(e);
+      handleMessageEvent(e);
     });
   }
 };
