@@ -103,9 +103,7 @@ import { hideLoaderGif } from '../domutils/domutils.js';
 
 import { fullNamePanValidation } from '../../common/panvalidation.js';
 
-setTimeout(() => import('./launch-dev.min.js'), 100);
 
-setTimeout(() => import('./fd-delayedutils.js'), 2000);
 
 export {
   getOTP,
