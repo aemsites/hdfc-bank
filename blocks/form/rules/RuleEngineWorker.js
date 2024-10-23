@@ -1,4 +1,4 @@
-import { createFormInstanceAsync } from './model/afb-runtime.js';
+import { createFormInstance } from './model/afb-runtime.js';
 import registerCustomFunctions from './functionRegistration.js';
 
 let customFunctionRegistered = false;
@@ -7,7 +7,7 @@ export default class RuleEngine {
   rulesOrder = {};
 
   async createFormInstance(formDef) {
-    this.form = await createFormInstanceAsync(formDef);
+    this.form = createFormInstance(formDef);
   }
 
   getState() {
@@ -25,7 +25,7 @@ onmessage = (e) => {
     switch (event.data.name) {
       case 'init':
         ruleEngine = new RuleEngine();
-        await ruleEngine.createFormInstance(event.data.payload);
+        ruleEngine.createFormInstance(event.data.payload);
         // eslint-disable-next-line no-case-declarations
         const state = ruleEngine.getState();
         postMessage({
