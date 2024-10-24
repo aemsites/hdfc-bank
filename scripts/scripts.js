@@ -36,6 +36,17 @@ const FORM_CONSTANT = [
       loadTime: 3600,
     },
   },
+    {
+    // NRE NRO
+    formPath: ['nre-nro', 'account-opening-nre-nro'],
+    class: 'nre',
+    urlKey: ['nre-nro', 'account-opening-nre-nro'],
+    launchScript: {
+      dev: 'https://assets.adobedtm.com/80673311e435/029b16140ccd/launch-e17de29eec01-development.min.js',
+      prod: 'https://assets.adobedtm.com/80673311e435/029b16140ccd/launch-39d52f236cd6.min.js',
+      loadTime: 3600,
+    },
+  },
 ];
 const ENV = 'dev'; // take it from common constant to denote
 
@@ -112,6 +123,7 @@ async function loadEager(doc) {
     if (window.innerWidth >= 900 || sessionStorage.getItem('fonts-loaded')) {
       loadFonts();
     }
+    
     const pathName = window.location.pathname;
     FORM_CONSTANT.some((form) => {
       if (form.formPath.some((el) => pathName.includes(el))) {
