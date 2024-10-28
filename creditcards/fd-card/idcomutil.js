@@ -46,7 +46,8 @@ const idcomm = async (globals) => {
   return fetchJsonResponse(apiEndPoint, idComRequest, 'POST');
 };
 
-const idcomSuccessHandler = async (authCode, redirectUrl) => new Promise((resolve) => {
+const idcomSuccessHandler = async (authCode, redirectUrl, globals) => new Promise((resolve) => {
+  globals.functions.setProperty(globals.form?.addressDeclarationPanel?.idcomRedirectUrl, { value: redirectUrl });
   setTimeout(() => {
     CURRENT_FORM_CONTEXT.authCode = authCode;
     CURRENT_FORM_CONTEXT.ID_COM_URL = redirectUrl;
