@@ -28,6 +28,10 @@ const ENDPOINTS = {
     CORPORATE_CARD_JOURNEY: '/content/hdfc_haf/api/aadhaarInit.json',
     EXISTING_CC_BASED_FDLIEN_JOURNEY: '/content/hdfc_hafcards/api/hdfccardsaadharauthenticationinit.json',
   },
+  panValidation: {
+    CORPORATE_CARD_JOURNEY: '/content/hdfc_forms_common_v2/api/panValNameMatch.json',
+    EXISTING_CC_BASED_FDLIEN_JOURNEY: '/content/hdfc_haf/api/panValidation.json',
+  },
 };
 
 const DEAD_PAN_STATUS = ['D', 'ED', 'X', 'F'];

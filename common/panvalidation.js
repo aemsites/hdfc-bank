@@ -33,7 +33,7 @@ const validatePan = (mobileNumber, panNumber, dob, firstName, showLoader, hideLo
     },
   };
   if (showLoader) formRuntime?.validatePanLoader();
-  const apiEndPoint = urlPath(endpoints.panValNameMatch);
+  const apiEndPoint = urlPath(endpoints.panValidation?.[currentFormContext.journeyName]);
   return fetchJsonResponse(apiEndPoint, validatePanRequest, 'POST', hideLoader);
 };
 
@@ -60,7 +60,7 @@ const fullNamePanValidation = (mobileNumber, panNumber, dob, name, showLoader, h
     },
   };
   if (showLoader) formRuntime?.validatePanLoader();
-  const apiEndPoint = urlPath(endpoints.panValNameMatch);
+  const apiEndPoint = urlPath(endpoints.panValidation?.[currentFormContext.journeyName]);
   return fetchJsonResponse(apiEndPoint, validatePanRequest, 'POST', hideLoader);
 };
 
