@@ -1,4 +1,4 @@
-import { FD_ENDPOINTS, JOURNEY_NAME } from './constant.js';
+import { ERROR_MSG, FD_ENDPOINTS, JOURNEY_NAME } from './constant.js';
 import { CHANNEL, CURRENT_FORM_CONTEXT, ENDPOINTS } from '../../common/constants.js';
 import { santizedFormDataWithContext, urlPath } from '../../common/formutils.js';
 import { fetchJsonResponse } from '../../common/makeRestAPI.js';
@@ -102,10 +102,29 @@ const invokeJourneyDropOffUpdate = async (state, mobileNumber, leadProfileId, jo
   return fetchJsonResponse(url, journeyJSONObj, method);
 };
 
+const loadHomePage = (globals) => {
+  const { exportData, setProperty } = globals.functions || {};
+  const { addressDeclarationPanel } = globals.form || {};
+  const formUrl = exportData?.().formUrl;
+  const errorCode = exportData?.().queryParams?.errorCode;
+  const idcomRedirectUrl = addressDeclarationPanel?.idcomRedirectUrl?.$value;
+  const homePage = window.location.origin + window.location.pathname;
+
+  if (errorCode === ERROR_MSG.sessionExpiredErrorCode && idcomRedirectUrl) {
+    setProperty(addressDeclarationPanel.idcomRedirectUrl, { value: '' });
+    window.location.href = idcomRedirectUrl;
+  } else if (formUrl) {
+    window.location.href = formUrl;
+  } else {
+    window.location.href = homePage;
+  }
+};
+
 export {
   invokeJourneyDropOff,
   fdWizardSwitch,
   errorScreenHandler,
   journeyResponseHandler,
   invokeJourneyDropOffUpdate,
+  loadHomePage,
 };

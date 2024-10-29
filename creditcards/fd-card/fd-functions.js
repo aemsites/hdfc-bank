@@ -24,6 +24,7 @@ import {
   fdWizardSwitch,
   journeyResponseHandler,
   invokeJourneyDropOffUpdate,
+  loadHomePage,
 } from './fd-journey-util.js';
 
 import {
@@ -46,7 +47,6 @@ import {
   validatePan,
   idcomRedirection,
   aadharInit,
-  loadHomePage,
 } from '../../common/functions.js';
 
 import { createJourneyId } from '../../common/journey-utils.js';

@@ -304,13 +304,23 @@ const checkModeFd = async (globals) => {
   creditCardSummary(globals);
 
   if (idcomVisit) {
-    if (globals?.functions?.exportData()?.queryParams?.errorCode === FD_CONSTANT.IDCOM.response.sessionExpired.errorCode) {
-      const { errorMessageText, errResDealerPanel } = resultPanel.errorResultPanel;
+    const errorCode = globals?.functions?.exportData()?.queryParams?.errorCode;
+    const { sessionExpired, invalidAuthCode } = FD_CONSTANT.IDCOM.response;
+    const { errorMessageText, errResDealerPanel } = resultPanel.errorResultPanel || {};
+    const arnNum = formData?.currentFormContext?.executeInterfaceResponse?.APS_APPL_REF_NUM;
+
+    if ([sessionExpired.errorCode, invalidAuthCode.errorCode].includes(errorCode)) {
       globals.functions.setProperty(resultPanel, { visible: true });
       globals.functions.setProperty(resultPanel.errorResultPanel, { visible: true });
-      globals.functions.setProperty(errorMessageText, { value: FD_CONSTANT.ERROR_MSG.sessionExpired });
-      const arnNum = formData?.currentFormContext?.executeInterfaceResponse?.APS_APPL_REF_NUM;
-      globals.functions.setProperty(errResDealerPanel?.errResDealerText2, { value: `${FD_CONSTANT.ERROR_MSG.branchVisitWithRefNum} ${arnNum}` });
+
+      const errorMessage = sessionExpired.errorCode === errorCode
+        ? sessionExpired.errorMsg
+        : invalidAuthCode.errorMsg;
+      globals.functions.setProperty(errorMessageText, { value: errorMessage });
+
+      globals.functions.setProperty(errResDealerPanel?.errResDealerText2, {
+        value: `${FD_CONSTANT.ERROR_MSG.branchVisitWithRefNum} ${arnNum}`,
+      });
     } else {
       executeInterfacePostRedirect('idCom', true, globals);
       return;
