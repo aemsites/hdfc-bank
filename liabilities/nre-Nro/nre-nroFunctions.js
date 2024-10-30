@@ -399,10 +399,35 @@ function setupBankUseSection(mainBankUsePanel, globals) {
 
 function showFinancialDetails(financialDetails, response, occupation, globals) {
   const occupationCode = response.customerAMLDetailsDTO[0].codOccupation;
-  const selectElement = document.querySelector('[name=occupationDropdown]');
-  selectElement.setAttribute('value', occupationCode);
-  selectElement.value = occupationCode;
-  const occupationText = selectElement.options[selectElement.selectedIndex].text;
+  const typCompanyCode = response.customerAMLDetailsDTO[0].typCompany;
+  const natureOfBusCode = response.customerAMLDetailsDTO[0].natureOfBus;
+  const incomeSourceCode = response.customerAMLDetailsDTO[0].incomeSource;
+  const annualTurnoverCode = response.customerAMLDetailsDTO[0].annualTurnover;
+  const residenceTypeMappingCode = response.customerAMLDetailsDTO[0].typResidence;
+  const txtProfessionDescCode = response.customerAMLDetailsDTO[0].txtProfessionDesc;
+
+  const occupationDropdownVal = document.querySelector('[name=occupationDropdown]');
+  occupationDropdownVal.value = occupationCode;
+  const occupationText = occupationDropdownVal.options[occupationDropdownVal.selectedIndex].text;
+  const typeOfCompanyMappingVal = document.querySelector('[name=typeOfCompanyMapping]');
+  typeOfCompanyMappingVal.value = typCompanyCode;
+  const typeOfCompanyText = typeOfCompanyMappingVal.options[typeOfCompanyMappingVal.selectedIndex].text;
+  const natureOfBusinessMappingVal = document.querySelector('[name=natureOfBusinessMapping]');
+  natureOfBusinessMappingVal.value = natureOfBusCode;
+  const natureOfBusinessText = natureOfBusinessMappingVal.options[natureOfBusinessMappingVal.selectedIndex].text;
+  const sourceOfFundMappingVal = document.querySelector('[name=sourceOfFundMapping]');
+  sourceOfFundMappingVal.value = incomeSourceCode;
+  const sourceOfFundText = sourceOfFundMappingVal.options[sourceOfFundMappingVal.selectedIndex].text;
+  const grossAnnualIncomeMappingVal = document.querySelector('[name=grossAnnualIncomeMapping]');
+  grossAnnualIncomeMappingVal.value = annualTurnoverCode;
+  const grossAnnualIncomeText = grossAnnualIncomeMappingVal.options[grossAnnualIncomeMappingVal.selectedIndex].text;
+  const residenceTypeMappingVal = document.querySelector('[name=residenceTypeMapping]');
+  residenceTypeMappingVal.value = residenceTypeMappingCode;
+  const residenceTypeProfText = residenceTypeMappingVal.options[residenceTypeMappingVal.selectedIndex].text;
+  const selfEmployedProfMappingVal = document.querySelector('[name=selfEmployedProfMapping]');
+  selfEmployedProfMappingVal.value = txtProfessionDescCode;
+  const selfEmployedProfText = selfEmployedProfMappingVal.options[selfEmployedProfMappingVal.selectedIndex].text;
+
   globals.functions.setProperty(financialDetails.occupation, { value: occupationText });
   globals.functions.setProperty(financialDetails.residenceType, { visible: true });
   globals.functions.setProperty(financialDetails.grossAnnualIncome, { visible: true });
@@ -410,6 +435,12 @@ function showFinancialDetails(financialDetails, response, occupation, globals) {
   globals.functions.setProperty(financialDetails.sourceOfFunds, { visible: true });
   globals.functions.setProperty(financialDetails.occupation, { visible: true });
   globals.functions.setProperty(financialDetails.occupation, { value: occupationText });
+  globals.functions.setProperty(financialDetails.sourceOfFunds, { value: sourceOfFundText });
+  globals.functions.setProperty(financialDetails.selfEmployedProfessional, { value: selfEmployedProfText });
+  globals.functions.setProperty(financialDetails.natureOfBusiness, { value: natureOfBusinessText });
+  globals.functions.setProperty(financialDetails.typeOfCompoanyFirm, { value: typeOfCompanyText });
+  globals.functions.setProperty(financialDetails.residenceType, { value: residenceTypeProfText });
+  globals.functions.setProperty(financialDetails.grossAnnualIncome, { value: grossAnnualIncomeText });
 
   if (occupationCode === 2) globals.functions.setProperty(financialDetails.selfEmployedProfessional, { visible: true });
   if (occupationCode === 3) {
@@ -1095,6 +1126,11 @@ function crmProductID(crmProductPanel, response, globals) {
     setFormValue(crmProductPanel.productKey, '601');
   }
 }
+function prefillFinancialDetails(financialDetails, nomineeDetails, globals) {
+  const occupationvalue = financialDetails.occupationDropdown.$value;
+  const occupationDropdownDisplay = financialDetails.occupationDropdown.$displayValue;
+  const nomineeval = nomineeDetails.nomineePanel.nomineerelation;
+}
 
 export {
   validateLogin,
@@ -1117,4 +1153,5 @@ export {
   selectSingleAccount,
   confirmDetailsConsent,
   crmProductID,
+  prefillFinancialDetails,
 };
