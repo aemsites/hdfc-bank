@@ -93,12 +93,11 @@ function sendPageloadEvent(journeyState, formData, pageName) {
       break;
     }
     case 'Thanksyou Page': {
-      digitalData.formDetails.accountType = 'savings';
-      digitalData.formDetails.bankBranch = 'mumbai';
-      digitalData.formDetails.branchCode = 'mum123';
-      digitalData.event.authMethod = 'login';
-      digitalData.formDetails.formSubmitted = 'submitted';
-      console.log('Thanksyou page load', digitalData.formDetails.accountType);
+      digitalData.formDetails.accountType = formData?.accountType;
+      digitalData.formDetails.bankBranch = formData?.homeBranch;
+      digitalData.formDetails.branchCode = formData?.branchCode;
+      digitalData.formDetails.authMethod = formData?.authMethod;
+      digitalData.formDetails.formSubmitted = formData?.formSubmitted;
       break;
     }
     default:
@@ -323,8 +322,8 @@ function populateResponse(payload, eventType, digitalData, formData) {
     }
     case 'on facing issue radio click': {
       let interactionWithRadio = '';
-      if (formData && formData?.AccountOpeningNRENRO.interactionWithRadio) {
-        interactionWithRadio = formData?.AccountOpeningNRENRO.interactionWithRadio;
+      if (formData && formData?.issuesRadio) {
+        interactionWithRadio = formData?.issuesRadio;
       }
       digitalData.event.status = interactionWithRadio;
       break;
@@ -334,11 +333,11 @@ function populateResponse(payload, eventType, digitalData, formData) {
       break;
     }
     case 'on HDFC Bank Website click': {
-      digitalData.event.status = 'Success';
+      digitalData.event.status = formData?.instance;
       break;
     }
     case 'on apply for CTA click': {
-      digitalData.event.status = 'Success';
+      digitalData.event.status = formData?.instance;
       break;
     }
     default:
