@@ -77,6 +77,11 @@ const data = {
     linkName: 'Submit Feedback',
     linkPosition: 'Form',
   },
+  'submit survey': {
+    linkType: 'button',
+    linkName: 'Submit Survey',
+    linkPosition: 'Form',
+  },
 };
 const ANALYTICS_CLICK_OBJECT = {
   page: {

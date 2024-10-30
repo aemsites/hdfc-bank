@@ -68,6 +68,7 @@ const getValidationMethod = (formContext) => {
  * @param {string} pageName.
  */
 function sendPageloadEvent(journeyState, formData, pageName) {
+  console.log('test data', currentFormContext.fatca_response);
   const digitalData = createDeepCopyFromBlueprint(ANALYTICS_PAGE_LOAD_OBJECT);
   digitalData.page.pageInfo.pageName = pageName;
   setAnalyticPageLoadProps(journeyState, formData, digitalData);
@@ -91,8 +92,17 @@ function sendPageloadEvent(journeyState, formData, pageName) {
       // digitalData.formDetails.typeofprofessional = dataReq.typeofprofessional;
       break;
     }
+    case 'Thanksyou Page': {
+      digitalData.formDetails.accountType = 'savings';
+      digitalData.formDetails.bankBranch = 'mumbai';
+      digitalData.formDetails.branchCode = 'mum123';
+      digitalData.event.authMethod = 'login';
+      digitalData.formDetails.formSubmitted = 'submitted';
+      console.log('Thanksyou page load', digitalData.formDetails.accountType);
+      break;
+    }
     default:
-      // do nothing
+    // do nothing
   }
   if (window) {
     window.digitalData = digitalData || {};
@@ -179,8 +189,43 @@ function sendSubmitClickEvent(phone, eventType, linkType, formData, journeyState
       }, 1000);
       break;
     }
+    case 'on rating click': {
+      if (window) {
+        window.digitalData = digitalData || {};
+      }
+      _satellite.track('survey');
+      break;
+    }
+    case 'on facing issue radio click': {
+      if (window) {
+        window.digitalData = digitalData || {};
+      }
+      _satellite.track('submit');
+      break;
+    }
+    case 'on copy symbol click': {
+      if (window) {
+        window.digitalData = digitalData || {};
+      }
+      _satellite.track('submit');
+      break;
+    }
+    case 'on HDFC Bank Website click': {
+      if (window) {
+        window.digitalData = digitalData || {};
+      }
+      _satellite.track('submit');
+      break;
+    }
+    case 'on apply for CTA click': {
+      if (window) {
+        window.digitalData = digitalData || {};
+      }
+      _satellite.track('submit');
+      break;
+    }
     default:
-      // do nothing
+    // do nothing
   }
 }
 
@@ -266,6 +311,34 @@ function populateResponse(payload, eventType, digitalData, formData) {
       digitalData.assisted.lc = lcCode;
       digitalData.formDetails.TAndCConsent = tAndCConsent;
       digitalData.formDetails.detailsConsent = detailsConsent;
+      break;
+    }
+    case 'on rating click': {
+      let feedbackrating = '';
+      if (formData && formData?.AccountOpeningNRENRO.feedbackrating) {
+        feedbackrating = formData?.AccountOpeningNRENRO.feedbackrating;
+      }
+      digitalData.event.rating = feedbackrating;
+      break;
+    }
+    case 'on facing issue radio click': {
+      let interactionWithRadio = '';
+      if (formData && formData?.AccountOpeningNRENRO.interactionWithRadio) {
+        interactionWithRadio = formData?.AccountOpeningNRENRO.interactionWithRadio;
+      }
+      digitalData.event.status = interactionWithRadio;
+      break;
+    }
+    case 'on copy symbol click': {
+      digitalData.event.status = 'Success';
+      break;
+    }
+    case 'on HDFC Bank Website click': {
+      digitalData.event.status = 'Success';
+      break;
+    }
+    case 'on apply for CTA click': {
+      digitalData.event.status = 'Success';
       break;
     }
     default:
