@@ -212,37 +212,41 @@
                     }
                   }
 
-                  /*  &[data-active="true"]~.field-registeredmobilenumber {
+                  &[data-active="true"]~.field-registeredmobilenumber {
                     background-color: transparent;
                     width: 72%;
                     left: 90px;
 
+                    label {
+                      top: -10px;
+                      background-color: #fff;
+                      font-size: 14px;
+                      font-weight: 400;
+                      line-height: 20px;
+                      left: -78px;
+                      padding: 0;
+                    }
+
+                    &[data-active="true"],
+                    &[data-empty="false"] {
                       label {
-                        top: -10px;
-                        background-color: #fff;
-                        font-size: 14px;
-                        font-weight: 400;
-                        line-height: 20px;
-                        left: -80px;
-                      }                    
-                  } */
+                        top: 12px;
+                      }
+                    }
+                  }
                 }
 
                 .field-registeredmobilenumber {
                   position: absolute;
-                  left: 90px;
                   margin: 1px;
                   padding-left: 15px;
                   padding-right: 15px;
                   border-radius: 12px;
-                  width: 72%;
-                  /*z-index: 2;
+                  z-index: 2;
                   max-width: 350px;
-                  height: 95%;
                   left: 0;
-                  background-color: #fff; 
-                   width: 95%;
-                  */
+                  background-color: #fff;
+                  width: 100%;
 
                   label {
                     top: 10px;
@@ -288,7 +292,7 @@
                       font-size: 14px;
                       font-weight: 400;
                       line-height: 20px;
-                      left: -80px;
+                      left: -82px;
                     }
                   }
                 }
@@ -383,7 +387,7 @@
                     line-height: 28px;
                     margin: 0;
                     color: var(--color-interface-text-secondary);
-                    display: none;                   
+                    display: none;
 
                     @media (320px <=width <=600px) {
                       top: 65px;
@@ -438,13 +442,14 @@
                       }
                     }
 
-                    &:has(input:not([edit-value="Date of Birth"])){
-                      label{
+                    &:has(input:not([edit-value="Date of Birth"])) {
+                      label {
                         @media (320px <=width <=991px) {
                           display: block;
                         }
                       }
                     }
+
                     input:not([edit-value="Date of Birth"]) {
                       background: url("../icons//cal_icon.png") no-repeat 97.2%;
                       font-weight: 500;
@@ -462,6 +467,7 @@
                       top: 12px;
                       font-size: 14px;
                       line-height: 20px;
+
                       @media (320px <=width <=991px) {
                         display: block;
                       }
@@ -1411,6 +1417,10 @@
               border-top-right-radius: 15px;
             }
           }
+
+          &:has(.accordion-collapse):has(~ .field-financialdetails) {
+            border: 1px solid red;
+          }
         }
 
         fieldset.field-nomineedetails .field-wrapper {
@@ -1667,6 +1677,20 @@
             @media (320px <=width <=600px) {
               width: 100%;
             }
+
+            button {
+              position: relative;
+
+              &::after {
+                content: '';
+                position: absolute;
+                right: 29%;
+                top: 17px;
+                height: 20px;
+                width: 20px;
+                background: url(../../icons/Arrow.png);
+              }
+            }
           }
         }
 
@@ -1681,7 +1705,6 @@
           .multiline-wrapper {
             position: relative;
             height: 70px;
-            /* margin-top: -20px; */
 
             label {
               margin-top: 2px;
@@ -1872,7 +1895,7 @@
             }
 
             .field-multiselectaccounttext {
-              margin-bottom: 30px;
+              margin-bottom: 20px;
               margin-top: -20px;
 
               p {
@@ -2001,12 +2024,6 @@
                         line-height: 17px;
                         color: var(--color-interface-text-secondary);
                       }
-
-                      /*  & label{
-                       margin: 0 0 0 10px;
-                       position: absolute;
-                       border-left: 1px solid var(--color-interface-text-secondary);
-                      } */
 
                       &.field-branch {
                         & label {
@@ -2910,11 +2927,6 @@
 
               @media (320px <=width <=600px) {
                 margin-top: 45px;
-                /* 
-                border-bottom: none;
-                border-bottom-left-radius: 0;
-                border-bottom-right-radius: 0;
-                padding-bottom: 0; */
                 padding: 20px;
                 margin-bottom: 20px;
               }
@@ -3002,12 +3014,6 @@
                   padding-bottom: 20px;
                 }
 
-                @media (320px <=width <=600px) {
-                  /*     border-top: none;
-                  border-bottom: 1px dashed var(--color-interface-border-secondary);
-                  padding-bottom: 20px; */
-                }
-
                 p {
                   padding-top: 10px;
                   margin-bottom: 0;
@@ -3043,12 +3049,6 @@
               }
 
               @media (320px <=width <=600px) {
-                /* border-top: none;
-                border-top-left-radius: 0;
-                border-top-right-radius: 0;
-                padding-bottom: 0;
-                margin-top: -20px; 
-                padding-top: 20px;*/
                 padding: 20px;
               }
 
