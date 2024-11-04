@@ -14,18 +14,22 @@ export const defaultErrorMessages = {
   required: 'Please fill in this field.',
 };
 
-let submitBaseUrl = '';
+let submitBaseUrl = 'https://applyonline.hdfcbank.com';
 
 const localDev = ['aem.live', 'aem.page', 'localhost', 'hlx.live', 'hlx.page'];
 
 function isLocalDev() {
   // eslint-disable-next-line no-restricted-globals
-  const { hostname } = location;
-  return localDev.some((dev) => hostname.includes(dev));
+  if (typeof location !== 'undefined') {
+    // eslint-disable-next-line no-restricted-globals
+    const { hostname } = location;
+    return localDev.some((dev) => hostname.includes(dev));
+  }
+  return false;
 }
 
 if (isLocalDev()) {
-  submitBaseUrl = 'https://applyonlinedev.hdfcbank.com';
+  submitBaseUrl = 'https://applyonline.hdfcbank.com';
 }
 
 export function setSubmitBaseUrl(url) {

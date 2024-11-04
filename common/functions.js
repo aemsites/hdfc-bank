@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 import {
   validatePan,
@@ -214,12 +215,9 @@ async function aadharInit(mobileNumber, pan, dob, globals) {
     },
   };
 
-  let path = urlPath(ENDPOINTS.aadhaarInit?.[currentFormContext.journeyName]);
+  const path = urlPath(ENDPOINTS.aadhaarInit?.[currentFormContext.journeyName]);
   const finalPayload = btoa(unescape(encodeURIComponent(JSON.stringify(jsonObj))));
   const decodedData = decodeURIComponent(escape(atob(finalPayload)));
-  if (!isValidJson(decodedData)) {
-    path = `https://hdfc-dev-04.adobecqms.net${ENDPOINTS.aadhaarInit?.[currentFormContext.journeyName]}`;
-  }
   const response = fetchJsonResponse(path, jsonObj, 'POST');
   response
     .then((res) => {
