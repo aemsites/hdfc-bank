@@ -1,7 +1,7 @@
 :root {
   --font-family-default: inter, inter-fallback;
   --font-family-secondary: 'Open Sans', sans-serif;
-
+  
   /* form--btn */
   --form-button-font-size: 16px;
   --form-button-font-weight: 700;

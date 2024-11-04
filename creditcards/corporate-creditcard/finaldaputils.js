@@ -96,7 +96,7 @@ const createDapRequestObj = (globals) => {
   };
 
   const kycFillers = kycFillCheck(customerInfo, kycFill);
-  const journeyType = formContextCallbackData?.breDemogResponse?.BREFILLER2 === 'D101' ? 'ETB' : 'NTB';
+  const journeyType = (formContextCallbackData?.breDemogResponse?.BREFILLER2 === 'D101' || formContextCallbackData?.breDemogResponse?.BREFILLER2 === 'D106') ? 'ETB' : 'NTB';
   const mobileMatch = globals.functions.exportData()?.aadhaar_otp_val_data?.result?.mobileValid !== undefined;
   const biometricStatus = kycFillers ?? '';
   const ekycConsent = ((kycFillers === 'aadhaar')) ? `${getCurrentDateAndTime(3)}YEnglishxeng1x0` : '';
@@ -188,7 +188,7 @@ const finalDap = (userRedirected, globals) => {
           throughDomSetArnNum(response.applicationNumber, mobileNumber, leadProfileId, journeyId, globals);
           setTimeout(async (globalObj) => {
             const santizedFormData = santizedFormDataWithContext(globalObj);
-            await Promise.resolve(sendPageloadEvent('CONFIRMATION_JOURNEY_STATE', santizedFormData, 'CONFIRMATION_PAGE_NAME'));
+            await Promise.resolve(sendPageloadEvent('CUSTOMER_ONBOARDING_COMPLETE', santizedFormData, 'CONFIRMATION_PAGE_NAME'));
           }, 5000, globals);
         }
       } else {

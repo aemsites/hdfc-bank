@@ -107,7 +107,7 @@ const pageRedirected = () => {
     journeyData.journeyName = ANALYTICS.JOURNEY_NAME;
     setTimeout(() => {
       sendFDAnalytics(formLoad.type, formLoad.pageName, {}, formLoad.journeyState, journeyData);
-    }, 500);
+    }, 2000);
   }
   if (delayedUtilState.idComRedirect && delayedUtilState?.errorCode !== IDCOM.response.sessionExpired.errorCode) {
     displayLoader();

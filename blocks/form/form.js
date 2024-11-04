@@ -223,8 +223,8 @@ function createImage(fd) {
   const field = createFieldWrapper(fd);
   const imagePath = fd.source || fd.properties['fd:repoPath'] || '';
   const image = `
-    <picture>
-      <source srcset="${imagePath}?width=2000&optimize=medium" media="(min-width: 600px)">
+  <picture>
+    <source srcset="${imagePath}?width=2000&optimize=medium" media="(min-width: 600px)">
     <source srcset="${imagePath}?width=750&optimize=medium">
     <img alt="${fd.altText || fd.name}" src="${imagePath}?width=750&optimize=medium">
   </picture>`;
