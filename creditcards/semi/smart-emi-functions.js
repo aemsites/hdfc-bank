@@ -29,8 +29,7 @@ import {
   handleMdmUtmParam,
 } from './semi-mdm-utils.js';
 
-import { invokeJourneyDropOffByParam } from '../../common/journey-utils.js';
-import { invokeJourneyDropOffUpdate, invokeJourneyDropOff } from './semi-journey-utils.js';
+import { invokeJourneyDropOffUpdate, invokeJourneyDropOff, invokeJourneyDropOffByParam } from './semi-journey-utils.js';
 import { reloadPage } from '../../common/functions.js';
 import {
   sendAnalytics,
@@ -104,16 +103,18 @@ function getCurrentFormContext(globals) {
 /**
    * generates the journeyId
    * @param {string} visitMode - The visit mode (e.g., "online", "offline").
-   * @param {string} journeyAbbreviation - The abbreviation for the journey.
+   * @param {string} journeyAbbreviationValue - The abbreviation for the journey.
    * @param {string} channel - The channel through which the journey is initiated.
    * @param {object} globals
    */
-function createJourneyId(visitMode, journeyAbbreviation, channelValue, globals) {
+function createJourneyId(visitMode, journeyAbbreviationValue, channelValue, globals) {
   const dynamicUUID = generateUUID();
   // var dispInstance = getDispatcherInstance();
   let channel = channelValue;
+  const journeyAbbreviation = journeyAbbreviationValue || 'SEMI';
+  channel = 'WEB';
   if (isNodeEnv) {
-    channel = CHANNELS.adobeWhatsApp;
+    channel = 'WHATSAPP';
   }
   const journeyId = globals.functions.exportData().smartemi?.journeyId || `${dynamicUUID}_01_${journeyAbbreviation}_${visitMode}_${channel}`;
   globals.functions.setProperty(globals.form.runtime.journeyId, { value: journeyId });
@@ -288,7 +289,7 @@ const setData = (globals, panel, txn, i) => {
   globals.functions.setProperty(panel[i]?.aem_TxnDate, { value: txn?.date || txn?.aem_TxnDate });
   globals.functions.setProperty(panel[i]?.aem_TxnID, { value: txn?.id || txn?.aem_TxnID });
   globals.functions.setProperty(panel[i]?.aem_TxnName, { value: txn?.name || txn?.aem_TxnName });
-  globals.functions.setProperty(panel[i]?.authCode, { value: txn?.AUTH_CODE || txn?.authCode });
+  globals.functions.setProperty(panel[i]?.authCode, { value: txn?.AUTH_CODE || txn?.authCode || txn?.authcode });
   globals.functions.setProperty(panel[i]?.logicMod, { value: txn?.LOGICMOD || txn?.logicMod });
   globals.functions.setProperty(panel[i]?.aem_txn_type, { value: txn?.type });
 };
@@ -1227,7 +1228,8 @@ const getCCSmartEmi = (mobileNum, cardNum, otpNum, globals) => {
   const tenurePlan = globals.functions.exportData().aem_tenureSelectionRepeatablePanel;
   const selectedTenurePlan = tenurePlan?.find((emiPlan) => emiPlan.aem_tenureSelection === '0');
   const emiSubData = JSON.parse(selectedTenurePlan?.aem_tenureRawData);
-  const PROC_FEES = String(currencyStrToNum(selectedTenurePlan?.aem_tenureSelectionProcessing));
+  // Commented PROC_FEES as it was not used
+  // const PROC_FEES = String(currencyStrToNum(selectedTenurePlan?.aem_tenureSelectionProcessing));
   const INTEREST = emiSubData?.interest; // '030888'
   const TENURE = (parseInt(emiSubData?.period, 10).toString().length === 1) ? (parseInt(emiSubData?.period, 10).toString().padStart(2, '0')) : parseInt(emiSubData?.period, 10).toString(); // '003' into '03' / '18'-'18'
   const TID = emiSubData?.tid; // '000000101'
@@ -1252,7 +1254,7 @@ const getCCSmartEmi = (mobileNum, cardNum, otpNum, globals) => {
       mobileNo: mobileNum,
       tid: TID,
       reqAmt: LOAN_AMOUNT,
-      procFeeWav: PROC_FEES,
+      procFeeWav: '000',
       reqNbr: REQ_NBR,
       emiConversion: emiConversionArray,
       journeyID: globals.form.runtime.journeyId.$value,
