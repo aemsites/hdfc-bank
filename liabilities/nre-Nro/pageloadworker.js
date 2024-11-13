@@ -1,28 +1,30 @@
 
 let thanks = document?.querySelector('[name="thankYouPanel"]');
-
 function setBodyPage(thanks){
   if(thanks){
     if (window && document) {
+      document?.body?.classList?.add('preloader');
+      let parentLandingPagePanel = document?.querySelector('[name="parentLandingPagePanel"]');
+      if(!parentLandingPagePanel?.dataset?.visible){
+        document?.body?.classList?.remove('preloader');
+      }
       thanks = document.querySelector('[name="thankYouPanel"]');
-      console.log(thanks);
       let errorPanel = document.querySelector('[name="itsNotYouPanel"]');
-      console.log(thanks?.dataset?.visible);
       if(!thanks?.dataset?.visible){
         document.body.classList.add('nreThankYouPage');
         document.body.classList.remove('errorPageBody');
+        document?.body?.classList?.remove('preloader');
       }
       if(!errorPanel?.dataset?.visible){
         document.body.classList.remove('nreThankYouPage');
         document.body.classList.add('errorPageBody');
+        document?.body?.classList?.remove('preloader');
       }
       
       //document.body.classList.add('preloader');
       const mutationCallback = (mutationsList) => {
         for (const mutation of mutationsList) {
-          console.log(mutation);
           let dataVisibileValue = mutation.target.getAttribute("data-visible");
-          console.log(dataVisibileValue);
           let currTarget = mutation.target.name;
           if (!dataVisibileValue) {
             document.body.classList.remove('preloader');
@@ -30,10 +32,12 @@ function setBodyPage(thanks){
               case 'thankYouPanel':
                 document.body.classList.add('nreThankYouPage');
                 document.body.classList.remove('errorPageBody');
+                document?.body?.classList?.remove('preloader');
                 break;
               case 'itsNotYouPanel':
                 document.body.classList.add('errorPageBody');
                 document.body.classList.remove('nreThankYouPage');
+                document?.body?.classList?.remove('preloader');
                 break;
               default:
                 break;
