@@ -41,10 +41,17 @@ export default async function componentDecorator(fd) {
     return module.default;
   }
 
+   //console.log(name+fieldType);
+   if(fieldType?.includes('input') && name === 'countryCode'){
+    const module = await import('./components/countryCode.js');
+    return module.default;
+  }
+
   if ((fieldType?.includes('input') || fieldType === 'drop-down' || fieldType === 'email') && fd.appliedCssClassNames !== 'passwordField') {
     //console.log(name);
     const module = await import('./components/floatingFields.js');
     return module.default;
   }
+
   return null;
 }

@@ -1,4 +1,4 @@
-
+import { urlPath } from "../../../common/formutils";
 /**
  * Represents a layout manager for displaying floating field labels.
  */
@@ -7,7 +7,9 @@ export default function searchPanel(panel) {
     inputField.dataset.id = "searchcode-id";
     let searchParent = inputField.parentNode;
 
-    let fetchResult = fetchJsonResponse('https://applyonlinedev.hdfcbank.com/content/hdfc_commonforms/api/mdm.ETB.NRI_ISD_MASTER.COUNTRYNAME-.json',
+    let path = /content/hdfc_commonforms/api/mdm.ETB.NRI_ISD_MASTER.COUNTRYNAME-.json;
+    path = urlPath(path);
+    let fetchResult = fetchJsonResponse(path,
         null,
         'GET',
         'dev'
@@ -37,26 +39,21 @@ export default function searchPanel(panel) {
             });
             newOptionTemp?.classList?.add('cocodrop');
             searchParent.appendChild(newOptionTemp);
-            //searchParent.dataset.visible = 'true';
 
             setTimeout(() => {
-
                 let allLis = document.querySelectorAll('.lianchor')
-                console.log(allLis);
                 for (var i = 0; i < allLis.length; i++) {
-                    console.log(allLis[i]);
                     allLis[i].addEventListener('click', (event) => {
-                        console.log(event.target.value);
                         document.querySelector('[name="searchCode"]').value = event.target.value;
                         const event1 = new Event('change', {
                             bubbles: true, // Allow the event to bubble up
                             cancelable: true, // Allow the event to be canceled
                         });
+                        panel.dataset.visible = false;
                         inputField?.dispatchEvent(event1);
                     });
                 }
                 document.querySelector('[name="searchCode"]')?.addEventListener('keyup', (event) => {
-                    console.log(event.target.value);
                     let searchKey = event.target.value;
                     if (searchKey && searchKey.length >= 0) {
                         drawCountryCode(searchOptions, searchKey, inputField);
@@ -94,7 +91,6 @@ async function fetchJsonResponse(url, payload, method, env) {
 }
 
 function drawCountryCode(searchOptions, key, inputField) {
-    console.log(searchOptions);
     let filteredOptions = [];
     if (key.length == 0) {
         filteredOptions = searchOptions;
@@ -113,15 +109,15 @@ function drawCountryCode(searchOptions, key, inputField) {
         newOption.classList.add('lianchor')
         newOption.dataset.id = filteredOption?.countryCode;
         newOption?.addEventListener('click', (event) => {
-            console.log(event.target.value);
             document.querySelector('[name="searchCode"]').value = event.target.value;
             const event1 = new Event('change', {
                 bubbles: true, // Allow the event to bubble up
                 cancelable: true, // Allow the event to be canceled
             });
+            
+            panel.dataset.visible = false;
             inputField?.dispatchEvent(event1);
         });
         cocodrop.appendChild(newOption);
     })
-    console.log("hello");
 }
