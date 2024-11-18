@@ -100,6 +100,9 @@ function drawCountryCode(searchOptions, key, inputField, panel) {
             return searchText.toLowerCase().includes(key.toLowerCase());
         });
     }
+    if(filteredOptions.length == 0) {
+        filteredOptions = searchOptions;
+    }
     let cocodrop = document.querySelector('.cocodrop');
     cocodrop.innerHTML = '';
     filteredOptions.forEach((filteredOption) => {
