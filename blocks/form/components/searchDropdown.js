@@ -24,13 +24,13 @@ export default function searchPanel(panel) {
                     const key = `${countryCode.DESCRIPTION} (${val})`;
                     const newOption = document.createElement('li');
                     newOption.innerText = key;
-                    newOption.value = val;
+                    newOption.value = `${val}`;
                     newOption.classList.add('lianchor')
-                    newOption.dataset.id = val;
+                    newOption.dataset.id = `${val}`;
                     newOptionTemp?.appendChild(newOption);
                     //adding searchable options to object
                     let searchOption = {
-                        countryCode: val,
+                        countryCode: `${val}`,
                         countryText: key
                     }
                     //creating array of all searchable options.
@@ -44,7 +44,7 @@ export default function searchPanel(panel) {
                 let allLis = document.querySelectorAll('.lianchor')
                 for (var i = 0; i < allLis.length; i++) {
                     allLis[i].addEventListener('click', (event) => {
-                        document.querySelector('[name="searchCode"]').value = event.target.value;
+                        document.querySelector('[name="searchCode"]').value = event.target.dataset.id;
                         const event1 = new Event('change', {
                             bubbles: true, // Allow the event to bubble up
                             cancelable: true, // Allow the event to be canceled
@@ -105,11 +105,11 @@ function drawCountryCode(searchOptions, key, inputField, panel) {
     filteredOptions.forEach((filteredOption) => {
         const newOption = document.createElement('li');
         newOption.innerText = filteredOption?.countryText;
-        newOption.value = filteredOption?.countryCode;
+        newOption.value = `${String(filteredOption?.countryCode)}`;
         newOption.classList.add('lianchor')
         newOption.dataset.id = filteredOption?.countryCode;
         newOption?.addEventListener('click', (event) => {
-            document.querySelector('[name="searchCode"]').value = event.target.value;
+            document.querySelector('[name="searchCode"]').value = event.target.dataset.id;
             const event1 = new Event('change', {
                 bubbles: true, // Allow the event to bubble up
                 cancelable: true, // Allow the event to be canceled
