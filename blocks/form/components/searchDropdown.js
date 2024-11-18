@@ -55,7 +55,7 @@ export default function searchPanel(panel) {
                 }
                 document.querySelector('[name="searchCode"]')?.addEventListener('keyup', (event) => {
                     let searchKey = event.target.value;
-                    if (searchKey && searchKey.length >= 0) {
+                    if (typeof searchKey !== undefined && searchKey.length > -1) {
                         drawCountryCode(searchOptions, searchKey, inputField, panel);
                     }
                 });
