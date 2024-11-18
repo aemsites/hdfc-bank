@@ -186,8 +186,8 @@
                   }
 
                   input[name="countryCode"] {
-                    max-width: 75px;
-                    width: 75px;
+                    max-width: 80px;
+                    width: 80px;
                     padding-left: 15px;
                     border: none;
                     border-color: var(--color-interface-border-secondary) !important;
@@ -211,7 +211,7 @@
                    &::before {
                     content: '|';
                     color: #f0f0f0;
-                    margin-left: 80px;
+                    margin-left: 88px;
                     padding-right: 5px;
                     position: absolute;
                     top: 7px;
@@ -285,7 +285,7 @@
                   /*  height: 96%; */
 
                   left: 90px;
-                  width: 72%;
+                 /*  width: 72%; */
 
                   label {
                     top: 10px;
@@ -347,7 +347,7 @@
                   border: 1px solid var(--color-interface-border-secondary);
                   border-radius: 12px;
                   z-index: 2;
-                  width: 350px;
+                  width: 352px;
                   margin-top: -17px;
 
                   input {
@@ -357,6 +357,10 @@
                     border: none;
                     border-bottom: 1px solid var(--color-interface-border-secondary);
                     border-radius: 0;
+                    font-size: 16px;
+                    font-weight: 500;
+                    line-height: 20px;
+                    color: var(--color-interface-text-primary);
 
                     &:hover,
                     &:focus {
@@ -365,7 +369,7 @@
                   }
 
                   .cocodrop {
-                    height: 264px;
+                    max-height: 264px;
                     overflow: auto;
                     margin: 0;
                     padding: 0;
