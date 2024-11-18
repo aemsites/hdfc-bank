@@ -1,4 +1,4 @@
-import { urlPath } from "../../../common/formutils";
+import { urlPath } from "../../../common/formutils.js";
 /**
  * Represents a layout manager for displaying floating field labels.
  */
@@ -56,7 +56,7 @@ export default function searchPanel(panel) {
                 document.querySelector('[name="searchCode"]')?.addEventListener('keyup', (event) => {
                     let searchKey = event.target.value;
                     if (searchKey && searchKey.length >= 0) {
-                        drawCountryCode(searchOptions, searchKey, inputField);
+                        drawCountryCode(searchOptions, searchKey, inputField, panel);
                     }
                 });
 
@@ -90,7 +90,7 @@ async function fetchJsonResponse(url, payload, method, env) {
     }
 }
 
-function drawCountryCode(searchOptions, key, inputField) {
+function drawCountryCode(searchOptions, key, inputField, panel) {
     let filteredOptions = [];
     if (key.length == 0) {
         filteredOptions = searchOptions;
