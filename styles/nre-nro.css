@@ -188,7 +188,7 @@
                   input[name="countryCode"] {
                     max-width: 75px;
                     width: 75px;
-                    padding-left: 20px;
+                    padding-left: 10px;
                     border: none;
                     border-color: var(--color-interface-border-secondary) !important;
                     background: url('./../icons/select_arrow.png') no-repeat right center;
