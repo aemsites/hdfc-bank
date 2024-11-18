@@ -20,7 +20,7 @@ export default function searchPanel(panel) {
             let searchOptions = [];
             res.forEach((countryCode) => {
                 if (countryCode.ISDCODE != null && countryCode.DESCRIPTION != null) {
-                    const val = ` +${String(countryCode.ISDCODE)}`;
+                    const val = `+${String(countryCode.ISDCODE)}`;
                     const key = `${countryCode.DESCRIPTION} (${val})`;
                     const newOption = document.createElement('li');
                     newOption.innerText = key;
