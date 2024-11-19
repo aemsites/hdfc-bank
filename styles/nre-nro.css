@@ -1513,7 +1513,7 @@
 
                 @media (320px <=width <=600px) {
                   height: auto;
-                }
+                } 
               }
             }
           }
@@ -1548,7 +1548,6 @@
 
             fieldset.field-nomineedetails .field-wrapper {
               padding-top: 0 !important;
-
               @media (320px <=width <=600px) {
                 grid-column: span 12;
               }
@@ -1667,6 +1666,51 @@
               left: 0;
               top: -115px;
               padding: 0 10px;
+            }
+
+            &::before {
+              content: '';
+              position: absolute;
+              height: 16px;
+              width: 16px;
+              background: #00875F url('../icons/tick-completed-step.svg') no-repeat center center;
+              border-radius: 100%;
+              background-size: 7px;
+            }
+
+            p {
+              margin: 0;
+
+              p {
+                margin: 0;
+                color: #00875F;
+                font-size: 16px;
+                font-weight: 600;
+                line-height: 24px;
+                padding-left: 30px;
+              }
+            }
+          }
+
+          .field-accountsuccessmsg {
+            position: absolute;
+            top: 15px;
+            left: 37%;
+            padding-left: 15px;
+            height: 40px;
+            border-radius: 8px;
+            background-color: #EBF9EF;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+
+            @media (768px <=width <=991px) {
+              left: 30%;
+            }
+
+            @media (320px <=width <=600px) {
+              left: 7%;
+              top: 55px;
             }
 
             &::before {
