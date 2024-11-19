@@ -3241,7 +3241,7 @@
         @media (767px <=width <=992px) {
           margin-left: 42px;
         }
-        @media (320 <=width <=766) {
+        @media (320px <=width <=766px) {
           margin-left: 42px;
         }
 
@@ -4154,7 +4154,6 @@
           @media (768px <=width <=991px) {
             left: 0;
           }
-
           @media (320px <=width <=767px) {
             left: 0;
           }
