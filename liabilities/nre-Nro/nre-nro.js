@@ -35,6 +35,7 @@ import {
   nreNroShowHidePage,
   submitThankYou,
   reloadPage,
+  feedbackButton,
 } from './nre-nroFunctions.js';
 
 import { sendAnalytics } from './analytics.js';
@@ -89,4 +90,5 @@ export {
   getCountryName,
   submitThankYou,
   reloadPage,
+  feedbackButton,
 };
