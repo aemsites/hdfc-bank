@@ -1129,6 +1129,8 @@ async function accountOpeningNreNro(idComToken) {
       errorCode: '0',
       accountNumber: '50919394857273',
     },
+    {
+    }
   };*/
 
 }
