@@ -1165,9 +1165,11 @@ function prefillThankYouPage(accountNumber, globals) {
   const journeyAccountType = finalResult.journeyParamStateInfo.currentFormContext.journeyAccountType === 'NRE' ? 'NRO' : 'NRE';
   globals.functions.setProperty(thankyouLeftPanel.successfullyText, { value: `<p>Yay! ${journeyAccountType} account opened successfully.</p>` });
   if (!isNullOrEmpty(accountNumber)) {
+    globals.functions.setProperty(thankyouLeftPanel.accountNumber.accountNumber, { visible: true });
     globals.functions.setProperty(thankyouLeftPanel.accountNumber.accountNumber, { value: accountNumber }); // Setting the account number
   } else if (!isNullOrEmpty(finalResult.journeyParamStateInfo.form.confirmDetails.crm_leadId)) {
-    globals.functions.setProperty(thankyouLeftPanel.accountNumber.accountNumber, { value: finalResult.journeyParamStateInfo.form.confirmDetails.crm_leadId });
+    globals.functions.setProperty(thankyouLeftPanel.accountNumber.leadId_number, { visible: true });
+    globals.functions.setProperty(thankyouLeftPanel.accountNumber.leadId_number, { value: finalResult.journeyParamStateInfo.form.confirmDetails.crm_leadId });
     globals.functions.setProperty(thankyouLeftPanel.accountNumber.confirmText, { value: 'Congratulations! Your online application is successfully submitted !!!' });
   } else {
     globals.functions.setProperty(globals.form.thankYouPanel, { visible: false });
