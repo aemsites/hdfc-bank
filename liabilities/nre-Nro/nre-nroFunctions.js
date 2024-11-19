@@ -1163,6 +1163,7 @@ async function fetchIdComToken() {
  * @returns {void}
  */
 function prefillThankYouPage(accountNumber, globals) {
+  Promise.resolve(sendAnalytics('page load-Step 5 : Confirmation', { }, 'ON_THANK_YOU_PAGE_LOAD', globals));
   const { thankyouLeftPanel } = globals.form.thankYouPanel.thankYoufragment;
   const journeyAccountType = finalResult.journeyParamStateInfo.currentFormContext.journeyAccountType === 'NRE' ? 'NRO' : 'NRE';
   globals.functions.setProperty(thankyouLeftPanel.successfullyText, { value: `<p>Yay! ${journeyAccountType} account opened successfully.</p>` });
@@ -1343,6 +1344,7 @@ function nreNroShowHidePage(globals) {
 function nreNroInit(globals) {
   globals.functions.setProperty(globals.form.runtime.journeyName, { value: JOURNEY_NAME }); // Setting the hidden field
   globals.functions.setProperty(globals.form.parentLandingPagePanel.landingPanel.init_hidden_field, { value: 'INIT' }); // Setting the hidden field
+  onPageLoadAnalytics();
 }
 
 /**
@@ -1359,6 +1361,9 @@ function nreNroPageRedirected(globals) {
   currentFormContext.idComErrorMessage = queryParams?.errorMessage;
   currentFormContext.idComSuccess = queryParams?.success.toUpperCase();
   currentFormContext.idComRedirect = currentFormContext?.authModeParam && ((currentFormContext?.authModeParam === 'DebitCard') || (currentFormContext?.authModeParam === 'NetBanking')); // debit card or net banking flow
+  if(currentFormContext.idComRedirect){
+    Promise.resolve(sendAnalytics('idcom redirection check', { validationMethod: currentFormContext?.authModeParam, status: currentFormContext?.idComSuccess }, 'ON_IDCOM_REDIRECTION', globals));
+  }
   if (currentFormContext.idComRedirect && currentFormContext.idComSuccess === 'TRUE') {
     globals.functions.setProperty(globals.form.parentLandingPagePanel.landingPanel.nreNroPageRedirectedResp, { value: 'true' });
     globals.functions.setProperty(globals.form.runtime.journeyId, { value: currentFormContext.journeyId });
@@ -1397,16 +1402,11 @@ const switchWizard = (globals) => {
   invokeJourneyDropOffUpdate('CUSTOMER_ACCOUNT_VARIANT_SELECTED', mobileNumber, leadProfileId, journeyID, globals);
   moveWizardView('wizardNreNro', 'confirmDetails');
   currentFormContext.action = 'Confirm Details';
-  Promise.resolve(sendAnalytics('page load-Confirm Details', { }, 'ON_CONFIRM_DETAILS_PAGE_LOAD', globals));
 };
 
 const onPageLoadAnalytics = async (globals) => {
-  await Promise.resolve(sendAnalytics('page load-All Pages', { }, 'ON_PAGE_LOAD', globals));
+  await Promise.resolve(sendAnalytics('page load-Step 1 : Identify Yourself', { }, 'ON_PAGE_LOAD', globals));
 };
-
-setTimeout(() => {
-  onPageLoadAnalytics();
-}, 5000);
 
 const crmLeadIdDetail = (globals) => {
   const { fatca_response: response, selectedCheckedValue: accIndex } = currentFormContext;
@@ -1559,7 +1559,7 @@ const crmLeadIdDetail = (globals) => {
       employmentType: '',
       employmentTypeOthers: '',
       phone: currentFormContext.mobileNumber,
-      productCategory: globals.form.crmProductPanel.productCategory.$value,
+      productCategory: currentFormContext.productCategory,
       productName: currentFormContext.productAccountName,
       ratingKey: '',
       residentialStatus: '',
@@ -1588,7 +1588,7 @@ const crmLeadIdDetail = (globals) => {
       occupationTypeID: '',
       ownerCode: '',
       productCategoryID: currentFormContext.productCategoryID,
-      productCode: response.customerAccountDetailsDTO[accIndex].productCode.toString(),
+      productCode: currentFormContext.productAccountType,
       productKey: currentFormContext.productKey,
       residentialStatusID: '',
       websiteUrl: '',
@@ -1732,7 +1732,7 @@ function crmProductID(crmProductPanel, response, globals) {
   }
 }
 
-function nreNroAccountType(nroAccountTypePanel, nreAccountTypePanel) {
+function nreNroAccountType(nroAccountTypePanel, nreAccountTypePanel, globals) {
   const nroEliteSavingsAcco = nroAccountTypePanel.eliteSavingsAccountPanel.eliteSavingsAccount.$value;
   const nroRegularSavingsAcco = nroAccountTypePanel.regularSavingsAccountPanel.regularSavingsAccount.$value;
   const nroCurrentAcco = nroAccountTypePanel.currentAccountPanel.currentAccount.$value;
@@ -1776,6 +1776,8 @@ function nreNroAccountType(nroAccountTypePanel, nreAccountTypePanel) {
     currentFormContext.productCategoryID = '484';
     currentFormContext.productKey = '604';
   }
+
+  Promise.resolve(sendAnalytics('select account type click', { productAccountType: currentFormContext?.productAccountType ?? '' }, 'ON_SELECT_ACCOUNT_TYPE', globals));
 }
 
 function multiAccountVarient(selectAccount, globals) {
@@ -1792,6 +1794,9 @@ function multiAccountVarient(selectAccount, globals) {
     globals.functions.setProperty(selectAccount.nre_account_type_pannel, { visible: true });
     globals.functions.setProperty(selectAccount.nro_account_type_pannel.eliteSavingsAccountPanel.eliteSavingsAccount, { value: null });
   }
+
+  currentFormContext.existingAccountType = varientType;
+  Promise.resolve(sendAnalytics('continue btn select account', { varientType }, 'SELECT_ACCOUNT_ON_CONTINUE_CLICK', globals));
 }
 
 function errorHandling(response, journeyState, globals) {

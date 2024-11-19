@@ -25,6 +25,11 @@ const data = {
     StepName: 'Select Account Type',
     linkPosition: 'Form',
   },
+  'continue btn select account': {
+    linkType: 'button',
+    StepName: 'Select Account',
+    linkPosition: 'Form',
+  },
   'confirm details click': {
     linkType: 'button',
     StepName: 'Confirm Details',
@@ -155,6 +160,26 @@ const ANALYTICS_PAGE_LOAD_OBJECT = {
   form: {
     name: '',
   },
+  formDetails: {
+    city: '',
+    state: '',
+    pincode: '',
+    nationality: '',
+    countryTaxResidence: '',
+    countryofBirth: '',
+    nomineeRelation: '',
+    companyName: '',
+    AnnualIncome: '',
+    currency: '',
+    residenceType: '',
+    sourceoffunds: '',
+    selfemployeddate: '',
+    natureofbusiness: '',
+    typeofcompany: '',
+    typeofprofessional: '',
+    bankBranch: '',
+    existingAccountType: '',
+  },
 };
 
 const PAGE_NAME = {
@@ -173,8 +198,11 @@ const PAGE_NAME = {
     'thank you screen': 'Confirmation',
   },
   nrenro: {
-    'otp click': 'Identify Yourself',
-    'confirm otp': 'Verify with OTP',
+    'otp click': 'Step 1 : Identify Yourself',
+    'confirm otp': 'Step 2 : Verify with OTP',
+    'select account': 'Step 3 : Select  Account',
+    'select account type': 'Step 3 : Account Type',
+    'confirm details': 'Step 4 : Confirm Details',
     'check offers': 'Customer Details',
     'get this card': 'Choose Card',
     'kyc continue': 'Select KYC',
