@@ -363,6 +363,7 @@ function addTransactions(allTxn, globals) {
  *
  * @param {Array} allTxn - Array of all transactions.
  * @param {number} [btxn] - Number of billed transactions.
+ * @param {number} [uBtxn] - Number of unbilled transactions.
  * @param {Object} billedTxnPanel - The panel for billed transactions.
  * @param {Object} [unBilledTxnPanel] - The panel for unbilled transactions.
  * @param {Object} globals - Global variables and functions.
@@ -370,7 +371,7 @@ function addTransactions(allTxn, globals) {
 const setTxnPanelData = async (allTxn, btxn, uBtxn, billedTxnPanel, unBilledTxnPanel, globals) => {
   if (!allTxn?.length) return;
   if (!isNodeEnv) {
-    allTxn.forEach((_txn, i) => {
+    const processTransactions = allTxn.map((_txn, i) => {
       const isBilled = i < btxn;
       let panel = billedTxnPanel;
       if (btxn !== undefined && unBilledTxnPanel !== undefined) {
@@ -379,7 +380,7 @@ const setTxnPanelData = async (allTxn, btxn, uBtxn, billedTxnPanel, unBilledTxnP
       }
       const delay = DELAY + (DELTA_DELAY * i);
       const panelIndex = isBilled ? i : i - btxn;
-      setTimeout(() => {
+      const processTxnInstances = () => {
         if (isBilled && (btxn - 1 >= billedTxnPanel.length)) {
           /* condition to skip the default txn list data */
           globals.functions.dispatchEvent(panel, 'addItem');
@@ -393,8 +394,12 @@ const setTxnPanelData = async (allTxn, btxn, uBtxn, billedTxnPanel, unBilledTxnP
           type: isBilled ? 'BILLED' : 'UNBILLED',
         };
         setData(globals, panel, txnData, panelIndex);
-      }, delay);
+      };
+      const processCallBack = ('requestIdleCallback' in window) ? requestIdleCallback(processTxnInstances, { timeout: 0 }) : setTimeout(processTxnInstances, delay);
+      return Promise.resolve(processCallBack);
     });
+    // Wait for all tasks to complete
+    await Promise.allSettled(processTransactions);
   } else {
     // special handling for whatsapp flow
     addTransactions(allTxn, globals);
@@ -540,6 +545,14 @@ function checkELigibilityHandler(resPayload1, globals) {
     if (ccUnBilledData?.length === 0) {
       globals.functions.setProperty(globals.form.aem_semiWizard.aem_chooseTransactions.unbilledTxnFragment, { visible: false });
       globals.functions.setProperty(globals.form.aem_semiWizard.aem_chooseTransactions.unbilledTxnFragment.aem_chooseTransactions.aem_TxnsList, { visible: false });
+    }
+    // throw error screen if ccbilled & ccUnbilled have no transactions.
+    if ((!isNodeEnv) && (ccBilledData?.length === 0) && (ccUnBilledData?.length === 0)) {
+      globals.functions.setProperty(globals.form.aem_semiWizard, { visible: false });
+      globals.functions.setProperty(globals.form.aem_semicreditCardDisplay, { visible: false });
+      globals.functions.setProperty(globals.form.resultPanel, { visible: true });
+      globals.functions.setProperty(globals.form.resultPanel.errorResultPanelSemi, { visible: true });
+      globals.functions.setProperty(globals.form.resultPanel.errorResultPanelSemi.errorMessageText, { value: ERROR_MSG.noEligibleTxnFlow });
     }
     return response;
   } catch (error) {
