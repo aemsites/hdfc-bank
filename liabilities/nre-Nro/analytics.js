@@ -287,8 +287,8 @@ function populateResponse(payload, eventType, digitalData, formData) {
       break;
     }
     case 'idcom redirection check': {
-      digitalData.event.validationMethod = payload.validationMethod;
-      digitalData.event.status = payload.status;
+      digitalData.event.validationMethod = payload?.validationMethod ?? '';
+      digitalData.event.status = payload?.status ?? '';
       break;
     }
     default:

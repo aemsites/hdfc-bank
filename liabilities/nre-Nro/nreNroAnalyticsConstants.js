@@ -35,6 +35,11 @@ const data = {
     StepName: 'Confirm Details',
     linkPosition: 'Form',
   },
+  'idcom redirection check': {
+    linkType: 'button',
+    StepName: 'IDCOM Redirection',
+    linkPosition: 'Form',
+  },
   'submit otp': {
     error: '',
   },

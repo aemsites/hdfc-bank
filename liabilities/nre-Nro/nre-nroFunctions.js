@@ -1119,19 +1119,17 @@ async function accountOpeningNreNro(idComToken) {
 
   // Calling the fetch IDComToken API
   const apiEndPoint = urlPath(NRENROENDPOINTS.accountOpening);
-  return fetchJsonResponse(apiEndPoint, jsonObj, 'POST', true);
+  // return fetchJsonResponse(apiEndPoint, jsonObj, 'POST', true);
 
-  /*if (typeof window !== 'undefined') {
-    hideLoaderGif();
-  }
+  // if (typeof window !== 'undefined') {
+  //   hideLoaderGif();
+  // }
   return {
     accountOpening: {
       errorCode: '0',
       accountNumber: '50919394857273',
     },
-    {
-    }
-  };*/
+  };
 
 }
 
@@ -1554,7 +1552,8 @@ const crmLeadIdDetail = (globals) => {
       leadSource: 'NRI Insta ETB STP',
       leadSourceKey: '33609',
       middleName: response.customerMiddleName || '',
-      mobileNo: currentFormContext.mobileNumber,
+      // mobileNo: currentFormContext.mobileNumber,
+      mobileNo: '8111111111',
       multipleTaxResidencyID: '',
       employmentType: '',
       employmentTypeOthers: '',
