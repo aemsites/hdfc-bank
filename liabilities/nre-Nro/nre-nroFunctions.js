@@ -1200,12 +1200,14 @@ async function accountOpeningNreNro(idComToken, globals) {
 
   // prefillThankYouPage(res, globals);
 
-  Promise.resolve(fetchResult).then((res) => {
-    prefillThankYouPage(res, globals);
-  }).catch((err) => {
-    console.log(err);
-    errorHandling('', 'CUSTOMER_ONBOARDING_FAILURE', globals);
-  });
+  prefillThankYouPage(res, globals);
+
+  // Promise.resolve(fetchResult).then((res) => {
+  //   prefillThankYouPage(res, globals);
+  // }).catch((err) => {
+  //   console.log(err);
+  //   errorHandling('', 'CUSTOMER_ONBOARDING_FAILURE', globals);
+  // });
 
   /* if (typeof window !== 'undefined') {
     hideLoaderGif();
