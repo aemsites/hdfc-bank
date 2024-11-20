@@ -187,7 +187,14 @@ function applyRuleEngine(htmlForm, form, captcha) {
     } else {
       form.getElement(id).value = value;
     }
-    // console.log(JSON.stringify(form.exportData(), null, 2));
+  });
+
+  htmlForm.addEventListener('input', (e) => {
+    const field = e.target;
+    const {
+      id, value,
+    } = field;
+    form.getElement(id).value = value;
   });
 
   htmlForm.addEventListener('click', async (e) => {
