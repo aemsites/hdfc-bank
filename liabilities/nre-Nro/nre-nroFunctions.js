@@ -871,36 +871,36 @@ const finalResult = {
  * @returns {void}
  */
 function prefillThankYouPage(accountres, globals) {
-  if(isNullOrEmpty(accountres)){
+  if (isNullOrEmpty(accountres)) {
     accountres = {
       "errorText": "0",
       "errorCode": "0",
       "externalReferenceNo": "679225519",
       "accountNumber": "50100117366369",
       "status": {
-          "isOverriden": false,
-          "replyText": "0",
-          "internalReferenceNumber": "2024324353401194",
-          "errorCode": "0",
-          "memo": null,
-          "replyCode": 0,
-          "validationErrors": null,
-          "externalReferenceNo": "679225519",
-          "postingDate": {
-              "dateString": "20241119000000"
-          },
-          "extendedReply": {
-              "messages": null
-          },
-          "userReferenceNumber": null
+        "isOverriden": false,
+        "replyText": "0",
+        "internalReferenceNumber": "2024324353401194",
+        "errorCode": "0",
+        "memo": null,
+        "replyCode": 0,
+        "validationErrors": null,
+        "externalReferenceNo": "679225519",
+        "postingDate": {
+          "dateString": "20241119000000"
+        },
+        "extendedReply": {
+          "messages": null
+        },
+        "userReferenceNumber": null
       }
-  };
+    };
   }
   const { thankyouLeftPanel } = globals.form.thankYouPanel.thankYoufragment;
 
   globals.functions.setProperty(globals.form.parentLandingPagePanel, { visible: false });
   globals.functions.setProperty(globals.form.thankYouPanel, { visible: true });
-  const journeyAccountType =  'NRE';
+  const journeyAccountType = 'NRE';
   globals.functions.setProperty(thankyouLeftPanel.successfullyText, { value: `<p>Yay! ${journeyAccountType} account opened successfully.</p>` });
 
   const setAccountSummaryProperties = (summary) => {
@@ -914,10 +914,13 @@ function prefillThankYouPage(accountres, globals) {
   const journeyInfo = finalResult.journeyParamStateInfo;
 
   if (!isNullOrEmpty(accountres?.accountNumber)) {
-    globals.functions.setProperty(thankyouLeftPanel.accountNumber.accountNumber, { visible: true });
-    globals.functions.setProperty(thankyouLeftPanel.accountNumber.accountNumber, { value: accountres.accountOpening.accountNumber }); // Setting the account number
+    debugger;
+    globals.functions.setProperty(thankyouLeftPanel.accountNumber.accountNumber, { visible: false });
+    globals.functions.setProperty(thankyouLeftPanel.accountNumber.accountNumber, { value: accountres.accountNumber }); // Setting the account number
+    globals.functions.setProperty(thankyouLeftPanel.accountNumber.displayValue, { value: accountres.accountNumber }); // Setting the account number
+    globals.functions.setProperty(thankyouLeftPanel.accountNumber.displayValue, { visible: true }); // Setting the account number  
     setAccountSummaryProperties({});
-    invokeJourneyDropOffUpdate('CUSTOMER_ONBOARDING_COMPLETE', currentFormContext.mobileNumber, currentFormContext.leadProfileId, currentFormContext.journeyId, globals);
+    //invokeJourneyDropOffUpdate('CUSTOMER_ONBOARDING_COMPLETE', currentFormContext.mobileNumber, currentFormContext.leadProfileId, currentFormContext.journeyId, globals);
   } else if (!isNullOrEmpty(finalResult.journeyParamStateInfo.form.confirmDetails.crm_leadId)) {
     globals.functions.setProperty(thankyouLeftPanel.accountNumber.leadId_number, { visible: true });
     globals.functions.setProperty(thankyouLeftPanel.accountNumber.accountNumber, { visible: false });
@@ -964,7 +967,7 @@ async function accountOpeningNreNro(idComToken, globals) {
       customerID: response.customerId.toString(),
       maskedCustID: response.customerId.toString().slice((response.customerId.toString().length - 4), response.customerId.toString().length),
       maskedAccountNumber: 'X'.repeat((response.customerAccountDetailsDTO[accIndex].accountNumber.length - 4))
-                            + response.customerAccountDetailsDTO[accIndex].accountNumber.slice((response.customerAccountDetailsDTO[accIndex].accountNumber.length - 4), (response.customerAccountDetailsDTO[accIndex].accountNumber.length)),
+        + response.customerAccountDetailsDTO[accIndex].accountNumber.slice((response.customerAccountDetailsDTO[accIndex].accountNumber.length - 4), (response.customerAccountDetailsDTO[accIndex].accountNumber.length)),
       agriculturalIncome: '',
       sex: response.txtCustSex,
       email: response.refCustEmail,
@@ -1268,7 +1271,7 @@ async function accountOpeningNreNro1(idComToken) {
       customerID: response.customerId.toString(),
       maskedCustID: response.customerId.toString().slice((response.customerId.toString().length - 4), response.customerId.toString().length),
       maskedAccountNumber: 'X'.repeat((response.customerAccountDetailsDTO[accIndex].accountNumber.length - 4))
-                            + response.customerAccountDetailsDTO[accIndex].accountNumber.slice((response.customerAccountDetailsDTO[accIndex].accountNumber.length - 4), (response.customerAccountDetailsDTO[accIndex].accountNumber.length)),
+        + response.customerAccountDetailsDTO[accIndex].accountNumber.slice((response.customerAccountDetailsDTO[accIndex].accountNumber.length - 4), (response.customerAccountDetailsDTO[accIndex].accountNumber.length)),
       agriculturalIncome: '',
       sex: response.txtCustSex,
       email: response.refCustEmail,
@@ -1762,11 +1765,11 @@ const switchWizard = (globals) => {
   invokeJourneyDropOffUpdate('CUSTOMER_ACCOUNT_VARIANT_SELECTED', mobileNumber, leadProfileId, journeyID, globals);
   moveWizardView('wizardNreNro', 'confirmDetails');
   currentFormContext.action = 'Confirm Details';
-  Promise.resolve(sendAnalytics('page load-Confirm Details', { }, 'ON_CONFIRM_DETAILS_PAGE_LOAD', globals));
+  Promise.resolve(sendAnalytics('page load-Confirm Details', {}, 'ON_CONFIRM_DETAILS_PAGE_LOAD', globals));
 };
 
 const onPageLoadAnalytics = async (globals) => {
-  await Promise.resolve(sendAnalytics('page load-All Pages', { }, 'ON_PAGE_LOAD', globals));
+  await Promise.resolve(sendAnalytics('page load-All Pages', {}, 'ON_PAGE_LOAD', globals));
 };
 
 setTimeout(() => {
