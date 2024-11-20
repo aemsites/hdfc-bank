@@ -63,10 +63,14 @@ function getValidationMethod(formContext) {
  * @param {string} journeyState.
  * @param {object} formData.
  * @param {string} pageName.
+ * @param {string} errorAPI.
  */
-function sendPageloadEvent(journeyState, formData, pageName) {
+function sendPageloadEvent(journeyState, formData, pageName, errorAPI, errorMessage, errorCode) {
   const digitalData = createDeepCopyFromBlueprint(ANALYTICS_PAGE_LOAD_OBJECT);
   digitalData.page.pageInfo.pageName = pageName;
+  digitalData.page.pageInfo.errorAPI = errorAPI;
+  digitalData.page.pageInfo.errorCode = errorCode;
+  digitalData.page.pageInfo.errorMessage = errorMessage;
   setAnalyticPageLoadProps(journeyState, formData, digitalData);
   switch (pageName) {
     case 'Step 3 : Select  Account': {
@@ -340,7 +344,10 @@ function sendAnalytics(eventType, payload, journeyState, globals) {
   const formData = santizedFormDataWithContext(globals);
   if (eventType.includes('page load')) {
     const pageName = eventType.split('-')[1];
-    sendPageloadEvent(journeyState, formData, pageName);
+    const errorAPI = formData?.AccountOpeningNRENRO?.apiDetails?.APIName;
+    const errorMessage = formData?.AccountOpeningNRENRO?.apiDetails?.errorMessage;
+    const errorCode = formData?.AccountOpeningNRENRO?.apiDetails?.errorCode;
+    sendPageloadEvent(journeyState, formData, pageName, errorAPI, errorMessage, errorCode);
   } else {
     sendAnalyticsEvent(eventType, payload, journeyState, formData);
   }

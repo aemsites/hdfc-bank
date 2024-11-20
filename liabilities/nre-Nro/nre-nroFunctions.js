@@ -192,6 +192,9 @@ const getCountryName = (countryCodeIst) => new Promise((resolve) => {
 });
 
 function errorHandling(response, journeyState, globals) {
+  setTimeout(() => {
+    Promise.resolve(sendAnalytics('page load-Error Page', { }, 'ON_ERROR_PAGE_LOAD', globals));
+  }, 2000);
   const {
     mobileNumber,
     leadProfileId,
