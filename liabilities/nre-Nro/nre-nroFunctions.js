@@ -917,8 +917,8 @@ function prefillThankYouPage(accountres, globals) {
     debugger;
     globals.functions.setProperty(thankyouLeftPanel.accountNumber.accountNumber, { visible: false });
     globals.functions.setProperty(thankyouLeftPanel.accountNumber.accountNumber, { value: accountres.accountNumber }); // Setting the account number
-    globals.functions.setProperty(thankyouLeftPanel.accountNumber.displayValue, { value: accountres.accountNumber }); // Setting the account number
-    globals.functions.setProperty(thankyouLeftPanel.accountNumber.displayValue, { visible: true }); // Setting the account number  
+    globals.functions.setProperty(thankyouLeftPanel.accountNumber.accountNumberPanel.displayValue, { value: accountres.accountNumber }); // Setting the account number
+    globals.functions.setProperty(thankyouLeftPanel.accountNumber.accountNumberPanel.displayValue, { visible: true }); // Setting the account number  
     setAccountSummaryProperties({});
     //invokeJourneyDropOffUpdate('CUSTOMER_ONBOARDING_COMPLETE', currentFormContext.mobileNumber, currentFormContext.leadProfileId, currentFormContext.journeyId, globals);
   } else if (!isNullOrEmpty(finalResult.journeyParamStateInfo.form.confirmDetails.crm_leadId)) {
