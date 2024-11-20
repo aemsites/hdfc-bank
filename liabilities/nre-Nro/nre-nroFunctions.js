@@ -1190,14 +1190,22 @@ async function accountOpeningNreNro(idComToken, globals) {
 
   // Calling the fetch IDComToken API
   const apiEndPoint = urlPath(NRENROENDPOINTS.accountOpening);
-  const fetchResult = fetchJsonResponse(apiEndPoint, jsonObj, 'POST', false);
+  // const fetchResult = fetchJsonResponse(apiEndPoint, jsonObj, 'POST', false);
+  res =  {
+    accountOpening: {
+      errorCode: '0',
+      accountNumber: '50919394857273',
+    },
+  };
 
-  Promise.resolve(fetchResult).then((res) => {
-    prefillThankYouPage(res, globals);
-  }).catch((err) => {
-    console.log(err);
-    errorHandling('', 'CUSTOMER_ONBOARDING_FAILURE', globals);
-  });
+  prefillThankYouPage(res, globals);
+
+  // Promise.resolve(fetchResult).then((res) => {
+  //   prefillThankYouPage(res, globals);
+  // }).catch((err) => {
+  //   console.log(err);
+  //   errorHandling('', 'CUSTOMER_ONBOARDING_FAILURE', globals);
+  // });
 
   /* if (typeof window !== 'undefined') {
     hideLoaderGif();
@@ -1494,7 +1502,15 @@ async function accountOpeningNreNro1(idComToken) {
 
   // Calling the fetch IDComToken API
   const apiEndPoint = urlPath(NRENROENDPOINTS.accountOpening);
-  return fetchJsonResponse(apiEndPoint, jsonObj, 'POST', false);
+  // return fetchJsonResponse(apiEndPoint, jsonObj, 'POST', false);
+  res =  {
+    accountOpening: {
+      errorCode: '0',
+      accountNumber: '50919394857273',
+    },
+  };
+
+  prefillThankYouPage(res, globals);
 }
 
 /**
@@ -1701,7 +1717,7 @@ function nreNroPageRedirected(globals) {
   currentFormContext.idComSuccess = queryParams?.success.toUpperCase();
   currentFormContext.idComRedirect = currentFormContext?.authModeParam && ((currentFormContext?.authModeParam === 'DebitCard') || (currentFormContext?.authModeParam === 'NetBanking')); // debit card or net banking flow
   if(currentFormContext.idComRedirect){
-    Promise.resolve(sendAnalytics('idcom redirection check', { validationMethod: currentFormContext?.authModeParam, status: currentFormContext?.idComSuccess }, 'ON_IDCOM_REDIRECTION', globals));
+    sendAnalytics('idcom redirection check', { validationMethod: currentFormContext?.authModeParam, status: currentFormContext?.idComSuccess }, 'ON_IDCOM_REDIRECTION', globals);
   }
   if (currentFormContext.idComRedirect && currentFormContext.idComSuccess === 'TRUE') {
     globals.functions.setProperty(globals.form.parentLandingPagePanel.landingPanel.nreNroPageRedirectedResp, { value: 'true' });
@@ -1744,7 +1760,7 @@ const switchWizard = (globals) => {
 };
 
 const onPageLoadAnalytics = async (globals) => {
-  await Promise.resolve(sendAnalytics('page load-Step 1 : Identify Yourself', { }, 'ON_PAGE_LOAD', globals));
+  sendAnalytics('page load-Step 1 : Identify Yourself', { }, 'ON_PAGE_LOAD', globals);
 };
 
 setTimeout(() => {
@@ -2126,7 +2142,7 @@ function nreNroAccountType(nroAccountTypePanel, nreAccountTypePanel, globals) {
     currentFormContext.selectedAccountName = 'NRE - Current Account';
   }
 
-  Promise.resolve(sendAnalytics('select account type click', { productAccountType: currentFormContext?.productAccountType ?? '' }, 'ON_SELECT_ACCOUNT_TYPE', globals));
+  sendAnalytics('select account type click', { productAccountType: currentFormContext?.productAccountType ?? '' }, 'ON_SELECT_ACCOUNT_TYPE', globals);
 }
 
 function multiAccountVarient(selectAccount, globals) {
@@ -2145,7 +2161,7 @@ function multiAccountVarient(selectAccount, globals) {
   }
 
   currentFormContext.existingAccountType = varientType;
-  Promise.resolve(sendAnalytics('continue btn select account', { varientType }, 'SELECT_ACCOUNT_ON_CONTINUE_CLICK', globals));
+  sendAnalytics('continue btn select account', { varientType }, 'SELECT_ACCOUNT_ON_CONTINUE_CLICK', globals);
 }
 
 function submitThankYou(globals) {
