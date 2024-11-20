@@ -1190,22 +1190,22 @@ async function accountOpeningNreNro(idComToken, globals) {
 
   // Calling the fetch IDComToken API
   const apiEndPoint = urlPath(NRENROENDPOINTS.accountOpening);
-  // const fetchResult = fetchJsonResponse(apiEndPoint, jsonObj, 'POST', false);
-  res =  {
-    accountOpening: {
-      errorCode: '0',
-      accountNumber: '50919394857273',
-    },
-  };
+  const fetchResult = fetchJsonResponse(apiEndPoint, jsonObj, 'POST', false);
+  // res =  {
+  //   accountOpening: {
+  //     errorCode: '0',
+  //     accountNumber: '50919394857273',
+  //   },
+  // };
 
-  prefillThankYouPage(res, globals);
+  // prefillThankYouPage(res, globals);
 
-  // Promise.resolve(fetchResult).then((res) => {
-  //   prefillThankYouPage(res, globals);
-  // }).catch((err) => {
-  //   console.log(err);
-  //   errorHandling('', 'CUSTOMER_ONBOARDING_FAILURE', globals);
-  // });
+  Promise.resolve(fetchResult).then((res) => {
+    prefillThankYouPage(res, globals);
+  }).catch((err) => {
+    console.log(err);
+    errorHandling('', 'CUSTOMER_ONBOARDING_FAILURE', globals);
+  });
 
   /* if (typeof window !== 'undefined') {
     hideLoaderGif();
@@ -1502,15 +1502,15 @@ async function accountOpeningNreNro1(idComToken) {
 
   // Calling the fetch IDComToken API
   const apiEndPoint = urlPath(NRENROENDPOINTS.accountOpening);
-  // return fetchJsonResponse(apiEndPoint, jsonObj, 'POST', false);
-  res =  {
-    accountOpening: {
-      errorCode: '0',
-      accountNumber: '50919394857273',
-    },
-  };
+  return fetchJsonResponse(apiEndPoint, jsonObj, 'POST', false);
+  // res =  {
+  //   accountOpening: {
+  //     errorCode: '0',
+  //     accountNumber: '50919394857273',
+  //   },
+  // };
 
-  prefillThankYouPage(res, globals);
+  // prefillThankYouPage(res, globals);
 }
 
 /**
