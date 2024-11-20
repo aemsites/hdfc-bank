@@ -141,6 +141,12 @@
           padding: 30px 20px 50px 20px !important;
         }
 
+        input,
+        textarea,
+        select {
+          font-family: "Inter", sans-serif !important;
+        }
+
         .field-parentlandingpagepanel {
           .field-landingpanel {
             .field-letsgetstarted p {
@@ -1502,7 +1508,6 @@
               height: fit-content;
               resize: none;
               min-height: auto;
-              font-family: "Inter", sans-serif !important;
 
               @media (320px <=width <=767px) {
                 font-size: 14px;
@@ -1949,7 +1954,6 @@
               height: 100%;
               min-height: auto;
               resize: none;
-              font-family: "Inter", sans-serif !important;
 
               &:focus-visible {
                 outline: none;
@@ -2105,7 +2109,6 @@
               font-weight: 500;
               color: var(--color-interface-background-quaternary);
               position: absolute;
-              font-family: "Inter", sans-serif !important;
 
               &:focus-visible {
                 outline: none;
@@ -2572,7 +2575,6 @@
                 color: var(--color-interface-background-quaternary);
                 margin-top: 2px;
                 position: absolute;
-                font-family: "Inter", sans-serif !important;
                 border-radius: 0;
 
                 &:focus-visible {
@@ -3241,6 +3243,7 @@
         @media (767px <=width <=992px) {
           margin-left: 42px;
         }
+
         @media (320px <=width <=766px) {
           margin-left: 42px;
         }
@@ -3356,7 +3359,7 @@
                   margin-left: 0;
                   margin-top: -165px;
                 }
-                
+
 
                 @media (320px <=width <=767px) {
                   font-size: 20px;
@@ -3381,6 +3384,7 @@
                   @media (655px <=width <=766px) {
                     top: -280px;
                   }
+
                   @media (320px <=width <=654px) {
                     top: -245px;
                     background-size: 30%;
@@ -3405,7 +3409,7 @@
               padding: 30px;
               background: #fff;
               margin-top: 4px;
-
+              /* margin-bottom: 20px; */
 
               @media (768px <=width <=991px) {
                 margin-top: -10px;
@@ -3423,15 +3427,18 @@
               }
 
               &>.field-accountnumber,
-              &>.field-leadid-number {
+              &>.field-leadid-number,
+              .field-accountnumberpanel {
                 position: relative;
                 padding-left: 95px;
+                padding-bottom: 10px;
 
                 @media (320px <=width <=767px) {
                   padding-left: 75px;
                 }
 
-                label {
+                label,
+                .field-accountnumberlable p {
                   color: var(--color-interface-text-secondary);
                   font-size: 16px;
                   font-weight: 400;
@@ -3442,6 +3449,7 @@
                   transform: none;
                   padding: 0;
                   display: block;
+                  margin-bottom: 0;
 
                   @media (320px <=width <=767px) {
                     font-size: 12px;
@@ -3449,7 +3457,8 @@
                   }
                 }
 
-                input {
+                input,
+                .field-displayvalue {
                   color: var(--color-interface-text-primary);
                   font-size: 32px;
                   font-weight: 600;
@@ -3458,8 +3467,19 @@
                   height: auto;
                   padding: 0;
                   margin: 0;
-                  background: url("../icons/copy_icon.png") no-repeat 72% center;
                   width: auto;
+                  position: relative;
+
+                  &::after{
+                    content: '';
+                    position: absolute;
+                    background: url("../icons/copy_icon.png") no-repeat center center;
+                    width: 24px;
+                    height: 24px;
+                    top: 8px;
+                    margin-left: 10px;
+                    cursor: pointer;
+                  }
 
                   @media (768px <=width <=991px) {
                     font-size: 28px;
@@ -3476,6 +3496,13 @@
 
                   &:focus-visible {
                     outline: none;
+                  }
+
+                  &.field-displayvalue{
+                    margin-top: -15px;
+                    @media (320px <=width <=767px) {
+                      margin-top: 0;
+                    }
                   }
                 }
 
@@ -3496,9 +3523,9 @@
                 }
               }
 
-              &>.plain-text-wrapper {
+              &>.field-confirmtext {
                 border-top: 1px dashed var(--color-interface-border-secondary);
-                margin-top: 15px;
+               /*  margin-top: 15px; */
 
                 @media (768px <=width <=991px) {
                   border-top: none;
@@ -3561,7 +3588,10 @@
               }
 
               .text-wrapper.field-wrapper,
-              .multiline-wrapper {
+              .multiline-wrapper,
+              .field-accounttypepanel,
+              .field-homebranchpanel {
+
                 @media (768px <=width <=991px) {
                   grid-column: span 6;
                 }
@@ -3572,7 +3602,9 @@
                   margin-bottom: 20px;
                 }
 
-                label {
+                label,
+                .field-accounttypelable p,
+                .field-homebranchlable p {
                   color: var(--color-interface-text-secondary);
                   font-size: 14px;
                   font-weight: 400;
@@ -3583,13 +3615,20 @@
                   transform: none;
                   padding: 0;
                   display: initial;
+                  margin-bottom: 0;
+
+                  p {
+                    margin-bottom: 0;
+                  }
 
                   @media (320px <=width <=767px) {
                     font-size: 12px;
-                  }
+                  }                 
                 }
-
-                input {
+            
+                input,
+                .field-accounttype,
+                .field-homebranch {
                   color: var(--color-interface-text-primary);
                   font-size: 18px;
                   font-weight: 500;
@@ -3599,10 +3638,7 @@
                   padding: 0;
                   margin: 0;
                   border-radius: 0;
-
-                  @media (1200px <=width <=1300px) {
-                    font-size: 17px;
-                  }
+                  word-break: break-word;
 
                   @media (320px <=width <=767px) {
                     font-size: 14px;
@@ -3615,7 +3651,8 @@
                   }
                 }
 
-                textarea {
+                textarea, 
+                .field-homebranch {
                   border: none;
                   background: none;
                   margin: 0;
@@ -3626,6 +3663,8 @@
                   font-weight: 500;
                   color: var(--color-interface-background-quaternary);
                   resize: none;
+                  word-wrap: break-word;
+                  width: 90%;
                   /* width: 100%; 
                   min-height: auto;*/
 
@@ -3649,6 +3688,12 @@
                     grid-column: span 12;
                   }
                 }
+
+                &.field-accounttypepanel, 
+                &.field-homebranchpanel {
+                  display: initial;
+                }
+
               }
             }
 
@@ -4154,6 +4199,7 @@
           @media (768px <=width <=991px) {
             left: 0;
           }
+
           @media (320px <=width <=767px) {
             left: 0;
           }
