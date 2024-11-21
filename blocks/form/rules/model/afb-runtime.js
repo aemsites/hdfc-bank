@@ -4682,8 +4682,7 @@ class DateField extends Field {
     _dataFormat = 'yyyy-MM-dd';
     _applyDefaults() {
         super._applyDefaults();
-        //this.locale = new Intl.DateTimeFormat().resolvedOptions().locale;
-        this.locale = 'en-GB';
+        this.locale = new Intl.DateTimeFormat().resolvedOptions().locale;
         if (!this._jsonModel.editFormat) {
             this._jsonModel.editFormat = 'short';
         }
@@ -4706,11 +4705,7 @@ class DateField extends Field {
         }
         else {
             if (this._jsonModel.editFormat !== 'short' && this._jsonModel.editFormat !== 'date|short') {
-<<<<<<< Updated upstream
                 const parsedDate = parseDate(value, 'en-GB', this._jsonModel.editFormat) || parseDate(value, 'en-GB', 'yyyy-MM-dd');
-=======
-                const parsedDate = parseDate(value, this.locale, 'yyyy-MM-dd');
->>>>>>> Stashed changes
                 if (parsedDate instanceof Date) {
                     super.value = formatDate(parsedDate, this.locale, this._dataFormat);
                 }
