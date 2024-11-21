@@ -289,6 +289,7 @@ function inputDecorator(field, element) {
     const fieldType = getHTMLRenderType(field);
     if (['number', 'date', 'text', 'email'].includes(fieldType) && (field.displayFormat || field.displayValueExpression)) {
       field.type = fieldType;
+      
       input.setAttribute('edit-value', field.value ?? '');
       input.setAttribute('display-value', field.displayValue ?? '');
       input.type = 'text';
