@@ -194,7 +194,9 @@ function applyRuleEngine(htmlForm, form, captcha) {
     const {
       id, value,
     } = field;
-    form.getElement(id).value = value;
+    if(!field.closest('.field-wrapper').classList.contains('skip-onchange')){
+      form.getElement(id).value = value;
+    }    
   });
 
   htmlForm.addEventListener('click', async (e) => {
