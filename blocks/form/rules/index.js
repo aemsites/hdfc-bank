@@ -191,12 +191,14 @@ function applyRuleEngine(htmlForm, form, captcha) {
 
   htmlForm.addEventListener('input', (e) => {
     const field = e.target;
-    const {
-      id, value,
-    } = field;
-    if(!field.closest('.field-wrapper').classList.contains('skip-onchange')){
-      form.getElement(id).value = value;
-    }    
+    const fieldWrapper = field?.closest('.field-wrapper');
+    if (!fieldWrapper || fieldWrapper.classList.contains('skip-onchange')) return;
+    
+    const { id, value } = field;
+    const formElement = form.getElement(id);
+    if (formElement) {
+      formElement.value = value;
+    }
   });
 
   htmlForm.addEventListener('click', async (e) => {
