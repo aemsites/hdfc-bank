@@ -889,8 +889,10 @@ function prefillThankYouPage(accountres, globals) {
   const journeyInfo = finalResult.journeyParamStateInfo;
 
   if (!isNullOrEmpty(accountres?.accountNumber)) {
-    globals.functions.setProperty(thankyouLeftPanel.accountNumber.accountNumber, { visible: true });
+    globals.functions.setProperty(thankyouLeftPanel.accountNumber.accountNumber, { visible: false });
     globals.functions.setProperty(thankyouLeftPanel.accountNumber.accountNumber, { value: accountres.accountNumber }); // Setting the account number
+    globals.functions.setProperty(thankyouLeftPanel.accountNumber.accountNumberPanel.displayValue, { value: accountres.accountNumber }); // Setting the account number
+    globals.functions.setProperty(thankyouLeftPanel.accountNumber.accountNumberPanel.displayValue, { visible: true }); // Setting the account number  
     setAccountSummaryProperties(journeyInfo);
     invokeJourneyDropOffUpdate('CUSTOMER_ONBOARDING_COMPLETE', currentFormContext.mobileNumber, currentFormContext.leadProfileId, currentFormContext.journeyId, globals);
   } else if (!isNullOrEmpty(finalResult.journeyParamStateInfo.form.confirmDetails.crm_leadId)) {
@@ -939,7 +941,7 @@ async function accountOpeningNreNro(idComToken) {
       customerID: response.customerId.toString(),
       maskedCustID: response.customerId.toString().slice((response.customerId.toString().length - 4), response.customerId.toString().length),
       maskedAccountNumber: 'X'.repeat((response.customerAccountDetailsDTO[accIndex].accountNumber.length - 4))
-                            + response.customerAccountDetailsDTO[accIndex].accountNumber.slice((response.customerAccountDetailsDTO[accIndex].accountNumber.length - 4), (response.customerAccountDetailsDTO[accIndex].accountNumber.length)),
+        + response.customerAccountDetailsDTO[accIndex].accountNumber.slice((response.customerAccountDetailsDTO[accIndex].accountNumber.length - 4), (response.customerAccountDetailsDTO[accIndex].accountNumber.length)),
       agriculturalIncome: '',
       sex: response.txtCustSex,
       email: response.refCustEmail,
@@ -1253,7 +1255,7 @@ async function accountOpeningNreNro1(idComToken) {
       customerID: response.customerId.toString(),
       maskedCustID: response.customerId.toString().slice((response.customerId.toString().length - 4), response.customerId.toString().length),
       maskedAccountNumber: 'X'.repeat((response.customerAccountDetailsDTO[accIndex].accountNumber.length - 4))
-                            + response.customerAccountDetailsDTO[accIndex].accountNumber.slice((response.customerAccountDetailsDTO[accIndex].accountNumber.length - 4), (response.customerAccountDetailsDTO[accIndex].accountNumber.length)),
+        + response.customerAccountDetailsDTO[accIndex].accountNumber.slice((response.customerAccountDetailsDTO[accIndex].accountNumber.length - 4), (response.customerAccountDetailsDTO[accIndex].accountNumber.length)),
       agriculturalIncome: '',
       sex: response.txtCustSex,
       email: response.refCustEmail,
