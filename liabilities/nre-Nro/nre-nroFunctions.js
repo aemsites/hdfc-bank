@@ -693,7 +693,7 @@ function prefillAccountDetail(response, i, responseLength, globals) {
   setFormValue(custIDWithoutMasking, response.customerId);
   if (responseLength > 1) {
     setFormValue(customerID, customerDataMasking('cutomerIDMasking', response.customerId.toString()));
-    setFormValue(multipleAccounts.multipleAccountRepeatable[i].accountNumber, customerDataMasking('accountNumberMasking', response.customerAccountDetailsDTO[0].accountNumber));
+    setFormValue(multipleAccounts.multipleAccountRepeatable[i].accountNumber, customerDataMasking('accountNumberMasking', response.customerAccountDetailsDTO[i].accountNumber));
     setFormValue(multipleAccounts.multipleAccountRepeatable[i].multiSubPanel.accountType, response.customerAccountDetailsDTO[i].productName?.toUpperCase());
     setFormValue(multipleAccounts.multipleAccountRepeatable[i].multiIFSCBranchPanel.branch, response.customerAccountDetailsDTO[i].branchName?.toUpperCase());
     setFormValue(multipleAccounts.multipleAccountRepeatable[i].multiIFSCBranchPanel.ifscCode, response.customerAccountDetailsDTO[i].ifscCode?.toUpperCase());
