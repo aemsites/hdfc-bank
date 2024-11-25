@@ -191,6 +191,9 @@ const getCountryName = (countryCodeIst) => new Promise((resolve) => {
 });
 
 function errorHandling(response, journeyState, globals) {
+  setTimeout(() => {
+    Promise.resolve(sendAnalytics('page load-Error Page', { }, 'ON_ERROR_PAGE_LOAD', globals));
+  }, 2000);
   const {
     mobileNumber,
     leadProfileId,
@@ -377,6 +380,7 @@ const getOtpNRE = (mobileNumber, pan, dob, globals) => {
       identifierValue: clearString(identifierVal),
       identifierName: identifierNam,
       getEmail: 'Y',
+      userAgent: (typeof window !== 'undefined') ? window.navigator.userAgent : 'onLoad' 
     },
   };
 
@@ -513,6 +517,7 @@ function otpValidationNRE(mobileNumber, pan, dob, otpNumber, globals) {
       journeyID: currentFormContext.journeyID,
       journeyName: globals.form.runtime.journeyName.$value || currentFormContext.journeyName,
       referenceNumber: referenceNumber ?? '',
+      userAgent: (typeof window !== 'undefined') ? window.navigator.userAgent : 'onLoad'
     },
   };
 
@@ -2181,7 +2186,7 @@ function nreNroAccountType(nroAccountTypePanel, nreAccountTypePanel, globals) {
 function multiAccountVarient(selectAccount, globals) {
   const varientType = currentFormContext.journeyAccountType;
   globals.functions.setProperty(selectAccount.multipleAccounts, { visible: false });
-  // globals.functions.setProperty(globals.form.wizardPanel.continue, { visible: true });
+  globals.functions.setProperty(globals.form.wizardPanel.continue, { visible: true });
   globals.functions.setProperty(globals.form.wizardPanel.MultiAccoCountinue, { visible: false });
   globals.functions.setProperty(selectAccount.text, { visible: false });
   globals.functions.setProperty(selectAccount.customerName, { visible: false });
