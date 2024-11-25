@@ -57,7 +57,7 @@ let dispSec = OTP_TIMER;
 
 const { CHANNEL, JOURNEY_NAME, VISIT_MODE } = NRE_CONSTANT;
 // Initialize all NRE/NRO Journey Context Variables.
-currentFormContext.journeyName = JOURNEY_NAME;
+currentFormContext.journeyName = "ACCOUNTOPENING_NRO_NRE_JOURNEY";
 currentFormContext.journeyType = 'NTB';
 currentFormContext.errorCode = '';
 currentFormContext.errorMessage = '';
@@ -511,7 +511,7 @@ function setupBankUseSection(mainBankUsePanel, globals) {
   const lcCode = mainBankUsePanel.lcCode;
   const toggle = mainBankUsePanel.bankUseToggle;
   const resetAllBtn = mainBankUsePanel.resetAllBtn;
-  globals.functions.setProperty(toggle, { checked: true });
+  // globals.functions.setProperty(toggle, { checked: false });
   if (urlParams.size > 0) {
     ['lgCode', 'lcCode'].forEach((param) => {
       const value = urlParams.get(param);
@@ -1707,7 +1707,7 @@ function nreNroShowHidePage(globals) {
  * @param {Object} globals - The global object containing necessary data.
  */
 function nreNroInit(globals) {
-  globals.functions.setProperty(globals.form.runtime.journeyName, { value: JOURNEY_NAME }); // Setting the hidden field
+  globals.functions.setProperty(globals.form.runtime.journeyName, { value: currentFormContext.journeyName }); // Setting the hidden field
   globals.functions.setProperty(globals.form.parentLandingPagePanel.landingPanel.init_hidden_field, { value: 'INIT' }); // Setting the hidden field
   onPageLoadAnalytics();
 }
