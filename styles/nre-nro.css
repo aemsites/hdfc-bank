@@ -2462,7 +2462,9 @@
                         }
 
                         & input {
-                          left: 50px;
+                          left: 53px;
+                          position: absolute;
+                          width: 100px;
                         }
                       }
                     }
