@@ -2062,7 +2062,7 @@ function confirmDetailsConsent(firstConsent, secondConsent, globals) {
   globals.functions.setProperty(globals.form.wizardPanel.confirmButton, { enabled: false });
   const firstConsents = firstConsent.$value;
   const secondConsents = secondConsent.$value;
-  if ((firstConsents && secondConsents) === 'on') {
+  if (firstConsents === 'on' && secondConsents === 'on') {
     globals.functions.setProperty(globals.form.wizardPanel.confirmButton, { enabled: true });
   } else {
     globals.functions.setProperty(globals.form.wizardPanel.confirmButton, { enabled: false });
@@ -2158,7 +2158,7 @@ function nreNroAccountType(nroAccountTypePanel, nreAccountTypePanel, globals) {
 function multiAccountVarient(selectAccount, globals) {
   const varientType = currentFormContext.journeyAccountType;
   globals.functions.setProperty(selectAccount.multipleAccounts, { visible: false });
-  globals.functions.setProperty(globals.form.wizardPanel.continue, { visible: true });
+  // globals.functions.setProperty(globals.form.wizardPanel.continue, { visible: true });
   globals.functions.setProperty(globals.form.wizardPanel.MultiAccoCountinue, { visible: false });
   globals.functions.setProperty(selectAccount.text, { visible: false });
   globals.functions.setProperty(selectAccount.customerName, { visible: false });
@@ -2198,6 +2198,21 @@ const feedbackButton = () => {
   }, 100);
 };
 
+function selectVarient(nroAccountTypePanel, nreAccountTypePanel, globals) {
+  const nroEliteSavingsAcco = nroAccountTypePanel.eliteSavingsAccountPanel.eliteSavingsAccount.$value;
+  const nroRegularSavingsAcco = nroAccountTypePanel.regularSavingsAccountPanel.regularSavingsAccount.$value;
+  const nroCurrentAcco = nroAccountTypePanel.currentAccountPanel.currentAccount.$value;
+  const nreEliteSavingsAcco = nreAccountTypePanel.nreeliteSavingsAccountPanel.eliteSavingsAccount.$value;
+  const nreRegularSavingsAcco = nreAccountTypePanel.NreregularSavingsAccountPanel.regularSavingsAccount.$value;
+  const nreCurrentAcco = nreAccountTypePanel.nreCurrentAccountPanel.currentAccount.$value;
+  if (nroEliteSavingsAcco || nroRegularSavingsAcco || nroCurrentAcco) {
+    globals.functions.setProperty(globals.form.wizardPanel.continue, { enabled: true });
+  } else if (nreEliteSavingsAcco || nreRegularSavingsAcco || nreCurrentAcco) {
+    globals.functions.setProperty(globals.form.wizardPanel.continue, { enabled: true });
+  } else {
+    globals.functions.setProperty(globals.form.wizardPanel.continue, { enabled: false });
+  }
+}
 export {
   validateLogin,
   getOtpNRE,
@@ -2237,4 +2252,5 @@ export {
   reloadPage,
   accountOpeningNreNro1,
   feedbackButton,
+  selectVarient,
 };
