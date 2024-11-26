@@ -64,7 +64,7 @@ const setknowMoreBenefitsPanelData = (moreFeatures, knowMoreBenefitsPanel, globa
   globals.functions.importData(transformedMoreFeatures, knowMoreBenefitsPanel.$qualifiedName);
   setTimeout(() => {
     replaceElementsWith('.field-knowmorebenefitspanel textarea', 'p', 0);
-  }, 500);
+  }, 200);
 };
 
 const knowMoreCardClickHandler = (globals) => {
