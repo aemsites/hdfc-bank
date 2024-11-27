@@ -141,10 +141,6 @@
           padding: 30px 20px 50px 20px !important;
         }
 
-        input, textarea, select, button{
-          font-family: "Inter", sans-serif !important;
-        }
-
         input,
         textarea,
         select,
@@ -2434,8 +2430,9 @@
                           font-weight: 400 !important;
                           line-height: 17px !important;
                           top: -17px;
+
                           @media (min-width: 769px) {
-                          height: 20px;
+                            height: 20px;
                           }
                         }
 
@@ -2496,7 +2493,7 @@
                       box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
                       transition: all 200ms ease-out;
                       background-color: #fff;
-                      visibility:hidden;
+                      visibility: hidden;
                       max-width: 275px;
                       left: 170px;
                       top: -7px;
@@ -4154,6 +4151,13 @@
 
                 &:focus-visible {
                   outline: none;
+                }
+
+                &::placeholder,
+                &::-webkit-input-placeholder,
+                &::-moz-placeholder,
+                &:-ms-input-placeholder {
+                  color: var(--color-input-text-placeholder-default);
                 }
               }
             }
