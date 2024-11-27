@@ -200,8 +200,12 @@ function errorHandling(response, journeyState, globals) {
     journeyID,
   } = currentFormContext;
   if (response.errorCode === '02') {
+    currentFormContext.errorCode = response.errorCode;
+    currentFormContext.errorMessage = response.errorMsg;
     globals.functions.setProperty(globals.form.otppanelwrapper.otpFragment.incorrectOTPText, { visible: true });
   } else if (response.errorCode === '04') {
+    currentFormContext.errorCode = response.errorCode;
+    currentFormContext.errorMessage = response.errorMsg;
     document.body.classList.add('errorPageBody');
     document.body.classList.remove('wizardPanelBody');
     globals.functions.setProperty(globals.form.otppanelwrapper, { visible: false });
@@ -209,11 +213,15 @@ function errorHandling(response, journeyState, globals) {
   } else if (response.errorCode === 'V01' || response.errorCode === 'V02' || response.errorCode === 'V03' || response.errorCode === 'V04'
     || response.errorCode === 'V05' || response.errorCode === 'VO6' || response.errorCode === 'V07' || response.errorCode === 'V08'
     || response.errorCode === 'V09' || response.errorCode === 'V10' || response.errorCode === 'V11' || response.errorCode === 'V12') {
+    currentFormContext.errorCode = response.errorCode;
+    currentFormContext.errorMessage = response.errorMsg;
     document.body.classList.add('errorPageBody');
     document.body.classList.remove('wizardPanelBody');
     globals.functions.setProperty(globals.form.otppanelwrapper, { visible: false });
     globals.functions.setProperty(globals.form.errorPanel.errorresults.differentErrorCodes, { visible: true });
   } else {
+    currentFormContext.errorCode = response.errorCode;
+    currentFormContext.errorMessage = response.errorMsg ? response.errorMsg : response.errorText;
     document.body.classList.add('errorPageBody');
     document.body.classList.remove('wizardPanelBody');
     globals.functions.setProperty(globals.form.otppanelwrapper, { visible: false });
@@ -2029,4 +2037,5 @@ export {
   accountOpeningNreNro1,
   feedbackButton,
   selectVarient,
+  isNullOrEmpty,
 };
