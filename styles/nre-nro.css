@@ -2622,7 +2622,7 @@
                 }
 
                 @media (min-width: 900px) {
-                  max-width: 80%;
+                  max-width: 85%;
                 }
 
                 @media (320px <=width <=767px) {
@@ -2650,6 +2650,7 @@
                 ul {
                   margin: 0;
                   list-style-type: disc;
+                  padding-left: 25px;
                 }
               }
             }
