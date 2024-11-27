@@ -141,6 +141,10 @@
           padding: 30px 20px 50px 20px !important;
         }
 
+        input, textarea, select, button{
+          font-family: "Inter", sans-serif !important;
+        }
+
         input,
         textarea,
         select,
@@ -2662,6 +2666,7 @@
 
                 @media (min-width: 900px) {
                   max-width: 84%;
+                  max-width: 84%;
                 }
 
                 @media (320px <=width <=767px) {
@@ -2689,6 +2694,7 @@
                 ul {
                   margin: 0;
                   list-style-type: disc;
+                  padding-left: 25px;
                   padding-left: 25px;
                 }
               }
@@ -4137,6 +4143,7 @@
                 font-weight: 400;
                 line-height: 20px;
                 color: var(--color-interface-text-primary);
+                color: var(--color-interface-text-primary);
                 padding: 15px;
                 margin-top: -10px;
                 margin-bottom: 5px;
@@ -4147,13 +4154,6 @@
 
                 &:focus-visible {
                   outline: none;
-                }
-
-                &::placeholder,
-                &::-webkit-input-placeholder,
-                &::-moz-placeholder,
-                &:-ms-input-placeholder {
-                  color: var(--color-input-text-placeholder-default);
                 }
               }
             }
