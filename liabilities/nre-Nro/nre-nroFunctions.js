@@ -1294,6 +1294,9 @@ async function accountOpeningNreNro1(idComToken) {
       productName: journeyParamStateInfo.currentFormContext.productAccountName,
       productKey: journeyParamStateInfo.currentFormContext.productKey,
       productCategoryID: journeyParamStateInfo.currentFormContext.productCategoryID,
+      userAgent: (typeof window !== 'undefined') ? window.navigator.userAgent : 'onLoad',
+      journeyID: journeyParamStateInfo.currentFormContext.journeyID,
+      journeyName: currentFormContext.journeyName,
     },
   };
 
