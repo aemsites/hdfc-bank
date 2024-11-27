@@ -12,6 +12,8 @@ import {
   loadScript,
 } from './aem.js';
 
+import { getSubmitBaseUrl } from '../blocks/form/constant.js';
+
 const LCP_BLOCKS = []; // add your LCP blocks to the list
 
 const FORM_CONSTANT = [
@@ -44,12 +46,12 @@ const FORM_CONSTANT = [
     urlKey: ['fdlien', 'pvtestfdliencugtest', 'fd-lien-cug-test', 'etb-fixed-deposit-cc', 'fdlienprodtest'],
     launchScript: {
       dev: 'https://assets.adobedtm.com/80673311e435/029b16140ccd/launch-a47f215bcdb9-development.min.js',
-      prod: 'https://assets.adobedtm.com/80673311e435/029b16140ccd/launch-a47f215bcdb9-development.min.js',
+      prod: 'https://assets.adobedtm.com/80673311e435/029b16140ccd/launch-39d52f236cd6.min.js',
       loadTime: 1200,
     },
   },
 ];
-const ENV = 'dev'; // take it from common constant to denote
+const ENV = getSubmitBaseUrl()?.includes('dev') ? 'dev' : 'prod';
 
 /**
  * Builds hero block and prepends to main in a new section.

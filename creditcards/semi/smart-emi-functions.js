@@ -278,7 +278,7 @@ const txnInrFormat = (txnAmt) => {
  * @param {Object} txn - current tramsaction object
  * @param {number} i - current instance of panel row
  */
-const setData = (globals, panel, txn, i) => {
+const setData = async (globals, panel, txn, i) => {
   let enabled = true;
   if (currentFormContext.totalSelect === 10 && txn?.aem_Txn_checkBox !== 'on') enabled = false;
   globals.functions.setProperty(panel[i]?.aem_Txn_checkBox, { value: txn?.checkbox || txn?.aem_Txn_checkBox });
@@ -380,7 +380,7 @@ const setTxnPanelData = async (allTxn, btxn, uBtxn, billedTxnPanel, unBilledTxnP
       }
       const delay = DELAY + (DELTA_DELAY * i);
       const panelIndex = isBilled ? i : i - btxn;
-      const processTxnInstances = () => {
+      const processTxnInstances = async () => {
         if (isBilled && (btxn - 1 >= billedTxnPanel.length)) {
           /* condition to skip the default txn list data */
           globals.functions.dispatchEvent(panel, 'addItem');
@@ -393,9 +393,21 @@ const setTxnPanelData = async (allTxn, btxn, uBtxn, billedTxnPanel, unBilledTxnP
           ..._txn,
           type: isBilled ? 'BILLED' : 'UNBILLED',
         };
-        setData(globals, panel, txnData, panelIndex);
+        await setData(globals, panel, txnData, panelIndex);
       };
-      const processCallBack = ('requestIdleCallback' in window) ? requestIdleCallback(processTxnInstances, { timeout: 0 }) : setTimeout(processTxnInstances, delay);
+      const idleCallFallBack = new Promise((resolve) => {
+        setTimeout(() => {
+          processTxnInstances();
+          resolve();
+        }, delay);
+      });
+      const reqIdleCall = new Promise((resolve) => {
+        requestIdleCallback(() => {
+          processTxnInstances();
+          resolve();
+        }, { timeout: delay });
+      });
+      const processCallBack = ('requestIdleCallback' in window) ? reqIdleCall : idleCallFallBack;
       return Promise.resolve(processCallBack);
     });
     // Wait for all tasks to complete
@@ -547,7 +559,7 @@ function checkELigibilityHandler(resPayload1, globals) {
       globals.functions.setProperty(globals.form.aem_semiWizard.aem_chooseTransactions.unbilledTxnFragment.aem_chooseTransactions.aem_TxnsList, { visible: false });
     }
     // throw error screen if ccbilled & ccUnbilled have no transactions.
-    if ((!isNodeEnv) && (ccBilledData?.length === 0) && (ccUnBilledData?.length === 0)) {
+    if ((!isNodeEnv) && (ccBilledData.length === 0) && (ccUnBilledData?.length === 0)) {
       globals.functions.setProperty(globals.form.aem_semiWizard, { visible: false });
       globals.functions.setProperty(globals.form.aem_semicreditCardDisplay, { visible: false });
       globals.functions.setProperty(globals.form.resultPanel, { visible: true });
@@ -836,32 +848,29 @@ const handleTadMadAlert = (globals) => {
     let billedTotal = currentFormContext.sumOfbilledTxnOnly;
 
     /* track selected index calculate break point for tad-mad */
-    let breakReducer = null;
     const mapBiledSelected = mapBiledList?.filter((el) => el.checkVal);
-    const trackLastIndex = mapBiledSelected?.reduceRight((acc, curr, i) => {
-      billedTotal -= curr.amtVal;
+    const trackLastIndex = [];
+    for (let i = mapBiledSelected.length - 1; i >= 0; i -= 1) {
+      billedTotal -= mapBiledSelected[i].amtVal;
       if (billedTotal < currentFormContext.tadMinusMadValue) {
-        if (!breakReducer) {
-          breakReducer = i;
-          if (breakReducer) {
-            acc.push(i);
-          }
-        }
+        trackLastIndex.push(i);
+        break;
       } else {
-        acc.push(i);
+        trackLastIndex.push(i);
       }
-      return acc;
-    }, []);
-
+    }
     /* unselect each billed values based on tracklastIndex */
-    trackLastIndex?.forEach(async (selectedIndex) => globals.functions.setProperty(billedList[selectedIndex].aem_Txn_checkBox, { value: undefined }));
+    if (!(currentFormContext.sumOfbilledTxnOnly < currentFormContext.tadMinusMadValue)) {
+      trackLastIndex?.forEach(async (selectedIndex) => globals.functions.setProperty(billedList[selectedIndex].aem_Txn_checkBox, { value: undefined }));
+    }
 
     /* Select Top Ten Handling - After unchecking the billed items based on the TAD-MAD value, if the user has selected 'Top Ten',
      the 'Select Top Ten' functionality should apply to the remaining available unbilled transaction list */
     const prevSelectedBilled = mapBiledSelected;
     const billedSelected = prevSelectedBilled.length - trackLastIndex.length;
     const availableToSelectInUnbilled = userPrevSelect.txnAvailableToSelectInTopTen - billedSelected;
-    if (availableToSelectInUnbilled) {
+    const isUnbilledInResponse = (currentFormContext?.EligibilityResponse?.ccUnBilledTxnResponse?.responseString?.length);
+    if (availableToSelectInUnbilled && isUnbilledInResponse) {
       const unbilledSortByAmt = sortDataByAmount(globals.functions.exportData().smartemi.aem_unbilledTxn.aem_unbilledTxnSection);
       const unbilledAvailableToselect = unbilledSortByAmt?.slice(0, availableToSelectInUnbilled);
       const unbilledPanel = globals.form.aem_semiWizard.aem_chooseTransactions.unbilledTxnFragment.aem_chooseTransactions.aem_TxnsList;
