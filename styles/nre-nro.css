@@ -2498,17 +2498,9 @@
                       max-width: 275px;
                       left: 170px;
                       top: -7px;
-
-                      p {
-                        margin-bottom: 0;
-
-                        p {
-                          margin-bottom: 0;
-                          font-size: 12px;
-                          font-weight: 400;
-                          line-height: 17px;
-                        }
-                      }
+                      font-size: 12px;
+                      font-weight: 400;
+                      line-height: 17px;
                     }
                   }
                 }
