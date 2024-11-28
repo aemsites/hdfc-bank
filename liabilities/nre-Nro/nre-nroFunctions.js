@@ -22,6 +22,7 @@ import {
   displayLoader,
   hideLoaderGif,
   fetchJsonResponse,
+  getJsonResponse,
 } from '../../common/makeRestAPI.js';
 import * as NRE_CONSTANT from './constant.js';
 import {
@@ -57,7 +58,7 @@ let dispSec = OTP_TIMER;
 
 const { CHANNEL, JOURNEY_NAME, VISIT_MODE } = NRE_CONSTANT;
 // Initialize all NRE/NRO Journey Context Variables.
-currentFormContext.journeyName = "ACCOUNTOPENING_NRO_NRE_JOURNEY";
+currentFormContext.journeyName = 'ACCOUNTOPENING_NRO_NRE_JOURNEY';
 currentFormContext.journeyType = 'NTB';
 currentFormContext.errorCode = '';
 currentFormContext.errorMessage = '';
@@ -216,8 +217,10 @@ function errorHandling(response, journeyState, globals) {
     globals.functions.setProperty(globals.form.otppanelwrapper, { visible: false });
     globals.functions.setProperty(globals.form.errorPanel.errorresults.differentErrorCodes, { visible: true });
   } else {
-    document.body.classList.add('errorPageBody');
-    document.body.classList.remove('wizardPanelBody');
+    if (typeof document !== 'undefined') {
+      document.body.classList.add('errorPageBody');
+      document.body.classList.remove('wizardPanelBody');
+    }
     globals.functions.setProperty(globals.form.otppanelwrapper, { visible: false });
     globals.functions.setProperty(globals.form.wizardPanel, { visible: false });
     globals.functions.setProperty(globals.form.errorPanel.errorresults.errorConnection, { visible: true });
@@ -382,7 +385,7 @@ const getOtpNRE = (mobileNumber, pan, dob, globals) => {
       identifierValue: clearString(identifierVal),
       identifierName: identifierNam,
       getEmail: 'Y',
-      userAgent: (typeof window !== 'undefined') ? window.navigator.userAgent : 'onLoad' 
+      userAgent: (typeof window !== 'undefined') ? window.navigator.userAgent : 'onLoad',
     },
   };
 
@@ -519,7 +522,7 @@ function otpValidationNRE(mobileNumber, pan, dob, otpNumber, globals) {
       journeyID: currentFormContext.journeyID,
       journeyName: globals.form.runtime.journeyName.$value || currentFormContext.journeyName,
       referenceNumber: referenceNumber ?? '',
-      userAgent: (typeof window !== 'undefined') ? window.navigator.userAgent : 'onLoad'
+      userAgent: (typeof window !== 'undefined') ? window.navigator.userAgent : 'onLoad',
     },
   };
 
@@ -1283,8 +1286,8 @@ async function accountOpeningNreNro1(idComToken) {
       maskedAccountNumber: 'X'.repeat((response.customerAccountDetailsDTO[accIndex].accountNumber.length - 4))
                             + response.customerAccountDetailsDTO[accIndex].accountNumber.slice((response.customerAccountDetailsDTO[accIndex].accountNumber.length - 4), (response.customerAccountDetailsDTO[accIndex].accountNumber.length)),
       branchCode: response.customerAccountDetailsDTO[accIndex].branchCode.toString(),
-      codeLC: '',
-      codeLG: '',
+      codeLC: currentFormContext.lcCode,
+      codeLG: currentFormContext.lgCode,
       flgChqBookIssue: 'N',
       productCode: journeyParamStateInfo.currentFormContext.productAccountType,
       StatusCode: 'Branch Approved',
@@ -1563,9 +1566,6 @@ const crmLeadIdDetail = (globals) => {
   const { fatca_response: response, selectedCheckedValue: accIndex } = currentFormContext;
   const { financialDetails } = globals.form.wizardPanel.wizardFragment.wizardNreNro.confirmDetails.confirmDetailsAccordion;
   currentFormContext.phoneWithISD = currentFormContext.isdCode + currentFormContext.mobileNumber;
-  // if (currentFormContext.isdCode !== '91') {
-  //   currentFormContext.mobileWithISD = '';
-  // }
 
   const jsonObj = {
     requestString: {
@@ -1603,8 +1603,8 @@ const crmLeadIdDetail = (globals) => {
       countryOfNominee: '',
       country: response.namHoldadrCntry,
       passpostExpiryDate: '',
-      codeLC: '',
-      codeLG: '',
+      codeLC: globals.form.wizardPanel.wizardFragment.wizardNreNro.confirmDetails.needBankHelp.bankUseFragment.mainBankUsePanel.lcCode.$value,
+      codeLG: globals.form.wizardPanel.wizardFragment.wizardNreNro.confirmDetails.needBankHelp.bankUseFragment.mainBankUsePanel.lgCode.$value,
       applicationDate: new Date().toISOString().slice(0, 19),
       DLExpiryDate: '',
       selfEmployedProfessionalCategory: financialDetails.selfEmployedProfessional.$value,
@@ -1799,7 +1799,7 @@ const crmLeadIdDetail = (globals) => {
       acctOperInstrs: response.customerAccountDetailsDTO[accIndex].accountOperatingInstructions,
       amtShareFixed: '',
       codRel: response.customerAccountDetailsDTO[accIndex].codRel.toString(),
-      AMBValue: '',
+      AMBValue: currentFormContext.ambValue,
       TPTConsent: '',
       AMBDateTime: new Date().toISOString().slice(0, 19),
       guardianName: null,
@@ -1999,6 +1999,19 @@ function selectVarient(nroAccountTypePanel, nreAccountTypePanel, globals) {
     globals.functions.setProperty(globals.form.wizardPanel.continue, { enabled: false });
   }
 }
+
+function setAMBValue() {
+  const finalURL = `/content/hdfc_commonforms/api/mdm.INSTA.NRI_AMB_MASTER.BRANCH_CODE-${currentFormContext.fatca_response.customerAccountDetailsDTO[currentFormContext.selectedCheckedValue].branchCode}.json`;
+  getJsonResponse(urlPath(finalURL), null, 'GET')
+    .then((response) => {
+      const ambValue = response[0].AMB_AQB;
+      currentFormContext.ambValue = ambValue;
+    })
+    .catch((error) => {
+      console.error('Error while getting amb value:', error);
+    });
+}
+
 export {
   validateLogin,
   getOtpNRE,
@@ -2039,4 +2052,5 @@ export {
   accountOpeningNreNro1,
   feedbackButton,
   selectVarient,
+  setAMBValue,
 };
