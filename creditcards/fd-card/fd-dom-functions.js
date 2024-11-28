@@ -25,7 +25,6 @@ const validateOtpInput = () => {
 };
 
 const addGaps = (elSelector) => {
-  if (typeof document === 'undefined') return;
   const panInputField = document.querySelector(elSelector);
   if (!panInputField) return;
   panInputField.addEventListener('input', () => {
@@ -41,7 +40,6 @@ const addGaps = (elSelector) => {
 };
 
 const addMobileValidation = () => {
-  if (typeof document === 'undefined') return;
   const validFirstDigits = ['6', '7', '8', '9'];
   const inputField = document.querySelector('.field-registeredmobilenumber input');
   inputField.addEventListener('input', () => validatePhoneNumber(inputField, validFirstDigits));
@@ -81,6 +79,7 @@ const buttonEnableOnCheck = (selector, ctaSelector) => {
 };
 
 setTimeout(() => {
+  if (typeof document === 'undefined') return;
   [DOM_ELEMENT.identifyYourself.dob, DOM_ELEMENT.personalDetails.dob].forEach((dateField) => setMaxDateToToday(dateField));
   addGaps('.field-pan.char-gap-4 input');
   addMobileValidation();
