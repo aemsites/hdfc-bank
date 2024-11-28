@@ -67,6 +67,8 @@ currentFormContext.productAccountType = '';
 currentFormContext.productAccountName = '';
 currentFormContext.journeyAccountType = '';
 currentFormContext.countryName = '';
+currentFormContext.mobileWithISD = '';
+currentFormContext.phoneWithISD = '';
 
 formRuntime.getOtpLoader = currentFormContext.getOtpLoader || (typeof window !== 'undefined') ? displayLoader : false;
 formRuntime.otpValLoader = currentFormContext.otpValLoader || (typeof window !== 'undefined') ? displayLoader : false;
@@ -720,6 +722,7 @@ function prefillAccountDetail(response, i, responseLength, globals) {
     setFormValue(multipleAccounts.multipleAccountRepeatable[i].multiSubPanel.accountType, response.customerAccountDetailsDTO[i].productName?.toUpperCase());
     setFormValue(multipleAccounts.multipleAccountRepeatable[i].multiIFSCBranchPanel.branch, response.customerAccountDetailsDTO[i].branchName?.toUpperCase());
     setFormValue(multipleAccounts.multipleAccountRepeatable[i].multiIFSCBranchPanel.ifscCode, response.customerAccountDetailsDTO[i].ifscCode?.toUpperCase());
+    setFormValue(multipleAccounts.multipleAccountRepeatable[i].multiIFSCBranchPanel.hiddenBranch, response.customerAccountDetailsDTO[i].branchName?.toUpperCase());
   } else {
     setFormValue(singleAccount.customerID, customerDataMasking('cutomerIDMasking', response.customerId.toString()));
     setFormValue(singleAccount.accountNumber, customerDataMasking('accountNumberMasking', response.customerAccountDetailsDTO[0].accountNumber));
@@ -1549,7 +1552,7 @@ const switchWizard = (globals) => {
 };
 
 const onPageLoadAnalytics = async (globals) => {
-  sendAnalytics('page load-Step 1 : Identify Yourself', { }, 'ON_PAGE_LOAD', globals);
+  sendAnalytics('page load-Step 1 - Identify Yourself', { }, 'ON_PAGE_LOAD', globals);
 };
 
 setTimeout(() => {
@@ -1559,6 +1562,10 @@ setTimeout(() => {
 const crmLeadIdDetail = (globals) => {
   const { fatca_response: response, selectedCheckedValue: accIndex } = currentFormContext;
   const { financialDetails } = globals.form.wizardPanel.wizardFragment.wizardNreNro.confirmDetails.confirmDetailsAccordion;
+  currentFormContext.phoneWithISD = currentFormContext.isdCode + currentFormContext.mobileNumber;
+  // if (currentFormContext.isdCode !== '91') {
+  //   currentFormContext.mobileWithISD = '';
+  // }
 
   const jsonObj = {
     requestString: {
@@ -1703,7 +1710,7 @@ const crmLeadIdDetail = (globals) => {
       multipleTaxResidencyID: '-1',
       employmentType: '',
       employmentTypeOthers: '',
-      phone: currentFormContext.mobileNumber,
+      phone: currentFormContext.phoneWithISD,
       productCategory: currentFormContext.productCategory,
       productName: currentFormContext.productAccountName,
       ratingKey: '3',
