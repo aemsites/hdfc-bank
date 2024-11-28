@@ -101,7 +101,7 @@ const pageRedirected = () => {
   const { aadharRedirect, idComRedirect, errorCode } = delayedUtilState;
   const sessionExpiredErrorCode = IDCOM.response.sessionExpired.errorCode;
   // eslint-disable-next-line no-undef
-  const journeyId = myForm.resolveQualifiedName('$form.runtime.journeyId')._data.$_value;
+  const journeyId = myForm?.resolveQualifiedName('$form.runtime.journeyId')._data.$_value;
   const journeyData = {
     journeyId,
     journeyName: ANALYTICS.JOURNEY_NAME,
