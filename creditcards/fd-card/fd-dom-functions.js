@@ -42,7 +42,7 @@ const addGaps = (elSelector) => {
 const addMobileValidation = () => {
   const validFirstDigits = ['6', '7', '8', '9'];
   const inputField = document.querySelector('.field-registeredmobilenumber input');
-  inputField.addEventListener('input', () => validatePhoneNumber(inputField, validFirstDigits));
+  if (inputField) inputField.addEventListener('input', () => validatePhoneNumber(inputField, validFirstDigits));
 };
 
 /**
