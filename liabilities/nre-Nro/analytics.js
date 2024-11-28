@@ -118,7 +118,7 @@ function sendPageloadEvent(journeyState, formData, pageName, errorAPI, errorMess
       digitalData.formDetails.typeofcompany = formData?.form?.confirmDetails?.financialDetails?.typeOfCompoanyFirm ?? '';
       digitalData.formDetails.typeofprofessional = formData?.form?.confirmDetails?.financialDetails?.selfEmployedProfessional ?? '';
     }
-    case 'Step 5 : Confirmation': {
+    case 'Step 5 - Confirmation': {
       digitalData.formDetails.accountType;
     }
     default:
@@ -163,9 +163,10 @@ function sendSubmitClickEvent(phone, eventType, linkType, formData, journeyState
       break;
     }
     case 'resend otp click': {
-      digitalData.link.linkName = 'Resend OTP';
       if (window) {
         window.digitalData = digitalData || {};
+        digitalData.page.pageInfo.pageName = 'Step 2 - Verify with OTP';
+        digitalData.link.linkName = 'Resend OTP';
       }
       _satellite.track('submit');
       break;
@@ -221,6 +222,7 @@ function sendSubmitClickEvent(phone, eventType, linkType, formData, journeyState
     case 'confirm details click': {
       if (window) {
         window.digitalData = digitalData || {};
+        digitalData.page.pageInfo.pageName = 'Step 4 - Confirm Details';
       }
       _satellite.track('submit');
       break;
@@ -313,8 +315,9 @@ function populateResponse(payload, eventType, digitalData, formData) {
     }
     case 'select account type click': {
       digitalData.formDetails.accountType = currentFormContext.productAccountName ?? '';
+      digitalData.formDetails.existingAccountType = currentFormContext.journeyAccountType ?? '';
       digitalData.formDetails.bankBranch = currentFormContext?.fatca_response?.customerAccountDetailsDTO[currentFormContext.selectedCheckedValue]?.branchName ?? '';
-      digitalData.formDetails.existingAccountType = currentFormContext?.existingAccountType ?? '';
+      digitalData.event.status = 1;
       break;
     }
     case 'confirm details click': {
@@ -323,6 +326,7 @@ function populateResponse(payload, eventType, digitalData, formData) {
       digitalData.assisted.lc = '';
       digitalData.formDetails.TAndCConsent = formData?.needBankHelp?.confirmDetailsConsent1 ?? '';
       digitalData.formDetails.detailsConsent = formData?.needBankHelp?.confirmDetailsConsent2 ?? '';
+      digitalData.event.status = 1;
       break;
     }
     case 'idcom redirection check': {
