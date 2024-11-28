@@ -57,7 +57,7 @@ let dispSec = OTP_TIMER;
 
 const { CHANNEL, JOURNEY_NAME, VISIT_MODE } = NRE_CONSTANT;
 // Initialize all NRE/NRO Journey Context Variables.
-currentFormContext.journeyName = "ACCOUNTOPENING_NRO_NRE_JOURNEY";
+currentFormContext.journeyName = 'ACCOUNTOPENING_NRO_NRE_JOURNEY';
 currentFormContext.journeyType = 'NTB';
 currentFormContext.errorCode = '';
 currentFormContext.errorMessage = '';
@@ -67,7 +67,6 @@ currentFormContext.productAccountType = '';
 currentFormContext.productAccountName = '';
 currentFormContext.journeyAccountType = '';
 currentFormContext.countryName = '';
-currentFormContext.mobileWithISD = '';
 currentFormContext.phoneWithISD = '';
 
 formRuntime.getOtpLoader = currentFormContext.getOtpLoader || (typeof window !== 'undefined') ? displayLoader : false;
@@ -1274,6 +1273,9 @@ async function accountOpeningNreNro1(idComToken) {
   const { fatca_response: response, selectedCheckedValue: accIndex } = currentFormContext;
   const jsonObj = {
     requestString: {
+      userAgent: (typeof window !== 'undefined') ? window.navigator.userAgent : 'onLoad',
+      journeyID: journeyParamStateInfo.currentFormContext.journeyID,
+      journeyName: currentFormContext.journeyName,
       Id_token_jwt: journeyParamStateInfo.AccountOpeningNRENRO.fatcaJwtToken,
       IDCOM_Token: idComToken,
       ItemKey: journeyParamStateInfo.form.confirmDetails.crm_leadId,
@@ -1297,9 +1299,6 @@ async function accountOpeningNreNro1(idComToken) {
       productName: journeyParamStateInfo.currentFormContext.productAccountName,
       productKey: journeyParamStateInfo.currentFormContext.productKey,
       productCategoryID: journeyParamStateInfo.currentFormContext.productCategoryID,
-      userAgent: (typeof window !== 'undefined') ? window.navigator.userAgent : 'onLoad',
-      journeyID: journeyParamStateInfo.currentFormContext.journeyID,
-      journeyName: currentFormContext.journeyName,
     },
   };
 
