@@ -1272,7 +1272,7 @@ async function accountOpeningNreNro(idComToken) {
  * Call Account Opening Function
  * @returns {PROMISE}
  */
-async function accountOpeningNreNro1(idComToken) {
+async function accountOpeningNreNro1(idComToken, globals) {
   const journeyParamStateInfo = finalResult.journeyParamStateInfo;
   const { fatca_response: response, selectedCheckedValue: accIndex } = currentFormContext;
   const jsonObj = {
@@ -1286,8 +1286,8 @@ async function accountOpeningNreNro1(idComToken) {
       maskedAccountNumber: 'X'.repeat((response.customerAccountDetailsDTO[accIndex].accountNumber.length - 4))
                             + response.customerAccountDetailsDTO[accIndex].accountNumber.slice((response.customerAccountDetailsDTO[accIndex].accountNumber.length - 4), (response.customerAccountDetailsDTO[accIndex].accountNumber.length)),
       branchCode: response.customerAccountDetailsDTO[accIndex].branchCode.toString(),
-      codeLC: currentFormContext.lcCode,
-      codeLG: currentFormContext.lgCode,
+      codeLC: 'INSTASTP',
+      codeLG: globals.form.wizardPanel.wizardFragment.wizardNreNro.confirmDetails.needBankHelp.bankUseFragment.mainBankUsePanel.lgCode.$value,
       flgChqBookIssue: 'N',
       productCode: journeyParamStateInfo.currentFormContext.productAccountType,
       StatusCode: 'Branch Approved',
@@ -1603,7 +1603,7 @@ const crmLeadIdDetail = (globals) => {
       countryOfNominee: '',
       country: response.namHoldadrCntry,
       passpostExpiryDate: '',
-      codeLC: globals.form.wizardPanel.wizardFragment.wizardNreNro.confirmDetails.needBankHelp.bankUseFragment.mainBankUsePanel.lcCode.$value,
+      codeLC: 'INSTASTP',
       codeLG: globals.form.wizardPanel.wizardFragment.wizardNreNro.confirmDetails.needBankHelp.bankUseFragment.mainBankUsePanel.lgCode.$value,
       applicationDate: new Date().toISOString().slice(0, 19),
       DLExpiryDate: '',
@@ -1836,6 +1836,7 @@ const crmLeadIdDetail = (globals) => {
       subLeadSource: 'Adobe Insta Lead',
       LayoutKey: '100542',
       StatusCodeKey: '9',
+      misCode: '700'
     },
   };
 
