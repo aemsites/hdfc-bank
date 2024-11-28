@@ -2430,7 +2430,7 @@
                           font-weight: 400 !important;
                           line-height: 17px !important;
                           top: -17px;
-                          cursor: pointer;
+                          cursor: default;
 
                           @media (min-width: 769px) {
                             height: 20px;
