@@ -1970,7 +1970,7 @@ body.fdlien:has(.field-selectkycoptionspanel[data-visible='true']) main {
             border: none;
             pointer-events: none;
             margin-top: 2px;
-            margin-left: 0;
+            margin-left: -15px;
             padding: 0;
             width: 35px;
             height: 50px !important;
@@ -2767,7 +2767,7 @@ body.fdlien:has(.field-selectkycoptionspanel[data-visible='true']) main {
               margin: 0;
               padding: 0;
               height: auto;
-              min-height: 1.5em;
+              min-height: 50px;
               max-height: none;
               overflow-y: hidden;
               resize: none;
@@ -2782,6 +2782,16 @@ body.fdlien:has(.field-selectkycoptionspanel[data-visible='true']) main {
               &:focus {
                 box-shadow: none;
               }
+            }
+
+            p {
+              font-size: var(--body-fd-md-font-size);
+              color: var(--color-input-text-primary);
+              line-height: var(--font-linehight-regular);
+              font-weight: var(--font-weight-regular);
+              text-align: left;
+              padding-left: 35px;
+              display: block;
             }
 
             &::before {
@@ -4851,11 +4861,12 @@ body.fdlien:has(.field-selectkycoptionspanel[data-visible='true']) main {
       }
 
       .field-selectcardtnc {
-        width: 55%;
+        width: 100%;
+        margin-top: 20px;
 
         .field-confirmcardtnc1 {
           .field-description {
-            top: 105px !important;
+            top: 90px !important;
           }
         }
 
@@ -4867,7 +4878,7 @@ body.fdlien:has(.field-selectkycoptionspanel[data-visible='true']) main {
 
         .field-confirmcardtnc3 {
           .field-description {
-            top: 213px !important;
+            top: 220px !important;
             left: 35px !important;
           }
         }
@@ -4875,6 +4886,15 @@ body.fdlien:has(.field-selectkycoptionspanel[data-visible='true']) main {
 
       .field-selectidentifier {
         width: 55%;
+      }
+
+      .field-eligiblecreditlimitamount {
+        margin: 10px 0;
+        width: 100%;
+
+        input[type='text'] {
+          width: 180px;
+        }
       }
     }
   }
@@ -4927,6 +4947,10 @@ body.fdlien:has(.field-selectkycoptionspanel[data-visible='true']) main {
     }
 
     .field-feessinglecard {
+      margin-top: 0 !important;
+    }
+
+    .field-singlecardtitle {
       margin-top: 0 !important;
     }
   }
