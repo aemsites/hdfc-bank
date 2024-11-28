@@ -10,7 +10,6 @@ import {
   displayLoader,
 } from '../../common/makeRestAPI.js';
 import * as NRE_CONSTANT from './constant.js';
-import { isNullOrEmpty } from './nre-nroFunctions.js';
 import * as CONSTANT from '../../common/constants.js';
 
 const { ENDPOINTS, CURRENT_FORM_CONTEXT: currentFormContext } = CONSTANT;
@@ -85,8 +84,6 @@ const invokeJourneyDropOffUpdate = async (state, mobileNumber, leadProfileId, jo
   const journeyJSONObj = {
     RequestPayload: {
       userAgent: (typeof window !== 'undefined') ? window.navigator.userAgent : '',
-      errorCode: !isNullOrEmpty(currentFormContext.errorCode) ? currentFormContext.errorCode : '0',
-      errorMessage: currentFormContext.errorMessage,
       leadProfile: {
         mobileNumber: isdCode + mobileNumber,
         isCountryCodeappended: 'true',
@@ -107,8 +104,6 @@ const invokeJourneyDropOffUpdate = async (state, mobileNumber, leadProfileId, jo
       },
     },
   };
-  currentFormContext.errorCode = '';
-  currentFormContext.errorMessage = '';
   // sendSubmitClickEvent(mobileNumber, linkName, sanitizedFormData);
   const url = urlPath(ENDPOINTS.journeyDropOffUpdate);
   const method = 'POST';
