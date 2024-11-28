@@ -312,6 +312,7 @@ body.fdlien:has(.field-fdbasedcreditcardwizard:not([data-visible='false'])) {
   height: 32px;
   content: url('../icons/safe-secure.svg');
   padding: 0;
+  display: inline !important;
 }
 
 .fdlien:has(.section.cmp-container-container) .section.cmp-container-container {
