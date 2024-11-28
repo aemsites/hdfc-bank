@@ -233,6 +233,7 @@ const hideLoaderGif = () => {
  * @param {string} inputName - The name attribute of the input field to be validated.
  */
 const setMaxDateToToday = (inputName) => {
+  if (typeof document === 'undefined') return;
   const calendarEl = document.querySelector(`[name= ${inputName}]`);
   calendarEl?.setAttribute('max', new Date()?.toISOString()?.split('T')?.[0]);
 };
