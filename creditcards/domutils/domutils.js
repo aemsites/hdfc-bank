@@ -411,6 +411,26 @@ const updateInnerHtml = (selectorName, updatedValue) => {
   if (typeof document !== 'undefined') document.querySelector(selectorName).innerHTML = updatedValue;
 };
 
+/**
+ * Replaces specified elements with another element while retaining attributes and content.
+ * @param {string} selector - The CSS selector for the elements to replace.
+ * @param {string} newTag - The tag name of the new element to replace with.
+ */
+const replaceElementsWith = (selector, newTag, skipIndex = -1) => {
+  document.querySelectorAll(selector).forEach((element, index) => {
+    if (index === skipIndex) return;
+
+    const newElement = document.createElement(newTag);
+    newElement.textContent = element.value || element.textContent;
+
+    [...element.attributes].forEach((attr) => {
+      newElement.setAttribute(attr.name, attr.value);
+    });
+
+    element.parentNode.replaceChild(newElement, element);
+  });
+};
+
 export {
   setDataAttributeOnClosestAncestor,
   setSelectOptions,
@@ -436,4 +456,5 @@ export {
   attachRedirectOnClick,
   imageClickable,
   updateInnerHtml,
+  replaceElementsWith,
 };
