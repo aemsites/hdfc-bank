@@ -1560,7 +1560,6 @@ const crmLeadIdDetail = (globals) => {
   const { fatca_response: response, selectedCheckedValue: accIndex } = currentFormContext;
   const { financialDetails } = globals.form.wizardPanel.wizardFragment.wizardNreNro.confirmDetails.confirmDetailsAccordion;
   currentFormContext.phoneWithISD = currentFormContext.isdCode + currentFormContext.mobileNumber;
-  currentFormContext.mobileWithISD = currentFormContext.isdCode + currentFormContext.mobileNumber;
   // if (currentFormContext.isdCode !== '91') {
   //   currentFormContext.mobileWithISD = '';
   // }
@@ -1704,7 +1703,7 @@ const crmLeadIdDetail = (globals) => {
       leadSource: 'Adobe',
       leadSourceKey: '33262',
       middleName: response.customerMiddleName || '',
-      mobileNo: currentFormContext.mobileWithISD,
+      mobileNo: currentFormContext.mobileNumber,
       multipleTaxResidencyID: '-1',
       employmentType: '',
       employmentTypeOthers: '',
