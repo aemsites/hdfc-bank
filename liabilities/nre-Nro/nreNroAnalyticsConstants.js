@@ -165,26 +165,6 @@ const ANALYTICS_PAGE_LOAD_OBJECT = {
   form: {
     name: '',
   },
-  formDetails: {
-    city: '',
-    state: '',
-    pincode: '',
-    nationality: '',
-    countryTaxResidence: '',
-    countryofBirth: '',
-    nomineeRelation: '',
-    companyName: '',
-    AnnualIncome: '',
-    currency: '',
-    residenceType: '',
-    sourceoffunds: '',
-    selfemployeddate: '',
-    natureofbusiness: '',
-    typeofcompany: '',
-    typeofprofessional: '',
-    bankBranch: '',
-    existingAccountType: '',
-  },
 };
 
 const PAGE_NAME = {
