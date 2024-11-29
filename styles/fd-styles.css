@@ -340,6 +340,12 @@ body.fdlien:has(.field-selectkycoptionspanel[data-visible='true']) main {
     min-height: 648px;
   }
 
+  .field-bankloginpanel {
+    input[type='password'] {
+      font-size: var(--body-fd-sm-font-size);
+    }
+  }
+
   .field-bannerimagepanel {
     background: var(--color-interface-fd-background-secondary)
       url('../icons/side_bar_banner.png') no-repeat center center / cover;
@@ -4509,6 +4515,7 @@ body.fdlien:has(.field-selectkycoptionspanel[data-visible='true']) main {
       .field-errormessagetext:not(:has(p)) {
         padding: 30px 215px 80px 20px !important;
         text-align: left !important;
+        font-size: var(--body-fd-xx-xlg-font-size);
       }
 
       .field-errresdealerpanel {

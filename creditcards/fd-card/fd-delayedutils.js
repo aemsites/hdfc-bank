@@ -37,6 +37,8 @@ const fdCardBoardingSuccess = async (data, stateInfoData) => {
   setArnNumberInResult(stateInfoData.currentFormContext.ARN_NUM, 'refNumPanel', 'referenceNumber');
   invokeJourneyDropOffUpdate('CUSTOMER_ONBOARDING_COMPLETE', mobileNumber, leadProfileId, journeyId, stateInfoData);
   sendPageloadEvent('CUSTOMER_ONBOARDING_COMPLETE', stateInfoData, 'Confirmation', 'confirmationPage');
+  invokeJourneyDropOffUpdate('CUSTOMER_ONBOARDING_COMPLETE', mobileNumber, leadProfileId, journeyId, stateInfoData);
+  sendPageloadEvent('CUSTOMER_ONBOARDING_COMPLETE', stateInfoData, 'Confirmation', 'confirmationPage');
 };
 
 const fdCardBoardingFailure = (err, stateInfoData) => {
@@ -120,9 +122,7 @@ const pageRedirected = () => {
   }
   if (idComRedirect && errorCode !== sessionExpiredErrorCode) {
     displayLoader();
-    setTimeout(() => {
-      finalDapFetchRes();
-    }, 5000);
+    setTimeout(finalDapFetchRes, 5000);
   }
 };
 
