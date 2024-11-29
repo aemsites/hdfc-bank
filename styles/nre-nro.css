@@ -209,7 +209,6 @@
                     font-weight: 400 !important;
                     line-height: 28px !important;
                     letter-spacing: 0 !important;
-                    height: 60px;
                     max-height: max-content;
                     margin: 0;
                     color: var(--color-interface-text-secondary);
@@ -281,6 +280,7 @@
                   z-index: 2;
                   max-width: 350px;
                   left: 90px;
+                  grid-column: span 12;
 
                   label {
                     top: 10px;
@@ -1060,8 +1060,10 @@
                       margin-bottom: 0;
                     }
 
-                    a {
-                      font-weight: 600;
+                    a {                     
+                      b{
+                        font-weight: 600;
+                      }
                     }
                   }
                 }
@@ -1196,9 +1198,9 @@
                 color: var(--color-interface-text-primary);
                 border-color: var(--color-interface-border-secondary);
                 caret-color: currentcolor;
-                margin-top: 0;
+                margin-top: 0;               
 
-                @media (320px <=width <=767px) {
+                @media (320px <=width <=600px) {
                   letter-spacing: 25px;
                 }
 
@@ -1209,6 +1211,14 @@
                 &[type="password"] {
                   font-size: 41px;
                   line-height: 40px;
+
+                  @media (992px <=width <=1100px  ) {
+                    letter-spacing: 50px;
+                  }
+
+                  @-moz-document url-prefix() {
+                    font-size: 20px;
+                  }                  
                 }
 
                 &::placeholder {
@@ -3643,10 +3653,12 @@
                 }
 
                 &.field-leadid-number {
-                  background-position-x: 42%;
+                  input {
+                    background-position-x: 42%;
 
-                  @media (320px <=width <=767px) {
-                    background-position-x: 55%;
+                    @media (320px <=width <=767px) {
+                      background-position-x: 55%;
+                    }
                   }
                 }
               }
@@ -3715,6 +3727,14 @@
                 }
               }
 
+              .field-accounttype.text-wrapper.field-wrapper{
+                input{
+                  @media (1200px <=width <=1300px) {
+                    font-size: 17px;
+                  }
+                }
+              }
+
               .text-wrapper.field-wrapper,
               .multiline-wrapper {
                 @media (768px <=width <=991px) {
@@ -3753,11 +3773,7 @@
                   height: auto;
                   padding: 0;
                   margin: 0;
-                  border-radius: 0;
-
-                  @media (1200px <=width <=1300px) {
-                    font-size: 17px;
-                  }
+                  border-radius: 0;                 
 
                   @media (320px <=width <=767px) {
                     font-size: 14px;
@@ -3775,7 +3791,6 @@
                   background: none;
                   margin: 0;
                   padding: 0;
-                  height: 100%;
                   font-size: 18px;
                   line-height: 28px;
                   font-weight: 500;
@@ -4231,8 +4246,7 @@
 
 
           .field-hdfcbankwebsite {
-            flex: 0 0 100%;
-
+          /*   flex: 0 0 100%; */ 
             @media (320px <=width <=991px) {
               margin-bottom: 20px;
             }

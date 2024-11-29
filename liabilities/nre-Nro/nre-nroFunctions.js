@@ -35,6 +35,7 @@ import {
 } from './constant.js';
 import {
   sendAnalytics,
+  sendPageloadEvent,
 } from './analytics.js';
 import { reloadPage } from '../../common/functions.js';
 
@@ -194,7 +195,7 @@ const getCountryName = (countryCodeIst) => new Promise((resolve) => {
 
 function errorHandling(response, journeyState, globals) {
   setTimeout(() => {
-    Promise.resolve(sendAnalytics('page load-Error Page', { }, 'ON_ERROR_PAGE_LOAD', globals));
+    Promise.resolve(sendAnalytics('page load-Error Page', { }, 'CUSTOMER_IDENTITY UNRESOLVED', globals));
   }, 2000);
   const {
     mobileNumber,
@@ -849,6 +850,7 @@ const createIdComRequestObj = (globals) => {
       journeyID: formData.journeyId,
       journeyName: formData.journeyName,
       scope: 'ADOBE_ACNRI',
+      mobileNumber: globals.form.parentLandingPagePanel.landingPanel.loginFragmentNreNro.mobilePanel.registeredMobileNumber.$value,
     },
   };
   return idComObj;
@@ -951,6 +953,8 @@ function prefillThankYouPage(accountres, globals) {
     globals.functions.setProperty(globals.form.thankYouPanel, { visible: false });
     errorHandling('', 'CUSTOMER_ONBOARDING_FAILURE', globals);
   }
+    sendAnalytics('thankyou page click', { }, 'THANKYOU_PAGE_TYPE', globals);
+    // sendPageloadEvent('page load thankyou page', formData, 'thankyou page');
 }
 
 /**
@@ -1289,7 +1293,7 @@ async function accountOpeningNreNro1(idComToken, globals) {
                             + response.customerAccountDetailsDTO[accIndex].accountNumber.slice((response.customerAccountDetailsDTO[accIndex].accountNumber.length - 4), (response.customerAccountDetailsDTO[accIndex].accountNumber.length)),
       branchCode: response.customerAccountDetailsDTO[accIndex].branchCode.toString(),
       codeLC: 'INSTASTP',
-      codeLG: globals.form.wizardPanel.wizardFragment.wizardNreNro.confirmDetails.needBankHelp.bankUseFragment.mainBankUsePanel.lgCode.$value,
+      codeLG: globals.form.wizardPanel.wizardFragment.wizardNreNro.confirmDetails.needBankHelp.bankUseFragment.mainBankUsePanel.lgCode.$value || '',
       flgChqBookIssue: 'N',
       productCode: journeyParamStateInfo.currentFormContext.productAccountType,
       StatusCode: 'Branch Approved',
@@ -1578,9 +1582,9 @@ const crmLeadIdDetail = (globals) => {
       custBirthDate: parseDate(response.datBirthCust),
       identifierName: globals.form.parentLandingPagePanel.landingPanel.loginFragmentNreNro.identifierPanel.pan.$value ? 'PAN' : 'dob',
       preferredChannel: '',
-      territoryName: 'Khanda Colony - Panvel',
+      territoryName: '',
       address: `${response?.txtCustadrAdd1} ${response?.txtCustadrAdd2} ${response?.txtCustadrAdd3}`,
-      companyName: 'ADOBE SYSTEMS INDIA PVT LTD',
+      companyName: '',
       nomineeAge: response.customerAccountDetailsDTO[accIndex].prodTypeDesc.toString(),
       typeOfFirm: financialDetails.typeOfCompoanyFirm.$value,
       typCompany: '',
@@ -1603,7 +1607,7 @@ const crmLeadIdDetail = (globals) => {
       country: response.namHoldadrCntry,
       passpostExpiryDate: '',
       codeLC: 'INSTASTP',
-      codeLG: globals.form.wizardPanel.wizardFragment.wizardNreNro.confirmDetails.needBankHelp.bankUseFragment.mainBankUsePanel.lgCode.$value,
+      codeLG: globals.form.wizardPanel.wizardFragment.wizardNreNro.confirmDetails.needBankHelp.bankUseFragment.mainBankUsePanel.lgCode.$value || '',
       applicationDate: new Date().toISOString().slice(0, 19),
       DLExpiryDate: '',
       selfEmployedProfessionalCategory: financialDetails.selfEmployedProfessional.$value,
