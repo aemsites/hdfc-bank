@@ -59,7 +59,7 @@ const validateLogin = (globals) => {
   const panErrorText = FD_CONSTANT.ERROR_MSG.panError;
 
   const panInput = document.querySelector(`[name=${'pan'} ]`);
-  const panWrapper = panInput.parentElement;
+  const panWrapper = panInput?.parentElement;
 
   const panIsValid = validFDPan(panValue);
   const dobIsValid = ageValidator(FD_CONSTANT.AGE_LIMIT.min, FD_CONSTANT.AGE_LIMIT.max, dobValue);
@@ -91,9 +91,9 @@ const validateLogin = (globals) => {
       }
       break;
     case 'PAN':
-      panWrapper.setAttribute('data-empty', true);
+      panWrapper?.setAttribute('data-empty', true);
       if (panValue) {
-        panWrapper.setAttribute('data-empty', false);
+        panWrapper?.setAttribute('data-empty', false);
         if (panIsValid && (mobIsValid)) {
           globals.functions.markFieldAsInvalid('$form.loginMainPanel.loginPanel.identifierPanel.pan', '', { useQualifiedName: true });
           globals.functions.setProperty(globals.form.loginMainPanel.getOTPbutton, { enabled: true });

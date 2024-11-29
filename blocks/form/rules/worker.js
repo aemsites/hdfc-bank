@@ -1,8 +1,8 @@
-export default async function initializeRuleEngineWorker(formDef, renderHTMLForm) {
-  if (typeof Worker === 'undefined') {
+export default async function initializeRuleEngineWorker(formDef, renderHTMLForm, bUseWorker) {
+  if (typeof Worker === 'undefined' || bUseWorker === false) {
     const ruleEngine = await import('./model/afb-runtime.js');
     const form = ruleEngine.createFormInstance(formDef);
-    return renderHTMLForm(form.getState(true), formDef.data);
+    return renderHTMLForm(form, formDef.data);
   }
   const myWorker = new Worker('/blocks/form/rules/RuleEngineWorker.js', { type: 'module' });
 
