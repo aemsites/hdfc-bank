@@ -1,0 +1,355 @@
+/* stylelint-disable no-descending-specificity */
+@import url('../../styles/color-palette.css');
+
+body.modal-open {
+  overflow: hidden;
+}
+
+.icon-modal dialog {
+  --dialog-border-radius: var(--form-modal-radius);  
+  overscroll-behavior: none;
+  border: 1px solid var(--color-interface-background-box-shadow-primary);
+  border-radius: var(--dialog-border-radius);
+}
+
+.icon-modal dialog:has(.field-aadharconsentpopup) {
+  width: 525px;
+  padding: 0;
+
+  .field-aadharconsentlabel { display: flex;
+    p, h3 { margin: 0 0 8px; }
+    b { font-size: var(--body-x-lg-font-size); }
+  }
+  
+  .field-aadharconsentlabel b::before { 
+    content: url('../../icons/aadhar-icon.svg'); 
+    padding-right: 10px;
+  }
+  
+  .field-selectlanguage { display: inline-grid; 
+    
+    label {
+      padding-top: 7px;
+      font-size: var(--body-sm-font-size);
+      text-align: justify;
+    }
+    
+    select {
+      height: 42px;
+      width: 330px;
+      padding: var(--form-input-padding) !important;
+      border: 1px solid var(--color-input-border-default) !important;
+      border-radius: var(--form-input-border-radius) !important;
+    }
+  }
+
+  fieldset[class*='field-aadharconsent-'] {
+    padding: 0;
+
+    div[class*='field-aadharconsenttext-'] { 
+      padding: 20px 0 0 24px; 
+
+      p { 
+        color: var(--color-input-text-default); 
+        font-weight: var(--font-weight-medium);
+      }      
+    }
+    .panel-wrapper { padding: 0; }
+    
+    div[class*='field-aadharconsenthelp-'] p {
+      color: var(--color-interface-text-secondary);
+      font-size: var(--body-x-sm-font-size);
+    }
+  }
+
+  .field-aadharconsentagree {
+    text-align: left;
+    max-width: 167px;
+    margin-top: 10px !important;
+  }
+}
+
+.modal-content {
+  max-width: 920px;
+  width: 100%;
+   color: var(--color-modal-interface-text-primary);
+   overflow: auto;
+
+  p {
+    font-size: var(--body-sm-font-size);
+    font-weight: var(--font-weight-regular);
+    line-height: var(--font-linehight-regular);
+    letter-spacing: 0; 
+    text-align: left;
+  }
+
+  legend{
+    display: none;
+  }
+
+  .field-label {
+    font-size: var(--body-lg-font-size);
+    font-weight: var(--font-weight-bold);
+    line-height: var(----font-linehight-large);
+    letter-spacing: 0;
+    text-align: center;
+    padding-top: 32px;
+  }
+
+  .panel-wrapper {
+    border: none;
+    padding: 20px 40px;
+  }
+
+  .form-disagreedummybutton,
+  .form-iagreeconsent1 {
+    margin-top: 1em;
+  }
+
+  .form-actionwrapperpanel .field-label {
+    display: none;
+  }
+
+  .field-viewallcardbenefitspanel {
+    p { margin: 3px;}
+    .popuptext-resp {margin-bottom: 15px;}
+    .field-label { display: none; }
+    
+    .field-cardbenefitstext {
+      p:has(b):not(:first-of-type) {margin-top: 16px;}
+    }
+
+    button{
+      text-align: justify;
+      background: var(--color-interface-background-quinary);
+      color:var(--color-action-background-primary-default);
+      padding-left: 10px !important;
+    }
+
+    button:hover{ background: var(--color-interface-background-quinary) !important; }
+  }
+}
+
+.icon-modal dialog .modal-content {
+  overflow-y: auto;
+  overscroll-behavior: none;
+  max-height: calc(95dvh - 60px);
+}
+
+@media (width >=768px) {
+  .icon-modal dialog {
+    width: 100%;
+    max-width: 480px;
+    font-size: var(--body-sm-font-size);
+    font-weight: var(--font-weight-regular);
+    line-height: var(--font-linehight-regular);
+    letter-spacing: 0;
+    text-align: left;
+    padding: 0;
+    overflow: hidden;
+    &.ytpanel-dialog{
+      max-width: 640px;
+    }
+  }
+
+
+  .icon-modal dialog .modal-content {
+    max-height: calc(100vh - 90px);
+  }
+}
+
+@media (width <= 540px) {
+  .icon-modal dialog:has(.field-aadharconsentpopup) {
+    width: 100%;
+  }
+}
+
+.icon-modal dialog::backdrop {
+  background-color: rgb(0 0 0 / 50%);
+}
+
+.icon-modal .close-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 24px;
+  height: auto;
+  padding: 24px 50px 0 24px;
+  border-radius: 0 var(--dialog-border-radius) 0 0;
+  background-color: unset;
+  text-overflow: clip;
+  margin: 0;
+  border: none;
+  color: var(--color-interface-text-secondary);
+}
+
+.icon-modal dialog .section {
+  padding: 0;
+}
+
+
+.field-viewallcardbenefitspanel{
+  padding: 20px !important;
+
+  .field-backlinkcardbenefits{
+    text-align: left;
+    padding-bottom: 20px;
+
+    button{
+      max-width: 100%;
+      border-radius: 6px;
+    }
+  }
+}
+fieldset[class*='field-helppopupcontainer'] {
+  padding: 5px !important;
+  .field-helppopuppanel {
+    padding: 0;
+  }
+  .field-helppopuplabel p {
+    text-align: center;
+    color: var(--color-interface-background-tertiary);
+    font-size: var(--body-md-font-size);
+    font-weight: var(--form-button-font-weight);
+  }
+  .field-helppanel1, .field-helppanel2 {
+    border: 1px dotted var(--color-interface-background-box-shadow-primary);
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    border-radius: 10px;
+    box-sizing: border-box;
+    overflow: hidden;
+    padding: 0 10px 0 0;
+    cursor: pointer;
+    .image-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 0 0 10px;
+      box-sizing: border-box;
+      img {
+        margin: 0 20px 0 0;
+      }
+    }
+    .button-wrapper {
+      text-align: left;
+      display: flex;
+      align-items: center;
+      flex-grow: 1;
+      padding: 0;
+      box-sizing: border-box;
+      button {
+        position: relative;
+        background: none;
+        color: var(--color-interface-background-tertiary);
+        font-size: var(--body-x-sm-font-size);
+        white-space: normal;
+        text-align: left;
+        &:focus{
+          outline: none;
+        }
+        &:hover {
+          background: none !important;
+        }
+        &:after {
+          content: '\003e';
+          position: absolute;
+          right: 0;
+          top: 50%;
+          font-size: var(--body-xx-lg-font-size);
+          transform: translateY(-50%);
+          display: flex;
+          box-sizing: border-box;
+          align-items: center;
+        }
+      }
+    }      
+  }
+  .field-customercarepanel {
+    display: flex;    
+    padding: 0;
+    .plain-text-wrapper{
+      p{
+        color: var(--color-interface-background-tertiary);
+      }
+    }
+    .field-helpcustomercaretext {
+      padding: 0 40px 0 10px;
+      b:first-child{
+        display: block;
+      }
+    }
+    .image-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 0 0 10px;
+      box-sizing: border-box;
+      img {
+        margin: 0 20px 0 0;
+      }
+    }
+  }    
+}
+fieldset[class*='field-helppopupsubpanel'] {
+  
+  .button-wrapper {
+    display: inline-block;
+    width: 50%;
+    text-align: center;
+    p:hover, a:hover, b:hover{
+      background: none !important;
+      color: var(--color-interface-background-tertiary);
+    }
+    a{
+      text-decoration: underline;
+      &:focus{
+        outline: none;
+      }
+    }
+    &:not(:last-child) {
+      text-align: left;
+      button {
+        width: auto;
+        &:hover {
+          background: none !important;
+        }
+      }      
+    }  
+    &:last-child {
+      text-align: right;
+      button {
+        text-decoration: none;
+        background: var(--color-action-background-ancillary-default);
+        color: var(--color-interface-background-primary);
+        border-radius: 20px;
+        padding: 0px 20px;
+        width: auto;
+        &:hover{
+          background: var(--color-action-background-ancillary-default) !important;
+        }
+      }
+      
+    }
+    button {
+      text-decoration: underline;
+      background: none;
+      color: var(--color-interface-background-tertiary);
+      height: auto;
+      font-size: var(--body-x-sm-font-size);
+    }
+  }
+}
+.icon-modal dialog {
+  &.helppoupsubpanel-dialog {
+    max-width: 600px;
+    .field-helppopupsubpanel {
+      .plain-text-wrapper {
+        font-size: var(--body-md-font-size);
+        color: var(--color-interface-background-tertiary);
+      }
+    }
+  }
+  
+}

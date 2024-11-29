@@ -6,10 +6,9 @@ body.modal-open {
 }
 
 .modal dialog {
-  --dialog-border-radius: 16px;
-  
+  --dialog-border-radius: 16px;  
   overscroll-behavior: none;
-  border: 1px solid #ccc;
+  border: 1px solid var(--color-interface-background-box-shadow-primary);
   border-radius: var(--dialog-border-radius);
 }
 
@@ -52,14 +51,14 @@ body.modal-open {
 
       p { 
         color: var(--color-input-text-default); 
-        font-weight: 500;
+        font-weight: var(----font-weight-medium);
       }      
     }
     .panel-wrapper { padding: 0; }
     
     div[class*='field-aadharconsenthelp-'] p {
       color: var(--color-interface-text-secondary);
-      font-size: 12px;
+      font-size: var(--body-x-sm-font-size);
     }
   }
 
@@ -77,8 +76,8 @@ body.modal-open {
    overflow: auto;
 
   p {
-    font-size: 14px;
-    font-weight: 400;
+    font-size: var(--body-sm-font-size);
+    font-weight: var(--font-weight-regular);
     line-height: 20px;
     letter-spacing: 0; 
     text-align: left;
@@ -89,8 +88,8 @@ body.modal-open {
   }
 
   .field-label {
-    font-size: 18px;
-    font-weight: 600;
+    font-size: var(--body-lg-font-size);
+    font-weight: var(--font-weight-bold);
     line-height: 28px;
     letter-spacing: 0;
     text-align: center;
@@ -141,8 +140,8 @@ body.modal-open {
   .modal dialog {
     width: 100%;
     max-width: 920px;
-    font-size: 14px;
-    font-weight: 400;
+    font-size: var(----body-sm-font-size);
+    font-weight: var(--font-weight-regular);
     line-height: 20px;
     letter-spacing: 0;
     text-align: left;
@@ -177,7 +176,7 @@ body.modal-open {
   text-overflow: clip;
   margin: 0;
   border: none;
-  color: #6b7280;
+  color: var(--color-interface-text-secondary);
 }
 
 .modal dialog .section {
