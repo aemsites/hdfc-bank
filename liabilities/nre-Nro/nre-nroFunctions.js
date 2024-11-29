@@ -850,6 +850,7 @@ const createIdComRequestObj = (globals) => {
       journeyID: formData.journeyId,
       journeyName: formData.journeyName,
       scope: 'ADOBE_ACNRI',
+      mobileNumber: globals.form.parentLandingPagePanel.landingPanel.loginFragmentNreNro.mobilePanel.registeredMobileNumber.$value,
     },
   };
   return idComObj;
@@ -1272,7 +1273,7 @@ async function accountOpeningNreNro(idComToken) {
  * Call Account Opening Function
  * @returns {PROMISE}
  */
-async function accountOpeningNreNro1(idComToken) {
+async function accountOpeningNreNro1(idComToken, globals) {
   const journeyParamStateInfo = finalResult.journeyParamStateInfo;
   const { fatca_response: response, selectedCheckedValue: accIndex } = currentFormContext;
   const jsonObj = {
@@ -1286,8 +1287,8 @@ async function accountOpeningNreNro1(idComToken) {
       maskedAccountNumber: 'X'.repeat((response.customerAccountDetailsDTO[accIndex].accountNumber.length - 4))
                             + response.customerAccountDetailsDTO[accIndex].accountNumber.slice((response.customerAccountDetailsDTO[accIndex].accountNumber.length - 4), (response.customerAccountDetailsDTO[accIndex].accountNumber.length)),
       branchCode: response.customerAccountDetailsDTO[accIndex].branchCode.toString(),
-      codeLC: currentFormContext.lcCode,
-      codeLG: currentFormContext.lgCode,
+      codeLC: 'INSTASTP',
+      codeLG: globals.form.wizardPanel.wizardFragment.wizardNreNro.confirmDetails.needBankHelp.bankUseFragment.mainBankUsePanel.lgCode.$value || '',
       flgChqBookIssue: 'N',
       productCode: journeyParamStateInfo.currentFormContext.productAccountType,
       StatusCode: 'Branch Approved',
@@ -1303,6 +1304,7 @@ async function accountOpeningNreNro1(idComToken) {
       userAgent: (typeof window !== 'undefined') ? window.navigator.userAgent : 'onLoad',
       journeyID: journeyParamStateInfo.currentFormContext.journeyID,
       journeyName: currentFormContext.journeyName,
+      mobileNo: journeyParamStateInfo.currentFormContext.mobileNumber,
     },
   };
 
@@ -1579,9 +1581,9 @@ const crmLeadIdDetail = (globals) => {
       custBirthDate: parseDate(response.datBirthCust),
       identifierName: globals.form.parentLandingPagePanel.landingPanel.loginFragmentNreNro.identifierPanel.pan.$value ? 'PAN' : 'dob',
       preferredChannel: '',
-      territoryName: 'Khanda Colony - Panvel',
+      territoryName: '',
       address: `${response?.txtCustadrAdd1} ${response?.txtCustadrAdd2} ${response?.txtCustadrAdd3}`,
-      companyName: 'ADOBE SYSTEMS INDIA PVT LTD',
+      companyName: '',
       nomineeAge: response.customerAccountDetailsDTO[accIndex].prodTypeDesc.toString(),
       typeOfFirm: financialDetails.typeOfCompoanyFirm.$value,
       typCompany: '',
@@ -1603,8 +1605,8 @@ const crmLeadIdDetail = (globals) => {
       countryOfNominee: '',
       country: response.namHoldadrCntry,
       passpostExpiryDate: '',
-      codeLC: globals.form.wizardPanel.wizardFragment.wizardNreNro.confirmDetails.needBankHelp.bankUseFragment.mainBankUsePanel.lcCode.$value,
-      codeLG: globals.form.wizardPanel.wizardFragment.wizardNreNro.confirmDetails.needBankHelp.bankUseFragment.mainBankUsePanel.lgCode.$value,
+      codeLC: 'INSTASTP',
+      codeLG: globals.form.wizardPanel.wizardFragment.wizardNreNro.confirmDetails.needBankHelp.bankUseFragment.mainBankUsePanel.lgCode.$value || '',
       applicationDate: new Date().toISOString().slice(0, 19),
       DLExpiryDate: '',
       selfEmployedProfessionalCategory: financialDetails.selfEmployedProfessional.$value,
@@ -1836,6 +1838,7 @@ const crmLeadIdDetail = (globals) => {
       subLeadSource: 'Adobe Insta Lead',
       LayoutKey: '100542',
       StatusCodeKey: '9',
+      misCode: '700'
     },
   };
 
