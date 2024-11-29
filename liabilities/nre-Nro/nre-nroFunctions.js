@@ -1306,6 +1306,7 @@ async function accountOpeningNreNro1(idComToken, globals) {
       userAgent: (typeof window !== 'undefined') ? window.navigator.userAgent : 'onLoad',
       journeyID: journeyParamStateInfo.currentFormContext.journeyID,
       journeyName: currentFormContext.journeyName,
+      mobileNo: journeyParamStateInfo.currentFormContext.mobileNumber,
     },
   };
 
