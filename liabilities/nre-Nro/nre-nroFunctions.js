@@ -354,11 +354,11 @@ const validateLogin = (globals) => {
 
 // console.log(payload, globals);
 const sessionService = async (globals) => {
-  const jidTemporary = createJourneyId(VISIT_MODE, JOURNEY_NAME, CHANNEL, globals);
+  
   debugger;
   const reqObj = {
     requestString: {
-      jid: globals.form.runtime.journeyId.$value ?? jidTemporary,
+      jid: globals.form.runtime.journeyId.$value,
       browserFingerPrint: '',
       clientIp: '',
       payloadEncrypted: '',
@@ -373,6 +373,7 @@ const sessionService = async (globals) => {
 };
 
 const getOtpNRE = async (mobileNumber, pan, dob, globals) => {
+  const jidTemporary = createJourneyId(VISIT_MODE, JOURNEY_NAME, CHANNEL, globals);
   /* jidTemporary  temporarily added for FD development it has to be removed completely once runtime create journey id is done with FD */
   //const jidTemporary = createJourneyId(VISIT_MODE, JOURNEY_NAME, CHANNEL, globals);
   const [year, month, day] = dob.$value ? dob.$value.split('-') : ['', '', ''];
