@@ -114,12 +114,20 @@ function sendPageloadEvent(journeyState, formData, pageName, errorAPI, errorMess
       // digitalData.formDetails.natureofbusiness = dataReq.natureofbusiness;
       // digitalData.formDetails.typeofcompany = dataReq.typeofcompany;
       // digitalData.formDetails.typeofprofessional = dataReq.typeofprofessional;
+      if (window) {
+        window.digitalData = digitalData || {};
+      }
+      _satellite.track('pageload');
       break;
     }
     case 'select account type': {
       digitalData.formDetails.bankBranch = currentFormContext?.fatca_response?.customerAccountDetailsDTO[currentFormContext.selectedCheckedValue]?.branchName ?? '';
       digitalData.formDetails.existingAccountType = currentFormContext?.existingAccountType ?? '';
       digitalData.formDetails.accountType = currentFormContext.productAccountName ?? '';
+      if (window) {
+        window.digitalData = digitalData || {};
+      }
+      _satellite.track('pageload');
 
       break;
     }
@@ -140,25 +148,25 @@ function sendPageloadEvent(journeyState, formData, pageName, errorAPI, errorMess
       digitalData.formDetails.natureofbusiness = formData?.form?.confirmDetails?.financialDetails?.natureOfBusiness ?? '';
       digitalData.formDetails.typeofcompany = formData?.form?.confirmDetails?.financialDetails?.typeOfCompoanyFirm ?? '';
       digitalData.formDetails.typeofprofessional = formData?.form?.confirmDetails?.financialDetails?.selfEmployedProfessional ?? '';
+      if (window) {
+        window.digitalData = digitalData || {};
+      }
+      _satellite.track('pageload');
+      break;
     }
     case 'Step 5 - Confirmation': {
-      digitalData.formDetails.accountType;
-    }
-    case 'confirmation page': {
-      // digitalData.formDetails.accountType = formData?.accounttype ?? '';
-      // digitalData.formDetails.bankBranch = formData?.homeBranch ?? '';
-      // window.digitalData = digitalData || {};
-      // // digitalData.formDetails.branchCode = '';
-      // // digitalData.event.authMethod = '';
-      // // digitalData.formDetails.formSubmitted = '';
+      digitalData.formDetails.accountType = currentFormContext.accountType ?? '';
+      digitalData.formDetails.branchCode = currentFormContext.branchCode ?? '';
+      digitalData.formDetails.bankBranch = currentFormContext.branchName ?? '';
+      if (window) {
+        window.digitalData = digitalData || {};
+      }
+      _satellite.track('pageload');
+      break;
     }
     default:
       // do nothing
   }
-  if (window) {
-    window.digitalData = digitalData || {};
-  }
-  _satellite.track('pageload');
 }
 
 // /**
@@ -331,13 +339,12 @@ function sendSubmitClickEvent(phone, eventType, linkType, formData, journeyState
       _satellite.track('event');
       break;
     }
-    case 'on rating click': {
+    case 'on submit click': {
       if (window) {
         window.digitalData = digitalData || {};
-        digitalData.event.status = 1;
-        digitalData.event.rating = describeIssue ?? '';
+        digitalData.event.status = (formData?.form?.thankyou?.facingIssue === '0') ? 'No' : 'Yes';
+        digitalData.event.rating = currentFormContext.ratedVal;
       }
-      digitalData.page.pageInfo.pageName = 'Step 5 - Confirmation';
       _satellite.track('submit');
       break;
     }

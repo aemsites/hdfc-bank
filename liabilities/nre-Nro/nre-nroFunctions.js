@@ -195,7 +195,7 @@ const getCountryName = (countryCodeIst) => new Promise((resolve) => {
 
 function errorHandling(response, journeyState, globals) {
   setTimeout(() => {
-    Promise.resolve(sendAnalytics('page load-Error Page', { }, 'CUSTOMER_IDENTITY UNRESOLVED', globals));
+    Promise.resolve(sendAnalytics('page load-Error Page', { }, 'CUSTOMER INVALID OTP POST IDENTIFICATION', globals));
   }, 2000);
   const {
     mobileNumber,
@@ -921,7 +921,6 @@ const finalResult = {
  */
 function prefillThankYouPage(accountres, globals) {
   const { thankyouLeftPanel } = globals.form.thankYouPanel.thankYoufragment;
-
   globals.functions.setProperty(globals.form.parentLandingPagePanel, { visible: false });
   globals.functions.setProperty(globals.form.thankYouPanel, { visible: true });
   const journeyAccountType = finalResult.journeyParamStateInfo.currentFormContext.journeyAccountType === 'NRE' ? 'NRO' : 'NRE';
@@ -954,8 +953,7 @@ function prefillThankYouPage(accountres, globals) {
     errorHandling('', 'CUSTOMER_ONBOARDING_FAILURE', globals);
   }
     sendAnalytics('thankyou page click', { }, 'THANKYOU_PAGE_TYPE', globals);
-    // sendPageloadEvent('page load thankyou page', formData, 'thankyou page');
-}
+    // sendPageloadEvent('page load thankyou page', formData, 'thankyou page');  }
 
 /**
  * Call Account Opening Function
@@ -1559,7 +1557,7 @@ const switchWizard = (globals) => {
 };
 
 const onPageLoadAnalytics = async (globals) => {
-  sendAnalytics('page load-Step 1 - Identify Yourself', { }, 'ON_PAGE_LOAD', globals);
+  sendAnalytics('page load-Step 1 - Identify Yourself', { }, 'ON_PAGE_LOADCUSTOMER_IDENTITY_INITIATED', globals);
 };
 
 setTimeout(() => {
@@ -1943,7 +1941,7 @@ function nreNroAccountType(nroAccountTypePanel, nreAccountTypePanel, globals) {
     currentFormContext.selectedAccountName = 'NRE - Current Account';
   }
 
-  sendAnalytics('select account type click', { productAccountType: currentFormContext?.productAccountType ?? '' }, 'ON_SELECT_ACCOUNT_TYPE', globals);
+  sendAnalytics('select account type click', { productAccountType: currentFormContext?.productAccountType ?? '' }, 'CUSTOMER_ACCOUNT_VARIANT_SELECTED', globals);
 }
 
 function multiAccountVarient(selectAccount, globals) {
