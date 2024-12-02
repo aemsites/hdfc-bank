@@ -351,7 +351,23 @@ const validateLogin = (globals) => {
   }
 };
 
-const getOtpNRE = (mobileNumber, pan, dob, globals) => {
+// console.log(payload, globals);
+const sessionService = async (payload) => {
+  try {
+    const apiEndPoint = '/content/hdfcbankformssecurity/api/journeyinit.json';
+    const path = urlPath(apiEndPoint);
+
+    const responseObj = await fetchJsonResponse(path, payload, 'POST', true);
+    if (responseObj && (responseObj.statusCode === 'SM00' || responseObj.statusCode === 'SM01')) {
+      return true;
+    }
+    return false;
+  } catch (e) {
+    return { value: e, status: false };
+  }
+};
+
+const getOtpNRE = async (mobileNumber, pan, dob, globals) => {
   /* jidTemporary  temporarily added for FD development it has to be removed completely once runtime create journey id is done with FD */
   const jidTemporary = createJourneyId(VISIT_MODE, JOURNEY_NAME, CHANNEL, globals);
   const [year, month, day] = dob.$value ? dob.$value.split('-') : ['', '', ''];
@@ -374,6 +390,20 @@ const getOtpNRE = (mobileNumber, pan, dob, globals) => {
     pan.$value = '';
     datOfBirth = year + month + day;
   }
+
+  const reqObj = {
+    requestString: {
+      jid: globals.form.runtime.journeyId.$value ?? jidTemporary,
+      browserFingerPrint: '',
+      clientIp: '',
+      payloadEncrypted: '',
+    },
+  };
+
+  const sessionResponse = await sessionService(reqObj, globals);
+  // if (!sessionResponse) {
+  //   throw new Error('Session initialization failed');
+  // }
   // currentFormContext.isdCode = '91'; // TODO : Comment
   const jsonObj = {
     requestString: {
