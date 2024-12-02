@@ -35,17 +35,66 @@ function hideLoaderGif() {
  * @returns {Promise<*>} - A promise that resolves to the JSON response from the server.
  */
 // eslint-disable-next-line default-param-last
+// async function fetchJsonResponse(url, payload, method, loader = false) {
+//   try {
+//     if (env === 'dev') {
+//       return fetch(url, {
+//         method,
+//         body: payload ? JSON.stringify(payload) : null,
+//         mode: 'cors',
+//         headers: {
+//           'Content-type': 'text/plain',
+//           Accept: 'application/json',
+//         },
+//       })
+//         .then((res) => {
+//           if (loader) hideLoaderGif();
+//           return res.json();
+//         });
+//     }
+//     const responseObj = await invokeRestAPIWithDataSecurity(payload);
+//     const response = await fetch(url, {
+//       method,
+//       body: responseObj.dataEnc,
+//       mode: 'cors',
+//       headers: {
+//         'Content-type': 'text/plain',
+//         Accept: 'text/plain',
+//         'X-Enckey': responseObj.keyEnc,
+//         'X-Encsecret': responseObj.secretEnc,
+//       },
+//     });
+//     const result = await response.text();
+//     const decryptedResult = await decryptDataES6(result, responseObj.secret);
+//     if (loader) hideLoaderGif();
+//     return JSON.parse(decryptedResult);
+//   } catch (error) {
+//     // eslint-disable-next-line no-console
+//     console.error('Error in fetching JSON response:', error);
+//     throw error;
+//   }
+// }
+
 async function fetchJsonResponse(url, payload, method, loader = false) {
   try {
+    const currentDate = new Date();
     if (env === 'dev') {
+      const headers = {
+        'Content-type': 'text/plain',
+        Accept: 'application/json',
+      };
+      let journeyID = '';
+      if (payload.requestString.journeyID || payload.requestString.journeyid || payload.requestString.jid) {
+        journeyID = payload.requestString.journeyID || payload.requestString.journeyid || payload.requestString.jid;
+      }
+      console.log('journeyIDsssssssssss', journeyID);
+      headers.iat = window ? btoa(currentDate.getTime()) : '';
+      headers.journeyid = journeyID;
       return fetch(url, {
         method,
         body: payload ? JSON.stringify(payload) : null,
         mode: 'cors',
-        headers: {
-          'Content-type': 'text/plain',
-          Accept: 'application/json',
-        },
+        headers: (headers && typeof headers !== 'undefined') ? headers : {},
       })
         .then((res) => {
           if (loader) hideLoaderGif();
@@ -69,7 +118,7 @@ async function fetchJsonResponse(url, payload, method, loader = false) {
     if (loader) hideLoaderGif();
     return JSON.parse(decryptedResult);
   } catch (error) {
-    // eslint-disable-next-line no-console
+  // eslint-disable-next-line no-console
     console.error('Error in fetching JSON response:', error);
     throw error;
   }
