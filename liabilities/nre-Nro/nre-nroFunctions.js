@@ -35,6 +35,7 @@ import {
 } from './constant.js';
 import {
   sendAnalytics,
+  sendPageloadEvent,
 } from './analytics.js';
 import { reloadPage } from '../../common/functions.js';
 
@@ -68,7 +69,6 @@ currentFormContext.productAccountType = '';
 currentFormContext.productAccountName = '';
 currentFormContext.journeyAccountType = '';
 currentFormContext.countryName = '';
-currentFormContext.mobileWithISD = '';
 currentFormContext.phoneWithISD = '';
 
 formRuntime.getOtpLoader = currentFormContext.getOtpLoader || (typeof window !== 'undefined') ? displayLoader : false;
@@ -195,7 +195,7 @@ const getCountryName = (countryCodeIst) => new Promise((resolve) => {
 
 function errorHandling(response, journeyState, globals) {
   setTimeout(() => {
-    Promise.resolve(sendAnalytics('page load-Error Page', { }, 'ON_ERROR_PAGE_LOAD', globals));
+    Promise.resolve(sendAnalytics('page load-Error Page', { }, 'CUSTOMER_IDENTITY UNRESOLVED', globals));
   }, 2000);
   const {
     mobileNumber,
@@ -953,6 +953,8 @@ function prefillThankYouPage(accountres, globals) {
     globals.functions.setProperty(globals.form.thankYouPanel, { visible: false });
     errorHandling('', 'CUSTOMER_ONBOARDING_FAILURE', globals);
   }
+    sendAnalytics('thankyou page click', { }, 'THANKYOU_PAGE_TYPE', globals);
+    // sendPageloadEvent('page load thankyou page', formData, 'thankyou page');
 }
 
 /**
