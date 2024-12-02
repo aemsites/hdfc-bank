@@ -352,19 +352,20 @@ const validateLogin = (globals) => {
 };
 
 // console.log(payload, globals);
-const sessionService = async (payload) => {
-  try {
+const sessionService = async () => {
+  const reqObj = {
+    requestString: {
+      jid: globals.form.runtime.journeyId.$value ?? jidTemporary,
+      browserFingerPrint: '',
+      clientIp: '',
+      payloadEncrypted: '',
+    },
+  };
     const apiEndPoint = '/content/hdfcbankformssecurity/api/journeyinit.json';
     const path = urlPath(apiEndPoint);
 
-    const responseObj = await fetchJsonResponse(path, payload, 'POST', true);
-    if (responseObj && (responseObj.statusCode === 'SM00' || responseObj.statusCode === 'SM01')) {
-      return true;
-    }
-    return false;
-  } catch (e) {
-    return { value: e, status: false };
-  }
+    return fetchJsonResponse(path, reqObj, 'POST', true);
+   
 };
 
 const getOtpNRE = async (mobileNumber, pan, dob, globals) => {
@@ -391,20 +392,10 @@ const getOtpNRE = async (mobileNumber, pan, dob, globals) => {
     datOfBirth = year + month + day;
   }
 
-  const reqObj = {
-    requestString: {
-      jid: globals.form.runtime.journeyId.$value ?? jidTemporary,
-      browserFingerPrint: '',
-      clientIp: '',
-      payloadEncrypted: '',
-    },
-  };
+  
 
-  const sessionResponse = await sessionService(reqObj, globals);
-  // if (!sessionResponse) {
-  //   throw new Error('Session initialization failed');
-  // }
-  // currentFormContext.isdCode = '91'; // TODO : Comment
+  //const sessionResponse = await sessionService(reqObj, globals);
+  
   const jsonObj = {
     requestString: {
       mobileNumber: currentFormContext.isdCode + mobileNumber.$value,
@@ -2088,4 +2079,5 @@ export {
   feedbackButton,
   selectVarient,
   setAMBValue,
+  sessionService,
 };
