@@ -7,6 +7,7 @@ import {
 } from '../../common/analyticsConstants.js';
 import {
   createDeepCopyFromBlueprint,
+  generateHash,
   santizedFormDataWithContext,
 } from '../../common/formutils.js';
 import { FORM_NAME } from './constant.js';
@@ -118,7 +119,7 @@ function sendPageloadEvent(journeyState, formData, pageName) {
  * @param {object} formContext
  * @param {object} digitalData
  */
-function sendSubmitClickEvent(phone, eventType, linkType, formData, journeyState, digitalData) {
+async function sendSubmitClickEvent(phone, eventType, linkType, formData, journeyState, digitalData) {
   setAnalyticClickGenericProps(eventType, linkType, formData, journeyState, digitalData);
   digitalData.page.pageInfo.pageName = PAGE_NAME.ccc[eventType];
   switch (eventType) {
@@ -152,8 +153,11 @@ function sendSubmitClickEvent(phone, eventType, linkType, formData, journeyState
       break;
     }
     case 'check offers': {
+      digitalData.event = {
+        status: '1',
+      };
       digitalData.user.gender = formData.form.gender;
-      digitalData.user.email = formData.form.workEmailAddress;
+      digitalData.user.email = formData.form.workEmailAddress ? await generateHash(formData.form.workEmailAddress) : '';
       if (formData.form.currentAddressToggle === 'off') {
         digitalData.formDetails = {
           pincode: currentFormContext?.breDemogResponse?.VDCUSTZIPCODE,
