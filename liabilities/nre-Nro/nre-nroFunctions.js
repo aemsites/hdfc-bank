@@ -23,6 +23,7 @@ import {
   hideLoaderGif,
   fetchJsonResponse,
   getJsonResponse,
+  fetchJsonResponse1,
 } from '../../common/makeRestAPI.js';
 import * as NRE_CONSTANT from './constant.js';
 import {
@@ -352,7 +353,9 @@ const validateLogin = (globals) => {
 };
 
 // console.log(payload, globals);
-const sessionService = async () => {
+const sessionService = async (globals) => {
+  const jidTemporary = createJourneyId(VISIT_MODE, JOURNEY_NAME, CHANNEL, globals);
+  debugger;
   const reqObj = {
     requestString: {
       jid: globals.form.runtime.journeyId.$value ?? jidTemporary,
@@ -361,16 +364,17 @@ const sessionService = async () => {
       payloadEncrypted: '',
     },
   };
+  debugger;
     const apiEndPoint = '/content/hdfcbankformssecurity/api/journeyinit.json';
     const path = urlPath(apiEndPoint);
 
-    return fetchJsonResponse(path, reqObj, 'POST', true);
+    return fetchJsonResponse1(path, reqObj, 'POST', true);
    
 };
 
 const getOtpNRE = async (mobileNumber, pan, dob, globals) => {
   /* jidTemporary  temporarily added for FD development it has to be removed completely once runtime create journey id is done with FD */
-  const jidTemporary = createJourneyId(VISIT_MODE, JOURNEY_NAME, CHANNEL, globals);
+  //const jidTemporary = createJourneyId(VISIT_MODE, JOURNEY_NAME, CHANNEL, globals);
   const [year, month, day] = dob.$value ? dob.$value.split('-') : ['', '', ''];
   currentFormContext.action = 'getOTP';
   currentFormContext.journeyID = globals.form.runtime.journeyId.$value || jidTemporary;
