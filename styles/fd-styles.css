@@ -2987,20 +2987,20 @@ body.fdlien:has(.field-selectkycoptionspanel[data-visible='true']) main {
     .field-confirmcardtnc3 {
       .field-description {
         position: absolute;
-        top: 40px;
-        left: 35px;
+        top: 15%;
+        left: 3.2%;
       }
     }
 
     .field-confirmcardtnc2 {
       .field-description {
-        top: 100px;
+        top: 38%;
       }
     }
 
     .field-confirmcardtnc3 {
       .field-description {
-        top: 140px;
+        top: 54%;
         left: 28%;
       }
     }
@@ -4147,20 +4147,22 @@ body.fdlien:has(.field-selectkycoptionspanel[data-visible='true']) main {
       .field-selectcardtnc {
         .field-confirmcardtnc1 {
           .field-description {
-            top: 65px !important;
+            top: 22%;
+            left: 5%;
           }
         }
 
         .field-confirmcardtnc2 {
           .field-description {
-            top: 110px !important;
+            top: 43%;
+            left: 5%;
           }
         }
 
         .field-confirmcardtnc3 {
           .field-description {
-            top: 130px !important;
-            left: 47% !important;
+            top: 57%;
+            left: 46%;
           }
         }
       }
@@ -4859,20 +4861,22 @@ body.fdlien:has(.field-selectkycoptionspanel[data-visible='true']) main {
 
         .field-confirmcardtnc1 {
           .field-description {
-            top: 90px !important;
+            top: 24%;
+            left: 10%;
           }
         }
 
         .field-confirmcardtnc2 {
           .field-description {
-            top: 170px !important;
+            top: 47%;
+            left: 10%;
           }
         }
 
         .field-confirmcardtnc3 {
           .field-description {
-            top: 220px !important;
-            left: 35px !important;
+            top: 62%;
+            left: 10%;
           }
         }
       }
