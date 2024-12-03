@@ -94,7 +94,14 @@ async function fetchJsonResponse(url, payload, method, loader = false) {
         method,
         body: payload ? JSON.stringify(payload) : null,
         mode: 'cors',
-        headers: (headers && typeof headers !== 'undefined') ? headers : {},
+        headers:{
+        'Content-type': 'text/plain',
+        Accept: 'application/json',
+        'journeyid': journeyID,
+        'iat': window ? btoa(currentDate.getTime()) : '',
+
+        },
+        credentials: 'same-origin'
       })
         .then((res) => {
           if (loader) hideLoaderGif();
@@ -109,6 +116,64 @@ async function fetchJsonResponse(url, payload, method, loader = false) {
       headers: {
         'Content-type': 'text/plain',
         Accept: 'text/plain',
+        credentials: 'include',
+        'X-Enckey': responseObj.keyEnc,
+        'X-Encsecret': responseObj.secretEnc,
+      },
+    });
+    const result = await response.text();
+    const decryptedResult = await decryptDataES6(result, responseObj.secret);
+    if (loader) hideLoaderGif();
+    return JSON.parse(decryptedResult);
+  } catch (error) {
+  // eslint-disable-next-line no-console
+    console.error('Error in fetching JSON response:', error);
+    throw error;
+  }
+}
+
+async function fetchJsonResponse1(url, payload, method, loader = false) {
+  try {
+    const currentDate = new Date();
+    if (env === 'dev') {
+      const headers = {
+        'Content-type': 'text/plain',
+        Accept: 'application/json',
+      };
+      let journeyID = '';
+      if (payload.requestString.journeyID || payload.requestString.journeyid || payload.requestString.jid) {
+        journeyID = payload.requestString.journeyID || payload.requestString.journeyid || payload.requestString.jid;
+      }
+      console.log('journeyIDsssssssssss', journeyID);
+      headers.iat = window ? btoa(currentDate.getTime()) : '';
+      headers.journeyid = journeyID;
+      return fetch(url, {
+        method,
+        body: payload ? JSON.stringify(payload) : null,
+        mode: 'cors',
+        headers:{
+          'Content-type': 'text/plain',
+        Accept: 'application/json',
+        journeyid: journeyID,
+        iat: window ? btoa(currentDate.getTime()) : '',
+
+        },
+        credentials: 'same-origin'
+      })
+        .then((res) => {
+          if (loader) hideLoaderGif();
+          return res.json();
+        });
+    }
+    const responseObj = await invokeRestAPIWithDataSecurity(payload);
+    const response = await fetch(url, {
+      method,
+      body: responseObj.dataEnc,
+      mode: 'cors',
+      headers: {
+        'Content-type': 'text/plain',
+        Accept: 'text/plain',
+        credentials: 'same-origin',
         'X-Enckey': responseObj.keyEnc,
         'X-Encsecret': responseObj.secretEnc,
       },
@@ -401,4 +466,5 @@ export {
   fetchIPAResponse,
   chainedFetchAsyncCall,
   fetchRecursiveResponse,
+  fetchJsonResponse1,
 };

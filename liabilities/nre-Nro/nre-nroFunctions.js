@@ -23,6 +23,7 @@ import {
   hideLoaderGif,
   fetchJsonResponse,
   getJsonResponse,
+  fetchJsonResponse1,
 } from '../../common/makeRestAPI.js';
 import * as NRE_CONSTANT from './constant.js';
 import {
@@ -352,24 +353,29 @@ const validateLogin = (globals) => {
 };
 
 // console.log(payload, globals);
-const sessionService = async (payload) => {
-  try {
+const sessionService = async (globals) => {
+  
+  debugger;
+  const reqObj = {
+    requestString: {
+      jid: globals.form.runtime.journeyId.$value,
+      browserFingerPrint: '',
+      clientIp: '',
+      payloadEncrypted: '',
+    },
+  };
+  debugger;
     const apiEndPoint = '/content/hdfcbankformssecurity/api/journeyinit.json';
     const path = urlPath(apiEndPoint);
 
-    const responseObj = await fetchJsonResponse(path, payload, 'POST', true);
-    if (responseObj && (responseObj.statusCode === 'SM00' || responseObj.statusCode === 'SM01')) {
-      return true;
-    }
-    return false;
-  } catch (e) {
-    return { value: e, status: false };
-  }
+    return fetchJsonResponse1(path, reqObj, 'POST', true);
+   
 };
 
 const getOtpNRE = async (mobileNumber, pan, dob, globals) => {
-  /* jidTemporary  temporarily added for FD development it has to be removed completely once runtime create journey id is done with FD */
   const jidTemporary = createJourneyId(VISIT_MODE, JOURNEY_NAME, CHANNEL, globals);
+  /* jidTemporary  temporarily added for FD development it has to be removed completely once runtime create journey id is done with FD */
+  //const jidTemporary = createJourneyId(VISIT_MODE, JOURNEY_NAME, CHANNEL, globals);
   const [year, month, day] = dob.$value ? dob.$value.split('-') : ['', '', ''];
   currentFormContext.action = 'getOTP';
   currentFormContext.journeyID = globals.form.runtime.journeyId.$value || jidTemporary;
@@ -391,20 +397,10 @@ const getOtpNRE = async (mobileNumber, pan, dob, globals) => {
     datOfBirth = year + month + day;
   }
 
-  const reqObj = {
-    requestString: {
-      jid: globals.form.runtime.journeyId.$value ?? jidTemporary,
-      browserFingerPrint: '',
-      clientIp: '',
-      payloadEncrypted: '',
-    },
-  };
+  
 
-  const sessionResponse = await sessionService(reqObj, globals);
-  // if (!sessionResponse) {
-  //   throw new Error('Session initialization failed');
-  // }
-  // currentFormContext.isdCode = '91'; // TODO : Comment
+  //const sessionResponse = await sessionService(reqObj, globals);
+  
   const jsonObj = {
     requestString: {
       mobileNumber: currentFormContext.isdCode + mobileNumber.$value,
@@ -2088,4 +2084,5 @@ export {
   feedbackButton,
   selectVarient,
   setAMBValue,
+  sessionService,
 };

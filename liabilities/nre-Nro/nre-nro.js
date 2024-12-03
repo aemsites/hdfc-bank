@@ -39,6 +39,7 @@ import {
   feedbackButton,
   selectVarient,
   setAMBValue,
+  sessionService,
 
 } from './nre-nroFunctions.js';
 
@@ -98,4 +99,5 @@ export {
   feedbackButton,
   selectVarient,
   setAMBValue,
+  sessionService,
 };
