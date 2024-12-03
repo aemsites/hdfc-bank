@@ -895,6 +895,8 @@ async function idComRedirection(globals) {
     await globals.functions.setProperty(globals.form.parentLandingPagePanel.landingPanel.idcom_token, { value: resp.authCode });
     await invokeJourneyDropOffUpdate('IDCOM_REDIRECTION_INITIATED', mobileNumber, leadProfileId, journeyID, globals);
     window.location.href = resp.redirectUrl;
+  } else {
+    errorHandling('', 'IDCOM_REDIRECTION_FAILURE', globals);
   }
 }
 
