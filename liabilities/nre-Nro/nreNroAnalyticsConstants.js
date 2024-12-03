@@ -112,7 +112,7 @@ const data = {
     StepName: 'Confirm Details',
     linkPosition: 'Form',
   }, 
-  'on rating click': {
+  'on submit click': {
     linkType: 'button',
     StepName: 'Step 5 - Confirmation',
     linkPosition: 'Form',
