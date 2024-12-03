@@ -165,10 +165,6 @@ function sendPageloadEvent(journeyState, formData, pageName, errorAPI, errorMess
     default:
     // do nothing
   }
-  if (window) {
-    window.digitalData = digitalData || {};
-  }
-  _satellite.track('pageload');
 }
 
 // /**
