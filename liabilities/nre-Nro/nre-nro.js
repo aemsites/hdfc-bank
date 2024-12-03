@@ -27,7 +27,6 @@ import {
   prefillAccountDetail,
   fetchIdComToken,
   prefillThankYouPage,
-  accountOpeningNreNro,
   validateJourneyParams,
   errorHandling,
   getCountryName,
@@ -39,8 +38,6 @@ import {
   feedbackButton,
   selectVarient,
   setAMBValue,
-  sessionService,
-
 } from './nre-nroFunctions.js';
 
 import { sendAnalytics } from './analytics.js';
@@ -87,7 +84,6 @@ export {
   prefillAccountDetail,
   fetchIdComToken,
   prefillThankYouPage,
-  accountOpeningNreNro,
   validateJourneyParams,
   errorHandling,
   postIdCommRedirect,
@@ -99,5 +95,4 @@ export {
   feedbackButton,
   selectVarient,
   setAMBValue,
-  sessionService,
 };
