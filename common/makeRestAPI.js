@@ -34,10 +34,17 @@ function hideLoaderGif() {
  * @param {boolean} [loader=false] - Whether to hide the loader GIF after the response is received (default is false).
  * @returns {Promise<*>} - A promise that resolves to the JSON response from the server.
  */
-// eslint-disable-next-line default-param-last
+
 async function fetchJsonResponse(url, payload, method, loader = false) {
   try {
+    const currentDate = new Date();
     if (env === 'dev') {
+      const headers = {
+        'Content-type': 'text/plain',
+        Accept: 'application/json',
+      };
+
+      headers.iat = window ? btoa(currentDate.getTime()) : '';
       return fetch(url, {
         method,
         body: payload ? JSON.stringify(payload) : null,
@@ -45,7 +52,10 @@ async function fetchJsonResponse(url, payload, method, loader = false) {
         headers: {
           'Content-type': 'text/plain',
           Accept: 'application/json',
+          iat: window ? btoa(currentDate.getTime()) : '',
+
         },
+        credentials: 'same-origin',
       })
         .then((res) => {
           if (loader) hideLoaderGif();
@@ -60,6 +70,7 @@ async function fetchJsonResponse(url, payload, method, loader = false) {
       headers: {
         'Content-type': 'text/plain',
         Accept: 'text/plain',
+        credentials: 'include',
         'X-Enckey': responseObj.keyEnc,
         'X-Encsecret': responseObj.secretEnc,
       },
@@ -69,7 +80,7 @@ async function fetchJsonResponse(url, payload, method, loader = false) {
     if (loader) hideLoaderGif();
     return JSON.parse(decryptedResult);
   } catch (error) {
-    // eslint-disable-next-line no-console
+  // eslint-disable-next-line no-console
     console.error('Error in fetching JSON response:', error);
     throw error;
   }
