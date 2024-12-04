@@ -127,7 +127,7 @@ async function sendSubmitClickEvent(phone, eventType, linkType, formData, journe
   switch (eventType) {
     case 'otp click': {
       digitalData.event = {
-        phone,
+        phone: formData.form.login.maskedMobileNumber ? await generateHash(formData.form.login.maskedMobileNumber) : '',
         validationMethod: getValidationMethod(formData),
       };
       if (window) {
