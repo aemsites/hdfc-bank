@@ -65,8 +65,8 @@ function setAnalyticClickGenericProps(linkName, linkType, formData, journeyState
 }
 
 const getValidationMethod = (formContext) => {
-  if (formContext && formContext?.login && formContext.login.panDobSelection) {
-    return formContext.login.panDobSelection === '0' ? 'DOB' : 'PAN';
+  if (formContext && formContext.form.login.panDobSelection) {
+    return formContext.form.login.panDobSelection === '0' ? 'DOB' : 'PAN';
   }
   return '';
 };
