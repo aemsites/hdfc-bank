@@ -29,6 +29,8 @@ function setAnalyticPageLoadProps(journeyState, formData, digitalData) {
   digitalData.user.journeyState = journeyState;
   digitalData.user.casa = '';
   digitalData.form.name = FORM_NAME;
+  const leadID = currentFormContext.LEAD_ID || ((typeof window !== 'undefined') && new URLSearchParams(window.location.search).get('leadId')) || '';
+  digitalData.user.leadID = leadID;
 }
 
 /**
