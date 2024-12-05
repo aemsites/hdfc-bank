@@ -380,6 +380,9 @@ const getOtpNRE = async (mobileNumber, pan, dob, globals) => {
   const sessionInitPromise = await sessionService(jidTemporary);
   Promise.resolve(sessionInitPromise)
   .then((res) => {
+    res.headers.forEach((header) => {
+      console.log(header);
+    });
     console.log(res);
   })
   .catch((err) => {
