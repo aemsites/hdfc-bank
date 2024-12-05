@@ -353,12 +353,12 @@ const validateLogin = (globals) => {
 };
 
 // console.log(payload, globals);
-const sessionService = async (globals) => {
+const sessionService = async (journeyId) => {
   
   debugger;
   const reqObj = {
     requestString: {
-      jid: globals.form.runtime.journeyId.$value,
+      jid: journeyId,
       browserFingerPrint: '',
       clientIp: '',
       payloadEncrypted: '',
@@ -373,9 +373,18 @@ const sessionService = async (globals) => {
 };
 
 const getOtpNRE = async (mobileNumber, pan, dob, globals) => {
+
   const jidTemporary = createJourneyId(VISIT_MODE, JOURNEY_NAME, CHANNEL, globals);
   /* jidTemporary  temporarily added for FD development it has to be removed completely once runtime create journey id is done with FD */
   //const jidTemporary = createJourneyId(VISIT_MODE, JOURNEY_NAME, CHANNEL, globals);
+  const sessionInitPromise = sessionService(jidTemporary);
+  Promise.resolve(sessionInitPromise)
+  .then((res) => {
+    console.log(res);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
   const [year, month, day] = dob.$value ? dob.$value.split('-') : ['', '', ''];
   currentFormContext.action = 'getOTP';
   currentFormContext.journeyID = globals.form.runtime.journeyId.$value || jidTemporary;

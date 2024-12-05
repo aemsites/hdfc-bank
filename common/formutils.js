@@ -329,7 +329,7 @@ const removeUndefinedKeys = (jsonObj) => {
    */
 const santizedFormDataWithContext = (globals, currentFormContext) => {
   try {
-    const formData = (Object.prototype.hasOwnProperty.call(globals, 'form') && Object.prototype.hasOwnProperty.call(globals, 'functions')) ? globals.functions.exportData() : globals;
+    const formData = (Object.prototype.hasOwnProperty.call(globals, 'form') && Object.prototype.hasOwnProperty.call(globals, 'functions')) ? globals.functions.exportData() : {};
     formData.currentFormContext = currentFormContext;
     if (formData.form) {
       const {
