@@ -263,7 +263,7 @@ const PAGE_NAME = {
     'confirm otp': 'Step 2 - Verify with OTP',
     'select account': 'Step 3 - Select  Account',
     'select account type': 'Step 3 - Account Type',
-    'confirm details': 'Step 4 : Confirm Details',
+    'confirm details': 'Step 4 - Confirm Details',
     'confirmation page': 'Step 5 - Confirmation',
     'check offers': 'Customer Details',
     'get this card': 'Choose Card',
@@ -275,6 +275,9 @@ const PAGE_NAME = {
     'start kyc': 'Confirmation',
     'submit review': 'Confirmation',
     'thank you screen': 'Step 5 - Confirmation',
+    'privacy click': 'Step 1 - Identify Yourself',
+    'other products click': 'Step 1 - Identify Yourself',
+    'requested product click': 'Step 1 - Identify Yourself',
   },
 };
 export {

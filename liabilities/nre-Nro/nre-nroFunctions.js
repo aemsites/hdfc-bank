@@ -956,7 +956,7 @@ function prefillThankYouPage(accountres, globals) {
     globals.functions.setProperty(globals.form.thankYouPanel, { visible: false });
     errorHandling('', 'CUSTOMER_ONBOARDING_FAILURE', globals);
   }
-  sendAnalytics('thankyou page click', {}, 'THANKYOU_PAGE_TYPE', globals);
+  sendAnalytics('page load-thankyou page', {}, 'THANKYOU_PAGE_TYPE', globals);
   // sendPageloadEvent('page load thankyou page', formData, 'thankyou page');
 }
 
@@ -1248,7 +1248,7 @@ const switchWizard = (globals) => {
 };
 
 const onPageLoadAnalytics = async (globals) => {
-  sendAnalytics('page load-Step 1 - Identify Yourself', {}, 'ON_PAGE_LOADCUSTOMER_IDENTITY_INITIATED', globals);
+  sendAnalytics('page load_Step 1 - Identify Yourself', {}, 'CUSTOMER_IDENTITY_INITIATED', globals);
 };
 
 setTimeout(() => {

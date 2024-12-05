@@ -165,7 +165,7 @@ function sendPageloadEvent(journeyState, formData, pageName, errorAPI, errorMess
     default:
     // do nothing
   }
-  if (window) {
+  if (typeof window !== 'undefined') {
     window.digitalData = digitalData || {};
   }
   _satellite.track('pageload');
@@ -179,7 +179,7 @@ function sendPageloadEvent(journeyState, formData, pageName, errorAPI, errorMess
 //  * @param {object} formContext
 //  * @param {object} digitalData
 //  */
-function sendSubmitClickEvent(phone, eventType, linkType, formData, journeyState, digitalData) {
+async function sendSubmitClickEvent(phone, eventType, linkType, formData, journeyState, digitalData) {
   setAnalyticClickGenericProps(eventType, linkType, formData, journeyState, digitalData);
   digitalData.page.pageInfo.pageName = PAGE_NAME.nrenro[eventType];
   switch (eventType) {
@@ -188,7 +188,7 @@ function sendSubmitClickEvent(phone, eventType, linkType, formData, journeyState
         window.digitalData = digitalData || {};
         digitalData.link.linkName = 'otp click';
         digitalData.event.status = 1;
-        // digitalData.event.phone = hashPhNo(string(formData?.login?.registeredMobileNumber));
+        digitalData.event.phone = await hashPhNo(String(formData?.form?.login?.registeredMobileNumber));
       }
       _satellite.track('submit');
       currentFormContext.action = 'otp click';
@@ -293,6 +293,7 @@ function sendSubmitClickEvent(phone, eventType, linkType, formData, journeyState
     case 'privacy click': {
       if (window) {
         window.digitalData = digitalData || {};
+        digitalData.event.status = 1;
       }
       _satellite.track('submit');
       break;
@@ -314,6 +315,7 @@ function sendSubmitClickEvent(phone, eventType, linkType, formData, journeyState
     case 'requested product click': {
       if (window) {
         window.digitalData = digitalData || {};
+        digitalData.event.status = 1;
       }
       _satellite.track('submit');
       break;
@@ -321,6 +323,7 @@ function sendSubmitClickEvent(phone, eventType, linkType, formData, journeyState
     case 'other products click': {
       if (window) {
         window.digitalData = digitalData || {};
+        digitalData.event.status = 1;
       }
       _satellite.track('submit');
       break;
@@ -470,18 +473,23 @@ function sendErrorAnalytics(errorCode, errorMsg, journeyState, globals) {
 * @param {object} globals
 */
 function sendAnalytics(eventType, payload, journeyState, globals) {
-  const formData = santizedFormDataWithContext(globals);
+  let formData = santizedFormDataWithContext(globals);
   currentFormContext.lgCode = globals?.form?.wizardPanel.wizardFragment.wizardNreNro.confirmDetails.needBankHelp.bankUseFragment.mainBankUsePanel.lgCode.$value;
   currentFormContext.lcCode = globals?.form?.wizardPanel.wizardFragment.wizardNreNro.confirmDetails.needBankHelp.bankUseFragment.mainBankUsePanel.lcCode.$value;
   currentFormContext.flag = globals?.form?.wizardPanel.wizardFragment.wizardNreNro.confirmDetails.needBankHelp.bankUseFragment.mainBankUsePanel.bankUseToggle.$value;
+  if (typeof formData === 'undefined' || formData === null) {
+    formData = {};
+    formData.currentFormContext = currentFormContext;
+  }
   if (eventType.includes('page load')) {
-    const pageName = eventType.split('-')[1];
+    const pageName = eventType.split('_')[1];
     const errorAPI = formData?.AccountOpeningNRENRO?.apiDetails?.APIName ?? '';
     const errorMessage = formData?.AccountOpeningNRENRO?.apiDetails?.errorMessage ?? '';
     const errorCode = formData?.AccountOpeningNRENRO?.apiDetails?.errorCode ?? '';
     // const eventStatus = formData?.AccountOpeningNRENRO?.apiDetails?.status;
     sendPageloadEvent(journeyState, formData, pageName, errorAPI, errorMessage, errorCode);
   } else {
+    // console.log('elsesssssss', eventType);
     sendAnalyticsEvent(eventType, payload, journeyState, formData);
   }
 }
@@ -517,7 +525,7 @@ function enableAccordionClick(globals) {
           const accordionName = legendElement.textContent.trim();
           setTimeout(() => {
             if (legendElement.classList.contains('accordion-collapse')) {
-              sendAnalytics('accordion click', {}, 'Click', globals);
+              sendAnalytics('accordion click', {}, '', globals);
             }
           }, 1000);
         }
@@ -529,34 +537,34 @@ function enableAccordionClick(globals) {
 
 function attachPrivacyPolicyAnalytics(globals) {
   const privacyPolicyLink = document.querySelector('.checkbox-wrapper a');
-  if (privacyPolicyLink && privacyPolicyLink.textContent.includes("Privacy Policy")) {
-    privacyPolicyLink.addEventListener('click', function (event) {
+  if (privacyPolicyLink && privacyPolicyLink.textContent.includes('Privacy Policy')) {
+    privacyPolicyLink.addEventListener('click', (event) => {
       event.preventDefault();
-      sendAnalytics('privacy click', {}, 'Click', globals);
-      setTimeout(function () {
+      sendAnalytics('privacy click', {}, '', globals);
+      setTimeout(() => {
         window.open(privacyPolicyLink.href, '_blank');
       }, 100);
     });
   }
   const applyForLinks = document.querySelectorAll('a');
-  applyForLinks.forEach(function (link) {
-    if (link.textContent.trim() === "Apply for a") {
-      link.addEventListener('click', function (event) {
+  applyForLinks.forEach((link) => {
+    if (link.textContent.trim() === 'Apply for a') {
+      link.addEventListener('click', (event) => {
         event.preventDefault();
-        sendAnalytics('apply for click', {}, 'Click', globals);
-        setTimeout(function () {
+        sendAnalytics('apply for click', {}, '', globals);
+        setTimeout(() => {
           window.open(link.href, '_blank');
         }, 100);
       });
     }
   });
   const hdfcBankWebsiteLinks = document.querySelectorAll('a');
-  hdfcBankWebsiteLinks.forEach(function (link) {
-    if (link.textContent.trim() === "HDFC Bank Website") {
-      link.addEventListener('click', function (event) {
+  hdfcBankWebsiteLinks.forEach((link) => {
+    if (link.textContent.trim() === 'HDFC Bank Website') {
+      link.addEventListener('click', (event) => {
         event.preventDefault();
-        sendAnalytics('hdfc website click', {}, 'Click', globals);
-        setTimeout(function () {
+        sendAnalytics('hdfc website click', {}, '', globals);
+        setTimeout(() => {
           window.open(link.href, '_blank');
         }, 100);
       });
@@ -564,17 +572,17 @@ function attachPrivacyPolicyAnalytics(globals) {
   });
   const requestedProduct = document.querySelector('.field-checkboxconsent1label .link');
   if (requestedProduct) {
-    requestedProduct.addEventListener('click', function (event) {
+    requestedProduct.addEventListener('click', (event) => {
       event.preventDefault();
-      sendAnalytics('requested product click', {}, 'Click', globals);
+      sendAnalytics('requested product click', {}, '', globals);
     });
   }
   const otherProducts = document.querySelector('.field-checkboxconsent2label .link');
   if (otherProducts) {
-    otherProducts.addEventListener('click', function (event) {
+    otherProducts.addEventListener('click', (event) => {
       event.preventDefault();
-      sendAnalytics('other products click', {}, 'Click', globals);
-      setTimeout(function () {
+      sendAnalytics('other products click', {}, '', globals);
+      setTimeout(() => {
       }, 100);
     });
   }
