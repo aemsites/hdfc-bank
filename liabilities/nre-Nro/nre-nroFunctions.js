@@ -352,15 +352,16 @@ const validateLogin = (globals) => {
 };
 
 const getOtpNRE = async (mobileNumber, pan, dob, globals) => {
+  debugger;
   // const jidTemporary = createJourneyId(VISIT_MODE, JOURNEY_NAME, CHANNEL, globals);
   /* jidTemporary  temporarily added for FD development it has to be removed completely once runtime create journey id is done with FD */
   const jidTemporary = createJourneyId(VISIT_MODE, JOURNEY_NAME, CHANNEL, globals);
+  globals.functions.setProperty(globals.form.runtime.journeyName, { value: 'ACCOUNTOPENING_NRE_NRO_JOURNEY' });
   const [year, month, day] = dob.$value ? dob.$value.split('-') : ['', '', ''];
   currentFormContext.action = 'getOTP';
   currentFormContext.journeyID = globals.form.runtime.journeyId.$value || jidTemporary;
   currentFormContext.mobileNumber = mobileNumber.$value;
   currentFormContext.leadIdParam = globals.functions.exportData().queryParams;
-  currentFormContext.journeyName = globals.form.runtime.journeyName.$value;
   let identifierNam = '';
   let identifierVal = '';
   let datOfBirth = '';
