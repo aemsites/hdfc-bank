@@ -60,6 +60,6 @@ export async function getAudiences(xdm, data) {
   });
   const segmentIds = extractSegments(response);
   const offers = extractOffersDecisions(response);
-  console.log(segmentIds, offers, response);
+  //console.log(segmentIds, offers, response);
   return { segmentIds, offers };
 }

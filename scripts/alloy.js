@@ -6283,7 +6283,7 @@
         cookieJar = _ref.cookieJar,
         isPageSsl = _ref.isPageSsl;
       var extraCookieOptions = isPageSsl ? {
-        sameSite: "lax",
+        sameSite: "Lax",
         secure: true
       } : {};
       var processCookies = function processCookies(destinations) {
@@ -14280,7 +14280,7 @@
             }
             // When sameSite is set to none, the secure flag must be set.
             // Experience edge will not set the secure flag in these cases.
-            if (sameSite === "none") {
+            if (sameSite === "Lax") {
               options.secure = true;
             }
             cookieJar.set(stateItem.key, stateItem.value, options);
