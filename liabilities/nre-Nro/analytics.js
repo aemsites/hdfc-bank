@@ -231,6 +231,7 @@ async function sendSubmitClickEvent(phone, eventType, linkType, formData, journe
       if (window) {
         window.digitalData = digitalData || {};
         digitalData.page.pageInfo.pageName = 'Step 2 - Verify with OTP';
+        digitalData.event.phone = await hashPhNo(String(formData?.form?.login?.registeredMobileNumber));
       }
       _satellite.track('submit');
       setTimeout(() => {
@@ -281,7 +282,70 @@ async function sendSubmitClickEvent(phone, eventType, linkType, formData, journe
       }, 1000);
       break;
     }
-    case 'accordion click': {
+    case 'Fatca Details accordion collapse click': {
+      if (window) {
+        window.digitalData = digitalData || {};
+        digitalData.page.pageInfo.pageName = 'Step 4 - Confirm Details';
+        digitalData.event.status = 1;
+      }
+      _satellite.track('submit');
+      break;
+    }
+    case 'Fatca Details accordion expand click': {
+      if (window) {
+        window.digitalData = digitalData || {};
+        digitalData.page.pageInfo.pageName = 'Step 4 - Confirm Details';
+        digitalData.event.status = 1;
+      }
+      _satellite.track('submit');
+      break;
+    }
+    case 'Personal Details accordion collapse click': {
+      if (window) {
+        window.digitalData = digitalData || {};
+        digitalData.page.pageInfo.pageName = 'Step 4 - Confirm Details';
+        digitalData.event.status = 1;
+      }
+      _satellite.track('submit');
+      break;
+    }
+    case 'Personal Details accordion expand click': {
+      if (window) {
+        window.digitalData = digitalData || {};
+        digitalData.page.pageInfo.pageName = 'Step 4 - Confirm Details';
+        digitalData.event.status = 1;
+      }
+      _satellite.track('submit');
+      break;
+    }
+    case 'Financial Details accordion collapse click': {
+      if (window) {
+        window.digitalData = digitalData || {};
+        digitalData.page.pageInfo.pageName = 'Step 4 - Confirm Details';
+        digitalData.event.status = 1;
+      }
+      _satellite.track('submit');
+      break;
+    }
+    case 'Financial Details accordion expand click': {
+      if (window) {
+        window.digitalData = digitalData || {};
+        digitalData.page.pageInfo.pageName = 'Step 4 - Confirm Details';
+        digitalData.event.status = 1;
+      }
+      _satellite.track('submit');
+      break;
+    }
+    case 'Nominee Details accordion collapse click': {
+      if (window) {
+        window.digitalData = digitalData || {};
+        digitalData.page.pageInfo.pageName = 'Step 4 - Confirm Details';
+        digitalData.event.status = 1;
+      }
+      _satellite.track('submit');
+      break;
+    }
+    case 'Nominee Details accordion expand click': {
       if (window) {
         window.digitalData = digitalData || {};
         digitalData.page.pageInfo.pageName = 'Step 4 - Confirm Details';
@@ -525,7 +589,9 @@ function enableAccordionClick(globals) {
           const accordionName = legendElement.textContent.trim();
           setTimeout(() => {
             if (legendElement.classList.contains('accordion-collapse')) {
-              sendAnalytics('accordion click', {}, '', globals);
+              sendAnalytics(accordionName + ' accordion expand click', {}, '', globals);
+            } else{
+              sendAnalytics(accordionName + ' accordion collapse click', {}, '', globals);
             }
           }, 1000);
         }
