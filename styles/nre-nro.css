@@ -1073,8 +1073,8 @@
                       margin-bottom: 0;
                     }
 
-                    a {                     
-                      b{
+                    a {
+                      b {
                         font-weight: 600;
                       }
                     }
@@ -1225,13 +1225,13 @@
                   font-size: 41px;
                   line-height: 40px;
 
-                  @media (992px <=width <=1100px  ) {
+                  @media (992px <=width <=1100px) {
                     letter-spacing: 50px;
                   }
 
                   @-moz-document url-prefix() {
                     font-size: 20px;
-                  }   
+                  }
                 }
 
                 &::placeholder {
@@ -3592,113 +3592,127 @@
                 margin-bottom: 20px;
               }
 
-              &>.field-accountnumber,
-              &>.field-leadid-number {
-                position: relative;
-                padding-left: 95px;
+              .account-lead-wrapper {
+                display: flex;
 
-                @media (320px <=width <=767px) {
-                  padding-left: 75px;
-                }
-
-                label {
-                  color: var(--color-interface-text-secondary);
-                  font-size: 16px;
-                  font-weight: 400;
-                  line-height: 24px;
-                  position: initial;
-                  transition: none;
-                  margin: 0;
-                  transform: none;
-                  padding: 0;
-                  display: block;
+                & .field-accountnumber,
+                & .field-leadid-number {
+                  position: relative;
+                  padding-left: 95px;
 
                   @media (320px <=width <=767px) {
-                    font-size: 12px;
-                    line-height: 20px;
-                  }
-                }
-
-                input {
-                  color: var(--color-interface-text-primary);
-                  font-size: 32px;
-                  font-weight: 600;
-                  line-height: 40px;
-                  border: none;
-                  height: auto;
-                  padding: 0;
-                  margin: 0;
-                  background: url("../icons/copy_icon.png") no-repeat 72% center;
-                  width: auto;
-
-                  @media (768px <=width <=991px) {
-                    font-size: 28px;
-                    line-height: 36px;
+                    padding-left: 75px;
                   }
 
-                  @media (320px <=width <=767px) {
-                    font-size: 24px;
-                    line-height: 32px;
-                    background-position-x: 100%;
-                    width: 100%;
-                  }
-
-                  &:focus-visible {
-                    outline: none;
-                  }
-                }
-
-                &::before {
-                  content: '';
-                  background: #F4F0FF url("../icons/account_number_icon.png") no-repeat center center;
-                  width: 72px;
-                  height: 72px;
-                  position: absolute;
-                  left: 0;
-                  border-radius: 50%;
-
-                  @media (320px <=width <=767px) {
-                    width: 52px;
-                    height: 52px;
-                    background-size: 35%;
-                  }
-                }
-
-                &.field-leadid-number {
-                  input {
-                    background-position-x: 42%;
-
-                    @media (320px <=width <=767px) {
-                      background-position-x: 55%;
-                    }
-                  }
-                }
-              }
-
-              &>.plain-text-wrapper {
-                border-top: 1px dashed var(--color-interface-border-secondary);
-                margin-top: 15px;
-
-                @media (768px <=width <=991px) {
-                  border-top: none;
-                  border-bottom: 1px dashed var(--color-interface-border-secondary);
-                  padding-bottom: 20px;
-                }
-
-                p {
-                  padding-top: 10px;
-                  margin-bottom: 0;
-
-                  p {
+                  label {
+                    color: var(--color-interface-text-secondary);
                     font-size: 16px;
                     font-weight: 400;
                     line-height: 24px;
-                    color: var(--color-interface-text-secondary);
-                    margin-bottom: 0;
+                    position: initial;
+                    transition: none;
+                    margin: 0;
+                    transform: none;
+                    padding: 0;
+                    display: block;
 
                     @media (320px <=width <=767px) {
                       font-size: 12px;
                       line-height: 20px;
+                    }
+                  }
+
+                  input {
+                    color: var(--color-interface-text-primary);
+                    font-size: 32px;
+                    font-weight: 600;
+                    line-height: 40px;
+                    border: none;
+                    height: auto;
+                    padding: 0;
+                    margin: 0;
+                    /* width: 270px; */
+
+                    @media (768px <=width <=991px) {
+                      font-size: 28px;
+                      line-height: 36px;
+                    }
+
+                    @media (320px <=width <=767px) {
+                      font-size: 24px;
+                      line-height: 32px;
+                      background-position-x: 100%;
+                      width: 100%;
+                    }
+
+                    &:focus-visible {
+                      outline: none;
+                    }
+                  }
+
+                  &::before {
+                    content: '';
+                    background: #F4F0FF url("../icons/account_number_icon.png") no-repeat center center;
+                    width: 72px;
+                    height: 72px;
+                    position: absolute;
+                    left: 0;
+                    border-radius: 50%;
+
+                    @media (320px <=width <=767px) {
+                      width: 52px;
+                      height: 52px;
+                      background-size: 35%;
+                    }
+                  }
+
+                 /*  &.field-leadid-number {
+                    input {
+                      width: 170px;                    
+                    }
+                  } */
+                }
+
+                & .field-copyicon {
+                  background: url(../icons/copy_icon.png) no-repeat center center;
+                  width: 30px;
+                  height: 30px;
+                  position: relative;
+                  top: 13px;
+                  cursor: pointer;
+                  border: none;
+
+                  p {
+                    display: none;
+                  }
+                }
+
+                & .field-confirmtext {
+                  border-top: 1px dashed var(--color-interface-border-secondary);
+                  margin-top: 15px;
+                  width: 100%;
+
+                  @media (768px <=width <=991px) {
+                    border-top: none;
+                    border-bottom: 1px dashed var(--color-interface-border-secondary);
+                    padding-bottom: 20px;
+                  }
+
+                  p {
+                    padding-top: 10px;
+                    margin-bottom: 0;
+
+                    p {
+                      font-size: 16px;
+                      font-weight: 400;
+                      line-height: 24px;
+                      color: var(--color-interface-text-secondary);
+                      margin-bottom: 0;
+
+                      @media (320px <=width <=767px) {
+                        font-size: 12px;
+                        line-height: 20px;
+                      }
                     }
                   }
                 }
@@ -3739,8 +3753,8 @@
                 }
               }
 
-              .field-accounttype.text-wrapper.field-wrapper{
-                input{
+              .field-accounttype.text-wrapper.field-wrapper {
+                input {
                   @media (1200px <=width <=1300px) {
                     font-size: 17px;
                   }
