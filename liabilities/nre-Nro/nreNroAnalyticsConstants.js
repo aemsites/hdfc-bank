@@ -97,6 +97,54 @@ const data = {
     StepName: 'Confirm Details',
     linkPosition: 'Form',
   },
+  'Fatca Details accordion collapse click': {
+    linkType: 'accordion',
+    linkName: 'Fatca Details Accordion Collapse',
+    StepName: 'Confirm Details',
+    linkPosition: 'Form',
+  },
+  'Fatca Details accordion expand click': {
+    linkType: 'accordion',
+    linkName: 'Fatca Details Accordion Expand',
+    StepName: 'Confirm Details',
+    linkPosition: 'Form',
+  },
+  'Personal Details accordion collapse click': {
+    linkType: 'accordion',
+    linkName: 'Personal Details Accordion Collapse',
+    StepName: 'Confirm Details',
+    linkPosition: 'Form',
+  },
+  'Personal Details accordion expand click': {
+    linkType: 'accordion',
+    linkName: 'Personal Details Accordion Expand',
+    StepName: 'Confirm Details',
+    linkPosition: 'Form',
+  },
+  'Financial Details accordion collapse click': {
+    linkType: 'accordion',
+    linkName: 'Financial Details Accordion Collapse',
+    StepName: 'Confirm Details',
+    linkPosition: 'Form',
+  },
+  'Financial Details accordion expand click': {
+    linkType: 'accordion',
+    linkName: 'Financial Details Accordion Expand',
+    StepName: 'Confirm Details',
+    linkPosition: 'Form',
+  },
+  'Nominee Details accordion collapse click': {
+    linkType: 'accordion',
+    linkName: 'Nominee Details Accordion Collapse',
+    StepName: 'Confirm Details',
+    linkPosition: 'Form',
+  },
+  'Nominee Details accordion expand click': {
+    linkType: 'accordion',
+    linkName: 'Nominee Details Accordion Expand',
+    StepName: 'Confirm Details',
+    linkPosition: 'Form',
+  },
   'Nominee Details click': {
     linkType: 'accordion',
     StepName: 'Confirm Details',
@@ -263,7 +311,7 @@ const PAGE_NAME = {
     'confirm otp': 'Step 2 - Verify with OTP',
     'select account': 'Step 3 - Select  Account',
     'select account type': 'Step 3 - Account Type',
-    'confirm details': 'Step 4 : Confirm Details',
+    'confirm details': 'Step 4 - Confirm Details',
     'confirmation page': 'Step 5 - Confirmation',
     'check offers': 'Customer Details',
     'get this card': 'Choose Card',
@@ -275,6 +323,9 @@ const PAGE_NAME = {
     'start kyc': 'Confirmation',
     'submit review': 'Confirmation',
     'thank you screen': 'Step 5 - Confirmation',
+    'privacy click': 'Step 1 - Identify Yourself',
+    'other products click': 'Step 1 - Identify Yourself',
+    'requested product click': 'Step 1 - Identify Yourself',
   },
 };
 export {
