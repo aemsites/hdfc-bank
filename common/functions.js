@@ -189,19 +189,6 @@ async function aadharInit(mobileNumber, pan, dob, globals) {
           ProductShortname: 'IS',
         },
         client_ip: '',
-        device: {
-          type: getDevice(),
-          name: 'Samsung G5',
-          os: getOS(),
-          os_ver: '637.38383',
-        },
-        isp: {
-          ip: '839.893.89.89',
-          provider: 'AirTel',
-          city: 'Mumbai',
-          state: 'Maharashrta',
-          pincode: '400828',
-        },
         geo: {
           lat: '72.8777° E',
           long: '19.0760° N',
