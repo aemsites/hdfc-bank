@@ -12,7 +12,7 @@ import {
   removeSpecialCharacters,
   pincodeCheck,
 } from '../../common/formutils.js';
-import { getJsonResponse, displayLoader, getJsonWithoutEncrypt } from '../../common/makeRestAPI.js';
+import { displayLoader, getJsonWithoutEncrypt } from '../../common/makeRestAPI.js';
 import {
   addDisableClass,
   setSelectOptions,
