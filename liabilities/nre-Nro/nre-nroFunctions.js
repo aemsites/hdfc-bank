@@ -71,6 +71,8 @@ currentFormContext.journeyAccountType = '';
 currentFormContext.countryName = '';
 currentFormContext.phoneWithISD = '';
 currentFormContext.ambValue = '';
+currentFormContext.territoryName = '';
+currentFormContext.territoryKey = '';
 
 formRuntime.getOtpLoader = currentFormContext.getOtpLoader || (typeof window !== 'undefined') ? displayLoader : false;
 formRuntime.otpValLoader = currentFormContext.otpValLoader || (typeof window !== 'undefined') ? displayLoader : false;
@@ -1285,7 +1287,7 @@ const crmLeadIdDetail = async (globals) => {
       custBirthDate: parseDate(response.datBirthCust),
       identifierName: globals.form.parentLandingPagePanel.landingPanel.loginFragmentNreNro.identifierPanel.pan.$value ? 'PAN' : 'dob',
       preferredChannel: '',
-      territoryName: '',
+      territoryName: currentFormContext.territoryName,
       address: `${response?.txtCustadrAdd1} ${response?.txtCustadrAdd2} ${response?.txtCustadrAdd3}`,
       companyName: '',
       nomineeAge: '',
@@ -1426,8 +1428,8 @@ const crmLeadIdDetail = async (globals) => {
       salutationKey: response.txtCustPrefix.toUpperCase() === 'MR' ? '1' : response.txtCustPrefix.toUpperCase() === 'MRS' ? '2' : '8',
       salutationName: response.txtCustPrefix.toUpperCase() === 'MR' ? 'MR.' : response.txtCustPrefix.toUpperCase() === 'MRS' ? 'MRS.' : 'MX.',
       statusCodeInOn: new Date().toISOString().slice(0, 19),
-      territoryCode: '',
-      territoryKey: '',
+      territoryCode: response.customerAccountDetailsDTO[accIndex].branchCode.toString(),
+      territoryKey: currentFormContext.territoryKey,
       zipCode: response.txtPermadrZip,
       transcriptLatLong: '',
       companyCode: '',
@@ -1724,6 +1726,18 @@ function setAMBValue() {
     });
 }
 
+function setTerritoryValue() {
+  const finalURL = `/content/hdfc_commonforms/api/mdm.INSTA.BRANCH_MASTER.CODE-${currentFormContext.fatca_response.customerAccountDetailsDTO[currentFormContext.selectedCheckedValue].branchCode}.json`;
+  getJsonResponse(urlPath(finalURL), null, 'GET')
+    .then((response) => {
+      currentFormContext.territoryName = response[0].NAME;
+      currentFormContext.territoryKey = response[0].TERRITORYKEY;
+    })
+    .catch((error) => {
+      console.error('Error while getting territory value:', error);
+    });
+}
+
 export {
   validateLogin,
   getOtpNRE,
@@ -1764,4 +1778,5 @@ export {
   feedbackButton,
   selectVarient,
   setAMBValue,
+  setTerritoryValue,
 };
