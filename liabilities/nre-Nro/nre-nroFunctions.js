@@ -1416,8 +1416,8 @@ const crmLeadIdDetail = async (globals) => {
       middleName: response.customerMiddleName ? response.customerMiddleName : getNamePart(response.customerFullName, 'middle'),
       mobileNo: currentFormContext.mobileNumber,
       multipleTaxResidencyID: '-1',
-      employmentType: '',
-      employmentTypeOthers: '',
+      employmentType: financialDetails.occupation.$value,
+      employmentTypeOthers: financialDetails.occupation.$value,
       phone: currentFormContext.phoneWithISD,
       mobileNumber: currentFormContext.phoneWithISD,
       productCategory: globals.form.parentLandingPagePanel.landingPanel.userSelectedProductDetails.userSelectedProductCatogery.$value,
@@ -1727,11 +1727,26 @@ function setAMBValue() {
 }
 
 function setTerritoryValue() {
-  const finalURL = `/content/hdfc_commonforms/api/mdm.INSTA.BRANCH_MASTER.CODE-${currentFormContext.fatca_response.customerAccountDetailsDTO[currentFormContext.selectedCheckedValue].branchCode}.json`;
+  const branchCode = currentFormContext.fatca_response.customerAccountDetailsDTO[currentFormContext.selectedCheckedValue].branchCode;
+  const finalURL = `/content/hdfc_commonforms/api/mdm.INSTA.BRANCH_MASTER.CODE-${branchCode}.json`;
+
   getJsonResponse(urlPath(finalURL), null, 'GET')
     .then((response) => {
-      currentFormContext.territoryName = response[0].NAME;
-      currentFormContext.territoryKey = response[0].TERRITORYKEY;
+      if (!response || response.length === 0) {
+        console.warn('No response data received.');
+        return;
+      }
+
+      const territory = response.length === 1
+        ? response[0]
+        : response.find((item) => item.CODE === branchCode.toString());
+
+      if (territory) {
+        currentFormContext.territoryName = territory.NAME;
+        currentFormContext.territoryKey = territory.TERRITORYKEY;
+      } else {
+        console.warn('No matching territory found for the branch code.');
+      }
     })
     .catch((error) => {
       console.error('Error while getting territory value:', error);
