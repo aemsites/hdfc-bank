@@ -138,7 +138,7 @@ function fileElement(file, index) {
   const el = document.createElement('div');
   el.dataset.index = index;
   el.classList.add('file-description');
-  el.innerHTML = `<span class="file-description-name">${file.name}</span>
+  el.textContent = `<span class="file-description-name">${file.name}</span>
   <span class="file-description-size">${formatBytes(file.size)}</span>
   <button class="file-description-remove" type="button"></button>`;
   return el;
@@ -160,7 +160,7 @@ function createDragAndDropArea(wrapper, field) {
     dragContainer.title = stripTags(input.title, '');
   }
   dragContainer.className = 'file-drag-area';
-  dragContainer.innerHTML = dragArea;
+  dragContainer.textContent = dragArea;
   dragContainer.appendChild(input.cloneNode(true));
   input.parentNode.replaceChild(dragContainer, input);
   return dragContainer;
@@ -256,7 +256,7 @@ export default async function decorate(fieldDiv, field, htmlForm) {
     }
   });
   htmlForm.addEventListener('reset', () => {
-    fileListElement.innerHTML = '';
+    fileListElement.textContent = '';
     input.value = '';
   });
   fieldDiv.insertBefore(fileListElement, input.nextElementSibling);
