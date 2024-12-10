@@ -45,6 +45,16 @@ const data = {
     StepName: 'IDCOM Redirection',
     linkPosition: 'Form',
   },
+  'HDFC Bank Website Link Click': {
+    linkType: 'link',
+    StepName: 'Clicked HDFC Bank Website Link',
+    linkPosition: 'Form',
+  },
+  'Apply for a CTA Click': {
+    linkType: 'link',
+    StepName: 'Clicked HDFC Bank Website Link',
+    linkPosition: 'Form',
+  },
   'submit otp': {
     error: '',
   },
@@ -268,6 +278,9 @@ const ANALYTICS_PAGE_LOAD_OBJECT = {
   form: {
     name: '',
   },
+  event: {
+    authMethod: '',
+  },
   formDetails: {
     city: '',
     state: '',
@@ -313,6 +326,8 @@ const PAGE_NAME = {
     'select account type': 'Step 3 - Account Type',
     'confirm details': 'Step 4 - Confirm Details',
     'confirmation page': 'Step 5 - Confirmation',
+    'Apply for a CTA Click': 'Step 5 - Confirmation',
+    'HDFC Bank Website Link Click': 'Step 5 - Confirmation',
     'check offers': 'Customer Details',
     'get this card': 'Choose Card',
     'kyc continue': 'Select KYC',

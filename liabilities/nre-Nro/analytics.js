@@ -154,8 +154,11 @@ function sendPageloadEvent(journeyState, formData, pageName, errorAPI, errorMess
     }
     case 'Step 5 - Confirmation': {
       digitalData.formDetails.accountType = currentFormContext.accountType ?? '';
-      digitalData.formDetails.branchCode = currentFormContext.branchCode ?? '';
-      digitalData.formDetails.bankBranch = currentFormContext.branchName ?? '';
+      digitalData.formDetails.branchCode = currentFormContext.fatca_response.customerAccountDetailsDTO[currentFormContext.selectedCheckedValue].branchCode ?? '';
+      digitalData.formDetails.bankBranch = currentFormContext.fatca_response.customerAccountDetailsDTO[currentFormContext.selectedCheckedValue].branchName ?? '';
+      // while(typeof window === 'undefined'){
+      //   console.log("Waiting for window to load");
+      // }
       if (window) {
         window.digitalData = digitalData || {};
       }
@@ -412,10 +415,17 @@ async function sendSubmitClickEvent(phone, eventType, linkType, formData, journe
       if (window) {
         window.digitalData = digitalData || {};
         digitalData.event.status = (formData?.form?.thankyou?.facingIssue === '0') ? 'No' : 'Yes';
-        digitalData.event.rating = currentFormContext.ratedVal;
+        digitalData.event.rating = formData?.AccountOpeningNRENRO?.feedbackrating ?? '';
       }
       digitalData.page.pageInfo.pageName = 'Step 5 - Confirmation';
       _satellite.track('submit');
+      break;
+    }
+    case 'on apply for CTA click': {
+      if (window) {
+        window.digitalData = digitalData || {};
+      }
+      _satellite.track('event');
       break;
     }
     default:

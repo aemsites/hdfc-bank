@@ -195,7 +195,7 @@ const getCountryName = (countryCodeIst) => new Promise((resolve) => {
 
 function errorHandling(response, journeyState, globals) {
   setTimeout(() => {
-    Promise.resolve(sendAnalytics('page load-Error Page', {}, 'CUSTOMER_IDENTITY UNRESOLVED', globals));
+    sendAnalytics('page load_Error Page', {}, 'CUSTOMER_IDENTITY UNRESOLVED', globals);
   }, 2000);
   const {
     mobileNumber,
@@ -932,6 +932,7 @@ function prefillThankYouPage(accountres, globals) {
 
   const setAccountSummaryProperties = (summary) => {
     globals.functions.setProperty(thankyouLeftPanel.accountSummary.accounttype, { value: globals.form.parentLandingPagePanel.landingPanel.userSelectedProductDetails.userSelectedAccountName.$value });
+    currentFormContext.accountType = globals.form.parentLandingPagePanel.landingPanel.userSelectedProductDetails.userSelectedAccountName.$value ?? '';
     globals.functions.setProperty(thankyouLeftPanel.accountSummary.homeBranch, { value: currentFormContext.fatca_response.customerAccountDetailsDTO[currentFormContext.selectedCheckedValue].branchName });
     globals.functions.setProperty(thankyouLeftPanel.accountSummary.branchCode, { value: currentFormContext.fatca_response.customerAccountDetailsDTO[currentFormContext.selectedCheckedValue].branchCode });
     globals.functions.setProperty(thankyouLeftPanel.accountSummary.ifsc, { value: currentFormContext.fatca_response.customerAccountDetailsDTO[currentFormContext.selectedCheckedValue].ifscCode });
@@ -956,7 +957,6 @@ function prefillThankYouPage(accountres, globals) {
     globals.functions.setProperty(globals.form.thankYouPanel, { visible: false });
     errorHandling('', 'CUSTOMER_ONBOARDING_FAILURE', globals);
   }
-  sendAnalytics('page load-thankyou page', {}, 'THANKYOU_PAGE_TYPE', globals);
   // sendPageloadEvent('page load thankyou page', formData, 'thankyou page');
 }
 
