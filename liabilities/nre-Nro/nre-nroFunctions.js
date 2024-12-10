@@ -70,6 +70,9 @@ currentFormContext.productAccountName = '';
 currentFormContext.journeyAccountType = '';
 currentFormContext.countryName = '';
 currentFormContext.phoneWithISD = '';
+currentFormContext.ambValue = '';
+currentFormContext.territoryName = '';
+currentFormContext.territoryKey = '';
 
 formRuntime.getOtpLoader = currentFormContext.getOtpLoader || (typeof window !== 'undefined') ? displayLoader : false;
 formRuntime.otpValLoader = currentFormContext.otpValLoader || (typeof window !== 'undefined') ? displayLoader : false;
@@ -193,6 +196,37 @@ const getCountryName = (countryCodeIst) => new Promise((resolve) => {
     });
 });
 
+const getaddressForTaxPurpose = async (value) => {
+  let result = '';
+
+  switch (value) {
+    case 1:
+      result = 'Residential or Business';
+      break;
+
+    case 2:
+      result = 'Residential';
+      break;
+
+    case 3:
+      result = 'Business';
+      break;
+
+    case 4:
+      result = 'Registered Office';
+      break;
+
+    case 5:
+      result = 'Unspecified';
+      break;
+
+    default:
+      result = '';
+  }
+
+  return result.toUpperCase();
+};
+
 function errorHandling(response, journeyState, globals) {
   setTimeout(() => {
     sendAnalytics('page load_Error Page', {}, 'CUSTOMER_IDENTITY UNRESOLVED', globals);
@@ -223,6 +257,7 @@ function errorHandling(response, journeyState, globals) {
     }
     globals.functions.setProperty(globals.form.otppanelwrapper, { visible: false });
     globals.functions.setProperty(globals.form.wizardPanel, { visible: false });
+    globals.functions.setProperty(globals.form.thankYouPanel, { visible: false });
     globals.functions.setProperty(globals.form.errorPanel.errorresults.errorConnection, { visible: true });
   }
 
@@ -258,13 +293,29 @@ function getGender(input) {
   return 'Third Gender';
 }
 
-function getLastWord(input) {
-  if (typeof input !== 'string' || input.trim() === '') {
-    return 'Invalid input';
+function getNamePart(input, type) {
+  const words = input.trim().split(' ');
+
+  let result = '';
+
+  switch (type) {
+    case 'first':
+      result = words[0] || '';
+      break;
+
+    case 'middle':
+      result = words[1] || '';
+      break;
+
+    case 'last':
+      result = words.slice(2).join(' ') || '';
+      break;
+
+    default:
+      result = '';
   }
 
-  const words = input.trim().split(/\s+/);
-  return words.length > 1 ? words[words.length - 1] : '';
+  return result;
 }
 
 /**
@@ -396,7 +447,7 @@ const getOtpNRE = async (mobileNumber, pan, dob, globals) => {
 };
 
 const getCountryCodes = (dropdown) => {
-  const finalURL = `/content/hdfc_commonforms/api/mdm.ETB.NRI_ISD_MASTER.COUNTRYNAME.json?pageSize=300`;
+  const finalURL = '/content/hdfc_commonforms/api/mdm.ETB.NRI_ISD_MASTER.COUNTRYNAME.json?pageSize=300';
   fetchJsonResponse(urlPath(finalURL), null, 'GET', true).then((response) => {
     dropdown?.addEventListener('change', () => {
       if (prevSelectedIndex !== -1) {
@@ -566,7 +617,7 @@ function showFinancialDetails(financialDetails, response, occupation, globals) {
     typCompany: typCompanyCode,
     natureOfBus: natureOfBusCode,
     incomeSource: incomeSourceCode,
-    annualTurnover: annualTurnoverCode,
+    grossIncome: grossIncomeCode,
     typResidence: residenceTypeMappingCode,
     txtProfessionDesc: txtProfessionDescCode,
     typEmployer: employeerCatCode,
@@ -581,7 +632,7 @@ function showFinancialDetails(financialDetails, response, occupation, globals) {
         return item.text;
       }
       mappedValue.value = '';
-      return 'Others';
+      return '';
     }
     return '';
   };
@@ -591,7 +642,7 @@ function showFinancialDetails(financialDetails, response, occupation, globals) {
   const natureOfBusinessText = setDropdownValue('natureOfBusinessMapping', natureOfBusCode);
   const typeOfCompanyText = setDropdownValue('typeOfCompanyMapping', typCompanyCode);
   const sourceOfFundText = setDropdownValue('sourceOfFundMapping', incomeSourceCode);
-  const grossAnnualIncomeText = setDropdownValue('grossAnnualIncomeMapping', annualTurnoverCode);
+  const grossAnnualIncomeText = setDropdownValue('grossAnnualIncomeMapping', grossIncomeCode);
   const selfEmployedProfText = setDropdownValue('selfEmployedProfMapping', txtProfessionDescCode);
   const employeerCatCodeText = setDropdownValue('employerCategoryMapping', employeerCatCode);
 
@@ -600,21 +651,22 @@ function showFinancialDetails(financialDetails, response, occupation, globals) {
   globals.functions.setProperty(financialDetails.currencyName, { visible: true });
   globals.functions.setProperty(financialDetails.sourceOfFunds, { visible: true, value: sourceOfFundText?.toUpperCase() });
   globals.functions.setProperty(financialDetails.occupation, { value: occupationText?.toUpperCase() });
+  globals.functions.setProperty(financialDetails.occupation, { visible: true });
   globals.functions.setProperty(financialDetails.selfEmployedProfessional, { value: selfEmployedProfText?.toUpperCase() });
   globals.functions.setProperty(financialDetails.natureOfBusiness, { value: natureOfBusinessText?.toUpperCase() });
   globals.functions.setProperty(financialDetails.typeOfCompoanyFirm, { value: typeOfCompanyText?.toUpperCase() });
   globals.functions.setProperty(financialDetails.employerCategory, { value: employeerCatCodeText?.toUpperCase() });
 
-  if (occupationCode === 2) {
-    globals.functions.setProperty(financialDetails.selfEmployedProfessional, { visible: true });
+  if (occupationCode === '2') {
+    globals.functions.setProperty(financialDetails.selfEmployedProfessional, { visible: false });
     globals.functions.setProperty(financialDetails.employerCategory, { visible: true });
   }
-  if (occupationCode === 3) {
+  if (occupationCode === '3') {
     globals.functions.setProperty(financialDetails.selfEmployedSince, { visible: true });
     globals.functions.setProperty(financialDetails.natureOfBusiness, { visible: true });
     globals.functions.setProperty(financialDetails.typeOfCompoanyFirm, { visible: true });
   }
-  if (occupationCode === 5) {
+  if (occupationCode === '5') {
     globals.functions.setProperty(financialDetails.sourceOfFunds, { visible: false });
     globals.functions.setProperty(financialDetails.typeOfCompoanyFirm, { visible: true });
     globals.functions.setProperty(financialDetails.selfEmployedProfessional, { visible: true });
@@ -637,12 +689,13 @@ function showNomineeDetails(nomineeDetails, response, globals) {
       return item.text;
     }
     dropdown.value = '';
-    return 'Others';
+    return '';
   };
   const relationText = setDropdownValue(relationDropdown, relationCode);
   if (nomineeName !== null) {
     globals.functions.setProperty(nomineeDetails, { visible: true });
     const formattedDate = convertDateToMmmDdYyyy(nomineeDob);
+    globals.functions.setProperty(nomineeDetails.nomineePanel.nomineeSubpanel.relation, { visible: false });
     globals.functions.setProperty(nomineeDetails.nomineePanel.nomineeSubpanel.relation, { value: relationText?.toUpperCase() });
     globals.functions.setProperty(nomineeDetails.nomineePanel.nomineeSubpanel.nomineeName, { value: nomineeName?.toUpperCase() });
     globals.functions.setProperty(nomineeDetails.nomineePanel.nomineeSubpanel.nomineedob, { value: formattedDate });
@@ -683,27 +736,24 @@ function prefillCustomerDetail(response, globals) {
 ${customerDataMasking('CityState', response.namPermadrCity)}, ${customerDataMasking('CityState', response.namPermadrState)}, ${customerDataMasking('Country', response.namPermadrCntry)}, ${response.txtPermadrZip}`?.toUpperCase());
 
   getCountryName(response.txtCustNATNLTY)
-    .then(() => setFormValue(fatcaDetails.nationality, currentFormContext.countryName?.toUpperCase()));
+    .then((countryName) => setFormValue(fatcaDetails.nationality, countryName?.toUpperCase()));
   getCountryName(response.customerFATCADtlsDTO[0].codTaxCntry1)
-    .then(() => setFormValue(fatcaDetails.countryTaxResidence, currentFormContext.countryName?.toUpperCase()));
+    .then((countryName) => setFormValue(fatcaDetails.countryTaxResidence, countryName?.toUpperCase()));
   getCountryName(response.customerFATCADtlsDTO[0].codCntryBirth?.toUpperCase())
-    .then(() => setFormValue(fatcaDetails.countryOfBirth, currentFormContext.countryName?.toUpperCase()));
-  // setFormValue(fatcaDetails.nationality, currentFormContext.countryName?.toUpperCase());
-  // setFormValue(fatcaDetails.countryTaxResidence, response.customerFATCADtlsDTO[0].codTaxCntry1?.toUpperCase());
+    .then((countryName) => setFormValue(fatcaDetails.countryOfBirth, countryName?.toUpperCase()));
   setFormValue(fatcaDetails.taxIdNumber, response.customerFATCADtlsDTO[0].tinNo1);
-  setFormValue(fatcaDetails.addressForTaxPurpose, response.customerFATCADtlsDTO[0].typAddrTax1);
+  getaddressForTaxPurpose(response.customerFATCADtlsDTO[0].addrTyp)
+    .then((taxPurpose) => setFormValue(fatcaDetails.addressForTaxPurpose, taxPurpose));
   setFormValue(fatcaDetails.taxIdType, response.customerFATCADtlsDTO[0].typTinNo1);
   setFormValue(fatcaDetails.cityOfBirth, response.customerFATCADtlsDTO[0].namCityBirth?.toUpperCase());
-  // setFormValue(fatcaDetails.countryOfBirth, response.customerFATCADtlsDTO[0].codCntryBirth?.toUpperCase());
   setFormValue(fatcaDetails.fathersName, response.customerFATCADtlsDTO[0].namCustFather?.toUpperCase());
   setFormValue(fatcaDetails.mothersName, response.namMotherMaiden?.toUpperCase());
-  setFormValue(fatcaDetails.spousesName, response.customerFATCADtlsDTO[0].namSpouseCust?.toUpperCase());
+  setFormValue(fatcaDetails.spousesName, response.customerFATCADtlsDTO[0].namCustSpouse?.toUpperCase());
   setFormValue(financialDetails.employeerName, response.customerFATCADtlsDTO[0].namCustEmp);
   setFormValue(financialDetails.selfEmployedSince, response.customerAMLDetailsDTO[0].selfEmpFrom);
   setFormValue(financialDetails.dateOfIncorporation, response.datIncorporated);
   setFormValue(financialDetails.currencyName, response.customerAMLDetailsDTO[0].namCcy);
   setFormValue(financialDetails.pepDeclaration, response.customerAMLDetailsDTO[0].amlCod1);
-  // setFormValue(financialDetails.codeOccupation, response.customerAMLDetailsDTO[0].codOccupation);
 }
 
 function prefillAccountDetail(response, i, responseLength, globals) {
@@ -851,7 +901,7 @@ const createIdComRequestObj = (globals) => {
       journeyID: formData.journeyId,
       journeyName: formData.journeyName,
       scope: 'ADOBE_ACNRI',
-      mobileNumber: globals.form.parentLandingPagePanel.landingPanel.loginFragmentNreNro.mobilePanel.registeredMobileNumber.$value,
+      mobileNumber: currentFormContext.phoneWithISD,
     },
   };
   return idComObj;
@@ -978,8 +1028,8 @@ async function accountOpeningNreNro1(idComToken, globals) {
       maskedAccountNumber: 'X'.repeat((response.customerAccountDetailsDTO[accIndex].accountNumber.length - 4))
         + response.customerAccountDetailsDTO[accIndex].accountNumber.slice((response.customerAccountDetailsDTO[accIndex].accountNumber.length - 4), (response.customerAccountDetailsDTO[accIndex].accountNumber.length)),
       branchCode: response.customerAccountDetailsDTO[accIndex].branchCode.toString(),
-      codeLC: 'INSTASTP',
-      codeLG: globals.form.wizardPanel.wizardFragment.wizardNreNro.confirmDetails.needBankHelp.bankUseFragment.mainBankUsePanel.lgCode.$value || '',
+      codeLC: 'NRISTP',
+      codeLG: globals.form.wizardPanel.wizardFragment.wizardNreNro.confirmDetails.needBankHelp.bankUseFragment.mainBankUsePanel.lgCode.$value || 'MKTG',
       flgChqBookIssue: 'N',
       productCode: globals.form.parentLandingPagePanel.landingPanel.userSelectedProductDetails.userSelectedProductAccountType.$value,
       StatusCode: 'Branch Approved',
@@ -997,6 +1047,7 @@ async function accountOpeningNreNro1(idComToken, globals) {
       journeyName: currentFormContext.journeyName,
       mobileNo: journeyParamStateInfo.currentFormContext.mobileNumber,
       mobileNumber: journeyParamStateInfo.currentFormContext.phoneWithISD,
+      misCode: '700',
     },
   };
 
@@ -1028,6 +1079,56 @@ async function fetchIdComToken() {
   return fetchJsonResponse(apiEndPoint, idComTokenObj, 'POST');
 }
 
+function validateAccountOpening(accountName, accountType, globals) {
+  switch (accountName) {
+    case
+      'NRE - Regular Savings Account':
+      if (accountType !== '106') {
+        errorHandling('', 'CUSTOMER_ONBOARDING_FAILURE', globals);
+        return false;
+      }
+      break;
+    case
+      'NRE - Elite Savings Account':
+      if (accountType !== '1350') {
+        errorHandling('', 'CUSTOMER_ONBOARDING_FAILURE', globals);
+        return false;
+      }
+      break;
+    case
+      'NRE - Current Account':
+      if (accountType !== '218') {
+        errorHandling('', 'CUSTOMER_ONBOARDING_FAILURE', globals);
+        return false;
+      }
+      break;
+    case
+      'NRO - Elite Savings Account':
+      if (accountType !== '1345') {
+        errorHandling('', 'CUSTOMER_ONBOARDING_FAILURE', globals);
+        return false;
+      }
+      break;
+    case
+      'NRO - Regular Savings Account':
+      if (accountType !== '101') {
+        errorHandling('', 'CUSTOMER_ONBOARDING_FAILURE', globals);
+        return false;
+      }
+      break;
+    case
+      'NRO - Current Account':
+      if (accountType !== '201') {
+        errorHandling('', 'CUSTOMER_ONBOARDING_FAILURE', globals);
+        return false;
+      }
+      break;
+    default: break;
+    // do nothing
+  }
+  return true;
+}
+
 /**
  * @name validateJourneyParams - Validates the last Journey state
  * @returns {PROMISE}
@@ -1051,7 +1152,13 @@ async function validateJourneyParams(formData, globals) {
       if (currentFormContext.idComSuccess === 'TRUE') {
         if (finalResult.journeyParamStateInfo.currentFormContext && finalResult.journeyParamStateInfo.currentFormContext.fatca_response) {
           currentFormContext.fatca_response = finalResult.journeyParamStateInfo.currentFormContext.fatca_response;
-          currentFormContext.selectedAccountName = globals.form.parentLandingPagePanel.landingPanel.userSelectedProductDetails.userSelectedAccountName.$value;
+          const accountValidation = await validateAccountOpening(finalResult.journeyParamStateInfo.form.confirmDetails.crm_selectedAccountName, finalResult.journeyParamStateInfo.form.confirmDetails.crm_selectedProductAccountType, globals);
+          if (!accountValidation) {
+            globals.functions.setProperty(globals.form.parentLandingPagePanel, { visible: false });
+            return {
+              status: 'showErrorPage',
+            };
+          }
         }
         invokeJourneyDropOffUpdate('CUSTOMER_ONBOARDING_STARTED', globals.form.parentLandingPagePanel.landingPanel.loginFragmentNreNro.mobilePanel.registeredMobileNumber.$value, globals.form.runtime.leadProifileId.$value, currentFormContext.journeyId, globals);
         globals.functions.setProperty(globals.form.parentLandingPagePanel.landingPanel.toDo, { value: 'fetchIdComToken' });
@@ -1164,7 +1271,7 @@ setTimeout(() => {
   onPageLoadAnalytics();
 }, 5000);
 
-const crmLeadIdDetail = (globals) => {
+const crmLeadIdDetail = async (globals) => {
   const { fatca_response: response, selectedCheckedValue: accIndex } = currentFormContext;
   const { financialDetails } = globals.form.wizardPanel.wizardFragment.wizardNreNro.confirmDetails.confirmDetailsAccordion;
   currentFormContext.phoneWithISD = currentFormContext.isdCode + currentFormContext.mobileNumber;
@@ -1181,10 +1288,10 @@ const crmLeadIdDetail = (globals) => {
       custBirthDate: parseDate(response.datBirthCust),
       identifierName: globals.form.parentLandingPagePanel.landingPanel.loginFragmentNreNro.identifierPanel.pan.$value ? 'PAN' : 'dob',
       preferredChannel: '',
-      territoryName: '',
+      territoryName: currentFormContext.territoryName,
       address: `${response?.txtCustadrAdd1} ${response?.txtCustadrAdd2} ${response?.txtCustadrAdd3}`,
       companyName: '',
-      nomineeAge: response.customerAccountDetailsDTO[accIndex].prodTypeDesc.toString(),
+      nomineeAge: '',
       typeOfFirm: financialDetails.typeOfCompoanyFirm.$value,
       typCompany: '',
       typeOfFirm_label: financialDetails.typeOfCompoanyFirm.$value,
@@ -1197,16 +1304,16 @@ const crmLeadIdDetail = (globals) => {
       ProductCategory: globals.form.parentLandingPagePanel.landingPanel.userSelectedProductDetails.userSelectedProductCatogery.$value,
       name: `${response.txtCustPrefix} ${response.customerFullName}`,
       otherThanAgriIncome: '',
-      nomineeName: response.customerAccountDetailsDTO[accIndex].nomineeName || '',
+      nomineeName: '',
       birthCertificate: '',
       PANNumber: response.refCustItNum,
       nomineeAddress: '',
       maidenName: response.namMotherMaiden,
       countryOfNominee: '',
-      country: response.namHoldadrCntry,
+      country: await getCountryName(response.namPermadrCntry),
       passpostExpiryDate: '',
-      codeLC: 'INSTASTP',
-      codeLG: globals.form.wizardPanel.wizardFragment.wizardNreNro.confirmDetails.needBankHelp.bankUseFragment.mainBankUsePanel.lgCode.$value || '',
+      codeLC: 'NRISTP',
+      codeLG: globals.form.wizardPanel.wizardFragment.wizardNreNro.confirmDetails.needBankHelp.bankUseFragment.mainBankUsePanel.lgCode.$value || 'MKTG',
       applicationDate: new Date().toISOString().slice(0, 19),
       DLExpiryDate: '',
       selfEmployedProfessionalCategory: financialDetails.selfEmployedProfessional.$value,
@@ -1214,7 +1321,7 @@ const crmLeadIdDetail = (globals) => {
       nomineeCity: '',
       stateOfBirth: '',
       cityOfBirth: response.customerFATCADtlsDTO[0].namCityBirth,
-      taxCntry1: response.customerFATCADtlsDTO[0].codTaxCntry1,
+      taxCntry1: await getCountryName(response.customerFATCADtlsDTO[0].codTaxCntry1),
       permanentAddressState: response.namPermadrState,
       permanentAddressCity: response.namPermadrCity,
       permanentAddressLM: response.txtPermadrAdd3,
@@ -1237,14 +1344,14 @@ const crmLeadIdDetail = (globals) => {
       otherEmployeeCategory_label: '',
       occupationType: '',
       permanentAddressPin: response.txtPermadrZip,
-      presentAddressPin: response.txtPermadrZip,
+      presentAddressPin: response.txtCustadrZip,
       maritalStatus: response.maritalStatusDescription,
       marital_Status: '',
       spouseName: response.customerFATCADtlsDTO[0].namCustSpouse,
       declareNominee: '',
       otherTypeOfFirm: '',
       otherTypeOfFirm_label: '',
-      otherSourceOfFunds: '',
+      otherSourceOfFunds: financialDetails.sourceOfFunds.$value,
       nomineeAddressLine2: '',
       nomineeLandmark: '',
       nomAdrCity: '',
@@ -1252,7 +1359,7 @@ const crmLeadIdDetail = (globals) => {
       nomAdrState: '',
       nomAdrZip: '',
       nomRelation: '',
-      nomineeDoB: response.customerAccountDetailsDTO[accIndex].nomineeDOB ? parseDate(response.customerAccountDetailsDTO[accIndex].nomineeDOB) : '',
+      nomineeDoB: '',
       isForm60Attached: '',
       PANAckNo: '',
       doaInput: '',
@@ -1260,18 +1367,18 @@ const crmLeadIdDetail = (globals) => {
       grossAnnualIncome_range: financialDetails.grossAnnualIncome.$value,
       monthlyIncome: '',
       selfServiceAnnualIncome: '',
-      sourceOfFunds: financialDetails.sourceOfFunds.$value.$value,
-      sourceOfFunds_label: financialDetails.sourceOfFunds.$value.$value,
+      sourceOfFunds: financialDetails.sourceOfFunds.$value,
+      sourceOfFunds_label: financialDetails.sourceOfFunds.$value,
       displayProductName: globals.form.parentLandingPagePanel.landingPanel.userSelectedProductDetails.userSelectedProductName.$value,
-      state: response.namPermadrState,
-      city: response.namPermadrCity,
+      state: response.namCustadrState,
+      city: response.namCustadrCity,
       residenceType: financialDetails.residenceType.$value,
       residenceType_label: financialDetails.residenceType.$value,
       doYouHavePAN: response.refCustItNum ? 'Y' : 'N',
       voterIDNo: '',
       drivingLicenseNo: '',
       isSeniorCitizen: '',
-      countryOfTaxResidency: response.customerFATCADtlsDTO[0].codTaxCntry1,
+      countryOfTaxResidency: await getCountryName(response.customerFATCADtlsDTO[0].codTaxCntry1),
       PANFSDocument: '',
       passportFSDocument: '',
       voterIDFSDocument: '',
@@ -1284,7 +1391,7 @@ const crmLeadIdDetail = (globals) => {
       declarationforRequiredBalance: '',
       incorporationDate: '',
       nationality: response.namHoldadrCntry,
-      custNationality: response.txtCustNATNLTY,
+      custNationality: await getCountryName(response.txtCustNATNLTY),
       addressTypeOtherThanResidential: '',
       passportBSDocument: '',
       votersIDBSDocument: '',
@@ -1298,20 +1405,20 @@ const crmLeadIdDetail = (globals) => {
       familyPPSBSDocument: '',
       allotmentLetterFSDocument: '',
       allotmentLEtterBSDocument: '',
-      firstName: response.customerFirstName || '',
-      gender: getGender(response.txtCustSex),
-      lastName: response.customerLastName ? response.customerLastName : getLastWord(response.customerFullName),
+      firstName: response.customerFirstName ? response.customerFirstName : getNamePart(response.customerFullName, 'first'),
+      gender: response.genderDescription,
+      lastName: response.customerLastName ? response.customerLastName : getNamePart(response.customerFullName, 'last'),
       layout: '',
       customerFullName: `${response.txtCustPrefix} ${response.customerFullName}`,
       leadParentLame: '',
       leadRating: '',
       leadSource: 'Adobe',
       leadSourceKey: '33262',
-      middleName: response.customerMiddleName || '',
+      middleName: response.customerMiddleName ? response.customerMiddleName : getNamePart(response.customerFullName, 'middle'),
       mobileNo: currentFormContext.mobileNumber,
       multipleTaxResidencyID: '-1',
-      employmentType: '',
-      employmentTypeOthers: '',
+      employmentType: financialDetails.occupation.$value,
+      employmentTypeOthers: financialDetails.occupation.$value,
       phone: currentFormContext.phoneWithISD,
       mobileNumber: currentFormContext.phoneWithISD,
       productCategory: globals.form.parentLandingPagePanel.landingPanel.userSelectedProductDetails.userSelectedProductCatogery.$value,
@@ -1319,14 +1426,13 @@ const crmLeadIdDetail = (globals) => {
       ratingKey: '3',
       residentialStatus: '',
       residentialStatus_label: '',
-      salutationKey: '',
-      salutationName: response.txtCustPrefix,
+      salutationKey: response.txtCustPrefix.toUpperCase() === 'MR' ? '1' : response.txtCustPrefix.toUpperCase() === 'MRS' ? '2' : '8',
+      salutationName: response.txtCustPrefix.toUpperCase() === 'MR' ? 'MR.' : response.txtCustPrefix.toUpperCase() === 'MRS' ? 'MRS.' : 'MX.',
       statusCodeInOn: new Date().toISOString().slice(0, 19),
-      territoryCode: '',
-      territoryKey: '',
+      territoryCode: response.customerAccountDetailsDTO[accIndex].branchCode.toString(),
+      territoryKey: currentFormContext.territoryKey,
       zipCode: response.txtPermadrZip,
       transcriptLatLong: '',
-      AMBStamping: '',
       companyCode: '',
       occupationTypeOther: '',
       natureOfBusinessOther: '',
@@ -1376,9 +1482,9 @@ const crmLeadIdDetail = (globals) => {
       typResidence: '',
       typResidence_label: '',
       addr1: response.txtPermadrAdd1 || '',
-      custFirstName: response.customerFirstName || '',
+      custFirstName: response.customerFirstName ? response.customerFirstName : getNamePart(response.customerFullName, 'first'),
       custFullName: `${response.txtCustPrefix} ${response.customerFullName}`,
-      custLastName: response.customerLastName ? response.customerLastName : getLastWord(response.customerFullName),
+      custLastName: response.customerLastName ? response.customerLastName : getNamePart(response.customerFullName, 'last'),
       custSex: getGender(response.txtCustSex),
       custType: response.flgCustTyp,
       permAddr1: response.txtPermadrAdd1 || '',
@@ -1403,6 +1509,7 @@ const crmLeadIdDetail = (globals) => {
       amtShareFixed: '',
       codRel: response.customerAccountDetailsDTO[accIndex].codRel.toString(),
       AMBValue: currentFormContext.ambValue,
+      AMBStamping: !isNullOrEmpty(currentFormContext.ambValue) ? 'Yes' : 'No',
       TPTConsent: '',
       AMBDateTime: new Date().toISOString().slice(0, 19),
       guardianName: null,
@@ -1440,6 +1547,14 @@ const crmLeadIdDetail = (globals) => {
       LayoutKey: '100542',
       StatusCodeKey: '9',
       misCode: '700',
+      mailingCountry: await getCountryName(response.namCustadrCntry),
+      tinType2: response.customerFATCADtlsDTO[0].typTinNo1 || '',
+      cntTaxResidence: await getCountryName(response.customerFATCADtlsDTO[0].codTaxCntry1) || '',
+      tinNumber2: response.customerFATCADtlsDTO[0].tinNo1 || '',
+      nameOfCurrency: response.customerAMLDetailsDTO[0].namCcy || '',
+      addTaxPurpose: await getaddressForTaxPurpose(response.customerFATCADtlsDTO[0].addrTyp),
+      mailingCity: response.namCustadrCity,
+      birthCountry: await getCountryName(response.customerFATCADtlsDTO[0].codCntryBirth),
     },
   };
 
@@ -1613,6 +1728,33 @@ function setAMBValue() {
     });
 }
 
+function setTerritoryValue() {
+  const branchCode = currentFormContext.fatca_response.customerAccountDetailsDTO[currentFormContext.selectedCheckedValue].branchCode;
+  const finalURL = `/content/hdfc_commonforms/api/mdm.INSTA.BRANCH_MASTER.CODE-${branchCode}.json`;
+
+  getJsonResponse(urlPath(finalURL), null, 'GET')
+    .then((response) => {
+      if (!response || response.length === 0) {
+        console.warn('No response data received.');
+        return;
+      }
+
+      const territory = response.length === 1
+        ? response[0]
+        : response.find((item) => item.CODE === branchCode.toString());
+
+      if (territory) {
+        currentFormContext.territoryName = territory.NAME;
+        currentFormContext.territoryKey = territory.TERRITORYKEY;
+      } else {
+        console.warn('No matching territory found for the branch code.');
+      }
+    })
+    .catch((error) => {
+      console.error('Error while getting territory value:', error);
+    });
+}
+
 export {
   validateLogin,
   getOtpNRE,
@@ -1653,4 +1795,5 @@ export {
   feedbackButton,
   selectVarient,
   setAMBValue,
+  setTerritoryValue,
 };
