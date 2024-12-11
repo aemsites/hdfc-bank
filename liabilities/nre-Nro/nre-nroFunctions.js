@@ -1341,7 +1341,7 @@ const crmLeadIdDetail = async (globals) => {
       employeeCategory: '',
       employeeCategory_label: financialDetails.employerCategory.$value,
       otherEmployeeCategory: '',
-      otherEmployeeCategory_label: financialDetails.employerCategory.$value,
+      otherEmployeeCategory_label: '',
       occupationType: '',
       permanentAddressPin: response.txtPermadrZip,
       presentAddressPin: response.txtCustadrZip,
