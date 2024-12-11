@@ -1,0 +1,3 @@
+[submodule "shared"]
+	path = shared
+	url = https://git.corp.adobe.com/HDFC/HDFC_HAF_COMMONS.git

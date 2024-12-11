@@ -7,7 +7,7 @@ import {
   hashPhoneNumber,
   getGender,
   getEmploymentType,
-} from '../../common/formanalytics.js';
+} from '../../shared/formanalytics.js';
 import { createDeepCopyFromBlueprint, santizedFormDataWithContext } from '../../common/formutils.js';
 import { ANALYTICS } from './constant.js';
 
