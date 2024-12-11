@@ -94,84 +94,65 @@ function sendPageloadEvent(journeyState, formData, pageName, errorAPI, errorMess
   digitalData.page.pageInfo.errorMessage = errorMessage ?? '';
   // digitalData.page.event.status = eventStatus;
   setAnalyticPageLoadProps(journeyState, formData, digitalData);
-  switch (pageName) {
-    case 'Step 3 : Select  Account': {
-      // dataReq = getFatcaData(formData);
-      // digitalData.formDetails.state = dataReq.state;
-      // digitalData.formDetails.pincode = dataReq.pincode;
-      // digitalData.formDetails.nationality = dataReq.nationality;
-      // digitalData.formDetails.countryTaxResidence = dataReq.countryTaxResidence;
-      // digitalData.formDetails.countryofBirth = dataReq.countryofBirth;
-      // digitalData.nomineeRelation = dataReq.nomineeRelation;
-      // digitalData.formDetails.companyName = dataReq.companyName;
-      // digitalData.formDetails.AnnualIncome = dataReq.AnnualIncome;
-      // digitalData.formDetails.currency = dataReq.currency;
-      // digitalData.formDetails.residenceType = dataReq.residenceType;
-      // digitalData.formDetails.sourceoffunds = dataReq.sourceoffunds;
-      // digitalData.formDetails.selfemployeddate = dataReq.selfemployeddate;
-      // digitalData.formDetails.natureofbusiness = dataReq.natureofbusiness;
-      // digitalData.formDetails.typeofcompany = dataReq.typeofcompany;
-      // digitalData.formDetails.typeofprofessional = dataReq.typeofprofessional;
-      if (window) {
-        window.digitalData = digitalData || {};
+  if(typeof window !== 'undefined' && typeof _satellite !== 'undefined'){
+    switch (pageName) {
+      case 'Step 3 : Select  Account': {
+        // dataReq = getFatcaData(formData);
+        // digitalData.formDetails.state = dataReq.state;
+        // digitalData.formDetails.pincode = dataReq.pincode;
+        // digitalData.formDetails.nationality = dataReq.nationality;
+        // digitalData.formDetails.countryTaxResidence = dataReq.countryTaxResidence;
+        // digitalData.formDetails.countryofBirth = dataReq.countryofBirth;
+        // digitalData.nomineeRelation = dataReq.nomineeRelation;
+        // digitalData.formDetails.companyName = dataReq.companyName;
+        // digitalData.formDetails.AnnualIncome = dataReq.AnnualIncome;
+        // digitalData.formDetails.currency = dataReq.currency;
+        // digitalData.formDetails.residenceType = dataReq.residenceType;
+        // digitalData.formDetails.sourceoffunds = dataReq.sourceoffunds;
+        // digitalData.formDetails.selfemployeddate = dataReq.selfemployeddate;
+        // digitalData.formDetails.natureofbusiness = dataReq.natureofbusiness;
+        // digitalData.formDetails.typeofcompany = dataReq.typeofcompany;
+        // digitalData.formDetails.typeofprofessional = dataReq.typeofprofessional;
+        break;
       }
-      _satellite.track('pageload');
-      break;
-    }
-    case 'select account type': {
-      digitalData.formDetails.bankBranch = currentFormContext?.fatca_response?.customerAccountDetailsDTO[currentFormContext.selectedCheckedValue]?.branchName ?? '';
-      digitalData.formDetails.existingAccountType = currentFormContext?.existingAccountType ?? '';
-      digitalData.formDetails.accountType = currentFormContext.productAccountName ?? '';
-      if (window) {
-        window.digitalData = digitalData || {};
+      case 'select account type': {
+        digitalData.formDetails.bankBranch = currentFormContext?.fatca_response?.customerAccountDetailsDTO[currentFormContext.selectedCheckedValue]?.branchName ?? '';
+        digitalData.formDetails.existingAccountType = currentFormContext?.existingAccountType ?? '';
+        digitalData.formDetails.accountType = currentFormContext.productAccountName ?? '';
+        break;
       }
-      _satellite.track('pageload');
-
-      break;
-    }
-    case 'Step 4 : Confirm Details': {
-      digitalData.formDetails.city = currentFormContext?.fatca_response?.namCustadrCity ?? '';
-      digitalData.formDetails.state = currentFormContext?.fatca_response?.namCustadrState ?? '';
-      digitalData.formDetails.pincode = currentFormContext?.fatca_response?.txtCustadrZip ?? '';
-      digitalData.formDetails.nationality = formData?.form?.confirmDetails?.countryOfBirth ?? '';
-      digitalData.formDetails.countryTaxResidence = formData?.form?.confirmDetails?.countryTaxResidence ?? '';
-      digitalData.formDetails.countryofBirth = formData?.form?.confirmDetails?.countryOfBirth ?? '';
-      digitalData.formDetails.nomineeRelation = formData?.form?.confirmDetails?.nomineeDetails?.relation ?? '';
-      digitalData.formDetails.companyName = formData?.form?.confirmDetails?.financialDetails?.employeerName ?? '';
-      digitalData.formDetails.AnnualIncome = formData?.form?.confirmDetails?.financialDetails?.grossAnnualIncome ?? '';
-      digitalData.formDetails.currency = formData?.form?.confirmDetails?.financialDetails?.currencyName ?? '';
-      digitalData.formDetails.residenceType = formData?.form?.confirmDetails?.financialDetails?.residenceType ?? '';
-      digitalData.formDetails.sourceoffunds = formData?.form?.confirmDetails?.financialDetails?.sourceOfFunds ?? '';
-      digitalData.formDetails.selfemployeddate = formData?.form?.confirmDetails?.financialDetails?.selfEmployedSince ?? '';
-      digitalData.formDetails.natureofbusiness = formData?.form?.confirmDetails?.financialDetails?.natureOfBusiness ?? '';
-      digitalData.formDetails.typeofcompany = formData?.form?.confirmDetails?.financialDetails?.typeOfCompoanyFirm ?? '';
-      digitalData.formDetails.typeofprofessional = formData?.form?.confirmDetails?.financialDetails?.selfEmployedProfessional ?? '';
-      if (window) {
-        window.digitalData = digitalData || {};
+      case 'Step 4 : Confirm Details': {
+        digitalData.formDetails.city = currentFormContext?.fatca_response?.namCustadrCity ?? '';
+        digitalData.formDetails.state = currentFormContext?.fatca_response?.namCustadrState ?? '';
+        digitalData.formDetails.pincode = currentFormContext?.fatca_response?.txtCustadrZip ?? '';
+        digitalData.formDetails.nationality = formData?.form?.confirmDetails?.countryOfBirth ?? '';
+        digitalData.formDetails.countryTaxResidence = formData?.form?.confirmDetails?.countryTaxResidence ?? '';
+        digitalData.formDetails.countryofBirth = formData?.form?.confirmDetails?.countryOfBirth ?? '';
+        digitalData.formDetails.nomineeRelation = formData?.form?.confirmDetails?.nomineeDetails?.relation ?? '';
+        digitalData.formDetails.companyName = formData?.form?.confirmDetails?.financialDetails?.employeerName ?? '';
+        digitalData.formDetails.AnnualIncome = formData?.form?.confirmDetails?.financialDetails?.grossAnnualIncome ?? '';
+        digitalData.formDetails.currency = formData?.form?.confirmDetails?.financialDetails?.currencyName ?? '';
+        digitalData.formDetails.residenceType = formData?.form?.confirmDetails?.financialDetails?.residenceType ?? '';
+        digitalData.formDetails.sourceoffunds = formData?.form?.confirmDetails?.financialDetails?.sourceOfFunds ?? '';
+        digitalData.formDetails.selfemployeddate = formData?.form?.confirmDetails?.financialDetails?.selfEmployedSince ?? '';
+        digitalData.formDetails.natureofbusiness = formData?.form?.confirmDetails?.financialDetails?.natureOfBusiness ?? '';
+        digitalData.formDetails.typeofcompany = formData?.form?.confirmDetails?.financialDetails?.typeOfCompoanyFirm ?? '';
+        digitalData.formDetails.typeofprofessional = formData?.form?.confirmDetails?.financialDetails?.selfEmployedProfessional ?? '';
+        break;
       }
-      _satellite.track('pageload');
-      break;
-    }
-    case 'Step 5 - Confirmation': {
-      digitalData.formDetails.accountType = currentFormContext.accountType ?? '';
-      digitalData.formDetails.branchCode = currentFormContext.fatca_response.customerAccountDetailsDTO[currentFormContext.selectedCheckedValue].branchCode ?? '';
-      digitalData.formDetails.bankBranch = currentFormContext.fatca_response.customerAccountDetailsDTO[currentFormContext.selectedCheckedValue].branchName ?? '';
-      // while(typeof window === 'undefined'){
-      //   console.log("Waiting for window to load");
-      // }
-      if (window) {
-        window.digitalData = digitalData || {};
+      case 'Step 5 - Confirmation': {
+        digitalData.formDetails.accountType = currentFormContext.accountType ?? '';
+        digitalData.formDetails.branchCode = currentFormContext.fatca_response.customerAccountDetailsDTO[currentFormContext.selectedCheckedValue].branchCode ?? '';
+        digitalData.formDetails.bankBranch = currentFormContext.fatca_response.customerAccountDetailsDTO[currentFormContext.selectedCheckedValue].branchName ?? '';
+        break;
       }
-      _satellite.track('pageload');
-      break;
+      default:
+      // do nothing
     }
-    default:
-    // do nothing
-  }
-  if (typeof window !== 'undefined') {
+    
     window.digitalData = digitalData || {};
+    _satellite.track('pageload');
   }
-  _satellite.track('pageload');
 }
 
 // /**
@@ -187,13 +168,13 @@ async function sendSubmitClickEvent(phone, eventType, linkType, formData, journe
   digitalData.page.pageInfo.pageName = PAGE_NAME.nrenro[eventType];
   switch (eventType) {
     case 'otp click': {
-      if (window) {
+      if (typeof window !== 'undefined' && typeof _satellite !== 'undefined') {
         window.digitalData = digitalData || {};
         digitalData.link.linkName = 'otp click';
         digitalData.event.status = 1;
         digitalData.event.phone = await hashPhNo(String(formData?.form?.login?.registeredMobileNumber));
+        _satellite.track('submit');
       }
-      _satellite.track('submit');
       currentFormContext.action = 'otp click';
       setTimeout(() => {
         sendPageloadEvent(journeyState, formData, PAGE_NAME.nrenro['confirm otp']);
@@ -201,52 +182,52 @@ async function sendSubmitClickEvent(phone, eventType, linkType, formData, journe
       break;
     }
     case 'privacy consent click': {
-      if (window) {
+      if (typeof window !== 'undefined' && typeof _satellite !== 'undefined') {
         window.digitalData = digitalData || {};
+        _satellite.track('submit');
       }
-      _satellite.track('submit');
       break;
     }
     case 'resend otp click': {
-      if (window) {
+      if (typeof window !== 'undefined' && typeof _satellite !== 'undefined') {
         window.digitalData = digitalData || {};
         digitalData.page.pageInfo.pageName = 'Step 2 - Verify with OTP';
         digitalData.link.linkName = 'Resend OTP';
+        _satellite.track('submit');
       }
-      _satellite.track('submit');
       break;
     }
     case 'mandatory I understand click': {
-      if (window) {
+      if (typeof window !== 'undefined' && typeof _satellite !== 'undefined') {
         window.digitalData = digitalData || {};
+        _satellite.track('submit');
       }
-      _satellite.track('submit');
       break;
     }
     case 'optional I understand click': {
-      if (window) {
+      if (typeof window !== 'undefined' && typeof _satellite !== 'undefined') {
         window.digitalData = digitalData || {};
+        _satellite.track('submit');
       }
-      _satellite.track('submit');
       break;
     }
     case 'submit otp click': {
-      if (window) {
+      if (typeof window !== 'undefined' && typeof _satellite !== 'undefined') {
         window.digitalData = digitalData || {};
         digitalData.page.pageInfo.pageName = 'Step 2 - Verify with OTP';
         digitalData.event.phone = await hashPhNo(String(formData?.form?.login?.registeredMobileNumber));
+        _satellite.track('submit');
       }
-      _satellite.track('submit');
       setTimeout(() => {
         sendPageloadEvent(journeyState, formData, PAGE_NAME.nrenro['select account']);
       }, 1000);
       break;
     }
     case 'continue btn select account': {
-      if (window) {
+      if (typeof window !== 'undefined' && typeof _satellite !== 'undefined') {
         window.digitalData = digitalData || {};
+        _satellite.track('submit');
       }
-      _satellite.track('submit');
 
       setTimeout(() => {
         sendPageloadEvent(journeyState, formData, PAGE_NAME.nrenro['select account type']);
@@ -254,11 +235,11 @@ async function sendSubmitClickEvent(phone, eventType, linkType, formData, journe
       break;
     }
     case 'select account type click': {
-      if (window) {
+      if (typeof window !== 'undefined' && typeof _satellite !== 'undefined') {
         window.digitalData = digitalData || {};
         digitalData.page.pageInfo.pageName = 'Step 3 - Select  Account';
+        _satellite.track('submit');
       }
-      _satellite.track('submit');
 
       setTimeout(() => {
         sendPageloadEvent(journeyState, formData, PAGE_NAME.nrenro['confirm details']);
@@ -272,11 +253,11 @@ async function sendSubmitClickEvent(phone, eventType, linkType, formData, journe
       break;
     }
     case 'confirm details click': {
-      if (window) {
+      if (typeof window !== 'undefined' && typeof _satellite !== 'undefined') {
         window.digitalData = digitalData || {};
         digitalData.page.pageInfo.pageName = 'Step 4 - Confirm Details';
+        _satellite.track('submit');
       }
-      _satellite.track('submit');
       break;
     }
     case 'confirm otp': {
@@ -286,146 +267,146 @@ async function sendSubmitClickEvent(phone, eventType, linkType, formData, journe
       break;
     }
     case 'Fatca Details accordion collapse click': {
-      if (window) {
+      if (typeof window !== 'undefined' && typeof _satellite !== 'undefined') {
         window.digitalData = digitalData || {};
         digitalData.page.pageInfo.pageName = 'Step 4 - Confirm Details';
         digitalData.event.status = 1;
+        _satellite.track('submit');
       }
-      _satellite.track('submit');
       break;
     }
     case 'Fatca Details accordion expand click': {
-      if (window) {
+      if (typeof window !== 'undefined' && typeof _satellite !== 'undefined') {
         window.digitalData = digitalData || {};
         digitalData.page.pageInfo.pageName = 'Step 4 - Confirm Details';
         digitalData.event.status = 1;
+        _satellite.track('submit');
       }
-      _satellite.track('submit');
       break;
     }
     case 'Personal Details accordion collapse click': {
-      if (window) {
+      if (typeof window !== 'undefined' && typeof _satellite !== 'undefined') {
         window.digitalData = digitalData || {};
         digitalData.page.pageInfo.pageName = 'Step 4 - Confirm Details';
         digitalData.event.status = 1;
+        _satellite.track('submit');
       }
-      _satellite.track('submit');
       break;
     }
     case 'Personal Details accordion expand click': {
-      if (window) {
+      if (typeof window !== 'undefined' && typeof _satellite !== 'undefined') {
         window.digitalData = digitalData || {};
         digitalData.page.pageInfo.pageName = 'Step 4 - Confirm Details';
         digitalData.event.status = 1;
+        _satellite.track('submit');
       }
-      _satellite.track('submit');
       break;
     }
     case 'Financial Details accordion collapse click': {
-      if (window) {
+      if (typeof window !== 'undefined' && typeof _satellite !== 'undefined') {
         window.digitalData = digitalData || {};
         digitalData.page.pageInfo.pageName = 'Step 4 - Confirm Details';
         digitalData.event.status = 1;
+        _satellite.track('submit');
       }
-      _satellite.track('submit');
       break;
     }
     case 'Financial Details accordion expand click': {
-      if (window) {
+      if (typeof window !== 'undefined' && typeof _satellite !== 'undefined') {
         window.digitalData = digitalData || {};
         digitalData.page.pageInfo.pageName = 'Step 4 - Confirm Details';
         digitalData.event.status = 1;
+        _satellite.track('submit');
       }
-      _satellite.track('submit');
       break;
     }
     case 'Nominee Details accordion collapse click': {
-      if (window) {
+      if (typeof window !== 'undefined' && typeof _satellite !== 'undefined') {
         window.digitalData = digitalData || {};
         digitalData.page.pageInfo.pageName = 'Step 4 - Confirm Details';
         digitalData.event.status = 1;
+        _satellite.track('submit');
       }
-      _satellite.track('submit');
       break;
     }
     case 'Nominee Details accordion expand click': {
-      if (window) {
+      if (typeof window !== 'undefined' && typeof _satellite !== 'undefined') {
         window.digitalData = digitalData || {};
         digitalData.page.pageInfo.pageName = 'Step 4 - Confirm Details';
         digitalData.event.status = 1;
+        _satellite.track('submit');
       }
-      _satellite.track('submit');
       break;
     }
     case 'privacy click': {
-      if (window) {
+      if (typeof window !== 'undefined' && typeof _satellite !== 'undefined') {
         window.digitalData = digitalData || {};
         digitalData.event.status = 1;
+        _satellite.track('submit');
       }
-      _satellite.track('submit');
       break;
     }
     case 'apply for click': {
-      if (window) {
+      if (typeof window !== 'undefined' && typeof _satellite !== 'undefined') {
         window.digitalData = digitalData || {};
+        _satellite.track('submit');
       }
-      _satellite.track('submit');
       break;
     }
     case 'hdfc website click': {
-      if (window) {
+      if (typeof window !== 'undefined' && typeof _satellite !== 'undefined') {
         window.digitalData = digitalData || {};
+        _satellite.track('submit');
       }
-      _satellite.track('submit');
       break;
     }
     case 'requested product click': {
-      if (window) {
+      if (typeof window !== 'undefined' && typeof _satellite !== 'undefined') {
         window.digitalData = digitalData || {};
         digitalData.event.status = 1;
+        _satellite.track('submit');
       }
-      _satellite.track('submit');
       break;
     }
     case 'other products click': {
-      if (window) {
+      if (typeof window !== 'undefined' && typeof _satellite !== 'undefined') {
         window.digitalData = digitalData || {};
         digitalData.event.status = 1;
+        _satellite.track('submit');
       }
-      _satellite.track('submit');
       break;
     }
     case 'Nominee Details click': {
-      if (window) {
+      if (typeof window !== 'undefined' && typeof _satellite !== 'undefined') {
         window.digitalData = digitalData || {};
         digitalData.page.pageInfo.pageName = 'Step 4 - Confirm Details';
         digitalData.event.status = 1;
+        _satellite.track('event');
       }
-      _satellite.track('event');
       break;
     }
     case 'Fatca Details click': {
-      if (window) {
+      if (typeof window !== 'undefined' && typeof _satellite !== 'undefined') {
         window.digitalData = digitalData || {};
+        _satellite.track('event');
       }
-      _satellite.track('event');
       break;
     }
     case 'on submit click': {
-      if (window) {
+      if (typeof window !== 'undefined' && typeof _satellite !== 'undefined') {
         window.digitalData = digitalData || {};
         digitalData.event.status = (formData?.form?.thankyou?.facingIssue === '0') ? 'No' : 'Yes';
         digitalData.event.rating = formData?.AccountOpeningNRENRO?.feedbackrating ?? '';
+        digitalData.page.pageInfo.pageName = 'Step 5 - Confirmation';
+        _satellite.track('submit');
       }
-      digitalData.page.pageInfo.pageName = 'Step 5 - Confirmation';
-      _satellite.track('submit');
       break;
     }
     case 'on apply for CTA click': {
-      if (window) {
+      if (typeof window !== 'undefined' && typeof _satellite !== 'undefined') {
         window.digitalData = digitalData || {};
+        _satellite.track('event');
       }
-      _satellite.track('event');
       break;
     }
     default:
@@ -533,10 +514,10 @@ function sendErrorAnalytics(errorCode, errorMsg, journeyState, globals) {
   setAnalyticPageLoadProps(journeyState, santizedFormDataWithContext(globals), digitalData);
   digitalData.page.pageInfo.errorCode = errorCode;
   digitalData.page.pageInfo.errorMessage = errorMsg;
-  if (window) {
+  if (typeof window !== 'undefined' && typeof _satellite !== 'undefined') {
     window.digitalData = digitalData || {};
+    _satellite.track('pageload');
   }
-  _satellite.track('pageload');
 }
 
 /**

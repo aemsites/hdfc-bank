@@ -42,7 +42,7 @@ function setBodyPage(thanks) {
           digitalData.user.journeyState = 'CUSTOMER_ONBOARDING_COMPLETE';
           digitalData.form.name = FORM_NAME;
           digitalData.user.casa = 'NA';
-          digitalData.page.pageInfo.pageName = PAGE_NAME.nrenro[eventType];
+          digitalData.page.pageInfo.pageName = PAGE_NAME.nrenro[linkName];
 
           if (window) {
             window.digitalData = digitalData || {};
@@ -50,7 +50,7 @@ function setBodyPage(thanks) {
           _satellite.track('event');
         });
 
-        document.querySelector('.field-image1729666081960')?.addEventListener('click', function() {
+        document.querySelector('.field-applyfora a')?.addEventListener('click', function() {
           const digitalData = createDeepCopyFromBlueprint(ANALYTICS_CLICK_OBJECT);
           const linkName = 'Apply for a CTA Click';
           const attributes = data[linkName];
