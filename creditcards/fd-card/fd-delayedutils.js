@@ -100,6 +100,7 @@ const finalDapFetchRes = async () => {
 const pageRedirected = () => {
   const { aadharRedirect, idComRedirect, errorCode } = delayedUtilState;
   const sessionExpiredErrorCode = IDCOM.response.sessionExpired.errorCode;
+  const cancelledByUserErrorCode = IDCOM.response.cancelledByUser.errorCode;
   // eslint-disable-next-line no-undef
   const journeyId = myForm.resolveQualifiedName('$form.runtime.journeyId')._data.$_value;
   const journeyData = {
@@ -118,7 +119,7 @@ const pageRedirected = () => {
       sendFDAnalytics('page load', 'Address Details', {}, 'IDCOM_REDIRECTION_INITIATED', journeyData);
     }, 1200);
   }
-  if (idComRedirect && errorCode !== sessionExpiredErrorCode) {
+  if (idComRedirect && errorCode !== sessionExpiredErrorCode && errorCode !== cancelledByUserErrorCode) {
     displayLoader();
     setTimeout(() => {
       finalDapFetchRes();
