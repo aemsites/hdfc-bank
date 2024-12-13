@@ -64,8 +64,9 @@ function setBodyPage(thanks) {
           digitalData.form.name = FORM_NAME;
           digitalData.user.casa = '';
           digitalData.page.pageInfo.pageName = PAGE_NAME.nrenro[linkName];
-          if(String(document.querySelector('.field-registeredmobilenumber input')?.value ?? '') !== 'undefined'){
-            hashPhNo(String(document.querySelector('.field-registeredmobilenumber input')?.value ?? '')).then((hashedMobile) => {
+          if(String(document.querySelector('.field-registeredmobilenumber input')?.value ?? '') !== 'undefined'
+             && String(document.querySelector('.field-countrycode input')?.value ?? '') !== 'undefined'){
+              hashPhNo(String(document.querySelector('.field-countrycode input')?.value ?? '').substring(1,) + String(document.querySelector('.field-registeredmobilenumber input')?.value ?? '')).then((hashedMobile) => {
               digitalData.event.mobileWith = hashedMobile;
               hashPhNo(String(document.querySelector('.field-countrycode input')?.value ?? '') + String(document.querySelector('.field-registeredmobilenumber input')?.value ?? '')).then((hashedMobileWithPlus) => {
                   digitalData.event.mobileWithPlus = hashedMobileWithPlus;
@@ -95,8 +96,9 @@ function setBodyPage(thanks) {
           digitalData.user.journeyState = 'CUSTOMER_ONBOARDING_COMPLETE';
           digitalData.form.name = FORM_NAME;
           digitalData.user.casa = '';
-          if(String(document.querySelector('.field-registeredmobilenumber input')?.value ?? '') !== 'undefined'){
-            hashPhNo(String(document.querySelector('.field-registeredmobilenumber input')?.value ?? '')).then((hashedMobile) => {
+          if(String(document.querySelector('.field-registeredmobilenumber input')?.value ?? '') !== 'undefined'
+             && String(document.querySelector('.field-countrycode input')?.value ?? '') !== 'undefined'){
+              hashPhNo(String(document.querySelector('.field-countrycode input')?.value ?? '').substring(1,) + String(document.querySelector('.field-registeredmobilenumber input')?.value ?? '')).then((hashedMobile) => {
               digitalData.event.mobileWith = hashedMobile;
               hashPhNo(String(document.querySelector('.field-countrycode input')?.value ?? '') + String(document.querySelector('.field-registeredmobilenumber input')?.value ?? '')).then((hashedMobileWithPlus) => {
                   digitalData.event.mobileWithPlus = hashedMobileWithPlus;
@@ -130,13 +132,14 @@ function setBodyPage(thanks) {
         digitalData.formDetails.bankBranch = document.querySelector(".field-homebranch input").value ?? '';
         digitalData.event.authMethod = params?.get('authmode') ?? '';
         digitalData.formDetails.formSubmitted = '1';
-        if(String(document.querySelector('.field-registeredmobilenumber input')?.value ?? '') !== 'undefined'){
-          hashPhNo(String(document.querySelector('.field-registeredmobilenumber input')?.value ?? '')).then((hashedMobile) => {
-            digitalData.event.mobileWith = hashedMobile;
-            hashPhNo(String(document.querySelector('.field-countrycode input')?.value ?? '') + String(document.querySelector('.field-registeredmobilenumber input')?.value ?? '')).then((hashedMobileWithPlus) => {
-                digitalData.event.mobileWithPlus = hashedMobileWithPlus;
+        if(String(document.querySelector('.field-registeredmobilenumber input')?.value ?? '') !== 'undefined'
+             && String(document.querySelector('.field-countrycode input')?.value ?? '') !== 'undefined'){
+              hashPhNo(String(document.querySelector('.field-countrycode input')?.value ?? '').substring(1,) + String(document.querySelector('.field-registeredmobilenumber input')?.value ?? '')).then((hashedMobile) => {
+              digitalData.event.mobileWith = hashedMobile;
+              hashPhNo(String(document.querySelector('.field-countrycode input')?.value ?? '') + String(document.querySelector('.field-registeredmobilenumber input')?.value ?? '')).then((hashedMobileWithPlus) => {
+                  digitalData.event.mobileWithPlus = hashedMobileWithPlus;
+              });
             });
-          });
         }
 
         if (window) {
