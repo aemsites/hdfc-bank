@@ -415,6 +415,28 @@ async function sendSubmitClickEvent(phone, eventType, linkType, formData, journe
       }
       break;
     }
+    case 'nine_rating_cta_click': {
+      if (typeof window !== 'undefined' && typeof _satellite !== 'undefined') {
+        window.digitalData = digitalData || {};
+        digitalData.event.status = '1';
+        digitalData.formDetails.facingIssue = (formData?.form?.thankyou?.facingIssue === '0') ? 'No' : 'Yes';
+        digitalData.event.rating = formData?.AccountOpeningNRENRO?.feedbackrating ?? '';
+        digitalData.page.pageInfo.pageName = 'Step 5 - Confirmation';
+        _satellite.track('survey');
+      }
+      break;
+    }
+    case 'ten_rating_cta_click': {
+      if (typeof window !== 'undefined' && typeof _satellite !== 'undefined') {
+        window.digitalData = digitalData || {};
+        digitalData.event.status = '1';
+        digitalData.formDetails.facingIssue = (formData?.form?.thankyou?.facingIssue === '0') ? 'No' : 'Yes';
+        digitalData.event.rating = formData?.AccountOpeningNRENRO?.feedbackrating ?? '';
+        digitalData.page.pageInfo.pageName = 'Step 5 - Confirmation';
+        _satellite.track('survey');
+      }
+      break;
+    }
     case 'on apply for CTA click': {
       if (typeof window !== 'undefined' && typeof _satellite !== 'undefined') {
         window.digitalData = digitalData || {};
