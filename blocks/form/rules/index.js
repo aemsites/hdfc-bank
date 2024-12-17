@@ -67,7 +67,7 @@ export async function fieldChanged(payload, form, generateFormRendition) {
         } else if (fieldType === 'checkbox') {
           field.checked = compare(currentValue, field.value, type);
         } else if (fieldType === 'plain-text') {
-          field.innerHTML = currentValue;
+          field.textContent = currentValue;
         } else if (field.type !== 'file') {
           field.value = currentValue;
         }
@@ -127,7 +127,7 @@ export async function fieldChanged(payload, form, generateFormRendition) {
         if (fieldContainer) {
           let descriptionEl = fieldContainer.querySelector('.field-description');
           if (descriptionEl) {
-            descriptionEl.innerHTML = currentValue;
+            descriptionEl.textContent = currentValue;
           } else if (currentValue !== '') {
             descriptionEl = createHelpText({
               id,

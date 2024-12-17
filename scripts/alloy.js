@@ -6859,7 +6859,7 @@
   
     var createFragment = (function (content) {
       return createNode(DIV, {}, {
-        innerHTML: content
+        textContent: content
       });
     });
   

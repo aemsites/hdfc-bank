@@ -17,7 +17,7 @@ async function createMainModal(content, actionWrapClass, reqConsentAgree) {
   closeButton.classList.add('close-button');
   closeButton.setAttribute('aria-label', 'Close');
   closeButton.type = 'button';
-  closeButton.innerHTML = '<span class="icon icon-close">X</span>';
+  closeButton.textContent = '<span class="icon icon-close">X</span>';
   closeButton.addEventListener('click', () => {
     const resultScope = {};
     resultScope[`${'closeIcon'}`] = true;

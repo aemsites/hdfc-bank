@@ -173,8 +173,8 @@ const createLabelInElement = (elementSelector, labelClass) => {
 * The text content of the label element.
 * @type {string}
 */
-  const labelText = element.getElementsByTagName('label')[0].innerHTML;
-  element.getElementsByTagName('label')[0].innerHTML = '';
+  const labelText = element.getElementsByTagName('label')[0].textContent;
+  element.getElementsByTagName('label')[0].textContent = '';
   if (!labelText) {
     return;
   }
@@ -407,7 +407,7 @@ const attachRedirectOnClick = (selector, url, target = '_blank') => {
 };
 
 const updateInnerHtml = (selectorName, updatedValue) => {
-  if (typeof document !== 'undefined') document.querySelector(selectorName).innerHTML = updatedValue;
+  if (typeof document !== 'undefined') document.querySelector(selectorName).textContent = updatedValue;
 };
 
 export {

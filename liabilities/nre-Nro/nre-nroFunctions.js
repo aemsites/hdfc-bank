@@ -415,7 +415,7 @@ const getCountryCodes = (dropdown) => {
       prevSelectedIndex = selectedIndex;
     });
     if (dropdown) {
-      dropdown.innerHTML = '';
+      dropdown.textContent = '';
     }
     const newOptionTemp = document.createElement('option');
     newOptionTemp.value = '+91';

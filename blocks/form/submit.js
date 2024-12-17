@@ -8,7 +8,7 @@ export function submitSuccess(e, form) {
       thankYouMessage = document.createElement('div');
       thankYouMessage.className = 'form-message success-message';
     }
-    thankYouMessage.innerHTML = payload?.body?.thankYouMessage || 'Thanks for your submission';
+    thankYouMessage.textContent = payload?.body?.thankYouMessage || 'Thanks for your submission';
     form.prepend(thankYouMessage);
     if (thankYouMessage.scrollIntoView) {
       thankYouMessage.scrollIntoView({ behavior: 'smooth' });
@@ -25,7 +25,7 @@ export function submitFailure(e, form) {
     errorMessage = document.createElement('div');
     errorMessage.className = 'form-message error-message';
   }
-  errorMessage.innerHTML = 'Some error occured while submitting the form'; // TODO: translation
+  errorMessage.textContent = 'Some error occured while submitting the form'; // TODO: translation
   form.prepend(errorMessage);
   errorMessage.scrollIntoView({ behavior: 'smooth' });
   form.setAttribute('data-submitting', 'false');

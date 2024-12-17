@@ -617,8 +617,8 @@
   * The text content of the label element.
   * @type {string}
   */
-    const labelText = element.getElementsByTagName('label')[0].innerHTML;
-    element.getElementsByTagName('label')[0].innerHTML = '';
+    const labelText = element.getElementsByTagName('label')[0].textContent;
+    element.getElementsByTagName('label')[0].textContent = '';
     if (!labelText) {
       return;
     }

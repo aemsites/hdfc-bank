@@ -167,7 +167,7 @@ function drawCountryCode(searchOptions, key, inputField, panel) {
         filteredOptions = searchOptions;
     }
     let cocodrop = document.querySelector('.cocodrop');
-    cocodrop.innerHTML = '';
+    cocodrop.textContent = '';
     filteredOptions.forEach((filteredOption) => {
         const newOption = document.createElement('li');
         newOption.innerText = filteredOption?.countryText;

@@ -209,7 +209,7 @@ function createRadioOrCheckboxGroup(fd) {
 function createPlainText(fd) {
   const paragraph = document.createElement('p');
   if (fd.richText) {
-    paragraph.innerHTML = stripTags(fd.value);
+    paragraph.textContent = stripTags(fd.value);
   } else {
     paragraph.textContent = fd.value;
   }
@@ -228,7 +228,7 @@ function createImage(fd) {
     <source srcset="${imagePath}?width=750&optimize=medium">
     <img alt="${fd.altText || fd.name}" src="${imagePath}?width=750&optimize=medium">
   </picture>`;
-  field.innerHTML = image;
+  field.textContent = image;
   return field;
 }
 

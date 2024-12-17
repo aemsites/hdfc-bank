@@ -61,7 +61,7 @@ export function createLabel(fd, tagName = 'label') {
     label.setAttribute('for', fd.id);
     label.className = 'field-label';
     if (fd.label.richText === true) {
-      label.innerHTML = stripTags(fd.label.value);
+      label.textContent = stripTags(fd.label.value);
     } else {
       label.textContent = fd.label.value;
     }
@@ -145,7 +145,7 @@ export function createHelpText(fd) {
   const div = document.createElement('div');
   div.className = 'field-description';
   div.setAttribute('aria-live', 'polite');
-  div.innerHTML = fd.description;
+  div.textContent = fd.description;
   div.id = `${fd.id}-description`;
   return div;
 }
@@ -162,7 +162,7 @@ export function updateOrCreateInvalidMsg(fieldElement, msg) {
     element.textContent = msg;
   } else if (container.dataset.description) {
     container.classList.remove('field-invalid');
-    element.innerHTML = container.dataset.description;
+    element.textContent = container.dataset.description;
   } else if (element) {
     element.remove();
   }
