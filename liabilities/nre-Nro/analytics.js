@@ -114,7 +114,7 @@ function sendPageloadEvent(journeyState, formData, pageName, errorAPI, errorMess
   setAnalyticPageLoadProps(journeyState, formData, digitalData);
   if(typeof window !== 'undefined' && typeof _satellite !== 'undefined'){
     switch (pageName) {
-      case 'select account type': {
+      case 'Step 3 - Account Type': {
         digitalData.formDetails.bankBranch = currentFormContext?.fatca_response?.customerAccountDetailsDTO[currentFormContext.selectedCheckedValue]?.branchName ?? '';
         digitalData.formDetails.existingAccountType = currentFormContext?.existingAccountType ?? '';
         digitalData.formDetails.accountType = currentFormContext.productAccountName ?? '';
@@ -224,9 +224,6 @@ async function sendSubmitClickEvent(phone, eventType, linkType, formData, journe
         digitalData.page.pageInfo.pageName = 'Step 2 - Verify with OTP';
         _satellite.track('submit');
       }
-      setTimeout(() => {
-        sendPageloadEvent(journeyState, formData, PAGE_NAME.nrenro['select account']);
-      }, 1000);
       break;
     }
     case 'continue btn select account': {
@@ -236,7 +233,7 @@ async function sendSubmitClickEvent(phone, eventType, linkType, formData, journe
       }
 
       setTimeout(() => {
-        sendPageloadEvent(journeyState, formData, PAGE_NAME.nrenro['select account type']);
+        sendPageloadEvent(journeyState, formData, PAGE_NAME.nrenro['select account type click']);
       }, 1000);
       break;
     }
