@@ -843,7 +843,9 @@ function multiCustomerId(response, selectAccount, singleAccountCust, multipleAcc
       }, 1000);
     });
   } else {
-    sendAnalytics('page load_Step 3 - Account Type', {}, 'CUSTOMER_ELIGIBILITY_SUCCESS', globals);
+    setTimeout(() => {
+      sendAnalytics('page load_Step 3 - Account Type', {}, 'CUSTOMER_ELIGIBILITY_SUCCESS', globals);
+    }, 1000);
     globals.functions.setProperty(globals.form.wizardPanel.MultiAccoCountinue, { visible: false });
     prefillAccountDetail(response, responseLength - 1, responseLength, globals);
   }
@@ -1696,7 +1698,6 @@ function multiAccountVarient(selectAccount, globals) {
     globals.functions.setProperty(selectAccount.nro_account_type_pannel.eliteSavingsAccountPanel.eliteSavingsAccount, { value: null });
   }
 
-  currentFormContext.existingAccountType = varientType;
   sendAnalytics('continue btn select account', { varientType }, 'CUSTOMER_ACCOUNT_SELECTED', globals);
 }
 

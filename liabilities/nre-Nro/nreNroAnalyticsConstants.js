@@ -165,6 +165,12 @@ const data = {
     StepName: 'Confirm Details',
     linkPosition: 'Form',
   },
+  'Confirm Details accordion collapse click': {
+    linkType: 'accordion',
+    linkName: 'Confirm Details Checkbox Clicked',
+    StepName: 'Confirm Details',
+    linkPosition: 'Form',
+  },
   'Nominee Details click': {
     linkType: 'accordion',
     StepName: 'Confirm Details',
