@@ -733,7 +733,7 @@ function prefillCustomerDetail(response, globals) {
   // globals.functions.setProperty(globals.form.runtime.fatca_response, { value: response });
   setFormValue(personalDetails.emailID, customerDataMasking('eMail', response.refCustEmail)?.toUpperCase());
   setFormValue(personalDetails.fullName, response.customerFullName?.toUpperCase());
-  setFormValue(personalDetails.mobileNumber, `+${currentFormContext.isdCode} ${maskNumber(currentFormContext.mobileNumber, 6)}`);
+  setFormValue(personalDetails.mobileNumber, `+${currentFormContext.isdCode} ${maskNumber(currentFormContext.mobileNumber, currentFormContext.mobileNumber.length > 7 ? 6 : 3)}`);
   setFormValue(personalDetails.pan, customerDataMasking('PANnmbr', response.refCustItNum)?.toUpperCase());
   if (!response.refCustTelex) globals.functions.setProperty(personalDetails.telephoneNumber, { visible: false });
   else setFormValue(personalDetails.telephoneNumber, maskNumber(response.refCustTelex, 6));
@@ -877,7 +877,7 @@ const resendOTP = async (globals) => {
     resendOtpCount += 1;
 
     const otpResult = await getOtpNRE(mobileNo, panValue, dobValue, globals);
-    invokeJourneyDropOffUpdate('CUSTOMER_LEAD_QUALIFIED_SUCESS', mobileNumber, globals.form.runtime.leadProifileId.$value, journeyID, globals);
+    invokeJourneyDropOffUpdate('CUSTOMER_LEAD_QUALIFIED', mobileNumber, globals.form.runtime.leadProifileId.$value, journeyID, globals);
     globals.functions.setProperty(globals.form.otppanelwrapper.otpFragment.otpPanel.secondsPanel.seconds, { value: dispSec });
     if (otpResult && otpResult.customerIdentificationResponse.existingCustomer === 'Y') {
       sec = OTP_TIMER;
@@ -990,7 +990,6 @@ function prefillThankYouPage(accountres, globals) {
   globals.functions.setProperty(globals.form.parentLandingPagePanel, { visible: false });
   globals.functions.setProperty(globals.form.thankYouPanel, { visible: true });
   const journeyAccountType = finalResult.journeyParamStateInfo.currentFormContext.journeyAccountType === 'NRE' ? 'NRO' : 'NRE';
-  globals.functions.setProperty(thankyouLeftPanel.successfullyText, { value: `<p>Yay! ${journeyAccountType} account opened successfully.</p>` });
 
   const setAccountSummaryProperties = (summary) => {
     globals.functions.setProperty(thankyouLeftPanel.accountSummary.accounttype, { value: globals.form.parentLandingPagePanel.landingPanel.userSelectedProductDetails.userSelectedAccountName.$value });
@@ -1004,11 +1003,13 @@ function prefillThankYouPage(accountres, globals) {
   const journeyInfo = finalResult.journeyParamStateInfo;
 
   if (!isNullOrEmpty(accountres?.accountNumber)) {
+    globals.functions.setProperty(thankyouLeftPanel.successfullyText, { value: `<p>Yay! ${journeyAccountType} account opened successfully.</p>` });
     globals.functions.setProperty(thankyouLeftPanel.accountNumber.accountNumber, { visible: true });
     globals.functions.setProperty(thankyouLeftPanel.accountNumber.accountNumber, { value: accountres.accountNumber }); // Setting the account number
     setAccountSummaryProperties(journeyInfo);
     invokeJourneyDropOffUpdate('CUSTOMER_ONBOARDING_COMPLETE', currentFormContext.mobileNumber, currentFormContext.leadProfileId, currentFormContext.journeyId, globals);
   } else if (!isNullOrEmpty(finalResult.journeyParamStateInfo.form.confirmDetails.crm_leadId)) {
+    globals.functions.setProperty(thankyouLeftPanel.successfullyText, { value: '<p>Lead details captured successfully !!</p>' });
     globals.functions.setProperty(thankyouLeftPanel.accountNumber.leadId_number, { visible: true });
     globals.functions.setProperty(thankyouLeftPanel.accountNumber.accountNumber, { visible: false });
     globals.functions.setProperty(thankyouLeftPanel.accountNumber.leadId_number, { value: finalResult.journeyParamStateInfo.form.confirmDetails.crm_leadId });
@@ -1328,7 +1329,7 @@ const crmLeadIdDetail = async (globals) => {
       countryOfNominee: '',
       country: await getCountryName(response.namPermadrCntry),
       passpostExpiryDate: '',
-      codeLC: 'NRISTP',
+      codeLC: 'NRI INSTASTP',
       codeLG: globals.form.wizardPanel.wizardFragment.wizardNreNro.confirmDetails.needBankHelp.bankUseFragment.mainBankUsePanel.lgCode.$value || 'MKTG',
       applicationDate: new Date().toISOString().slice(0, 19),
       DLExpiryDate: '',
