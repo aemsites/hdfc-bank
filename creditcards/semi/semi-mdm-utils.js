@@ -155,10 +155,6 @@ const assistedToggleHandler = async (globals) => {
       if (utmCheckKey?.some((key) => UTM_PARAMS[key])) {
         globals.functions.setProperty(channelDropDown, { enabled: false });
       }
-<<<<<<< HEAD
- 
-=======
->>>>>>> df5fa7e5c55acec2340a18b1b09bced17f3ea392
     }
   } catch (error) {
     // eslint-disable-next-line no-console
@@ -295,13 +291,9 @@ const handleMdmUtmParam = async (globals) => {
     const paramFound = Object.entries(UTM_PARAMS).some(([, val]) => val);
     if (paramFound) {
       SEMI_CONSTANT.CURRENT_FORM_CONTEXT.UTM_PARAMS = UTM_PARAMS;
-<<<<<<< HEAD
-      globals.functions.setProperty(globals.form.aem_semiWizard.aem_selectTenure.aem_bankAssistedToggle, { value: 'Yes' });
-=======
-      //globals.functions.setProperty(globals.form.aem_semiWizard.aem_selectTenure.aem_bankAssistedToggle, { value: 'Yes' });
-     //globals.functions.setProperty(globals.form.aem_semiWizard.aem_selectTenure.aem_bankAssistedToggle, { value: 'Yes', enabled: !UTM_PARAMS.channel });
-     globals.functions.setProperty(globals.form.aem_semiWizard.aem_selectTenure.aem_bankAssistedToggle, { value: UTM_PARAMS.channel ? 'Yes' : undefined, enabled: !UTM_PARAMS.channel });
->>>>>>> df5fa7e5c55acec2340a18b1b09bced17f3ea392
+      // globals.functions.setProperty(globals.form.aem_semiWizard.aem_selectTenure.aem_bankAssistedToggle, { value: 'Yes' });
+      // globals.functions.setProperty(globals.form.aem_semiWizard.aem_selectTenure.aem_bankAssistedToggle, { value: 'Yes', enabled: !UTM_PARAMS.channel });
+      globals.functions.setProperty(globals.form.aem_semiWizard.aem_selectTenure.aem_bankAssistedToggle, { value: UTM_PARAMS.channel ? 'Yes' : undefined, enabled: !UTM_PARAMS.channel });
     }
   }
 };
