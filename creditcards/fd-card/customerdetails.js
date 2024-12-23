@@ -387,12 +387,10 @@ const branchCodeHandler = async (globals) => {
       const changeDataAttrObj = { attrChange: true, value: false, disable: true };
       branchNameUtil.setValue(response.branchDetails[0].Name, changeDataAttrObj);
       branchCityUtil.setValue(response.cityDetails[0].CityName, changeDataAttrObj);
-    } else {
-      globals.functions.setProperty(employeeAssistancePanel.branchName, { value: '', readOnly: false });
-      globals.functions.setProperty(employeeAssistancePanel.branchCity, { value: '', readOnly: false });
     }
   } catch (error) {
-    console.error(error);
+    globals.functions.setProperty(employeeAssistancePanel.branchName, { value: '', readOnly: false });
+    globals.functions.setProperty(employeeAssistancePanel.branchCity, { value: '', readOnly: false });
   }
 };
 
