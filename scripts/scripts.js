@@ -50,6 +50,17 @@ const FORM_CONSTANT = [
       loadTime: 1200,
     },
   },
+  {
+    // FD
+    formPath: ['fd-backed-cc'],
+    class: 'fdlien fd-backed-cc',
+    urlKey: ['fd-backed-cc'],
+    launchScript: {
+      dev: 'https://assets.adobedtm.com/80673311e435/029b16140ccd/launch-a47f215bcdb9-development.min.js',
+      prod: 'https://assets.adobedtm.com/80673311e435/029b16140ccd/launch-39d52f236cd6.min.js',
+      loadTime: 1200,
+    },
+  },
 ];
 const ENV = getSubmitBaseUrl()?.includes('dev') ? 'dev' : 'prod';
 
