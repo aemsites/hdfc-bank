@@ -53,7 +53,7 @@ const FORM_CONSTANT = [
   {
     // FD
     formPath: ['fd-backed-cc'],
-    class: 'fd-backed-cc fdlien',
+    class: 'fd-backed-cc',
     urlKey: ['fd-backed-cc'],
     launchScript: {
       dev: 'https://assets.adobedtm.com/80673311e435/029b16140ccd/launch-a47f215bcdb9-development.min.js',
