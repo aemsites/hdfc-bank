@@ -1028,8 +1028,18 @@ const firstLastNameValidation = (fn, ln, globals) => {
  * @returns {Promise<object>} - Resolves with an object containing the validation status (`valid`).
  */
 const validateFieldLength = (arg, minLength, maxLength, errorMessage, globals) => {
+  const yourDetails = globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage;
   const stringLength = (String(arg.$value)?.trim())?.length;
-  const isValid = ((stringLength >= minLength) && (stringLength <= maxLength));
+  let isValid = ((stringLength >= minLength) && (stringLength <= maxLength));
+  if ((arg.$name === 'newCurentAddressLine3') && (yourDetails.currentDetails.currentAddressETB.currentAddressToggle.$value === 'on') && (arg.$value === '')) {
+    isValid = true;
+  }
+  if ((yourDetails.currentDetails.currentAddressNTB.permanentAddress.permanentAddressToggle.$value === 'on') && (arg.$value === '') && ((arg.$name === 'permanentAddressLine1') || (arg.$name === 'permanentAddressLine2') || (arg.$name === 'permanentAddressLine3'))) {
+    isValid = true;
+  }
+  if (((arg.$name === 'permanentAddressLine3') || (arg.$name === 'officeAddressLine3') || (arg.$name === 'addressLine3')) && (arg.$value === '')) {
+    isValid = true;
+  }
   globals.functions.setProperty(arg, { valid: isValid });
   globals.functions.markFieldAsInvalid(arg.$qualifiedName, `${isValid ? '' : errorMessage}`, { useQualifiedName: true });
   const response = {
