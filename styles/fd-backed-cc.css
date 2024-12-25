@@ -1,0 +1,485 @@
+body.fd-backed-cc {
+    font-family: "Inter", sans-serif !important;
+
+    header {
+        background: var(--color-interface-fd-background-primary);
+
+        &>.cmp-container {
+            max-width: 1160px;
+
+            & div:nth-child(1) {
+                max-width: 1160px;
+
+                @media (320px <=width <=767px) {
+                    text-align: left !important;
+                    left: 10px;
+                }
+
+                @media (768px <=width < 1200px) {
+                    margin: 0 0 0 10px;
+                    text-align: left;
+                }
+            }
+
+            &>div:nth-child(2):has(div:empty) {
+                display: none;
+            }
+
+            &>div:nth-child(3) {
+                position: absolute;
+                width: 110px;
+                right: 0;
+                top: 0.5em;
+                height: 32px;
+                content: url('../icons/safe-secure.svg');
+                padding: 0;
+
+                @media (768px <=width < 1200px) {
+                    display: block;
+                    right: 10px;
+                }
+
+                @media (320px <=width <=767px) {
+                    right: 10px !important;
+                    display: block !important;
+                }
+            }
+        }
+    }
+
+    main {
+
+        &>.cmp-container-container {
+            display: none !important;
+        }
+
+        .form-container {
+            max-width: var(--form-fd-max-width) !important;
+            width: 100%;
+            margin: 0 auto !important;
+            box-shadow: none;
+            border-radius: 0;
+
+            .form-wrapper {
+                max-width: 100%;
+
+                .form {
+                    form {
+                        padding: 0 !important;
+
+                        @media (768px <=width < 1200px) {
+                            display: block;
+                        }
+
+                        input[type="text"],
+                        textarea,
+                        select {
+                            font-family: "Inter", sans-serif !important;
+
+                            &::placeholder {
+                                font-size: var(--body-lg-font-size);
+                                font-weight: var(--font-weight-regular);
+                                color: var(--color-interface-text-secondary);
+                                text-transform: capitalize;
+                            }
+                        }
+
+                        .field-bannerimagepanel {
+                            background: var(--color-interface-fd-background-secondary) url(../icons/side_bar_banner.png) no-repeat center center / cover;
+                            min-height: 648px;
+
+
+                            @media (768px <=width <=1200px) {
+                                background: var(--color-interface-fd-background-secondary) url('../icons/banner_tablet.webp') no-repeat center center / 100% 100%;
+                                min-height: 225px;
+                            }
+
+                            @media (320px <=width <=767px) {
+                                background: var(--color-interface-fd-background-secondary) url('../icons/banner_mobile.webp') no-repeat center center / 100% 100%;
+                                min-height: 225px;
+                            }
+                        }
+
+                        .field-loginmainpanel {
+                            padding: 40px 35px 40px 0;
+                            margin-bottom: 40px;
+                            display: initial;
+                            grid-column: span 8;
+
+                            @media (768px <=width < 1200px) {
+                                margin: 0 auto;
+                                padding: 40px 35px;
+                            }
+
+                            @media (max-width: 768px) {
+                                padding: 40px 35px 40px 40px;
+                            }
+
+                            .field-welcometext {
+                                p {
+                                    font-size: var(--body-fd-xx-lg-font-size);
+                                    font-weight: var(--font-weight-bold);
+                                    margin-bottom: 2.5rem;
+                                    color: var(--color-interface-text-quaternary);
+                                }
+                            }
+
+                            .field-loginpanel {
+                                display: grid;
+                            }
+
+                            .field-mobilepanel {
+                                display: grid;
+                                position: relative;
+
+                                @media (320px <=width <=767px) {
+                                    grid-column: span 12;
+                                }
+
+                                .field-landinglabel {
+
+                                    p {
+                                        margin: 0;
+                                        font-weight: var(--font-weight-medium);
+                                    }
+                                }
+
+                                .field-mobilenumberwrapper {
+                                    position: relative;
+                                    display: flex;
+                                    margin-bottom: 12px;
+                                    margin-top: -7px;
+
+                                    .field-countrycode {
+                                        border: 1px solid var(--color-interface-border-secondary);
+                                        border-radius: 12px;
+                                        height: 60px;
+                                        width: 100%;
+
+                                        &::before {
+                                            content: '|';
+                                            color: #f0f0f0;
+                                            margin-left: 88px;
+                                            position: absolute;
+                                            top: 12px;
+                                            border-width: .5px;
+                                            z-index: 2;
+                                        }
+
+                                        select {
+                                            background: url(../icons/india-flag.png) no-repeat 20px center;
+                                            padding: 0 !important;
+                                            text-align: right;
+                                            appearance: none;
+                                            pointer-events: none;
+                                            width: 80px;
+                                            border-color: var(--color-interface-border-secondary) !important;
+                                            border: none !important;
+                                            font-size: var(--body-lg-font-size) !important;
+                                            font-weight: var(--font-weight-medium) !important;
+                                            letter-spacing: 0 !important;
+                                            color: var(--color-interface-text-primary) !important;
+                                            margin-top: 6px;
+
+                                            &:focus {
+                                                outline: none;
+                                            }
+
+
+                                        }
+                                    }
+
+                                    .field-registeredmobilenumber {
+                                        position: absolute;
+                                        margin: 1px;
+                                        padding-left: 15px;
+                                        left: 90px;
+                                        height: 58px;
+
+                                        label {
+                                            top: 5px;
+                                            font-size: var(--body-fd-lg-font-size);
+                                            font-weight: var(--font-weight-regular);
+                                            line-height: 28px;
+                                            margin: 0;
+                                            color: var(--color-interface-text-secondary);
+                                            opacity: 0;
+                                        }
+
+                                        input {
+                                            padding-left: 0px;
+                                            margin: 0;
+                                            border: none;
+                                            color: var(--color-interface-text-primary) !important;
+                                            font-size: var(--body-lg-font-size);
+                                            font-weight: var(--font-weight-medium);
+                                            height: 100%;
+                                            border-radius: 12px;
+
+                                            &:focus {
+                                                outline: none;
+                                            }
+                                        }
+
+                                        &[data-empty="false"],
+                                        &[data-active="true"] {
+                                            label {
+                                                left: -72px;
+                                                top: 8px;
+                                                opacity: 1;
+                                                font-size: var(--body-fd-sm-font-size);
+                                            }
+                                        }
+
+                                        &[data-empty="false"] {
+                                            input {
+                                                letter-spacing: .7rem;
+                                            }
+                                        }
+
+                                        .field-description {
+                                            margin-top: 1px;
+                                            position: absolute;
+                                            left: -88px;
+                                        }
+                                    }
+                                }
+                            }
+
+                            .field-identifierpanel {
+                                margin-top: 0 !important;
+
+                                @media (320px <=width <=767px) {
+                                    grid-column: span 12;
+                                }
+
+                                legend {
+                                    font-size: var(--body-md-font-size) !important;
+                                    font-weight: var(--font-weight-medium);
+                                    margin-right: 24px;
+                                    color: var(--color-interface-text-quaternary) !important;
+                                }
+
+                                .field-pandobselection {
+                                    margin-right: 0;
+                                    gap: 4px;
+                                    display: flex;
+                                    align-items: center;
+
+                                    label.field-label {
+                                        font-size: var(--body-sm-font-size) !important;
+                                        font-weight: var(--font-weight-regular);
+                                        color: var(--color-interface-text-primary);
+                                    }
+
+                                    input[type="radio"] {
+                                        -webkit-appearance: none;
+                                        appearance: none;
+                                        border-radius: 100%;
+                                        border-color: var(--color-interface-border-secondary);
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: center;
+                                        position: relative;
+
+                                        &:focus-visible {
+                                            outline: none;
+                                        }
+
+                                        &::before {
+                                            content: '';
+                                            width: 12px;
+                                            height: 12px;
+                                            border-radius: 100%;
+                                            position: absolute;
+                                        }
+
+                                        &:checked {
+                                            border-color: var(--color-action-border-primary-default);
+
+                                            &::before {
+                                                content: '';
+                                                background-color: var(--color-action-border-primary-default);
+                                            }
+                                        }
+
+                                        &#pandobselection-1 {
+                                            margin-left: 20px;
+                                        }
+                                    }
+                                }
+
+                                .field-pan {
+                                    input[type="text"] {
+                                        letter-spacing: 0 !important;
+                                        padding: 16px 12px 16px 20px;
+                                        height: 60px;
+                                        font-size: var(--body-lg-font-size) !important;
+                                        font-weight: var(--font-weight-regular) !important;
+                                        color: var(--color-interface-text-primary) !important;
+                                        border-color: var(--color-interface-border-secondary);
+                                        border-radius: 12px !important;
+                                        margin-top: 0;
+
+                                        &:focus {
+                                            outline: none;
+                                        }
+                                    }
+
+                                    &[data-active="true"],
+                                    &[data-empty="false"] {
+                                        label {
+                                            margin-top: 13px;
+                                        }
+                                    }
+
+                                    &[data-empty="false"] {
+                                        input {
+                                            letter-spacing: .7rem !important;
+                                        }
+                                    }
+                                }
+
+                                .field-dateofbirth {
+                                    label {
+                                        font-size: var(--body-fd-sm-font-size);
+                                        font-weight: var(--font-weight-regular);
+                                        margin-top: 13px;
+                                    }
+
+                                    input {
+                                        letter-spacing: 0 !important;
+                                        padding: 16px 12px 16px 20px;
+                                        height: 60px;
+                                        font-size: var(--body-lg-font-size) !important;
+                                        font-weight: var(--font-weight-regular) !important;
+                                        color: var(--color-interface-text-secondary) !important;
+                                        border-color: var(--color-interface-border-secondary);
+                                        border-radius: 12px !important;
+                                        margin-top: 0;
+
+                                        &:focus {
+                                            outline: none;
+                                        }
+                                    }
+
+                                    &[data-empty="false"] {
+                                        input {
+                                            color: var(--color-interface-text-primary) !important;
+                                        }
+                                    }
+                                }
+                            }
+
+
+                            .registeredMobileNumberFootNote {
+                                background: #E7EEFD;
+                                color: var(--color-action-text-secondary-default);
+                                font-size: var(--body-x-sm-font-size);
+                                font-weight: var(--font-weight-bold);
+                                position: relative;
+                                margin-bottom: 20px;
+
+                                &::before {
+                                    content: '';
+                                    position: absolute;
+                                    top: 6px;
+                                    left: 15px;
+                                    background-image: url('../icons/info-icon.svg');
+                                    width: 16px;
+                                    height: 16px;
+                                    padding: 10px 15px 10px 25px;
+                                }
+                            }
+
+                            .field-consenttext {
+                                border-top: 1px dashed var(--color-interface-border-secondary);
+                                padding-top: 20px;
+                                margin-top: 20px;
+
+                                p p {
+                                    font-size: var(--body-fd-sm-font-size);
+                                    color: var(--color-interface-text-secondary);
+                                    font-weight: var(--font-weight-regular);
+                                }
+
+                                a {
+                                    text-decoration: underline;
+                                    font-weight: var(--font-weight-regular) !important;
+                                }
+                            }
+
+                            .button-wrapper {
+                                text-align: left;
+                                max-width: 272px;
+
+                                button {
+                                    font-size: var(--body-fd-md-font-size);
+                                    font-weight: var(--font-weight-bold);
+                                }
+                            }
+
+                        }
+
+                        /* login screen end */
+
+                        fieldset.field-otppanel {
+                            .button-wrapper.field-otpresend {
+                                grid-column: span 5;
+                            }
+                        }
+
+
+                        .text-wrapper:is([data-active="true"], [data-empty="false"]),
+                        & .drop-down-wrapper:is([data-active="true"], [data-empty="false"]),
+                        & .multiline-wrapper.field-invalid:is([data-active="true"], [data-empty="false"]) {
+
+                            >label,
+                            label p {
+                                color: var(--color-input-text-placeholder-disabled);
+                                font-size: var(--body-fd-sm-font-size);
+                                font-weight: var(--font-weight-regular);
+                            }
+                        }
+
+                        & .text-wrapper:not(:focus),
+                        & .drop-down-wrapper:not(:focus),
+                        & .multiline-wrapper:not(:focus),
+                        & .number-wrapper:not(:focus) {
+
+                            >label,
+                            label p {
+                                color: transparent;
+                            }
+                        }
+
+                        & .field-invalid:has(.field-description) {
+                            .field-description {
+                                color: var(--color-input-text-msg-error);
+                                font-size: var(--body-fd-sm-font-size) !important;
+                                font-weight: var(--font-weight-regular);
+                            }
+                        }
+                    }
+
+                    /* form tag close */
+                }
+
+                /* .form calss close */
+            }
+        }
+    }
+
+    /* main tag close */
+
+    footer {
+        background: var(--color-interface-fd-background-primary);
+        text-align: center;
+
+        & .cmp-container {
+            div:nth-child(1) {
+                text-align: center;
+            }
+        }
+    }
+}
