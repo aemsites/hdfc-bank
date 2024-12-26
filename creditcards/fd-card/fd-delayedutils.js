@@ -121,12 +121,8 @@ const pageRedirected = () => {
   if (idComRedirect && errorCode !== sessionExpiredErrorCode) {
     displayLoader();
     setTimeout(() => {
-      sendFDAnalytics('page load', 'Address Details', {}, 'IDCOM_REDIRECTION_INITIATED', journeyData);
-    }, 1200);
-  }
-  if (idComRedirect && errorCode !== sessionExpiredErrorCode) {
-    displayLoader();
-    setTimeout(finalDapFetchRes, 5000);
+      finalDapFetchRes();
+    }, 5000);
   }
 };
 
