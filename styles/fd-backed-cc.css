@@ -423,13 +423,71 @@ body.fd-backed-cc {
 
                         /* login screen end */
 
-                        fieldset.field-otppanel {
-                            .button-wrapper.field-otpresend {
-                                grid-column: span 5;
+                        .field-otppanelwrapper{
+                            grid-template-rows: auto auto 270px;
+
+                            fieldset.field-otppanel{
+                                max-width: 100%;
+                                grid-template-rows: auto;
+                                padding: 40px 40px 0 0;
+
+                                .field-otppanel{
+                                    text-align: left;
+                                    & legend {
+                                        b {
+                                            color: var(--color-interface-text-quaternary);
+                                            font-size: var(--body-fd-xx-lg-font-size);
+                                            font-weight: var(--font-weight-bold);
+                                        }
+                                    }
+
+                                    .field-otphelptext {
+                                        margin-top: -60px;
+                                        font-size: var(--body-fd-md-font-size);
+                                        font-weight: var(--font-weight-bold);
+
+                                        p {
+                                            color: var(--color-input-text-primary);
+                                            font-size: var(--body-fd-md-font-size);
+                                            font-weight: var(--font-weight-regular);
+                                        }
+                                    }
+
+                                    .field-otpnumber {
+                                        margin: -28px 0 -18px;
+
+                                        input {
+                                            max-width: 422px;
+                                            letter-spacing: 51px;
+                                        }
+                                    }
+
+                                    .field-otpsubpanel {
+                                        display: flex;
+                                        flex-direction: row;
+                                        justify-content: end;
+
+                                        .field-numretries {
+                                            /* margin: -6px -14px 0 -30px; */
+
+                                            input {
+                                                font-size: var(--body-fd-sm-font-size) !important;
+                                                letter-spacing: normal !important;
+                                                color: var(--color-interface-text-secondary) !important;
+                                            }
+                                        }
+
+                                        .plain-text-wrapper {
+                                            width: fit-content;
+                                        }
+                                    }
+                                }
                             }
                         }
 
+                      
 
+                        /* common styles  */
                         .text-wrapper:is([data-active="true"], [data-empty="false"]),
                         & .drop-down-wrapper:is([data-active="true"], [data-empty="false"]),
                         & .multiline-wrapper.field-invalid:is([data-active="true"], [data-empty="false"]) {
