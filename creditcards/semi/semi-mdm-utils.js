@@ -26,6 +26,7 @@ const UTM_PARAMS = {
 };
 
 const utmCheckKey = ['lgcode', 'smcode', 'lc2', 'lc1', 'dsacode', 'branchcode'];
+
 /**
  * Extracts specific tenure-related fields from the global form object.
  * @param {object} globals - global form object
