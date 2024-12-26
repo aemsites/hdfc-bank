@@ -18,7 +18,7 @@ export const defaultErrorMessages = {
 let submitBaseUrl = 'https://applyonlinestage.hdfcbank.com';
 
 const localDev = ['aem.live', 'aem.page', 'localhost', 'hlx.live', 'hlx.page'];
-const mainProd = ['hdfc-bank-prod'];
+const mainProd = ['hdfc-bank-prod', 'stage-semi'];
 
 function isLocalDev() {
   if (typeof location !== 'undefined') {
