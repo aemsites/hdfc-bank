@@ -114,8 +114,8 @@ body.fd-backed-cc {
                             .field-loginpanel {
                                 display: grid;
 
-                                &:has(.field-description) ~ .field-registeredmobilenumberfootnote{
-                                   margin-top: ;
+                                &:has(.field-description)~.field-registeredmobilenumberfootnote {
+                                    margin-top: 10px;
                                 }
                             }
 
@@ -219,10 +219,10 @@ body.fd-backed-cc {
                                             margin-top: 1px;
                                             position: absolute;
                                             left: -88px;
-                                        }                                       
-                                    }           
-                                    
-                                    &:has(.field-description) .field-countrycode{
+                                        }
+                                    }
+
+                                    &:has(.field-description) .field-countrycode {
                                         border: 1px solid var(--color-input-border-error);
                                         box-shadow: 0 0 0 2px var(--color-input-box-shadow-error-default);
                                         outline: none;
@@ -389,7 +389,7 @@ body.fd-backed-cc {
                                 }
                             }
 
-                            .field-getotpbutton{
+                            .field-getotpbutton {
                                 margin-top: 10px;
                             }
 
@@ -527,33 +527,33 @@ body.fd-backed-cc {
 
                         .field-otppanelwrapper {
                             grid-template-rows: auto auto 270px;
-                            padding: 40px 35px 40px 0;
-                            
-                            @media (768px <=width < 1200px) {
-                                margin: 0 auto;
-                                padding: 40px 35px;
-                            }
+                            padding: 40px 35px;
+                           
 
                             fieldset.field-otppanel {
                                 max-width: 100%;
                                 grid-template-rows: auto;
 
-                                @media (768px <= width < 1272px) {
-                                padding: 0 !important;
-                                margin-top: 0 !important;
+                                @media (768px <=width < 1272px) {
+                                    padding: 0 !important;
+                                    margin-top: 0 !important;
                                 }
 
                                 .field-otppanel {
                                     text-align: left;
 
-                                    & .field-enter-otp-heading {
-                                        p{
-                                        b {
-                                            color: var(--color-interface-text-quaternary);
-                                            font-size: var(--body-fd-xx-lg-font-size);
-                                            font-weight: var(--font-weight-bold);
+                                    @media (350px <= width <= 767px) {
+                                            padding: 0 !important;
                                         }
-                                    }
+
+                                    & .field-enter-otp-heading {
+                                        p {
+                                            b {
+                                                color: var(--color-interface-text-quaternary);
+                                                font-size: var(--body-fd-xx-lg-font-size);
+                                                font-weight: var(--font-weight-bold);
+                                            }
+                                        }
                                     }
 
                                     .field-otphelptext {
@@ -577,8 +577,13 @@ body.fd-backed-cc {
                                         input {
                                             letter-spacing: 40px;
                                             margin-top: 0;
-                                            max-width: 386px;
+                                            max-width: 445px;
                                             font-size: var(--body-fd-xxx-lg-font-size);
+
+                                            @media (320px <=width < 767px) {
+                                                width: 100%;
+                                                max-width: initial;
+                                            }
 
                                             &[type="password"] {
                                                 font-size: var(--body-fd-xxx-lg-font-size);
@@ -586,53 +591,66 @@ body.fd-backed-cc {
                                                 letter-spacing: 35px;
                                             }
 
-                                            &::placeholder{
+                                            &::placeholder {
                                                 font-size: var(--body-fd-xxx-lg-font-size);
                                                 letter-spacing: 35px;
                                             }
                                         }
 
-                                        .bi-eye-slash, .bi-eye{
-                                          position: relative;
-                                          margin-top: 0;
+                                        .bi-eye-slash,
+                                        .bi-eye {
+                                            position: relative;
+                                            margin-top: 0;
+                                            margin-bottom: 0;
                                         }
                                     }
 
-                                    .field-otpresend{
+                                    .field-otpresend {
                                         margin-top: -8px;
+
+                                        @media (481px <= width <= 767px) {
+                                            margin-top: -13px !important;
+                                        }
                                     }
 
-                                    .field-secondspanel{
+                                    .field-secondspanel {
                                         display: flex;
 
-                                        .field-resendotplabel, .field-sectext{
-                                            p{
+                                        @media (350px <=width <=992px) {
+                                            flex-direction: row;
+                                        }
+
+                                        .field-resendotplabel,
+                                        .field-sectext {
+                                            p {
                                                 font-size: var(--body-fd-md-font-size);
                                                 font-weight: var(--font-weight-medium);
                                                 color: var(--color-interface-text-secondary);
                                                 margin-bottom: 0;
                                             }
                                         }
-                                        .field-seconds{
+
+                                        .field-seconds {
                                             max-width: 20px;
                                             margin-left: -15px;
                                             margin-top: -7px;
 
-                                            input{
+                                            input {
                                                 height: 20px;
                                                 border: none;
                                             }
                                         }
 
-                                        .field-sectext{
+                                        .field-sectext {
                                             left: -15px;
                                             position: relative;
                                         }
                                     }
 
-                                    .field-maxattemptmessage{
+                                    .field-maxattemptmessage {
                                         grid-column: span 4;
-                                        p{
+
+                                        p {
                                             font-size: var(--body-fd-sm-font-size);
                                             color: var(--color-input-text-msg-error);
                                         }
@@ -641,8 +659,7 @@ body.fd-backed-cc {
                                     .field-otpsubpanel {
                                         display: flex;
                                         text-align: center;
-                                        margin-top: 5px;
-                                        grid-column: span 2;
+                                        margin-top: -1px;
 
                                         .field-numretries,
                                         .field-attempts {
@@ -667,13 +684,14 @@ body.fd-backed-cc {
                                         }
                                     }
 
-                                    &:has(.field-maxattemptmessage[data-visible="true"]) .field-otpnumber{
-                                        label{
+                                    &:has(.field-maxattemptmessage[data-visible="true"]) .field-otpnumber {
+                                        label {
                                             color: var(--color-input-text-msg-error) !important;
                                         }
+
                                         input {
                                             border-color: var(--color-input-border-error);
-                                            box-shadow: 0 0 0 2px var(--color-input-box-shadow-error-default);                                
+                                            box-shadow: 0 0 0 2px var(--color-input-box-shadow-error-default);
                                             outline: none;
                                         }
                                     }
@@ -716,17 +734,18 @@ body.fd-backed-cc {
                             &:-webkit-autofill:hover,
                             &:-webkit-autofill:focus,
                             :-webkit-autofill:active {
-                              -webkit-box-shadow: 0 0 0 30px white inset !important;
+                                -webkit-box-shadow: 0 0 0 30px white inset !important;
                             }
                         }
 
                         .field-invalid:has(.field-description) {
-                            label{
+                            label {
                                 color: var(--color-input-text-msg-error) !important;
                             }
+
                             input {
                                 border-color: var(--color-input-border-error);
-                                box-shadow: 0 0 0 2px var(--color-input-box-shadow-error-default);                                
+                                box-shadow: 0 0 0 2px var(--color-input-box-shadow-error-default);
                                 outline: none;
                             }
                         }
