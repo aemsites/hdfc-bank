@@ -71,19 +71,6 @@ body.fd-backed-cc {
                             display: block;
                         }
 
-                        input[type="text"],
-                        textarea,
-                        select {
-                            font-family: "Inter", sans-serif !important;
-
-                            &::placeholder {
-                                font-size: var(--body-lg-font-size);
-                                font-weight: var(--font-weight-regular);
-                                color: var(--color-interface-text-secondary);
-                                text-transform: capitalize;
-                            }
-                        }
-
                         .field-bannerimagepanel {
                             background: var(--color-interface-fd-background-secondary) url(../icons/side_bar_banner.png) no-repeat top center;
                             min-height: 648px;
@@ -126,6 +113,10 @@ body.fd-backed-cc {
 
                             .field-loginpanel {
                                 display: grid;
+
+                                &:has(.field-description) ~ .field-registeredmobilenumberfootnote{
+                                   margin-top: ;
+                                }
                             }
 
                             .field-mobilepanel {
@@ -207,18 +198,11 @@ body.fd-backed-cc {
                                         }
 
                                         input {
+                                            height: 100%;
                                             padding-left: 0px;
                                             margin: 0;
                                             border: none;
-                                            color: var(--color-interface-text-primary) !important;
-                                            font-size: var(--body-lg-font-size);
-                                            font-weight: var(--font-weight-medium);
-                                            height: 100%;
-                                            border-radius: 12px;
-
-                                            &:focus {
-                                                outline: none;
-                                            }
+                                            box-shadow: none;
                                         }
 
                                         &[data-empty="false"],
@@ -231,18 +215,25 @@ body.fd-backed-cc {
                                             }
                                         }
 
-                                        &[data-empty="false"] {
-                                            input {
-                                                letter-spacing: .7rem;
-                                            }
-                                        }
-
                                         .field-description {
                                             margin-top: 1px;
                                             position: absolute;
                                             left: -88px;
+                                        }                                       
+                                    }           
+                                    
+                                    &:has(.field-description) .field-countrycode{
+                                        border: 1px solid var(--color-input-border-error);
+                                        box-shadow: 0 0 0 2px var(--color-input-box-shadow-error-default);
+                                        outline: none;
+                                        border-radius: 12px;
+
+                                        input {
+                                            box-shadow: none;
                                         }
+
                                     }
+
                                 }
                             }
 
@@ -311,19 +302,8 @@ body.fd-backed-cc {
 
                                 .field-pan {
                                     input[type="text"] {
-                                        letter-spacing: 0 !important;
-                                        padding: 16px 12px 16px 20px;
-                                        height: 60px;
-                                        font-size: var(--body-lg-font-size) !important;
-                                        font-weight: var(--font-weight-regular) !important;
-                                        color: var(--color-interface-text-primary) !important;
-                                        border-color: var(--color-interface-border-secondary);
-                                        border-radius: 12px !important;
                                         margin-top: 0;
-
-                                        &:focus {
-                                            outline: none;
-                                        }
+                                        padding-left: 20px;
                                     }
 
                                     &[data-active="true"],
@@ -333,11 +313,11 @@ body.fd-backed-cc {
                                         }
                                     }
 
-                                    &[data-empty="false"] {
+                                    /*   &[data-empty="false"] {
                                         input {
-                                            letter-spacing: .7rem !important;
+                                            letter-spacing: .7rem;
                                         }
-                                    }
+                                    } */
                                 }
 
                                 .field-dateofbirth {
@@ -348,24 +328,12 @@ body.fd-backed-cc {
                                     }
 
                                     input {
-                                        letter-spacing: 0 !important;
-                                        padding: 16px 12px 16px 20px;
-                                        height: 60px;
-                                        font-size: var(--body-lg-font-size) !important;
-                                        font-weight: var(--font-weight-regular) !important;
-                                        color: var(--color-interface-text-secondary) !important;
-                                        border-color: var(--color-interface-border-secondary);
-                                        border-radius: 12px !important;
                                         margin-top: 0;
-
-                                        &:focus {
-                                            outline: none;
-                                        }
                                     }
 
                                     &[data-empty="false"] {
                                         input {
-                                            color: var(--color-interface-text-primary) !important;
+                                            color: var(--color-interface-text-primary);
                                         }
                                     }
                                 }
@@ -420,50 +388,8 @@ body.fd-backed-cc {
                                 }
                             }
 
-                            .field-getotpbutton {
-                                text-align: left;
-                                max-width: 272px;
-
-                                button {
-                                    font-size: var(--body-fd-md-font-size);
-                                    font-weight: var(--font-weight-bold);
-                                }
-                            }
-
-                            /* .field-stepstofollowfragment { */
-                            /* background: var(--color-interface-background-quinary);
-                                padding: 30px;
-                                border-radius: 20px;
-                  
-                                @media (320px <=width <=767px) {
-                                  margin-top: 32px;
-                                  background: var(--color-interface-background-quinary);
-                                  padding: 20px;
-                                  padding-top: 0;
-                                  border-radius: 20px;
-                                } */
-
-                            /* .field-stepstofollowtitle {
-                                  @media (320px <=width <=767px) {
-                                    margin-bottom: 30px;
-                                  }
-                  
-                                  p {
-                                    font-weight: 600;
-                                    font-size: 24px !important;
-                                    line-height: 32px;
-                                    color: var(--color-interface-text-primary);
-                                    margin-bottom: 0px;
-                  
-                                    @media (320px <=width <=767px) {
-                                      margin-top: 20px;
-                                      margin-bottom: 0 !important;
-                                    }
-                                  }
-                                } */
-
                             .field-stepstofollow {
-                               /*  display: grid;
+                                /*  display: grid;
                                 grid-template-columns: repeat(4, 1fr); */
                                 background: var(--color-interface-background-quinary);
                                 padding: 30px;
@@ -487,17 +413,17 @@ body.fd-backed-cc {
                                 }
 
                                 & .field-step-follow-heading {
-                                   p{
-                                    font-weight: 600;
-                                    font-size: var(--body-fd-xx-lg-font-size);
-                                    color: var(--color-interface-text-primary);
-                                    margin-bottom: 0px;
+                                    p {
+                                        font-weight: 600;
+                                        font-size: var(--body-fd-xx-lg-font-size);
+                                        color: var(--color-interface-text-primary);
+                                        margin-bottom: 0px;
 
-                                    @media (320px <=width <=767px) {
-                                        margin-top: 20px;
-                                        margin-bottom: 0 !important;
+                                        @media (320px <=width <=767px) {
+                                            margin-top: 20px;
+                                            margin-bottom: 0 !important;
+                                        }
                                     }
-                                   }
                                 }
 
                                 fieldset.panel-wrapper.field-wrapper {
@@ -562,15 +488,9 @@ body.fd-backed-cc {
                                         &.field-step4image {
                                             &::after {
                                                 background: url("../icons/step_follow_credit-card.png") no-repeat center center;
-                                                
+
                                             }
                                         }
-
-                                     /*    &.field-accountopendicon {
-                                            &::after {
-                                                background: url("../icons/accountopened.png") no-repeat center center;
-                                            }
-                                        } */
                                     }
 
                                     .plain-text-wrapper {
@@ -587,7 +507,7 @@ body.fd-backed-cc {
                                             font-weight: var(--font-weight-regular);
                                             color: var(--color-input-text-primary);
                                             margin-bottom: 0;
-                                            
+
                                         }
 
                                     }
@@ -598,74 +518,218 @@ body.fd-backed-cc {
 
                         }
 
-                        /* login screen end */
+                        /* LOGIN SCREEN END */
 
                         .field-otppanelwrapper {
                             grid-template-rows: auto auto 270px;
+                            padding: 40px 35px 40px 0;
+                            
+                            @media (768px <=width < 1200px) {
+                                margin: 0 auto;
+                                padding: 40px 35px;
+                            }
 
                             fieldset.field-otppanel {
                                 max-width: 100%;
                                 grid-template-rows: auto;
-                                padding: 40px 40px 0 0;
+
+                                @media (768px <= width < 1272px) {
+                                padding: 0 !important;
+                                margin-top: 0 !important;
+                                }
 
                                 .field-otppanel {
                                     text-align: left;
 
-                                    & legend {
+                                    & .field-enter-otp-heading {
+                                        p{
                                         b {
                                             color: var(--color-interface-text-quaternary);
                                             font-size: var(--body-fd-xx-lg-font-size);
                                             font-weight: var(--font-weight-bold);
                                         }
                                     }
+                                    }
 
                                     .field-otphelptext {
-                                        margin-top: -60px;
+                                        margin-top: -40px;
                                         font-size: var(--body-fd-md-font-size);
                                         font-weight: var(--font-weight-bold);
+                                        color: var(--color-input-text-primary);
+                                        display: flex;
 
                                         p {
                                             color: var(--color-input-text-primary);
                                             font-size: var(--body-fd-md-font-size);
                                             font-weight: var(--font-weight-regular);
+                                            margin-bottom: 0;
                                         }
                                     }
 
                                     .field-otpnumber {
-                                        margin: -28px 0 -18px;
+                                        /* margin: -28px 0 -18px; */
 
                                         input {
-                                            max-width: 422px;
-                                            letter-spacing: 51px;
+                                            letter-spacing: 40px;
+                                            margin-top: 0;
+                                            max-width: 386px;
+
+                                            &[type="password"] {
+                                                font-size: var(--body-fd-xxx-lg-font-size);
+                                                color: var(--color-interface-text-secondary);
+                                                letter-spacing: 35px;
+                                            }
+
+                                            &::placeholder{
+                                                font-size: var(--body-fd-xxx-lg-font-size);
+                                                letter-spacing: 35px;
+                                            }
+                                        }
+
+                                        .bi-eye-slash, .bi-eye{
+                                          position: relative;
+                                        }
+                                    }
+
+                                    .field-otpresend{
+                                        margin-top: -8px;
+                                    }
+
+                                    .field-secondspanel{
+                                        display: flex;
+                                        grid-column: span 3;
+                                        .field-resendotplabel, .field-sectext{
+                                            p{
+                                                font-size: var(--body-fd-md-font-size);
+                                                font-weight: var(--font-weight-medium);
+                                                color: var(--color-interface-text-secondary);
+                                                margin-bottom: 0;
+                                            }
+                                        }
+                                        .field-seconds{
+                                            max-width: 20px;
+                                            margin-left: -15px;
+                                            margin-top: -7px;
+
+                                            input{
+                                                height: 20px;
+                                                border: none;
+                                            }
+                                        }
+
+                                        .field-sectext{
+                                            left: -15px;
+                                            position: relative;
+                                        }
+                                    }
+
+                                    .field-maxattemptmessage{
+                                        grid-column: span 4;
+                                        p{
+                                            font-size: var(--body-fd-sm-font-size);
+                                            color: var(--color-input-text-msg-error);
                                         }
                                     }
 
                                     .field-otpsubpanel {
                                         display: flex;
-                                        flex-direction: row;
-                                        justify-content: end;
+                                        text-align: center;
+                                        margin-top: 5px;
+                                        grid-column: span 2;
 
-                                        .field-numretries {
-                                            /* margin: -6px -14px 0 -30px; */
+                                        .field-numretries,
+                                        .field-attempts {
 
-                                            input {
-                                                font-size: var(--body-fd-sm-font-size) !important;
-                                                letter-spacing: normal !important;
-                                                color: var(--color-interface-text-secondary) !important;
+                                            input,
+                                            p {
+                                                font-size: var(--body-fd-md-font-size);
+                                                font-weight: var(--font-weight-regular);
+                                                color: var(--color-interface-text-secondary);
+                                                height: auto;
+                                                margin: 0;
                                             }
                                         }
 
-                                        .plain-text-wrapper {
-                                            width: fit-content;
+                                        .field-numretries {
+                                            position: relative;
+
+                                            input {
+                                                margin-top: 4px;
+                                                position: absolute;
+                                            }
                                         }
                                     }
                                 }
                             }
                         }
 
-
+                        /* OTP PANEL SCREEN END */
 
                         /* common styles  */
+
+                        input[type="text"],
+                        input[type="password"],
+                        input[type="date"] {
+                            font-size: var(--body-lg-font-size);
+                            font-weight: var(--font-weight-medium);
+                            color: var(--color-interface-text-primary) !important;
+                            border-color: var(--color-interface-border-secondary);
+                            font-family: "Inter", sans-serif !important;
+                            border-radius: 12px;
+                            height: 60px;
+                            max-width: 368px;
+                            letter-spacing: .7rem;
+                            line-height: 60px;
+                            position: relative;
+
+                            &:focus {
+                                outline: none;
+                            }
+
+                            &::placeholder {
+                                font-size: var(--body-lg-font-size);
+                                font-weight: var(--font-weight-regular);
+                                color: var(--color-input-text-placeholder-default);
+                                font-weight: var(--font-weight-regular);
+                                letter-spacing: 0;
+                            }
+
+                            &:-webkit-autofill,
+                            &:-webkit-autofill:hover,
+                            &:-webkit-autofill:focus,
+                            :-webkit-autofill:active {
+                              -webkit-box-shadow: 0 0 0 30px white inset !important;
+                            }
+                        }
+
+                        .field-invalid:has(.field-description) {
+                            label{
+                                color: var(--color-input-text-msg-error) !important;
+                            }
+                            input {
+                                border-color: var(--color-input-border-error);
+                                box-shadow: 0 0 0 2px var(--color-input-box-shadow-error-default);                                
+                                outline: none;
+                            }
+                        }
+
+                        .button-wrapper {
+                            text-align: left;
+                            max-width: 272px;
+
+                            button {
+                                font-size: var(--body-fd-md-font-size);
+                                font-weight: var(--font-weight-medium);
+                                font-family: "Inter", sans-serif !important;
+
+                                &::after {
+                                    content: url(../../icons/Arrow.png);
+                                    position: absolute;
+                                    margin-top: 2px;
+                                }
+                            }
+                        }
+
                         .text-wrapper:is([data-active="true"], [data-empty="false"]),
                         & .drop-down-wrapper:is([data-active="true"], [data-empty="false"]),
                         & .multiline-wrapper.field-invalid:is([data-active="true"], [data-empty="false"]) {
