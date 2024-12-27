@@ -303,7 +303,7 @@ body.fd-backed-cc {
                                 .field-pan {
                                     input[type="text"] {
                                         margin-top: 0;
-                                        padding-left: 20px;
+                                        padding-left: 22px;
                                     }
 
                                     &[data-active="true"],
@@ -329,6 +329,7 @@ body.fd-backed-cc {
 
                                     input {
                                         margin-top: 0;
+                                        padding-left: 22px;
                                     }
 
                                     &[data-empty="false"] {
@@ -386,6 +387,10 @@ body.fd-backed-cc {
                                     text-decoration: underline;
                                     font-weight: var(--font-weight-regular) !important;
                                 }
+                            }
+
+                            .field-getotpbutton{
+                                margin-top: 10px;
                             }
 
                             .field-stepstofollow {
@@ -552,7 +557,7 @@ body.fd-backed-cc {
                                     }
 
                                     .field-otphelptext {
-                                        margin-top: -40px;
+                                        margin-top: -35px;
                                         font-size: var(--body-fd-md-font-size);
                                         font-weight: var(--font-weight-bold);
                                         color: var(--color-input-text-primary);
@@ -573,6 +578,7 @@ body.fd-backed-cc {
                                             letter-spacing: 40px;
                                             margin-top: 0;
                                             max-width: 386px;
+                                            font-size: var(--body-fd-xxx-lg-font-size);
 
                                             &[type="password"] {
                                                 font-size: var(--body-fd-xxx-lg-font-size);
@@ -588,6 +594,7 @@ body.fd-backed-cc {
 
                                         .bi-eye-slash, .bi-eye{
                                           position: relative;
+                                          margin-top: 0;
                                         }
                                     }
 
@@ -597,7 +604,7 @@ body.fd-backed-cc {
 
                                     .field-secondspanel{
                                         display: flex;
-                                        grid-column: span 3;
+
                                         .field-resendotplabel, .field-sectext{
                                             p{
                                                 font-size: var(--body-fd-md-font-size);
@@ -657,6 +664,17 @@ body.fd-backed-cc {
                                                 margin-top: 4px;
                                                 position: absolute;
                                             }
+                                        }
+                                    }
+
+                                    &:has(.field-maxattemptmessage[data-visible="true"]) .field-otpnumber{
+                                        label{
+                                            color: var(--color-input-text-msg-error) !important;
+                                        }
+                                        input {
+                                            border-color: var(--color-input-border-error);
+                                            box-shadow: 0 0 0 2px var(--color-input-box-shadow-error-default);                                
+                                            outline: none;
                                         }
                                     }
                                 }
