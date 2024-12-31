@@ -3,7 +3,7 @@ import { applicableCards, extractJSONFromHTMLString, urlPath } from '../../commo
 import { invokeJourneyDropOffUpdate } from './fd-journey-util.js';
 import {
   fetchJsonResponse,
-  // fetchRecursiveResponse,
+  fetchRecursiveResponse,
 } from '../../common/makeRestAPI.js';
 import { FD_ENDPOINTS } from './constant.js';
 import { SELECTED_CUSTOMER_ID } from './customeridutil.js';
@@ -52,7 +52,8 @@ const ipa = (payload, showLoader, hideLoader, globals) => {
   const apiEndPoint = urlPath(FD_ENDPOINTS.ipa);
   if (showLoader) FORM_RUNTIME.ipa();
   const fieldName = ['IPAResponse', 'productEligibility', 'productDetails'];
-  return fetchJsonResponse('ipa', apiEndPoint, ipaRequest, 'POST', Number(payload.ipaDuration), Number(payload.ipaTimer), fieldName, hideLoader);
+  // return fetchRecursiveResponse('ipa', apiEndPoint, ipaRequest, 'POST', Number(payload.ipaDuration), Number(payload.ipaTimer), fieldName, hideLoader);
+  return fetchJsonResponse(apiEndPoint, ipaRequest, 'POST', hideLoader);
 };
 
 const updateData = (globals, productDetail, panel, index) => {
