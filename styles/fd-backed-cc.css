@@ -1,5 +1,6 @@
 body.fd-backed-cc {
     font-family: "Inter", sans-serif !important;
+    box-sizing: border-box;
 
     header {
         background: var(--color-interface-fd-background-primary);
@@ -528,7 +529,7 @@ body.fd-backed-cc {
                         .field-otppanelwrapper {
                             grid-template-rows: auto auto 270px;
                             padding: 40px 35px;
-                           
+
 
                             fieldset.field-otppanel {
                                 max-width: 100%;
@@ -542,9 +543,9 @@ body.fd-backed-cc {
                                 .field-otppanel {
                                     text-align: left;
 
-                                    @media (350px <= width <= 767px) {
-                                            padding: 0 !important;
-                                        }
+                                    @media (350px <=width <=767px) {
+                                        padding: 0 !important;
+                                    }
 
                                     & .field-enter-otp-heading {
                                         p {
@@ -568,6 +569,29 @@ body.fd-backed-cc {
                                             font-size: var(--body-fd-md-font-size);
                                             font-weight: var(--font-weight-regular);
                                             margin-bottom: 0;
+                                        }
+                                    }
+
+                                    .field-editmobilenumbtn {
+                                        max-width: none;
+                                        margin-top: -25px;
+
+                                        button {
+                                            color: var(--color-action-text-secondary-default);
+                                            font-weight: var(--font-weight-bold);
+                                            font-size: var(--body-fd-md-font-size);
+                                            background: none;
+                                            width: auto;
+                                            padding: 0;
+                                            height: auto;
+
+                                            &::after{
+                                                display: none;
+                                            }
+
+                                            &:hover {
+                                                background: none !important;
+                                            }
                                         }
                                     }
 
@@ -605,10 +629,15 @@ body.fd-backed-cc {
                                         }
                                     }
 
+                                    .field-resendotppanel {
+                                        border: 1px solid red;
+                                        max-width: 445px;
+                                        display: flex;
+                                    }
                                     .field-otpresend {
                                         margin-top: -8px;
 
-                                        @media (481px <= width <= 767px) {
+                                        @media (481px <=width <=767px) {
                                             margin-top: -13px !important;
                                         }
                                     }
