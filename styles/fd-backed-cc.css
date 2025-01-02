@@ -630,7 +630,6 @@ body.fd-backed-cc {
                                     }
 
                                     .field-resendotppanel {
-                                        border: 1px solid red;
                                         max-width: 445px;
                                         display: flex;
                                     }
