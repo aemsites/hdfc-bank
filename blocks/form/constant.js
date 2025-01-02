@@ -15,10 +15,10 @@ export const defaultErrorMessages = {
   required: 'Please fill in this field.',
 };
 
-let submitBaseUrl = 'https://applyonlinestage.hdfcbank.com';
+let submitBaseUrl = 'https://applyonline.hdfcbank.com';
 
 const localDev = ['aem.live', 'aem.page', 'localhost', 'hlx.live', 'hlx.page'];
-const mainProd = ['hdfc-bank-prod', 'stage-semi'];
+const mainProd = ['hdfc-bank-prod'];
 
 function isLocalDev() {
   if (typeof location !== 'undefined') {
