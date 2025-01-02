@@ -342,13 +342,14 @@ const executeInterfacePostRedirect = async (source, userRedirected, globals) => 
       }
     },
     errorCallBack: (response, globalObj) => {
-      const { resultPanel, fdBasedCreditCardWizard } = globalObj.form;
+      const { resultPanel, fdBasedCreditCardWizard, loginMainPanel } = globalObj.form;
 
       const formContextCallbackData = globalObj.functions.exportData()?.currentFormContext;
       const mobileNumber = globalObj.functions.exportData().form.login.registeredMobileNumber;
       const leadProfileId = globalObj.functions.exportData().leadProifileId;
       const journeyId = formContextCallbackData.journeyID;
       globalObj.functions.setProperty(fdBasedCreditCardWizard, { visible: false });
+      globalObj.functions.setProperty(loginMainPanel, { visible: false });
       globalObj.functions.setProperty(resultPanel, { visible: true });
       globalObj.functions.setProperty(resultPanel.errorResultPanel.errorMessageText, { value: response?.ExecuteInterfaceResponse?.APS_ERROR_DESC });
       globalObj.functions.setProperty(resultPanel.errorResultPanel, { visible: true });
