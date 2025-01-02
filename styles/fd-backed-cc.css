@@ -147,6 +147,10 @@ body.fd-backed-cc {
                                         border-radius: 12px;
                                         height: 60px;
                                         width: 100%;
+                                      
+                                        @media (max-width: 768px) {
+                                            max-width: 368px;
+                                        }
 
                                         &::before {
                                             content: '|';
@@ -528,7 +532,16 @@ body.fd-backed-cc {
 
                         .field-otppanelwrapper {
                             grid-template-rows: auto auto 270px;
-                            padding: 40px 35px;
+                            padding: 40px 35px 40px 0;
+
+                            @media (768px <=width < 1200px) {
+                                margin: 0 auto;
+                                padding: 40px 35px;
+                            }
+
+                            @media (max-width: 768px) {
+                                padding: 40px 35px 40px 40px;
+                            }
 
 
                             fieldset.field-otppanel {
@@ -632,6 +645,10 @@ body.fd-backed-cc {
                                     .field-resendotppanel {
                                         max-width: 445px;
                                         display: flex;
+
+                                        @media (max-width: 768px) {
+                                            max-width: 100%;
+                                        }
                                     }
                                     .field-otpresend {
                                         margin-top: -8px;
