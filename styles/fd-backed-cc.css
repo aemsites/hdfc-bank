@@ -485,19 +485,19 @@ body.fd-backed-cc {
 
                                         &.field-step2image {
                                             &::after {
-                                                background: url("../icons/step_follow_select-fd.png") no-repeat center center;
+                                                background: url("../icons/step_follow_credit-card.png") no-repeat center center;
                                             }
                                         }
 
                                         &.field-step3image {
                                             &::after {
-                                                background: url("../icons/step_follow_verify-identify.png") no-repeat center center;
+                                                background: url("../icons/step_follow_select-fd.png") no-repeat center center;
                                             }
                                         }
 
                                         &.field-step4image {
                                             &::after {
-                                                background: url("../icons/step_follow_credit-card.png") no-repeat center center;
+                                                background: url("../icons/step_follow_verify-identify.png") no-repeat center center;
 
                                             }
                                         }
@@ -644,7 +644,7 @@ body.fd-backed-cc {
 
                                     .field-resendotppanel {
                                         max-width: 445px;
-                                        display: flex;
+                                        display: grid;
 
                                         @media (max-width: 768px) {
                                             max-width: 100%;
@@ -652,7 +652,8 @@ body.fd-backed-cc {
                                     }
                                     .field-otpresend {
                                         margin-top: -8px;
-
+                                        grid-column: span 6;
+                                        
                                         @media (481px <=width <=767px) {
                                             margin-top: -13px !important;
                                         }
@@ -660,6 +661,7 @@ body.fd-backed-cc {
 
                                     .field-secondspanel {
                                         display: flex;
+                                        grid-column: span 6;
 
                                         @media (350px <=width <=992px) {
                                             flex-direction: row;
@@ -693,7 +695,7 @@ body.fd-backed-cc {
                                     }
 
                                     .field-maxattemptmessage {
-                                        grid-column: span 4;
+                                        grid-column: span 6;
 
                                         p {
                                             font-size: var(--body-fd-sm-font-size);
@@ -705,6 +707,7 @@ body.fd-backed-cc {
                                         display: flex;
                                         text-align: center;
                                         margin-top: -1px;
+                                        grid-column: span 6;
 
                                         .field-numretries,
                                         .field-attempts {
