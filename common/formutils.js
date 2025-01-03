@@ -222,7 +222,7 @@ const composeNameOption = (fn, mn, ln, cardType, maxlength) => {
   const initial = (str) => str?.charAt(0);
   const createNames = (patterns) => patterns
     .map(([a, b]) => [a, b].filter(Boolean).join(' '))
-    .filter((el) => el.length <= maxlength);
+    .filter((el) => (!maxlength || el.length <= maxlength));
 
   const basePatterns = [
     fn && mn ? [fn, initial(mn)] : null,
