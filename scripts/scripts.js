@@ -42,7 +42,7 @@ const FORM_CONSTANT = [
   {
     // FD
     formPath: ['etb-fixed-deposit-cc', 'pvtestfdliencugtest', 'fd-lien-cug-test', 'fdlienprodtest', 'fd-backed-cc'],
-    class: 'fdlien',
+    class: 'fd-backed-cc',
     urlKey: ['fdlien', 'pvtestfdliencugtest', 'fd-lien-cug-test', 'etb-fixed-deposit-cc', 'fdlienprodtest', 'fd-backed-cc'],
     launchScript: {
       dev: 'https://assets.adobedtm.com/80673311e435/029b16140ccd/launch-a47f215bcdb9-development.min.js',
