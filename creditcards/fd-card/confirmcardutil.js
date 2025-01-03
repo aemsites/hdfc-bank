@@ -91,7 +91,8 @@ const selectCardBackClickHandler = (globals) => {
 
 const cardSelectHandler = (cardsPanel, globals) => {
   if (confirmCardState.selectedCardIndex !== -1) {
-    globals.functions.setProperty(cardsPanel[confirmCardState.selectedCardIndex].cardSelection, { value: undefined });
+    const selectedItems = cardsPanel.filter((item) => item.cardSelection._data.$value === '0');
+    if (selectedItems.length > 1) globals.functions.setProperty(cardsPanel[confirmCardState.selectedCardIndex].cardSelection, { value: undefined });
     setTimeout(() => {
       confirmCardState.selectedCardIndex = cardsPanel.findIndex((item) => item.cardSelection._data.$value === '0');
     }, 50);
