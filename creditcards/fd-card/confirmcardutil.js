@@ -90,6 +90,8 @@ const selectCardBackClickHandler = (globals) => {
 };
 
 const cardSelectHandler = (cardsPanel, globals) => {
+  const isRedirected = globals?.functions?.exportData()?.queryParams?.journeyId || '';
+  if (isRedirected !== '') return;
   if (confirmCardState.selectedCardIndex !== -1) {
     const selectedItems = cardsPanel.filter((item) => item.cardSelection._data.$value === '0');
     if (selectedItems.length > 1) globals.functions.setProperty(cardsPanel[confirmCardState.selectedCardIndex].cardSelection, { value: undefined });
