@@ -97,12 +97,14 @@ const cardSelectHandler = (cardsPanel, globals) => {
     if (selectedItems.length > 1) globals.functions.setProperty(cardsPanel[confirmCardState.selectedCardIndex].cardSelection, { value: undefined });
     setTimeout(() => {
       confirmCardState.selectedCardIndex = cardsPanel.findIndex((item) => item.cardSelection._data.$value === '0');
+      globals.functions.setProperty(globals.form.fdBasedCreditCardWizard.selectCard.selectedCreditCard, { value: IPA_RESPONSE?.productDetails?.[confirmCardState.selectedCardIndex]?.cardProductCode });
+      CURRENT_FORM_CONTEXT.selectedCreditCard = IPA_RESPONSE?.productDetails?.[confirmCardState.selectedCardIndex];
     }, 50);
   } else {
     confirmCardState.selectedCardIndex = cardsPanel.findIndex((item) => item.cardSelection._data.$value === '0');
+    globals.functions.setProperty(globals.form.fdBasedCreditCardWizard.selectCard.selectedCreditCard, { value: IPA_RESPONSE?.productDetails?.[confirmCardState.selectedCardIndex]?.cardProductCode });
+    CURRENT_FORM_CONTEXT.selectedCreditCard = IPA_RESPONSE?.productDetails?.[confirmCardState.selectedCardIndex];
   }
-  globals.functions.setProperty(globals.form.fdBasedCreditCardWizard.selectCard.selectedCreditCard, { value: IPA_RESPONSE?.productDetails?.[confirmCardState.selectedCardIndex]?.cardProductCode });
-  CURRENT_FORM_CONTEXT.selectedCreditCard = IPA_RESPONSE?.productDetails?.[confirmCardState.selectedCardIndex];
 };
 
 const popupBackClickHandler = (globals) => {
