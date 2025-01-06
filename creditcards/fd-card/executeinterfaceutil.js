@@ -298,8 +298,8 @@ const executeInterface = async (payload, showLoader, hideLoader, source, globals
 const executeInterfacePostRedirect = async (source, userRedirected, globals) => {
   const formCallBackContext = globals.functions.exportData()?.currentFormContext || JSON.parse(globals?.functions?.exportData()?.formContext);
   const requestObj = formCallBackContext?.executeInterfaceRequest;
-  const selectedCreditCardCode = globals.functions.exportData()?.selectedCreditCard || '';
-  requestObj.requestString.productCode = selectedCreditCardCode;
+  // const selectedCreditCardCode = globals.functions.exportData()?.selectedCreditCard || '';
+  // requestObj.requestString.productCode = selectedCreditCardCode;
   const kycModes = {
     aadhaar: 'eKYCIDCOM',
     biokyc: 'OTP',
