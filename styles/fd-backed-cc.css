@@ -147,7 +147,7 @@ body.fd-backed-cc {
                                         border-radius: 12px;
                                         height: 60px;
                                         width: 100%;
-                                      
+
                                         @media (max-width: 768px) {
                                             max-width: 368px;
                                         }
@@ -227,16 +227,42 @@ body.fd-backed-cc {
                                         }
                                     }
 
-                                    &:has(.field-description) .field-countrycode {
-                                        border: 1px solid var(--color-input-border-error);
-                                        box-shadow: 0 0 0 2px var(--color-input-box-shadow-error-default);
-                                        outline: none;
-                                        border-radius: 12px;
-
-                                        input {
-                                            box-shadow: none;
+                                    &:has(input:user-invalid) {
+                                        label {
+                                            color: var(--color-input-text-msg-error) !important;
                                         }
 
+                                        .field-countrycode {
+                                            border: 1px solid var(--color-input-border-error);
+                                            box-shadow: 0 0 0 2px var(--color-input-box-shadow-error-default);
+                                            outline: none;
+                                            border-radius: 12px;
+
+                                            input {
+                                                box-shadow: none;
+
+                                                &~.field-description {
+                                                    color: var(--color-input-text-msg-error);
+                                                    font-weight: var(--font-weight-regular);
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    &:has(input:user-valid) {
+                                        label {
+                                            color: var(--color-action-text-secondary-default) !important;
+                                        }
+
+                                        .field-countrycode {
+                                            border-color: var(--color-action-border-primary-default);
+                                            box-shadow: 0 0 0 2px var(--color-interface-background-box-shadow-secondary);
+                                            outline: none;
+
+                                            input {
+                                                box-shadow: none;
+                                            }
+                                        }
                                     }
 
                                 }
@@ -317,12 +343,6 @@ body.fd-backed-cc {
                                             margin-top: 13px;
                                         }
                                     }
-
-                                    /*   &[data-empty="false"] {
-                                        input {
-                                            letter-spacing: .7rem;
-                                        }
-                                    } */
                                 }
 
                                 .field-dateofbirth {
@@ -598,7 +618,7 @@ body.fd-backed-cc {
                                             padding: 0;
                                             height: auto;
 
-                                            &::after{
+                                            &::after {
                                                 display: none;
                                             }
 
@@ -640,6 +660,22 @@ body.fd-backed-cc {
                                             margin-top: 0;
                                             margin-bottom: 0;
                                         }
+
+                                        &:not(.field-description) {
+                                            input:user-valid {
+                                                font-size: var(--body-xx-lg-font-size);
+                                                & ~ .bi-eye{
+                                                    margin-bottom: -4px;
+                                                }
+                                            }
+                                            input[type="password"] {
+                                                font-size: var(--body-fd-xxx-lg-font-size);
+
+                                                & ~ .bi-eye{
+                                                    margin-bottom: -4px;
+                                                }
+                                            }                                           
+                                        }
                                     }
 
                                     .field-resendotppanel {
@@ -650,10 +686,11 @@ body.fd-backed-cc {
                                             max-width: 100%;
                                         }
                                     }
+
                                     .field-otpresend {
                                         margin-top: -8px;
                                         grid-column: span 6;
-                                        
+
                                         @media (481px <=width <=767px) {
                                             margin-top: -13px !important;
                                         }
@@ -731,18 +768,6 @@ body.fd-backed-cc {
                                             }
                                         }
                                     }
-
-                                    &:has(.field-maxattemptmessage[data-visible="true"]) .field-otpnumber {
-                                        label {
-                                            color: var(--color-input-text-msg-error) !important;
-                                        }
-
-                                        input {
-                                            border-color: var(--color-input-border-error);
-                                            box-shadow: 0 0 0 2px var(--color-input-box-shadow-error-default);
-                                            outline: none;
-                                        }
-                                    }
                                 }
                             }
                         }
@@ -786,16 +811,37 @@ body.fd-backed-cc {
                             }
                         }
 
-                        .field-invalid:has(.field-description) {
-                            label {
-                                color: var(--color-input-text-msg-error) !important;
+                        .field-invalid,
+                        .field-otppanel {
+                            &:has(input:user-invalid) {
+                                label {
+                                    color: var(--color-input-text-msg-error) !important;
+                                }
+
+                                input:user-invalid {
+                                    border-color: var(--color-input-border-error);
+                                    box-shadow: 0 0 0 2px var(--color-input-box-shadow-error-default);
+                                    outline: none;
+
+                                    &~.field-description {
+                                        color: var(--color-input-text-msg-error);
+                                        font-weight: var(--font-weight-regular);
+                                    }
+                                }
                             }
 
-                            input {
-                                border-color: var(--color-input-border-error);
-                                box-shadow: 0 0 0 2px var(--color-input-box-shadow-error-default);
-                                outline: none;
+                            &:has(input:user-valid) {
+                                label {
+                                    color: var(--color-action-text-secondary-default) !important;
+                                }
+
+                                input:user-valid {
+                                    border-color: var(--color-action-border-primary-default);
+                                    box-shadow: 0 0 0 2px var(--color-interface-background-box-shadow-secondary);
+                                    outline: none;
+                                }
                             }
+
                         }
 
                         .button-wrapper {
@@ -835,14 +881,6 @@ body.fd-backed-cc {
                             >label,
                             label p {
                                 color: transparent;
-                            }
-                        }
-
-                        & .field-invalid:has(.field-description) {
-                            .field-description {
-                                color: var(--color-input-text-msg-error);
-                                font-size: var(--body-fd-sm-font-size) !important;
-                                font-weight: var(--font-weight-regular);
                             }
                         }
                     }
