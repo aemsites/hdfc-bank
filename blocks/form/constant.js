@@ -38,7 +38,7 @@ function isMainProd() {
 }
 
 if (isLocalDev()) {
-  submitBaseUrl = 'applyonlinedev.hdfcbank.com';
+  submitBaseUrl = 'https://applyonlinedev.hdfcbank.com';
 }
 
 export function setSubmitBaseUrl(url) {
