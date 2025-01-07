@@ -343,23 +343,50 @@ body.fd-backed-cc {
                                             margin-top: 13px;
                                         }
                                     }
+
+                                    &[data-empty="true"] {
+                                        input {
+                                            text-transform: none;
+                                        }
+                                    }                                    
                                 }
 
                                 .field-dateofbirth {
-                                    label {
+                                    label, label p {
                                         font-size: var(--body-fd-sm-font-size);
                                         font-weight: var(--font-weight-regular);
                                         margin-top: 13px;
+
+                                        p {
+                                            margin: 0;
+                                        }
                                     }
 
                                     input {
                                         margin-top: 0;
                                         padding-left: 22px;
+
+                                        &[type="text"] {
+                                            background: url('../icons/date_picker_cal_icon_default.svg') no-repeat 98% center;
+                                        }
+
+                                        &[type="date"] {
+                                            background: url('../icons/date_picker_cal_icon_select.svg') no-repeat 98% center;
+                                        }
+
+                                        &:focus-visible {
+                                            outline: none;
+                                        }
+
+                                        &::-webkit-calendar-picker-indicator {
+                                            background: none;
+                                        }
                                     }
 
                                     &[data-empty="false"] {
                                         input {
                                             color: var(--color-interface-text-primary);
+                                            background: url('../icons/date_picker_cal_icon_select.svg') no-repeat 98% center;
                                         }
                                     }
                                 }
@@ -664,17 +691,19 @@ body.fd-backed-cc {
                                         &:not(.field-description) {
                                             input:user-valid {
                                                 font-size: var(--body-xx-lg-font-size);
-                                                & ~ .bi-eye{
+
+                                                &~.bi-eye {
                                                     margin-bottom: -4px;
                                                 }
                                             }
+
                                             input[type="password"] {
                                                 font-size: var(--body-fd-xxx-lg-font-size);
 
-                                                & ~ .bi-eye{
+                                                &~.bi-eye {
                                                     margin-bottom: -4px;
                                                 }
-                                            }                                           
+                                            }
                                         }
                                     }
 
@@ -774,7 +803,7 @@ body.fd-backed-cc {
 
                         /* OTP PANEL SCREEN END */
 
-                        /* common styles  */
+                        /* COMMON STYLES FOR JOURNEY  */
 
                         input[type="text"],
                         input[type="password"],
@@ -839,6 +868,10 @@ body.fd-backed-cc {
                                     border-color: var(--color-action-border-primary-default);
                                     box-shadow: 0 0 0 2px var(--color-interface-background-box-shadow-secondary);
                                     outline: none;
+
+                                    &~.field-description {
+                                        font-weight: var(--font-weight-regular);
+                                    }
                                 }
                             }
 
