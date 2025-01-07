@@ -89,7 +89,7 @@ body.fd-backed-cc {
                         }
 
                         .field-loginmainpanel {
-                            padding: 40px 35px 40px 0;
+                            /*    padding: 40px 35px 40px 0;
                             margin-bottom: 40px;
                             display: initial;
                             grid-column: span 8;
@@ -101,7 +101,7 @@ body.fd-backed-cc {
 
                             @media (max-width: 768px) {
                                 padding: 40px 35px 40px 40px;
-                            }
+                            } */
 
                             .field-welcometext {
                                 p {
@@ -348,11 +348,13 @@ body.fd-backed-cc {
                                         input {
                                             text-transform: none;
                                         }
-                                    }                                    
+                                    }
                                 }
 
                                 .field-dateofbirth {
-                                    label, label p {
+
+                                    label,
+                                    label p {
                                         font-size: var(--body-fd-sm-font-size);
                                         font-weight: var(--font-weight-regular);
                                         margin-top: 13px;
@@ -578,18 +580,6 @@ body.fd-backed-cc {
                         /* LOGIN SCREEN END */
 
                         .field-otppanelwrapper {
-                            grid-template-rows: auto auto 270px;
-                            padding: 40px 35px 40px 0;
-
-                            @media (768px <=width < 1200px) {
-                                margin: 0 auto;
-                                padding: 40px 35px;
-                            }
-
-                            @media (max-width: 768px) {
-                                padding: 40px 35px 40px 40px;
-                            }
-
 
                             fieldset.field-otppanel {
                                 max-width: 100%;
@@ -602,6 +592,7 @@ body.fd-backed-cc {
 
                                 .field-otppanel {
                                     text-align: left;
+                                    margin-bottom: 10px;
 
                                     @media (350px <=width <=767px) {
                                         padding: 0 !important;
@@ -657,6 +648,7 @@ body.fd-backed-cc {
 
                                     .field-otpnumber {
                                         /* margin: -28px 0 -18px; */
+                                        margin-top: 10px;
 
                                         input {
                                             letter-spacing: 40px;
@@ -713,14 +705,15 @@ body.fd-backed-cc {
 
                                         @media (max-width: 768px) {
                                             max-width: 100%;
+                                            margin-top: -5px;
                                         }
                                     }
 
                                     .field-otpresend {
-                                        margin-top: -8px;
+                                        margin-top: -13px;
                                         grid-column: span 6;
 
-                                        @media (481px <=width <=767px) {
+                                        @media (320px <=width <=767px) {
                                             margin-top: -13px !important;
                                         }
                                     }
@@ -803,7 +796,131 @@ body.fd-backed-cc {
 
                         /* OTP PANEL SCREEN END */
 
+                        .field-carddetailswrapper {
+                            max-width: 497px;
+                            margin: 0 auto;
+                            display: inherit;
+                            padding-top: 40px;
+
+                            @media (width >= 1200px) {
+                                display: initial;
+                            }
+
+                            .field-ccnamepanel {
+                                display: flex;
+                                justify-content: center;
+                                flex-flow: row wrap;
+
+                                @media (max-width: 450px) {
+                                    line-height: 10px;
+                                }
+
+                                p {
+                                    font-size: var(--body-x-lg-font-size);
+                                    font-weight: var(--font-weight-bold);
+                                    color: var(--color-input-text-default);
+                                    margin: 0;
+                                }
+                            }
+
+                            .field-ccimageselected {
+                                width: 199px;
+                                height: 125px;
+                                margin: 30px auto;
+                                background: url('../icons/credit-card-sample.png') no-repeat;                             
+                               
+
+                                picture {
+                                    display: none;
+                                }
+                            }
+
+
+                            .field-minfdamountwrapper {
+                                display: flex;
+                                align-items: center;
+                                justify-content: space-between;
+                                max-width: 300px;
+                                margin: 0 auto 30px auto;
+                                border: 1px solid var(--color-interface-border-secondary);
+                                border-radius: 12px;
+                                height: 56px;
+                                flex-direction: initial;
+
+                                .field-minfdamountlabel {
+                                    height: 100%;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    width: 148px;
+
+                                    p {
+                                        color: var(--color-interface-text-primary);
+                                        font-size: var(--body-sm-font-size);
+                                        font-weight: var(--font-weight-medium);
+                                        margin: 0;
+                                    }
+                                }
+
+                                input {
+                                    background-color: var(--color-interface-background-quinary);
+                                    border-top-right-radius: 12px;
+                                    border-bottom-right-radius: 12px;
+                                    border-top-left-radius: 0;
+                                    border-bottom-left-radius: 0;
+                                    border: none;
+                                    max-width: 130px;
+                                    font-size: var(--body-lg-font-size);
+                                    font-weight: var(--font-weight-extra-bold);
+                                    margin: 0;
+                                    height: 54px;
+                                    letter-spacing: normal;
+
+                                }
+                            }
+
+                            .field-ccselectedhelptext {
+                                font-size: var(--body-lg-font-size);
+                                font-weight: var(--font-weight-regular);
+                                text-align: center;
+                            }
+
+                            .field-proceedtoapply {
+                                margin: 30px auto;
+                            }
+                        }
+
+                        /* CARD DETAILS POPUP SCREEN END */
+
+                        .field-runtime {}
+
+                        /* FIELD-RUNTIME SCREEN END */
+
+                        .field-resultpanel {}
+
+                        /* FIELD-RUNTIME SCREEN END */
+
+
                         /* COMMON STYLES FOR JOURNEY  */
+
+                        .field-loginmainpanel,
+                        .field-otppanelwrapper,
+                        .field-runtime,
+                        .field-resultpanel {
+                            padding: 40px 35px 40px 0;
+                            margin-bottom: 40px;
+                            display: initial;
+                            grid-column: span 8;
+
+                            @media (768px <=width < 1200px) {
+                                margin: 0 auto;
+                                padding: 40px 35px;
+                            }
+
+                            @media (max-width: 768px) {
+                                padding: 40px 35px 40px 40px;
+                            }
+                        }
 
                         input[type="text"],
                         input[type="password"],
@@ -875,6 +992,12 @@ body.fd-backed-cc {
                                 }
                             }
 
+                            input {
+                                &~.field-description {
+                                    font-weight: var(--font-weight-regular);
+                                }
+                            }
+
                         }
 
                         .button-wrapper {
@@ -914,6 +1037,12 @@ body.fd-backed-cc {
                             >label,
                             label p {
                                 color: transparent;
+                            }
+                        }
+
+                        &:has(.field-carddetailswrapper[data-visible="true"]) {
+                            .field-bannerimagepanel {
+                                display: none;
                             }
                         }
                     }
