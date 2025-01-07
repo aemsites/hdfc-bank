@@ -51,9 +51,9 @@ const FORM_CONSTANT = [
     },
   },
   {
-    formPath: ['etb-fixed-deposit-cc', 'pvtestfdliencugtest', 'fd-lien-cug-test', 'fdlienprodtest'],
+    formPath: ['etb-fixed-deposit-cc', 'pvtestfdliencugtest', 'fd-lien-cug-test', 'fdlienprodtest', 'fixed-deposit-cc'],
     class: 'fdlien',
-    urlKey: ['fdlien', 'pvtestfdliencugtest', 'fd-lien-cug-test', 'etb-fixed-deposit-cc', 'fdlienprodtest'],
+    urlKey: ['fdlien', 'pvtestfdliencugtest', 'fd-lien-cug-test', 'etb-fixed-deposit-cc', 'fdlienprodtest', 'fixed-deposit-cc'],
     launchScript: {
       dev: 'https://assets.adobedtm.com/80673311e435/029b16140ccd/launch-a47f215bcdb9-development.min.js',
       prod: 'https://assets.adobedtm.com/80673311e435/029b16140ccd/launch-39d52f236cd6.min.js',
@@ -83,8 +83,8 @@ if (typeof location !== 'undefined') {
   const params = new URLSearchParams(queryString);
   const isBlueGreenActive = params.get('isBGPrd');
   console.log(isBlueGreenActive);
-  //const isReferrerAllowed = GREEN_ENV.some(hostname => GREEN_ENV.includes(hostname));
-  if( isBlueGreenActive){
+  // const isReferrerAllowed = GREEN_ENV.some(hostname => GREEN_ENV.includes(hostname));
+  if (isBlueGreenActive) {
     setSubmitBaseUrl('https://publish1apsouth1-b80-28920470.prod.hdfc.adobecqms.net');
   }
 }
