@@ -1,5 +1,5 @@
 import { getSubmitBaseUrl } from '../../blocks/form/constant.js';
-
+// test updates
 const JOURNEY_NAME = 'SMART_EMI_JOURNEY';
 const PRO_CODE = '009';
 const ERROR_MSG = {
