@@ -1,3 +1,4 @@
+/* eslint-disable no-self-compare */
 /* eslint-disable no-undef */
 import {
   data,
@@ -92,27 +93,26 @@ function sendPageloadEvent(journeyState, formData, pageName, errorAPI, errorMess
   digitalData.page.pageInfo.errorAPI = errorAPI ?? '';
   digitalData.page.pageInfo.errorCode = errorCode ?? '';
   digitalData.page.pageInfo.errorMessage = errorMessage ?? '';
-  
-  if(String(formData?.form?.login?.registeredMobileNumber) !== 'undefined' && String(formData?.countryCode) !== 'undefined'){
-    hashPhNo(String(formData?.countryCode.substring(1,)) + String(formData?.form?.login?.registeredMobileNumber)).then((hashedMobile) => {
+
+  if (String(formData?.form?.login?.registeredMobileNumber) !== 'undefined' && String(formData?.countryCode) !== 'undefined') {
+    hashPhNo(String(formData?.countryCode.substring(1)) + String(formData?.form?.login?.registeredMobileNumber)).then((hashedMobile) => {
       digitalData.event.mobileWith = hashedMobile;
       hashPhNo(String(formData?.countryCode) + String(formData?.form?.login?.registeredMobileNumber)).then((hashedMobileWithPlus) => {
-          digitalData.event.mobileWithPlus = hashedMobileWithPlus;
+        digitalData.event.mobileWithPlus = hashedMobileWithPlus;
       });
     });
-  } else if(String(currentFormContext?.mobileNumber) !== 'undefined' && String(currentFormContext?.isdCode) !== 'undefined'){
+  } else if (String(currentFormContext?.mobileNumber) !== 'undefined' && String(currentFormContext?.isdCode) !== 'undefined') {
     hashPhNo(String(currentFormContext?.isdCode) + String(currentFormContext?.mobileNumber)).then((hashedMobile) => {
       digitalData.event.mobileWith = hashedMobile;
-      hashPhNo('+' + String(currentFormContext?.isdCode) + String(currentFormContext?.mobileNumber)).then((hashedMobileWithPlus) => {
-          digitalData.event.mobileWithPlus = hashedMobileWithPlus;
+      hashPhNo(`+${String(currentFormContext?.isdCode)}${String(currentFormContext?.mobileNumber)}`).then((hashedMobileWithPlus) => {
+        digitalData.event.mobileWithPlus = hashedMobileWithPlus;
       });
     });
   }
 
-
   // digitalData.page.event.status = eventStatus;
   setAnalyticPageLoadProps(journeyState, formData, digitalData);
-  if(typeof window !== 'undefined' && typeof _satellite !== 'undefined'){
+  if (typeof window !== 'undefined' && typeof _satellite !== 'undefined') {
     switch (pageName) {
       case 'Step 3 - Account Type': {
         digitalData.formDetails.bankBranch = currentFormContext?.fatca_response?.customerAccountDetailsDTO[currentFormContext.selectedCheckedValue]?.branchName ?? '';
@@ -148,7 +148,7 @@ function sendPageloadEvent(journeyState, formData, pageName, errorAPI, errorMess
       default:
       // do nothing
     }
-    
+
     window.digitalData = digitalData || {};
     _satellite.track('pageload');
   }
@@ -165,14 +165,14 @@ function sendPageloadEvent(journeyState, formData, pageName, errorAPI, errorMess
 async function sendSubmitClickEvent(phone, eventType, linkType, formData, journeyState, digitalData) {
   setAnalyticClickGenericProps(eventType, linkType, formData, journeyState, digitalData);
   digitalData.page.pageInfo.pageName = PAGE_NAME.nrenro[eventType];
-  if((formData?.countryCode ?? '' !== '') && (formData?.form?.login?.registeredMobileNumber ?? '' !== '')){
-    digitalData.event.mobileWith = await hashPhNo(String(formData?.countryCode.substring(1,)) + String(formData?.form?.login?.registeredMobileNumber));
-    digitalData.event.mobileWithPlus = await hashPhNo(String(formData?.countryCode)+String(formData?.form?.login?.registeredMobileNumber));
-  } else if((currentFormContext?.isdCode ?? '' !== '') && (currentFormContext?.mobileNumber ?? '' !== '')){
+  if ((formData?.countryCode ?? '' !== '') && (formData?.form?.login?.registeredMobileNumber ?? '' !== '')) {
+    digitalData.event.mobileWith = await hashPhNo(String(formData?.countryCode.substring(1)) + String(formData?.form?.login?.registeredMobileNumber));
+    digitalData.event.mobileWithPlus = await hashPhNo(String(formData?.countryCode) + String(formData?.form?.login?.registeredMobileNumber));
+  } else if ((currentFormContext?.isdCode ?? '' !== '') && (currentFormContext?.mobileNumber ?? '' !== '')) {
     digitalData.event.mobileWith = await hashPhNo(String(currentFormContext?.isdCode) + String(currentFormContext?.mobileNumber));
-    digitalData.event.mobileWithPlus = await hashPhNo('+' + String(currentFormContext?.isdCode)+String(currentFormContext?.mobileNumber));
+    digitalData.event.mobileWithPlus = await hashPhNo(`+${String(currentFormContext?.isdCode)}${String(currentFormContext?.mobileNumber)}`);
   }
-  
+
   switch (eventType) {
     case 'otp click': {
       if (typeof window !== 'undefined' && typeof _satellite !== 'undefined') {
@@ -452,10 +452,10 @@ async function sendSubmitClickEvent(phone, eventType, linkType, formData, journe
 function populateResponse(payload, eventType, digitalData, formData) {
   switch (eventType) {
     case 'otp click': {
-      digitalData.formDetails.privacyContent = formData?.form?.consent?.checkboxConsent1Label ? 'Yes' : 'No';;
+      digitalData.formDetails.privacyContent = formData?.form?.consent?.checkboxConsent1Label ? 'Yes' : 'No';
       digitalData.formDetails.callSmsWhatsappConsent = formData?.form?.consent?.checkboxConsent2Label ? 'Yes' : 'No';
       digitalData.event.validationMethod = getValidationMethod(formData);
-      digitalData.formDetails.country = formData?.countryCode ?? '';;
+      digitalData.formDetails.country = formData?.countryCode ?? '';
       break;
     }
     case 'privacy consent click': {
@@ -600,12 +600,12 @@ function enableAccordionClick(globals) {
         const legendElement = accordion.querySelector('.field-label.nrenro-accordian');
         if (legendElement) {
           const accordionName = legendElement.textContent.trim();
-          if(accordionName !== 'Confirm Details'){
+          if (accordionName !== 'Confirm Details') {
             setTimeout(() => {
               if (legendElement.classList.contains('accordion-collapse')) {
-                sendAnalytics(accordionName + ' accordion expand click', {}, '', globals);
-              } else{
-                sendAnalytics(accordionName + ' accordion collapse click', {}, '', globals);
+                sendAnalytics(`${accordionName} accordion expand click`, {}, '', globals);
+              } else {
+                sendAnalytics(`${accordionName} accordion collapse click`, {}, '', globals);
               }
             }, 1000);
           }

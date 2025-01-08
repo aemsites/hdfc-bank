@@ -1,3 +1,6 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-restricted-syntax */
 import {
   CURRENT_FORM_CONTEXT as currentFormContext,
 } from '../../common/constants.js';
@@ -37,23 +40,30 @@ const hashPhNo = async (phoneNumber) => {
   return hashed;
 };
 
-const thanks = document?.querySelector('[name="thankYouPanel"]');
-
 function setBodyPage(thanks) {
   if (thanks) {
+    const errorPanel = document.querySelector('[name="itsNotYouPanel"]');
+    const errorConnectionPanel = document.querySelector('[name="errorConnection"]');
+    if (!thanks?.dataset?.visible) {
+      document.body.classList.add('nreThankYouPage');
+      document.body.classList.remove('errorPageBody');
+    }
+    if (!errorPanel?.dataset?.visible) {
+      document.body.classList.remove('nreThankYouPage');
+      document.body.classList.add('errorPageBody');
+    }
+    if (!errorConnectionPanel?.dataset?.visible) {
+      document.body.classList.remove('nreThankYouPage');
+      document.body.classList.add('errorPageBody');
+    }
     if (window && document && typeof _satellite !== 'undefined') {
       enableAccordionClick();
       attachPrivacyPolicyAnalytics();
-      console.log(currentFormContext);
       thanks = document.querySelector('[name="thankYouPanel"]');
-      const errorPanel = document.querySelector('[name="itsNotYouPanel"]');
-      const errorConnectionPanel = document.querySelector('[name="errorConnection"]');
-      if (!thanks?.dataset?.visible) {
-        document.body.classList.add('nreThankYouPage');
-        document.body.classList.remove('errorPageBody');
 
+      if (!thanks?.dataset?.visible) {
         // On Click Analytics
-        document.querySelector('.field-hdfcbankwebsite a')?.addEventListener('click', function() {
+        document.querySelector('.field-hdfcbankwebsite a')?.addEventListener('click', () => {
           const digitalData = createDeepCopyFromBlueprint(ANALYTICS_CLICK_OBJECT);
           const linkName = 'HDFC Bank Website Link Click';
           const attributes = data[linkName];
@@ -65,17 +75,17 @@ function setBodyPage(thanks) {
           digitalData.link.linkPosition = data[linkName].linkPosition;
           digitalData.user.pseudoID = '';
           digitalData.user.journeyName = currentFormContext?.journeyName;
-          digitalData.user.journeyID = document.querySelector(".field-journeyid input")?.value ?? '';
+          digitalData.user.journeyID = document.querySelector('.field-journeyid input')?.value ?? '';
           digitalData.user.journeyState = 'CUSTOMER_ONBOARDING_COMPLETE';
           digitalData.form.name = FORM_NAME;
           digitalData.user.casa = '';
           digitalData.page.pageInfo.pageName = PAGE_NAME.nrenro[linkName];
-          if(String(document.querySelector('.field-registeredmobilenumber input')?.value ?? '') !== 'undefined'
-             && String(document.querySelector('.field-countrycode input')?.value ?? '') !== 'undefined'){
-              hashPhNo(String(document.querySelector('.field-countrycode input')?.value ?? '').substring(1,) + String(document.querySelector('.field-registeredmobilenumber input')?.value ?? '')).then((hashedMobile) => {
+          if (String(document.querySelector('.field-registeredmobilenumber input')?.value ?? '') !== 'undefined'
+             && String(document.querySelector('.field-countrycode input')?.value ?? '') !== 'undefined') {
+            hashPhNo(String(document.querySelector('.field-countrycode input')?.value ?? '').substring(1) + String(document.querySelector('.field-registeredmobilenumber input')?.value ?? '')).then((hashedMobile) => {
               digitalData.event.mobileWith = hashedMobile;
               hashPhNo(String(document.querySelector('.field-countrycode input')?.value ?? '') + String(document.querySelector('.field-registeredmobilenumber input')?.value ?? '')).then((hashedMobileWithPlus) => {
-                  digitalData.event.mobileWithPlus = hashedMobileWithPlus;
+                digitalData.event.mobileWithPlus = hashedMobileWithPlus;
               });
             });
           }
@@ -86,7 +96,7 @@ function setBodyPage(thanks) {
           _satellite.track('event');
         });
 
-        document.querySelector('.field-applyfora a')?.addEventListener('click', function() {
+        document.querySelector('.field-applyfora a')?.addEventListener('click', () => {
           const digitalData = createDeepCopyFromBlueprint(ANALYTICS_CLICK_OBJECT);
           const linkName = 'Apply for a CTA Click';
           const attributes = data[linkName];
@@ -98,16 +108,16 @@ function setBodyPage(thanks) {
           digitalData.link.linkPosition = data[linkName].linkPosition;
           digitalData.user.pseudoID = '';
           digitalData.user.journeyName = currentFormContext?.journeyName;
-          digitalData.user.journeyID = document.querySelector(".field-journeyid input")?.value ?? '';
+          digitalData.user.journeyID = document.querySelector('.field-journeyid input')?.value ?? '';
           digitalData.user.journeyState = 'CUSTOMER_ONBOARDING_COMPLETE';
           digitalData.form.name = FORM_NAME;
           digitalData.user.casa = '';
-          if(String(document.querySelector('.field-registeredmobilenumber input')?.value ?? '') !== 'undefined'
-             && String(document.querySelector('.field-countrycode input')?.value ?? '') !== 'undefined'){
-              hashPhNo(String(document.querySelector('.field-countrycode input')?.value ?? '').substring(1,) + String(document.querySelector('.field-registeredmobilenumber input')?.value ?? '')).then((hashedMobile) => {
+          if (String(document.querySelector('.field-registeredmobilenumber input')?.value ?? '') !== 'undefined'
+             && String(document.querySelector('.field-countrycode input')?.value ?? '') !== 'undefined') {
+            hashPhNo(String(document.querySelector('.field-countrycode input')?.value ?? '').substring(1) + String(document.querySelector('.field-registeredmobilenumber input')?.value ?? '')).then((hashedMobile) => {
               digitalData.event.mobileWith = hashedMobile;
               hashPhNo(String(document.querySelector('.field-countrycode input')?.value ?? '') + String(document.querySelector('.field-registeredmobilenumber input')?.value ?? '')).then((hashedMobileWithPlus) => {
-                  digitalData.event.mobileWithPlus = hashedMobileWithPlus;
+                digitalData.event.mobileWithPlus = hashedMobileWithPlus;
               });
             });
           }
@@ -124,28 +134,28 @@ function setBodyPage(thanks) {
         // Setting Analytics for Thank You PageLoad
         const digitalData = createDeepCopyFromBlueprint(ANALYTICS_PAGE_LOAD_OBJECT);
         digitalData.page.pageInfo.pageName = 'Step 5 - Confirmation' ?? '';
-        digitalData.page.pageInfo.errorAPI = document.querySelector(".field-apiname input")?.value ?? ''
-        digitalData.page.pageInfo.errorCode = document.querySelector(".field-errorcode input")?.value ?? '';
-        digitalData.page.pageInfo.errorMessage = document.querySelector(".field-errormessage input")?.value ?? '';
+        digitalData.page.pageInfo.errorAPI = document.querySelector('.field-apiname input')?.value ?? '';
+        digitalData.page.pageInfo.errorCode = document.querySelector('.field-errorcode input')?.value ?? '';
+        digitalData.page.pageInfo.errorMessage = document.querySelector('.field-errormessage input')?.value ?? '';
         digitalData.user.pseudoID = '';// Need to check
         digitalData.user.journeyName = currentFormContext?.journeyName;
-        digitalData.user.journeyID = document.querySelector(".field-journeyid input")?.value ?? '';
+        digitalData.user.journeyID = document.querySelector('.field-journeyid input')?.value ?? '';
         digitalData.user.journeyState = 'CUSTOMER_ONBOARDING_COMPLETE';
         digitalData.user.casa = '';
         digitalData.form.name = FORM_NAME;
         digitalData.formDetails.accountType = document.querySelector('.field-accountsummary .field-accounttype input').value ?? '';
-        digitalData.formDetails.branchCode = document.querySelector(".field-branchcode input").value ?? '';
-        digitalData.formDetails.bankBranch = document.querySelector(".field-homebranch input").value ?? '';
+        digitalData.formDetails.branchCode = document.querySelector('.field-branchcode input').value ?? '';
+        digitalData.formDetails.bankBranch = document.querySelector('.field-homebranch input').value ?? '';
         digitalData.event.authMethod = params?.get('authmode') ?? '';
         digitalData.formDetails.formSubmitted = '1';
-        if(String(document.querySelector('.field-registeredmobilenumber input')?.value ?? '') !== 'undefined'
-             && String(document.querySelector('.field-countrycode input')?.value ?? '') !== 'undefined'){
-              hashPhNo(String(document.querySelector('.field-countrycode input')?.value ?? '').substring(1,) + String(document.querySelector('.field-registeredmobilenumber input')?.value ?? '')).then((hashedMobile) => {
-              digitalData.event.mobileWith = hashedMobile;
-              hashPhNo(String(document.querySelector('.field-countrycode input')?.value ?? '') + String(document.querySelector('.field-registeredmobilenumber input')?.value ?? '')).then((hashedMobileWithPlus) => {
-                  digitalData.event.mobileWithPlus = hashedMobileWithPlus;
-              });
+        if (String(document.querySelector('.field-registeredmobilenumber input')?.value ?? '') !== 'undefined'
+             && String(document.querySelector('.field-countrycode input')?.value ?? '') !== 'undefined') {
+          hashPhNo(String(document.querySelector('.field-countrycode input')?.value ?? '').substring(1) + String(document.querySelector('.field-registeredmobilenumber input')?.value ?? '')).then((hashedMobile) => {
+            digitalData.event.mobileWith = hashedMobile;
+            hashPhNo(String(document.querySelector('.field-countrycode input')?.value ?? '') + String(document.querySelector('.field-registeredmobilenumber input')?.value ?? '')).then((hashedMobileWithPlus) => {
+              digitalData.event.mobileWithPlus = hashedMobileWithPlus;
             });
+          });
         }
 
         if (window) {
@@ -153,16 +163,8 @@ function setBodyPage(thanks) {
         }
 
         // setTimeout(() => {
-          _satellite.track('pageload');
+        _satellite.track('pageload');
         // }, 2000);
-      }
-      if (!errorPanel?.dataset?.visible) {
-        document.body.classList.remove('nreThankYouPage');
-        document.body.classList.add('errorPageBody');
-      }
-      if (!errorConnectionPanel?.dataset?.visible) {
-        document.body.classList.remove('nreThankYouPage');
-        document.body.classList.add('errorPageBody');
       }
 
       // document.body.classList.add('preloader');
@@ -201,7 +203,7 @@ function setBodyPage(thanks) {
       if (errorConnectionPanel) {
         observer.observe(errorConnectionPanel, { attributes: true });
       }
-    } else{
+    } else {
       setTimeout(() => {
         if (window && document) {
           thanks = document.querySelector('[name="thankYouPanel"]');
