@@ -229,7 +229,7 @@ const getaddressForTaxPurpose = async (value) => {
 
 function errorHandling(response, journeyState, globals) {
   setTimeout(() => {
-    sendAnalytics('page load_Error Page', {}, 'CUSTOMER_IDENTITY UNRESOLVED', globals);
+    sendAnalytics('page load_Error Page', {}, journeyState, globals);
   }, 2000);
   const {
     mobileNumber,
@@ -304,11 +304,11 @@ function getNamePart(input, type) {
       break;
 
     case 'middle':
-      result = words[1] || '';
+      result = words.length > 2 ? words[1] : ' ';
       break;
 
     case 'last':
-      result = words.slice(2).join(' ') || '';
+      result = words.length !== 2 ? words.slice(2).join(' ') : words[1];
       break;
 
     default:
@@ -659,12 +659,12 @@ async function showFinancialDetails(financialDetails, response, occupation, glob
   globals.functions.setProperty(financialDetails.natureOfBusiness, { value: natureOfBusinessText?.toUpperCase() });
   globals.functions.setProperty(financialDetails.typeOfCompoanyFirm, { value: typeOfCompanyText?.toUpperCase() });
   globals.functions.setProperty(financialDetails.employerCategory, { value: employeerCatCodeText?.toUpperCase() });
-  globals.functions.setProperty(financialDetails.employeerName, { value: employerName});
+  globals.functions.setProperty(financialDetails.employeerName, { value: employerName });
 
   if (occupationCode === '2' || occupationCode === '28' || occupationCode === '30') {
     globals.functions.setProperty(financialDetails.selfEmployedProfessional, { visible: false });
     globals.functions.setProperty(financialDetails.employerCategory, { visible: true });
-    if(typeof employerName !== 'undefined'){
+    if (typeof employerName !== 'undefined') {
       globals.functions.setProperty(financialDetails.employeerName, { visible: true });
     }
   }
@@ -1281,11 +1281,19 @@ const onPageLoadAnalytics = async (globals) => {
   sendAnalytics('page load_Step 1 - Identify Yourself', {}, 'CUSTOMER_IDENTITY_INITIATED', globals);
 };
 
+const onPageLoadErrorAnalytics = async (globals) => {
+  sendAnalytics('page load_Error Page', {}, 'IDCOM_REDIRECT_FAILURE', globals);
+};
+
 setTimeout(() => {
-  if(typeof window !== 'undefined' && typeof _satellite !== 'undefined'){
+  if (typeof window !== 'undefined' && typeof _satellite !== 'undefined') {
     const params = new URLSearchParams(window.location.search);
-    if(params?.get('success') !== 'true' || (params?.get('authmode') !== 'DebitCard' && params?.get('authmode') !== 'NetBanking')){
-      onPageLoadAnalytics();
+    if ((params?.get('success') ?? '') !== 'true' || ((params?.get('authmode') ?? '') !== 'DebitCard' && (params?.get('authmode') ?? '') !== 'NetBanking')) {
+      if (params?.get('success') !== null && params?.get('authmode') !== null) {
+        onPageLoadErrorAnalytics();
+      } else {
+        onPageLoadAnalytics();
+      }
     }
   }
 }, 5000);
@@ -1410,7 +1418,7 @@ const crmLeadIdDetail = async (globals) => {
       declarationforRequiredBalance: '',
       incorporationDate: '',
       nationality: response.namHoldadrCntry,
-      custNationality: response.txtCustNATNLTY ? await getCountryName(response.txtCustNATNLTY): '',
+      custNationality: response.txtCustNATNLTY ? await getCountryName(response.txtCustNATNLTY) : '',
       addressTypeOtherThanResidential: '',
       passportBSDocument: '',
       votersIDBSDocument: '',
@@ -1783,29 +1791,28 @@ function setTerritoryValue() {
     });
 }
 
-async function getEmployerNameFromMDM(employerCode){
-    const finalURL = `/content/hdfc_commonforms/api/mdm.INSTA.COMPANY_CODE.COMPANYCODE-${employerCode}.json`;
-    try{
-      const response = await getJsonResponse(urlPath(finalURL), null, 'GET');
-        if (!response || response.length === 0) {
-          console.warn('No response data received.');
-          return '';
-        }
-  
-        const employerName = response.length === 1
-        ? response[0].COMPANYNAME
-        : response.find((item) => item.COMPANYCODE === employerCode.toString()).COMPANYNAME;
-  
-        if (employerName) {
-          return employerName
-        } else {
-          console.warn('No matching employer name found for the employer code.');
-          return '';
-        }
-      } catch(error){
-        console.error('Error while getting employer name :', error);
-        return ''
-      }
+async function getEmployerNameFromMDM(employerCode) {
+  const finalURL = `/content/hdfc_commonforms/api/mdm.INSTA.COMPANY_CODE.COMPANYCODE-${employerCode}.json`;
+  try {
+    const response = await getJsonResponse(urlPath(finalURL), null, 'GET');
+    if (!response || response.length === 0) {
+      console.warn('No response data received.');
+      return '';
+    }
+
+    const employerName = response.length === 1
+      ? response[0].COMPANYNAME
+      : response.find((item) => item.COMPANYCODE === employerCode.toString()).COMPANYNAME;
+
+    if (employerName) {
+      return employerName;
+    }
+    console.warn('No matching employer name found for the employer code.');
+    return '';
+  } catch (error) {
+    console.error('Error while getting employer name :', error);
+    return '';
+  }
 }
 
 export {
