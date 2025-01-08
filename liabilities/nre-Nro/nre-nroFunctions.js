@@ -35,7 +35,6 @@ import {
 } from './constant.js';
 import {
   sendAnalytics,
-  sendPageloadEvent,
 } from './analytics.js';
 import { reloadPage } from '../../common/functions.js';
 
