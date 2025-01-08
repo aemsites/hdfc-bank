@@ -802,7 +802,7 @@ body.fd-backed-cc {
                             display: inherit;
                             padding-top: 40px;
 
-                            @media (width >= 1200px) {
+                            @media (width >=1200px) {
                                 display: initial;
                             }
 
@@ -827,8 +827,8 @@ body.fd-backed-cc {
                                 width: 199px;
                                 height: 125px;
                                 margin: 30px auto;
-                                background: url('../icons/credit-card-sample.png') no-repeat;                             
-                               
+                                background: url('../icons/credit-card-sample.png') no-repeat;
+
 
                                 picture {
                                     display: none;
@@ -851,8 +851,8 @@ body.fd-backed-cc {
                                     height: 100%;
                                     display: flex;
                                     align-items: center;
-                                    justify-content: center;
-                                    width: 148px;
+                                    justify-content: center;                                    
+                                    width: 45%; 
 
                                     p {
                                         color: var(--color-interface-text-primary);
@@ -862,20 +862,44 @@ body.fd-backed-cc {
                                     }
                                 }
 
-                                input {
+                                .field-minfdamount {
                                     background-color: var(--color-interface-background-quinary);
                                     border-top-right-radius: 12px;
                                     border-bottom-right-radius: 12px;
                                     border-top-left-radius: 0;
                                     border-bottom-left-radius: 0;
-                                    border: none;
-                                    max-width: 130px;
-                                    font-size: var(--body-lg-font-size);
-                                    font-weight: var(--font-weight-extra-bold);
-                                    margin: 0;
-                                    height: 54px;
-                                    letter-spacing: normal;
+                                    display: flex;
+                                    align-items: center;
+                                    flex-direction: row-reverse;
+                                    padding: 0 20px;
+                                   
+                                    label{
+                                        transform: none;
+                                        margin: 0;
+                                        padding: 0;
+                                        background: url('../icons/only_amount_icon.png') no-repeat center center;
+                                        background-size: 15px;
+                                        width: 20px;
+                                        font-size: 0;
+                                        position: initial;
+                                    }
+                                    input {
+                                        background-color: var(--color-interface-background-quinary);
+                                        height: 54px;
+                                        border: none;                                       
+                                        font-size: var(--body-lg-font-size);
+                                        font-weight: var(--font-weight-extra-bold);
+                                        margin: 0;                                      
+                                        letter-spacing: normal;      
+                                        padding-right: 0;                                  
+                                        field-sizing: content;                                  
+                                        width: auto;
 
+                                        &:focus {
+                                            outline: none;
+                                        }
+
+                                    }
                                 }
                             }
 
@@ -892,6 +916,186 @@ body.fd-backed-cc {
 
                         /* CARD DETAILS POPUP SCREEN END */
 
+                        .field-accountselectionwrapper {
+                            .field-accountselectionlabel {
+                                p {
+                                    font-size: var(--body-xx-lg-font-size);
+                                    font-weight: var(--font-weight-bold);
+                                    color: var(--color-interface-text-primary);
+                                }
+                            }
+
+                            .field-accountselectionpanel {
+                                max-height: 256px;
+                                overflow-y: auto;
+                                padding-right: 20px;
+
+                                .field-repeatwrapper {
+                                    min-height: 140px;
+                                    border-radius: 16px;
+                                    border: 1px solid var(--color-interface-border-secondary);
+                                    padding: 20px;
+                                    grid-column: span 6;
+
+                                    @media (max-width: 768px) {
+                                        margin-bottom: 20px;
+                                    }
+
+                                    & input[type="text"] {
+                                        letter-spacing: -1px;
+                                        margin: 0;
+                                        padding: 0;
+                                        height: auto;
+                                        border-radius: 0;
+                                        border: none;
+                                        line-height: normal;
+                                    }
+
+                                    .field-savingsaccountnumwrapper {
+                                        display: flex;
+                                        flex-flow: initial;
+                                        align-items: flex-start;
+                                        justify-content: space-between;
+
+                                        .field-savingsaccountnum[data-empty="false"] {
+
+                                            label {
+                                                position: initial;
+                                                margin: 0;
+                                                transform: none;
+                                                font-size: var(--body-md-font-size);
+                                                font-weight: var(--font-weight-small);
+                                                color: var(--color-interface-text-primary);
+                                                padding: 0;
+                                            }
+
+                                            input {
+                                                font-size: var(--body-x-lg-font-size);
+                                                font-weight: var(--font-weight-extra-bold);
+                                                field-sizing: content;                                  
+                                                width: auto;
+                                            }
+                                        }
+
+                                        .field-accselection {
+                                            margin-top: 0;
+                                            flex: auto;
+                                            justify-content: flex-end;
+
+                                            & input[type="checkbox"] {
+                                                border-radius: 100%;
+                                                border: 1px solid var(--color-interface-border-secondary);
+                                                appearance: none;
+                                                -webkit-appearance: none;
+                                                outline: none;
+                                                padding: 0;
+                                                width: 24px !important;
+                                                height: 24px !important;
+
+
+                                                &:checked {
+                                                    cursor: pointer;
+                                                    position: relative;
+                                                    display: flex;
+                                                    align-items: center;
+                                                    justify-content: center;
+                                                    border: 1px solid var(--color-interface-icon-highlight);
+
+                                                    &::before {
+                                                        content: '';
+                                                        border-radius: 100%;
+                                                        width: 12px;
+                                                        height: 12px;
+                                                        background-color: var(--color-interface-icon-highlight);
+                                                        position: absolute;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    .field-balanceamountwrapper {
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: space-between;
+
+                                        .field-balanceamountlabel {
+                                            margin-top: 3px;
+
+                                            p {
+                                                font-size: var(--body-md-font-size);
+                                                font-weight: var(--font-weight-regular);
+                                                color: var(--color-input-text-primary);
+                                                margin-bottom: 0;
+                                            }
+                                        }
+
+                                        .field-balanceamount {
+                                            input {
+                                                font-size: var(--body-md-font-size);
+                                                font-weight: var(--font-weight-medium);
+                                                text-align: right;
+                                                field-sizing: content;                                  
+                                                width: auto;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            .field-employmenttypewrapper {
+                                margin-top: 20px;
+
+                                .field-employmenttypelabel {
+                                    p {
+                                        font-size: var(--body-x-lg-font-size);
+                                        font-weight: var(--font-weight-bold);
+                                        color: #1F2937;
+                                        margin-bottom: 0;
+                                    }
+                                }
+
+                                .field-employmenttype {
+                                    select {
+                                        max-width: 372px;
+                                        width: 100%;
+                                        padding-left: 20px !important;
+                                        font-size: var(--body-lg-font-size);
+                                        font-weight: var(--font-weight-medium);
+                                        color: var(--color-interface-text-primary);
+                                        height: 60px !important;
+                                        border-radius: 12px !important;
+                                        border: 1px solid var(--color-interface-border-secondary) !important;
+                                    }
+                                }
+                            }
+
+                            .field-accselectioninfo, .field-accselectioninfolabel {                            
+
+                                p {
+                                    font-size: var(--body-lg-font-size);
+                                    font-weight: var(--font-weight-regular);
+                                    color: var(--color-interface-text-quaternary);
+                                    margin-bottom: 0;
+                                }
+
+                                &.field-accselectioninfolabel {
+                                    margin-top: 10px;
+
+                                    p{
+                                        font-weight: var(--font-weight-medium);
+                                    }
+                                }
+                            }
+
+
+                            .field-proccedfromaccselection {
+                                margin-top: 20px;
+                            }
+                        }
+
+                        /* ACCOUNT SELECTION SCREEN END */
+
                         .field-runtime {}
 
                         /* FIELD-RUNTIME SCREEN END */
@@ -906,7 +1110,9 @@ body.fd-backed-cc {
                         .field-loginmainpanel,
                         .field-otppanelwrapper,
                         .field-runtime,
-                        .field-resultpanel {
+                        .field-resultpanel,
+                        .field-accountselectionwrapper,
+                        .field-landingwrapper {
                             padding: 40px 35px 40px 0;
                             margin-bottom: 40px;
                             display: initial;
@@ -954,6 +1160,17 @@ body.fd-backed-cc {
                             &:-webkit-autofill:focus,
                             :-webkit-autofill:active {
                                 -webkit-box-shadow: 0 0 0 30px white inset !important;
+                            }
+                        }
+
+                        select {
+                            -moz-appearance: none;
+                            -webkit-appearance: none;
+                            appearance: none;
+                            background: url('./../icons/select_arrow.svg') no-repeat 95% center;
+
+                            &:focus-visible {
+                                outline: none;
                             }
                         }
 
