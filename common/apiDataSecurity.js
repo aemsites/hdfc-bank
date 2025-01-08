@@ -60,8 +60,9 @@ function getDataEncRequestHeaders(encDataPack) {
 function initRestAPIDataSecurityServiceES6() {
   return new Promise((resolve, reject) => {
     // eslint-disable-next-line max-len
-    const publicKeyPemContent = 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAocLO0ZabqWBbhb/cpaHTZf53LfEymcRMuAHRpUh3yhwPROgY2u3FTEsFJSKdQAbA4205njlXq3A1ICCd1ZrEQBA7Vc60eL0suO/0Qu5U/8vtYNCPsvMX+Pd7cUcMMM6JmLxacvlThOwAxc0ChSrFhlGRHQFZbg44y0Xy0B2bvxOnEjSAtV7kLjht/EKkiPXc3wptsLEMu2qK34Djucp5AllsbxJdWFogHTcJ1vizxAge9KwxA/2GSKYr5c9Wt8EAn7kqC0t43vnhtZuhgShJEbeV7VgF2GXGQBCxbbDravhltrGI+YKnAEd/RK0P0SJx+BXR7TcEv7zDg1QgXqfTewIDAQAB';
-
+    // const publicKeyPemContent = 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAocLO0ZabqWBbhb/cpaHTZf53LfEymcRMuAHRpUh3yhwPROgY2u3FTEsFJSKdQAbA4205njlXq3A1ICCd1ZrEQBA7Vc60eL0suO/0Qu5U/8vtYNCPsvMX+Pd7cUcMMM6JmLxacvlThOwAxc0ChSrFhlGRHQFZbg44y0Xy0B2bvxOnEjSAtV7kLjht/EKkiPXc3wptsLEMu2qK34Djucp5AllsbxJdWFogHTcJ1vizxAge9KwxA/2GSKYr5c9Wt8EAn7kqC0t43vnhtZuhgShJEbeV7VgF2GXGQBCxbbDravhltrGI+YKnAEd/RK0P0SJx+BXR7TcEv7zDg1QgXqfTewIDAQAB';
+    // eslint-disable-next-line max-len
+    const publicKeyPemContent = 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoAatblmEzZTQOT732FU38hiT9vCvGK12+pUD3yENyHXjk7oN1uWPlpItm5OAcsPZt52WznDkpOb/AxLBeJKFYZPvOk75lo6ZAA1qyJEOekQru5XQUtpMzsC9w96T2zTYQQ4HUwMNXmYkWIVo4Ek/KCfX2yklRHxwm3Pqj93vJkUmoddLctXArddtm75HUjtYzf5jecQCGk//pyjTDJEswMpg3oXNiI2F1PnDUiKdQBE7+a1s5KB7CAKKYQLFNN48kjiOdDutMByjZxW0elPs9ETVU+NVNQ6ru9vKQYzvR/2YD7NNSHPUCpdexIpfiYeWrxUNgpHLM2qfXTOvn6UztQIDAQAB';
     // Base64 decode
     const binaryDerString = atob(publicKeyPemContent);
     // Convert from a binary string to an ArrayBuffer
