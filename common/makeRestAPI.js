@@ -76,7 +76,7 @@ async function fetchJsonResponse(url, payload, method, loader = false) {
     const decryptedResult = await decryptDataES6(result, responseObj.secret);
     if (loader) hideLoaderGif();
     const parsedResult = JSON.parse(decryptedResult);
-    await delay(500);
+    await delay(700);
     return parsedResult;
   } catch (error) {
     console.error('Error in fetching JSON response:', error);
