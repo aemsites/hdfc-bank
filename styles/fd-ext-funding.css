@@ -1,3 +1,5 @@
+/* stylelint-disable declaration-block-no-redundant-longhand-properties */
+/* stylelint-disable no-descending-specificity */
 .fd-ext-fund header,  .fd-ext-fund footer {
     background: var(--color-interface-fd-background-primary);
 }
@@ -13,7 +15,7 @@
 
 .fd-ext-fund header .cmp-container > div:nth-child(2) {
     display: none
-  }
+}
 
 .fd-ext-fund header .cmp-container > div:nth-child(3) {
     position: absolute;
@@ -23,18 +25,323 @@
     height: 32px;
     content: url('../icons/safe-secure.svg');
     padding: 0 !important;
+}
+
+.fd-ext-fund {  
+  /* Input floating label */
+  input::placeholder {
+    text-transform: none !important;
+    font-size: var(--body-md-font-size) !important;
+    letter-spacing: normal !important;
   }
+
+  input:not([type='radio']):focus,
+  input:not([type='radio']):hover,
+  select:focus,
+  select:hover,
+  textarea:focus,
+  textarea:hover {
+    border-color: var(--color-action-border-primary-default) !important;
+    box-shadow: 0 0 0 2px var(--color-interface-background-box-shadow-secondary);
+    outline: none;
+  }
+
+  .text-wrapper:not(:focus),
+  .drop-down-wrapper:not(:focus),
+  .multiline-wrapper:not(:focus),
+  .number-wrapper:not(:focus) {
+    > label,
+    label p {
+      color: transparent;
+    }
+  }
+
+  /* End of code for floating labels */
+
+  /* Popups */
+  .field-consentpanel1wrapper, .field-consentpanel2wrapper {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: var(--color-interface-popup-background);
+    z-index: 2;
+
+    .field-consentpanel1, .field-consentpanel2 {
+      margin: auto !important;
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      overflow: auto;
+      background: var(--color-interface-background-primary);
+      border-radius: 10px;
+      padding: 25px;
+      width: 90%;
+      height: 70%;
+      text-align: center;
+    }
+  }
+
+  /* End of code for popups */
+
+  main .section.form-container {
+    max-width: var(--form-fd-max-width) !important;
+    width: 100%;
+  }
+
+  .section > div { max-width: 100%; }
+  
+  .form form {
+      padding: 30px 20px 30px 0;
+
+      /* Heading1 */
+      .field-welcometext p, .field-step-follow-heading p, .field-basic-requirements > legend, .field-extfundimplinks > legend {
+        font-size: var(--body-xx-lg-font-size);
+        font-weight: var(--font-weight-bold);
+        color: var(--color-interface-text-primary);
+      }
+
+      .field-welcometext {
+        padding-bottom: 20px;
+        border-bottom: dotted 2px var(--color-interface-border-secondary);
+        p { margin: 0; }
+      }
+
+      /* Login Screen */
+      .field-loginmainpanel {
+        padding-bottom: 30px;
+
+        .field-loginpanel {
+          .field-mobilepanel {
+              display: grid;
+              grid-column: span 7;
+              max-width: 100%;
+        
+              .field-landinglabel {
+                min-height: 38px;
+              }
+        
+              .field-wrapper {
+                p {
+                  margin: 0;
+                }
+        
+                p p {
+                  font-size: var(--body-md-font-size) !important;
+                  font-weight: var(--font-weight-medium);
+                }
+              }
+        
+              .field-countrycode {
+                grid-column: span 3;
+                margin-top: -19px;
+                align-self: flex-end;
+                max-width: 100%;
+        
+                select {
+                  height: 53px !important;
+                  background: url('../icons/india-flag.png') no-repeat 20px center;
+                  border-radius: var(--form-input-border-radius) 0 0 var(--form-input-border-radius) !important;
+                  padding: 0 20px 0 0 !important;
+                  text-align: right;
+                  margin-top: 40px;
+                  margin-bottom: 0;
+                  letter-spacing: 0 !important;
+                  pointer-events: none;
+                  appearance: none;
+        
+                  &:focus {
+                    outline: none;
+                  }
+                }
+              }
+        
+              .field-registeredmobilenumber {
+                grid-column: span 9;
+                margin-left: -22px;
+                align-self: flex-end;
+        
+                input {
+                  border-radius: 0 var(--form-input-border-radius)
+                    var(--form-input-border-radius) 0 !important;
+                  margin-top: 5px;
+                  margin-bottom: 0;
+                  height: 53px;
+                }
+        
+                label {
+                  margin: 18px 0 0 10px;
+                }
+        
+                .field-description {
+                  margin: 0;
+                  position: absolute;
+                  left: -27%;
+                }
+              }
+        
+              .field-registeredmobilenumber:is(
+                  [data-active='true'],
+                  [data-empty='false']
+                )
+                > label {
+                left: -26%;
+              }
+
+              .field-wrapper.field-fdextregmobnodesc p {
+                font-weight: var(--font-weight-regular);
+                color: var(--color-interface-text-secondary) !important;
+              }
+          }
+
+          .field-identifierpanel {
+              grid-column: span 7;
+              padding-top: 15px;
+
+              legend { 
+                  max-width: initial; 
+                  padding-bottom: 20px;
+              }
+
+              input { height: 53px; }
+          }
+        }
+
+        .field-consent-fragment {
+          label p {
+            color: var(--color-interface-text-primary);
+            margin: 5px 0 5px 5px;
+            font-size: var(--body-sm-font-size);
+          }
+
+          .field-checkboxconsent1label:has(.field-description) {
+            display: grid !important;
+          }
+
+          .field-consent3label p { 
+            font-size: var(--body-sm-font-size); 
+            color: var(--color-interface-text-primary);
+          }
+        }
+
+        .field-getotpbutton {
+          text-align: left;
+          max-width: 272px;
+        }
+
+        .panel-wrapper.field-stepstofollow {
+            display: grid;
+            background: var(--color-interface-background-quinary);
+            padding: 10px 0 10px 10px;
+            border-radius: 20px;
+            width: 100%;
+            justify-content: center;
+    
+            .field-step-follow-heading p {
+                margin: 0;
+                padding-bottom: 7px;
+                position: relative;
+                top: 25%;
+                left: 1%;
+            }
+    
+            fieldset {
+                padding: 0;
+                text-align: center;
+                display: inline-block;
+
+                img {
+                    width: 40px;
+                    height: 40px;
+                    font-size: var(--body-fd-sm-font-size);
+                }
+        
+                p:nth-child(1) { font-size: var(--body-fd-sm-font-size); }
+                .plain-text-wrapper { white-space: normal !important; }
+                }
+                .field-step1panel { padding-left: 15px; }
+                .field-step4panel { padding-right: 15px; }
+        }
+
+        .field-basic-requirements {
+          margin-top: 10px;
+
+          .plain-text-wrapper p {
+            margin: 0;
+            color: var(--color-interface-text-secondary);
+            font-size: var(--body-x-sm-font-size);
+          }
+        }
+
+        .field-extfundimplinks {
+          display: flex;
+          padding-top: 10px;
+
+          .plain-text-wrapper { 
+            display: flex; 
+            margin: -13px 0 0;
+
+            p {
+              padding-left: 6px;
+              font-size: var(--body-x-sm-font-size);
+              font-weight: var(--font-weight-medium);
+              margin: 3px 0 0;
+            }
+          }
+
+          .field-grievancetxt::before { content: url('../icons/call-blue.svg'); }
+          .field-sachettxt::before { content: url('../icons/book-blue.svg'); }
+          .field-insurancetxt::before { content: url('../icons/info-blue.svg'); }
+          .field-complaintmanagementtxt::before { content: url('../icons/message-question-blue.svg'); }
+        }
+    }
+  }
+}
 
 /* For tablets */
 @media (768px <=width <1272px) {
-    .fd-ext-fund header > .cmp-container div:nth-child(2) {
-        display: none;
-    }
+  .fd-ext-fund {
+    header > .cmp-container div:nth-child(2) { display: none; }
+  }
 }
 
 /* For mobiles */
 @media (350px <=width <=767px) {
-    .fd-ext-fund header > .cmp-container div:nth-child(2) {
-        display: none;
+  .fd-ext-fund {
+    header > .cmp-container div:nth-child(2) { display: none; }  
+
+    .form form { 
+      .field-loginhelptext1 { margin-top: 0; } 
+
+      .field-loginmainpanel {
+        .field-loginpanel .field-mobilepanel {
+          .field-countrycode { margin-top: 0; }
+          .field-mobilenumberwrapper { display: grid; }
+        }
+        .field-stepstofollow, .field-basic-requirements, .field-extfundimplinks { margin-top: 20px; }
+      }
     }
+  }
+}
+
+/* Intermediate breakpoints -- for complex structures */
+
+/* Country code and phone number field */
+@media (1050px <=width <1200px) {
+  .fd-ext-fund .form form {
+    .field-loginmainpanel .field-loginpanel { 
+      .field-mobilepanel, .field-identifierpanel { grid-column: span 8; } 
+    }
+  }
+}
+
+@media (width < 1050px) {
+  .fd-ext-fund .form form {
+    .field-loginmainpanel .field-loginpanel { 
+      .field-mobilepanel, .field-identifierpanel { grid-column: span 12; } 
+    }
+  }
 }
