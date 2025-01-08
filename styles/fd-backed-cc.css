@@ -88,21 +88,13 @@ body.fd-backed-cc {
                             }
                         }
 
+                        .field-landingpagemainwrapper{
+
+                        }
+
+                        /* LANDING PAGE SCREEN END */
+
                         .field-loginmainpanel {
-                            /*    padding: 40px 35px 40px 0;
-                            margin-bottom: 40px;
-                            display: initial;
-                            grid-column: span 8;
-
-                            @media (768px <=width < 1200px) {
-                                margin: 0 auto;
-                                padding: 40px 35px;
-                            }
-
-                            @media (max-width: 768px) {
-                                padding: 40px 35px 40px 40px;
-                            } */
-
                             .field-welcometext {
                                 p {
                                     font-size: var(--body-fd-xx-lg-font-size);
@@ -1112,7 +1104,7 @@ body.fd-backed-cc {
                         .field-runtime,
                         .field-resultpanel,
                         .field-accountselectionwrapper,
-                        .field-landingwrapper {
+                        .field-landingpagemainwrapper {
                             padding: 40px 35px 40px 0;
                             margin-bottom: 40px;
                             display: initial;
@@ -1257,7 +1249,8 @@ body.fd-backed-cc {
                             }
                         }
 
-                        &:has(.field-carddetailswrapper[data-visible="true"]) {
+                        &:has(.field-carddetailswrapper[data-visible="true"]),
+                        &:has(.field-landingpagemainwrapper[data-visible="true"]) {
                             .field-bannerimagepanel {
                                 display: none;
                             }
