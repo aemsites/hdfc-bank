@@ -33,7 +33,7 @@ function createJourneyId(visitMode, journeyAbbreviationValue, channelValue, glob
  * @return {PROMISE}
  */
 // eslint-disable-next-line no-unused-vars
-async function getOTP(mobileNumber, pan, dob, globals) {
+async function getOtpExternalFundingFD(mobileNumber, pan, dob, globals) {
   const jsonObj = {
     mobileNumber: '918619484593',
     dateOfBirth: '19920910',
@@ -49,6 +49,6 @@ async function getOTP(mobileNumber, pan, dob, globals) {
 }
 
 export {
-  getOTP,
+  getOtpExternalFundingFD,
   createJourneyId,
 };

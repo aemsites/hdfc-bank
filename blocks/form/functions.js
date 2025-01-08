@@ -11,7 +11,7 @@ export const formIdPathMapping = {
   '/content/forms/af/hdfc_haf/digital/fd-lien-cug': '../../../creditcards/fd-card/fd-functions.js', // fd
   '/content/forms/af/hdfc_haf/digital/fdlienprodtest': '../../../creditcards/fd-card/fd-functions.js',
   '/content/forms/af/hdfc_haf/digital/corporate-credit-cards-application-cug': '../../../creditcards/corporate-creditcard/cc-functions.js', // ccc cug
-  '/content/forms/af/hdfc_haf/digital/external-funding': '../../../liabilities/fd-external-funding/fd-ef-functions.js', // fd-external-fund
+  '/content/forms/af/hdfc_haf/assets/fd-external-funding/forms/external-funding': '../../../liabilities/fd-external-funding/fd-ef-functions.js', // fd-external-fund
 };
 
 export default function getCustomFunctionPath(id) {

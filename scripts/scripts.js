@@ -205,7 +205,7 @@ function loadDelayed() {
   const pathName = window.location.pathname;
   FORM_CONSTANT.some((form) => {
     if (form.urlKey.some((el) => pathName.includes(el))) {
-      window.setTimeout(() => form?.launchScript?.[ENV] && loadScript(form.launchScript[ENV]), form.launchScript.loadTime);
+      form?.launchScript?.[ENV] && window.setTimeout(() => loadScript(form.launchScript[ENV]), form.launchScript.loadTime);
       return true;
     }
     return false;
