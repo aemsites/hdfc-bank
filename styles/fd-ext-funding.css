@@ -191,9 +191,8 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                             font-size: var(--body-fd-lg-font-size);
                                             font-weight: var(--font-weight-regular);
                                             line-height: 28px;
-                                            margin: 0;
+                                            margin: 10px 0 0 0;
                                             color: var(--color-interface-text-secondary);
-                                            opacity: 0;
                                         }
 
                                         input {
@@ -201,19 +200,25 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                             padding-left: 0px;
                                             margin: 0;
                                             border: none;
-                                            box-shadow: none;
+                                            box-shadow: none !important;
                                             width: 90%;
+                                            background-color: transparent;
                                         }
 
                                         &[data-empty="false"],
                                         &[data-active="true"] {
                                             label {
                                                 left: -72px;
-                                                top: 8px;
+                                                top: -3px;
                                                 opacity: 1;
                                                 font-size: var(--body-fd-sm-font-size);
                                             }
                                         }
+                                        .field-description {
+                                            margin-top: 1px;
+                                            position: absolute;
+                                            left: -88px;
+                                        } 
                                     }
 
                                     .field-fdextregmobnodesc {
@@ -223,10 +228,6 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                             color: var(--color-interface-text-secondary) !important;
                                            
                                             margin-bottom: 0;
-
-                                            @media (min-width: 769px) {
-                                                margin-top: -10px;
-                                            }
                                         }
                                     }
 
@@ -360,6 +361,10 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                             background: url("../icons/cal_icon.png") no-repeat 97%;
                                             margin-bottom: 0;
                                         }
+                                    }
+
+                                    .field-description{
+                                        margin-top: 0;
                                     }
                                 }
 
@@ -767,7 +772,6 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                     &~.field-description {
                                         color: var(--color-input-text-msg-error);
                                         font-weight: var(--font-weight-regular);
-                                        display: none;
                                     }
                                 }
 
@@ -796,9 +800,12 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
 
                                     &~.field-description {
                                         font-weight: var(--font-weight-regular);
-                                        display: none;
                                     }
                                 }
+                            }
+
+                            .field-description{
+                                font-weight: var(--font-weight-regular);
                             }
                         }
 
