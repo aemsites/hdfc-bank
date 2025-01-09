@@ -76,6 +76,8 @@ async function fetchJsonResponse(url, payload, method, loader = false) {
     const decryptedResult = await decryptDataES6(result, responseObj.secret);
     const parsedResult = JSON.parse(decryptedResult);
     if (loader) hideLoaderGif();
+    console.log(parsedResult);
+
     return parsedResult;
   } catch (error) {
     console.error('Error in fetching JSON response:', error);
@@ -130,6 +132,7 @@ async function fetchJsonResponseWithDelay(url, payload, method, timeInMs, loader
     const parsedResult = JSON.parse(decryptedResult);
     await delay(timeInMs);
     if (loader) hideLoaderGif();
+    console.log('delay: ', parsedResult);
     return parsedResult;
   } catch (error) {
     console.error('Error in fetching JSON response:', error);
