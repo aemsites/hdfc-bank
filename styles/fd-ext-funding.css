@@ -67,23 +67,25 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                 .form {
                     form {
                         padding: 0 !important;
-
-                        @media (768px <=width < 1200px) {
+                        display: grid;
+                     
+                        @media (320px <=width <=640px) {
                             display: block;
                         }
 
                         .field-bannerimagepanel {
                             background: var(--color-interface-fd-background-secondary) url(../icons/side_bar_banner.png) no-repeat top center;
                             min-height: 648px;
+                            background-size: contain;
 
 
-                            @media (768px <=width <=1200px) {
-                                background: var(--color-interface-fd-background-secondary) url('../icons/banner_tablet.webp') no-repeat center center / 100% 100%;
-                                min-height: 225px;
-                            }
+                           /*  @media (768px <=width <=1200px) {
+                                background: var(--color-interface-fd-background-secondary) url('../icons/side_bar_banner.png') no-repeat center center / 100% 100%;
+                                min-height: 648px;
+                            } */
 
-                            @media (320px <=width <=767px) {
-                                background: var(--color-interface-fd-background-secondary) url('../icons/banner_mobile.webp') no-repeat center center / 100% 100%;
+                            @media (320px <=width <=640px) {
+                                background: var(--color-interface-fd-background-secondary) url('../icons/banner_mobile.png') no-repeat center center / 100% 100%;
                                 min-height: 225px;
                             }
                         }
@@ -101,16 +103,9 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
 
                             .field-loginpanel {
                                 display: initial;
-
-                                @media screen and (min-width: 768px) {
                                     padding-top: 40px;
                                     border-top: 1.5px dashed var(--color-interface-border-secondary);
-                                    margin-bottom: 15px;
-                                  }
-
-                               /*  &:has(.field-description)~.field-registeredmobilenumberfootnote {
-                                    margin-top: 10px;
-                                } */
+                                    margin-bottom: 15px;                                  
                             }
 
                             .field-mobilepanel {
@@ -281,8 +276,9 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
 
                                 fieldset.field-pandobselection {
                                     margin-right: 5px;
-                                    margin-top: 30px;
-                                    margin-bottom: 20px;
+                                    margin-top: 30px !important;
+                                    margin-bottom: 15px !important;
+                                    display: flex;
 
                                     legend {
                                         float: none;
@@ -336,6 +332,10 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                 }                            
 
                                 .field-dateofbirth {
+                                    @media (320px <=width <=767px) {
+                                        margin-top: 0 !important;                                    
+                                    }
+
                                     label{
                                         font-size: var(--body-fd-sm-font-size);
                                         font-weight: var(--font-weight-regular);
@@ -369,9 +369,14 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                 }
 
                                 .field-pan {
+                                    @media (320px <=width <=767px) {
+                                        margin-top: 0 !important;                                    
+                                    }
+
                                     input[type="text"] {
                                         margin-top: 0;
                                         padding-left: 22px;
+                                        margin-bottom: 0;
                                     }
 
                                     &[data-active="true"],
@@ -488,6 +493,10 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                 }
 
                                 & .field-step-follow-heading {
+                                    @media (320px <=width <=991px) {
+                                        margin-bottom: 20px;
+                                    }
+
                                     p {
                                         font-weight: 600;
                                         font-size: var(--body-fd-xx-lg-font-size);
@@ -627,6 +636,10 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                 margin-top: 40px;
                                 display: flex;
 
+                                @media (320px <=width <=640px) {
+                                    display: none;
+                                }
+
                                 legend{
                                     font-size: var(--body-lg-font-size);
                                     font-weight: var(--font-weight-bold);
@@ -700,14 +713,9 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                             margin-bottom: 40px;
                             display: initial;
                             grid-column: span 8;
-
-                            @media (768px <=width < 1200px) {
-                                margin: 0 auto;
-                                padding: 40px 35px;
-                            }
-
-                            @media (max-width: 768px) {
-                                padding: 40px 35px 40px 40px;
+                           
+                            @media (max-width: 640px) {
+                                padding: 30px 20px 20px 20px;
                             }
                         }
 
