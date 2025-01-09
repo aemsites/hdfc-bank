@@ -585,28 +585,41 @@ function otpValidationNRE(mobileNumber, pan, dob, otpNumber, globals) {
 function setupBankUseSection(mainBankUsePanel, globals) {
   /* eslint-disable prefer-destructuring */
   const urlParams = new URLSearchParams(window.location.search);
+  let caseInsensitiveUrlParams = new URLSearchParams();;
+  for (const [name, value] of urlParams) {
+    caseInsensitiveUrlParams.append(name.toUpperCase(), value);
+  }
   const utmParams = {};
   const lgCode = mainBankUsePanel.lgCode;
   const lcCode = mainBankUsePanel.lcCode;
   const toggle = mainBankUsePanel.bankUseToggle;
   const resetAllBtn = mainBankUsePanel.resetAllBtn;
+  console.log(caseInsensitiveUrlParams);
+  
   // globals.functions.setProperty(toggle, { checked: false });
-  if (urlParams.size > 0) {
-    ['lgCode', 'lcCode'].forEach((param) => {
-      const value = urlParams.get(param);
+  if (caseInsensitiveUrlParams.size > 0) {
+    ['LGCODE', 'LCCODE'].forEach((param) => {
+      const value = caseInsensitiveUrlParams.get(param);
       if (value) {
         utmParams[param] = value;
       }
     });
 
-    globals.functions.setProperty(lgCode, { value: utmParams.lgCode });
-    globals.functions.setProperty(lcCode, { value: utmParams.lcCode });
+    if(Object.keys(utmParams).length > 0){
+      globals.functions.setProperty(toggle, { checked: 'on' });
+      globals.functions.setProperty(lgCode, { enabled: false });
+      globals.functions.setProperty(lgCode, { value: utmParams.LGCODE });
+      globals.functions.setProperty(toggle, { enabled: false });
+    } else{
+      globals.functions.setProperty(toggle, { enabled: true });
+    }
+    // globals.functions.setProperty(lcCode, { value: utmParams.lcCode });
   } else {
-    globals.functions.setProperty(lcCode, { value: 'NRI INSTASTP' });
+    globals.functions.setProperty(toggle, { enabled: true });
   }
   globals.functions.setProperty(resetAllBtn, { enabled: false });
-  globals.functions.setProperty(toggle, { enabled: true });
   globals.functions.setProperty(lcCode, { enabled: false });
+  globals.functions.setProperty(lcCode, { value: 'NRI INSTASTP' });
 }
 
 async function showFinancialDetails(financialDetails, response, occupation, globals) {
