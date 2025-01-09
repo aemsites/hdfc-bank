@@ -17,7 +17,7 @@ const {
  */
 function createJourneyId(visitMode, journeyAbbreviationValue, channelValue, globals) {
   const dynamicUUID = generateUUID();
-  const journeyId = globals.functions.exportData().smartemi?.journeyId || `${dynamicUUID}_01_${journeyAbbreviationValue}_${visitMode}_${channelValue}`;
+  const journeyId = globals.functions.exportData().form?.journeyId || `${dynamicUUID}_01_${journeyAbbreviationValue}_${visitMode}_${channelValue}`;
   globals.functions.setProperty(globals.form.runtime.journeyId, { value: journeyId });
   // Update the form context
   currentFormContext.journeyName = journeyName;

@@ -65,7 +65,6 @@ const FORM_CONSTANT = [
     // FD_EXTERNAL_FUNDING
     formPath: ['external-funding', 'fd-external-funding'],
     class: 'fd-ext-fund',
-    cssFilePath: '/styles/fd-ext-funding.css',
     urlKey: ['external-funding', 'fd-external-funding'],
     // launchScript: { // enable once the correct launch scripts got confirmed
     //   dev: 'https://assets.adobedtm.com/80673311e435/029b16140ccd/launch-94203efd95a9-development.min.js',
@@ -165,7 +164,6 @@ async function loadEager(doc) {
     FORM_CONSTANT.some((form) => {
       if (form.formPath.some((el) => pathName.includes(el))) {
         document.body.classList.add(form.class);
-        form?.cssFilePath && loadCSS(`${window.hlx.codeBasePath}${form.cssFilePath}`);
         return true;
       }
       return false;
