@@ -48,7 +48,18 @@ async function getOtpExternalFundingFD(mobileNumber, pan, dob, globals) {
   return fetchJsonResponse(urlPath, jsonObj, 'POST', true);
 }
 
+/**
+ * @name fdEfOtpValHandler
+ * @param {Object} response
+ * @param {Object} globals
+ * @return {PROMISE}
+ */
+
+// eslint-disable-next-line no-unused-vars
+function fdEfOtpValHandler(globals) {
+}
 export {
   getOtpExternalFundingFD,
   createJourneyId,
+  fdEfOtpValHandler,
 };
