@@ -202,6 +202,7 @@
                   padding-left: 15px;
                   background-color: #fff;
                   border-radius: 12px;
+                  height: var(--form-input-height);
 
                   @media (320px <=width <=767px) {
                     width: 100% !important;
