@@ -557,6 +557,13 @@ function buildBlock(blockName, content) {
   return blockEl;
 }
 
+const FORM_CONSTANT = [
+  {
+    formPath: ['etb-fixed-deposit-cc', 'pvtestfdliencugtest', 'fd-lien-cug-test', 'fdlienprodtest'],
+    cssPath : '/styles/fd-styles.css'
+  },
+]
+
 /**
  * Loads JS and CSS for a block.
  * @param {Element} block The block element
@@ -568,6 +575,14 @@ async function loadBlock(block) {
     const { blockName } = block.dataset;
     try {
       const cssLoaded = loadCSS(`${window.hlx.codeBasePath}/blocks/${blockName}/${blockName}.css`);
+      const pathName = window.location.pathname;
+      FORM_CONSTANT.some((form) => {
+      if (form.formPath.some((el) => pathName.includes(el))) {
+        const formSpecificCss = loadCSS(form.cssPath);
+        return true;
+      }
+      return false;
+    });
       const decorationComplete = new Promise((resolve) => {
         (async () => {
           try {
