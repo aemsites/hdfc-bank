@@ -609,14 +609,13 @@ function setupBankUseSection(mainBankUsePanel, globals) {
   const lcCode = mainBankUsePanel.lcCode;
   const toggle = mainBankUsePanel.bankUseToggle;
   const resetAllBtn = mainBankUsePanel.resetAllBtn;
-  console.log(caseInsensitiveUrlParams);
+  const specialCharRegex = /[^a-zA-Z0-9\s]/;
   
-  // globals.functions.setProperty(toggle, { checked: false });
   if (caseInsensitiveUrlParams.size > 0) {
     ['LGCODE', 'LCCODE'].forEach((param) => {
       const value = caseInsensitiveUrlParams.get(param);
       if (value) {
-        utmParams[param] = value;
+        utmParams[param] = value.replace(specialCharRegex, '');
       }
     });
 
@@ -628,7 +627,6 @@ function setupBankUseSection(mainBankUsePanel, globals) {
     } else{
       globals.functions.setProperty(toggle, { enabled: true });
     }
-    // globals.functions.setProperty(lcCode, { value: utmParams.lcCode });
   } else {
     globals.functions.setProperty(toggle, { enabled: true });
   }
