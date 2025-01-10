@@ -506,6 +506,20 @@ const getCountryCodes = (dropdown) => {
 };
 
 /**
+ * Validate lgCode.
+ * @param {Object} globals
+*/
+function validateLGCode(lgCode, globals){
+  const specialCharRegex = /[^a-zA-Z0-9\s]/;
+  const inputValue = lgCode.$value;
+   // Check if the last character is a special character
+   if (specialCharRegex.test(inputValue.slice(-1))) {
+    // Remove the last character if it's a special character
+    globals.functions.setProperty(lgCode, { value : inputValue.slice(0, -1)});
+  }
+}
+
+/**
  * Starts the Nre_Nro OTPtimer for resending OTP.
  * @param {Object} globals - The global object containing necessary data for DAP request.
 */
@@ -1869,4 +1883,5 @@ export {
   selectVarient,
   setAMBValue,
   setTerritoryValue,
+  validateLGCode,
 };
