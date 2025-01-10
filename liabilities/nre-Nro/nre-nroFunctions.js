@@ -610,7 +610,7 @@ function setupBankUseSection(mainBankUsePanel, globals) {
   const toggle = mainBankUsePanel.bankUseToggle;
   const resetAllBtn = mainBankUsePanel.resetAllBtn;
   const specialCharRegex = /[^a-zA-Z0-9\s]/;
-  
+
   if (caseInsensitiveUrlParams.size > 0) {
     ['LGCODE', 'LCCODE'].forEach((param) => {
       const value = caseInsensitiveUrlParams.get(param);
