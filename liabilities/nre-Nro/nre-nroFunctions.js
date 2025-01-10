@@ -610,7 +610,7 @@ function setupBankUseSection(mainBankUsePanel, globals) {
   const toggle = mainBankUsePanel.bankUseToggle;
   const resetAllBtn = mainBankUsePanel.resetAllBtn;
   const specialCharRegex = /[^a-zA-Z0-9\s]/;
-  
+
   if (caseInsensitiveUrlParams.size > 0) {
     ['LGCODE', 'LCCODE'].forEach((param) => {
       const value = caseInsensitiveUrlParams.get(param);
@@ -1819,28 +1819,29 @@ function setTerritoryValue() {
 }
 
 async function getEmployerNameFromMDM(employerCode){
-    const finalURL = `/content/hdfc_commonforms/api/mdm.INSTA.COMPANY_CODE.COMPANYCODE-${employerCode}.json`;
-    try{
-      const response = await getJsonResponse(urlPath(finalURL), null, 'GET');
-        if (!response || response.length === 0) {
-          console.warn('No response data received.');
-          return '';
-        }
-  
-        const employerName = response.length === 1
-        ? response[0].COMPANYNAME
-        : response.find((item) => item.COMPANYCODE === employerCode.toString()).COMPANYNAME;
-  
-        if (employerName) {
-          return employerName
-        } else {
-          console.warn('No matching employer name found for the employer code.');
-          return '';
-        }
-      } catch(error){
-        console.error('Error while getting employer name :', error);
-        return ''
+  const finalURL = `/content/hdfc_commonforms/api/mdm.INSTA.COMPANY_CODE.COMPANYCODE-${employerCode}.json`;
+  try{
+    if(isNullOrEmpty(employerCode)) return '';
+    const response = await getJsonResponse(urlPath(finalURL), null, 'GET');
+      if (!response || response.length === 0) {
+        console.warn('No response data received.');
+        return '';
       }
+
+      const employerName = response.length === 1
+      ? response[0].COMPANYNAME
+      : response.find((item) => item.COMPANYCODE === employerCode.toString()).COMPANYNAME;
+
+      if (employerName) {
+        return employerName
+      } else {
+        console.warn('No matching employer name found for the employer code.');
+        return '';
+      }
+    } catch(error){
+      console.error('Error while getting employer name :', error);
+      return ''
+    }
 }
 
 export {
