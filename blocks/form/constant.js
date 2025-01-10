@@ -15,7 +15,7 @@ export const defaultErrorMessages = {
   required: 'Please fill in this field.',
 };
 
-let submitBaseUrl = 'https://hdfc-dev-04.adobecqms.net';
+let submitBaseUrl = 'https://applyonline.hdfcbank.com';
 
 const localDev = ['aem.live', 'aem.page', 'localhost', 'hlx.live', 'hlx.page'];
 
@@ -39,7 +39,7 @@ function isMainProd() {
 }
 
 if (isLocalDev()) {
-  submitBaseUrl = 'https://applyonlinedev.hdfcbank.com';
+  submitBaseUrl = 'https://hdfc-dev-04.adobecqms.net';
 }
 
 export function setSubmitBaseUrl(url) {
