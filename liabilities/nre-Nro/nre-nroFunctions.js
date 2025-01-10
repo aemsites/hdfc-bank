@@ -2,6 +2,7 @@
 import {
   createJourneyId,
   nreNroInvokeJourneyDropOffByParam,
+  invokeJourneyDropOff,
   invokeJourneyDropOffUpdate,
   postIdCommRedirect,
 } from './nre-nro-journey-utils.js';
@@ -840,6 +841,7 @@ function multiCustomerId(response, selectAccount, singleAccountCust, multipleAcc
   // globals.functions.setProperty(globals.form.wizardPanel.wizardFragment.wizardNreNro.selectAccount.multipleAccounts.multipleAccountRepeatable[0]?.AccountNumber, { value: accountDetailsList[0].accountNumber });
   if (responseLength > 1) {
     setTimeout(() => {
+      invokeJourneyDropOff('CUSTOMER_ELIGIBILITY_SUCCESS', currentFormContext?.mobileNumber ?? '', globals);
       sendAnalytics('page load_Step 3 - Select Account', {}, 'CUSTOMER_ELIGIBILITY_SUCCESS', globals);
     }, 1000);
     globals.functions.setProperty(singleAccountCust, { visible: false });
@@ -870,6 +872,7 @@ function multiCustomerId(response, selectAccount, singleAccountCust, multipleAcc
     });
   } else {
     setTimeout(() => {
+      invokeJourneyDropOff('CUSTOMER_ELIGIBILITY_SUCCESS', currentFormContext?.mobileNumber ?? '', globals);
       sendAnalytics('page load_Step 3 - Account Type', {}, 'CUSTOMER_ELIGIBILITY_SUCCESS', globals);
     }, 1000);
     globals.functions.setProperty(globals.form.wizardPanel.MultiAccoCountinue, { visible: false });
