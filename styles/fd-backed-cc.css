@@ -149,6 +149,7 @@ body.fd-backed-cc {
 
                                     .field-landingpanel12 {
                                         display: flex;
+                                        flex-direction: row;
                                         margin-left: 40px;
                                         margin-top: -40px;
 
@@ -230,6 +231,7 @@ body.fd-backed-cc {
                                         display: flex;
                                         align-items: center;
                                         justify-content: flex-end;
+                                        flex-direction: row;
 
                                         .field-retailcardsbtn,
                                         .field-businesscardsbtn {
@@ -451,6 +453,7 @@ body.fd-backed-cc {
                                     .field-navigationarrowswrap1,
                                     .field-navigationdotswrap1 {
                                         display: flex;
+                                        flex-direction: row;
 
                                         .button-wrapper {
                                             button {
@@ -470,14 +473,32 @@ body.fd-backed-cc {
                                             display: flex;
                                             align-items: center;
                                             justify-content: space-between;
+                                            
                                             top: 40%;
 
                                             button {
                                                 width: 42px;
                                                 height: 42px;
                                                 border-radius: 50px;
-                                                background: var(--color-action-background-primary-default) url('../icons/right-arrow.png') no-repeat center center !important;
-                                            
+                                                position: relative;
+                                                display: flex;
+                                                align-items: center;
+                                                justify-content: center;
+                                                transition: transform 0.2s ease-out;
+
+                                                &::before {
+                                                    content: '';
+                                                    position: absolute;
+                                                    height: 100%;
+                                                    width: 10px;
+                                                    background: var(--color-action-background-primary-default) url('../icons/right-arrow.png') no-repeat center center !important;
+                                                }
+
+                                                &:hover {
+                                                    &::before {
+                                                        transform: translateY(100%);
+                                                    }
+                                                }
                                             }
 
                                             .field-leftarrow1 {
@@ -487,13 +508,13 @@ body.fd-backed-cc {
                                             }
                                         }
 
-                                        &.field-navigationdotswrap1{
+                                        &.field-navigationdotswrap1 {
                                             display: flex;
                                             align-items: center;
                                             justify-content: center;
 
-                                            .field-navigationdot11{
-                                                button{
+                                            .field-navigationdot11 {
+                                                button {
                                                     width: 40px;
                                                     height: 8px;
                                                     border-radius: 200px;
@@ -501,9 +522,10 @@ body.fd-backed-cc {
                                                 }
                                             }
 
-                                            .field-navigationdot21{
+                                            .field-navigationdot21 {
                                                 margin-left: -10px;
-                                                button{
+
+                                                button {
                                                     width: 8px;
                                                     height: 8px;
                                                     border-radius: 100%;
@@ -523,6 +545,8 @@ body.fd-backed-cc {
                                     background-color: var(--color-action-background-primary-default);
                                     padding: 30px;
                                     display: flex;
+                                    flex-direction: row;
+                                    align-items: center;
 
                                     .plain-text-wrapper {
                                         p {
@@ -615,6 +639,7 @@ body.fd-backed-cc {
                                                 flex-direction: column;
                                                 background-color: var(--color-interface-promotion-text-primary);
                                                 width: 206px;
+                                                height: 76px;
                                                 border-radius: 16px;
                                                 position: relative;
 
@@ -628,7 +653,7 @@ body.fd-backed-cc {
                                                     background: url('../icons/credit_limit_tick_icon.png') no-repeat left center;
                                                     width: 32px;
                                                     height: 32px;
-                                                    top: 18px;
+                                                    top: 30%;
                                                     left: 15px;
                                                 }
 
@@ -682,6 +707,7 @@ body.fd-backed-cc {
 
                                 .field-secureccinfowrapper {
                                     display: flex;
+                                    flex-direction: row;
                                     margin-top: 40px;
 
                                     .panel-wrapper {
