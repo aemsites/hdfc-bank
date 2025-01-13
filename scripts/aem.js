@@ -562,6 +562,14 @@ const FORM_CONSTANT = [
     formPath: ['etb-fixed-deposit-cc', 'pvtestfdliencugtest', 'fd-lien-cug-test', 'fdlienprodtest'],
     cssPath : '/styles/fd-styles.css'
   },
+  {
+    formPath: ['semi', 'smart-emi', 'smart emi', 'smart_emi', 'smartemi'],
+    cssPath : '/styles/semi-styles.css'
+  },
+  {
+    formPath: ['nre-nro', 'account-opening-nre-nro'],
+    cssPath : '/styles/nre-nro.css'
+  },
 ]
 
 /**
