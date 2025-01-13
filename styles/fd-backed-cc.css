@@ -4,12 +4,20 @@ body.fd-backed-cc {
 
     header {
         background: var(--color-interface-fd-background-primary);
+        height: 72px !important;
+        display: flex;
+        align-items: center;
 
         &>.cmp-container {
             max-width: 1160px;
 
             & div:nth-child(1) {
                 max-width: 1160px;
+
+                img {
+                    height: 32px;
+                    width: 166px;
+                }
 
                 @media (320px <=width <=767px) {
                     text-align: left !important;
@@ -34,6 +42,7 @@ body.fd-backed-cc {
                 height: 32px;
                 content: url('../icons/safe-secure.svg');
                 padding: 0;
+
 
                 @media (768px <=width < 1200px) {
                     display: block;
@@ -88,8 +97,682 @@ body.fd-backed-cc {
                             }
                         }
 
-                        .field-landingpagemainwrapper{
+                        .field-landingpagemainwrapper.panel-wrapper {
+                            grid-column: span 12;
+                            padding-right: 0;
+                            position: relative;
 
+                            .field-headertext {
+                                position: absolute;
+                                top: -50px;
+                                left: 250px;
+                                color: var(--color-interface-text-tertiary);
+                                border-left: 1px solid var(--color-interface-fd-title-border);
+                                padding-left: 20px;
+
+                                p {
+                                    font-size: var(--body-x-lg-font-size);
+                                    font-weight: var(--font-weight-bold);
+                                    color: var(--color-interface-text-tertiary);
+                                    margin-bottom: 0;
+                                }
+                            }
+
+                            .field-landingpagebanner {
+                                background: url('../icons/landing_banner_bg.png') repeat-x top center;
+                                margin-top: -40px;
+                                display: grid;
+
+                                .field-landingpanel1 {
+                                    grid-column: span 8;
+
+                                    .field-landingpanel11 {
+                                        background: url('../icons/landing_banner_smily-bg.png') no-repeat -20px -10px;
+
+                                        .field-landingpagetext1 {
+                                            background: url('../icons/landing_banner_left-text.png') no-repeat 40px 50px;
+                                            height: 378px;
+                                            width: 100%;
+
+                                            p {
+                                                display: none;
+                                            }
+                                        }
+
+
+                                        .field-landingpagenote,
+                                        .field-landingpagetext2,
+                                        .field-landingpagetext3 {
+                                            display: none;
+                                        }
+                                    }
+
+                                    .field-landingpanel12 {
+                                        display: flex;
+                                        flex-direction: row;
+                                        margin-left: 40px;
+                                        margin-top: -40px;
+
+                                        .button-wrapper {
+                                            width: 225px;
+
+                                            button {
+                                                &::after {
+                                                    display: none;
+                                                }
+                                            }
+
+                                            &.field-knowyourcclimit {
+                                                button {
+                                                    background: none;
+                                                    border: 1px solid var(--color-action-border-primary-default);
+                                                    color: var(--color-action-text-secondary-default);
+
+                                                    &:hover {
+                                                        color: var(--color-interface-text-tertiary);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+                                .field-landingpanel2 {
+                                    grid-column: span 4;
+
+                                    .image-wrapper {
+                                        width: 380px;
+                                        height: 378px;
+                                        background: url('../icons/landing_banner_right.png') no-repeat right 50px;
+                                        background-size: 87%;
+
+                                        picture {
+                                            display: none;
+                                        }
+                                    }
+                                }
+                            }
+
+                            .field-perfectcardpanel {
+                                margin-top: 50px;
+                                padding: 20px 40px;
+                                background-color: var(--color-interface-background-quinary);
+
+                                .field-perfectpanelwrapper {
+                                    display: grid;
+
+                                    .field-perfectpanelwrap1 {
+                                        display: inline;
+                                        grid-column: span 6;
+
+                                        .field-findyourperfectcardtext1 {
+                                            p {
+                                                font-size: var(--font-linehight-m-large);
+                                                font-weight: var(--font-weight-bold);
+                                                color: var(--color-action-text-secondary-default);
+                                                margin-bottom: 0;
+                                            }
+                                        }
+
+                                        .field-findyourperfectcardtext2 {
+                                            margin-top: -5px;
+
+                                            p {
+                                                font-size: var(--body-lg-font-size);
+                                                font-weight: var(--font-weight-medium);
+                                                color: var(--color-interface-text-secondary);
+                                                margin-bottom: 0;
+                                            }
+                                        }
+                                    }
+
+                                    .field-perfectpanelwrap2 {
+                                        grid-column: span 6;
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: flex-end;
+                                        flex-direction: row;
+
+                                        .field-retailcardsbtn,
+                                        .field-businesscardsbtn {
+                                            button {
+                                                font-size: var(--body-fd-sm-font-size);
+                                                font-weight: var(--font-weight-medium);
+                                                width: auto;
+                                                padding: 0 20px;
+                                                border-radius: 40px;
+                                                height: 36px;
+
+                                                &::after {
+                                                    display: none;
+                                                }
+                                            }
+
+                                            &.field-businesscardsbtn {
+                                                button {
+                                                    background: none;
+                                                    border: 1px solid var(--color-action-border-primary-default);
+                                                    color: var(--color-action-text-secondary-default);
+
+                                                    &:hover {
+                                                        color: var(--color-interface-text-tertiary);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+                                .field-retailcardssectionmainwrapper {
+                                    position: relative;
+
+                                    .field-retailcardssection {
+                                        margin-top: 10px;
+                                        display: flex;
+                                        flex-wrap: nowrap;
+
+                                        .field-retailcardssectionrepeatable {
+                                            border: 1px solid var(--color-interface-border-secondary);
+                                            border-radius: 16px;
+                                            max-width: 350px;
+                                            padding: 20px;
+                                            display: inline-block;
+                                            background-color: var(--color-interface-background-primary);
+
+                                            p {
+                                                margin-bottom: 0;
+                                            }
+
+                                            .field-cardselection-display1 {
+                                                p {
+                                                    font-size: var(--body-x-lg-font-size);
+                                                    font-weight: var(--font-weight-bold);
+                                                    color: var(--color-interface-text-primary);
+                                                }
+                                            }
+
+                                            .field-cardtagline1 {
+                                                p {
+                                                    font-size: var(--body-fd-md-font-size);
+                                                    font-weight: var(--font-weight-regular);
+                                                    color: var(--color-input-text-primary);
+                                                }
+                                            }
+
+
+                                            .image-wrapper {
+                                                background: url('../icons/freedom_card.png') no-repeat;
+                                                margin-top: 20px;
+
+                                                height: 125px;
+
+                                                picture {
+                                                    display: none;
+                                                }
+                                            }
+
+                                            .field-cardfeatureswrapper1 {
+                                                margin-top: 20px;
+                                                display: inline-block;
+
+                                                .plain-text-wrapper {
+                                                    margin-bottom: 7px;
+
+                                                    &::before {
+                                                        content: '';
+                                                        position: absolute;
+                                                        width: 16px;
+                                                        height: 16px;
+                                                        background: url('../icons/folder_icon.png') no-repeat top left;
+                                                    }
+
+                                                    p p {
+                                                        padding-left: 30px;
+                                                        font-size: var(--body-fd-sm-font-size);
+                                                        font-weight: var(--font-weight-regular);
+                                                        color: var(--color-interface-text-primary);
+                                                        position: relative;
+                                                        margin-bottom: 0;
+                                                    }
+                                                }
+                                            }
+
+                                            .field-allfeaturesandbenefits1 {
+                                                margin-top: 0px;
+
+                                                button {
+                                                    background: none;
+                                                    color: var(--color-action-text-secondary-default);
+                                                    font-size: var(--body-md-font-size);
+                                                    font-weight: var(--font-weight-bold);
+                                                    width: auto;
+                                                    height: auto;
+
+                                                    &::after {
+                                                        background: url('../icons/right_blue_arrow.png') no-repeat right 3px;
+                                                    }
+
+                                                    &:hover {
+                                                        background: none !important;
+                                                    }
+                                                }
+                                            }
+
+                                            .field-minfdamountcardwrapper1 {
+                                                margin-top: 20px;
+                                                display: flex;
+                                                align-items: center;
+                                                justify-content: space-between;
+                                                max-width: 300px;
+                                                margin: 20px 0 0 0;
+                                                border: 1px solid var(--color-interface-border-secondary);
+                                                border-radius: 12px;
+                                                height: 56px;
+                                                flex-direction: initial;
+
+                                                .field-minfdamountheading1 {
+                                                    height: 100%;
+                                                    display: flex;
+                                                    align-items: center;
+                                                    justify-content: center;
+                                                    width: 45%;
+
+                                                    p {
+                                                        color: var(--color-interface-text-primary);
+                                                        font-size: var(--body-sm-font-size);
+                                                        font-weight: var(--font-weight-medium);
+                                                        margin: 0;
+                                                    }
+                                                }
+
+                                                .field-minfdamountcard1 {
+                                                    border-top-right-radius: 12px;
+                                                    border-bottom-right-radius: 12px;
+                                                    border-top-left-radius: 0;
+                                                    border-bottom-left-radius: 0;
+                                                    display: flex;
+                                                    align-items: center;
+                                                    flex-direction: row-reverse;
+                                                    padding: 0 20px;
+                                                    background-color: var(--color-interface-background-quinary);
+
+                                                    label {
+                                                        transform: none;
+                                                        margin: 0;
+                                                        padding: 0;
+                                                        background: url('../icons/only_amount_icon.png') no-repeat center center;
+                                                        background-size: 15px;
+                                                        width: 20px;
+                                                        font-size: 0;
+                                                        position: initial;
+                                                    }
+
+                                                    input {
+                                                        background-color: var(--color-interface-background-quinary);
+                                                        height: 54px;
+                                                        border: none;
+                                                        font-size: var(--body-lg-font-size);
+                                                        font-weight: var(--font-weight-extra-bold);
+                                                        margin: 0;
+                                                        letter-spacing: normal;
+                                                        padding-right: 0;
+                                                        field-sizing: content;
+                                                        width: auto;
+                                                        background: transparent;
+
+                                                        &:focus {
+                                                            outline: none;
+                                                        }
+
+                                                    }
+                                                }
+                                            }
+
+                                            .field-getthisperfectcard1 {
+                                                width: 100%;
+                                                max-width: none;
+                                                margin-top: 20px;
+
+                                                button {
+                                                    background: none;
+                                                    border: 1px solid var(--color-action-border-primary-default);
+                                                    color: var(--color-action-text-secondary-default);
+
+                                                    &::after {
+                                                        display: none;
+                                                    }
+
+                                                    &:hover {
+                                                        color: var(--color-interface-text-tertiary);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    .field-navigationarrowswrap1,
+                                    .field-navigationdotswrap1 {
+                                        display: flex;
+                                        flex-direction: row;
+
+                                        .button-wrapper {
+                                            button {
+                                                color: transparent;
+                                                width: auto;
+
+
+                                                &::after {
+                                                    display: none;
+                                                }
+                                            }
+                                        }
+
+                                        &.field-navigationarrowswrap1 {
+                                            position: absolute;
+                                            width: 100%;
+                                            display: flex;
+                                            align-items: center;
+                                            justify-content: space-between;
+                                            
+                                            top: 40%;
+
+                                            button {
+                                                width: 42px;
+                                                height: 42px;
+                                                border-radius: 50px;
+                                                position: relative;
+                                                display: flex;
+                                                align-items: center;
+                                                justify-content: center;
+                                                transition: transform 0.2s ease-out;
+
+                                                &::before {
+                                                    content: '';
+                                                    position: absolute;
+                                                    height: 100%;
+                                                    width: 10px;
+                                                    background: var(--color-action-background-primary-default) url('../icons/right-arrow.png') no-repeat center center !important;
+                                                }
+
+                                                &:hover {
+                                                    &::before {
+                                                        transform: translateY(100%);
+                                                    }
+                                                }
+                                            }
+
+                                            .field-leftarrow1 {
+                                                button {
+                                                    rotate: 180deg;
+                                                }
+                                            }
+                                        }
+
+                                        &.field-navigationdotswrap1 {
+                                            display: flex;
+                                            align-items: center;
+                                            justify-content: center;
+
+                                            .field-navigationdot11 {
+                                                button {
+                                                    width: 40px;
+                                                    height: 8px;
+                                                    border-radius: 200px;
+                                                    background-color: var(--color-action-scroll-primary);
+                                                }
+                                            }
+
+                                            .field-navigationdot21 {
+                                                margin-left: -10px;
+
+                                                button {
+                                                    width: 8px;
+                                                    height: 8px;
+                                                    border-radius: 100%;
+                                                    background-color: #D0DDFC;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            .field-knowyourcclimitpanel {
+                                margin-top: 20px;
+
+                                .field-knowyourcclimitcalcpanel {
+                                    border-radius: 16px;
+                                    background-color: var(--color-action-background-primary-default);
+                                    padding: 30px;
+                                    display: flex;
+                                    flex-direction: row;
+                                    align-items: center;
+
+                                    .plain-text-wrapper {
+                                        p {
+                                            color: var(--color-interface-background-primary);
+                                            margin-bottom: 0;
+                                        }
+                                    }
+
+                                    .field-knowyourcclimittextwrapper {
+                                        display: inline;
+                                        flex: 2;
+
+                                        .field-knowyourcclimittext1 {
+                                            p {
+                                                font-weight: var(--font-weight-extra-bold);
+                                                font-size: var(--body-xx-lg-font-size);
+                                            }
+                                        }
+
+                                        .field-knowyourcclimittext2 {
+                                            p {
+                                                font-weight: var(--font-weight-regular);
+                                                font-size: var(--body-lg-font-size);
+                                            }
+                                        }
+                                    }
+
+                                    .field-enterfdamtwrap,
+                                    .field-yourcclimitwrap {
+
+                                        .number-wrapper {
+                                            label {
+                                                margin: 0;
+                                                background: none;
+                                                position: initial;
+                                                color: var(--color-interface-background-primary);
+                                                transform: none;
+                                            }
+
+                                            input {
+                                                letter-spacing: 0;
+                                                width: auto;
+                                                border-radius: 0;
+                                                field-sizing: content;
+                                                background: none;
+                                                border: 0;
+                                                margin: 0;
+                                                padding: 0;
+                                                height: auto;
+                                                line-height: normal;
+                                                color: var(--color-interface-background-primary) !important;
+
+                                                &:focus {
+                                                    outline: none;
+                                                }
+                                            }
+                                        }
+
+                                        &.field-enterfdamtwrap {
+                                            flex: 2;
+                                            background: url('../icons/triple_right_arrow.png') no-repeat 90% center;
+
+                                            .field-enterfdamt {
+                                                display: flex;
+                                                align-items: center;
+                                                justify-content: center;
+                                                flex-direction: column;
+
+                                                label {
+                                                    font-weight: var(--font-weight-regular);
+                                                    font-size: var(--body-md-font-size);
+                                                    padding: 0;
+                                                    margin-bottom: 5px;
+                                                }
+
+                                                input {
+                                                    font-size: var(--body-fd-xx-xlg-font-size);
+                                                    font-weight: var(--font-weight-extra-bold);
+                                                    border-bottom: 1px solid;
+                                                }
+                                            }
+                                        }
+
+                                        &.field-yourcclimitwrap {
+                                            flex: 1;
+
+                                            .field-yourcclimit {
+                                                display: flex;
+                                                justify-content: center;
+                                                flex-direction: column;
+                                                background-color: var(--color-interface-promotion-text-primary);
+                                                width: 206px;
+                                                height: 76px;
+                                                border-radius: 16px;
+                                                position: relative;
+
+                                                * {
+                                                    padding-left: 60px;
+                                                }
+
+                                                &::before {
+                                                    content: '';
+                                                    position: absolute;
+                                                    background: url('../icons/credit_limit_tick_icon.png') no-repeat left center;
+                                                    width: 32px;
+                                                    height: 32px;
+                                                    top: 30%;
+                                                    left: 15px;
+                                                }
+
+
+                                                label {
+                                                    font-size: var(--body-sm-font-size);
+                                                    font-weight: var(--font-weight-regular);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+                                .field-securedcclimitnote {
+                                    p {
+                                        font-size: var(--body-lg-font-size);
+                                        font-weight: var(--font-weight-regular);
+                                        color: var(--color-interface-text-secondary);
+                                        margin-bottom: 0;
+                                    }
+                                }
+                            }
+
+                            .field-benefitsofsecuredcc {
+                                padding: 30px 40px;
+                                display: inline;
+
+                                .field-businesssecuredtxtheading {
+                                    p {
+                                        margin-bottom: 0;
+                                    }
+
+                                    h3 {
+                                        font-size: var(--font-linehight-m-large);
+                                        font-weight: var(--font-weight-bold);
+                                        color: var(--color-action-text-secondary-default);
+                                        margin: 0;
+                                    }
+                                }
+
+                                .field-benefitsofsecuredccsubline {
+                                    margin-top: 10px;
+
+                                    p {
+                                        margin-bottom: 0;
+                                        font-size: var(--body-lg-font-size);
+                                        font-weight: var(--font-weight-medium);
+                                        color: var(--color-interface-text-secondary);
+                                    }
+                                }
+
+                                .field-secureccinfowrapper {
+                                    display: flex;
+                                    flex-direction: row;
+                                    margin-top: 40px;
+
+                                    .panel-wrapper {
+                                        flex: 1;
+                                        display: inline;
+                                        background-color: #F9FAFF;
+                                        padding: 20px;
+
+                                        .image-wrapper {
+                                            width: 32px;
+                                            height: 32px;
+                                            margin-bottom: 20px;
+
+                                            picture {
+                                                display: none;
+                                            }
+
+                                            &.field-secureccinfo1img {
+                                                background: url('../icons/benifit_build_credit_icon.png') no-repeat center center;
+                                            }
+
+                                            &.field-secureccinfo2img {
+                                                background: url('../icons/benifit_high_rates_icon.png') no-repeat center center;
+                                            }
+
+                                            &.field-secureccinfo3img {
+                                                background: url('../icons/benifit_unsecure_card_icon.png') no-repeat center center;
+                                            }
+
+                                            &.field-secureccinfo4img {
+                                                background: url('../icons/benifit_reward_icon.png') no-repeat center center;
+                                            }
+
+                                        }
+
+                                        .plain-text-wrapper {
+                                            p {
+                                                margin-bottom: 0;
+                                            }
+                                        }
+
+                                        .field-secureccinfo11,
+                                        .field-secureccinfo21,
+                                        .field-secureccinfo31,
+                                        .field-secureccinfo41 {
+                                            p {
+                                                font-size: var(--body-md-font-size);
+                                                font-weight: var(--font-weight-bold);
+                                                color: #1F2937;
+                                            }
+                                        }
+
+                                        .field-secureccinfo12,
+                                        .field-secureccinfo22,
+                                        .field-secureccinfo32,
+                                        .field-secureccinfo42 {
+                                            p {
+                                                font-size: var(--body-sm-font-size);
+                                                font-weight: var(--font-weight-regular);
+                                                color: var(--color-interface-text-secondary);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         }
 
                         /* LANDING PAGE SCREEN END */
@@ -843,8 +1526,8 @@ body.fd-backed-cc {
                                     height: 100%;
                                     display: flex;
                                     align-items: center;
-                                    justify-content: center;                                    
-                                    width: 45%; 
+                                    justify-content: center;
+                                    width: 45%;
 
                                     p {
                                         color: var(--color-interface-text-primary);
@@ -864,8 +1547,8 @@ body.fd-backed-cc {
                                     align-items: center;
                                     flex-direction: row-reverse;
                                     padding: 0 20px;
-                                   
-                                    label{
+
+                                    label {
                                         transform: none;
                                         margin: 0;
                                         padding: 0;
@@ -875,16 +1558,17 @@ body.fd-backed-cc {
                                         font-size: 0;
                                         position: initial;
                                     }
+
                                     input {
                                         background-color: var(--color-interface-background-quinary);
                                         height: 54px;
-                                        border: none;                                       
+                                        border: none;
                                         font-size: var(--body-lg-font-size);
                                         font-weight: var(--font-weight-extra-bold);
-                                        margin: 0;                                      
-                                        letter-spacing: normal;      
-                                        padding-right: 0;                                  
-                                        field-sizing: content;                                  
+                                        margin: 0;
+                                        letter-spacing: normal;
+                                        padding-right: 0;
+                                        field-sizing: content;
                                         width: auto;
 
                                         &:focus {
@@ -964,7 +1648,7 @@ body.fd-backed-cc {
                                             input {
                                                 font-size: var(--body-x-lg-font-size);
                                                 font-weight: var(--font-weight-extra-bold);
-                                                field-sizing: content;                                  
+                                                field-sizing: content;
                                                 width: auto;
                                             }
                                         }
@@ -1027,7 +1711,7 @@ body.fd-backed-cc {
                                                 font-size: var(--body-md-font-size);
                                                 font-weight: var(--font-weight-medium);
                                                 text-align: right;
-                                                field-sizing: content;                                  
+                                                field-sizing: content;
                                                 width: auto;
                                             }
                                         }
@@ -1062,7 +1746,8 @@ body.fd-backed-cc {
                                 }
                             }
 
-                            .field-accselectioninfo, .field-accselectioninfolabel {                            
+                            .field-accselectioninfo,
+                            .field-accselectioninfolabel {
 
                                 p {
                                     font-size: var(--body-lg-font-size);
@@ -1074,7 +1759,7 @@ body.fd-backed-cc {
                                 &.field-accselectioninfolabel {
                                     margin-top: 10px;
 
-                                    p{
+                                    p {
                                         font-weight: var(--font-weight-medium);
                                     }
                                 }
@@ -1250,7 +1935,7 @@ body.fd-backed-cc {
                         }
 
                         &:has(.field-carddetailswrapper[data-visible="true"]),
-                        &:has(.field-landingpagemainwrapper[data-visible="true"]) {
+                        &:has(.field-landingpagemainwrapper:not([data-visible="false"])) {
                             .field-bannerimagepanel {
                                 display: none;
                             }
