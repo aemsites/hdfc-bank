@@ -1,3 +1,13 @@
+body.fd-ext-fund:has(.field-wizardwrapper :not([data-visible='false'])) {
+    header {
+      height: 100px !important;
+    }
+  
+    main .section.form-container {
+      margin-top: 0 !important;
+    }
+  }
+  
 .fd-ext-fund header,  .fd-ext-fund footer {
     background: var(--color-interface-fd-background-primary);
 }
@@ -23,6 +33,153 @@
     height: 32px;
     content: url('../icons/safe-secure.svg');
     padding: 0 !important;
+  }
+
+  .fd-ext-fund .field-wizardwrapper  {
+    .wizard-menu-items {
+      position: absolute;
+      left: 4%;
+      width: 92%;
+      justify-content: center;
+      margin-top: -135px;
+      background: var(--color-interface-background-primary);
+      border-radius: 24px;
+      padding: 10px;
+      border: 1px solid var(--color-interface-border-primary);
+  
+      .wizard-menu-item {
+        margin: 0 25px 0 0;
+        display: flex;
+        align-items: center;
+      }
+  
+      .wizard-menu-item:first-child::after {
+        content: '';
+        width: 0;
+      }
+  
+      .wizard-menu-item::after {
+        content: '';
+        display: block;
+        height: 3px;
+        width: 40px;
+        background-color: var(--color-interface-border-primary);
+        margin: 0 0 0 -60px;
+        position: absolute;
+        top: 30px;
+        transform: translateY(-50%);
+      }
+  
+      li.wizard-menu-active-item {
+        color: var(--color-interface-button-background);
+      }
+  
+      li.wizard-menu-item::before {
+        border: none !important;
+        vertical-align: bottom;
+        height: 42px;
+        width: 42px;
+      }
+  
+      li.wizard-menu-active-item::after {
+        background: var(--color-interface-button-background);
+      }
+  
+      li.wizard-menu-active-item::before {
+        border: none;
+      }
+  
+      li:first-child::before {
+        background: url('../icons/Indicator.png') no-repeat center center / 40px
+          40px;
+        content: '';
+      }
+  
+      li.wizard-menu-active-item:first-child::before {
+        background: url('../icons/FD-Ext-Indicator1-Active.png') no-repeat center center /
+          40px 40px;
+        content: '';
+      }
+  
+      li.wizard-menu-item:nth-child(2)::before {
+        background: url('../icons/FD-Ext-Indicator2.png') no-repeat center center / 40px
+          40px;
+        content: '';
+      }
+  
+      li:nth-child(2):has(+ li.wizard-menu-active-item)::before {
+        background: url('../icons/Indicator.png') no-repeat center center / 40px
+          40px;
+        content: '';
+      }
+  
+      li:nth-child(2):has(+ li.wizard-menu-active-item)::after {
+        background: var(--color-interface-button-background);
+      }
+  
+      li.wizard-menu-active-item:nth-child(2)::before {
+        background: url('../icons/FD-Ext-Indicator2-active.png') no-repeat center center /
+          40px 40px;
+        content: '';
+      }
+  
+      li.wizard-menu-item:last-child::before {
+        background: url('../icons/FD-Ext-Indicator3.png') no-repeat center center / 40px
+          40px;
+        content: '';
+      }
+  
+      li.wizard-menu-active-item:nth-child(3)::before {
+        background: url('../icons/FD-Ext-Indicator3-active.png') no-repeat center center /
+          40px 40px;
+        content: '';
+      }
+    }
+
+    .field-createfd {
+        .field-leftwrapper {
+            .field-tenurepanel {
+                .field-tenurewrapper {
+                    display: flex;
+                    border: 1px solid var(--color-interface-border-secondary);
+                    border-radius: 11px;
+                    padding: 5px;
+                    legend {
+                        display: inline-block !important;
+                        width: auto;
+                        margin-left: 10px;
+                        padding: 0 5px;
+                    }
+                    .drop-down-wrapper {
+                        flex: 1;
+                        position: relative;
+                        select {
+                            appearance: none;
+                            border: none !important;
+                            font-size: var(--body-xx-lg-font-size);
+                            font-weight: var( --font-weight-medium);
+                        }
+                        &.field-year, &.field-months {
+                            &::after {
+                                content: '.';
+                                font-size: var(--font-linehight-x-large);
+                                position: absolute;
+                                top: -15px;
+                                color: var(--color-interface-border-secondary);
+                            }
+                        }
+                    }
+                    .field-ytxt, .field-mtxt, .field-dtxt {
+                        font-size: var(--body-md-font-size);
+                        font-weight: var( --font-weight-medium);
+                        position: relative;
+                        left: -22%;
+                        top: 18px;
+                    }
+                }
+            }
+        }
+    }
   }
 
 /* For tablets */
