@@ -61,7 +61,8 @@ currentFormContext.territoryKey = '';
 */
 
 const validFDPan = (val) => {
-    if (val?.length !== 12) return false;
+    if (val?.length !== 10) return false;
+    // if (val?.length !== 12) return false; // TODO : Commented this, since the Test data was 12 chars.
     if (![...val.slice(0, 5)]?.every((c) => /[a-zA-Z]/.test(c))) return false;
     return true;
 };
@@ -165,6 +166,40 @@ const validateLoginFd = (globals) => {
     }
   };
 
+
+/**
+
+  {
+    "requestString" : {
+        "common":{
+            "journeyID": "e27b4a83-cab0-40c2-8aa0-e7d697bf1780_01_FD_EXTERNAL_FUNDING_JOURNEY_U_WEB",
+            "journeyName": "FD_EXTERNAL_FUNDING_JOURNEY",
+            "mobileNumber": "917911312377",
+            "userAgent": "ABCBBABCA"
+        },
+        "otpGen": {
+            "version": "V2",
+            "payload": {
+                "dateOfBirth": "19840625",
+                "panNumber": "",
+                "referenceNumber": "AD203505182114",
+                "mobileNumber": "917911312377"
+            }
+        },
+        "customerIdentification": {
+            "version": "V1",
+            "payload": {
+                "dateOfBirth": "19840625",
+                "panNumber": "",
+                "referenceNumber": "AD203505182114",
+                "mobileNumber": "917911312377"
+            }
+        }
+    }
+}
+
+ */
+
 const getOtpExternalFundingFD = async (mobileNumber, pan, dob, globals) => {
     // const jidTemporary = createJourneyId(VISIT_MODE, JOURNEY_NAME, CHANNEL, globals);
     /* jidTemporary  temporarily added for FD development it has to be removed completely once runtime create journey id is done with FD */
@@ -189,24 +224,55 @@ const getOtpExternalFundingFD = async (mobileNumber, pan, dob, globals) => {
       pan.$value = '';
       datOfBirth = year + month + day;
     }
-  
+    
     const jsonObj = {
       requestString: {
-        mobileNumber: currentFormContext.isdCode + mobileNumber.$value,
-        dateOfBirth: datOfBirth,
-        panNumber: clearString(pan.$value || ''),
-        journeyID: globals.form.runtime.journeyId.$value ?? jidTemporary,
-        journeyName: globals.form.runtime.journeyName.$value || currentFormContext.journeyName,
-        identifierValue: clearString(identifierVal),
-        identifierName: identifierNam,
-        getEmail: 'Y',
-        userAgent: (typeof window !== 'undefined') ? window.navigator.userAgent : 'onLoad',
-      },
+        common: {
+          journeyID: globals.form.runtime.journeyId.$value ?? jidTemporary,
+          journeyName: globals.form.runtime.journeyName.$value || currentFormContext.journeyName,
+          mobileNumber: currentFormContext.isdCode + mobileNumber.$value,
+          userAgent: (typeof window !== 'undefined') ? window.navigator.userAgent : 'onLoad',
+          identifierValue: clearString(identifierVal),
+          identifierName: identifierNam,
+        },
+        customerIdentification: {
+          version: "V1",
+          payload: {
+            dateOfBirth: datOfBirth,
+            panNumber: clearString(pan.$value || ''),
+            mobileNumber: currentFormContext.isdCode + mobileNumber.$value,
+          }
+        },
+        otpGen: {
+          version: "V2",
+          payload: {
+            dateOfBirth: datOfBirth,
+            panNumber: clearString(pan.$value || ''),
+            mobileNumber: currentFormContext.isdCode + mobileNumber.$value,
+          }
+        }
+      }
     };
+
+    // const jsonObj = {
+    //   requestString: {
+    //     mobileNumber: currentFormContext.isdCode + mobileNumber.$value,
+    //     dateOfBirth: datOfBirth,
+    //     panNumber: clearString(pan.$value || ''),
+    //     journeyID: globals.form.runtime.journeyId.$value ?? jidTemporary,
+    //     journeyName: globals.form.runtime.journeyName.$value || currentFormContext.journeyName,
+    //     identifierValue: clearString(identifierVal),
+    //     identifierName: identifierNam,
+    //     getEmail: 'Y',
+    //     userAgent: (typeof window !== 'undefined') ? window.navigator.userAgent : 'onLoad',
+    //   },
+    // };
   
-    const path = urlPath(ENDPOINTS.customerOtpGen);
-    // formRuntime?.getOtpLoader();
-    return fetchJsonResponse(path, jsonObj, 'POST', true);
+    // const path = urlPath(ENDPOINTS.customerOtpGen);
+    // // formRuntime?.getOtpLoader();
+    // return fetchJsonResponse(path, jsonObj, 'POST', true);
+
+    return JSON.parse("{\"otpGen\":{\"existingCustomer\":\"Y\",\"formURL\":\"/content/forms/af/hdfc_haf/assets/fd-external-funding/forms/external-funding.html\",\"status\":{\"errorCode\":\"00000\",\"errorMsg\":\"Yourrequestcouldnotbeprocessed,Pleasetryagaintocontinue\"}},\"customerIdentification\":{\"existingCustomer\":\"Y\",\"status\":{\"errorCode\":\"0\",\"errorMsg\":\"Success\"}}}");
   };
 
 export {
