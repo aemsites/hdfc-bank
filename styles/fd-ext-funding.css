@@ -706,9 +706,226 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
 
                         /* LOGIN SCREEN END */
 
+                        .field-otppanelwrapper {
+
+                            fieldset.field-otppanel {
+                                max-width: 100%;
+                                grid-template-rows: auto;
+
+                                @media (320px <=width < 1272px) {
+                                    padding: 0 !important;
+                                    margin-top: 0 !important;
+                                }
+
+                                .field-otppanel {
+                                    text-align: left;
+                                    margin-bottom: 10px;
+
+                                    @media (350px <=width <=767px) {
+                                        padding: 0 !important;
+                                    }
+
+                                    & .field-enter-otp-heading {
+                                        p {
+                                            b {
+                                                color: var(--color-interface-text-quaternary);
+                                                font-size: var(--body-fd-xx-lg-font-size);
+                                                font-weight: var(--font-weight-bold);
+                                            }
+                                        }
+                                    }
+
+                                    .field-otphelptext {
+                                        margin-top: -35px;
+                                        font-size: var(--body-fd-md-font-size);
+                                        font-weight: var(--font-weight-bold);
+                                        color: var(--color-input-text-primary);
+                                        display: flex;
+
+                                        p {
+                                            color: var(--color-input-text-primary);
+                                            font-size: var(--body-fd-md-font-size);
+                                            font-weight: var(--font-weight-regular);
+                                            margin-bottom: 0;
+                                        }
+                                    }
+
+                                    .field-editmobilenumbtn {
+                                        max-width: none;
+                                        margin-top: -25px !important;                                
+
+                                        button {
+                                            color: var(--color-action-text-secondary-default);
+                                            font-weight: var(--font-weight-bold);
+                                            font-size: var(--body-fd-md-font-size);
+                                            background: none;
+                                            width: auto;
+                                            padding: 0;
+                                            height: auto;
+
+                                            &::after {
+                                                display: none;
+                                            }
+
+                                            &:hover {
+                                                background: none !important;
+                                            }
+                                        }
+                                    }
+
+                                    .field-otpnumber {
+                                        margin-top: 10px;
+
+                                        input {
+                                            letter-spacing: 40px;
+                                            margin-top: 0;
+                                            max-width: 445px;
+                                            font-size: var(--body-fd-xxx-lg-font-size);
+
+                                            @media (320px <=width < 767px) {
+                                                width: 100%;
+                                                max-width: initial;
+                                            }
+
+                                            &[type="password"] {
+                                                font-size: var(--body-fd-xxx-lg-font-size);
+                                                color: var(--color-interface-text-secondary);
+                                                letter-spacing: 35px;
+                                            }
+
+                                            &::placeholder {
+                                                font-size: var(--body-fd-xxx-lg-font-size);
+                                                letter-spacing: 35px;
+                                            }
+                                        }
+
+                                        .bi-eye-slash,
+                                        .bi-eye {
+                                            position: relative;
+                                            margin-top: 0;
+                                            margin-bottom: 0;
+                                        }
+
+                                        &:not(.field-description) {
+                                            input:user-valid {
+                                                font-size: var(--body-xx-lg-font-size);
+
+                                                &~.bi-eye {
+                                                    margin-bottom: -4px;
+                                                }
+                                            }
+
+                                            input[type="password"] {
+                                                font-size: var(--body-fd-xxx-lg-font-size);
+
+                                                &~.bi-eye {
+                                                    margin-bottom: -4px;
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    .field-resendotppanel {
+                                        max-width: 445px;
+                                        display: grid;
+
+                                        @media (max-width: 768px) {
+                                            max-width: 100%;
+                                            margin-top: -5px;
+                                        }
+                                    }
+
+                                    .field-otpresend {
+                                        margin-top: -13px;
+                                        grid-column: span 6;
+
+                                        @media (320px <=width <=767px) {
+                                            margin-top: -13px !important;
+                                        }
+                                    }
+
+                                    .field-secondspanel {
+                                        display: flex;
+                                        grid-column: span 6;
+
+                                        @media (350px <=width <=992px) {
+                                            flex-direction: row;
+                                        }
+
+                                        .field-resendotplabel,
+                                        .field-sectext {
+                                            p {
+                                                font-size: var(--body-fd-md-font-size);
+                                                font-weight: var(--font-weight-medium);
+                                                color: var(--color-interface-text-secondary);
+                                                margin-bottom: 0;
+                                            }
+                                        }
+
+                                        .field-seconds {
+                                            max-width: 20px;
+                                            margin-left: -15px;
+                                            margin-top: -7px;
+
+                                            input {
+                                                height: 20px;
+                                                border: none;
+                                            }
+                                        }
+
+                                        .field-sectext {
+                                            left: -15px;
+                                            position: relative;
+                                        }
+                                    }
+
+                                    .field-maxattemptmessage {
+                                        grid-column: span 6;
+
+                                        p {
+                                            font-size: var(--body-fd-sm-font-size);
+                                            color: var(--color-input-text-msg-error);
+                                        }
+                                    }
+
+                                    .field-otpsubpanel {
+                                        display: flex;
+                                        text-align: center;
+                                        margin-top: -1px;
+                                        grid-column: span 6;
+
+                                        .field-numretries,
+                                        .field-attempts {
+
+                                            input,
+                                            p {
+                                                font-size: var(--body-fd-md-font-size);
+                                                font-weight: var(--font-weight-regular);
+                                                color: var(--color-interface-text-secondary);
+                                                height: auto;
+                                                margin: 0;
+                                            }
+                                        }
+
+                                        .field-numretries {
+                                            position: relative;
+
+                                            input {
+                                                margin-top: 4px;
+                                                position: absolute;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                          /* OTP VALIDATION SCREEN END */
+
                         /* COMMON STYLES FOR JOURNEY  */
 
-                        .field-loginmainpanel {
+                        .field-loginmainpanel,
+                        .field-otppanelwrapper {
                             padding: 40px 35px 40px 0;
                             margin-bottom: 40px;
                             display: initial;
@@ -754,17 +971,6 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                             }
                         }
 
-                        /*  select {
-                             -moz-appearance: none;
-                             -webkit-appearance: none;
-                             appearance: none;
-                             background: url('./../icons/select_arrow.svg') no-repeat 95% center;
- 
-                             &:focus-visible {
-                                 outline: none;
-                             }
-                         } */
-
                         .field-invalid,
                         .field-otppanel {
                             &:has(input:user-invalid) {
@@ -780,6 +986,7 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                     &~.field-description {
                                         color: var(--color-input-text-msg-error);
                                         font-weight: var(--font-weight-regular);
+                                        margin-top: 0;
                                     }
                                 }
 
@@ -820,6 +1027,7 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                         .button-wrapper {
                             text-align: left;
                             max-width: 272px;
+                            margin-top: 10px;
 
                             button {
                                 font-size: var(--body-fd-md-font-size);
