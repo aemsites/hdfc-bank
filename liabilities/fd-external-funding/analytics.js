@@ -164,7 +164,7 @@ import {
   //  */
   async function sendSubmitClickEvent(phone, eventType, linkType, formData, journeyState, digitalData) {
     setAnalyticClickGenericProps(eventType, linkType, formData, journeyState, digitalData);
-    digitalData.page.pageInfo.pageName = PAGE_NAME.nrenro[eventType];
+    digitalData.page.pageInfo.pageName = PAGE_NAME.effd[eventType];
     if((formData?.countryCode ?? '' !== '') && (formData?.form?.login?.registeredMobileNumber ?? '' !== '')){
       digitalData.event.mobileWith = await hashPhNo(String(formData?.countryCode.substring(1,)) + String(formData?.form?.login?.registeredMobileNumber));
       digitalData.event.mobileWithPlus = await hashPhNo(String(formData?.countryCode)+String(formData?.form?.login?.registeredMobileNumber));
@@ -551,9 +551,9 @@ import {
   */
   function sendAnalytics(eventType, payload, journeyState, globals) {
     let formData = santizedFormDataWithContext(globals);
-    currentFormContext.lgCode = globals?.form?.wizardPanel.wizardFragment.wizardNreNro.confirmDetails.needBankHelp.bankUseFragment.mainBankUsePanel.lgCode.$value;
-    currentFormContext.lcCode = globals?.form?.wizardPanel.wizardFragment.wizardNreNro.confirmDetails.needBankHelp.bankUseFragment.mainBankUsePanel.lcCode.$value;
-    currentFormContext.flag = globals?.form?.wizardPanel.wizardFragment.wizardNreNro.confirmDetails.needBankHelp.bankUseFragment.mainBankUsePanel.bankUseToggle.$value;
+    // currentFormContext.lgCode = globals?.form?.wizardPanel.wizardFragment.wizardNreNro.confirmDetails.needBankHelp.bankUseFragment.mainBankUsePanel.lgCode.$value;
+    // currentFormContext.lcCode = globals?.form?.wizardPanel.wizardFragment.wizardNreNro.confirmDetails.needBankHelp.bankUseFragment.mainBankUsePanel.lcCode.$value;
+    // currentFormContext.flag = globals?.form?.wizardPanel.wizardFragment.wizardNreNro.confirmDetails.needBankHelp.bankUseFragment.mainBankUsePanel.bankUseToggle.$value;
     if (typeof formData === 'undefined' || formData === null) {
       formData = {};
       formData.currentFormContext = currentFormContext;

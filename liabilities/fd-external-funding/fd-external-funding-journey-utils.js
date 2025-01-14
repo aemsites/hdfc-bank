@@ -1,5 +1,7 @@
 import {
     generateUUID,
+    urlPath,
+    santizedFormDataWithContext,
 } from '../../common/formutils.js';
 import {
   fetchJsonResponse,
@@ -34,7 +36,7 @@ function createJourneyId(visitMode, journeyAbbreviation, channel, globals) {
      * @return {PROMISE}
      */
 const invokeJourneyDropOff = async (state, mobileNumber, globals) => {
-    const isdCode = (globals.form.parentLandingPagePanel.landingPanel.loginFragmentNreNro.mobilePanel.countryCode.$value)?.replace(/[^a-zA-Z0-9]+/g, '');
+    const isdCode = (globals.form.loginMainPanel.loginPanel.mobilePanel.mobileNumberWrapper.countryCode.$value)?.replace(/[^a-zA-Z0-9]+/g, '');
     const journeyJSONObj = {
       RequestPayload: {
         userAgent: (typeof window !== 'undefined') ? window.navigator.userAgent : 'onLoad',
@@ -64,44 +66,29 @@ const invokeJourneyDropOff = async (state, mobileNumber, globals) => {
 };
   
 /**
- * @name invokeJourneyDropOffUpdate
- * @param {string} state
- * @param {string} mobileNumber
- * @param {string} leadProfileId
- * @param {string} journeyId
- * @param {Object} globals - globals variables object containing form configurations.
- * @return {PROMISE}
- */
-const invokeJourneyDropOffUpdate = async (state, mobileNumber, leadProfileId, journeyId, globals) => {
-    const isdCode = (globals.form.parentLandingPagePanel.landingPanel.loginFragmentNreNro.mobilePanel.countryCode.$value)?.replace(/[^a-zA-Z0-9]+/g, '');
-    const sanitizedFormData = santizedFormDataWithContext(globals, currentFormContext);
-    const journeyJSONObj = {
+    * @name effdInvokeJourneyDropOffByParam
+    * @param {string} mobileNumber
+    * @param {string} leadProfileId
+    * @param {string} journeyId
+    * @return {PROMISE}
+    */
+// eslint-disable-next-line
+const effdInvokeJourneyDropOffByParam = async (mobileNumber, leadProfileId, journeyID, globals) => {
+  const journeyJSONObj = {
     RequestPayload: {
-    userAgent: (typeof window !== 'undefined') ? window.navigator.userAgent : '',
-    leadProfile: {
-        mobileNumber: isdCode + mobileNumber,
-        isCountryCodeappended: 'true',
-        leadProfileId: leadProfileId?.toString(),
-        countryCode: isdCode,
+      leadProfile: {
+      },
+      journeyInfo: {
+        journeyID: currentFormContext.journeyId,
+      },
     },
-    formData: {
-        channel: CHANNEL,
-        journeyName: globals.form.runtime.journeyName.$value || currentFormContext.journeyName,
-        journeyID: journeyId,
-        journeyStateInfo: [
-        {
-            state,
-            stateInfo: JSON.stringify(sanitizedFormData),
-            timeinfo: new Date().toISOString(),
-        },
-        ],
-    },
-    },
-    };
-    // sendSubmitClickEvent(mobileNumber, linkName, sanitizedFormData);
-    const url = urlPath(ENDPOINTS.journeyDropOffUpdate);
-    const method = 'POST';
-    return fetchJsonResponse(url, journeyJSONObj, method);
+  };
+  const url = urlPath(ENDPOINTS.journeyDropOffParam);
+  const method = 'POST';
+  if (typeof window !== 'undefined') {
+    displayLoader();
+  }
+  return fetchJsonResponse(url, journeyJSONObj, method);
 };
   
 /**
@@ -118,7 +105,7 @@ function journeyResponseHandlerUtil(payload, formContext) {
 
 export {
     invokeJourneyDropOff,
-    invokeJourneyDropOffUpdate,
+    effdInvokeJourneyDropOffByParam,
     createJourneyId,
     journeyResponseHandlerUtil,
   };

@@ -7,14 +7,19 @@ import {
 
 import {
     invokeJourneyDropOff,
-    invokeJourneyDropOffUpdate,
+    effdInvokeJourneyDropOffByParam,
   } from './fd-external-funding-journey-utils.js';
+
+import {
+    sendAnalytics,
+} from './analytics.js';
 
 export {
     validateLoginFd,
     otpTimer,
     getOtpExternalFundingFD,
     invokeJourneyDropOff,
-    invokeJourneyDropOffUpdate,
+    effdInvokeJourneyDropOffByParam,
     resendOTP,
+    sendAnalytics,
 };

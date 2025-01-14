@@ -59,7 +59,6 @@ currentFormContext.ambValue = '';
 currentFormContext.territoryName = '';
 currentFormContext.territoryKey = '';
 
-debugger;
 formRuntime.getOtpLoader = currentFormContext.getOtpLoader || (typeof window !== 'undefined') ? displayLoader : false;
 formRuntime.otpValLoader = currentFormContext.otpValLoader || (typeof window !== 'undefined') ? displayLoader : false;
 formRuntime.hideLoader = (typeof window !== 'undefined') ? hideLoaderGif : false;
