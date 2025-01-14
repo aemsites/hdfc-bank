@@ -28,9 +28,12 @@ import {
     santizedFormDataWithContext,
   } from '../../common/formutils.js';
 
-import {
-  fetchJsonResponse,
-} from '../../common/makeRestAPI.js';
+  import {
+    displayLoader,
+    hideLoaderGif,
+    fetchJsonResponse,
+    getJsonResponse,
+  } from '../../common/makeRestAPI.js';
 
 import {CHANNEL, JOURNEY_NAME, VISIT_MODE} from './constant.js';
 
@@ -56,9 +59,10 @@ currentFormContext.ambValue = '';
 currentFormContext.territoryName = '';
 currentFormContext.territoryKey = '';
 
-// formRuntime.getOtpLoader = currentFormContext.getOtpLoader || (typeof window !== 'undefined') ? displayLoader : false;
-// formRuntime.otpValLoader = currentFormContext.otpValLoader || (typeof window !== 'undefined') ? displayLoader : false;
-// formRuntime.hideLoader = (typeof window !== 'undefined') ? hideLoaderGif : false;
+debugger;
+formRuntime.getOtpLoader = currentFormContext.getOtpLoader || (typeof window !== 'undefined') ? displayLoader : false;
+formRuntime.otpValLoader = currentFormContext.otpValLoader || (typeof window !== 'undefined') ? displayLoader : false;
+formRuntime.hideLoader = (typeof window !== 'undefined') ? hideLoaderGif : false;
 
 
 // /**
@@ -272,7 +276,7 @@ const getOtpExternalFundingFD = async (mobileNumber, pan, dob, globals) => {
     };
   
     const path = urlPath(EFFD_ENDPOINTS.customerOtpGen);
-    // formRuntime?.getOtpLoader();
+    formRuntime?.getOtpLoader();
     return fetchJsonResponse(path, jsonObj, 'POST', true);
 
     // return JSON.parse("{\"otpGen\":{\"existingCustomer\":\"Y\",\"formURL\":\"/content/forms/af/hdfc_haf/assets/fd-external-funding/forms/external-funding.html\",\"status\":{\"errorCode\":\"00000\",\"errorMsg\":\"Yourrequestcouldnotbeprocessed,Pleasetryagaintocontinue\"}},\"customerIdentification\":{\"existingCustomer\":\"Y\",\"status\":{\"errorCode\":\"0\",\"errorMsg\":\"Success\"}}}");
@@ -334,6 +338,7 @@ const resendOTP = async (globals) => {
     globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.secondsPanel.seconds, { value: dispSec });
     if (otpResult && otpResult.customerIdentification.existingCustomer === 'Y') {
       sec = OTP_TIMER;
+      globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.otpSubPanel.numRetries, { value: (MAX_OTP_RESEND_COUNT - resendOtpCount)});
       otpTimer(globals);
     } else {
       globals.functions.setProperty(globals.form.otppanelwrapper.otpFragment.otpPanel.errorMessage, { visible: true, message: otpResult.message });
