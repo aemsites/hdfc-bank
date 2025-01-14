@@ -5,8 +5,17 @@ import {
   } from '../../common/constants.js';
 
 import {
+  EFFD_ENDPOINTS,
+} from './constant.js';
+
+import {
     createJourneyId,
 } from './fd-external-funding-journey-utils.js';
+
+import {
+  sendAnalytics,
+  sendPageloadEvent,
+} from './analytics.js';
 
 import {
     clearString,
@@ -24,6 +33,13 @@ import {
 } from '../../common/makeRestAPI.js';
 
 import {CHANNEL, JOURNEY_NAME, VISIT_MODE} from './constant.js';
+
+let resendOtpCount = 0;
+const MAX_OTP_RESEND_COUNT = 3;
+const OTP_TIMER = 30;
+let MAX_COUNT = 3;
+let sec = OTP_TIMER;
+let dispSec = OTP_TIMER;
 
 currentFormContext.journeyName = 'FD_EXTERNAL_FUNDING_JOURNEY';
 currentFormContext.journeyType = 'ETB';
@@ -229,7 +245,8 @@ const getOtpExternalFundingFD = async (mobileNumber, pan, dob, globals) => {
       requestString: {
         common: {
           journeyID: globals.form.runtime.journeyId.$value ?? jidTemporary,
-          journeyName: globals.form.runtime.journeyName.$value || currentFormContext.journeyName,
+          // journeyName: globals.form.runtime.journeyName.$value || currentFormContext.journeyName,
+          journeyName: 'FD_EXTERNAL_FUNDING_JOURNEY',
           mobileNumber: currentFormContext.isdCode + mobileNumber.$value,
           userAgent: (typeof window !== 'undefined') ? window.navigator.userAgent : 'onLoad',
           identifierValue: clearString(identifierVal),
@@ -253,29 +270,103 @@ const getOtpExternalFundingFD = async (mobileNumber, pan, dob, globals) => {
         }
       }
     };
-
-    // const jsonObj = {
-    //   requestString: {
-    //     mobileNumber: currentFormContext.isdCode + mobileNumber.$value,
-    //     dateOfBirth: datOfBirth,
-    //     panNumber: clearString(pan.$value || ''),
-    //     journeyID: globals.form.runtime.journeyId.$value ?? jidTemporary,
-    //     journeyName: globals.form.runtime.journeyName.$value || currentFormContext.journeyName,
-    //     identifierValue: clearString(identifierVal),
-    //     identifierName: identifierNam,
-    //     getEmail: 'Y',
-    //     userAgent: (typeof window !== 'undefined') ? window.navigator.userAgent : 'onLoad',
-    //   },
-    // };
   
-    // const path = urlPath(ENDPOINTS.customerOtpGen);
-    // // formRuntime?.getOtpLoader();
-    // return fetchJsonResponse(path, jsonObj, 'POST', true);
+    const path = urlPath(EFFD_ENDPOINTS.customerOtpGen);
+    // formRuntime?.getOtpLoader();
+    return fetchJsonResponse(path, jsonObj, 'POST', true);
 
-    return JSON.parse("{\"otpGen\":{\"existingCustomer\":\"Y\",\"formURL\":\"/content/forms/af/hdfc_haf/assets/fd-external-funding/forms/external-funding.html\",\"status\":{\"errorCode\":\"00000\",\"errorMsg\":\"Yourrequestcouldnotbeprocessed,Pleasetryagaintocontinue\"}},\"customerIdentification\":{\"existingCustomer\":\"Y\",\"status\":{\"errorCode\":\"0\",\"errorMsg\":\"Success\"}}}");
+    // return JSON.parse("{\"otpGen\":{\"existingCustomer\":\"Y\",\"formURL\":\"/content/forms/af/hdfc_haf/assets/fd-external-funding/forms/external-funding.html\",\"status\":{\"errorCode\":\"00000\",\"errorMsg\":\"Yourrequestcouldnotbeprocessed,Pleasetryagaintocontinue\"}},\"customerIdentification\":{\"existingCustomer\":\"Y\",\"status\":{\"errorCode\":\"0\",\"errorMsg\":\"Success\"}}}");
   };
+
+/**
+ * Starts the Nre_Nro OTPtimer for resending OTP.
+ * @param {Object} globals - The global object containing necessary data for DAP request.
+*/
+function otpTimer(globals) {
+  if (resendOtpCount < MAX_OTP_RESEND_COUNT) {
+    globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.secondsPanel.seconds, { visible: true });
+    globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.otpResend, { visible: false });
+  } else {
+    globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.secondsPanel, { visible: false });
+  }
+  const timer = setInterval(() => {
+    sec -= 1;
+    dispSec = sec;
+    if (sec < 10) {
+      dispSec = `0${sec}`;
+    }
+    globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.secondsPanel.seconds, { value: dispSec });
+    if (sec < 0) {
+      clearInterval(timer);
+      globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.secondsPanel, { visible: false });
+      if (resendOtpCount < MAX_OTP_RESEND_COUNT) {
+        globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.otpResend, { visible: true });
+      }
+    }
+  }, 1000);
+}
+
+/**
+ * @name resendOTP
+ * @param {Object} globals - The global object containing necessary data for DAP request.
+ * @return {PROMISE}
+ */
+const resendOTP = async (globals) => {
+  const {
+    mobileNumber,
+    journeyID,
+  } = currentFormContext;
+
+  dispSec = OTP_TIMER;
+  const mobileNo = globals.form.loginMainPanel.loginPanel.mobilePanel.mobileNumberWrapper.registeredMobileNumber;
+  const panValue = globals.form.loginMainPanel.loginPanel.identifierPanel.pan;
+  const dobValue = globals.form.loginMainPanel.loginPanel.identifierPanel.dateOfBirth;
+  globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.otpResend, { visible: false });
+  globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.secondsPanel, { visible: true });
+  globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.secondsPanel.seconds, { value: dispSec });
+  globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.incorrectOTPText, { visible: false });
+  globals.functions.setProperty(globals.form.otpPanelWrapper.submitOTP, { enabled: false });
+  if (resendOtpCount < MAX_OTP_RESEND_COUNT) {
+    resendOtpCount += 1;
+
+    const otpResult = await getOtpExternalFundingFD(mobileNo, panValue, dobValue, globals);
+    // invokeJourneyDropOffUpdate('CUSTOMER_LEAD_QUALIFIED', mobileNumber, globals.form.runtime.leadProifileId.$value, journeyID, globals);
+    globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.secondsPanel.seconds, { value: dispSec });
+    if (otpResult && otpResult.customerIdentification.existingCustomer === 'Y') {
+      sec = OTP_TIMER;
+      otpTimer(globals);
+    } else {
+      globals.functions.setProperty(globals.form.otppanelwrapper.otpFragment.otpPanel.errorMessage, { visible: true, message: otpResult.message });
+      globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.otpResend, { visible: true });
+    }
+
+    if (resendOtpCount === MAX_OTP_RESEND_COUNT) {
+      globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.secondsPanel, { visible: false });
+      globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.otpResend, { visible: false });
+      globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.maxAttemptMessage, { visible: true });
+    }
+    return otpResult;
+  }
+
+  return null; // Return null if max attempts reached
+};
+
+const onPageLoadAnalytics = async (globals) => {
+    sendAnalytics('page load_Step 1', {}, 'CUSTOMER_IDENTITY_INITIATED', globals);
+};
+
+setTimeout(() => {
+  if(typeof window !== 'undefined' && typeof _satellite !== 'undefined'){
+    const params = new URLSearchParams(window.location.search);
+    if(params?.get('success') !== 'true' || (params?.get('authmode') !== 'DebitCard' && params?.get('authmode') !== 'NetBanking')){
+      onPageLoadAnalytics();
+    }
+  }
+}, 5000);
 
 export {
     validateLoginFd,
     getOtpExternalFundingFD,
+    otpTimer,
+    resendOTP,
 }

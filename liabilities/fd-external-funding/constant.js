@@ -1,6 +1,4 @@
-const EXTERNAL_FUNDING_FD_ENDPOINTS = {
-  };
-  
+
   // declare CONSTANTS for External Funding FD only.
   const FORM_NAME = 'External Funding FD';
   const CHANNEL = 'WEB';
@@ -18,12 +16,17 @@ const EXTERNAL_FUNDING_FD_ENDPOINTS = {
       anchorTagClass: 'link',
     },
   };
+
+  const EFFD_ENDPOINTS = {
+    customerOtpGen: '/content/hdfc_customerinfo/api/customerIdentificationOTPGen.json'
+  };
+
   export {
     CHANNEL,
     JOURNEY_NAME,
     VISIT_MODE,
     DOM_ELEMENT,
     FORM_NAME,
-    EXTERNAL_FUNDING_FD_ENDPOINTS,
+    EFFD_ENDPOINTS,
   };
   

@@ -1,6 +1,8 @@
 import {
     validateLoginFd,
+    otpTimer,
     getOtpExternalFundingFD,
+    resendOTP,
 } from './fd-external-fundingFunctions.js';
 
 import {
@@ -10,7 +12,9 @@ import {
 
 export {
     validateLoginFd,
+    otpTimer,
     getOtpExternalFundingFD,
     invokeJourneyDropOff,
     invokeJourneyDropOffUpdate,
+    resendOTP,
 };
