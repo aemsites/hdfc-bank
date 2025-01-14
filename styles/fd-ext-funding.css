@@ -135,7 +135,7 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                         border-radius: 12px;
                                         height: 60px;
                                         width: 100%;
-                                        max-width: 352px;
+                                        max-width: 368px;
 
                                         @media (max-width: 768px) {
                                             max-width: 368px;
@@ -986,7 +986,6 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                     &~.field-description {
                                         color: var(--color-input-text-msg-error);
                                         font-weight: var(--font-weight-regular);
-                                        margin-top: 0;
                                     }
                                 }
 
@@ -1020,7 +1019,8 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                             }
 
                             .field-description{
-                                font-weight: var(--font-weight-regular);
+                                font-weight: var(--font-weight-regular);                                
+                                margin-top: 0;
                             }
                         }
 
