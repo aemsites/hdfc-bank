@@ -135,7 +135,7 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                         border-radius: 12px;
                                         height: 60px;
                                         width: 100%;
-                                        max-width: 352px;
+                                        max-width: 368px;
 
                                         @media (max-width: 768px) {
                                             max-width: 368px;
@@ -775,6 +775,9 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
 
                                     .field-otpnumber {
                                         margin-top: 10px;
+                                        @media (769px <=width < 1024px) {
+                                            grid-column: span 12;
+                                        }
 
                                         input {
                                             letter-spacing: 40px;
@@ -828,6 +831,9 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                     .field-resendotppanel {
                                         max-width: 445px;
                                         display: grid;
+                                        @media (769px <=width < 1024px) {
+                                            margin-top: 10px;
+                                        }
 
                                         @media (max-width: 768px) {
                                             max-width: 100%;
@@ -848,7 +854,7 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                         display: flex;
                                         grid-column: span 6;
 
-                                        @media (350px <=width <=992px) {
+                                        @media (350px <=width <=1024px) {
                                             flex-direction: row;
                                         }
 
@@ -870,11 +876,16 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                             input {
                                                 height: 20px;
                                                 border: none;
+                                                font-size: var(--body-fd-md-font-size);
+                                                letter-spacing: normal;
+                                                padding: 0;
+                                                color: var(--color-interface-text-secondary) !important;
                                             }
                                         }
 
                                         .field-sectext {
-                                            left: -15px;
+                                            left: -18px;
+                                            top:.5px;
                                             position: relative;
                                         }
                                     }
@@ -986,7 +997,6 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                     &~.field-description {
                                         color: var(--color-input-text-msg-error);
                                         font-weight: var(--font-weight-regular);
-                                        margin-top: 0;
                                     }
                                 }
 
@@ -1020,7 +1030,8 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                             }
 
                             .field-description{
-                                font-weight: var(--font-weight-regular);
+                                font-weight: var(--font-weight-regular);                                
+                                margin-top: 0;
                             }
                         }
 
