@@ -1,28 +1,20 @@
-import { generateUUID } from '../../common/formutils.js';
+import { formUtil } from '../../common/formutils.js';
 import { fetchJsonResponse } from '../../common/makeRestAPI.js';
+import { createJourneyId } from './fd-ef-journeyutils.js';
+import { handleFetchCasaPrefill, updateFundAct } from './fd-ef-prefilutils.js';
+import {
+  fdEfSimulationExecute,
+  fdEfSimSuccessCallBack,
+  fdEfSimErrorCallBack,
+} from './fd-ef-simulationutils.js';
 import * as FD_EF_CONSTANT from './constant.js';
+import { moveWizardView } from '../domutils/domutils.js';
 
 const {
   CURRENT_FORM_CONTEXT: currentFormContext,
-  JOURNEY_NAME: journeyName,
   END_POINTS: fdEfEndpoints,
+  DATA_LIMITS,
 } = FD_EF_CONSTANT;
-
-/**
- * generates the journeyId
- * @param {string} visitMode - The visit mode (e.g., "online", "offline").
- * @param {string} journeyAbbreviationValue - The abbreviation for the journey - FD_EXTERNAL_FUNDING / FDEF
- * @param {string} channel - The channel through which the journey is initiated
- * @param {object} globals
- */
-function createJourneyId(visitMode, journeyAbbreviationValue, channelValue, globals) {
-  const dynamicUUID = generateUUID();
-  const journeyId = globals.functions.exportData().form?.journeyId || `${dynamicUUID}_01_${journeyAbbreviationValue}_${visitMode}_${channelValue}`;
-  globals.functions.setProperty(globals.form.runtime.journeyId, { value: journeyId });
-  // Update the form context
-  currentFormContext.journeyName = journeyName;
-  currentFormContext.journeyID = journeyId;
-}
 
 /**
  * generates the customer identification otp
@@ -55,11 +47,89 @@ async function getOtpExternalFundingFD(mobileNumber, pan, dob, globals) {
  * @return {PROMISE}
  */
 
-// eslint-disable-next-line no-unused-vars
 function fdEfOtpValHandler(globals) {
+  handleFetchCasaPrefill(globals);
+  return null;
 }
+
+/**
+ * function will be trigger on change of inverst amount
+ * @name investAmtChangeHandler
+ * @param {Object} amtField
+ * @return {PROMISE}
+ */
+function investAmtChangeHandler(amtField, globals) {
+  let investValue = (amtField.$value);
+  const changeDataAttrObj = { attrChange: true, value: false };
+  const investAmtFied = formUtil(globals, amtField);
+  const minInvest = DATA_LIMITS?.minInvest;
+  const maxInvest = currentFormContext?.selectedFundAcctBal;
+  const isValid = ((investValue >= minInvest) && (investValue <= maxInvest));
+  investValue = (isValid) ? investValue : currentFormContext?.initialLoadInvestBal;
+  investAmtFied.setValue(investValue, changeDataAttrObj);
+  currentFormContext.selectedFundAcct.investValue = investValue;
+}
+
+/**
+ * Sets the masked account number in the create Fd head text,
+ *
+ * @param {string} acctNo - The account number to be masked and displayed.
+ * @param {object} txtField - account field
+ * @param {object} globals - global object.
+ */
+const setAcctInCreateFdTitle = (acctNo, txtField, globals) => {
+  const selectedAct = String(acctNo);
+  if (selectedAct?.includes('X')) {
+    const maskSelectedWithAstrich = selectedAct?.replace('XXXXXXXXXX', '**********');
+    const createFdHeadTxt = `It will be linked with your HDFC savings A/c ${maskSelectedWithAstrich}.`;
+    const fdFootNoteTxtField = formUtil(globals, txtField);
+    fdFootNoteTxtField.setValue(createFdHeadTxt);
+  }
+};
+
+/**
+ * function will be triggered once the radio button of available fund account got selected
+ * @name selectFundAcct
+ * @param {Object} acctField
+ * @return {PROMISE}
+ */
+function selectFundAcct(acctField, globals) {
+  const selectedIndex = Number(acctField.$qualifiedName?.match(/\d+/g)?.[0]);
+  const {
+    selectAccount: { multipleAccounts: { multipleAccountRepeatable }, investmentAmt },
+    createFD,
+  } = globals.form.wizardWrapper.wizardExternalFunding;
+  const accountsPanelData = globals.functions.exportData().multipleAccountRepeatable;
+  updateFundAct(accountsPanelData, selectedIndex, multipleAccountRepeatable.$qualifiedName, globals);
+  const investAmtFied = formUtil(globals, investmentAmt);
+  const changeDataAttrObj = { attrChange: true, value: false };
+  const selectedFundAcctBal = (accountsPanelData[selectedIndex].availableBalance);
+  const halfOfClearBalance = (selectedFundAcctBal / 2);
+  const initialLoadInvestBal = halfOfClearBalance || 0;
+  currentFormContext.selectedFundAcct = accountsPanelData[selectedIndex]; // selectedFundAcct data {}
+  currentFormContext.selectedFundAcctBal = selectedFundAcctBal; // selected account  {accountRadio, accountNumber, availableBalance, accountType}
+  currentFormContext.initialLoadInvestBal = initialLoadInvestBal; // selected account 50% of avl balance .
+  investAmtFied.setValue(initialLoadInvestBal, changeDataAttrObj);
+  setAcctInCreateFdTitle(currentFormContext?.selectedFundAcct?.accountNumber, createFD.fdFootNoteTxt, globals); // create fd -foot note, set the account value in that heading.
+}
+
+/**
+ * @name fdEfSwitchWizard to switch panel visibility
+ * @param {string} source -  The source of the card wizard (e.g., 'selectAccount').
+ * @param {string} target -  The target panel to switch to (e.g., 'createFD').
+ */
+function fdEfSwitchWizard(source, target) {
+  moveWizardView(source, target);
+}
+
 export {
   getOtpExternalFundingFD,
   createJourneyId,
   fdEfOtpValHandler,
+  investAmtChangeHandler,
+  selectFundAcct,
+  fdEfSimulationExecute,
+  fdEfSimSuccessCallBack,
+  fdEfSimErrorCallBack,
+  fdEfSwitchWizard,
 };
