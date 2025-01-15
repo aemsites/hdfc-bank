@@ -863,7 +863,7 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                         }
 
                                         .field-seconds {
-                                            max-width: 18px;
+                                            max-width: 20px;
                                             margin-left: -15px;
                                             margin-top: -7px;
 
@@ -878,7 +878,7 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                         }
 
                                         .field-sectext {
-                                            left: -15px;
+                                            left: -18px;
                                             top:.5px;
                                             position: relative;
                                         }
