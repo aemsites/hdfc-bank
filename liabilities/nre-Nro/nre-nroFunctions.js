@@ -1276,6 +1276,7 @@ function nreNroPageRedirected(globals) {
     // displayLoader(); // TODO : Uncomment : Error popping up
     // await nreNroFetchRes(globals);
   } else if (currentFormContext.idComSuccess === 'FALSE') {
+    globals.functions.setProperty(globals.form.bankLoginWrapper, { visible: false });
     globals.functions.setProperty(globals.form.parentLandingPagePanel.landingPanel.nreNroPageRedirectedResp, { value: 'false' });
     globals.functions.setProperty(globals.form.otppanelwrapper, { visible: false });
     globals.functions.setProperty(globals.form.parentLandingPagePanel, { visible: false });
