@@ -600,7 +600,7 @@ function otpValidationNRE(mobileNumber, pan, dob, otpNumber, globals) {
 function setupBankUseSection(mainBankUsePanel, globals) {
   /* eslint-disable prefer-destructuring */
   const urlParams = new URLSearchParams(window.location.search);
-  let caseInsensitiveUrlParams = new URLSearchParams();;
+  let caseInsensitiveUrlParams = new URLSearchParams();
   for (const [name, value] of urlParams) {
     caseInsensitiveUrlParams.append(name.toUpperCase(), value);
   }
@@ -763,9 +763,15 @@ function prefillCustomerDetail(response, globals) {
   if (!response.refCustTelex) globals.functions.setProperty(personalDetails.telephoneNumber, { visible: false });
   else setFormValue(personalDetails.telephoneNumber, maskNumber(response.refCustTelex, 6));
 
-  setFormValue(personalDetails.communicationAddress, `${response.txtCustadrAdd1.trim()}, ${response.txtCustadrAdd2.trim()}, ${response.txtCustadrAdd3.trim()}, ${response.namCustadrCity}, ${response.namCustadrState}, ${response.namCustadrCntry}, ${response.txtCustadrZip}`?.toUpperCase());
+  const addressLine1 = response.txtCustadrAdd1?.trim() ?? '';
+  const formattedAddress1 = addressLine1 ? `${addressLine1}, ` : '';
+  const addressLine2 = response.txtCustadrAdd2?.trim() ?? '';
+  const formattedAddress2 = addressLine2 ? `${addressLine2}, ` : '';
+  const addressLine3 = response.txtCustadrAdd3?.trim() ?? '';
+  const formattedAddress3 = addressLine3 ? `${addressLine3}, ` : '';
+  setFormValue(personalDetails.communicationAddress, `${formattedAddress1}${formattedAddress2}${formattedAddress3} ${response.namCustadrCity}, ${response.namCustadrState}, ${response.namCustadrCntry}, ${response.txtCustadrZip}`?.toUpperCase());
 
-  setFormValue(personalDetails.permanentAddress, `${customerDataMasking('AddressLine', response.txtPermadrAdd1)} ${customerDataMasking('AddressLine', response.txtPermadrAdd2)}, ${customerDataMasking('AddressLine', response.txtPermadrAdd3)},
+  setFormValue(personalDetails.permanentAddress, `${customerDataMasking('AddressLine', response.txtPermadrAdd1)} ${customerDataMasking('AddressLine', response.txtPermadrAdd2)} ${customerDataMasking('AddressLine', response.txtPermadrAdd3)},
 ${customerDataMasking('CityState', response.namPermadrCity)}, ${customerDataMasking('CityState', response.namPermadrState)}, ${customerDataMasking('Country', response.namPermadrCntry)}, ${response.txtPermadrZip}`?.toUpperCase());
 
   getCountryName(response.txtCustNATNLTY)
