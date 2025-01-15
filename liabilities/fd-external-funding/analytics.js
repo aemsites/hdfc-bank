@@ -184,7 +184,7 @@ import {
         }
         currentFormContext.action = 'otp click';
         setTimeout(() => {
-          sendPageloadEvent(journeyState, formData, PAGE_NAME.nrenro['confirm otp']);
+          sendPageloadEvent(journeyState, formData, PAGE_NAME.effd['confirm otp']);
         }, 1000);
         break;
       }
@@ -233,25 +233,25 @@ import {
         }
   
         setTimeout(() => {
-          sendPageloadEvent(journeyState, formData, PAGE_NAME.nrenro['select account type click']);
+          sendPageloadEvent(journeyState, formData, PAGE_NAME.effd['select account type click']);
         }, 1000);
         break;
       }
       case 'select account type click': {
         if (typeof window !== 'undefined' && typeof _satellite !== 'undefined') {
           window.digitalData = digitalData || {};
-          digitalData.page.pageInfo.pageName = PAGE_NAME.nrenro['select account type click'];
+          digitalData.page.pageInfo.pageName = PAGE_NAME.effd['select account type click'];
           _satellite.track('submit');
         }
   
         setTimeout(() => {
-          sendPageloadEvent(journeyState, formData, PAGE_NAME.nrenro['confirm details']);
+          sendPageloadEvent(journeyState, formData, PAGE_NAME.effd['confirm details']);
         }, 1000);
         break;
       }
       case 'thankyou page click': {
         setTimeout(() => {
-          sendPageloadEvent(journeyState, formData, PAGE_NAME.nrenro['thank you screen']);
+          sendPageloadEvent(journeyState, formData, PAGE_NAME.effd['thank you screen']);
         }, 1000);
         break;
       }
@@ -597,7 +597,7 @@ import {
       if (!accordion.dataset.listenerAdded) {
         accordion.addEventListener('click', (event) => {
           event.stopPropagation();
-          const legendElement = accordion.querySelector('.field-label.nrenro-accordian');
+          const legendElement = accordion.querySelector('.field-label.effd-accordian');
           if (legendElement) {
             const accordionName = legendElement.textContent.trim();
             if(accordionName !== 'Confirm Details'){
