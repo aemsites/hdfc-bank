@@ -8,6 +8,7 @@ const {
   INR_CONST,
 } = FD_EF_CONSTANT;
 
+// eslint-disable-next-line no-unused-vars
 const createFdEfReqPayload = (globals) => {
 //   const mobileNo = globals.form.loginMainPanel.loginPanel.mobilePanel.mobileNumberWrapper.registeredMobileNumber.$value ?? '';
 //   const panValue = globals.form.loginMainPanel.loginPanel.identifierPanel.pan.$value ?? '';
@@ -32,8 +33,8 @@ const createFdEfReqPayload = (globals) => {
     },
   } = globals.form.wizardWrapper.wizardExternalFunding;
   const INT_PAY_KEYS = ['OnMaturity', 'MIP', 'QIP']; // OnMaturity or Reinvestment in api.
-  const mapInterestPayoust = (interestPayoutOpt.$enum || [])?.redunce((acc, prev, i) => {
-    acc[interestPayoutOpt.$enum] = [interestPayoutOpt.$enumNames[i], INT_PAY_KEYS[i]];
+  const mapInterestPayoust = (interestPayoutOpt.$enum || [])?.reduce((acc, prev, i) => {
+    acc[interestPayoutOpt.$enum[i]] = [interestPayoutOpt.$enumNames[i], INT_PAY_KEYS[i]];
     return acc;
   }, {});
   // eslint-disable-next-line no-unused-vars
@@ -139,9 +140,11 @@ const fdEfSimSuccessCallBack = (res, globals) => {
  * @param {object} globals
  * @returns {Promise}
  */
+// eslint-disable-next-line no-unused-vars
 function fdEfSimulationExecute(globals) {
   const urlPath = fdEfEndpoints.fdSimulation;
-  const jsonObj = createFdEfReqPayload(globals);
+  // const jsonObj = createFdEfReqPayload(globals);
+  const jsonObj = DATA_CONTRACT.fdSimReques;
   return fetchJsonResponse(urlPath, jsonObj, 'POST', true);
 }
 

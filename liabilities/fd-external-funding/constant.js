@@ -145,6 +145,68 @@ const DATA_CONTRACT = {
       errorMsg: 'Success',
     },
   },
+  fdSimReques: {
+    RequestPayload: {
+      SimulateTermDepositRequest: {
+        mobileNo: '918619484593',
+        operationMode: '5',
+        tdSimulationRequestDTO: {
+          termDepositFactsDTO: {
+            debitAccountNo: 'XXXXXXXXXX4042',
+            productGroup: 'Reinvestment',
+            principalAmount: {
+              amount: '5000',
+              currencyCode: 'INR',
+            },
+            term: {
+              days: '1',
+              months: '60',
+            },
+            dictionaryArray: [
+              {
+                nameValuePairDTOArray: [
+                  {
+                    name: 'codTypTd',
+                    value: 'C',
+                  },
+                ],
+              },
+            ],
+          },
+        },
+        dictionaryArray: [
+          {
+            nameValuePairDTOArray: [
+              {
+                name: 'DOB',
+                value: '19920910',
+              },
+              {
+                name: 'PAN',
+                value: '',
+              },
+              {
+                name: 'flgReplicateCASANominee',
+                value: 'Y',
+              },
+              {
+                name: 'flgSendSMS',
+                value: 'N',
+              },
+              {
+                name: 'makerID',
+                value: 'Adobe',
+              },
+            ],
+          },
+        ],
+      },
+      userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
+      journeyID: '8cdd86a6-1bf5-44ac-a17b-3d1722e72965_01_ECFD_U_WEB',
+      journeyName: 'FD_BOOKING_JOURNEY',
+      pseudoID: 'abcd',
+    },
+  },
   //
 };
 
