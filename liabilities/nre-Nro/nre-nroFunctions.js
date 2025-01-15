@@ -1259,7 +1259,6 @@ function nreNroInit(globals) {
  * @param {Object} globals - The global object containing necessary data.
  */
 function nreNroPageRedirected(globals) {
-  globals.functions.setProperty(globals.form.bankLoginWrapper, { visible: false });
   const queryParams = globals.functions.exportData().queryParams;
   currentFormContext.authModeParam = queryParams?.authmode;
   currentFormContext.journeyId = queryParams?.journeyId;
@@ -1277,6 +1276,7 @@ function nreNroPageRedirected(globals) {
     // displayLoader(); // TODO : Uncomment : Error popping up
     // await nreNroFetchRes(globals);
   } else if (currentFormContext.idComSuccess === 'FALSE') {
+    globals.functions.setProperty(globals.form.bankLoginWrapper, { visible: false });
     globals.functions.setProperty(globals.form.parentLandingPagePanel.landingPanel.nreNroPageRedirectedResp, { value: 'false' });
     globals.functions.setProperty(globals.form.otppanelwrapper, { visible: false });
     globals.functions.setProperty(globals.form.parentLandingPagePanel, { visible: false });
