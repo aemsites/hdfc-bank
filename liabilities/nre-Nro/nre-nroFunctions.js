@@ -184,7 +184,7 @@ function isNullOrEmpty(value) {
 
 const getCountryName = (countryCodeIst) => new Promise((resolve) => {
   const finalURL = `/content/hdfc_commonforms/api/mdm.COMMON.COUNTRYCODE_MASTER.COUNTRYCODE-${countryCodeIst}.json`;
-  fetchJsonResponse(urlPath(finalURL), null, 'GET', true)
+  getJsonResponse(urlPath(finalURL), null, 'GET', true)
     .then((response) => {
       const country = response[0];
       const description = country.DESCRIPTION;
