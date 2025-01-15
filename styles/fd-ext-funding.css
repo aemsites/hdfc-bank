@@ -775,6 +775,9 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
 
                                     .field-otpnumber {
                                         margin-top: 10px;
+                                        @media (769px <=width < 1024px) {
+                                            grid-column: span 12;
+                                        }
 
                                         input {
                                             letter-spacing: 40px;
@@ -828,6 +831,9 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                     .field-resendotppanel {
                                         max-width: 445px;
                                         display: grid;
+                                        @media (769px <=width < 1024px) {
+                                            margin-top: 10px;
+                                        }
 
                                         @media (max-width: 768px) {
                                             max-width: 100%;
@@ -848,7 +854,7 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                         display: flex;
                                         grid-column: span 6;
 
-                                        @media (350px <=width <=992px) {
+                                        @media (350px <=width <=1024px) {
                                             flex-direction: row;
                                         }
 
