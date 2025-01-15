@@ -135,7 +135,7 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                         border-radius: 12px;
                                         height: 60px;
                                         width: 100%;
-                                        max-width: 352px;
+                                        max-width: 368px;
 
                                         @media (max-width: 768px) {
                                             max-width: 368px;
@@ -863,18 +863,23 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                         }
 
                                         .field-seconds {
-                                            max-width: 20px;
+                                            max-width: 18px;
                                             margin-left: -15px;
                                             margin-top: -7px;
 
                                             input {
                                                 height: 20px;
                                                 border: none;
+                                                font-size: var(--body-fd-md-font-size);
+                                                letter-spacing: normal;
+                                                padding: 0;
+                                                color: var(--color-interface-text-secondary) !important;
                                             }
                                         }
 
                                         .field-sectext {
                                             left: -15px;
+                                            top:.5px;
                                             position: relative;
                                         }
                                     }
@@ -986,7 +991,6 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                     &~.field-description {
                                         color: var(--color-input-text-msg-error);
                                         font-weight: var(--font-weight-regular);
-                                        margin-top: 0;
                                     }
                                 }
 
@@ -1020,7 +1024,8 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                             }
 
                             .field-description{
-                                font-weight: var(--font-weight-regular);
+                                font-weight: var(--font-weight-regular);                                
+                                margin-top: 0;
                             }
                         }
 
