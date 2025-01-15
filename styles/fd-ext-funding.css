@@ -863,18 +863,23 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                         }
 
                                         .field-seconds {
-                                            max-width: 20px;
+                                            max-width: 18px;
                                             margin-left: -15px;
                                             margin-top: -7px;
 
                                             input {
                                                 height: 20px;
                                                 border: none;
+                                                font-size: var(--body-fd-md-font-size);
+                                                letter-spacing: normal;
+                                                padding: 0;
+                                                color: var(--color-interface-text-secondary) !important;
                                             }
                                         }
 
                                         .field-sectext {
                                             left: -15px;
+                                            top:.5px;
                                             position: relative;
                                         }
                                     }
