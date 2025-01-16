@@ -8,6 +8,7 @@ body.fd-backed-cc {
         display: flex;
         align-items: center;
 
+
         &>.cmp-container {
             max-width: 1160px;
 
@@ -19,9 +20,13 @@ body.fd-backed-cc {
                     width: 166px;
                 }
 
-                @media (320px <=width <=767px) {
+                @media (360px <=width <=767px) {
                     text-align: left !important;
                     left: 10px;
+                }
+
+                @media (max-width: 400px) {
+                    width: calc(100% - 20px);
                 }
 
                 @media (768px <=width < 1200px) {
@@ -58,6 +63,9 @@ body.fd-backed-cc {
     }
 
     main {
+        @media (min-width: 768px) {
+            overflow: initial;
+        }
 
         &>.cmp-container-container {
             display: none !important;
@@ -102,6 +110,10 @@ body.fd-backed-cc {
                             padding-right: 0;
                             position: relative;
 
+                            @media (min-width: 767px) {
+                                padding: 40px 35px 40px 0;
+                            }
+
                             .field-headertext {
                                 position: absolute;
                                 top: -50px;
@@ -109,6 +121,10 @@ body.fd-backed-cc {
                                 color: var(--color-interface-text-tertiary);
                                 border-left: 1px solid var(--color-interface-fd-title-border);
                                 padding-left: 20px;
+
+                                @media (max-width: 768px) {
+                                    display: none;
+                                }
 
                                 p {
                                     font-size: var(--body-x-lg-font-size);
@@ -122,17 +138,36 @@ body.fd-backed-cc {
                                 background: url('../icons/landing_banner_bg.png') repeat-x top center;
                                 margin-top: -40px;
                                 display: grid;
+                                animation: someanimation 1s linear forwards;
 
                                 .field-landingpanel1 {
                                     grid-column: span 8;
 
+                                    @media (max-width: 767px) {
+                                        grid-column: span 12;
+                                        order: 2;
+                                    }
+
+
                                     .field-landingpanel11 {
                                         background: url('../icons/landing_banner_smily-bg.png') no-repeat -20px -10px;
+
+                                        @media (max-width: 767px) {
+                                            background: none;
+                                        }
 
                                         .field-landingpagetext1 {
                                             background: url('../icons/landing_banner_left-text.png') no-repeat 40px 50px;
                                             height: 378px;
                                             width: 100%;
+
+                                            @media (max-width: 767px) {
+                                                background: url('../icons/banner_mobile_text.png') no-repeat top center;
+                                                height: 194px;
+                                            }
+                                            @media (max-width: 480px) {
+                                                background-size: 90%;
+                                            }
 
                                             p {
                                                 display: none;
@@ -153,8 +188,27 @@ body.fd-backed-cc {
                                         margin-left: 40px;
                                         margin-top: -40px;
 
+                                        @media (max-width: 767px) {
+                                            margin: 20px 0 0 0px;
+                                            justify-content: center;
+                                            padding: 0 20px;
+                                        }
+
+                                        @media (max-width: 460px) {
+                                            flex-direction: column;
+                                        }
+
                                         .button-wrapper {
                                             width: 225px;
+                                            
+
+                                            @media (max-width: 767px) {
+                                                width: 212px;
+                                            }
+
+                                            @media (max-width: 460px) {
+                                                width: 100%;
+                                            }
 
                                             button {
                                                 &::after {
@@ -180,11 +234,33 @@ body.fd-backed-cc {
                                 .field-landingpanel2 {
                                     grid-column: span 4;
 
+                                    @media (max-width: 767px) {
+                                        grid-column: span 12;
+                                        order: 1;
+                                        background: url('../icons/banner_mobile_users.png') no-repeat center 50px;
+                                    }
+
+                                    @media (max-width: 400px) {
+                                        background-size: 90%;
+                                        background-position: left 50px;
+                                    }
+
                                     .image-wrapper {
                                         width: 380px;
-                                        height: 378px;
+                                        height: 405px;
                                         background: url('../icons/landing_banner_right.png') no-repeat right 50px;
-                                        background-size: 87%;
+                                        background-size: 95%;
+
+                                        @media (max-width: 767px) {
+                                            background-size: 58%;
+                                            width: 100%;
+                                            margin-top: 50px;
+                                            background-position: bottom center;                                           
+                                        }
+
+                                        @media (max-width: 480px) {
+                                            background-size: 80%;
+                                        }
 
                                         picture {
                                             display: none;
@@ -198,6 +274,10 @@ body.fd-backed-cc {
                                 padding: 20px 40px;
                                 background-color: var(--color-interface-background-quinary);
 
+                                @media (max-width: 767px) {
+                                    padding: 20px 20px;
+                                }
+
                                 .field-perfectpanelwrapper {
                                     display: grid;
 
@@ -205,12 +285,20 @@ body.fd-backed-cc {
                                         display: inline;
                                         grid-column: span 6;
 
+                                        @media (max-width: 767px) {
+                                            grid-column: span 12;
+                                        }
+
                                         .field-findyourperfectcardtext1 {
                                             p {
                                                 font-size: var(--font-linehight-m-large);
                                                 font-weight: var(--font-weight-bold);
                                                 color: var(--color-action-text-secondary-default);
                                                 margin-bottom: 0;
+
+                                                @media (max-width: 767px) {
+                                                    font-size: var(--font-linehight-large);
+                                                }
                                             }
                                         }
 
@@ -243,35 +331,34 @@ body.fd-backed-cc {
                                                 border-radius: 40px;
                                                 height: 36px;
 
+                                                background: none;
+                                                border: 1px solid var(--color-action-border-primary-default);
+                                                color: var(--color-action-text-secondary-default);
+
+                                                &:hover {
+                                                    color: var(--color-interface-text-tertiary);
+                                                }
+
                                                 &::after {
                                                     display: none;
-                                                }
-                                            }
-
-                                            &.field-businesscardsbtn {
-                                                button {
-                                                    background: none;
-                                                    border: 1px solid var(--color-action-border-primary-default);
-                                                    color: var(--color-action-text-secondary-default);
-
-                                                    &:hover {
-                                                        color: var(--color-interface-text-tertiary);
-                                                    }
                                                 }
                                             }
                                         }
                                     }
                                 }
 
-                                .field-retailcardssectionmainwrapper {
+                                .field-retailcardssectionmainwrapper,
+                                .field-businesscardssectionmainwrapper {
                                     position: relative;
 
-                                    .field-retailcardssection {
+                                    .field-retailcardssection,
+                                    .field-businesscardssection {
                                         margin-top: 10px;
                                         display: flex;
                                         flex-wrap: nowrap;
 
-                                        .field-retailcardssectionrepeatable {
+                                        .field-retailcardssectionrepeatable,
+                                        .field-businesscardssectionrepeatable {
                                             border: 1px solid var(--color-interface-border-secondary);
                                             border-radius: 16px;
                                             max-width: 350px;
@@ -283,7 +370,8 @@ body.fd-backed-cc {
                                                 margin-bottom: 0;
                                             }
 
-                                            .field-cardselection-display1 {
+                                            .field-cardselection-display1,
+                                            .field-cardselection-display2 {
                                                 p {
                                                     font-size: var(--body-x-lg-font-size);
                                                     font-weight: var(--font-weight-bold);
@@ -291,7 +379,8 @@ body.fd-backed-cc {
                                                 }
                                             }
 
-                                            .field-cardtagline1 {
+                                            .field-cardtagline1,
+                                            .field-cardtagline2 {
                                                 p {
                                                     font-size: var(--body-fd-md-font-size);
                                                     font-weight: var(--font-weight-regular);
@@ -311,7 +400,8 @@ body.fd-backed-cc {
                                                 }
                                             }
 
-                                            .field-cardfeatureswrapper1 {
+                                            .field-cardfeatureswrapper1,
+                                            .field-cardfeatureswrapper2 {
                                                 margin-top: 20px;
                                                 display: inline-block;
 
@@ -337,7 +427,8 @@ body.fd-backed-cc {
                                                 }
                                             }
 
-                                            .field-allfeaturesandbenefits1 {
+                                            .field-allfeaturesandbenefits1,
+                                            .field-allfeaturesandbenefits2 {
                                                 margin-top: 0px;
 
                                                 button {
@@ -358,7 +449,8 @@ body.fd-backed-cc {
                                                 }
                                             }
 
-                                            .field-minfdamountcardwrapper1 {
+                                            .field-minfdamountcardwrapper1,
+                                            .field-minfdamountcardwrapper2 {
                                                 margin-top: 20px;
                                                 display: flex;
                                                 align-items: center;
@@ -370,7 +462,13 @@ body.fd-backed-cc {
                                                 height: 56px;
                                                 flex-direction: initial;
 
-                                                .field-minfdamountheading1 {
+                                                @media (max-width: 767px) {
+                                                    margin-bottom: 20px;
+                                                    max-width: initial;
+                                                }
+
+                                                .field-minfdamountheading1,
+                                                .field-minfdamountheading2 {
                                                     height: 100%;
                                                     display: flex;
                                                     align-items: center;
@@ -385,7 +483,8 @@ body.fd-backed-cc {
                                                     }
                                                 }
 
-                                                .field-minfdamountcard1 {
+                                                .field-minfdamountcard1,
+                                                .field-minfdamountcard2 {
                                                     border-top-right-radius: 12px;
                                                     border-bottom-right-radius: 12px;
                                                     border-top-left-radius: 0;
@@ -428,7 +527,8 @@ body.fd-backed-cc {
                                                 }
                                             }
 
-                                            .field-getthisperfectcard1 {
+                                            .field-getthisperfectcard1,
+                                            .field-getthisperfectcard2 {
                                                 width: 100%;
                                                 max-width: none;
                                                 margin-top: 20px;
@@ -451,11 +551,14 @@ body.fd-backed-cc {
                                     }
 
                                     .field-navigationarrowswrap1,
-                                    .field-navigationdotswrap1 {
+                                    .field-navigationdotswrap1,
+                                    .field-navigationarrowswrap2,
+                                    .field-navigationdotswrap2 {
                                         display: flex;
                                         flex-direction: row;
 
                                         .button-wrapper {
+
                                             button {
                                                 color: transparent;
                                                 width: auto;
@@ -467,14 +570,18 @@ body.fd-backed-cc {
                                             }
                                         }
 
-                                        &.field-navigationarrowswrap1 {
+                                        &.field-navigationarrowswrap1,
+                                        &.field-navigationarrowswrap2 {
                                             position: absolute;
                                             width: 100%;
                                             display: flex;
                                             align-items: center;
                                             justify-content: space-between;
-                                            
                                             top: 40%;
+
+                                            @media (max-width: 767px) {
+                                                display: none;
+                                            }
 
                                             button {
                                                 width: 42px;
@@ -484,36 +591,43 @@ body.fd-backed-cc {
                                                 display: flex;
                                                 align-items: center;
                                                 justify-content: center;
-                                                transition: transform 0.2s ease-out;
+                                                overflow: hidden;
 
                                                 &::before {
                                                     content: '';
                                                     position: absolute;
                                                     height: 100%;
-                                                    width: 10px;
-                                                    background: var(--color-action-background-primary-default) url('../icons/right-arrow.png') no-repeat center center !important;
+                                                    width: 100%;
+                                                    background: transparent url('../icons/right-arrow.png') no-repeat center center;
+                                                    transition: transform 0.3s ease, background 0.3s ease;
                                                 }
 
                                                 &:hover {
+                                                    background: var(--color-interface-border-highlight);
+
                                                     &::before {
-                                                        transform: translateY(100%);
+                                                        transform: rotate(360deg);
+                                                        background: var(--color-interface-border-highlight) url('../icons/right-arrow.png') no-repeat center center;
                                                     }
                                                 }
                                             }
 
-                                            .field-leftarrow1 {
+                                            .field-leftarrow1,
+                                            .field-leftarrow2 {
                                                 button {
                                                     rotate: 180deg;
                                                 }
                                             }
                                         }
 
-                                        &.field-navigationdotswrap1 {
+                                        &.field-navigationdotswrap1,
+                                        &.field-navigationdotswrap2 {
                                             display: flex;
                                             align-items: center;
                                             justify-content: center;
 
-                                            .field-navigationdot11 {
+                                            .field-navigationdot11,
+                                            .field-navigationdot31 {
                                                 button {
                                                     width: 40px;
                                                     height: 8px;
@@ -522,7 +636,8 @@ body.fd-backed-cc {
                                                 }
                                             }
 
-                                            .field-navigationdot21 {
+                                            .field-navigationdot21,
+                                            .field-navigationdot22 {
                                                 margin-left: -10px;
 
                                                 button {
@@ -535,6 +650,34 @@ body.fd-backed-cc {
                                         }
                                     }
                                 }
+
+                                &:has(.field-retailcardssectionmainwrapper[data-visible="true"]),
+                                &:has(.field-retailcardssectionmainwrapper:not([data-visible="false"])) {
+                                    .field-perfectpanelwrapper {
+                                        .field-perfectpanelwrap2 {
+                                            .field-retailcardsbtn {
+                                                button {
+                                                    background: var(--color-action-background-primary-default);
+                                                    color: var(--color-action-text-primary-default);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+                                &:has(.field-businesscardssectionmainwrapper[data-visible="true"]) {
+                                    .field-perfectpanelwrapper {
+                                        .field-perfectpanelwrap2 {
+                                            .field-businesscardsbtn {
+                                                button {
+                                                    background: var(--color-action-background-primary-default);
+                                                    color: var(--color-action-text-primary-default);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
                             }
 
                             .field-knowyourcclimitpanel {
@@ -547,6 +690,11 @@ body.fd-backed-cc {
                                     display: flex;
                                     flex-direction: row;
                                     align-items: center;
+
+                                    @media (max-width: 767px) {
+                                        flex-direction: column;
+                                        text-align: center;
+                                    }
 
                                     .plain-text-wrapper {
                                         p {
@@ -607,7 +755,16 @@ body.fd-backed-cc {
 
                                         &.field-enterfdamtwrap {
                                             flex: 2;
-                                            background: url('../icons/triple_right_arrow.png') no-repeat 90% center;
+                                            background: url(../icons/triple_right_arrow.png) no-repeat 90% center;
+                                            width: 100px;
+                                            height: 50px;
+                                            position: relative;
+
+                                            @media (max-width: 767px) {
+                                                width: 100%;
+                                                background: url('../icons/mob_vertical_three_arrow.png') no-repeat bottom center;
+                                                padding-bottom: 80px;
+                                            }
 
                                             .field-enterfdamt {
                                                 display: flex;
@@ -615,17 +772,33 @@ body.fd-backed-cc {
                                                 justify-content: center;
                                                 flex-direction: column;
 
+                                                @media (max-width: 767px) {
+                                                    width: 100%;
+                                                    border: 1px solid #fff;
+                                                    border-radius: 16px;
+                                                    padding: 20px;
+                                                }
+
                                                 label {
                                                     font-weight: var(--font-weight-regular);
                                                     font-size: var(--body-md-font-size);
                                                     padding: 0;
                                                     margin-bottom: 5px;
+
+                                                    @media (max-width: 767px) {
+                                                        font-size: var(--body-fd-sm-font-size);
+                                                    }
                                                 }
 
                                                 input {
                                                     font-size: var(--body-fd-xx-xlg-font-size);
                                                     font-weight: var(--font-weight-extra-bold);
                                                     border-bottom: 1px solid;
+
+                                                    @media (max-width: 767px) {
+                                                        font-size: var(--body-fd-lg-font-size);
+                                                        border: none;
+                                                    }
                                                 }
                                             }
                                         }
@@ -645,7 +818,20 @@ body.fd-backed-cc {
 
                                                 * {
                                                     padding-left: 60px;
+
+                                                    @media (max-width: 767px) {
+                                                        padding-left: 0;
+                                                    }
                                                 }
+
+                                                @media (max-width: 767px) {
+                                                    width: 100%;
+                                                    align-items: center;
+                                                    padding-top: 50px;
+                                                    height: auto;
+                                                    padding-bottom: 20px;
+                                                }
+
 
                                                 &::before {
                                                     content: '';
@@ -655,6 +841,11 @@ body.fd-backed-cc {
                                                     height: 32px;
                                                     top: 30%;
                                                     left: 15px;
+
+                                                    @media (max-width: 767px) {
+                                                        left: auto;
+                                                        top: 10px;
+                                                    }
                                                 }
 
 
@@ -678,8 +869,11 @@ body.fd-backed-cc {
                             }
 
                             .field-benefitsofsecuredcc {
-                                padding: 30px 40px;
-                                display: inline;
+                                padding: 30px 20px;
+                                @media (min-width: 768px) {
+                                    display: inline;
+                                    padding: 30px 40px;
+                                }
 
                                 .field-businesssecuredtxtheading {
                                     p {
@@ -706,15 +900,22 @@ body.fd-backed-cc {
                                 }
 
                                 .field-secureccinfowrapper {
-                                    display: flex;
-                                    flex-direction: row;
+                                    display: grid;
                                     margin-top: 40px;
 
+                                    @media (max-width: 767px) {
+                                        margin-top: 20px;
+                                    }
+
                                     .panel-wrapper {
-                                        flex: 1;
+                                        grid-column: span 3;
                                         display: inline;
                                         background-color: #F9FAFF;
                                         padding: 20px;
+
+                                        @media (max-width: 767px) {
+                                            grid-column: span 6;
+                                        }
 
                                         .image-wrapper {
                                             width: 32px;
@@ -1419,11 +1620,16 @@ body.fd-backed-cc {
                                             input {
                                                 height: 20px;
                                                 border: none;
+                                                font-size: var(--body-fd-md-font-size);
+                                                letter-spacing: normal;
+                                                padding: 0;
+                                                color: var(--color-interface-text-secondary) !important;
                                             }
                                         }
 
                                         .field-sectext {
-                                            left: -15px;
+                                            left: -18px;
+                                            top:.5px;
                                             position: relative;
                                         }
                                     }
@@ -1788,8 +1994,7 @@ body.fd-backed-cc {
                         .field-otppanelwrapper,
                         .field-runtime,
                         .field-resultpanel,
-                        .field-accountselectionwrapper,
-                        .field-landingpagemainwrapper {
+                        .field-accountselectionwrapper {
                             padding: 40px 35px 40px 0;
                             margin-bottom: 40px;
                             display: initial;
@@ -1944,6 +2149,11 @@ body.fd-backed-cc {
 
                     /* form tag close */
                 }
+
+               /*  .form.block>div>div>form,
+                .form.block>div>div>form fieldset {
+                    display: grid;
+                } */
 
                 /* .form calss close */
             }
