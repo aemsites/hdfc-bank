@@ -184,7 +184,7 @@ function isNullOrEmpty(value) {
 
 const getCountryName = (countryCodeIst) => new Promise((resolve) => {
   const finalURL = `/content/hdfc_commonforms/api/mdm.COMMON.COUNTRYCODE_MASTER.COUNTRYCODE-${countryCodeIst}.json`;
-  getJsonResponse(urlPath(finalURL), null, 'GET', true)
+  getJsonWithoutEncrypt(urlPath(finalURL), null, 'GET', true)
     .then((response) => {
       const country = response[0];
       const description = country.DESCRIPTION;
@@ -448,7 +448,7 @@ const getOtpNRE = async (mobileNumber, pan, dob, globals) => {
 
 const getCountryCodes = (dropdown) => {
   const finalURL = '/content/hdfc_commonforms/api/mdm.ETB.NRI_ISD_MASTER.COUNTRYNAME.json?pageSize=300';
-  fetchJsonResponse(urlPath(finalURL), null, 'GET', true).then((response) => {
+  getJsonWithoutEncrypt(urlPath(finalURL), null, 'GET', true).then((response) => {
     dropdown?.addEventListener('change', () => {
       if (prevSelectedIndex !== -1) {
         dropdown.remove(prevSelectedIndex);
@@ -1788,7 +1788,7 @@ function selectVarient(nroAccountTypePanel, nreAccountTypePanel, globals) {
 
 function setAMBValue() {
   const finalURL = `/content/hdfc_commonforms/api/mdm.INSTA.NRI_AMB_MASTER.BRANCH_CODE-${currentFormContext.fatca_response.customerAccountDetailsDTO[currentFormContext.selectedCheckedValue].branchCode}.json`;
-  getJsonResponse(urlPath(finalURL), null, 'GET')
+  getJsonWithoutEncrypt(urlPath(finalURL), null, 'GET')
     .then((response) => {
       const ambValue = response[0].AMB_AQB;
       currentFormContext.ambValue = ambValue;
@@ -1802,7 +1802,7 @@ function setTerritoryValue() {
   const branchCode = currentFormContext.fatca_response.customerAccountDetailsDTO[currentFormContext.selectedCheckedValue].branchCode;
   const finalURL = `/content/hdfc_commonforms/api/mdm.INSTA.BRANCH_MASTER.CODE-${branchCode}.json`;
 
-  getJsonResponse(urlPath(finalURL), null, 'GET')
+  getJsonWithoutEncrypt(urlPath(finalURL), null, 'GET')
     .then((response) => {
       if (!response || response.length === 0) {
         console.warn('No response data received.');
@@ -1829,7 +1829,7 @@ async function getEmployerNameFromMDM(employerCode){
   const finalURL = `/content/hdfc_commonforms/api/mdm.INSTA.COMPANY_CODE.COMPANYCODE-${employerCode}.json`;
   try{
     if(isNullOrEmpty(employerCode)) return '';
-    const response = await getJsonResponse(urlPath(finalURL), null, 'GET');
+    const response = await getJsonWithoutEncrypt(urlPath(finalURL), null, 'GET');
       if (!response || response.length === 0) {
         console.warn('No response data received.');
         return '';
