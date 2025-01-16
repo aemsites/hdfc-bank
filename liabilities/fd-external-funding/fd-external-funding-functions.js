@@ -2,11 +2,7 @@ import { formUtil } from '../../common/formutils.js';
 import { fetchJsonResponse } from '../../common/makeRestAPI.js';
 import { createJourneyId } from './fd-ef-journeyutils.js';
 import { handleFetchCasaPrefill, updateFundAct } from './fd-ef-prefilutils.js';
-import {
-  fdEfSimulationExecute,
-  fdEfSimSuccessCallBack,
-  fdEfSimErrorCallBack,
-} from './fd-ef-simulationutils.js';
+import fdEfSimulationExecute from './fd-ef-simulationutils.js';
 import * as FD_EF_CONSTANT from './constant.js';
 import { moveWizardView } from '../domutils/domutils.js';
 
@@ -115,7 +111,7 @@ function selectFundAcct(acctField, globals) {
 
 /**
  * @name fdEfSwitchWizard to switch panel visibility
- * @param {string} source -  The source of the card wizard (e.g., 'selectAccount').
+ * @param {string} source -  The source of the card wizard (e.g., 'wizardExternalFunding').
  * @param {string} target -  The target panel to switch to (e.g., 'createFD').
  */
 function fdEfSwitchWizard(source, target) {
@@ -129,7 +125,5 @@ export {
   investAmtChangeHandler,
   selectFundAcct,
   fdEfSimulationExecute,
-  fdEfSimSuccessCallBack,
-  fdEfSimErrorCallBack,
   fdEfSwitchWizard,
 };

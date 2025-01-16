@@ -5,12 +5,10 @@ import {
   investAmtChangeHandler,
   selectFundAcct,
   fdEfSimulationExecute,
-  fdEfSimSuccessCallBack,
-  fdEfSimErrorCallBack,
   fdEfSwitchWizard,
 } from './fd-external-funding-functions.js';
 
-import {errorHandlingFDExt} from './fd-ef-error-handler.js'
+import { errorHandlingFDExt } from './fd-ef-error-handler.js';
 
 export {
   createJourneyId,
@@ -19,8 +17,6 @@ export {
   investAmtChangeHandler,
   selectFundAcct,
   fdEfSimulationExecute,
-  fdEfSimSuccessCallBack,
-  fdEfSimErrorCallBack,
   fdEfSwitchWizard,
   errorHandlingFDExt,
 };
