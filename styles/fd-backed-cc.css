@@ -8,6 +8,7 @@ body.fd-backed-cc {
         display: flex;
         align-items: center;
 
+
         &>.cmp-container {
             max-width: 1160px;
 
@@ -58,6 +59,9 @@ body.fd-backed-cc {
     }
 
     main {
+        @media (min-width: 600px) {
+        overflow: initial;
+        }
 
         &>.cmp-container-container {
             display: none !important;
@@ -122,9 +126,16 @@ body.fd-backed-cc {
                                 background: url('../icons/landing_banner_bg.png') repeat-x top center;
                                 margin-top: -40px;
                                 display: grid;
+                                animation: someanimation 1s linear forwards;
 
                                 .field-landingpanel1 {
                                     grid-column: span 8;
+
+                                    @media (max-width: 767px) {
+                                        grid-column: span 12;
+                                        order: 2;
+                                       }
+   
 
                                     .field-landingpanel11 {
                                         background: url('../icons/landing_banner_smily-bg.png') no-repeat -20px -10px;
@@ -180,11 +191,16 @@ body.fd-backed-cc {
                                 .field-landingpanel2 {
                                     grid-column: span 4;
 
+                                    @media (max-width: 767px) {
+                                     grid-column: span 12;
+                                     order: 1;
+                                    }
+
                                     .image-wrapper {
                                         width: 380px;
-                                        height: 378px;
+                                        height: 405px;
                                         background: url('../icons/landing_banner_right.png') no-repeat right 50px;
-                                        background-size: 87%;
+                                        background-size: 95%;
 
                                         picture {
                                             display: none;
@@ -494,24 +510,24 @@ body.fd-backed-cc {
                                                 display: flex;
                                                 align-items: center;
                                                 justify-content: center;
-                                                transition: background 0.2s ease-out, transform 0.3s ease;
+                                                overflow: hidden;
 
                                                 &::before {
                                                     content: '';
                                                     position: absolute;
                                                     height: 100%;
-                                                    width: 10px;
-                                                    background: var(--color-action-background-primary-default) url('../icons/right-arrow.png') no-repeat center center;
-                                                    transition: transform 0.3s ease;
+                                                    width: 100%;
+                                                    background: transparent url('../icons/right-arrow.png') no-repeat center center;
+                                                    transition: transform 0.3s ease, background 0.3s ease;
                                                 }
 
                                                 &:hover {
-                                                    background: var(--color-action-scroll-primary) url('../icons/right-arrow.png') no-repeat center center !important;
-                                                    transform: rotate(360deg) scale(1.1);
-                                                }
+                                                    background: var(--color-interface-border-highlight);
 
-                                                &:hover::before {
-                                                    /*  transform: translateX(5px); */
+                                                    &::before {
+                                                        transform: rotate(360deg);
+                                                        background: var(--color-interface-border-highlight) url('../icons/right-arrow.png') no-repeat center center;
+                                                    }
                                                 }
                                             }
 
@@ -713,12 +729,13 @@ body.fd-backed-cc {
                                                 }
                                             }
                                         }
-                                    }    
+                                    }
+
                                     &:hover {
                                         .field-enterfdamtwrap {
                                             animation: slide 1s infinite;
                                         }
-                                    }   
+                                    }
                                 }
 
                                 .field-securedcclimitnote {
@@ -728,7 +745,7 @@ body.fd-backed-cc {
                                         color: var(--color-interface-text-secondary);
                                         margin-bottom: 0;
                                     }
-                                }                        
+                                }
                             }
 
                             .field-benefitsofsecuredcc {
@@ -2018,19 +2035,31 @@ body.fd-backed-cc {
     }
 }
 
+/* ----------------------- ANIMATIIONS ---------------------------- */
+
 @keyframes slide {
     0% {
         background-position: 90% center;
-        /* Start position */
     }
 
     50% {
         background-position: 100% center;
-        /* Move to the right */
     }
 
     100% {
         background-position: 90% center;
-        /* Return to start */
+    }
+}
+
+
+@keyframes someanimation {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
