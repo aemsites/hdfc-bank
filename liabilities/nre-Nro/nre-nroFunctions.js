@@ -24,6 +24,7 @@ import {
   hideLoaderGif,
   fetchJsonResponse,
   getJsonResponse,
+  getJsonWithoutEncrypt,
 } from '../../common/makeRestAPI.js';
 import * as NRE_CONSTANT from './constant.js';
 import {
