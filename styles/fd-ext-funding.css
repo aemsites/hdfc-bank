@@ -210,6 +210,8 @@ body.fd-ext-fund:has(.field-wizardwrapper :not([data-visible='false'])) {
 
         /* Select Account */
         .field-selectaccount {
+            display: block;
+
             .field-customername, .field-customername b {
                 font-size: var(--body-fd-xx-xlg-font-size);
                 font-weight: var(--font-weight-bold);
@@ -218,9 +220,8 @@ body.fd-ext-fund:has(.field-wizardwrapper :not([data-visible='false'])) {
             }
 
             .field-text p, .field-text {
-                font-size: 16px;
+                font-size: var(--body-md-font-size);
                 color: var(--color-input-text-primary);
-                margin-top: -13px;
             }
 
             .field-investmentamt {
@@ -228,14 +229,26 @@ body.fd-ext-fund:has(.field-wizardwrapper :not([data-visible='false'])) {
                     height: 60px;
                     font-size: var(--body-lg-font-size);
                     color: var(--color-interface-text-primary);
-                    margin-bottom: 0;
                 }
             }
 
-            .field-selectaccounttxt p {
-                font-size: var(--body-xx-lg-font-size);
-                font-weight: var(--font-weight-bold);
-                color: var(--color-interface-text-primary);
+            .field-txtinvestment {
+                padding-bottom: 34px;
+                border-bottom: solid 1px var(--color-input-border-active);
+            }
+
+            .field-txtinvestment, .field-txtinvestment p {
+                font-size: var(--body-md-font-size);
+                color: var(--color-interface-text-secondary);
+            }
+
+            .field-selectaccounttxt { padding-top: 34px;
+
+                p {
+                    font-size: var(--body-xx-lg-font-size);
+                    font-weight: var(--font-weight-bold);
+                    color: var(--color-interface-text-primary);
+                }
             }
 
             .field-multipleaccounts {
@@ -260,14 +273,33 @@ body.fd-ext-fund:has(.field-wizardwrapper :not([data-visible='false'])) {
                             p { margin: 0; }
 
                             .radio-group-wrapper, .panel-wrapper, .plain-text-wrapper { width: fit-content; }
+                            .radio-wrapper { label { display: none; } }
+                            .field-accountradio { margin-top: 5px; }
 
-                            .radio-wrapper {
-                                label { display: none; }
+                            .field-accountdtls { 
+                                margin-left: 20px;
+                                display: block;
+                                
+                                .field-accountnumber, .field-accountnumber p {
+                                    font-size: var(--body-x-lg-font-size);
+                                    font-weight: var(--font-weight-bold);
+                                    color: var(--color-interface-text-primary);
+                                }
+
+                                .field-availablebalance, .field-availablebalance p {
+                                    font-size: var(--body-md-font-size);
+                                    color: var(--color-input-text-primary);
+                                }
                             }
                         }
                     }
                     .item-add { display: none; }
                 }
+            }
+
+            .field-continuebtn {
+                padding-top: 40px;
+                max-width: 272px;
             }
         }
     }
@@ -293,19 +325,34 @@ body.fd-ext-fund:has(.field-wizardwrapper :not([data-visible='false'])) {
                     width: 97%;
                     padding: 24px 32px;
 
-                    p { margin: 0; }
+                    p { 
+                        margin: 0; 
+                        color: var(--color-input-text-placeholder-disabled);
+                    }
                 }
 
                 .field-investmentamountlabel b, .field-tenurelabel b, .field-interestpayoutlabel b, .field-renewalinstructionslabel b {
                     color: var(--color-interface-text-primary);
                 }
 
-                .field-investmentamt {
+                .field-investmentamt { position: relative;
+
                     input {
                         height: 65px;
                         font-size: var(--body-fd-xx-xlg-font-size);
                         color: var(--color-interface-text-primary);
                         margin: 0;
+                    }
+
+                    .field-description {
+                        position: absolute;
+                        right: 3%;
+                        top: 30%;
+
+                        p {
+                            color: var(--color-input-text-disabled);
+                            font-size: var(--body-fd-xxx-lg-font-size);
+                        }
                     }
                     label { margin-top: 13px; }
                 }
@@ -414,6 +461,54 @@ body.fd-ext-fund:has(.field-wizardwrapper :not([data-visible='false'])) {
                     }
                 }
             }
+
+            .field-continuecreatefd { max-width: 272px; }
+        }
+
+        /* Review */
+        .field-review {
+            .field-reviewwizard p {
+                font-size: var(--font-linehight-large);
+                font-weight: var(--font-weight-bold);
+                color: var(--color-interface-text-primary);
+            }
+            
+            fieldset.nre-style-accordian {
+                padding: 15px 0;
+                border: 1px solid var(--color-interface-border-primary); 
+                border-bottom-left-radius: 24px;      
+                border-bottom-right-radius: 24px;
+            }
+
+            legend.nrenro-accordian {
+                height: 70px;
+                padding: 24px 32px 10px;
+                border-radius: 24px 24px 4px 4px;
+                background-color: var(--color-interface-background-quinary);
+                color: var(--color-interface-background-quaternary);
+                position: relative;
+                width: 100.3%;
+                left: -2px;
+                p { color: var(--color-interface-background-quaternary); }
+            }
+                
+            .nrenro-accordian::after {
+                content: '\221F';
+                color: #1c3fca;
+                font-size: 19px;
+                display: inline;
+                position: absolute;
+                transition: transform 0s;
+                right: 22px;
+                cursor: pointer;
+                transform: rotate(-225deg);
+                top: 23px;
+            }
+            
+            .accordion-collapse::after {
+                transform: rotate(-45deg);
+                top: 18px;
+            }
         }
     }
 }
@@ -427,9 +522,7 @@ body.fd-ext-fund:has(.field-wizardwrapper:not([data-visible='false'])) {
 @media (768px <=width <1272px) {
     .fd-ext-fund header > .cmp-container div:nth-child(2) {
         display: none;
-    }
-
-    
+    }  
 }
 
 /* For mobiles */
@@ -437,12 +530,13 @@ body.fd-ext-fund:has(.field-wizardwrapper:not([data-visible='false'])) {
     .fd-ext-fund header > .cmp-container div:nth-child(2) {
         display: none;
     }
+
     .field-wizardexternalfunding {
       .wizard-menu-items {
         flex-wrap: nowrap;
         text-align: center;
         gap: 10px;
-        top:17%;
+        top: 17%;
   
         .wizard-menu-item {
           font-size: var(--body-x-sm-font-size);
@@ -479,8 +573,18 @@ body.fd-ext-fund:has(.field-wizardwrapper:not([data-visible='false'])) {
           content: '';
         }
       }
-      .field-selectaccount {
-        margin-top: 50px !important;
-      }
+      .field-selectaccount { margin-top: 50px !important; }
+    }
+}
+
+
+@media (width < 950px) {
+    .fd-ext-fund {
+        .field-wizardwrapper .field-wizardexternalfunding {
+            .field-selectaccount {
+                .field-multipleaccountrepeatable { .panel-wrapper { margin-bottom: 12px; } }
+                .field-continuebtn { padding-top: 20px; }
+            }
+        }
     }
 }
