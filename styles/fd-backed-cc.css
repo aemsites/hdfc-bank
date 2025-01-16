@@ -1620,11 +1620,16 @@ body.fd-backed-cc {
                                             input {
                                                 height: 20px;
                                                 border: none;
+                                                font-size: var(--body-fd-md-font-size);
+                                                letter-spacing: normal;
+                                                padding: 0;
+                                                color: var(--color-interface-text-secondary) !important;
                                             }
                                         }
 
                                         .field-sectext {
-                                            left: -15px;
+                                            left: -18px;
+                                            top:.5px;
                                             position: relative;
                                         }
                                     }
@@ -2097,7 +2102,6 @@ body.fd-backed-cc {
                         .button-wrapper {
                             text-align: left;
                             max-width: 272px;
-                            margin-top: 0 !important;
 
                             button {
                                 font-size: var(--body-fd-md-font-size);
