@@ -1,3 +1,8 @@
+/* stylelint-disable no-descending-specificity */
+.fd-ext-fund header,  .fd-ext-fund footer {
+    background: var(--color-interface-fd-background-primary);
+}
+
 body.fd-ext-fund:has(.field-wizardwrapper :not([data-visible='false'])) {
     header {
       height: 100px !important;
@@ -6,10 +11,6 @@ body.fd-ext-fund:has(.field-wizardwrapper :not([data-visible='false'])) {
     main .section.form-container {
       margin-top: 0 !important;
     }
-  }
-  
-.fd-ext-fund header,  .fd-ext-fund footer {
-    background: var(--color-interface-fd-background-primary);
 }
 
 .fd-ext-fund:has(.section.cmp-container-container) .section.cmp-container-container {
@@ -23,7 +24,7 @@ body.fd-ext-fund:has(.field-wizardwrapper :not([data-visible='false'])) {
 
 .fd-ext-fund header .cmp-container > div:nth-child(2) {
     display: none
-  }
+}
 
 .fd-ext-fund header .cmp-container > div:nth-child(3) {
     position: absolute;
@@ -33,154 +34,394 @@ body.fd-ext-fund:has(.field-wizardwrapper :not([data-visible='false'])) {
     height: 32px;
     content: url('../icons/safe-secure.svg');
     padding: 0 !important;
-  }
+}
 
-  .fd-ext-fund .field-wizardwrapper  {
-    .wizard-menu-items {
-      position: absolute;
-      left: 4%;
-      width: 92%;
-      justify-content: center;
-      margin-top: -135px;
-      background: var(--color-interface-background-primary);
-      border-radius: 24px;
-      padding: 10px;
-      border: 1px solid var(--color-interface-border-primary);
-  
-      .wizard-menu-item {
-        margin: 0 25px 0 0;
-        display: flex;
-        align-items: center;
-      }
-  
-      .wizard-menu-item:first-child::after {
-        content: '';
-        width: 0;
-      }
-  
-      .wizard-menu-item::after {
-        content: '';
-        display: block;
-        height: 3px;
-        width: 40px;
-        background-color: var(--color-interface-border-primary);
-        margin: 0 0 0 -60px;
-        position: absolute;
-        top: 30px;
-        transform: translateY(-50%);
-      }
-  
-      li.wizard-menu-active-item {
-        color: var(--color-interface-button-background);
-      }
-  
-      li.wizard-menu-item::before {
-        border: none !important;
-        vertical-align: bottom;
-        height: 42px;
-        width: 42px;
-      }
-  
-      li.wizard-menu-active-item::after {
-        background: var(--color-interface-button-background);
-      }
-  
-      li.wizard-menu-active-item::before {
-        border: none;
-      }
-  
-      li:first-child::before {
-        background: url('../icons/Indicator.png') no-repeat center center / 40px
-          40px;
-        content: '';
-      }
-  
-      li.wizard-menu-active-item:first-child::before {
-        background: url('../icons/FD-Ext-Indicator1-Active.png') no-repeat center center /
-          40px 40px;
-        content: '';
-      }
-  
-      li.wizard-menu-item:nth-child(2)::before {
-        background: url('../icons/FD-Ext-Indicator2.png') no-repeat center center / 40px
-          40px;
-        content: '';
-      }
-  
-      li:nth-child(2):has(+ li.wizard-menu-active-item)::before {
-        background: url('../icons/Indicator.png') no-repeat center center / 40px
-          40px;
-        content: '';
-      }
-  
-      li:nth-child(2):has(+ li.wizard-menu-active-item)::after {
-        background: var(--color-interface-button-background);
-      }
-  
-      li.wizard-menu-active-item:nth-child(2)::before {
-        background: url('../icons/FD-Ext-Indicator2-active.png') no-repeat center center /
-          40px 40px;
-        content: '';
-      }
-  
-      li.wizard-menu-item:last-child::before {
-        background: url('../icons/FD-Ext-Indicator3.png') no-repeat center center / 40px
-          40px;
-        content: '';
-      }
-  
-      li.wizard-menu-active-item:nth-child(3)::before {
-        background: url('../icons/FD-Ext-Indicator3-active.png') no-repeat center center /
-          40px 40px;
-        content: '';
-      }
+.fd-ext-fund {
+    main .section.form-container {
+        max-width: var(--form-fd-max-width) !important;
+        width: 100%;
+    }    
+    .section > div { max-width: 100%; }
+
+    /* Input floating label */
+    input::placeholder {
+        text-transform: none !important;
+        font-size: var(--body-md-font-size) !important;
+        letter-spacing: normal !important;
+    }
+    
+    input:not([type='radio']):focus,
+    input:not([type='radio']):hover,
+    select:focus,
+    select:hover,
+    textarea:focus,
+    textarea:hover {
+        border-color: var(--color-action-border-primary-default) !important;
+        box-shadow: 0 0 0 2px var(--color-interface-background-box-shadow-secondary);
+        outline: none;
+    }
+    
+    .text-wrapper:not(:focus),
+    .drop-down-wrapper:not(:focus),
+    .multiline-wrapper:not(:focus),
+    .number-wrapper:not(:focus) {
+        > label,
+        label p {
+        color: transparent;
+        }
     }
 
-    .field-createfd {
-        .field-leftwrapper {
-            .field-tenurepanel {
-                .field-tenurewrapper {
-                    display: flex;
-                    border: 1px solid var(--color-interface-border-secondary);
-                    border-radius: 11px;
-                    padding: 5px;
-                    legend {
-                        display: inline-block !important;
-                        width: auto;
-                        margin-left: 10px;
-                        padding: 0 5px;
-                    }
-                    .drop-down-wrapper {
-                        flex: 1;
-                        position: relative;
-                        select {
-                            appearance: none;
-                            border: none !important;
-                            font-size: var(--body-xx-lg-font-size);
-                            font-weight: var( --font-weight-medium);
-                        }
-                        &.field-year, &.field-months {
-                            &::after {
-                                content: '.';
-                                font-size: var(--font-linehight-x-large);
-                                position: absolute;
-                                top: -15px;
-                                color: var(--color-interface-border-secondary);
+    /* End of code for floating labels */
+
+    .field-accountsuccessmsg.field-wrapper {
+        margin-top: -106px;
+        width: 100%;
+        position: absolute;
+        max-width: 1204px;
+        justify-items: center;
+        z-index: 1000;
+
+        > p::before {
+            background-image: url('../icons/doc_upload_success.png');
+            background-size: 20px 20px;
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            content: "";
+        }
+        
+        p { 
+            display: flex;
+            margin: 0;
+            padding: 2px 7px;
+            border-radius: 8px;
+            background-color: var(--color-interface-toaster-background-primary);
+            color: var(--color-interface-toaster-text-primary);
+            font-size: var(--body-md-font-size);
+            font-weight: var(--font-weight-bold);
+            align-items: center;
+        }
+    }
+
+    /* Wizard */
+    .field-wizardwrapper {
+    .field-wizardexternalfunding { padding: 0;
+
+        /* Wizard menu items styling */
+        .wizard-menu-items {
+            position: absolute;
+            left: 4%;
+            width: 92%;
+            justify-content: center;
+            margin-top: -90px;
+            background: var(--color-interface-background-primary);
+            border-radius: 24px;
+            padding: 10px;
+            border: 1px solid var(--color-interface-border-primary);
+    
+            .wizard-menu-item {
+                margin: 0 25px 0 0;
+                display: flex;
+                align-items: center;
+            }
+        
+            .wizard-menu-item:first-child::after {
+                content: '';
+                width: 0;
+            }
+        
+            .wizard-menu-item::after {
+                content: '';
+                display: block;
+                height: 3px;
+                width: 40px;
+                background-color: var(--color-interface-border-primary);
+                margin: 0 0 0 -60px;
+                position: absolute;
+                top: 30px;
+                transform: translateY(-50%);
+            }
+        
+            li.wizard-menu-active-item {
+                color: var(--color-interface-button-background);
+            }
+        
+            li.wizard-menu-item::before {
+                border: none !important;
+                vertical-align: bottom;
+                height: 42px;
+                width: 42px;
+            }
+        
+            li.wizard-menu-active-item::after {
+                background: var(--color-interface-button-background);
+            }
+        
+            li.wizard-menu-active-item::before {
+                border: none;
+            }
+        
+            li:first-child::before {
+                background: url('../icons/Indicator.png') no-repeat center center / 40px
+                40px;
+                content: '';
+            }
+        
+            li.wizard-menu-active-item:first-child::before {
+                background: url('../icons/fd-ext-Indicator1-active.png') no-repeat center center /
+                40px 40px;
+                content: '';
+            }
+        
+            li.wizard-menu-item:nth-child(2)::before {
+                background: url('../icons/fd-ext-Indicator2.png') no-repeat center center / 40px
+                40px;
+                content: '';
+            }
+        
+            li:nth-child(2):has(+ li.wizard-menu-active-item)::before {
+                background: url('../icons/Indicator.png') no-repeat center center / 40px
+                40px;
+                content: '';
+            }
+        
+            li:nth-child(2):has(+ li.wizard-menu-active-item)::after {
+                background: var(--color-interface-button-background);
+            }
+        
+            li.wizard-menu-active-item:nth-child(2)::before {
+                background: url('../icons/fd-ext-Indicator2-active.png') no-repeat center center /
+                40px 40px;
+                content: '';
+            }
+        
+            li.wizard-menu-item:last-child::before {
+                background: url('../icons/fd-ext-Indicator3.png') no-repeat center center / 40px
+                40px;
+                content: '';
+            }
+        
+            li.wizard-menu-active-item:nth-child(3)::before {
+                background: url('../icons/fd-ext-Indicator3-active.png') no-repeat center center /
+                40px 40px;
+                content: '';
+            }
+        }
+
+        /* Select Account */
+        .field-selectaccount {
+            .field-customername, .field-customername b {
+                font-size: var(--body-fd-xx-xlg-font-size);
+                font-weight: var(--font-weight-bold);
+                color: var(--color-interface-text-primary);
+                margin: 15px 0 0;
+            }
+
+            .field-text p, .field-text {
+                font-size: 16px;
+                color: var(--color-input-text-primary);
+                margin-top: -13px;
+            }
+
+            .field-investmentamt {
+                input {
+                    height: 60px;
+                    font-size: var(--body-lg-font-size);
+                    color: var(--color-interface-text-primary);
+                    margin-bottom: 0;
+                }
+            }
+
+            .field-selectaccounttxt p {
+                font-size: var(--body-xx-lg-font-size);
+                font-weight: var(--font-weight-bold);
+                color: var(--color-interface-text-primary);
+            }
+
+            .field-multipleaccounts {
+                padding: 20px;
+                border: solid 1px var(--color-interface-border-primary);
+                border-radius: 24px;
+
+                .field-hdfcheader p {
+                    font-size: var(--body-x-lg-font-size);
+                    font-weight: var(--font-weight-bold);
+                    color: var(--color-interface-text-primary);
+                }
+
+                .field-multipleaccountrepeatable {
+                    > .repeat-wrapper { display: contents; 
+
+                        .panel-wrapper.field-wrapper.col-4 {
+                            border: solid 1px #D2D5DB;
+                            border-radius: 24px;
+                            padding: 24px;
+                            display: grid;
+                            p { margin: 0; }
+
+                            .radio-group-wrapper, .panel-wrapper, .plain-text-wrapper { width: fit-content; }
+
+                            .radio-wrapper {
+                                label { display: none; }
                             }
                         }
                     }
-                    .field-ytxt, .field-mtxt, .field-dtxt {
+                    .item-add { display: none; }
+                }
+            }
+        }
+    }
+
+        /* Create FD */
+        .field-createfd {
+            .field-createfdheading p {
+                font-size: var(--font-linehight-large);
+                margin: 0;
+                color: var(--color-interface-text-primary);
+            }
+    
+            .field-fdfootnotetxt{
+                margin: -20px 0 0;
+                font-size: var(--body-md-font-size);
+                p { font-size: var(--body-md-font-size); }
+            }
+
+            .field-leftwrapper {
+                .field-investmentamtpanel, .field-tenurepanel, .field-interestpayout, .field-renewalinstructions {
+                    border: solid 1px var(--color-interface-border-primary);
+                    border-radius: 24px;
+                    width: 97%;
+                    padding: 24px 32px;
+
+                    p { margin: 0; }
+                }
+
+                .field-investmentamountlabel b, .field-tenurelabel b, .field-interestpayoutlabel b, .field-renewalinstructionslabel b {
+                    color: var(--color-interface-text-primary);
+                }
+
+                .field-investmentamt {
+                    input {
+                        height: 65px;
+                        font-size: var(--body-fd-xx-xlg-font-size);
+                        color: var(--color-interface-text-primary);
+                        margin: 0;
+                    }
+                    label { margin-top: 13px; }
+                }
+                
+                .field-tenurepanel {
+                    .field-tenurewrapper {
+                        display: flex;
+                        border: 1px solid var(--color-interface-border-secondary);
+                        border-radius: 11px;
+                        padding: 5px;
+    
+                        legend {
+                            display: inline-block !important;
+                            width: auto;
+                            margin-left: 10px;
+                            padding: 0 5px;
+                        }
+    
+                        .drop-down-wrapper {
+                            flex: 1;
+                            position: relative;
+    
+                            select {
+                                appearance: none;
+                                border: none !important;
+                                font-size: var(--body-xx-lg-font-size);
+                                font-weight: var( --font-weight-medium);
+                            }
+    
+                            &.field-year, &.field-months {
+                                &::after {
+                                    content: '.';
+                                    font-size: var(--font-linehight-x-large);
+                                    position: absolute;
+                                    top: -15px;
+                                    color: var(--color-interface-border-secondary);
+                                }
+                            }
+                        }
+                        
+                        .field-ytxt, .field-mtxt, .field-dtxt {
+                            font-size: var(--body-md-font-size);
+                            font-weight: var( --font-weight-medium);
+                            position: relative;
+                            left: -22%;
+                            top: 18px;
+                        }
+                    }
+                }
+
+                .field-interestpayout {
+                    .field-interestpayoutopt { display: flex;
+
+                        .radio-wrapper { padding-right: 32px; 
+                            label { color: var(--color-interface-text-primary); }
+                        }
+                    }
+                }
+            }
+
+            .field-rightwrapper {
+                display: block;
+
+                .field-maturitydetailspanel {
+                    padding: 32px;
+                    margin-bottom: 24px;
+                    background: linear-gradient(91.26deg, var(--color-interface-promotion-text-primary) 0%, #997EF7 100%);
+                    border-radius: 24px;
+
+                    p {
+                        margin: -10px 0 0; 
+                        color: var(--color-interface-text-tertiary);
+                    }
+
+                    .field-titlem p, .field-mdetails p, .field-mdetails {
+                        font-size: var(--body-fd-xx-lg-font-size);
+                        font-weight: var(--font-weight-bold);
+                    }
+
+                    .field-textm1 p { font-size: var(--body-fd-md-font-size); }
+                    
+                    .field-mfootnote p { 
+                        font-size: var(--body-fd-sm-font-size);
+                    }
+                }
+
+                .field-infopanel {
+                    background-color: var(--color-interface-background-quinary);
+                    padding: 10px 24px;
+                    border-radius: 8px;
+
+                    p {
+                        color: var(--color-action-text-secondary-default);
+                        font-weight: var(--font-weight-bold);
                         font-size: var(--body-md-font-size);
-                        font-weight: var( --font-weight-medium);
-                        position: relative;
-                        left: -22%;
-                        top: 18px;
+                        margin: 0;
+                    }
+
+                    .field-infom { display: flex;
+
+                        &::before {
+                            content: url('../icons/info-icon.svg');
+                            align-content: center;
+                            padding-right: 12px;
+                        }
                     }
                 }
             }
         }
     }
-  }
+}
+
+body.fd-ext-fund:has(.field-wizardwrapper:not([data-visible='false'])) {
+    header { height: 105px !important; }
+    main .section.form-container { margin-top: 0 !important; }
+}
 
 /* For tablets */
 @media (768px <=width <1272px) {
