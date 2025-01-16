@@ -2146,10 +2146,10 @@ body.fd-backed-cc {
                     /* form tag close */
                 }
 
-                .form.block>div>div>form,
+               /*  .form.block>div>div>form,
                 .form.block>div>div>form fieldset {
                     display: grid;
-                }
+                } */
 
                 /* .form calss close */
             }
