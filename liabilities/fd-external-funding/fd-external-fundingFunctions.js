@@ -276,9 +276,9 @@ const getOtpExternalFundingFD = async (mobileNumber, pan, dob, globals) => {
   
     const path = urlPath(EFFD_ENDPOINTS.customerOtpGen);
     formRuntime?.getOtpLoader();
-    return fetchJsonResponse(path, jsonObj, 'POST', true);
+    // return fetchJsonResponse(path, jsonObj, 'POST', true);
 
-    // return JSON.parse("{\"otpGen\":{\"existingCustomer\":\"Y\",\"formURL\":\"/content/forms/af/hdfc_haf/assets/fd-external-funding/forms/external-funding.html\",\"status\":{\"errorCode\":\"00000\",\"errorMsg\":\"Yourrequestcouldnotbeprocessed,Pleasetryagaintocontinue\"}},\"customerIdentification\":{\"existingCustomer\":\"Y\",\"status\":{\"errorCode\":\"0\",\"errorMsg\":\"Success\"}}}");
+    return JSON.parse("{\"otpGen\":{\"existingCustomer\":\"Y\",\"formURL\":\"/content/forms/af/hdfc_haf/assets/fd-external-funding/forms/external-funding.html\",\"status\":{\"errorCode\":\"00000\",\"errorMsg\":\"Yourrequestcouldnotbeprocessed,Pleasetryagaintocontinue\"}},\"customerIdentification\":{\"existingCustomer\":\"Y\",\"status\":{\"errorCode\":\"0\",\"errorMsg\":\"Success\"}}}");
   };
 
 /**
@@ -286,6 +286,7 @@ const getOtpExternalFundingFD = async (mobileNumber, pan, dob, globals) => {
  * @param {Object} globals - The global object containing necessary data for DAP request.
 */
 function otpTimer(globals) {
+  formRuntime?.hideLoader();
   if (resendOtpCount < MAX_OTP_RESEND_COUNT) {
     globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.secondsPanel.seconds, { visible: true });
     globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.otpResend, { visible: false });
