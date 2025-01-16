@@ -15,9 +15,16 @@ const {
  * @param {object} globals
  */
 function createJourneyId(visitMode, journeyAbbreviationValue, channelValue, globals) {
+  // eslint-disable-next-line no-param-reassign
+  journeyAbbreviationValue = FD_EF_CONSTANT.JOURNEY_ABBR_VALUE;
+  // eslint-disable-next-line no-param-reassign
+  visitMode = 'online';
+  // eslint-disable-next-line no-param-reassign
+  channelValue = 'WEB';
   const dynamicUUID = generateUUID();
   const journeyId = globals.functions.exportData().form?.journeyId || `${dynamicUUID}_01_${journeyAbbreviationValue}_${visitMode}_${channelValue}`;
   globals.functions.setProperty(globals.form.runtime.journeyId, { value: journeyId });
+  globals.functions.setProperty(globals.form.runtime.journeyName, { value: journeyName });
   // Update the form context
   currentFormContext.journeyName = journeyName;
   currentFormContext.journeyID = journeyId;

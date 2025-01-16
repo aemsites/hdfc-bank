@@ -2,7 +2,7 @@ import { getSubmitBaseUrl } from '../../blocks/form/constant.js';
 import { CURRENT_FORM_CONTEXT } from '../../common/constants.js';
 
 const JOURNEY_NAME = 'FD_EXTERNAL_FUNDING';
-const JOURNEY_ABBR_VALUE = 'FD_E_F';
+const JOURNEY_ABBR_VALUE = 'FDEF';
 const BASE_URL = getSubmitBaseUrl();
 const END_POINTS = {
   otpGen: `${BASE_URL}/content/hdfc_fdforms/api/customeridentificationotpgen.json`,
