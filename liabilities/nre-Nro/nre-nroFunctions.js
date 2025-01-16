@@ -1271,6 +1271,7 @@ function nreNroPageRedirected(globals) {
   //   sendAnalytics('idcom redirection check', { validationMethod: currentFormContext?.authModeParam, status: currentFormContext?.idComSuccess }, 'ON_IDCOM_REDIRECTION', globals);
   // }
   if (currentFormContext.idComRedirect && currentFormContext.idComSuccess === 'TRUE') {
+    globals.functions.setProperty(globals.form.bankLoginWrapper, { visible: false });
     globals.functions.setProperty(globals.form.parentLandingPagePanel.landingPanel.nreNroPageRedirectedResp, { value: 'true' });
     globals.functions.setProperty(globals.form.runtime.journeyId, { value: currentFormContext.journeyId });
     // displayLoader(); // TODO : Uncomment : Error popping up
