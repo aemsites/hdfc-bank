@@ -20,9 +20,13 @@ body.fd-backed-cc {
                     width: 166px;
                 }
 
-                @media (320px <=width <=767px) {
+                @media (360px <=width <=767px) {
                     text-align: left !important;
                     left: 10px;
+                }
+
+                @media (max-width: 400px) {
+                    width: calc(100% - 20px);
                 }
 
                 @media (768px <=width < 1200px) {
@@ -59,8 +63,8 @@ body.fd-backed-cc {
     }
 
     main {
-        @media (min-width: 600px) {
-        overflow: initial;
+        @media (min-width: 768px) {
+            overflow: initial;
         }
 
         &>.cmp-container-container {
@@ -106,6 +110,10 @@ body.fd-backed-cc {
                             padding-right: 0;
                             position: relative;
 
+                            @media (min-width: 767px) {
+                                padding: 40px 35px 40px 0;
+                            }
+
                             .field-headertext {
                                 position: absolute;
                                 top: -50px;
@@ -113,6 +121,10 @@ body.fd-backed-cc {
                                 color: var(--color-interface-text-tertiary);
                                 border-left: 1px solid var(--color-interface-fd-title-border);
                                 padding-left: 20px;
+
+                                @media (max-width: 768px) {
+                                    display: none;
+                                }
 
                                 p {
                                     font-size: var(--body-x-lg-font-size);
@@ -134,16 +146,28 @@ body.fd-backed-cc {
                                     @media (max-width: 767px) {
                                         grid-column: span 12;
                                         order: 2;
-                                       }
-   
+                                    }
+
 
                                     .field-landingpanel11 {
                                         background: url('../icons/landing_banner_smily-bg.png') no-repeat -20px -10px;
+
+                                        @media (max-width: 767px) {
+                                            background: none;
+                                        }
 
                                         .field-landingpagetext1 {
                                             background: url('../icons/landing_banner_left-text.png') no-repeat 40px 50px;
                                             height: 378px;
                                             width: 100%;
+
+                                            @media (max-width: 767px) {
+                                                background: url('../icons/banner_mobile_text.png') no-repeat top center;
+                                                height: 194px;
+                                            }
+                                            @media (max-width: 480px) {
+                                                background-size: 90%;
+                                            }
 
                                             p {
                                                 display: none;
@@ -164,8 +188,27 @@ body.fd-backed-cc {
                                         margin-left: 40px;
                                         margin-top: -40px;
 
+                                        @media (max-width: 767px) {
+                                            margin: 20px 0 0 0px;
+                                            justify-content: center;
+                                            padding: 0 20px;
+                                        }
+
+                                        @media (max-width: 460px) {
+                                            flex-direction: column;
+                                        }
+
                                         .button-wrapper {
                                             width: 225px;
+                                            
+
+                                            @media (max-width: 767px) {
+                                                width: 212px;
+                                            }
+
+                                            @media (max-width: 460px) {
+                                                width: 100%;
+                                            }
 
                                             button {
                                                 &::after {
@@ -192,8 +235,14 @@ body.fd-backed-cc {
                                     grid-column: span 4;
 
                                     @media (max-width: 767px) {
-                                     grid-column: span 12;
-                                     order: 1;
+                                        grid-column: span 12;
+                                        order: 1;
+                                        background: url('../icons/banner_mobile_users.png') no-repeat center 50px;
+                                    }
+
+                                    @media (max-width: 400px) {
+                                        background-size: 90%;
+                                        background-position: left 50px;
                                     }
 
                                     .image-wrapper {
@@ -201,6 +250,17 @@ body.fd-backed-cc {
                                         height: 405px;
                                         background: url('../icons/landing_banner_right.png') no-repeat right 50px;
                                         background-size: 95%;
+
+                                        @media (max-width: 767px) {
+                                            background-size: 58%;
+                                            width: 100%;
+                                            margin-top: 50px;
+                                            background-position: bottom center;                                           
+                                        }
+
+                                        @media (max-width: 480px) {
+                                            background-size: 80%;
+                                        }
 
                                         picture {
                                             display: none;
@@ -214,6 +274,10 @@ body.fd-backed-cc {
                                 padding: 20px 40px;
                                 background-color: var(--color-interface-background-quinary);
 
+                                @media (max-width: 767px) {
+                                    padding: 20px 20px;
+                                }
+
                                 .field-perfectpanelwrapper {
                                     display: grid;
 
@@ -221,12 +285,20 @@ body.fd-backed-cc {
                                         display: inline;
                                         grid-column: span 6;
 
+                                        @media (max-width: 767px) {
+                                            grid-column: span 12;
+                                        }
+
                                         .field-findyourperfectcardtext1 {
                                             p {
                                                 font-size: var(--font-linehight-m-large);
                                                 font-weight: var(--font-weight-bold);
                                                 color: var(--color-action-text-secondary-default);
                                                 margin-bottom: 0;
+
+                                                @media (max-width: 767px) {
+                                                    font-size: var(--font-linehight-large);
+                                                }
                                             }
                                         }
 
@@ -390,6 +462,11 @@ body.fd-backed-cc {
                                                 height: 56px;
                                                 flex-direction: initial;
 
+                                                @media (max-width: 767px) {
+                                                    margin-bottom: 20px;
+                                                    max-width: initial;
+                                                }
+
                                                 .field-minfdamountheading1,
                                                 .field-minfdamountheading2 {
                                                     height: 100%;
@@ -481,6 +558,7 @@ body.fd-backed-cc {
                                         flex-direction: row;
 
                                         .button-wrapper {
+
                                             button {
                                                 color: transparent;
                                                 width: auto;
@@ -499,8 +577,11 @@ body.fd-backed-cc {
                                             display: flex;
                                             align-items: center;
                                             justify-content: space-between;
-
                                             top: 40%;
+
+                                            @media (max-width: 767px) {
+                                                display: none;
+                                            }
 
                                             button {
                                                 width: 42px;
@@ -610,6 +691,11 @@ body.fd-backed-cc {
                                     flex-direction: row;
                                     align-items: center;
 
+                                    @media (max-width: 767px) {
+                                        flex-direction: column;
+                                        text-align: center;
+                                    }
+
                                     .plain-text-wrapper {
                                         p {
                                             color: var(--color-interface-background-primary);
@@ -674,23 +760,45 @@ body.fd-backed-cc {
                                             height: 50px;
                                             position: relative;
 
+                                            @media (max-width: 767px) {
+                                                width: 100%;
+                                                background: url('../icons/mob_vertical_three_arrow.png') no-repeat bottom center;
+                                                padding-bottom: 80px;
+                                            }
+
                                             .field-enterfdamt {
                                                 display: flex;
                                                 align-items: center;
                                                 justify-content: center;
                                                 flex-direction: column;
 
+                                                @media (max-width: 767px) {
+                                                    width: 100%;
+                                                    border: 1px solid #fff;
+                                                    border-radius: 16px;
+                                                    padding: 20px;
+                                                }
+
                                                 label {
                                                     font-weight: var(--font-weight-regular);
                                                     font-size: var(--body-md-font-size);
                                                     padding: 0;
                                                     margin-bottom: 5px;
+
+                                                    @media (max-width: 767px) {
+                                                        font-size: var(--body-fd-sm-font-size);
+                                                    }
                                                 }
 
                                                 input {
                                                     font-size: var(--body-fd-xx-xlg-font-size);
                                                     font-weight: var(--font-weight-extra-bold);
                                                     border-bottom: 1px solid;
+
+                                                    @media (max-width: 767px) {
+                                                        font-size: var(--body-fd-lg-font-size);
+                                                        border: none;
+                                                    }
                                                 }
                                             }
                                         }
@@ -710,7 +818,20 @@ body.fd-backed-cc {
 
                                                 * {
                                                     padding-left: 60px;
+
+                                                    @media (max-width: 767px) {
+                                                        padding-left: 0;
+                                                    }
                                                 }
+
+                                                @media (max-width: 767px) {
+                                                    width: 100%;
+                                                    align-items: center;
+                                                    padding-top: 50px;
+                                                    height: auto;
+                                                    padding-bottom: 20px;
+                                                }
+
 
                                                 &::before {
                                                     content: '';
@@ -720,6 +841,11 @@ body.fd-backed-cc {
                                                     height: 32px;
                                                     top: 30%;
                                                     left: 15px;
+
+                                                    @media (max-width: 767px) {
+                                                        left: auto;
+                                                        top: 10px;
+                                                    }
                                                 }
 
 
@@ -728,12 +854,6 @@ body.fd-backed-cc {
                                                     font-weight: var(--font-weight-regular);
                                                 }
                                             }
-                                        }
-                                    }
-
-                                    &:hover {
-                                        .field-enterfdamtwrap {
-                                            animation: slide 1s infinite;
                                         }
                                     }
                                 }
@@ -749,8 +869,11 @@ body.fd-backed-cc {
                             }
 
                             .field-benefitsofsecuredcc {
-                                padding: 30px 40px;
-                                display: inline;
+                                padding: 30px 20px;
+                                @media (min-width: 768px) {
+                                    display: inline;
+                                    padding: 30px 40px;
+                                }
 
                                 .field-businesssecuredtxtheading {
                                     p {
@@ -777,15 +900,22 @@ body.fd-backed-cc {
                                 }
 
                                 .field-secureccinfowrapper {
-                                    display: flex;
-                                    flex-direction: row;
+                                    display: grid;
                                     margin-top: 40px;
 
+                                    @media (max-width: 767px) {
+                                        margin-top: 20px;
+                                    }
+
                                     .panel-wrapper {
-                                        flex: 1;
+                                        grid-column: span 3;
                                         display: inline;
                                         background-color: #F9FAFF;
                                         padding: 20px;
+
+                                        @media (max-width: 767px) {
+                                            grid-column: span 6;
+                                        }
 
                                         .image-wrapper {
                                             width: 32px;
@@ -1859,8 +1989,7 @@ body.fd-backed-cc {
                         .field-otppanelwrapper,
                         .field-runtime,
                         .field-resultpanel,
-                        .field-accountselectionwrapper,
-                        .field-landingpagemainwrapper {
+                        .field-accountselectionwrapper {
                             padding: 40px 35px 40px 0;
                             margin-bottom: 40px;
                             display: initial;
@@ -1968,6 +2097,7 @@ body.fd-backed-cc {
                         .button-wrapper {
                             text-align: left;
                             max-width: 272px;
+                            margin-top: 0 !important;
 
                             button {
                                 font-size: var(--body-fd-md-font-size);
@@ -2016,6 +2146,11 @@ body.fd-backed-cc {
                     /* form tag close */
                 }
 
+                .form.block>div>div>form,
+                .form.block>div>div>form fieldset {
+                    display: grid;
+                }
+
                 /* .form calss close */
             }
         }
@@ -2032,34 +2167,5 @@ body.fd-backed-cc {
                 text-align: center;
             }
         }
-    }
-}
-
-/* ----------------------- ANIMATIIONS ---------------------------- */
-
-@keyframes slide {
-    0% {
-        background-position: 90% center;
-    }
-
-    50% {
-        background-position: 100% center;
-    }
-
-    100% {
-        background-position: 90% center;
-    }
-}
-
-
-@keyframes someanimation {
-    0% {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-
-    100% {
-        opacity: 1;
-        transform: translateY(0);
     }
 }
