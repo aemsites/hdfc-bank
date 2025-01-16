@@ -80,10 +80,12 @@ formRuntime.hideLoader = (typeof window !== 'undefined') ? hideLoaderGif : false
 */
 
 const validFDPan = (val) => {
-    if (val?.length !== 10) return false;
-    // if (val?.length !== 12) return false; // TODO : Commented this, since the Test data was 12 chars.
-    if (![...val.slice(0, 5)]?.every((c) => /[a-zA-Z]/.test(c))) return false;
-    return true;
+    const panValidation = /^[A-Za-z]{5}[0-9]{4}[A-Za-z]$/;
+    
+    if(panValidation.test(val)){
+      return true;
+    }
+    return false;
 };
 
 const ageValidate = (minAge, maxAge, dobValue) => {
@@ -125,7 +127,7 @@ const validateLoginFd = (globals) => {
     const panWrapper = panInput?.parentElement;
 
     // Mobile Field Validation
-    if(mobileNo.length == 1 && /^[0-5]/.test(mobileNo)){
+    if((mobileNo && mobileNo.length == 1 && /^[0-5]/.test(mobileNo)) || (mobileNo && !(/^[0-9]/.test(mobileNo.slice(-1))))){
       globals.functions.setProperty(globals.form.loginMainPanel.loginPanel.mobilePanel.mobileNumberWrapper.registeredMobileNumber , { value : '' });
     }
   
