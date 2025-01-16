@@ -403,6 +403,7 @@ const branchCodeHandler = async (globals) => {
  * @param {Object} globals - The global state object containing form details.
  */
 const dobChangeHandler = (globals) => {
+  console.log('Inside dobChangeHandlerFn');
   const { personalDetails } = globals.form.fdBasedCreditCardWizard.basicDetails.reviewDetailsView;
   if (ageValidator(AGE_LIMIT.min, AGE_LIMIT.max, personalDetails.dateOfBirthPersonalDetails.$value)) {
     globals.functions.markFieldAsInvalid('$form.fdBasedCreditCardWizard.basicDetails.reviewDetailsView.personalDetails.dateOfBirthPersonalDetails', '', { useQualifiedName: true });
