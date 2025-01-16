@@ -123,6 +123,11 @@ const validateLoginFd = (globals) => {
   
     const panInput = document?.querySelector(`[name=${'pan'} ]`);
     const panWrapper = panInput?.parentElement;
+
+    // Mobile Field Validation
+    if(mobileNo.length == 1 && /^[0-5]/.test(mobileNo)){
+      globals.functions.setProperty(globals.form.loginMainPanel.loginPanel.mobilePanel.mobileNumberWrapper.registeredMobileNumber , { value : '' });
+    }
   
     switch (radioSelect) {
       case 'DOB':
@@ -276,17 +281,74 @@ const getOtpExternalFundingFD = async (mobileNumber, pan, dob, globals) => {
   
     const path = urlPath(EFFD_ENDPOINTS.customerOtpGen);
     formRuntime?.getOtpLoader();
-    // return fetchJsonResponse(path, jsonObj, 'POST', true);
+    return fetchJsonResponse(path, jsonObj, 'POST', true);
 
-    return JSON.parse("{\"otpGen\":{\"existingCustomer\":\"Y\",\"formURL\":\"/content/forms/af/hdfc_haf/assets/fd-external-funding/forms/external-funding.html\",\"status\":{\"errorCode\":\"00000\",\"errorMsg\":\"Yourrequestcouldnotbeprocessed,Pleasetryagaintocontinue\"}},\"customerIdentification\":{\"existingCustomer\":\"Y\",\"status\":{\"errorCode\":\"0\",\"errorMsg\":\"Success\"}}}");
+    // return JSON.parse("{\"otpGen\":{\"existingCustomer\":\"Y\",\"formURL\":\"/content/forms/af/hdfc_haf/assets/fd-external-funding/forms/external-funding.html\",\"status\":{\"errorCode\":\"00000\",\"errorMsg\":\"Yourrequestcouldnotbeprocessed,Pleasetryagaintocontinue\"}},\"customerIdentification\":{\"existingCustomer\":\"Y\",\"status\":{\"errorCode\":\"0\",\"errorMsg\":\"Success\"}}}");
   };
+
+
+  /**
+ * validates the otp
+ * @param {object} mobileNumber
+ * @param {object} pan
+ * @param {object} dob
+ * @return {PROMISE}
+ */
+const otpValidationExternalFundingFD = async (mobileNumber, pan, dob, otpNumber, globals) => {
+  const referenceNumber = `AD${getTimeStamp(new Date())}` ?? '';
+  currentFormContext.referenceNumber = referenceNumber;
+  // currentFormContext.leadProfileId = globals.form.runtime.leadProifileId.$value;
+  let datOfBirth = '';
+  if (pan.$value != null) {
+    dob.$value = '';
+    datOfBirth = '';
+  } else {
+    pan.$value = '';
+    datOfBirth = clearString(dob.$value) || '';
+  }
+
+  const jsonObj = {
+    requestString: {
+      common: {
+        journeyID: currentFormContext.journeyID,
+        journeyName: 'FD_EXTERNAL_FUNDING_JOURNEY',
+        mobileNumber: currentFormContext.isdCode + mobileNumber.$value,
+        userAgent: (typeof window !== 'undefined') ? window.navigator.userAgent : 'onLoad',
+      },
+      otpValidation: {
+        version: "V2",
+        payload: {
+          passwordValue: otpNumber.$value,
+          dateOfBirth: datOfBirth,
+          panNumber: clearString(pan.$value) || '',
+          referenceNumber: referenceNumber ?? ''
+        }
+      },
+      orchestration: {
+        fetchCasa: {
+          version: "V2",
+          payload: {
+            passwordValue: otpNumber.$value,
+            dateOfBirth: datOfBirth,
+            panNumber: clearString(pan.$value) || '',
+            referenceNumber: referenceNumber ?? ''
+          }
+        } 
+      }
+    }
+  };
+
+  const path = urlPath(EFFD_ENDPOINTS.otpValidationFetchCasa);
+  formRuntime?.otpValLoader();
+  return fetchJsonResponse(path, jsonObj, 'POST', true);
+}
 
 /**
  * Starts the Nre_Nro OTPtimer for resending OTP.
  * @param {Object} globals - The global object containing necessary data for DAP request.
 */
 function otpTimer(globals) {
-  formRuntime?.hideLoader();
+  // formRuntime?.hideLoader();
   if (resendOtpCount < MAX_OTP_RESEND_COUNT) {
     globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.secondsPanel.seconds, { visible: true });
     globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.otpResend, { visible: false });
@@ -372,6 +434,7 @@ setTimeout(() => {
 export {
     validateLoginFd,
     getOtpExternalFundingFD,
+    otpValidationExternalFundingFD,
     otpTimer,
     resendOTP,
 }

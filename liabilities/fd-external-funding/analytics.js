@@ -166,7 +166,7 @@ import {
     setAnalyticClickGenericProps(eventType, linkType, formData, journeyState, digitalData);
     digitalData.page.pageInfo.pageName = PAGE_NAME.effd[eventType];
     if((formData?.countryCode ?? '' !== '') && (formData?.form?.login?.registeredMobileNumber ?? '' !== '')){
-      digitalData.event.mobileWith = await hashPhNo(String(formData?.countryCode.substring(1,)) + String(formData?.form?.login?.registeredMobileNumber));
+      digitalData.event.mobileWith = await hashPhNo(String(formData?.countryCode) + String(formData?.form?.login?.registeredMobileNumber));
       digitalData.event.mobileWithPlus = await hashPhNo(String(formData?.countryCode)+String(formData?.form?.login?.registeredMobileNumber));
     } else if((currentFormContext?.isdCode ?? '' !== '') && (currentFormContext?.mobileNumber ?? '' !== '')){
       digitalData.event.mobileWith = await hashPhNo(String(currentFormContext?.isdCode) + String(currentFormContext?.mobileNumber));

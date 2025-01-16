@@ -64,6 +64,47 @@ const invokeJourneyDropOff = async (state, mobileNumber, globals) => {
     // return globals.functions.exportData().queryParams.leadId ? fetchJsonResponse(url, journeyJSONObj, method) : null;
     return journeyJSONObj.RequestPayload.formData.journeyID ? fetchJsonResponse(url, journeyJSONObj, method) : null;
 };
+
+/**
+     * @name invokeJourneyDropOffUpdate
+     * @param {string} state
+     * @param {string} mobileNumber
+     * @param {string} leadProfileId
+     * @param {string} journeyId
+     * @param {Object} globals - globals variables object containing form configurations.
+     * @return {PROMISE}
+     */
+const invokeJourneyDropOffUpdate = async (state, mobileNumber, leadProfileId, journeyId, globals) => {
+  const isdCode = (globals.form.loginMainPanel.loginPanel.mobilePanel.mobileNumberWrapper.countryCode.$value)?.replace(/[^a-zA-Z0-9]+/g, '');
+  const sanitizedFormData = santizedFormDataWithContext(globals, currentFormContext);
+  const journeyJSONObj = {
+    RequestPayload: {
+      userAgent: (typeof window !== 'undefined') ? window.navigator.userAgent : '',
+      leadProfile: {
+        mobileNumber: isdCode + mobileNumber,
+        isCountryCodeappended: 'true',
+        leadProfileId: leadProfileId?.toString(),
+        countryCode: isdCode,
+      },
+      formData: {
+        channel: CHANNEL,
+        journeyName: globals.form.runtime.journeyName.$value || currentFormContext.journeyName,
+        journeyID: journeyId,
+        journeyStateInfo: [
+          {
+            state,
+            stateInfo: JSON.stringify(sanitizedFormData),
+            timeinfo: new Date().toISOString(),
+          },
+        ],
+      },
+    },
+  };
+  // sendSubmitClickEvent(mobileNumber, linkName, sanitizedFormData);
+  const url = urlPath(ENDPOINTS.journeyDropOffUpdate);
+  const method = 'POST';
+  return fetchJsonResponse(url, journeyJSONObj, method);
+};
   
 /**
     * @name effdInvokeJourneyDropOffByParam
@@ -105,6 +146,7 @@ function journeyResponseHandlerUtil(payload, formContext) {
 
 export {
     invokeJourneyDropOff,
+    invokeJourneyDropOffUpdate,
     effdInvokeJourneyDropOffByParam,
     createJourneyId,
     journeyResponseHandlerUtil,

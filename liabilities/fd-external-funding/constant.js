@@ -18,7 +18,8 @@
   };
 
   const EFFD_ENDPOINTS = {
-    customerOtpGen: '/content/hdfc_customerinfo/api/customerIdentificationOTPGen.json'
+    customerOtpGen: '/content/hdfc_customerinfo/api/customerIdentificationOTPGen.json',
+    otpValidationFetchCasa: '/content/hdfc_customerinfo/api/otpValidationOrchestration.json',
   };
 
   export {
