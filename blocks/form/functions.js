@@ -12,7 +12,8 @@ export const formIdPathMapping = {
   '/content/forms/af/hdfc_haf/digital/fdlienprodtest': '../../../creditcards/fd-card/fd-functions.js', // fd form
   '/content/forms/af/hdfc_haf/digital/nriaddonaccounts': '../../../liabilities/nre-Nro/nre-nro.js',
   '/content/forms/af/hdfc_haf/loan-against-assets/smartemi/smartemi-cug': '../../../creditcards/semi/semi-functions.js',
-  '/content/forms/af/hdfc_haf/digital/etb-fixed-deposit-cc-cug': '../../../creditcards/fd-card/fd-functions.js' // fd CUG
+  '/content/forms/af/hdfc_haf/digital/etb-fixed-deposit-cc-cug': '../../../creditcards/fd-card/fd-functions.js',
+  '/content/forms/af/hdfc_haf/loan-against-assets/smartemi/smartemi-hf': '../../../creditcards/semi/semi-functions.js'
 };
 
 export default function getCustomFunctionPath(id) {
