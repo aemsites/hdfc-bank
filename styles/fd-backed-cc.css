@@ -165,6 +165,7 @@ body.fd-backed-cc {
                                                 background: url('../icons/banner_mobile_text.png') no-repeat top center;
                                                 height: 194px;
                                             }
+
                                             @media (max-width: 480px) {
                                                 background-size: 90%;
                                             }
@@ -200,7 +201,7 @@ body.fd-backed-cc {
 
                                         .button-wrapper {
                                             width: 225px;
-                                            
+
 
                                             @media (max-width: 767px) {
                                                 width: 212px;
@@ -255,7 +256,7 @@ body.fd-backed-cc {
                                             background-size: 58%;
                                             width: 100%;
                                             margin-top: 50px;
-                                            background-position: bottom center;                                           
+                                            background-position: bottom center;
                                         }
 
                                         @media (max-width: 480px) {
@@ -407,6 +408,8 @@ body.fd-backed-cc {
 
                                                 .plain-text-wrapper {
                                                     margin-bottom: 7px;
+                                                    display: flex;
+                                                    align-items: center;
 
                                                     &::before {
                                                         content: '';
@@ -870,6 +873,7 @@ body.fd-backed-cc {
 
                             .field-benefitsofsecuredcc {
                                 padding: 30px 20px;
+
                                 @media (min-width: 768px) {
                                     display: inline;
                                     padding: 30px 40px;
@@ -1629,7 +1633,7 @@ body.fd-backed-cc {
 
                                         .field-sectext {
                                             left: -18px;
-                                            top:.5px;
+                                            top: .5px;
                                             position: relative;
                                         }
                                     }
@@ -1979,6 +1983,909 @@ body.fd-backed-cc {
 
                         /* ACCOUNT SELECTION SCREEN END */
 
+                        .field-fdbackedccwizard {
+                            position: relative;
+
+                            .wizard-menu-items {
+                                height: 84px;
+                                border-radius: 20px;
+                                border: 1px solid #ECEDF3;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                padding-bottom: 0;
+                                margin-top: -50px;
+                                background: #fff;
+                                gap: 25px;
+
+                                @media (min-width: 768px) {
+                                    gap: 80px;
+                                    margin-top: -70px;
+                                }
+
+                                @media (min-width: 992px) {
+                                    gap: 80px;
+                                    margin-top: -84px;
+                                }
+
+                                @media (320px <=width <=767px) {
+                                    margin-top: -60px;
+                                }
+
+                                .wizard-menu-item {
+                                    font-size: 14px;
+                                    font-weight: 400;
+                                    line-height: 20px;
+                                    color: var(--color-interface-text-primary);
+                                    position: relative;
+
+                                    @media (min-width: 768px) {
+                                        font-size: 16px;
+                                        font-weight: 400;
+                                        line-height: 28px;
+                                    }
+
+                                    @media (min-width: 992px) {
+                                        font-size: 18px;
+                                        font-weight: 400;
+                                        line-height: 28px;
+                                    }
+
+
+                                    @media (320px <=width <=767px) {
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: center;
+                                        flex-direction: column;
+                                        min-width: 21%;
+                                    }
+
+                                    @media (320px <=width <=360px) {
+                                        min-width: auto;
+                                    }
+
+
+                                    &:first-child {
+                                        &::before {
+                                            background: url('../icons/wizard_select_credit_card_icon.png') no-repeat center center;
+                                            border-color: var(--color-action-border-primary-default);
+                                        }
+
+                                        &.wizard-menu-active-item {
+                                            color: var(--color-interface-icon-highlight);
+                                            font-weight: 600;
+
+                                            &::before {
+                                                background: var(--color-input-border-focus) url('../icons/wizard_select_credit_card_active_icon.png') no-repeat center center;
+                                                border: 2px solid #c6d4ff;
+                                            }
+                                        }
+                                    }
+
+                                    &:nth-child(2) {
+                                        &::before {
+                                            background: url('../icons/step-confirm-details.png') no-repeat center center;
+                                        }
+
+                                        &.wizard-menu-active-item {
+                                            &::before {
+                                                background: var(--color-input-border-focus) url('../icons/step-confirm-details-select.png') no-repeat center center;
+                                            }
+                                        }
+                                    }
+
+                                    &:nth-child(3) {
+                                        &::before {
+                                            background: url('../icons/wizard_verify_icon.png') no-repeat center center;
+                                        }
+
+                                        &.wizard-menu-active-item {
+                                            &::before {
+                                                background: var(--color-input-border-focus) url('../icons/wizard_verify_active_icon.png') no-repeat center center;
+                                            }
+                                        }
+
+                                        &::after {
+                                            display: none;
+                                        }
+                                    }
+
+                                    &::before {
+                                        border: 1.5px solid var(--color-interface-border-secondary);
+                                        border-radius: 20px;
+                                        color: transparent;
+                                        width: 44px;
+                                        height: 44px;
+
+                                        @media (320px <=width <=767px) {
+                                            border: 1.5px solid var(--color-interface-border-secondary);
+                                            border-radius: 15px;
+                                            color: transparent;
+                                            display: flex !important;
+                                            margin-right: 0 !important;
+                                            width: 32px !important;
+                                            height: 32px !important;
+                                        }
+                                    }
+
+                                    &::after {
+                                        content: '';
+                                        border-top: 3px solid var(--color-interface-border-primary);
+                                        height: 0px;
+                                        width: 40px;
+                                        position: absolute;
+                                        top: 18px;
+                                        right: -58px;
+
+                                        @media (320px <=width <=767px) {
+                                            right: -25px !important;
+                                        }
+
+                                        @media (320px <=width <=360px) {
+                                            right: -18px !important;
+                                        }
+                                    }
+                                }
+                            }
+
+                            .field-selectcreditcardwizard1 {
+                                margin-top: 20px;
+
+                                .field-backbuttonwizardview {
+                                    button {
+                                        font-size: var(--body-fd-lg-font-size);
+                                        font-weight: var(--font-weight-medium);
+                                        width: auto;
+                                        background: none;
+                                        color: var(--color-action-text-secondary-default);
+                                        position: relative;
+                                        display: flex;
+                                        padding-left: 25px;
+                                        align-items: center;
+
+                                        &::before {
+                                            content: '';
+                                            position: absolute;
+                                            height: 20px;
+                                            width: 20px;
+                                            background: url('../icons/arrow-right-blue_light_icon.png') no-repeat left center;
+                                            top: 15px;
+                                            left: 0;
+                                        }
+
+                                        &::after {
+                                            display: none;
+                                        }
+                                    }
+                                }
+
+
+                                .field-selectcreditcardsingle {
+                                    display: flex;
+                                    flex-flow: row;
+
+                                    p {
+                                        margin-bottom: 0;
+                                    }
+
+                                    .field-selectccsingleimagewrapper {
+                                        border: 1px solid var(--color-interface-border-secondary);
+                                        border-radius: 16px;
+                                        padding: 20px;
+                                        max-width: 324px;
+                                        margin-right: 20px;
+                                        display: inline-block;
+
+                                        .field-singlecardviewimage {
+                                            width: 283px;
+                                            height: 178px;
+                                            background: url('../icons/credit-card-sample.png') no-repeat;
+                                            background-size: cover;
+                                            margin: 0 auto;
+
+                                            picture {
+                                                display: none;
+                                            }
+                                        }
+
+                                        .field-singlecardfeature1 {
+                                            margin-top: 20px;
+                                            margin-bottom: 5px;
+
+                                            p {
+                                                font-size: var(--body-fd-md-font-size);
+                                                font-weight: var(--font-weight-bold);
+                                                color: #0A0F1C;
+                                            }
+                                        }
+
+                                        .field-singlecardfeature2,
+                                        .field-singlecardfeature3 {
+                                            p {
+                                                font-size: var(--body-fd-sm-font-size);
+                                                font-weight: var(--font-weight-regular);
+                                                color: #0A0F1C;
+                                            }
+                                        }
+
+                                        .field-viewothercardoptionssingle {
+                                            border-top: 1px solid var(--color-interface-border-secondary);
+                                            margin-top: 30px;
+                                            padding-top: 10px;
+                                        }
+                                    }
+
+                                    .field-singleccdetailswrapper {
+                                        flex: initial;
+                                        display: inline;
+
+                                        .field-singleccfeatureswrap {
+                                            display: flex;
+                                            align-items: center;
+                                            justify-content: space-between;
+                                            margin-top: -15px;
+                                            margin-bottom: 10px;
+
+                                            .field-moneybackcclabel {
+                                                p {
+                                                    font-size: var(--body-x-lg-font-size);
+                                                    font-weight: var(--font-weight-bold);
+                                                    color: #222222;
+                                                }
+                                            }
+                                        }
+
+                                        .field-singleccdetailsfeatureswrap1,
+                                        .field-singleccdetailsfeatureswrap2,
+                                        .field-singleccdetailsfeatureswrap3 {
+                                            display: flex;
+                                            align-items: center;
+                                            justify-content: space-between;
+                                            margin-bottom: 20px;
+
+                                            .plain-text-wrapper {
+                                                border: 1px solid var(--color-interface-border-primary);
+                                                border-radius: 16px;
+                                                padding: 20px;
+                                                position: relative;
+                                                min-height: 104px;
+                                                flex: 1;
+                                                display: flex;
+                                                align-items: center;
+
+                                                &::before {
+                                                    content: '';
+                                                    position: absolute;
+                                                    height: 40px;
+                                                    width: 40px;
+                                                    border-radius: 100px;
+                                                }
+
+                                                p {
+                                                    font-size: var(--body-fd-md-font-size);
+                                                    font-weight: var(--font-weight-regular);
+                                                    color: #0A0F1C;
+                                                    padding-left: 30px;
+                                                }
+
+                                                &.field-singleccfeature1 {
+                                                    &::before {
+                                                        background: #FEFAE6 url('../icons/currency_conversion_icon1.png') no-repeat center center;
+                                                    }
+                                                }
+
+                                                &.field-singleccfeature2 {
+                                                    &::before {
+                                                        background: #EBF9EF url('../icons/dollar_icon2.png') no-repeat center center;
+                                                    }
+                                                }
+
+                                                &.field-singleccfeature3 {
+                                                    &::before {
+                                                        background: #F4F0FF url('../icons/lounge_icon3.png') no-repeat center center;
+                                                    }
+                                                }
+
+                                                &.field-singleccfeature4 {
+                                                    &::before {
+                                                        background: #FDEFED url('../icons/insurance_icon4.png') no-repeat center center;
+                                                    }
+                                                }
+
+                                                &.field-singleccfeature5 {
+                                                    &::before {
+                                                        background: #EBF9EF url('../icons/dollar_icon2.png') no-repeat center center;
+                                                    }
+                                                }
+
+                                                &.field-singleccfeature6 {
+                                                    &::before {
+                                                        background: #FEFAE6 url('../icons/currency_conversion_icon1.png') no-repeat center center;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    button {
+                                        width: auto;
+                                        background: none;
+                                        font-size: var(--body-fd-md-font-size);
+                                        font-weight: var(--font-weight-bold);
+                                        color: var(--color-action-text-secondary-default);
+
+                                        &:hover {
+                                            background: none !important;
+                                        }
+
+                                        &::after {
+                                            display: none;
+                                        }
+                                    }
+                                }
+
+                                /* select credit card single view wrapper end */
+                                .field-selectcreditcardmultiple {
+                                    position: relative;
+
+                                    p {
+                                        margin-bottom: 0;
+                                    }
+
+                                    .field-multiplecardlabel1 {
+                                        p {
+                                            font-size: var(--body-fd-xx-lg-font-size);
+                                            font-weight: var(--font-weight-bold);
+                                            color: var(--color-interface-text-primary);
+                                        }
+                                    }
+
+                                    .field-multiplecardlabel2 {
+                                        background: var(--color-interface-background-quinary);
+                                        border-radius: 40px;
+                                        padding: 5px 10px;
+                                        width: 180px;
+
+                                        p {
+                                            font-size: var(--body-fd-lg-font-size);
+                                            font-weight: var(--font-weight-medium);
+                                            color: var(--color-action-text-secondary-default);
+                                        }
+                                    }
+
+                                    .field-multiplecardsselectionrepeatable {
+                                        border: 1px solid var(--color-interface-border-secondary);
+                                        border-radius: 16px;
+                                        max-width: 350px;
+                                        padding: 20px;
+                                        display: inline-block;
+                                        background-color: var(--color-interface-background-primary);
+
+                                        p {
+                                            margin-bottom: 0;
+                                        }
+
+                                        .field-multicardselection {
+
+                                            .field-multicardselection {
+                                                display: flex;
+                                                align-items: center;
+                                                justify-content: space-between;
+
+                                                label {
+                                                    font-size: var(--body-x-lg-font-size) !important;
+                                                    font-weight: var(--font-weight-bold);
+                                                    color: var(--color-interface-text-primary);
+                                                    order: 1;
+                                                }
+
+                                                input[type="radio"] {
+                                                    order: 2;
+                                                    border-radius: 100%;
+                                                    border: 1px solid var(--color-interface-border-secondary);
+                                                    appearance: none;
+                                                    -webkit-appearance: none;
+                                                    outline: none;
+                                                    padding: 0;
+                                                    width: 24px !important;
+                                                    height: 24px !important;
+
+                                                    &:checked {
+                                                        cursor: pointer;
+                                                        position: relative;
+                                                        display: flex;
+                                                        align-items: center;
+                                                        justify-content: center;
+                                                        border: 1px solid var(--color-interface-icon-highlight);
+
+                                                        &::before {
+                                                            content: '';
+                                                            border-radius: 100%;
+                                                            width: 12px !important;
+                                                            height: 12px !important;
+                                                            background-color: var(--color-interface-icon-highlight);
+                                                            position: absolute;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+
+                                        .field-multicardtagline1 {
+                                            p {
+                                                font-size: var(--body-fd-md-font-size);
+                                                font-weight: var(--font-weight-regular);
+                                                color: var(--color-input-text-primary);
+                                            }
+                                        }
+
+                                        .image-wrapper {
+                                            background: url('../icons/freedom_card.png') no-repeat;
+                                            margin-top: 20px;
+
+                                            height: 125px;
+
+                                            picture {
+                                                display: none;
+                                            }
+                                        }
+
+                                        .field-multicardfeatureswrapper {
+                                            margin-top: 20px;
+                                            display: inline-block;
+
+                                            .plain-text-wrapper {
+                                                margin-bottom: 7px;
+                                                display: flex;
+                                                align-items: center;
+
+                                                &::before {
+                                                    content: '';
+                                                    position: absolute;
+                                                    width: 16px;
+                                                    height: 16px;
+                                                    background: url('../icons/folder_icon.png') no-repeat top left;
+                                                }
+
+                                                p p {
+                                                    padding-left: 30px;
+                                                    font-size: var(--body-fd-sm-font-size);
+                                                    font-weight: var(--font-weight-regular);
+                                                    color: var(--color-interface-text-primary);
+                                                    position: relative;
+                                                    margin-bottom: 0;
+                                                }
+
+                                                &.field-multicardfeatures1 {
+                                                    &::before {
+                                                        background: url('../icons/bank_gray_icon.png') no-repeat top left;
+                                                    }
+                                                }
+                                            }
+                                        }
+
+                                        .field-multiallfeaturesandbenefits {
+                                            margin-top: 0px;
+
+                                            button {
+                                                background: none;
+                                                color: var(--color-action-text-secondary-default);
+                                                font-size: var(--body-md-font-size);
+                                                font-weight: var(--font-weight-bold);
+                                                width: auto;
+                                                height: auto;
+
+                                                &::after {
+                                                    background: url('../icons/right_blue_arrow.png') no-repeat right 3px;
+                                                }
+
+                                                &:hover {
+                                                    background: none !important;
+                                                }
+                                            }
+                                        }
+
+                                        .field-multiminfdamountcardwrapper {
+                                            margin-top: 20px;
+                                            display: flex;
+                                            align-items: center;
+                                            justify-content: space-between;
+                                            max-width: 300px;
+                                            margin: 20px 0 0 0;
+                                            border: 1px solid var(--color-interface-border-secondary);
+                                            border-radius: 12px;
+                                            height: 56px;
+                                            flex-direction: initial;
+
+                                            @media (max-width: 767px) {
+                                                margin-bottom: 20px;
+                                                max-width: initial;
+                                            }
+
+                                            .field-multiminfdamountheading {
+                                                height: 100%;
+                                                display: flex;
+                                                align-items: center;
+                                                justify-content: center;
+                                                width: 45%;
+
+                                                p {
+                                                    color: var(--color-interface-text-primary);
+                                                    font-size: var(--body-sm-font-size);
+                                                    font-weight: var(--font-weight-medium);
+                                                    margin: 0;
+                                                }
+                                            }
+
+                                            .field-multiminfdamountcard {
+                                                border-top-right-radius: 12px;
+                                                border-bottom-right-radius: 12px;
+                                                border-top-left-radius: 0;
+                                                border-bottom-left-radius: 0;
+                                                display: flex;
+                                                align-items: center;
+                                                flex-direction: row-reverse;
+                                                padding: 0 20px;
+                                                background-color: var(--color-interface-background-quinary);
+
+                                                label {
+                                                    transform: none;
+                                                    margin: 0;
+                                                    padding: 0;
+                                                    background: url('../icons/only_amount_icon.png') no-repeat center center;
+                                                    background-size: 15px;
+                                                    width: 20px;
+                                                    font-size: 0;
+                                                    position: initial;
+                                                }
+
+                                                input {
+                                                    background-color: var(--color-interface-background-quinary);
+                                                    height: 54px;
+                                                    border: none;
+                                                    font-size: var(--body-lg-font-size);
+                                                    font-weight: var(--font-weight-extra-bold);
+                                                    margin: 0;
+                                                    letter-spacing: normal;
+                                                    padding-right: 0;
+                                                    field-sizing: content;
+                                                    width: auto;
+                                                    background: transparent;
+
+                                                    &:focus {
+                                                        outline: none;
+                                                    }
+
+                                                }
+                                            }
+                                        }
+
+                                        .field-getthisperfectcard1,
+                                        .field-getthisperfectcard2 {
+                                            width: 100%;
+                                            max-width: none;
+                                            margin-top: 20px;
+
+                                            button {
+                                                background: none;
+                                                border: 1px solid var(--color-action-border-primary-default);
+                                                color: var(--color-action-text-secondary-default);
+
+                                                &::after {
+                                                    display: none;
+                                                }
+
+                                                &:hover {
+                                                    color: var(--color-interface-text-tertiary);
+                                                }
+                                            }
+                                        }
+                                    }
+
+
+
+                                }
+
+                                /* select credit card multiple view wrapper end */
+
+                                .field-fdamountcclimitwrapper {
+                                    border: 1px solid var(--color-action-border-primary-disabled);
+                                    background: var(--color-interface-background-quinary);
+                                    border-radius: 16px;
+                                    padding: 20px;
+                                    margin-top: 10px;
+
+                                    p {
+                                        margin-bottom: 0;
+                                    }
+
+                                    .number-wrapper,
+                                    .drop-down-wrapper {
+                                        label {
+                                            font-weight: var(--body-sm-font-size);
+                                            font-weight: var(--font-weight-regular);
+                                            color: var(--color-interface-text-secondary);
+                                        }
+
+                                        input,
+                                        select {
+                                            font-weight: var(--font-weight-medium);
+                                            letter-spacing: 0;
+                                            padding-left: 20px;
+                                            margin-bottom: 0;
+
+                                            &:focus {
+                                                outline: none;
+                                            }
+                                        }
+                                    }
+
+                                    .field-fdcclimitlabel {
+
+                                        p {
+                                            font-size: var(--body-fd-lg-font-size);
+                                            font-weight: var(--font-weight-bold);
+                                            color: var(--color-interface-text-primary);
+                                        }
+                                    }
+
+                                    .field-fdcclimitwrapper {
+                                        display: flex;
+
+                                        .field-eligiblecclimit {
+                                            display: flex;
+                                            align-items: center;
+                                            border: 1px solid var(--color-interface-border-secondary);
+                                            border-radius: 12px;
+                                            height: 60px;
+                                            background: var(--color-interface-background-primary);
+                                            margin-top: 8px;
+
+                                            label {
+                                                font-size: var(--body-md-font-size);
+                                                font-weight: var(--font-weight-medium);
+                                                color: var(--color-interface-text-primary);
+                                                position: initial;
+                                                transform: none;
+                                                position: relative;
+                                                margin: 0;
+                                                padding: 0 30px 0 60px;
+                                                height: 29px;
+                                                display: flex;
+                                                align-items: center;
+
+                                                &::before {
+                                                    content: '';
+                                                    position: absolute;
+                                                    height: 29px;
+                                                    width: 29px;
+                                                    background: url('../icons/eligible_credit_limit_icon.png') no-repeat;
+                                                    margin-left: -40px;
+                                                }
+                                            }
+
+                                            input {
+                                                border: none;
+                                                width: auto;
+                                                margin: 0;
+                                                field-sizing: content;
+                                                background: var(--color-interface-promotion-text-primary);
+                                                font-size: var(--body-fd-lg-font-size);
+                                                font-weight: var(--font-weight-extra-bold);
+                                                color: var(--color-interface-text-tertiary) !important;
+                                                border-top-left-radius: 0;
+                                                border-bottom-left-radius: 0;
+                                                padding: 0 15px;
+                                                height: 100%;
+                                            }
+
+                                        }
+
+                                    }
+
+                                    .field-minmaxnote {
+                                        margin-top: -10px;
+
+                                        p {
+                                            font-size: var(--body-fd-md-font-size);
+                                            font-weight: var(--font-weight-regular);
+                                            color: var(--color-interface-text-secondary);
+                                        }
+                                    }
+
+                                    .field-tenurelabel {
+                                        p {
+                                            font-size: var(--body-fd-md-font-size);
+                                            font-weight: var(--font-weight-medium);
+                                            color: #1F2937;
+                                        }
+                                    }
+
+                                    .field-selecttenurewrapper {
+                                        display: flex;
+
+                                        select {
+                                            width: 114px;
+                                            line-height: normal;
+                                            padding: 0 0 0 20px !important;
+                                        }
+                                    }
+
+                                    .field-tenurenote {
+                                        margin-top: -10px;
+
+                                        p {
+                                            font-size: var(--body-lg-font-size);
+                                            font-weight: var(--font-weight-regular);
+                                            color: var(--color-interface-text-secondary);
+                                        }
+                                    }
+
+                                    .field-fddetailssection {
+                                        display: inline;
+
+                                        .field-fddetailslabel {
+                                            margin-bottom: 10px;
+
+                                            p {
+                                                font-size: var(--body-fd-lg-font-size);
+                                                font-weight: var(--font-weight-bold);
+                                                color: var(--color-interface-text-primary);
+                                            }
+                                        }
+
+                                        &>.panel-wrapper {
+                                            display: grid;
+                                            margin-bottom: 10px;
+
+                                            .text-wrapper,
+                                            .number-wrapper,
+                                            .field-nomineedetailwrapper {
+                                                display: inline;
+                                                grid-column: span 4;
+
+                                                label,
+                                                .field-nomineedetailslabel p {
+                                                    padding: 0;
+                                                    background: none;
+                                                    margin: 0;
+                                                    transform: none;
+                                                    position: initial;
+                                                    color: var(--color-interface-text-quaternary);
+                                                    font-size: var(--body-fd-sm-font-size);
+                                                    font-weight: var(--font-weight-regular);
+                                                }
+
+                                                input {
+                                                    font-size: var(--body-fd-lg-font-size);
+                                                    font-weight: var(--font-weight-medium);
+                                                    border: none;
+                                                    background: none;
+                                                    padding: 0;
+                                                    height: auto;
+                                                    letter-spacing: 0;
+                                                    margin: 0;
+                                                    line-height: normal;
+                                                    border-radius: 0;
+                                                }
+
+                                                button {
+                                                    width: auto;
+                                                    background: none;
+                                                    font-size: var(--body-fd-md-font-size);
+                                                    font-weight: var(--font-weight-bold);
+                                                    color: var(--color-action-text-secondary-default);
+                                                    height: auto;
+                                                    margin-top: -5px;
+                                                }
+                                            }
+
+
+                                        }
+
+                                        .field-notesection {
+                                            display: inline;
+                                            border: 1px solid var(--color-interface-border-primary);
+                                            border-radius: 12px;
+                                            background: #F9FAFF;
+                                            padding: 20px;
+
+                                            .field-notelabel.plain-text-wrapper {
+                                                p {
+                                                    font-size: var(--body-fd-md-font-size);
+                                                    font-weight: var(--font-weight-medium);
+                                                    color: var(--color-interface-text-quaternary);
+                                                    font-weight: var(--font-weight-medium);
+                                                }
+                                            }
+
+                                            .plain-text-wrapper {
+                                                p {
+                                                    font-size: var(--body-fd-md-font-size);
+                                                    font-weight: var(--font-weight-regular);
+                                                    color: var(--color-interface-text-secondary);
+                                                }
+                                            }
+                                        }
+
+                                        .field-tandcpanel {
+                                            display: initial;
+
+                                            legend {
+                                                font-size: var(--body-fd-lg-font-size);
+                                                font-weight: var(--font-weight-bold);
+                                                color: var(--color-interface-text-primary);
+                                            }
+
+                                            .checkbox-wrapper {
+                                                @media (320px <=width <=767px) {
+                                                    margin-bottom: 10px;
+                                                }
+
+                                                input[type="checkbox"] {
+                                                    border-radius: 5px;
+                                                    border: 1.5px solid var(--color-interface-border-secondary);
+                                                    appearance: none;
+                                                    -webkit-appearance: none;
+                                                    outline: none;
+                                                    padding: 0;
+
+                                                    &:checked {
+                                                        background: var(--color-interface-icon-highlight) url("../icons/checkbox-checked-arrow.png") no-repeat center center;
+                                                        border: none;
+                                                        cursor: pointer;
+                                                    }
+                                                }
+
+                                                label {
+                                                    margin-bottom: 0;
+                                                    margin-top: 0;
+                                                    font-size: 14px;
+                                                    line-height: 20px;
+                                                    font-weight: 400;
+                                                    color: var(--color-interface-text-secondary);
+
+                                                    @media (320px <=width <=767px) {
+                                                        margin-bottom: 10px;
+                                                    }
+
+                                                    a {
+                                                        text-decoration: underline;
+                                                        font-weight: normal !important;
+
+                                                        &:hover {
+                                                            color: var(--color-interface-icon-highlight);
+                                                            text-decoration: none;
+                                                        }
+                                                    }
+                                                }
+                                            }
+
+                                            .field-tandcnote {
+                                                background-color: var(--color-interface-background-quinary);
+                                                border-radius: 8px;
+                                                padding: 20px;
+                                                margin-top: 20px;
+
+                                                p p {
+                                                    padding-left: 30px;
+                                                    background: url('../icons//info-icon.svg') no-repeat center left;
+                                                    font-size: var(--body-fd-sm-font-size);
+                                                    font-weight: var(--font-weight-medium);
+                                                    color: var(--color-action-border-primary-default);
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                }
+
+                                /* fd amount credit card wrapper end */
+                            }
+                        }
+
+                        /* SELECT CREDIT CARD SCREEN END */
+
                         .field-runtime {}
 
                         /* FIELD-RUNTIME SCREEN END */
@@ -1994,7 +2901,8 @@ body.fd-backed-cc {
                         .field-otppanelwrapper,
                         .field-runtime,
                         .field-resultpanel,
-                        .field-accountselectionwrapper {
+                        .field-accountselectionwrapper,
+                        .field-fdbackedccwizard {
                             padding: 40px 35px 40px 0;
                             margin-bottom: 40px;
                             display: initial;
@@ -2008,9 +2916,15 @@ body.fd-backed-cc {
                             @media (max-width: 768px) {
                                 padding: 40px 35px 40px 40px;
                             }
+
+                            &.field-fdbackedccwizard {
+                                grid-column: span 12;
+                                padding: 40px 35px;
+                            }
                         }
 
                         input[type="text"],
+                        input[type="number"],
                         input[type="password"],
                         input[type="date"] {
                             font-size: var(--body-lg-font-size);
@@ -2049,7 +2963,7 @@ body.fd-backed-cc {
                             -moz-appearance: none;
                             -webkit-appearance: none;
                             appearance: none;
-                            background: url('./../icons/select_arrow.svg') no-repeat 95% center;
+                            background: var(--color-interface-background-primary) url('./../icons/select_arrow.svg') no-repeat 95% center;
 
                             &:focus-visible {
                                 outline: none;
@@ -2140,7 +3054,8 @@ body.fd-backed-cc {
                         }
 
                         &:has(.field-carddetailswrapper[data-visible="true"]),
-                        &:has(.field-landingpagemainwrapper:not([data-visible="false"])) {
+                        &:has(.field-landingpagemainwrapper:not([data-visible="false"])),
+                        &:has(.field-fdbackedccwizard[data-visible="true"]) {
                             .field-bannerimagepanel {
                                 display: none;
                             }
@@ -2149,11 +3064,6 @@ body.fd-backed-cc {
 
                     /* form tag close */
                 }
-
-               /*  .form.block>div>div>form,
-                .form.block>div>div>form fieldset {
-                    display: grid;
-                } */
 
                 /* .form calss close */
             }
@@ -2170,6 +3080,13 @@ body.fd-backed-cc {
             div:nth-child(1) {
                 text-align: center;
             }
+        }
+    }
+
+    &:has(.field-fdbackedccwizard[data-visible="true"]) {
+        header {
+            height: 115px !important;
+            align-items: flex-start;
         }
     }
 }
