@@ -64,6 +64,14 @@ formRuntime.otpValLoader = currentFormContext.otpValLoader || (typeof window !==
 formRuntime.hideLoader = (typeof window !== 'undefined') ? hideLoaderGif : false;
 
 
+setTimeout(async () => {
+  if (typeof window !== 'undefined') {
+    const { validateOtpInput } = await import('./fd-external-funding-dom-functions.js');
+    validateOtpInput();
+  }
+}, 1200);
+
+
 // /**
 //  * Function to prefill a hidden field, invoking fdExternalFundingInit.
 //  * @name fdExternalFundingInit
@@ -106,6 +114,16 @@ const ageValidate = (minAge, maxAge, dobValue) => {
     }
   
     return age >= minAge && age < maxAge;
+};
+
+const editMobileNumber = (globals) => {
+    globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.otpSubPanel.hiddenMaxCount, { value : 3 }); // Resetting to 3. Need to confirm whether we should reset to 3.
+    globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.otpSubPanel.numRetries, { value : 3 });
+    globals.functions.setProperty(globals.form.otpPanelWrapper, { visible : false });
+    globals.functions.setProperty(globals.form.loginMainPanel, { visible : true });
+    resendOtpCount = 0;
+    sec = OTP_TIMER;
+    dispSec = OTP_TIMER;
 };
 
 const validateLoginFd = (globals) => {
@@ -375,6 +393,22 @@ function otpTimer(globals) {
 }
 
 /**
+ * does the custom show hide of panel or screens in resend otp.
+ * @param {string} errorMessage
+ * @param {number} numRetries
+ * @param {object} globals
+ */
+function customSetFocus(errorMessage, numRetries, globals) {
+  if (typeof numRetries === 'number' && numRetries < 1) {
+    globals.functions.setProperty(globals.form.otpPanelWrapper, { visible: false });
+    globals.functions.setProperty(globals.form.otpPanelWrapper.submitOTP, { visible: false });
+    globals.functions.setProperty(globals.form.resultPanel, { visible: true });
+    globals.functions.setProperty(globals.form.resultPanel.errorResultPanel, { visible: true });
+    globals.functions.setProperty(globals.form.resultPanel.errorResultPanel.errorMessageText, { value: errorMessage });
+  }
+}
+
+/**
  * @name resendOTP
  * @param {Object} globals - The global object containing necessary data for DAP request.
  * @return {PROMISE}
@@ -439,4 +473,6 @@ export {
     otpValidationExternalFundingFD,
     otpTimer,
     resendOTP,
+    editMobileNumber,
+    customSetFocus,
 }
