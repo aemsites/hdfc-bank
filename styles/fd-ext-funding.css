@@ -345,7 +345,7 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                     input {
                                         margin-top: 0;
                                         padding-left: 22px;
-
+                                        background: url("../icons/cal_icon.png") no-repeat 97%;
                                         &::-webkit-calendar-picker-indicator {
                                             background: none;
                                         }

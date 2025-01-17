@@ -88,7 +88,7 @@ setTimeout(async () => {
 */
 
 const validFDPan = (val) => {
-    const panValidation = /^[A-Za-z]{5}[0-9]{4}[A-Za-z]$/;
+    const panValidation = /^[A-Za-z]{3}[Pp][A-Za-z][0-9]{4}[A-Za-z]$/;
     
     if(panValidation.test(val)){
       return true;
@@ -119,11 +119,39 @@ const ageValidate = (minAge, maxAge, dobValue) => {
 const editMobileNumber = (globals) => {
     globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.otpSubPanel.hiddenMaxCount, { value : 3 }); // Resetting to 3. Need to confirm whether we should reset to 3.
     globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.otpSubPanel.numRetries, { value : 3 });
+    globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.otpNumber, { value : '' });
     globals.functions.setProperty(globals.form.otpPanelWrapper, { visible : false });
     globals.functions.setProperty(globals.form.loginMainPanel, { visible : true });
+
+    const eyeButton = document.querySelector('.bi-eye');
+    if(eyeButton){
+      eyeButton.click();
+    }
+
     resendOtpCount = 0;
     sec = OTP_TIMER;
     dispSec = OTP_TIMER;
+};
+
+const validatePanDynamically = (pan, panValue, globals) => {
+  const regexSegments = [
+    /^[A-Z]$/,         // First 3 characters should be letters
+    /^[A-Z]$/,         // 4th character can only be "P"
+    /^[A-Z]$/, // 5th character should be a letter
+    /^P$/, // Next 4 characters can only be digits
+    /^[A-Z]$/, // Last character should be a letter
+    /^[0-9]$/,
+    /^[0-9]$/,
+    /^[0-9]$/,
+    /^[0-9]$/,
+    /^[A-Z]$/,
+  ];
+
+  if(panValue && !regexSegments[panValue.length-1].test(panValue[panValue.length-1].toUpperCase())){
+    globals.functions.setProperty(pan, { value : panValue.slice(0, panValue.length-1) });
+    return false;
+  }
+  return true;
 };
 
 const validateLoginFd = (globals) => {
@@ -134,7 +162,7 @@ const validateLoginFd = (globals) => {
     const panDobSelection = globals.form.loginMainPanel.loginPanel.identifierPanel.panDobSelection.$value;
     const radioSelect = (panDobSelection === '0') ? 'DOB' : 'PAN';
     const consentFirst = globals.form.loginMainPanel.consent_fragment.checkboxConsent1Label.$value;
-    const panErrorText = 'Please enter a valid PAN Number';
+    const panErrorText = 'Please enter a valid PAN';
     const isdNumberPattern = /^(?!0)([5-9]\d{9})$/;
     const panIsValid = validFDPan(panValue);
     const nonISDNumberPattern = /^(?!0)\d{3,15}$/;
@@ -148,7 +176,9 @@ const validateLoginFd = (globals) => {
     if((mobileNo && mobileNo.length == 1 && /^[0-5]/.test(mobileNo)) || (mobileNo && !(/^[0-9]/.test(mobileNo.slice(-1))))){
       globals.functions.setProperty(globals.form.loginMainPanel.loginPanel.mobilePanel.mobileNumberWrapper.registeredMobileNumber , { value : '' });
     }
-  
+
+    validatePanDynamically(globals.form.loginMainPanel.loginPanel.identifierPanel.pan, panValue, globals);
+
     switch (radioSelect) {
       case 'DOB':
         if (dobValue && String(new Date(dobValue).getFullYear()).length === 4) {
