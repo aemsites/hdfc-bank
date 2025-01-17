@@ -438,6 +438,17 @@ function customSetFocus(errorMessage, numRetries, globals) {
   }
 }
 
+function customFocus(globals) {
+  MAX_COUNT -= 1;
+  if (MAX_COUNT >= resendOtpCount) {
+    globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.otpSubPanel.numRetries, { value: `${MAX_COUNT}/${MAX_OTP_RESEND_COUNT}` });
+  } else {
+    globals.functions.setProperty(globals.form.otppanelwrapper.otpFragment.otpPanel, { visible: false });
+    globals.functions.setProperty(globals.form.errorPanel.errorresults.incorrectOTPPanel, { visible: true });
+    globals.functions.setProperty(globals.form.otppanelwrapper.submitOTP, { visible: false });
+  }
+}
+
 /**
  * @name resendOTP
  * @param {Object} globals - The global object containing necessary data for DAP request.
@@ -505,4 +516,5 @@ export {
     resendOTP,
     editMobileNumber,
     customSetFocus,
+    customFocus,
 }

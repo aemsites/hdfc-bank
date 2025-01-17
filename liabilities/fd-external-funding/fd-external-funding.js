@@ -6,6 +6,7 @@ import {
     resendOTP,
     editMobileNumber,
     customSetFocus,
+    customFocus,
 } from './fd-external-fundingFunctions.js';
 
 import {
@@ -30,4 +31,5 @@ export {
     editMobileNumber,
     sendAnalytics,
     customSetFocus,
+    customFocus,
 };

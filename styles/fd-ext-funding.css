@@ -345,7 +345,6 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                     input {
                                         margin-top: 0;
                                         padding-left: 22px;
-                                        background: url("../icons/cal_icon.png") no-repeat 97%;
                                         &::-webkit-calendar-picker-indicator {
                                             background: none;
                                         }
@@ -353,12 +352,15 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                         &[type="text"] {
                                             letter-spacing: 0;
                                         }
+                                        &[type="date"] {
+                                            background: url("../icons/cal_icon.png") no-repeat 97%;
+                                        }
                                     }
 
                                     &[data-visible="true"] {
                                         input {
                                             color: var(--color-interface-text-primary);
-                                            background: url("../icons/cal_icon.png") no-repeat 97%;
+                                            /* background: url("../icons/cal_icon.png") no-repeat 97%; */
                                             margin-bottom: 0;
                                         }
                                     }
