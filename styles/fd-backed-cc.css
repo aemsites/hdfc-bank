@@ -1672,6 +1672,9 @@ body.fd-backed-cc {
                                             input {
                                                 margin-top: 4px;
                                                 position: absolute;
+                                                line-height: normal;
+                                                letter-spacing: 0;
+                                                color: var(--color-interface-text-secondary) !important;
                                             }
                                         }
                                     }
@@ -2332,256 +2335,261 @@ body.fd-backed-cc {
                                         margin-bottom: 0;
                                     }
 
-                                    .field-multiplecardlabel1 {
-                                        p {
-                                            font-size: var(--body-fd-xx-lg-font-size);
-                                            font-weight: var(--font-weight-bold);
-                                            color: var(--color-interface-text-primary);
+                                    .field-multicardlabelwrapper {
+                                        display: flex;
+
+                                        .field-multiplecardlabel1 {
+                                            p {
+                                                font-size: var(--body-fd-xx-lg-font-size);
+                                                font-weight: var(--font-weight-bold);
+                                                color: var(--color-interface-text-primary);
+                                            }
+                                        }
+
+                                        .field-multiplecardlabel2 {
+                                            background: var(--color-interface-background-quinary);
+                                            border-radius: 40px;
+                                            padding: 5px 10px;
+                                            width: 180px;
+
+                                            p {
+                                                font-size: var(--body-fd-lg-font-size);
+                                                font-weight: var(--font-weight-medium);
+                                                color: var(--color-action-text-secondary-default);
+                                            }
                                         }
                                     }
 
-                                    .field-multiplecardlabel2 {
-                                        background: var(--color-interface-background-quinary);
-                                        border-radius: 40px;
-                                        padding: 5px 10px;
-                                        width: 180px;
+                                    .field-multiplecardsselectionrepeatablewrapper {
+                                        .field-multiplecardsselectionrepeatable {
+                                            border: 1px solid var(--color-interface-border-secondary);
+                                            border-radius: 16px;
+                                            max-width: 350px;
+                                            padding: 20px;
+                                            display: inline-block;
+                                            background-color: var(--color-interface-background-primary);
 
-                                        p {
-                                            font-size: var(--body-fd-lg-font-size);
-                                            font-weight: var(--font-weight-medium);
-                                            color: var(--color-action-text-secondary-default);
-                                        }
-                                    }
-
-                                    .field-multiplecardsselectionrepeatable {
-                                        border: 1px solid var(--color-interface-border-secondary);
-                                        border-radius: 16px;
-                                        max-width: 350px;
-                                        padding: 20px;
-                                        display: inline-block;
-                                        background-color: var(--color-interface-background-primary);
-
-                                        p {
-                                            margin-bottom: 0;
-                                        }
-
-                                        .field-multicardselection {
+                                            p {
+                                                margin-bottom: 0;
+                                            }
 
                                             .field-multicardselection {
-                                                display: flex;
-                                                align-items: center;
-                                                justify-content: space-between;
 
-                                                label {
-                                                    font-size: var(--body-x-lg-font-size) !important;
-                                                    font-weight: var(--font-weight-bold);
-                                                    color: var(--color-interface-text-primary);
-                                                    order: 1;
-                                                }
+                                                .field-multicardselection {
+                                                    display: flex;
+                                                    align-items: center;
+                                                    justify-content: space-between;
 
-                                                input[type="radio"] {
-                                                    order: 2;
-                                                    border-radius: 100%;
-                                                    border: 1px solid var(--color-interface-border-secondary);
-                                                    appearance: none;
-                                                    -webkit-appearance: none;
-                                                    outline: none;
-                                                    padding: 0;
-                                                    width: 24px !important;
-                                                    height: 24px !important;
+                                                    label {
+                                                        font-size: var(--body-x-lg-font-size) !important;
+                                                        font-weight: var(--font-weight-bold);
+                                                        color: var(--color-interface-text-primary);
+                                                        order: 1;
+                                                    }
 
-                                                    &:checked {
-                                                        cursor: pointer;
-                                                        position: relative;
-                                                        display: flex;
-                                                        align-items: center;
-                                                        justify-content: center;
-                                                        border: 1px solid var(--color-interface-icon-highlight);
+                                                    input[type="radio"] {
+                                                        order: 2;
+                                                        border-radius: 100%;
+                                                        border: 1px solid var(--color-interface-border-secondary);
+                                                        appearance: none;
+                                                        -webkit-appearance: none;
+                                                        outline: none;
+                                                        padding: 0;
+                                                        width: 24px !important;
+                                                        height: 24px !important;
 
-                                                        &::before {
-                                                            content: '';
-                                                            border-radius: 100%;
-                                                            width: 12px !important;
-                                                            height: 12px !important;
-                                                            background-color: var(--color-interface-icon-highlight);
-                                                            position: absolute;
+                                                        &:checked {
+                                                            cursor: pointer;
+                                                            position: relative;
+                                                            display: flex;
+                                                            align-items: center;
+                                                            justify-content: center;
+                                                            border: 1px solid var(--color-interface-icon-highlight);
+
+                                                            &::before {
+                                                                content: '';
+                                                                border-radius: 100%;
+                                                                width: 12px !important;
+                                                                height: 12px !important;
+                                                                background-color: var(--color-interface-icon-highlight);
+                                                                position: absolute;
+                                                            }
                                                         }
                                                     }
                                                 }
                                             }
-                                        }
 
-                                        .field-multicardtagline1 {
-                                            p {
-                                                font-size: var(--body-fd-md-font-size);
-                                                font-weight: var(--font-weight-regular);
-                                                color: var(--color-input-text-primary);
-                                            }
-                                        }
-
-                                        .image-wrapper {
-                                            background: url('../icons/freedom_card.png') no-repeat;
-                                            margin-top: 20px;
-
-                                            height: 125px;
-
-                                            picture {
-                                                display: none;
-                                            }
-                                        }
-
-                                        .field-multicardfeatureswrapper {
-                                            margin-top: 20px;
-                                            display: inline-block;
-
-                                            .plain-text-wrapper {
-                                                margin-bottom: 7px;
-                                                display: flex;
-                                                align-items: center;
-
-                                                &::before {
-                                                    content: '';
-                                                    position: absolute;
-                                                    width: 16px;
-                                                    height: 16px;
-                                                    background: url('../icons/folder_icon.png') no-repeat top left;
-                                                }
-
-                                                p p {
-                                                    padding-left: 30px;
-                                                    font-size: var(--body-fd-sm-font-size);
-                                                    font-weight: var(--font-weight-regular);
-                                                    color: var(--color-interface-text-primary);
-                                                    position: relative;
-                                                    margin-bottom: 0;
-                                                }
-
-                                                &.field-multicardfeatures1 {
-                                                    &::before {
-                                                        background: url('../icons/bank_gray_icon.png') no-repeat top left;
-                                                    }
-                                                }
-                                            }
-                                        }
-
-                                        .field-multiallfeaturesandbenefits {
-                                            margin-top: 0px;
-
-                                            button {
-                                                background: none;
-                                                color: var(--color-action-text-secondary-default);
-                                                font-size: var(--body-md-font-size);
-                                                font-weight: var(--font-weight-bold);
-                                                width: auto;
-                                                height: auto;
-
-                                                &::after {
-                                                    background: url('../icons/right_blue_arrow.png') no-repeat right 3px;
-                                                }
-
-                                                &:hover {
-                                                    background: none !important;
-                                                }
-                                            }
-                                        }
-
-                                        .field-multiminfdamountcardwrapper {
-                                            margin-top: 20px;
-                                            display: flex;
-                                            align-items: center;
-                                            justify-content: space-between;
-                                            max-width: 300px;
-                                            margin: 20px 0 0 0;
-                                            border: 1px solid var(--color-interface-border-secondary);
-                                            border-radius: 12px;
-                                            height: 56px;
-                                            flex-direction: initial;
-
-                                            @media (max-width: 767px) {
-                                                margin-bottom: 20px;
-                                                max-width: initial;
-                                            }
-
-                                            .field-multiminfdamountheading {
-                                                height: 100%;
-                                                display: flex;
-                                                align-items: center;
-                                                justify-content: center;
-                                                width: 45%;
-
+                                            .field-multicardtagline1 {
                                                 p {
-                                                    color: var(--color-interface-text-primary);
-                                                    font-size: var(--body-sm-font-size);
-                                                    font-weight: var(--font-weight-medium);
-                                                    margin: 0;
+                                                    font-size: var(--body-fd-md-font-size);
+                                                    font-weight: var(--font-weight-regular);
+                                                    color: var(--color-input-text-primary);
                                                 }
                                             }
 
-                                            .field-multiminfdamountcard {
-                                                border-top-right-radius: 12px;
-                                                border-bottom-right-radius: 12px;
-                                                border-top-left-radius: 0;
-                                                border-bottom-left-radius: 0;
-                                                display: flex;
-                                                align-items: center;
-                                                flex-direction: row-reverse;
-                                                padding: 0 20px;
-                                                background-color: var(--color-interface-background-quinary);
+                                            .image-wrapper {
+                                                background: url('../icons/freedom_card.png') no-repeat;
+                                                margin-top: 20px;
 
-                                                label {
-                                                    transform: none;
-                                                    margin: 0;
-                                                    padding: 0;
-                                                    background: url('../icons/only_amount_icon.png') no-repeat center center;
-                                                    background-size: 15px;
-                                                    width: 20px;
-                                                    font-size: 0;
-                                                    position: initial;
-                                                }
+                                                height: 125px;
 
-                                                input {
-                                                    background-color: var(--color-interface-background-quinary);
-                                                    height: 54px;
-                                                    border: none;
-                                                    font-size: var(--body-lg-font-size);
-                                                    font-weight: var(--font-weight-extra-bold);
-                                                    margin: 0;
-                                                    letter-spacing: normal;
-                                                    padding-right: 0;
-                                                    field-sizing: content;
-                                                    width: auto;
-                                                    background: transparent;
-
-                                                    &:focus {
-                                                        outline: none;
-                                                    }
-
-                                                }
-                                            }
-                                        }
-
-                                        .field-getthisperfectcard1,
-                                        .field-getthisperfectcard2 {
-                                            width: 100%;
-                                            max-width: none;
-                                            margin-top: 20px;
-
-                                            button {
-                                                background: none;
-                                                border: 1px solid var(--color-action-border-primary-default);
-                                                color: var(--color-action-text-secondary-default);
-
-                                                &::after {
+                                                picture {
                                                     display: none;
                                                 }
+                                            }
 
-                                                &:hover {
-                                                    color: var(--color-interface-text-tertiary);
+                                            .field-multicardfeatureswrapper {
+                                                margin-top: 20px;
+                                                display: inline-block;
+
+                                                .plain-text-wrapper {
+                                                    margin-bottom: 7px;
+                                                    display: flex;
+                                                    align-items: center;
+
+                                                    &::before {
+                                                        content: '';
+                                                        position: absolute;
+                                                        width: 16px;
+                                                        height: 16px;
+                                                        background: url('../icons/folder_icon.png') no-repeat top left;
+                                                    }
+
+                                                    p p {
+                                                        padding-left: 30px;
+                                                        font-size: var(--body-fd-sm-font-size);
+                                                        font-weight: var(--font-weight-regular);
+                                                        color: var(--color-interface-text-primary);
+                                                        position: relative;
+                                                        margin-bottom: 0;
+                                                    }
+
+                                                    &.field-multicardfeatures1 {
+                                                        &::before {
+                                                            background: url('../icons/bank_gray_icon.png') no-repeat top left;
+                                                        }
+                                                    }
+                                                }
+                                            }
+
+                                            .field-multiallfeaturesandbenefits {
+                                                margin-top: 0px;
+
+                                                button {
+                                                    background: none;
+                                                    color: var(--color-action-text-secondary-default);
+                                                    font-size: var(--body-md-font-size);
+                                                    font-weight: var(--font-weight-bold);
+                                                    width: auto;
+                                                    height: auto;
+
+                                                    &::after {
+                                                        background: url('../icons/right_blue_arrow.png') no-repeat right 3px;
+                                                    }
+
+                                                    &:hover {
+                                                        background: none !important;
+                                                    }
+                                                }
+                                            }
+
+                                            .field-multiminfdamountcardwrapper {
+                                                margin-top: 20px;
+                                                display: flex;
+                                                align-items: center;
+                                                justify-content: space-between;
+                                                max-width: 300px;
+                                                margin: 20px 0 0 0;
+                                                border: 1px solid var(--color-interface-border-secondary);
+                                                border-radius: 12px;
+                                                height: 56px;
+                                                flex-direction: initial;
+
+                                                @media (max-width: 767px) {
+                                                    margin-bottom: 20px;
+                                                    max-width: initial;
+                                                }
+
+                                                .field-multiminfdamountheading {
+                                                    height: 100%;
+                                                    display: flex;
+                                                    align-items: center;
+                                                    justify-content: center;
+                                                    width: 45%;
+
+                                                    p {
+                                                        color: var(--color-interface-text-primary);
+                                                        font-size: var(--body-sm-font-size);
+                                                        font-weight: var(--font-weight-medium);
+                                                        margin: 0;
+                                                    }
+                                                }
+
+                                                .field-multiminfdamountcard {
+                                                    border-top-right-radius: 12px;
+                                                    border-bottom-right-radius: 12px;
+                                                    border-top-left-radius: 0;
+                                                    border-bottom-left-radius: 0;
+                                                    display: flex;
+                                                    align-items: center;
+                                                    flex-direction: row-reverse;
+                                                    padding: 0 20px;
+                                                    background-color: var(--color-interface-background-quinary);
+
+                                                    label {
+                                                        transform: none;
+                                                        margin: 0;
+                                                        padding: 0;
+                                                        background: url('../icons/only_amount_icon.png') no-repeat center center;
+                                                        background-size: 15px;
+                                                        width: 20px;
+                                                        font-size: 0;
+                                                        position: initial;
+                                                    }
+
+                                                    input {
+                                                        background-color: var(--color-interface-background-quinary);
+                                                        height: 54px;
+                                                        border: none;
+                                                        font-size: var(--body-lg-font-size);
+                                                        font-weight: var(--font-weight-extra-bold);
+                                                        margin: 0;
+                                                        letter-spacing: normal;
+                                                        padding-right: 0;
+                                                        field-sizing: content;
+                                                        width: auto;
+                                                        background: transparent;
+
+                                                        &:focus {
+                                                            outline: none;
+                                                        }
+
+                                                    }
+                                                }
+                                            }
+
+                                            .field-getthisperfectcard1,
+                                            .field-getthisperfectcard2 {
+                                                width: 100%;
+                                                max-width: none;
+                                                margin-top: 20px;
+
+                                                button {
+                                                    background: none;
+                                                    border: 1px solid var(--color-action-border-primary-default);
+                                                    color: var(--color-action-text-secondary-default);
+
+                                                    &::after {
+                                                        display: none;
+                                                    }
+
+                                                    &:hover {
+                                                        color: var(--color-interface-text-tertiary);
+                                                    }
                                                 }
                                             }
                                         }
                                     }
-
 
 
                                 }
@@ -2782,105 +2790,105 @@ body.fd-backed-cc {
 
 
                                         }
-
-                                        .field-notesection {
-                                            display: inline;
-                                            border: 1px solid var(--color-interface-border-primary);
-                                            border-radius: 12px;
-                                            background: #F9FAFF;
-                                            padding: 20px;
-
-                                            .field-notelabel.plain-text-wrapper {
-                                                p {
-                                                    font-size: var(--body-fd-md-font-size);
-                                                    font-weight: var(--font-weight-medium);
-                                                    color: var(--color-interface-text-quaternary);
-                                                    font-weight: var(--font-weight-medium);
-                                                }
-                                            }
-
-                                            .plain-text-wrapper {
-                                                p {
-                                                    font-size: var(--body-fd-md-font-size);
-                                                    font-weight: var(--font-weight-regular);
-                                                    color: var(--color-interface-text-secondary);
-                                                }
-                                            }
-                                        }
-
-                                        .field-tandcpanel {
-                                            display: initial;
-
-                                            legend {
-                                                font-size: var(--body-fd-lg-font-size);
-                                                font-weight: var(--font-weight-bold);
-                                                color: var(--color-interface-text-primary);
-                                            }
-
-                                            .checkbox-wrapper {
-                                                @media (320px <=width <=767px) {
-                                                    margin-bottom: 10px;
-                                                }
-
-                                                input[type="checkbox"] {
-                                                    border-radius: 5px;
-                                                    border: 1.5px solid var(--color-interface-border-secondary);
-                                                    appearance: none;
-                                                    -webkit-appearance: none;
-                                                    outline: none;
-                                                    padding: 0;
-
-                                                    &:checked {
-                                                        background: var(--color-interface-icon-highlight) url("../icons/checkbox-checked-arrow.png") no-repeat center center;
-                                                        border: none;
-                                                        cursor: pointer;
-                                                    }
-                                                }
-
-                                                label {
-                                                    margin-bottom: 0;
-                                                    margin-top: 0;
-                                                    font-size: 14px;
-                                                    line-height: 20px;
-                                                    font-weight: 400;
-                                                    color: var(--color-interface-text-secondary);
-
-                                                    @media (320px <=width <=767px) {
-                                                        margin-bottom: 10px;
-                                                    }
-
-                                                    a {
-                                                        text-decoration: underline;
-                                                        font-weight: normal !important;
-
-                                                        &:hover {
-                                                            color: var(--color-interface-icon-highlight);
-                                                            text-decoration: none;
-                                                        }
-                                                    }
-                                                }
-                                            }
-
-                                            .field-tandcnote {
-                                                background-color: var(--color-interface-background-quinary);
-                                                border-radius: 8px;
-                                                padding: 20px;
-                                                margin-top: 20px;
-
-                                                p p {
-                                                    padding-left: 30px;
-                                                    background: url('../icons//info-icon.svg') no-repeat center left;
-                                                    font-size: var(--body-fd-sm-font-size);
-                                                    font-weight: var(--font-weight-medium);
-                                                    color: var(--color-action-border-primary-default);
-                                                }
-                                            }
-                                        }
                                     }
 
                                 }
 
                                 /* fd amount credit card wrapper end */
+
+                                .field-notesection {
+                                    display: inline;
+                                    border: 1px solid var(--color-interface-border-primary);
+                                    border-radius: 12px;
+                                    background: #F9FAFF;
+                                    padding: 20px;
+
+                                    .field-notelabel.plain-text-wrapper {
+                                        p {
+                                            font-size: var(--body-fd-md-font-size);
+                                            font-weight: var(--font-weight-medium);
+                                            color: var(--color-interface-text-quaternary);
+                                            font-weight: var(--font-weight-medium);
+                                        }
+                                    }
+
+                                    .plain-text-wrapper {
+                                        p {
+                                            font-size: var(--body-fd-md-font-size);
+                                            font-weight: var(--font-weight-regular);
+                                            color: var(--color-interface-text-secondary);
+                                        }
+                                    }
+                                }
+
+                                .field-tandcpanel {
+                                    display: initial;
+
+                                    legend {
+                                        font-size: var(--body-fd-lg-font-size);
+                                        font-weight: var(--font-weight-bold);
+                                        color: var(--color-interface-text-primary);
+                                    }
+
+                                    .checkbox-wrapper {
+                                        @media (320px <=width <=767px) {
+                                            margin-bottom: 10px;
+                                        }
+
+                                        input[type="checkbox"] {
+                                            border-radius: 5px;
+                                            border: 1.5px solid var(--color-interface-border-secondary);
+                                            appearance: none;
+                                            -webkit-appearance: none;
+                                            outline: none;
+                                            padding: 0;
+
+                                            &:checked {
+                                                background: var(--color-interface-icon-highlight) url("../icons/checkbox-checked-arrow.png") no-repeat center center;
+                                                border: none;
+                                                cursor: pointer;
+                                            }
+                                        }
+
+                                        label {
+                                            margin-bottom: 0;
+                                            margin-top: 0;
+                                            font-size: 14px;
+                                            line-height: 20px;
+                                            font-weight: 400;
+                                            color: var(--color-interface-text-secondary);
+
+                                            @media (320px <=width <=767px) {
+                                                margin-bottom: 10px;
+                                            }
+
+                                            a {
+                                                text-decoration: underline;
+                                                font-weight: normal !important;
+
+                                                &:hover {
+                                                    color: var(--color-interface-icon-highlight);
+                                                    text-decoration: none;
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    .field-tandcnote {
+                                        background-color: var(--color-interface-background-quinary);
+                                        border-radius: 8px;
+                                        padding: 20px;
+                                        margin-top: 20px;
+
+                                        p p {
+                                            padding-left: 30px;
+                                            background: url('../icons//info-icon.svg') no-repeat center left;
+                                            font-size: var(--body-fd-sm-font-size);
+                                            font-weight: var(--font-weight-medium);
+                                            color: var(--color-action-border-primary-default);
+                                        }
+                                    }
+                                }
                             }
                         }
 
@@ -3059,6 +3067,10 @@ body.fd-backed-cc {
                             .field-bannerimagepanel {
                                 display: none;
                             }
+                        }
+
+                        .wizard-button-wrapper {
+                            display: none;
                         }
                     }
 
