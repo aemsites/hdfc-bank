@@ -1358,7 +1358,6 @@ const crmLeadIdDetail = async (globals) => {
       typeOfFirm: financialDetails.typeOfCompoanyFirm.$value,
       typCompany: '',
       typeOfFirm_label: financialDetails.typeOfCompoanyFirm.$value,
-      accountNumber: response.customerAccountDetailsDTO[accIndex].accountNumber,
       customerID: response.customerId.toString(),
       agriculturalIncome: '',
       sex: getGender(response.txtCustSex),
