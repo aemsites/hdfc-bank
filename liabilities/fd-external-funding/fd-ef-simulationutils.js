@@ -7,6 +7,7 @@ const {
   END_POINTS: fdEfEndpoints,
   DATA_CONTRACT,
   INR_CONST,
+  DOM_NAME,
 } = FD_EF_CONSTANT;
 
 const FD_SIM_API = {
@@ -115,12 +116,15 @@ const createFdEfReqPayload = (globals) => {
  */
 // eslint-disable-next-line no-unused-vars
 const fdEfSimErrorCallBack = (err, globals) => {
-  if (FD_SIM_API.failureCount === 2) {
+  if (FD_SIM_API.failureCount === 3) {
     hideLoaderGif();
     // add logics to show if the 3 attempt failed
+    globals.functions.setProperty(globals.form.wizardWrapper.wizardExternalFunding, { visible: false });
+    globals.functions.setProperty(globals.form.wizardWrapper.simulationErrPage, { visible: true });
+  } else {
+    // eslint-disable-next-line no-use-before-define
+    fdEfSimulationExecute(FD_SIM_API.triggerPlace, globals);
   }
-  // eslint-disable-next-line no-use-before-define
-  fdEfSimulationExecute(FD_SIM_API.triggerPlace, globals);
 };
 
 /**
@@ -135,20 +139,14 @@ const fdEfSimSuccessCallBack = (res, globals) => {
   if (validResponse) {
     hideLoaderGif();
     // method to set the response in the correct placess
-    if (FD_SIM_API.triggerPlace === 'selectAccount') {
-      moveWizardView('wizardExternalFunding', 'createFD');
-    }
-    const maturity = `${INR_CONST.rsUnicode} ${INR_CONST.nfObject.format(parseInt(response?.tdSimulationResponse?.maturityAmount?.amount || 0, 10))} @ ${response?.tdSimulationResponse?.interestRate}p.a`;
+    const maturity = `${INR_CONST.nfObject.format(parseInt(response?.tdSimulationResponse?.maturityAmount?.amount || 0, 10))} @ ${response?.tdSimulationResponse?.interestRate}p.a`;
     globals.functions.setProperty(globals.form.wizardWrapper.wizardExternalFunding.createFD.rightWrapper.maturityDetailsPanel.mDetails, { value: maturity });
+    if (FD_SIM_API.triggerPlace === DOM_NAME.wizardSelectAct) {
+      moveWizardView(DOM_NAME.wizardPanel, DOM_NAME.wizardCreateFd);
+    }
   } else {
     FD_SIM_API.failureCount += 1;
-    const errorResponse = { // dummy errorResponse
-      status: {
-        errorCode: '0003',
-        errorMsg: 'No data corresponding to given PAN is present.',
-      },
-    };
-    fdEfSimErrorCallBack(errorResponse, globals);
+    fdEfSimErrorCallBack(response, globals);
   }
 };
 
