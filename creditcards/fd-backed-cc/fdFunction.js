@@ -9,7 +9,6 @@ import {
   editCreds,
   updateOTPHelpText,
   fetchCardDetails,
-  fetchCardDetailsSuccessHandler,
   customerAccountDetails,
 } from './fdbacked-function.js';
 
@@ -52,6 +51,5 @@ export {
   loadHomePage,
   updateOTPHelpText,
   fetchCardDetails,
-  fetchCardDetailsSuccessHandler,
   customerAccountDetails,
 };
