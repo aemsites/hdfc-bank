@@ -1,12 +1,14 @@
 import { displayLoader, hideLoaderGif, restAPICall } from '../../common/makeRestAPI.js';
 import { moveWizardView } from '../domutils/domutils.js';
 import * as FD_EF_CONSTANT from './constant.js';
+import { formUtil } from '../../common/formutils.js';
 
 const {
   CURRENT_FORM_CONTEXT: currentFormContext,
   END_POINTS: fdEfEndpoints,
   DATA_CONTRACT,
   INR_CONST,
+  DOM_NAME,
 } = FD_EF_CONSTANT;
 
 const FD_SIM_API = {
@@ -115,12 +117,15 @@ const createFdEfReqPayload = (globals) => {
  */
 // eslint-disable-next-line no-unused-vars
 const fdEfSimErrorCallBack = (err, globals) => {
-  if (FD_SIM_API.failureCount === 2) {
+  if (FD_SIM_API.failureCount === 3) {
     hideLoaderGif();
     // add logics to show if the 3 attempt failed
+    globals.functions.setProperty(globals.form.wizardWrapper.wizardExternalFunding, { visible: false });
+    globals.functions.setProperty(globals.form.wizardWrapper.simulationErrPage, { visible: true });
+  } else {
+    // eslint-disable-next-line no-use-before-define
+    fdEfSimulationExecute(FD_SIM_API.triggerPlace, globals);
   }
-  // eslint-disable-next-line no-use-before-define
-  fdEfSimulationExecute(FD_SIM_API.triggerPlace, globals);
 };
 
 /**
@@ -135,20 +140,14 @@ const fdEfSimSuccessCallBack = (res, globals) => {
   if (validResponse) {
     hideLoaderGif();
     // method to set the response in the correct placess
-    if (FD_SIM_API.triggerPlace === 'selectAccount') {
-      moveWizardView('wizardExternalFunding', 'createFD');
-    }
-    const maturity = `${INR_CONST.rsUnicode} ${INR_CONST.nfObject.format(parseInt(response?.tdSimulationResponse?.maturityAmount?.amount || 0, 10))} @ ${response?.tdSimulationResponse?.interestRate}p.a`;
+    const maturity = `${INR_CONST.nfObject.format(parseInt(response?.tdSimulationResponse?.maturityAmount?.amount || 0, 10))} @ ${response?.tdSimulationResponse?.interestRate}p.a`;
     globals.functions.setProperty(globals.form.wizardWrapper.wizardExternalFunding.createFD.rightWrapper.maturityDetailsPanel.mDetails, { value: maturity });
+    if (FD_SIM_API.triggerPlace === DOM_NAME.wizardSelectAct) {
+      moveWizardView(DOM_NAME.wizardPanel, DOM_NAME.wizardCreateFd);
+    }
   } else {
     FD_SIM_API.failureCount += 1;
-    const errorResponse = { // dummy errorResponse
-      status: {
-        errorCode: '0003',
-        errorMsg: 'No data corresponding to given PAN is present.',
-      },
-    };
-    fdEfSimErrorCallBack(errorResponse, globals);
+    fdEfSimErrorCallBack(response, globals);
   }
 };
 
@@ -159,12 +158,21 @@ const fdEfSimSuccessCallBack = (res, globals) => {
  * @returns {Promise}
  */
 function fdEfSimulationExecute(triggerPlace, globals) {
-  const urlPath = fdEfEndpoints.fdSimulation;
-  // const jsonObj = createFdEfReqPayload(globals);
-  const jsonObj = DATA_CONTRACT.fdSimReques;
-  FD_SIM_API.triggerPlace = triggerPlace?.$name || triggerPlace?.name;
-  displayLoader();
-  restAPICall(globals, 'POST', jsonObj, urlPath, fdEfSimSuccessCallBack, fdEfSimErrorCallBack);
+  const tenureYears = parseInt(globals.form.wizardWrapper.wizardExternalFunding.createFD.leftWrapper.tenurePanel.tenureWrapper.year.$value);
+  const tenureMonths = parseInt(globals.form.wizardWrapper.wizardExternalFunding.createFD.leftWrapper.tenurePanel.tenureWrapper.months.$value);
+  const interestPayoutPanel = globals.form.wizardWrapper.wizardExternalFunding.createFD.leftWrapper.interestPayout
+  const interestPayoutPanelVisibility = formUtil(globals, interestPayoutPanel);
+  const isEligibleForInterestPayout = tenureMonths >= 6 || tenureYears >= 1;
+  interestPayoutPanelVisibility.visible(isEligibleForInterestPayout);
+  if (isEligibleForInterestPayout) {
+    const urlPath = fdEfEndpoints.fdSimulation;
+    // const jsonObj = createFdEfReqPayload(globals);
+    const jsonObj = DATA_CONTRACT.fdSimReques;
+    FD_SIM_API.triggerPlace = triggerPlace?.$name || triggerPlace?.name;
+    displayLoader();
+    restAPICall(globals, 'POST', jsonObj, urlPath, fdEfSimSuccessCallBack, fdEfSimErrorCallBack);
+  }
+  
 }
 
 export default fdEfSimulationExecute;

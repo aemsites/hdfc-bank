@@ -13,8 +13,19 @@ const DATA_LIMITS = {
 };
 
 const INR_CONST = {
-  nfObject: new Intl.NumberFormat('hi-IN'),
+  nfObject: new Intl.NumberFormat('hi-IN', {
+    style: 'currency',
+    currency: 'INR',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }),
   rsUnicode: '\u20B9',
+};
+
+const DOM_NAME = {
+  wizardPanel: 'wizardExternalFunding',
+  wizardCreateFd: 'createFD',
+  wizardSelectAct: 'selectAccount',
 };
 
 const DATA_CONTRACT = {
@@ -218,4 +229,5 @@ export {
   DATA_CONTRACT,
   DATA_LIMITS,
   INR_CONST,
+  DOM_NAME,
 };
