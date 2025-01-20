@@ -43,6 +43,7 @@ const OTP_TIMER = 30;
 let MAX_COUNT = 3;
 let sec = OTP_TIMER;
 let dispSec = OTP_TIMER;
+let timer = null;
 
 currentFormContext.journeyName = 'FD_EXTERNAL_FUNDING_JOURNEY';
 currentFormContext.journeyType = 'ETB';
@@ -131,6 +132,11 @@ const editMobileNumber = (globals) => {
     resendOtpCount = 0;
     sec = OTP_TIMER;
     dispSec = OTP_TIMER;
+    globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.otpSubPanel.numRetries, { value: (MAX_OTP_RESEND_COUNT - resendOtpCount)});
+    globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.secondsPanel.seconds, { value: dispSec });
+    if(timer){
+      clearInterval(timer);
+    }
 };
 
 const validatePanDynamically = (pan, panValue, globals) => {
@@ -405,7 +411,7 @@ function otpTimer(globals) {
   } else {
     globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.secondsPanel, { visible: false });
   }
-  const timer = setInterval(() => {
+  timer = setInterval(() => {
     sec -= 1;
     dispSec = sec;
     if (sec < 10) {
@@ -421,6 +427,8 @@ function otpTimer(globals) {
     }
   }, 1000);
 }
+
+
 
 /**
  * does the custom show hide of panel or screens in resend otp.
@@ -447,6 +455,14 @@ function customFocus(globals) {
     globals.functions.setProperty(globals.form.errorPanel.errorresults.incorrectOTPPanel, { visible: true });
     globals.functions.setProperty(globals.form.otppanelwrapper.submitOTP, { visible: false });
   }
+}
+
+function invalidOTP(globals) {
+  globals.functions.setProperty(globals.form.otppanelwrapper.otpFragment.otpPanel, { visible: false });
+};
+
+function setFetchCasaResponse(globals, casaResponse){
+  currentFormContext.fetchCasaResponse = casaResponse;
 }
 
 /**
@@ -514,7 +530,9 @@ export {
     otpValidationExternalFundingFD,
     otpTimer,
     resendOTP,
+    invalidOTP,
     editMobileNumber,
     customSetFocus,
     customFocus,
+    setFetchCasaResponse,
 }
