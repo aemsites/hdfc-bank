@@ -1929,6 +1929,10 @@ body.fd-backed-cc {
                                             }
                                         }
                                     }
+
+                                    button.item-add{
+                                        display: none;
+                                    }
                                 }
                             }
 
@@ -2134,6 +2138,10 @@ body.fd-backed-cc {
                             .field-selectcreditcardwizard1 {
                                 margin-top: 20px;
 
+                                p{
+                                    margin-bottom: 0;
+                                }
+
                                 .field-backbuttonwizardview {
                                     button {
                                         font-size: var(--body-fd-lg-font-size);
@@ -2174,10 +2182,11 @@ body.fd-backed-cc {
                                     .field-selectccsingleimagewrapper {
                                         border: 1px solid var(--color-interface-border-secondary);
                                         border-radius: 16px;
-                                        padding: 20px;
+                                        padding: 20px 20px 10px 20px;
                                         max-width: 324px;
                                         margin-right: 20px;
                                         display: inline-block;
+                                        height: fit-content;
 
                                         .field-singlecardviewimage {
                                             width: 283px;
@@ -2601,7 +2610,6 @@ body.fd-backed-cc {
                                     background: var(--color-interface-background-quinary);
                                     border-radius: 16px;
                                     padding: 20px;
-                                    margin-top: 10px;
 
                                     p {
                                         margin-bottom: 0;
@@ -2802,6 +2810,7 @@ body.fd-backed-cc {
                                     border-radius: 12px;
                                     background: #F9FAFF;
                                     padding: 20px;
+                                    margin-top: 10px;
 
                                     .field-notelabel.plain-text-wrapper {
                                         p {
@@ -2823,6 +2832,7 @@ body.fd-backed-cc {
 
                                 .field-tandcpanel {
                                     display: initial;
+                                    margin-bottom: 15px;
 
                                     legend {
                                         font-size: var(--body-fd-lg-font-size);
@@ -2850,7 +2860,7 @@ body.fd-backed-cc {
                                             }
                                         }
 
-                                        label {
+                                        label, label p {
                                             margin-bottom: 0;
                                             margin-top: 0;
                                             font-size: 14px;
@@ -2863,12 +2873,12 @@ body.fd-backed-cc {
                                             }
 
                                             a {
-                                                text-decoration: underline;
+                                                text-decoration: none;
                                                 font-weight: normal !important;
 
                                                 &:hover {
                                                     color: var(--color-interface-icon-highlight);
-                                                    text-decoration: none;
+                                                    text-decoration: underline;
                                                 }
                                             }
                                         }
@@ -2877,7 +2887,7 @@ body.fd-backed-cc {
                                     .field-tandcnote {
                                         background-color: var(--color-interface-background-quinary);
                                         border-radius: 8px;
-                                        padding: 20px;
+                                        padding: 12px;
                                         margin-top: 20px;
 
                                         p p {
