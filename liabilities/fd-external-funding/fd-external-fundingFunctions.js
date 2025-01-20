@@ -37,6 +37,7 @@ import {
   } from '../../common/makeRestAPI.js';
 
 import {CHANNEL, JOURNEY_NAME, VISIT_MODE} from './constant.js';
+import {handleFetchCasaPrefill} from './fd-ef-prefilutils.js';
 
 let resendOtpCount = 0;
 const MAX_OTP_RESEND_COUNT = 3;
@@ -505,8 +506,9 @@ function getOtpResponseHandling(custIdentResp, otpGenResp, globals) {
   }
 }
 
-function setFetchCasaResponse(globals, casaResponse){
+function setFetchCasaResponse(casaResponse ,globals){
   currentFormContext.fetchCasaResponse = casaResponse;
+  handleFetchCasaPrefill(casaResponse ,globals)
 }
 
 /**

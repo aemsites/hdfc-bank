@@ -41,10 +41,10 @@ const updateFundAct = async (casaAcctDetails, selectedRadioBtnIndex, multipleAcc
   }, 0);
 };
 
-const handleFetchCasaPrefill = async (response, globals) => {
-  const otpValCasaRes = DATA_CONTRACT.otpValResponse;
-  currentFormContext.fetchCasaResponse = DATA_CONTRACT.otpValResponse;
-  const selectAcct = globals.form.wizardWrapper.wizardExternalFunding.selectAccount;
+const handleFetchCasaPrefill = async (otpValResponse, globals) => {
+  const otpValCasaRes = otpValResponse;
+  currentFormContext.fetchCasaResponse = otpValResponse;
+  const selectAcct = globals.form.fdDetailsWrapper.externalFundingWizardView.wizardExternalFunding.selectAccount;
   const custmerCasa = otpValCasaRes?.casaDetails?.customerCASADetailsDTO?.[0];
   const custNameField = formUtil(globals, selectAcct.customerName);
   custNameField.setValue(custmerCasa?.customerFullName);
