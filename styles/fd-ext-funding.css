@@ -943,6 +943,24 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
 
                           /* OTP VALIDATION SCREEN END */
 
+                          .field-errorresultpanel{
+                            .button-wrapper{
+                                margin: 0 auto;
+                                width: 100%;
+                            }
+                            text-align: center;
+
+                            .field-errresdealerpanel{
+                               p p{
+                                font-size: var(--body-fd-lg-font-size);
+                                font-weight: var(--font-weight-medium);
+                                color: var(--color-interface-text-primary);
+                                margin-bottom: 0;
+                               }
+                            }
+                          }
+                          /* COMMON ERROR SCREEN END */
+
                         /* COMMON STYLES FOR JOURNEY  */
 
                         .field-loginmainpanel,
@@ -1082,7 +1100,8 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                         }
 
                         &:has(.field-carddetailswrapper[data-visible="true"]),
-                        &:has(.field-landingpagemainwrapper[data-visible="true"]) {
+                        &:has(.field-landingpagemainwrapper[data-visible="true"]),
+                        &:has(.field-errorresultpanel[data-visible="true"]) {
                             .field-bannerimagepanel {
                                 display: none;
                             }
