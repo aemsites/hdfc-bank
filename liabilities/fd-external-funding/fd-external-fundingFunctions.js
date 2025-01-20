@@ -352,7 +352,7 @@ const getOtpExternalFundingFD = async (mobileNumber, pan, dob, globals) => {
  * @param {object} dob
  * @return {PROMISE}
  */
-const otpValidationExternalFundingFD = async (mobileNumber, pan, dob, otpNumber, globals) => {
+const otpValidationExternalFundingFD = async (mobileNumber, pan, dob, otpNumber, globals) => {    
   const referenceNumber = `AD${getTimeStamp(new Date())}` ?? '';
   currentFormContext.referenceNumber = referenceNumber;
   // currentFormContext.leadProfileId = globals.form.runtime.leadProifileId.$value;
@@ -479,7 +479,11 @@ function invalidOTP(globals) {
     }
     sec = OTP_TIMER;
     dispSec = OTP_TIMER;
+    globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.otpResend, { visible: false });
+    globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.secondsPanel, { visible: true });
     globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.secondsPanel.seconds, { value: dispSec });
+    globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.incorrectOTPText, { visible: false });
+    globals.functions.setProperty(globals.form.otpPanelWrapper.submitOTP, { enabled: false });
     otpTimer(globals);
 
     if (resendOtpCount === MAX_OTP_RESEND_COUNT) {
