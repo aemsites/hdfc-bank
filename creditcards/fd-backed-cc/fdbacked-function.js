@@ -259,17 +259,18 @@ function editCreds(globals) {
   globals.functions.setProperty(globals.form.loginMainPanel, { visible: true });
 }
 
-const fetchCardDetails = () =>
+const fetchCardDetails = () => {
 // const resp = await fetch('./cardDetails.json');
 // const jsonObj = {
 //   retailsProductCode:['dtdy66', ''],
 //   bussinessProductCode:['dtdy66', '']
 // };
 
-// return fetchJsonResponse('./cardDetails.json', {}, 'POST', true);
-
   fetch('../../../creditcards/fd-backed-cc/cardDetails.json')
     .then((response) => response.json());
+};
+
+// return fetchJsonResponse('./cardDetails.json', {}, 'POST', true);
 
 const fetchCardDetailsSuccessHandler = async (response) => {
   // console.log('reerereresss', response);
@@ -287,6 +288,30 @@ const customerAccountDetails = (casaRes, globals) => {
   // const value = [{ savingsAccNumber: 'XXXXXXXXXX4042', balanceAmount: 22474.99 }, { savingsAccNumber: 'XXXXXXXXXX4033', balanceAmount: 22400 }, { savingsAccNumber: 'XXXXXXXXXX2233', balanceAmount: 12344 }];
 
   importData(value, globals.form?.accountSelectionWrapper?.accountSelectionPanel?.repeatWrapper?.$qualifiedName);
+
+  setTimeout(() => {
+    const repeatPanels = document.querySelectorAll('.repeat-wrapper .panel-wrapper');
+
+    repeatPanels.forEach((panel, index) => {
+      const checkboxWrapper = panel.querySelector('.checkbox-wrapper');
+
+      if (checkboxWrapper) {
+        const radioInput = document.createElement('input');
+        radioInput.type = 'radio';
+        radioInput.name = 'accSelectionGroup'; // Shared name for grouping radio buttons
+        radioInput.id = `radio-${index}`;
+        radioInput.value = `panel-${index}`;
+
+        const radioLabel = document.createElement('label');
+        radioLabel.setAttribute('for', `radio-${index}`);
+
+        checkboxWrapper.innerHTML = '';
+
+        checkboxWrapper.appendChild(radioInput);
+        checkboxWrapper.appendChild(radioLabel);
+      }
+    });
+  }, 1000);
 };
 
 export {
