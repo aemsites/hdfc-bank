@@ -10,6 +10,7 @@ import {
 
 import {
     createJourneyId,
+    invokeJourneyDropOffUpdate,
 } from './fd-external-funding-journey-utils.js';
 
 import {
@@ -458,8 +459,51 @@ function customFocus(globals) {
 }
 
 function invalidOTP(globals) {
-  globals.functions.setProperty(globals.form.otppanelwrapper.otpFragment.otpPanel, { visible: false });
+  globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.otpNumber, { value : '' });
+  globals.functions.setProperty(globals.form.otpPanelWrapper.submitOTP, { enabled: false });
+  sendAnalytics('submit otp click', '', 'CUSTOMER_LEAD_QUALIFIED_FAILURE');
+  invokeJourneyDropOffUpdate(
+    'CUSTOMER_LEAD_QUALIFIED_FAILURE', 
+    globals.form.loginMainPanel.loginPanel.mobilePanel.mobileNumberWrapper.registeredMobileNumber,
+    globals.form.runtime.leadProifileId,
+    globals.form.runtime.journeyId
+  );
+  if (resendOtpCount < MAX_OTP_RESEND_COUNT) {
+    resendOtpCount += 1;
+    globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.otpSubPanel.numRetries, { value: (
+      MAX_OTP_RESEND_COUNT - resendOtpCount
+    )});
+    if(timer){
+      clearTimeout(timer);
+    }
+    sec = OTP_TIMER;
+    dispSec = OTP_TIMER;
+    globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.secondsPanel.seconds, { value: dispSec });
+    otpTimer(globals);
+
+    if (resendOtpCount === MAX_OTP_RESEND_COUNT) {
+      globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.secondsPanel, { visible: false });
+      globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.otpResend, { visible: false });
+      globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.maxAttemptMessage, { visible: true });
+    }
+  }
 };
+
+function getOtpResponseHandling(custIdentResp, otpGenResp, globals) {
+  if(custIdentResp.existingCustomer === 'Y' && custIdentResp.status.errorCode === '0' && otpGenResp.status.errorCode === '00000'){
+    globals.functions.setProperty(globals.form.loginMainPanel, { visible: false });
+    globals.functions.setProperty(globals.form.otpPanelWrapper, { visible: true });
+    otpTimer(globals);
+  } else if(custIdentResp.existingCustomer === 'N' && custIdentResp.status.errorCode === '0') {
+    if(window){
+      window.location.href = NTB_REDIRECTION_URL;
+    }
+  } else {
+    globals.functions.setProperty(globals.form.loginMainPanel, { visible: false });
+    globals.functions.setProperty(globals.form.resultPanel.errorResultPanel, { visible: true });
+    globals.functions.setProperty(globals.form.resultPanel.errorResultPanel.errorMessageText, { value: 'Error' });
+  }
+}
 
 function setFetchCasaResponse(globals, casaResponse){
   currentFormContext.fetchCasaResponse = casaResponse;
@@ -527,6 +571,7 @@ setTimeout(() => {
 export {
     validateLoginFd,
     getOtpExternalFundingFD,
+    getOtpResponseHandling,
     otpValidationExternalFundingFD,
     otpTimer,
     resendOTP,

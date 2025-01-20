@@ -6,7 +6,9 @@ import { CURRENT_FORM_CONTEXT } from '../../common/constants.js';
   const JOURNEY_NAME = 'EXTERNAL_FUNDING_FD';
   const JOURNEY_ABBR_VALUE = 'FDEF';
   const VISIT_MODE = 'U';
+  const NTB_REDIRECTION_URL = 'https://smartx.hdfcbank.com/?journey=NTBFD&channel=RBB'
   const BASE_URL = getSubmitBaseUrl();
+
   const DOM_ELEMENT = {
     identifyYourself: {
       chekbox1Label: 'checkboxConsent1Label',
@@ -249,6 +251,7 @@ import { CURRENT_FORM_CONTEXT } from '../../common/constants.js';
     DOM_ELEMENT,
     FORM_NAME,
     EFFD_ENDPOINTS,
+    NTB_REDIRECTION_URL,
     CURRENT_FORM_CONTEXT,
     JOURNEY_ABBR_VALUE,
     END_POINTS,
