@@ -6,6 +6,7 @@ import {
 
 import {
   EFFD_ENDPOINTS,
+  NTB_REDIRECTION_URL,
 } from './constant.js';
 
 import {
@@ -494,7 +495,7 @@ function getOtpResponseHandling(custIdentResp, otpGenResp, globals) {
     globals.functions.setProperty(globals.form.loginMainPanel, { visible: false });
     globals.functions.setProperty(globals.form.otpPanelWrapper, { visible: true });
     otpTimer(globals);
-  } else if(custIdentResp.existingCustomer === 'N' && custIdentResp.status.errorCode === '0') {
+  } else if(custIdentResp.existingCustomer === 'N' && custIdentResp.status.errorCode === 'nonExistingCustomer') {
     if(window){
       window.location.href = NTB_REDIRECTION_URL;
     }
