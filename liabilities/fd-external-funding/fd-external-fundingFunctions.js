@@ -10,6 +10,7 @@ import {
 
 import {
     createJourneyId,
+    invokeJourneyDropOffUpdate,
 } from './fd-external-funding-journey-utils.js';
 
 import {
@@ -458,7 +459,18 @@ function customFocus(globals) {
 }
 
 function invalidOTP(globals) {
-  globals.functions.setProperty(globals.form.otppanelwrapper.otpFragment.otpPanel, { visible: false });
+  globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.otpNumber, { value : '' });
+  globals.functions.setProperty(globals.form.otpPanelWrapper.submitOTP, { enabled: false });
+  sendAnalytics('submit otp click', '', 'CUSTOMER_LEAD_QUALIFIED_FAILURE');
+  invokeJourneyDropOffUpdate(
+    'CUSTOMER_LEAD_QUALIFIED_FAILURE', 
+    globals.form.loginMainPanel.loginPanel.mobilePanel.mobileNumberWrapper.registeredMobileNumber,
+    globals.form.runtime.leadProifileId,
+    globals.form.runtime.journeyId
+  );
+  globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.otpSubPanel.numRetries, { value: (
+    globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.otpSubPanel.numRetries.$value - 1
+  )});
 };
 
 function setFetchCasaResponse(globals, casaResponse){
