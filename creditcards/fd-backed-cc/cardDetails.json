@@ -1,0 +1,104 @@
+{
+    "cardDetails": {
+      "retailCards": [
+        {
+          "cardName": "Freedom",
+          "productCode": "dtdy66",
+          "cardDescription": "Best Card for Rewards & Offers",
+          "cardImage": "/conent/dam/../../../",
+          "minumumFdAmount": "15,000",
+          "features": [
+            "<p><span class=green-highlight> upto 10x cash points </span>",
+            "<p><span class=green-highlight> 150 spent = 1 fuel point </span>",
+            "<p><span class=green-highlight> Joining fees 500</span>"
+          ],
+          "allBenefitsAndFeatures": [
+            {
+              "features": [
+                "<p><span class=green-highlight>Complimentary insurance cover</span>",
+                "<p><span class=green-highlight>zero cross currency conversion mark up</span>"
+              ],
+              "benefitsForYou": [
+                "1. Avail upto 50 days"
+              ]
+            }
+          ]
+        },
+        {
+          "cardName": "Millenia",
+          "productCode": "stdy66",
+          "cardDescription": "Best Card for Rewards & Offers",
+          "cardImage": "/conent/dam/../../../",
+          "minumumFdAmount": "15,000",
+          "features": [
+            "<p><span class=green-highlight> upto 10x cash points </span>",
+            "<p><span class=green-highlight> 150 spent = 1 fuel point </span>",
+            "<p><span class=green-highlight> Joining fees 500</span>"
+          ],
+          "allBenefitsAndFeatures": [
+            {
+              "features": [
+                "<p><span class=green-highlight>Complimentary insurance cover</span>",
+                "<p><span class=green-highlight>zero cross currency conversion mark up</span>"
+              ],
+              "benefitsForYou": [
+                "1. Avail upto 50 days"
+              ]
+            }
+          ]
+        }
+      ],
+      "businessCards": [
+        {
+          "cardName": "Freedom",
+          "productCode": "atdy66",
+          "cardDescription": "Best Card for Rewards & Offers",
+          "cardImage": "/conent/dam/../../../",
+          "minumumFdAmount": "15,000",
+          "features": [
+            "<p><span class=green-highlight> upto 10x cash points </span>",
+            "<p><span class=green-highlight> 150 spent = 1 fuel point </span>",
+            "<p><span class=green-highlight> Joining fees 500</span>"
+          ],
+          "allBenefitsAndFeatures": [
+            {
+              "features": [
+                "<p><span class=green-highlight>Complimentary insurance cover</span>",
+                "<p><span class=green-highlight>zero cross currency conversion mark up</span>"
+              ],
+              "benefitsForYou": [
+                "1. Avail upto 50 days"
+              ]
+            }
+          ]
+        },
+        {
+          "cardName": "Millenia Business",
+          "productCode": "ptdy66",
+          "cardDescription": "Best Card for Rewards & Offers",
+          "cardImage": "/conent/dam/../../../",
+          "minumumFdAmount": "15,000",
+          "features": [
+            "<p><span class=green-highlight> upto 10x cash points </span>",
+            "<p><span class=green-highlight> 150 spent = 1 fuel point </span>",
+            "<p><span class=green-highlight> Joining fees 500</span>"
+          ],
+          "allBenefitsAndFeatures": [
+            {
+              "features": [
+                "<p><span class=green-highlight>Complimentary insurance cover</span>",
+                "<p><span class=green-highlight>zero cross currency conversion mark up</span>"
+              ],
+              "benefitsForYou": [
+                "1. Avail upto 50 days"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "status": {
+      "errorCode": "0",
+      "errorMessage": "Success"
+    }
+  }

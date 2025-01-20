@@ -8,6 +8,8 @@ import {
   customSetFocus,
   editCreds,
   updateOTPHelpText,
+  fetchCardDetails,
+  customerAccountDetails,
 } from './fdbacked-function.js';
 
 import { createJourneyId } from '../../common/journey-utils.js';
@@ -48,4 +50,6 @@ export {
   validatePan,
   loadHomePage,
   updateOTPHelpText,
+  fetchCardDetails,
+  customerAccountDetails,
 };
