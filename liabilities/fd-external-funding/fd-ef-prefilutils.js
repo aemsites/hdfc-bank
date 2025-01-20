@@ -41,7 +41,7 @@ const updateFundAct = async (casaAcctDetails, selectedRadioBtnIndex, multipleAcc
   }, 0);
 };
 
-const handleFetchCasaPrefill = async (globals) => {
+const handleFetchCasaPrefill = async (response, globals) => {
   const otpValCasaRes = DATA_CONTRACT.otpValResponse;
   currentFormContext.fetchCasaResponse = DATA_CONTRACT.otpValResponse;
   const selectAcct = globals.form.wizardWrapper.wizardExternalFunding.selectAccount;
