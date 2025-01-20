@@ -1,9 +1,10 @@
+/* stylelint-disable value-no-vendor-prefix */
 /* stylelint-disable media-feature-range-notation */
 /* stylelint-disable font-family-name-quotes */
 /* stylelint-disable property-no-vendor-prefix */
 /* stylelint-disable no-descending-specificity */
 
-/* .fd-ext-fund:has(.field-wizardwrapper :not([data-visible='false'])) {
+.fd-ext-fund:has(.field-externalfundingwizardview :not([data-visible='false'])) {
     header {
       height: 100px !important;
     }
@@ -11,7 +12,7 @@
     main .section.form-container {
       margin-top: 0 !important;
     }
-} */
+}
 
 body.fd-ext-fund:not(.semi-form, .fdlien) {
     font-family: "Inter", sans-serif !important;
@@ -363,7 +364,7 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                         }
 
                                         &[type="date"] {
-                                            background: url("../icons/cal_icon.png") no-repeat 97%;
+                                            background: url('../icons/cal_icon.png') no-repeat 97%;
                                         }
                                     }
 
@@ -437,7 +438,7 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                         margin-top: 2px;
 
                                         &:checked {
-                                            background: var(--color-interface-icon-highlight) url("../icons/checkbox-checked-arrow.png") no-repeat center center;
+                                            background: var(--color-interface-icon-highlight) url('../icons/checkbox-checked-arrow.png') no-repeat center center;
                                             border: none;
                                             cursor: pointer;
                                         }
@@ -563,25 +564,25 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
 
                                         &.field-step1image {
                                             &::after {
-                                                background: url("../icons/step_follow_mob-dob.png") no-repeat center center;
+                                                background: url('../icons/step_follow_mob-dob.png') no-repeat center center;
                                             }
                                         }
 
                                         &.field-step2image {
                                             &::after {
-                                                background: url("../icons/step_follow_verify-otp.png") no-repeat center center;
+                                                background: url('../icons/step_follow_verify-otp.png') no-repeat center center;
                                             }
                                         }
 
                                         &.field-step3image {
                                             &::after {
-                                                background: url("../icons/step_follow_create-fd.png") no-repeat center center;
+                                                background: url('../icons/step_follow_create-fd.png') no-repeat center center;
                                             }
                                         }
 
                                         &.field-step4image {
                                             &::after {
-                                                background: url("../icons/step_follow_fund-fd.png") no-repeat center center;
+                                                background: url('../icons/step_follow_fund-fd.png') no-repeat center center;
 
                                             }
                                         }
@@ -843,7 +844,7 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                         max-width: 445px;
                                         display: grid;
 
-                                        @media (769px <=width < 1024px) {
+                                        @media (769px <=width < 1280px) {
                                             margin-top: 10px;
                                         }
 
@@ -866,7 +867,7 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                         display: flex;
                                         grid-column: span 6;
 
-                                        @media (350px <=width <=1024px) {
+                                        @media (350px <=width <=1280px) {
                                             flex-direction: row;
                                         }
 
@@ -958,6 +959,7 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                         }
 
                         input[type="text"],
+                        input[type="number"],
                         input[type="password"],
                         input[type="date"] {
                             font-size: var(--body-lg-font-size);
@@ -969,7 +971,6 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                             height: 60px;
                             max-width: 368px;
                             letter-spacing: .7rem;
-                            line-height: 60px;
                             position: relative;
 
                             &:focus {
@@ -1121,16 +1122,16 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                         }
 
                         /* Wizard styling */
-                        .field-wizardwrapper {
+                        .field-externalfundingwizardview {
                             .field-wizardexternalfunding { padding: 0;
-                        
+
                                 /* Wizard menu items styling */
                                 .wizard-menu-items {
                                     position: absolute;
                                     left: 4%;
                                     width: 92%;
                                     justify-content: center;
-                                    margin-top: -90px;
+                                    margin-top: -35px;
                                     background: var(--color-interface-background-primary);
                                     border-radius: 24px;
                                     padding: 10px;
@@ -1228,6 +1229,7 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                 /* Select Account */
                                 .field-selectaccount {
                                     display: block;
+                                    padding: 50px 40px;
                         
                                     .field-customername, .field-customername b {
                                         font-size: var(--body-fd-xx-xlg-font-size);
@@ -1246,12 +1248,12 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                             height: 60px;
                                             font-size: var(--body-lg-font-size);
                                             color: var(--color-interface-text-primary);
+                                            border: solid 1px var(--color-action-border-secondary-default);
                                         }
-                                    }
-                        
-                                    .field-txtinvestment {
-                                        padding-bottom: 34px;
-                                        border-bottom: solid 1px var(--color-input-border-active);
+
+                                        label {
+                                            color: var(--color-action-border-secondary-default);
+                                        }
                                     }
                         
                                     .field-txtinvestment, .field-txtinvestment p {
@@ -1322,7 +1324,8 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                             }
                         
                                 /* Create FD */
-                                .field-createfd {
+                                .field-createfd { padding: 50px 40px;
+
                                     .field-createfdheading p {
                                         font-size: var(--font-linehight-large);
                                         margin: 0;
@@ -1359,6 +1362,12 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                                 font-size: var(--body-fd-xx-xlg-font-size);
                                                 color: var(--color-interface-text-primary);
                                                 margin: 0;
+                                                max-width: -webkit-fill-available;
+                                            }
+
+                                            label { 
+                                                color: var(--color-input-text-placeholder-disabled); 
+                                                margin-top: 13px;
                                             }
                         
                                             .field-description {
@@ -1371,7 +1380,6 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                                     font-size: var(--body-fd-xxx-lg-font-size);
                                                 }
                                             }
-                                            label { margin-top: 13px; }
                                         }
                                         
                                         .field-tenurepanel {
@@ -1527,6 +1535,8 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                         top: 18px;
                                     }
                                 }
+
+                                .wizard-button-wrapper { display: none; }
                             }
 
                         /* End of wizard styling */
