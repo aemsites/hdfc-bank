@@ -501,8 +501,7 @@ function getOtpResponseHandling(custIdentResp, otpGenResp, globals) {
   } else {
     globals.functions.setProperty(globals.form.loginMainPanel, { visible: false });
     globals.functions.setProperty(globals.form.resultPanel, { visible: true });
-    globals.functions.setProperty(globals.form.resultPanel.errorResultPanel, { visible: true });
-    globals.functions.setProperty(globals.form.resultPanel.errorResultPanel.errorMessageText, { value: 'Sorry! It\'s not you, it\'s the system. \n\n We\'re unable to proceed at the moment. Please try again after some time.' });
+    globals.functions.setProperty(globals.form.resultPanel.technicalIssueErrorPanel, { visible: true });
   }
 }
 
