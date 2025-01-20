@@ -4,6 +4,7 @@
   const CHANNEL = 'WEB';
   const JOURNEY_NAME = 'EXTERNAL_FUNDING_FD';
   const VISIT_MODE = 'U';
+  const NTB_REDIRECTION_URL = 'https://smartx.hdfcbank.com/?journey=NTBFD&channel=RBB'
   const DOM_ELEMENT = {
     identifyYourself: {
       chekbox1Label: 'checkboxConsent1Label',
@@ -29,5 +30,6 @@
     DOM_ELEMENT,
     FORM_NAME,
     EFFD_ENDPOINTS,
+    NTB_REDIRECTION_URL,
   };
   

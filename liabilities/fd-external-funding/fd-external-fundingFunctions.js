@@ -489,6 +489,22 @@ function invalidOTP(globals) {
   }
 };
 
+function getOtpResponseHandling(custIdentResp, otpGenResp, globals) {
+  if(custIdentResp.existingCustomer === 'Y' && custIdentResp.status.errorCode === '0' && otpGenResp.status.errorCode === '00000'){
+    globals.functions.setProperty(globals.form.loginMainPanel, { visible: false });
+    globals.functions.setProperty(globals.form.otpPanelWrapper, { visible: true });
+    otpTimer(globals);
+  } else if(custIdentResp.existingCustomer === 'N' && custIdentResp.status.errorCode === '0') {
+    if(window){
+      window.location.href = NTB_REDIRECTION_URL;
+    }
+  } else {
+    globals.functions.setProperty(globals.form.loginMainPanel, { visible: false });
+    globals.functions.setProperty(globals.form.resultPanel.errorResultPanel, { visible: true });
+    globals.functions.setProperty(globals.form.resultPanel.errorResultPanel.errorMessageText, { value: 'Error' });
+  }
+}
+
 function setFetchCasaResponse(globals, casaResponse){
   currentFormContext.fetchCasaResponse = casaResponse;
 }
@@ -555,6 +571,7 @@ setTimeout(() => {
 export {
     validateLoginFd,
     getOtpExternalFundingFD,
+    getOtpResponseHandling,
     otpValidationExternalFundingFD,
     otpTimer,
     resendOTP,
