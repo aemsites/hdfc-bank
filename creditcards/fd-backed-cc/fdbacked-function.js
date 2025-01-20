@@ -259,6 +259,36 @@ function editCreds(globals) {
   globals.functions.setProperty(globals.form.loginMainPanel, { visible: true });
 }
 
+const fetchCardDetails = () =>
+// const resp = await fetch('./cardDetails.json');
+// const jsonObj = {
+//   retailsProductCode:['dtdy66', ''],
+//   bussinessProductCode:['dtdy66', '']
+// };
+
+// return fetchJsonResponse('./cardDetails.json', {}, 'POST', true);
+
+  fetch('../../../creditcards/fd-backed-cc/cardDetails.json')
+    .then((response) => response.json());
+
+const fetchCardDetailsSuccessHandler = async (response) => {
+  // console.log('reerereresss', response);
+};
+
+const customerAccountDetails = (casaRes, globals) => {
+  const { functions } = globals;
+  const { importData } = functions;
+
+  const value = casaRes[0].casaAccountDetails.map((account) => ({
+    savingsAccNumber: account.accountNumber,
+    balanceAmount: account.clearBalance,
+  }));
+
+  // const value = [{ savingsAccNumber: 'XXXXXXXXXX4042', balanceAmount: 22474.99 }, { savingsAccNumber: 'XXXXXXXXXX4033', balanceAmount: 22400 }, { savingsAccNumber: 'XXXXXXXXXX2233', balanceAmount: 12344 }];
+
+  importData(value, globals.form?.accountSelectionWrapper?.accountSelectionPanel?.repeatWrapper?.$qualifiedName);
+};
+
 export {
   validateLogin,
   otpTimer,
@@ -270,4 +300,7 @@ export {
   validFDPan,
   editCreds,
   updateOTPHelpText,
+  fetchCardDetails,
+  fetchCardDetailsSuccessHandler,
+  customerAccountDetails,
 };
