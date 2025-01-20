@@ -8,12 +8,11 @@ export const formIdPathMapping = {
   '/content/forms/af/hdfc_haf/loan-against-assets/smartemi/smartemi': '../../../creditcards/semi/semi-functions.js',
   '/content/forms/af/hdfc_haf/digital/pvtestfdliencugtest': '../../../creditcards/fd-card/fd-functions.js', // fd
   '/content/forms/af/hdfc_haf/digital/fd-lien-cug': '../../../creditcards/fd-card/fd-functions.js', // fd
-  '/content/forms/af/hdfc_haf/digital/corporate-credit-cards-application-cug': '../../../creditcards/corporate-creditcard/cc-functions.js', // ccc cug
   '/content/forms/af/hdfc_haf/digital/fdlienprodtest': '../../../creditcards/fd-card/fd-functions.js', // fd form
   '/content/forms/af/hdfc_haf/digital/nriaddonaccounts': '../../../liabilities/nre-Nro/nre-nro.js',
   '/content/forms/af/hdfc_haf/loan-against-assets/smartemi/smartemi-cug': '../../../creditcards/semi/semi-functions.js',
   '/content/forms/af/hdfc_haf/digital/etb-fixed-deposit-cc-cug': '../../../creditcards/fd-card/fd-functions.js',
-  '/content/forms/af/hdfc_haf/loan-against-assets/smartemi/smartemi-hf': '../../../creditcards/semi/semi-functions.js'
+  '/content/forms/af/hdfc_haf/digital/corporate-credit-cards-application-form-hf': '../../../creditcards/corporate-creditcard/cc-functions.js'
 };
 
 export default function getCustomFunctionPath(id) {
