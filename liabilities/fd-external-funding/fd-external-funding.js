@@ -4,9 +4,11 @@ import {
     getOtpExternalFundingFD,
     otpValidationExternalFundingFD,
     resendOTP,
+    invalidOTP,
     editMobileNumber,
     customSetFocus,
     customFocus,
+    setFetchCasaResponse,
 } from './fd-external-fundingFunctions.js';
 
 import {
@@ -28,8 +30,10 @@ export {
     invokeJourneyDropOffUpdate,
     effdInvokeJourneyDropOffByParam,
     resendOTP,
+    invalidOTP,
     editMobileNumber,
     sendAnalytics,
     customSetFocus,
     customFocus,
+    setFetchCasaResponse,
 };
