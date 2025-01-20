@@ -1206,7 +1206,7 @@ body.fd-backed-cc {
                                         &#pandobselection-1 {
                                             margin-left: 20px;
                                         }
-                                    }                                    
+                                    }
                                 }
 
                                 .field-pan {
@@ -1271,9 +1271,9 @@ body.fd-backed-cc {
                                     }
                                 }
 
-                                &:has(.field-pandobselection[data-visible="false"]){
-                                    .field-pan{
-                                        input[type="text"]{
+                                &:has(.field-pandobselection[data-visible="false"]) {
+                                    .field-pan {
+                                        input[type="text"] {
                                             margin-bottom: 12px;
                                         }
                                     }
@@ -1330,7 +1330,7 @@ body.fd-backed-cc {
                             }
 
                             .field-getotpbutton {
-                                margin-top: 10px;
+                                margin-top: 20px;
                             }
 
                             .field-stepstofollow {
@@ -1936,7 +1936,7 @@ body.fd-backed-cc {
                                         }
                                     }
 
-                                    button.item-add{
+                                    button.item-add {
                                         display: none;
                                     }
                                 }
@@ -2144,7 +2144,7 @@ body.fd-backed-cc {
                             .field-selectcreditcardwizard1 {
                                 margin-top: 20px;
 
-                                p{
+                                p {
                                     margin-bottom: 0;
                                 }
 
@@ -2866,7 +2866,8 @@ body.fd-backed-cc {
                                             }
                                         }
 
-                                        label, label p {
+                                        label,
+                                        label p {
                                             margin-bottom: 0;
                                             margin-top: 0;
                                             font-size: 14px;
@@ -2895,10 +2896,11 @@ body.fd-backed-cc {
                                         border-radius: 8px;
                                         padding: 12px;
                                         margin-top: 20px;
+                                        width: max-content;
 
                                         p p {
                                             padding-left: 30px;
-                                            background: url('../icons//info-icon.svg') no-repeat center left;
+                                            background: url('../icons/info-icon.svg') no-repeat center left;
                                             font-size: var(--body-fd-sm-font-size);
                                             font-weight: var(--font-weight-medium);
                                             color: var(--color-action-border-primary-default);
@@ -2907,25 +2909,212 @@ body.fd-backed-cc {
                                 }
 
 
-                                .field-nomineedetailswrapper{
+                                .field-nomineedetailswrapper {
                                     border-radius: 16px;
                                     padding: 40px 40px 32px 40px;
                                     background: var(--color-interface-background-primary);
+                                    max-width: 840px;
+                                    margin: 0 auto;
 
-                                    p{
+                                    p {
                                         margin-bottom: 0;
                                     }
 
-                                    .field-nomineedetailspanel{
-                                        .field-nomineedetailslabel{
-                                            p{
+                                    label {
+                                        padding: 0;
+                                    }
+
+                                    input[type="text"],
+                                    input[type="number"],
+                                    select {
+                                        padding-left: 20px;
+                                        max-width: 368px;
+                                        margin: 0;
+                                    }
+
+                                    .text-wrapper,
+                                    .date-wrapper,
+                                    .drop-down-wrapper,
+                                    .number-wrapper {
+
+                                        &[data-active="true"],
+                                        &[data-empty="false"] {
+                                            label {
+                                                transform: translateY(-29px);
+    font-weight: var(--font-weight-regular);
+                                            }
+                                        }
+
+                                        &.number-wrapper {
+                                            label {
+                                                color: inherit;
+                                            }
+                                        }
+                                    }
+
+                                    select {
+                                        border-color: var(--color-interface-border-secondary) !important;
+                                        height: 60px !important;
+                                        padding-left: 20px !important;
+                                        color: var(--color-interface-text-primary);
+                                        font-size: var(--body-lg-font-size);
+                                        font-weight: var(--font-weight-medium);
+                                        font-family: "Inter", sans-serif;
+                                    }
+
+                                    .field-guardiandetailswrapper,
+                                    .field-nomineeaddressdetailswrapper {
+                                        .field-wrapper {
+                                            grid-column: span 6;
+                                        }
+                                    }
+
+                                    .field-nomineedetailspanel {
+
+                                        .date-wrapper {
+                                            input {
+                                                margin-top: 0;
+                                                padding-left: 22px;
+
+                                                &[type="date"] {
+                                                    background: url('../icons/date_picker_cal_icon_select.svg') no-repeat 98% center;
+                                                }
+
+                                                &:focus-visible {
+                                                    outline: none;
+                                                }
+
+                                                &::-webkit-calendar-picker-indicator {
+                                                    background: none;
+                                                }
+                                            }
+                                        }
+
+                                        .field-nomineedetailslabel {
+                                            p {
                                                 font-size: var(--body-x-lg-font-size);
                                                 font-weight: var(--font-weight-bold);
                                                 color: var(--color-interface-text-primary);
                                             }
                                         }
-                                    }   
+
+                                        .field-nomineedetailssectionwrapper {
+                                            display: grid;
+
+                                            .field-wrapper {
+                                                grid-column: span 6;
+                                            }
+                                        }
+                                    }
+
+                                    .field-nomineeinfo {
+                                        background-color: var(--color-interface-background-quinary);
+                                        border-radius: 8px;
+                                        padding: 12px;
+                                        margin-top: 10px;
+
+                                        p p {
+                                            padding-left: 30px;
+                                            background: url('../icons/info-icon.svg') no-repeat center left;
+                                            font-size: var(--body-fd-sm-font-size);
+                                            font-weight: var(--font-weight-medium);
+                                            color: var(--color-action-border-primary-default);
+                                        }
+                                    }
+
+                                    .field-nomineemailingaddresspanel {
+                                        margin-top: 10px;
+
+                                        .field-nomineemailingaddresslabel {
+                                            p p {
+                                                font-size: var(--body-x-lg-font-size);
+                                                font-weight: var(--font-weight-bold);
+                                                color: var(--color-interface-text-primary);
+                                            }
+                                        }
+
+                                        .field-nomineeaddresscheck {
+                                            display: flex;
+                                            align-items: center;
+                                            margin-top: -5px;
+
+                                            input[type="checkbox"] {
+                                                border-radius: 5px;
+                                                border: 1.5px solid var(--color-interface-border-secondary);
+                                                appearance: none;
+                                                -webkit-appearance: none;
+                                                outline: none;
+                                                padding: 0;
+
+                                                &:checked {
+                                                    background: var(--color-interface-icon-highlight) url("../icons/checkbox-checked-arrow.png") no-repeat center center;
+                                                    border: none;
+                                                    cursor: pointer;
+                                                }
+                                            }
+
+                                            label {
+                                                font-size: var(--body-fd-sm-font-size);
+                                                font-weight: var(--font-weight-regular);
+                                                color: var(--color-input-text-primary);
+                                            }
+                                        }
+
+                                        .field-prefilledaddresspanel {
+                                            background: var(--color-interface-background-quinary);
+                                            padding: 15px;
+                                            border-radius: 12px;
+                                            display: inline;
+
+                                            .field-nomineeadddetaillabel {
+                                                p p {
+                                                    font-size: var(--body-fd-sm-font-size);
+                                                    font-weight: var(--font-weight-regular);
+                                                    color: var(--color-interface-text-secondary);
+                                                }
+                                            }
+
+                                            .field-nomineeaddressprefilledaddress {
+                                                p p {
+                                                    font-size: var(--body-lg-font-size);
+                                                    font-weight: var(--font-weight-medium);
+                                                    color: var(--color-interface-text-primary);
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    .field-nomineebtnsection {
+                                        display: flex;
+                                        margin-top: 20px;
+
+                                        .button-wrapper {
+                                            width: 170px;
+                                            height: 52px;
+
+
+                                        }
+
+                                        .field-nomineecancelbtn {
+
+                                            button {
+                                                background: none;
+                                                border: 1px solid var(--color-action-border-primary-default);
+                                                color: var(--color-action-text-secondary-default);
+
+
+                                                &::after {
+                                                    display: none;
+                                                }
+
+                                                &:hover {
+                                                    color: var(--color-interface-text-tertiary);
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
+
                                 /* nomineed-details screen end */
                             }
                         }
