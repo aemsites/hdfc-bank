@@ -488,10 +488,7 @@ body.fd-backed-cc {
 
                                                 .field-minfdamountcard1,
                                                 .field-minfdamountcard2 {
-                                                    border-top-right-radius: 12px;
-                                                    border-bottom-right-radius: 12px;
-                                                    border-top-left-radius: 0;
-                                                    border-bottom-left-radius: 0;
+                                                    border-radius: 0 12px 12px 0;
                                                     display: flex;
                                                     align-items: center;
                                                     flex-direction: row-reverse;
@@ -2899,18 +2896,32 @@ body.fd-backed-cc {
                                         }
                                     }
                                 }
+
+
+                                .field-nomineedetailswrapper{
+                                    border-radius: 16px;
+                                    padding: 40px 40px 32px 40px;
+                                    background: var(--color-interface-background-primary);
+
+                                    p{
+                                        margin-bottom: 0;
+                                    }
+
+                                    .field-nomineedetailspanel{
+                                        .field-nomineedetailslabel{
+                                            p{
+                                                font-size: var(--body-x-lg-font-size);
+                                                font-weight: var(--font-weight-bold);
+                                                color: var(--color-interface-text-primary);
+                                            }
+                                        }
+                                    }   
+                                }
+                                /* nomineed-details screen end */
                             }
                         }
 
                         /* SELECT CREDIT CARD SCREEN END */
-
-                        .field-runtime {}
-
-                        /* FIELD-RUNTIME SCREEN END */
-
-                        .field-resultpanel {}
-
-                        /* FIELD-RUNTIME SCREEN END */
 
 
                         /* COMMON STYLES FOR JOURNEY  */
