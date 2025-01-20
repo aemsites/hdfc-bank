@@ -468,9 +468,25 @@ function invalidOTP(globals) {
     globals.form.runtime.leadProifileId,
     globals.form.runtime.journeyId
   );
-  globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.otpSubPanel.numRetries, { value: (
-    globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.otpSubPanel.numRetries.$value - 1
-  )});
+  if (resendOtpCount < MAX_OTP_RESEND_COUNT) {
+    resendOtpCount += 1;
+    globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.otpSubPanel.numRetries, { value: (
+      MAX_OTP_RESEND_COUNT - resendOtpCount
+    )});
+    if(timer){
+      clearTimeout(timer);
+    }
+    sec = OTP_TIMER;
+    dispSec = OTP_TIMER;
+    globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.secondsPanel.seconds, { value: dispSec });
+    otpTimer(globals);
+
+    if (resendOtpCount === MAX_OTP_RESEND_COUNT) {
+      globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.secondsPanel, { visible: false });
+      globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.otpResend, { visible: false });
+      globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.maxAttemptMessage, { visible: true });
+    }
+  }
 };
 
 function setFetchCasaResponse(globals, casaResponse){
