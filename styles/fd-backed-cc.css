@@ -1826,118 +1826,131 @@ body.fd-backed-cc {
                                 padding-right: 20px;
 
                                 .field-repeatwrapper {
-                                    min-height: 140px;
-                                    border-radius: 16px;
-                                    border: 1px solid var(--color-interface-border-secondary);
-                                    padding: 20px;
-                                    grid-column: span 6;
+                                    .repeat-wrapper {
+                                        display: grid;
+                                        gap: 20px;
 
-                                    @media (max-width: 768px) {
-                                        margin-bottom: 20px;
-                                    }
+                                        &>.panel-wrapper.field-wrapper {
+                                            min-height: 140px;
+                                            border-radius: 16px;
+                                            border: 1px solid var(--color-interface-border-secondary);
+                                            padding: 20px;
+                                            grid-column: span 6;
 
-                                    & input[type="text"] {
-                                        letter-spacing: -1px;
-                                        margin: 0;
-                                        padding: 0;
-                                        height: auto;
-                                        border-radius: 0;
-                                        border: none;
-                                        line-height: normal;
-                                    }
+                                            @media (max-width: 768px) {
+                                                margin-bottom: 20px;
+                                            }
 
-                                    .field-savingsaccountnumwrapper {
-                                        display: flex;
-                                        flex-flow: initial;
-                                        align-items: flex-start;
-                                        justify-content: space-between;
-
-                                        .field-savingsaccountnum[data-empty="false"] {
-
-                                            label {
-                                                position: initial;
+                                            & input[type="text"] {
+                                                letter-spacing: -1px;
                                                 margin: 0;
-                                                transform: none;
-                                                font-size: var(--body-md-font-size);
-                                                font-weight: var(--font-weight-small);
-                                                color: var(--color-interface-text-primary);
                                                 padding: 0;
+                                                height: auto;
+                                                border-radius: 0;
+                                                border: none;
+                                                line-height: normal;
                                             }
 
-                                            input {
-                                                font-size: var(--body-x-lg-font-size);
-                                                font-weight: var(--font-weight-extra-bold);
-                                                field-sizing: content;
-                                                width: auto;
-                                            }
-                                        }
+                                            .field-savingsaccountnumwrapper {
+                                                display: flex;
+                                                flex-flow: initial;
+                                                align-items: flex-start;
+                                                justify-content: space-between;
 
-                                        .field-accselection {
-                                            margin-top: 0;
-                                            flex: auto;
-                                            justify-content: flex-end;
+                                                .field-savingsaccountnum,
+                                                .field-accselection {
+                                                    width: 100%;
+                                                }
 
-                                            & input[type="checkbox"] {
-                                                border-radius: 100%;
-                                                border: 1px solid var(--color-interface-border-secondary);
-                                                appearance: none;
-                                                -webkit-appearance: none;
-                                                outline: none;
-                                                padding: 0;
-                                                width: 24px !important;
-                                                height: 24px !important;
+                                                .field-savingsaccountnum[data-empty="false"] {
 
+                                                    label {
+                                                        position: initial;
+                                                        margin: 0;
+                                                        transform: none;
+                                                        font-size: var(--body-md-font-size);
+                                                        font-weight: var(--font-weight-small);
+                                                        color: var(--color-interface-text-primary);
+                                                        padding: 0;
+                                                    }
 
-                                                &:checked {
-                                                    cursor: pointer;
-                                                    position: relative;
-                                                    display: flex;
-                                                    align-items: center;
-                                                    justify-content: center;
-                                                    border: 1px solid var(--color-interface-icon-highlight);
+                                                    input {
+                                                        font-size: var(--body-x-lg-font-size);
+                                                        font-weight: var(--font-weight-extra-bold);
+                                                        field-sizing: content;
+                                                        width: auto;
+                                                    }
+                                                }
 
-                                                    &::before {
-                                                        content: '';
+                                                .field-accselection {
+                                                    margin-top: 0;
+                                                    flex: auto;
+                                                    justify-content: flex-end;
+                                                    width: auto;
+
+                                                    & input[type="checkbox"] {
                                                         border-radius: 100%;
-                                                        width: 12px;
-                                                        height: 12px;
-                                                        background-color: var(--color-interface-icon-highlight);
-                                                        position: absolute;
+                                                        border: 1px solid var(--color-interface-border-secondary);
+                                                        appearance: none;
+                                                        -webkit-appearance: none;
+                                                        outline: none;
+                                                        padding: 0;
+                                                        width: 24px !important;
+                                                        height: 24px !important;
+
+
+                                                        &:checked {
+                                                            cursor: pointer;
+                                                            position: relative;
+                                                            display: flex;
+                                                            align-items: center;
+                                                            justify-content: center;
+                                                            border: 1px solid var(--color-interface-icon-highlight);
+
+                                                            &::before {
+                                                                content: '';
+                                                                border-radius: 100%;
+                                                                width: 12px;
+                                                                height: 12px;
+                                                                background-color: var(--color-interface-icon-highlight);
+                                                                position: absolute;
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+
+                                            .field-balanceamountwrapper {
+                                                display: flex;
+                                                align-items: center;
+                                                justify-content: space-between;
+
+                                                .field-balanceamountlabel {
+                                                    margin-top: 3px;
+
+                                                    p {
+                                                        font-size: var(--body-md-font-size);
+                                                        font-weight: var(--font-weight-regular);
+                                                        color: var(--color-input-text-primary);
+                                                        margin-bottom: 0;
+                                                    }
+                                                }
+
+                                                .field-balanceamount {
+                                                    input {
+                                                        font-size: var(--body-md-font-size);
+                                                        font-weight: var(--font-weight-medium);
+                                                        text-align: right;
+                                                        field-sizing: content;
+                                                        width: auto;
                                                     }
                                                 }
                                             }
                                         }
-                                    }
 
-                                    .field-balanceamountwrapper {
-                                        display: flex;
-                                        align-items: center;
-                                        justify-content: space-between;
-
-                                        .field-balanceamountlabel {
-                                            margin-top: 3px;
-
-                                            p {
-                                                font-size: var(--body-md-font-size);
-                                                font-weight: var(--font-weight-regular);
-                                                color: var(--color-input-text-primary);
-                                                margin-bottom: 0;
-                                            }
+                                        button.item-add {
+                                            display: none;
                                         }
-
-                                        .field-balanceamount {
-                                            input {
-                                                font-size: var(--body-md-font-size);
-                                                font-weight: var(--font-weight-medium);
-                                                text-align: right;
-                                                field-sizing: content;
-                                                width: auto;
-                                            }
-                                        }
-                                    }
-
-                                    button.item-add {
-                                        display: none;
                                     }
                                 }
                             }
@@ -2941,7 +2954,7 @@ body.fd-backed-cc {
                                         &[data-empty="false"] {
                                             label {
                                                 transform: translateY(-29px);
-    font-weight: var(--font-weight-regular);
+                                                font-weight: var(--font-weight-regular);
                                             }
                                         }
 
