@@ -996,7 +996,7 @@ const firstLastNameValidation = (fn, ln, globals) => {
     lName: 'Please enter a valid Last Name',
   };
   const MAX_LENGTH = 23;
-  const MIN_LENGTH_FN = 1;
+  const MIN_LENGTH_FN = 3;
   const MIN_LENGTH_LN = 1;
   const { personalDetails } = globals.form.corporateCardWizardView.yourDetailsPanel.yourDetailsPage;
   const validate = (str, max, min) => (str && (!((str?.length <= max) && (str?.length >= min)))) || (str === '');
@@ -1015,7 +1015,7 @@ const firstLastNameValidation = (fn, ln, globals) => {
     globals.functions.markFieldAsInvalid(personalDetails.firstName.$qualifiedName, '', { useQualifiedName: true });
     globals.functions.markFieldAsInvalid(personalDetails.lastName.$qualifiedName, '', { useQualifiedName: true });
   }
-  const combinedLength = fn.length + ln.length;
+  /*const combinedLength = fn.length + ln.length;
   if (combinedLength < 4) {
     // return 'The combined length of first and last name must be at least 4 characters.';
     globals.functions.markFieldAsInvalid(personalDetails.firstName.$qualifiedName, invalidMsg.fName, { useQualifiedName: true });
@@ -1025,7 +1025,7 @@ const firstLastNameValidation = (fn, ln, globals) => {
   if ((fn.length === 1 || ln.length === 1) && (combinedLength >= 4)) {
     globals.functions.markFieldAsInvalid(personalDetails.firstName.$qualifiedName, '', { useQualifiedName: true });
     globals.functions.markFieldAsInvalid(personalDetails.lastName.$qualifiedName, '', { useQualifiedName: true });
-  }
+  }*/
 };
 
 /**
