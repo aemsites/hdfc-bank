@@ -14,6 +14,14 @@ import {
 } from './fd-external-fundingFunctions.js';
 
 import {
+    createJourneyId,
+    investAmtChangeHandler,
+    selectFundAcct,
+    fdEfSimulationExecute,
+    fdEfSwitchWizard,
+  } from './fd-external-funding-functions.js';
+
+import {
     invokeJourneyDropOff,
     invokeJourneyDropOffUpdate,
     effdInvokeJourneyDropOffByParam,
@@ -40,4 +48,9 @@ export {
     customFocus,
     setFetchCasaResponse,
     loadHomePage,
+    createJourneyId,
+    investAmtChangeHandler,
+    selectFundAcct,
+    fdEfSimulationExecute,
+    fdEfSwitchWizard,
 };

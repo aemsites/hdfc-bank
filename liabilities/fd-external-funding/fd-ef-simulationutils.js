@@ -141,7 +141,7 @@ const fdEfSimSuccessCallBack = (res, globals) => {
     hideLoaderGif();
     // method to set the response in the correct placess
     const maturity = `${INR_CONST.nfObject.format(parseInt(response?.tdSimulationResponse?.maturityAmount?.amount || 0, 10))} @ ${response?.tdSimulationResponse?.interestRate}p.a`;
-    globals.functions.setProperty(globals.form.wizardWrapper.wizardExternalFunding.createFD.rightWrapper.maturityDetailsPanel.mDetails, { value: maturity });
+    globals.functions.setProperty(globals.form.fdDetailsWrapper.externalFundingWizardView.wizardExternalFunding.createFD.rightWrapper.maturityDetailsPanel.mDetails, { value: maturity });
     if (FD_SIM_API.triggerPlace === DOM_NAME.wizardSelectAct) {
       moveWizardView(DOM_NAME.wizardPanel, DOM_NAME.wizardCreateFd);
     }
@@ -158,9 +158,9 @@ const fdEfSimSuccessCallBack = (res, globals) => {
  * @returns {Promise}
  */
 function fdEfSimulationExecute(triggerPlace, globals) {
-  const tenureYears = parseInt(globals.form.wizardWrapper.wizardExternalFunding.createFD.leftWrapper.tenurePanel.tenureWrapper.year.$value);
-  const tenureMonths = parseInt(globals.form.wizardWrapper.wizardExternalFunding.createFD.leftWrapper.tenurePanel.tenureWrapper.months.$value);
-  const interestPayoutPanel = globals.form.wizardWrapper.wizardExternalFunding.createFD.leftWrapper.interestPayout
+  const tenureYears = parseInt(globals.form.fdDetailsWrapper.externalFundingWizardView.wizardExternalFunding.createFD.leftWrapper.tenurePanel.tenureWrapper.year.$value);
+  const tenureMonths = parseInt(globals.form.fdDetailsWrapper.externalFundingWizardView.wizardExternalFunding.createFD.leftWrapper.tenurePanel.tenureWrapper.months.$value);
+  const interestPayoutPanel = globals.form.fdDetailsWrapper.externalFundingWizardView.wizardExternalFunding.createFD.leftWrapper.interestPayout
   const interestPayoutPanelVisibility = formUtil(globals, interestPayoutPanel);
   const isEligibleForInterestPayout = tenureMonths >= 6 || tenureYears >= 1;
   interestPayoutPanelVisibility.visible(isEligibleForInterestPayout);

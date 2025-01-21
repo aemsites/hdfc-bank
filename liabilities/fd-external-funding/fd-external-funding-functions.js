@@ -94,7 +94,7 @@ function selectFundAcct(acctField, globals) {
   const {
     selectAccount: { multipleAccounts: { multipleAccountRepeatable }, investmentAmt },
     createFD,
-  } = globals.form.wizardWrapper.wizardExternalFunding;
+  } = globals.form.fdDetailsWrapper.externalFundingWizardView.wizardExternalFunding;
   const accountsPanelData = globals.functions.exportData().multipleAccountRepeatable;
   updateFundAct(accountsPanelData, selectedIndex, multipleAccountRepeatable.$qualifiedName, globals);
   const investAmtFied = formUtil(globals, investmentAmt);
