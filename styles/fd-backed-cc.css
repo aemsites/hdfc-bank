@@ -110,7 +110,11 @@ body.fd-backed-cc {
                             padding-right: 0;
                             position: relative;
 
-                            @media (min-width: 767px) {
+                            @media (768px <=width <=991px) {
+                                padding: 40px 0;
+                            }
+
+                            @media (min-width: 992px) {
                                 padding: 40px 35px 40px 0;
                             }
 
@@ -152,6 +156,11 @@ body.fd-backed-cc {
                                     .field-landingpanel11 {
                                         background: url('../icons/landing_banner_smily-bg.png') no-repeat -20px -10px;
 
+                                        @media (768px <=width <=991px) {
+                                            background-size: 170%;
+                                            background-position-y: -50px;
+                                        }
+
                                         @media (max-width: 767px) {
                                             background: none;
                                         }
@@ -160,7 +169,10 @@ body.fd-backed-cc {
                                             background: url('../icons/landing_banner_left-text.png') no-repeat 40px 50px;
                                             height: 378px;
                                             width: 100%;
-
+                                            @media (768px <=width <=991px) {
+                                                background: url('../icons/landing_banner_left-text_ipad.png') no-repeat 40px 20px;
+                                                height: 252px;
+                                            }
                                             @media (max-width: 767px) {
                                                 background: url('../icons/banner_mobile_text.png') no-repeat top center;
                                                 height: 194px;
@@ -202,6 +214,15 @@ body.fd-backed-cc {
                                         .button-wrapper {
                                             width: 225px;
 
+                                            @media (768px <=width <=991px) {
+                                                width: auto;
+                                              button{
+                                                padding: 0 20px;
+                                                height: 40px;
+                                                border-radius: 10px;
+                                              }
+                                            }
+
 
                                             @media (max-width: 767px) {
                                                 width: 212px;
@@ -234,7 +255,7 @@ body.fd-backed-cc {
 
                                 .field-landingpanel2 {
                                     grid-column: span 4;
-
+                                 
                                     @media (max-width: 767px) {
                                         grid-column: span 12;
                                         order: 1;
@@ -251,6 +272,13 @@ body.fd-backed-cc {
                                         height: 405px;
                                         background: url('../icons/landing_banner_right.png') no-repeat right 50px;
                                         background-size: 95%;
+
+                                        @media (768px <=width <=991px) {
+                                            width: 100%;
+                                            height: 252px;
+                                            background: url('../icons/landing_banner_right_ipad.png') no-repeat right top;
+                                            background-size: 100%;
+                                        }
 
                                         @media (max-width: 767px) {
                                             background-size: 58%;
@@ -275,6 +303,10 @@ body.fd-backed-cc {
                                 padding: 20px 40px;
                                 background-color: var(--color-interface-background-quinary);
 
+                                @media (768px <=width <=991px) {
+                                    margin-top: 10px;
+                                }
+
                                 @media (max-width: 767px) {
                                     padding: 20px 20px;
                                 }
@@ -286,7 +318,7 @@ body.fd-backed-cc {
                                         display: inline;
                                         grid-column: span 6;
 
-                                        @media (max-width: 767px) {
+                                        @media (320px <=width <=991px) {
                                             grid-column: span 12;
                                         }
 
@@ -321,6 +353,11 @@ body.fd-backed-cc {
                                         align-items: center;
                                         justify-content: flex-end;
                                         flex-direction: row;
+
+                                        @media (320px <=width <=991px) {
+                                            grid-column: span 12;
+                                            justify-content: flex-start;
+                                        }
 
                                         .field-retailcardsbtn,
                                         .field-businesscardsbtn {
@@ -691,6 +728,10 @@ body.fd-backed-cc {
                                     flex-direction: row;
                                     align-items: center;
 
+                                    @media (768px <=width <=991px) {
+                                        flex-direction: column;
+                                    }
+
                                     @media (max-width: 767px) {
                                         flex-direction: column;
                                         text-align: center;
@@ -706,6 +747,10 @@ body.fd-backed-cc {
                                     .field-knowyourcclimittextwrapper {
                                         display: inline;
                                         flex: 2;
+
+                                        @media (768px <=width <=991px) {
+                                            text-align: center;
+                                        }
 
                                         .field-knowyourcclimittext1 {
                                             p {
@@ -913,6 +958,10 @@ body.fd-backed-cc {
                                         display: inline;
                                         background-color: #F9FAFF;
                                         padding: 20px;
+
+                                        @media (768px <=width <=991px) {
+                                            grid-column: span 6;
+                                        }
 
                                         @media (max-width: 767px) {
                                             grid-column: span 6;
