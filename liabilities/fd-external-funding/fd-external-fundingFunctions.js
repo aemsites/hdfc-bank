@@ -47,6 +47,7 @@ let MAX_COUNT = 3;
 let sec = OTP_TIMER;
 let dispSec = OTP_TIMER;
 let timer = null;
+let editMobileNumberFlag = false;
 
 currentFormContext.journeyName = 'FD_EXTERNAL_FUNDING_JOURNEY';
 currentFormContext.journeyType = 'ETB';
@@ -124,6 +125,7 @@ function otpPageReset(globals){
   globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.otpSubPanel.hiddenMaxCount, { value : 3 }); // Resetting to 3. Need to confirm whether we should reset to 3.
   globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.otpSubPanel.numRetries, { value : 3 });
   globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.otpNumber, { value : '' });
+  globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.incorrectOTPText, { visible: false });
   if(document)
   {
     const eyeButton = document.querySelector('.bi-eye');
@@ -146,6 +148,15 @@ const editMobileNumber = (globals) => {
   globals.functions.setProperty(globals.form.otpPanelWrapper, { visible : false });
   globals.functions.setProperty(globals.form.loginMainPanel, { visible : true });
   otpPageReset(globals);
+  editMobileNumberFlag = true;
+  // sendAnalytics('submit otp click', '', 'CUSTOMER_LEAD_QUALIFIED_FAILURE');
+  invokeJourneyDropOffUpdate(
+    'EDIT_MOBILE_NUMBER', 
+    globals.form.loginMainPanel.loginPanel.mobilePanel.mobileNumberWrapper.registeredMobileNumber,
+    globals.form.runtime.leadProifileId,
+    globals.form.runtime.journeyId,
+    globals
+  );
 };
 
 const validatePanDynamically = (pan, panValue, globals) => {
@@ -181,6 +192,7 @@ const validateLoginFd = (globals) => {
     const isdNumberPattern = /^(?!0)([5-9]\d{9})$/;
     const panIsValid = validFDPan(panValue);
     const nonISDNumberPattern = /^(?!0)\d{3,15}$/;
+    let mobileNoValid = false;
     currentFormContext.isdCode = isdCode;
     globals.functions.setProperty(globals.form.loginMainPanel.getOTPbutton, { enabled: false });
   
@@ -190,6 +202,13 @@ const validateLoginFd = (globals) => {
     // Mobile Field Validation
     if((mobileNo && mobileNo.length == 1 && /^[0-5]/.test(mobileNo)) || (mobileNo && !(/^[0-9]/.test(mobileNo.slice(-1))))){
       globals.functions.setProperty(globals.form.loginMainPanel.loginPanel.mobilePanel.mobileNumberWrapper.registeredMobileNumber , { value : '' });
+    }
+    if (mobileNo && ((isdCode === '91' && !isdNumberPattern.test(mobileNo)))) {
+      globals.functions.setProperty(globals.form.loginMainPanel.loginPanel.mobilePanel.mobileNumberWrapper.registerMobileNumberError, { visible: true });
+      globals.functions.setProperty(globals.form.loginMainPanel.getOTPbutton, { enabled: false });
+    } else {
+      globals.functions.setProperty(globals.form.loginMainPanel.loginPanel.mobilePanel.mobileNumberWrapper.registerMobileNumberError, { visible: false });
+      mobileNoValid = true;
     }
 
     validatePanDynamically(globals.form.loginMainPanel.loginPanel.identifierPanel.pan, panValue, globals);
@@ -201,7 +220,7 @@ const validateLoginFd = (globals) => {
           const maxAge = 100;
           const dobErrorText = `Customers with age below ${minAge} years and above ${maxAge} are not allowed.`;
           const ageValid = ageValidate(minAge, maxAge, dobValue);
-          if (ageValid && consentFirst && mobileNo) {
+          if (ageValid && consentFirst && mobileNo && mobileNoValid) {
             globals.functions.setProperty(globals.form.loginMainPanel.getOTPbutton, { enabled: true });
             globals.functions.markFieldAsInvalid('$form.loginMainPanel.loginPanel.identifierPanel.dateOfBirth', '', { useQualifiedName: true });
           }
@@ -215,7 +234,7 @@ const validateLoginFd = (globals) => {
             globals.functions.setProperty(globals.form.loginMainPanel.loginPanel.identifierPanel.dobErrorText, { visible: true });
             globals.functions.setProperty(globals.form.loginMainPanel.getOTPbutton, { enabled: false });
           }
-          if (!consentFirst && !ageValid && !mobileNo) {
+          if (!consentFirst && !ageValid && (!mobileNo || mobileNoValid == false)) {
             globals.functions.setProperty(globals.form.loginMainPanel.getOTPbutton, { enabled: false });
           }
         }
@@ -224,7 +243,7 @@ const validateLoginFd = (globals) => {
         panWrapper?.setAttribute('data-empty', true);
         if (panValue) {
           panWrapper?.setAttribute('data-empty', false);
-          if (panIsValid && consentFirst && mobileNo) {
+          if (panIsValid && consentFirst && mobileNo && mobileNoValid) {
             globals.functions.markFieldAsInvalid('$form.loginMainPanel.loginPanel.identifierPanel.pan', '', { useQualifiedName: true });
             globals.functions.setProperty(globals.form.loginMainPanel.getOTPbutton, { enabled: true });
           }
@@ -238,20 +257,13 @@ const validateLoginFd = (globals) => {
             globals.functions.setProperty(globals.form.loginMainPanel.loginPanel.identifierPanel.panErrorText, { visible: true });
             globals.functions.setProperty(globals.form.loginMainPanel.getOTPbutton, { enabled: false });
           }
-          if (!consentFirst && !mobileNo && !panIsValid) {
+          if (!consentFirst && (!mobileNo || mobileNoValid == false) && !panIsValid) {
             globals.functions.setProperty(globals.form.loginMainPanel.getOTPbutton, { enabled: false });
           }
         }
         break;
       default:
         globals.functions.setProperty(globals.form.loginMainPanel.getOTPbutton, { enabled: false });
-    }
-    if (mobileNo && ((isdCode === '91' && !isdNumberPattern.test(mobileNo))
-      || (isdCode !== '91' && !nonISDNumberPattern.test(mobileNo)))) {
-      globals.functions.setProperty(globals.form.loginMainPanel.loginPanel.mobilePanel.mobileNumberWrapper.registerMobileNumberError, { visible: true });
-      globals.functions.setProperty(globals.form.loginMainPanel.getOTPbutton, { enabled: false });
-    } else {
-      globals.functions.setProperty(globals.form.loginMainPanel.loginPanel.mobilePanel.mobileNumberWrapper.registerMobileNumberError, { visible: false });
     }
   };
 
@@ -477,7 +489,8 @@ function invalidOTP(globals) {
     'CUSTOMER_LEAD_QUALIFIED_FAILURE', 
     globals.form.loginMainPanel.loginPanel.mobilePanel.mobileNumberWrapper.registeredMobileNumber,
     globals.form.runtime.leadProifileId,
-    globals.form.runtime.journeyId
+    globals.form.runtime.journeyId,
+    globals
   );
   if (resendOtpCount < MAX_OTP_RESEND_COUNT) {
     resendOtpCount += 1;
@@ -504,10 +517,19 @@ function invalidOTP(globals) {
   }
 };
 
+function maskMobileNo(mobileNo){
+  if(mobileNo){
+    return '*'.repeat(5) + mobileNo.slice(5,11);
+  }
+  return '';
+}
+
 function getOtpResponseHandling(custIdentResp, otpGenResp, globals) {
   if(custIdentResp.existingCustomer === 'Y' && custIdentResp.status.errorCode === '0' && otpGenResp.status.errorCode === '00000'){
+    let mobileNo = 
     globals.functions.setProperty(globals.form.loginMainPanel, { visible: false });
     globals.functions.setProperty(globals.form.otpPanelWrapper, { visible: true });
+    globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.otpTextPanel.maskedMobileNo, { value: maskMobileNo(globals.form.loginMainPanel.loginPanel.mobilePanel.mobileNumberWrapper.registeredMobileNumber.$value) })
     otpTimer(globals);
   } else if(custIdentResp.existingCustomer === 'N' && custIdentResp.status.errorCode === 'nonExistingCustomer') {
     if(window){
