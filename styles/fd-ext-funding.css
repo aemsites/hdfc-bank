@@ -820,12 +820,13 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
 
                                             &[type="password"] {
                                                 font-size: var(--body-fd-xxx-lg-font-size);
-                                                color: var(--color-interface-text-secondary);
+                                                color: var(--color-interface-border-primary) !important;
                                                 letter-spacing: 35px;
                                             }
 
                                             &::placeholder {
                                                 font-size: var(--body-fd-xxx-lg-font-size);
+                                                color: var(--color-interface-border-primary);
                                                 letter-spacing: 35px;
                                             }
                                         }
@@ -934,7 +935,7 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                         margin-top: -1px;
                                         grid-column: span 6;
 
-                                        .field-numretries,
+                                        .number-wrapper,
                                         .field-attempts {
 
                                             input,
@@ -947,12 +948,14 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                             }
                                         }
 
-                                        .field-numretries {
+                                        .number-wrapper {
                                             position: relative;
 
                                             input {
                                                 margin-top: 4px;
                                                 position: absolute;
+                                                letter-spacing: 0;
+                                                color: var(--color-interface-text-secondary) !important;
                                             }
                                         }
                                     }
