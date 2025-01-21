@@ -21,7 +21,7 @@ const getAcctPanelData = async (accArr) => {
 };
 
 const fillActDtls = (data, globals) => {
-  const multAct = globals.form.wizardWrapper.wizardExternalFunding.selectAccount.multipleAccounts.multipleAccountRepeatable;
+  const multAct = globals.form.fdDetailsWrapper.externalFundingWizardView.wizardExternalFunding.selectAccount.multipleAccounts.multipleAccountRepeatable;
   (data || [])?.forEach(({ accountDtls: { accountNumber, availableBalance, accountType } }, i) => {
     const actNo = `${accountType} ${String(accountNumber)?.replace('XXXXXXXXXX', '**********')}`;
     const avlBal = `Available balance: ${FD_EF_CONSTANT.INR_CONST.nfObject.format(availableBalance)}`;
