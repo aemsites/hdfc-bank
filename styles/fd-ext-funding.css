@@ -811,6 +811,7 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                             &::placeholder {
                                                 font-size: var(--body-fd-xxx-lg-font-size);
                                                 letter-spacing: 35px;
+                                                color: var(--color-interface-border-primary);
                                             }
                                         }
 
@@ -931,6 +932,8 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
 
                                         .field-numretries {
                                             position: relative;
+                                            margin-right: -24px;
+                                            margin-top: -1px;
 
                                             input {
                                                 margin-top: 4px;
@@ -1089,6 +1092,49 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                             }
                         }
 
+                        /* Toggle code */
+                        .field-bankusetoggle {
+                            display: contents;
+                        
+                            .field-label {
+                              display: flex;
+                              flex-basis: 40px !important;
+                              align-items: center;
+                              background-color: #9ca3af;
+                              color: #fff;
+                              cursor: pointer;
+                              border-radius: 12px;
+                              height: 24px;
+                              width: 40px;
+                            }
+                        
+                            .field-label::before {
+                              content: '';
+                              display: inline-block;
+                              width: 20px;
+                              height: 20px;
+                              background-color: #fff;
+                              border-radius: 50%;
+                              margin-right: 10px;
+                              transition: transform 0.3s;
+                              margin-left: 1px;
+                            }
+                        }
+                        
+                        .field-bankusetoggle input[type='checkbox'] {
+                            display: none;
+                        }
+                        
+                        .field-bankusetoggle
+                            input[type='checkbox']:checked
+                            + .field-label::before {
+                            transform: translateX(20px);
+                            margin-right: 21px;
+                        }
+                        
+                        .field-bankusetoggle input[type='checkbox']:checked + .field-label {
+                            background-color: #1c3fca;
+                        }
 
                         /* success text above wizard */
                         .field-accountsuccessmsg.field-wrapper {
@@ -1186,13 +1232,13 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                     }
                                 
                                     li.wizard-menu-active-item:first-child::before {
-                                        background: url('../icons/fd-ext-Indicator1-active.png') no-repeat center center /
+                                        background: url('../icons/FD-Ext-Indicator1-Active.png') no-repeat center center /
                                         40px 40px;
                                         content: '';
                                     }
                                 
                                     li.wizard-menu-item:nth-child(2)::before {
-                                        background: url('../icons/fd-ext-Indicator2.png') no-repeat center center / 40px
+                                        background: url('../icons/FD-Ext-Indicator2.png') no-repeat center center / 40px
                                         40px;
                                         content: '';
                                     }
@@ -1208,19 +1254,19 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                     }
                                 
                                     li.wizard-menu-active-item:nth-child(2)::before {
-                                        background: url('../icons/fd-ext-Indicator2-active.png') no-repeat center center /
+                                        background: url('../icons/Fd-Ext-Indicator2-active.png') no-repeat center center /
                                         40px 40px;
                                         content: '';
                                     }
                                 
                                     li.wizard-menu-item:last-child::before {
-                                        background: url('../icons/fd-ext-Indicator3.png') no-repeat center center / 40px
+                                        background: url('../icons/Fd-Ext-Indicator3.png') no-repeat center center / 40px
                                         40px;
                                         content: '';
                                     }
                                 
                                     li.wizard-menu-active-item:nth-child(3)::before {
-                                        background: url('../icons/fd-ext-Indicator3-active.png') no-repeat center center /
+                                        background: url('../icons/Fd-Ext-Indicator3-active.png') no-repeat center center /
                                         40px 40px;
                                         content: '';
                                     }
@@ -1312,6 +1358,8 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                                         }
                                                     }
                                                 }
+
+                                                @media (width < 950px) { display: block; }
                                             }
                                             .item-add { display: none; }
                                         }
@@ -1320,12 +1368,18 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                     .field-continuebtn {
                                         padding-top: 40px;
                                         max-width: 272px;
+
+                                        @media (width < 767px) { 
+                                            max-width: 100%;
+
+                                            button { max-width: none; }
+                                        }
                                     }
                                 }
                             }
                         
                             /* Create FD */
-                            .field-createfd.field-createfd.current-wizard-step { padding: 50px 40px;
+                            .field-createfd.current-wizard-step { padding: 50px 40px;
 
                                 .field-createfdheading p {
                                     font-size: var(--font-linehight-large);
@@ -1350,6 +1404,15 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                             margin: 0; 
                                             color: var(--color-input-text-placeholder-disabled);
                                         }
+
+                                        .field-selectanyone {
+                                            label, select { color: var(--color-interface-text-primary); }
+
+                                            select {
+                                                font-size: var(--body-lg-font-size);
+                                                font-weight: var(--font-weight-medium);
+                                            }
+                                        }
                                     }
                     
                                     .field-investmentamountlabel b, .field-tenurelabel b, .field-interestpayoutlabel b, .field-renewalinstructionslabel b {
@@ -1365,6 +1428,7 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                             margin: 0;
                                             max-width: -webkit-fill-available;
                                             letter-spacing: 0;
+                                            pointer-events: none;
                                         }
 
                                         label { 
@@ -1381,6 +1445,17 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                                 color: var(--color-input-text-disabled);
                                                 font-size: var(--body-fd-xxx-lg-font-size);
                                             }
+                                        }
+                                    }
+
+                                    .field-editinvestmentamt {
+                                        margin: 0;
+                                        
+                                        button, button:hover {
+                                            font-weight: var(--font-weight-medium);
+                                            text-align: left;
+                                            background: var(--color-action-text-primary-default) !important;
+                                            color: var(--color-action-background-primary-default);
                                         }
                                     }
                                     
@@ -1489,12 +1564,63 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                         }
                                     }
                                 }
-                    
-                                .field-continuecreatefd { max-width: 272px; }
+
+                                .field-continuecreatefd {
+                                    padding: 20px 0 40px;
+                                    max-width: 272px;
+
+                                    @media (width < 767px) { 
+                                        max-width: 100%;
+
+                                        button { max-width: none; }
+                                    }
+                                }
                             }
                     
                             /* Review */
-                            .field-review.current-wizard-step { padding: 50px 40px 0;
+                            .field-review.current-wizard-step { padding: 50px 40px;
+
+                                .field-reviewlabelwizard {
+                                    b {
+                                        font-size: var(--font-linehight-large);
+                                        color: var(--color-interface-text-primary);
+                                    }
+                                    p { margin: 0; }
+                                }
+
+                                .wrapper-disabled {
+                                    label {
+                                      margin-left: 5px;
+                                      font-size: var(--body-fd-sm-font-size) !important;
+                                      font-weight: var(--font-weight-regular) !important;
+                                      color: var(--color-interface-text-secondary) !important;
+                                      transform: translateY(-22px);
+                                    }
+                                
+                                    input,
+                                    input:disabled,
+                                    select,
+                                    select:disabled,
+                                    textarea,
+                                    textarea:disabled {
+                                      font-size: var(--body-fd-lg-font-size) !important;
+                                      background-color: var(--color-interface-background-primary) !important;
+                                      border: none !important;
+                                      pointer-events: none;
+                                      appearance: none;
+                                      opacity: 1;
+                                      background-image: none;
+                                      letter-spacing: 0;
+                                
+                                      &:hover {
+                                        box-shadow: none;
+                                      }
+                                    }
+                                
+                                    select:disabled {
+                                      background: none !important;
+                                    }
+                                }
 
                                 .field-reviewwizard p {
                                     font-size: var(--font-linehight-large);
@@ -1514,10 +1640,12 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                     padding: 24px 32px 10px;
                                     border-radius: 24px 24px 4px 4px;
                                     background-color: var(--color-interface-background-quinary);
+                                    font-size: var(--body-xx-lg-font-size);
                                     color: var(--color-interface-background-quaternary);
                                     position: relative;
                                     width: 100.3%;
                                     left: -2px;
+
                                     p { color: var(--color-interface-background-quaternary); }
                                 }
                                     
@@ -1538,6 +1666,154 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                     transform: rotate(-45deg);
                                     top: 18px;
                                 }
+                                
+                                .field-textnominee {
+                                    p { margin: 0; }
+
+                                    b {
+                                        font-size: var(--font-linehight-regular);
+                                        font-weight: var(--font-weight-bold);
+                                        color: var(--color-interface-text-primary);
+                                    }
+                                }
+                                .field-helptextredemption p { font-size: var(--body-md-font-size); }
+
+                                .field-nomineeradiobtn { display: flex;
+
+                                    .radio-wrapper label { 
+                                        width: fit-content; 
+                                        padding-right: 35px;
+                                        font-weight: var(--font-weight-bold);
+                                        font-size: var(--body-md-font-size) !important;
+                                        color: var(--color-interface-text-primary);
+                                    }
+                                }
+
+                                .field-nomineepanelrepeatable fieldset:has(.field-nomineerd input[type='radio']:checked):not( .radio-group-wrapper) {
+                                    border: 1px solid var(--color-action-border-primary-default) !important;
+                                }
+
+                                .field-nomineepanelrepeatable {
+                                    margin-top: 34px;
+                                    
+                                    .repeat-wrapper { 
+                                        display: grid;
+                                        grid-template-columns: repeat(var(--form-columns), minmax(0, 1fr));
+                                        gap: var(--form-field-vert-gap) var(--form-field-horz-gap);
+
+                                        .panel-wrapper.col-4 {
+                                            display: grid;
+                                            padding: 24px 9px 24px 24px;
+                                            border-radius: 24px;
+                                            border: 1px solid var(--color-interface-border-secondary);
+
+                                            p { margin: 0; }
+
+                                            .field-nomineerd {
+                                                width: fit-content;
+                                                align-content: center;
+                                                label { display: none; }
+                                            }
+
+                                            .field-nomineename {
+                                                width: fit-content;
+                                                margin: 3px 0 0 10px;
+                                                align-content: center;
+                                            }
+
+                                            .field-nomineename, .field-nomineename p {
+                                                font-size: var(--body-x-lg-font-size);
+                                                font-weight: var(--font-weight-bold);
+                                                color: var(--color-interface-text-primary);
+                                            }
+
+                                            .field-editnominee { margin: 0;
+
+                                                button, button:hover {
+                                                    height: fit-content;
+                                                    background-color: var(--color-interface-background-primary) !important;
+                                                    color: var(--color-action-background-primary-default);
+                                                    font-size: var(--body-lg-font-size);
+                                                    font-weight: var(--font-weight-bold);
+
+                                                    &::after { content: ''; }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    .item-add { display: none; }
+                                }
+
+                                .field-nomineesectionbtns .field-addnewnominee{
+                                    justify-self: flex-start;
+
+                                    button, button:hover {
+                                        height: fit-content;
+                                        background-color: var(--color-interface-background-primary) !important;
+                                        color: var(--color-action-background-primary-default);
+                                        font-size: var(--body-lg-font-size);
+                                        font-weight: var(--font-weight-bold);
+                                    }
+                                }
+
+                                .field-bankusefragment {
+                                    border: solid 1px var(--color-interface-background-quinary);
+                                    border-radius: 24px;
+
+                                    .field-bankusetogglepanel {
+                                        background-color: var(--color-interface-background-quinary);
+                                        padding: 22px 0 6px 32px;
+                                        border-radius: 24px 24px 0 0;
+    
+                                        .field-bankusetogglelabel p {
+                                            font-size: var(--body-xx-lg-font-size);
+                                            font-weight: var(--font-weight-bold);
+                                            color: var(--color-interface-text-primary);
+                                        }
+                                        .field-bankusetoggle label { margin: 7px 0 0 20px; }
+                                    }
+
+                                    .field-lgcode, .field-lccode { padding: 0 0 0 30px; }
+
+                                    .field-resetallbtn { 
+                                        padding: 0 0 30px 30px; 
+                                        justify-self: flex-start;
+                                        margin-top: -15px;
+
+                                        button, button:hover {
+                                            height: fit-content;
+                                            background-color: var(--color-interface-background-primary) !important;
+                                            color: var(--color-action-background-primary-default);
+                                            font-size: var(--body-lg-font-size);
+                                            font-weight: var(--font-weight-bold);
+                                        }
+                                    }
+                                }
+
+                                .field-confirmdetailsconsent1 { margin-top: 20px; }
+                                .field-confirmdetailsconsent2 { margin: 0; }
+                                
+                                .field-footertexttt {
+                                    background-color: var(--color-interface-background-quinary);
+                                    padding: 12px 24px;
+                                    border-radius: 8px;
+                                    display: flex;
+
+                                    p { 
+                                        margin: 1px 0 0;
+                                        color: var(--color-action-text-secondary-default);
+                                        font-weight: var(--font-weight-bold);
+                                        width: fit-content;
+                                    }
+
+                                    &::before {
+                                        content: url('../icons/info-icon.svg');
+                                        align-content: center;
+                                        padding-right: 12px;
+                                    }
+                                }
+
+                                .field-confirmdetailsaccordion > fieldset > :not(legend) { padding: 0 20px; }
                             }
 
                             .wizard-button-wrapper { display: none; }
@@ -1574,7 +1850,6 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
         flex-wrap: nowrap;
         text-align: center;
         gap: 10px;
-        top: 17%;
   
         .wizard-menu-item {
           font-size: var(--body-x-sm-font-size);
@@ -1611,7 +1886,6 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
           content: '';
         }
       }
-      .field-selectaccount { margin-top: 50px !important; }
     }
 }
 
@@ -1626,11 +1900,15 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
 
             .field-createfd.current-wizard-step {
                 display: block;
+                margin-top: 15px;
+                padding: 50px 15px;
                 .field-fdfootnotetxt { margin-top: 0; }
                 .field-leftwrapper, .field-rightwrapper { margin-top: 20px; }
 
                 .field-leftwrapper {
-                    fieldset { margin-top: 10px; }
+                    fieldset { margin-top: 25px; }
+                    .field-investmentamt input { margin: 0; }
+                    .field-investmentamountlabel, .field-interestpayoutlabel, .field-renewalinstructionslabel { margin-bottom: 15px; }
 
                     .field-tenurepanel .field-tenurewrapper {
                         display: grid;
@@ -1645,6 +1923,12 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                             top: 16px;
                             grid-column: span 3;
                         }
+                    }
+                }
+
+                .field-rightwrapper {
+                    .field-maturitydetailspanel p {
+                        margin: 0;
                     }
                 }
             }
