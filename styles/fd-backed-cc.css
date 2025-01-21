@@ -22,7 +22,7 @@ body.fd-backed-cc {
 
                 @media (360px <=width <=767px) {
                     text-align: left !important;
-                    left: 10px;
+                    width: calc(100% - 20px);
                 }
 
                 @media (max-width: 400px) {
@@ -111,13 +111,13 @@ body.fd-backed-cc {
                             position: relative;
 
                             @media (768px <=width <=991px) {
-                                padding: 40px 0;
+                                padding-bottom: 40px;
                             }
 
-                            @media (min-width: 992px) {
+                            /*   @media (min-width: 992px) {
                                 padding: 40px 35px 40px 0;
                             }
-
+ */
                             .field-headertext {
                                 position: absolute;
                                 top: -50px;
@@ -139,8 +139,7 @@ body.fd-backed-cc {
                             }
 
                             .field-landingpagebanner {
-                                background: url('../icons/landing_banner_bg.png') repeat-x top center;
-                                margin-top: -40px;
+                                background: url('../icons/landing_banner_bg.png') repeat-x center top;
                                 display: grid;
                                 animation: someanimation 1s linear forwards;
 
@@ -169,10 +168,12 @@ body.fd-backed-cc {
                                             background: url('../icons/landing_banner_left-text.png') no-repeat 40px 50px;
                                             height: 378px;
                                             width: 100%;
+
                                             @media (768px <=width <=991px) {
                                                 background: url('../icons/landing_banner_left-text_ipad.png') no-repeat 40px 20px;
                                                 height: 252px;
                                             }
+
                                             @media (max-width: 767px) {
                                                 background: url('../icons/banner_mobile_text.png') no-repeat top center;
                                                 height: 194px;
@@ -207,8 +208,8 @@ body.fd-backed-cc {
                                             padding: 0 20px;
                                         }
 
-                                        @media (max-width: 460px) {
-                                            flex-direction: column;
+                                        @media (max-width: 480px) {
+                                            flex-direction: row-reverse;
                                         }
 
                                         .button-wrapper {
@@ -216,11 +217,12 @@ body.fd-backed-cc {
 
                                             @media (768px <=width <=991px) {
                                                 width: auto;
-                                              button{
-                                                padding: 0 20px;
-                                                height: 40px;
-                                                border-radius: 10px;
-                                              }
+
+                                                button {
+                                                    padding: 0 20px;
+                                                    height: 40px;
+                                                    border-radius: 10px;
+                                                }
                                             }
 
 
@@ -228,11 +230,16 @@ body.fd-backed-cc {
                                                 width: 212px;
                                             }
 
-                                            @media (max-width: 460px) {
-                                                width: 100%;
+                                            @media (max-width: 480px) {
+                                                width: 180px;
+                                                margin: 0;
                                             }
 
                                             button {
+                                                @media (max-width: 480px) {
+                                                    padding: 0 20px;
+                                                }
+
                                                 &::after {
                                                     display: none;
                                                 }
@@ -255,40 +262,47 @@ body.fd-backed-cc {
 
                                 .field-landingpanel2 {
                                     grid-column: span 4;
-                                 
+
                                     @media (max-width: 767px) {
                                         grid-column: span 12;
                                         order: 1;
-                                        background: url('../icons/banner_mobile_users.png') no-repeat center 50px;
+                                        background: url('../icons/banner_mobile_users.png') no-repeat center top;
                                     }
 
                                     @media (max-width: 400px) {
-                                        background-size: 90%;
-                                        background-position: left 50px;
+                                        background-size: 95%;
+                                        background-position: left 10px;
                                     }
 
                                     .image-wrapper {
-                                        width: 380px;
+                                        max-width: 380px;
                                         height: 405px;
                                         background: url('../icons/landing_banner_right.png') no-repeat right 50px;
                                         background-size: 95%;
 
                                         @media (768px <=width <=991px) {
                                             width: 100%;
-                                            height: 252px;
+                                           
                                             background: url('../icons/landing_banner_right_ipad.png') no-repeat right top;
                                             background-size: 100%;
                                         }
 
-                                        @media (max-width: 767px) {
-                                            background-size: 58%;
+                                        @media (max-width: 768px) {
+                                            background-size: 40%;
+                                            height: 300px;
                                             width: 100%;
                                             margin-top: 50px;
                                             background-position: bottom center;
+                                            max-width:none;
                                         }
 
+                                        @media (max-width: 600px) {
+                                            background-size: 56%;
+                                            margin-top: 70px;
+                                        }
                                         @media (max-width: 480px) {
-                                            background-size: 80%;
+                                            background-size: 70%;
+                                            margin-top: 70px;
                                         }
 
                                         picture {
@@ -381,6 +395,10 @@ body.fd-backed-cc {
                                                     display: none;
                                                 }
                                             }
+
+                                            @media (320px <=width <=767px) {
+                                                margin-top: 0 !important;
+                                            }
                                         }
                                     }
                                 }
@@ -391,9 +409,13 @@ body.fd-backed-cc {
 
                                     .field-retailcardssection,
                                     .field-businesscardssection {
-                                        margin-top: 10px;
+                                      
                                         display: flex;
                                         flex-wrap: nowrap;
+
+                                        @media (max-width: 767px) {
+                                            margin-top: 20px;
+                                        }
 
                                         .field-retailcardssectionrepeatable,
                                         .field-businesscardssectionrepeatable {
@@ -407,19 +429,40 @@ body.fd-backed-cc {
                                             p {
                                                 margin-bottom: 0;
                                             }
+                                            input {
+                                                margin: 0;
+                                                padding: 0;
+                                                letter-spacing: 0;
+                                                border: none;
+                                                height: auto;
+                                                line-height: normal;
+                                            }
+
+                                            .repeat-wrapper{
+                                               & > .panel-wrapper.field-wrapper {
+                                                display: inline;
+                                                }
+                                            }
 
                                             .field-cardselection-display1,
                                             .field-cardselection-display2 {
-                                                p {
+
+                                                p,
+                                                input {
                                                     font-size: var(--body-x-lg-font-size);
                                                     font-weight: var(--font-weight-bold);
                                                     color: var(--color-interface-text-primary);
-                                                }
+                                                }                                               
                                             }
 
                                             .field-cardtagline1,
                                             .field-cardtagline2 {
-                                                p {
+                                                position: relative;
+                                                @media (min-width: 768px) {
+                                                margin-top: -5px;
+                                                }
+
+                                                p, input {
                                                     font-size: var(--body-fd-md-font-size);
                                                     font-weight: var(--font-weight-regular);
                                                     color: var(--color-input-text-primary);
@@ -443,12 +486,14 @@ body.fd-backed-cc {
                                                 margin-top: 20px;
                                                 display: inline-block;
 
-                                                .plain-text-wrapper {
+                                                .plain-text-wrapper,
+                                                .text-wrapper.field-wrapper  {
                                                     margin-bottom: 7px;
                                                     display: flex;
                                                     align-items: center;
 
-                                                    &::before {
+                                                    &::before,
+                                                    label {
                                                         content: '';
                                                         position: absolute;
                                                         width: 16px;
@@ -456,13 +501,27 @@ body.fd-backed-cc {
                                                         background: url('../icons/folder_icon.png') no-repeat top left;
                                                     }
 
-                                                    p p {
+                                                    label{
+                                                        display: none;
+                                                    }
+
+                                                    p p, input {
                                                         padding-left: 30px;
                                                         font-size: var(--body-fd-sm-font-size);
                                                         font-weight: var(--font-weight-regular);
                                                         color: var(--color-interface-text-primary);
                                                         position: relative;
                                                         margin-bottom: 0;
+                                                    }
+
+                                                    input{
+                                                        color: var(--color-interface-text-primary) !important;    
+                                                    }
+
+                                                    &.text-wrapper.field-wrapper  {
+                                                        &::before{
+                                                            position: initial;
+                                                        }
                                                     }
                                                 }
                                             }
@@ -724,9 +783,7 @@ body.fd-backed-cc {
                                     border-radius: 16px;
                                     background-color: var(--color-action-background-primary-default);
                                     padding: 30px;
-                                    display: flex;
-                                    flex-direction: row;
-                                    align-items: center;
+                                    display: grid;
 
                                     @media (768px <=width <=991px) {
                                         flex-direction: column;
@@ -746,10 +803,15 @@ body.fd-backed-cc {
 
                                     .field-knowyourcclimittextwrapper {
                                         display: inline;
-                                        flex: 2;
+                                        grid-column: span 5;                                   
 
-                                        @media (768px <=width <=991px) {
+                                        @media (768px <=width <=1200px) {
+                                            grid-column: span 12;
                                             text-align: center;
+                                        }
+
+                                        @media (max-width: 767px) {
+                                            grid-column: span 12;
                                         }
 
                                         .field-knowyourcclimittext1 {
@@ -767,136 +829,180 @@ body.fd-backed-cc {
                                         }
                                     }
 
-                                    .field-enterfdamtwrap,
-                                    .field-yourcclimitwrap {
+                                    .field-knowyourccdetails {
+                                        grid-column: span 7;
+                                        display: grid;
 
-                                        .number-wrapper {
-                                            label {
-                                                margin: 0;
-                                                background: none;
-                                                position: initial;
-                                                color: var(--color-interface-background-primary);
-                                                transform: none;
-                                            }
+                                      
 
-                                            input {
-                                                letter-spacing: 0;
-                                                width: auto;
-                                                border-radius: 0;
-                                                field-sizing: content;
-                                                background: none;
-                                                border: 0;
-                                                margin: 0;
-                                                padding: 0;
-                                                height: auto;
-                                                line-height: normal;
-                                                color: var(--color-interface-background-primary) !important;
-
-                                                &:focus {
-                                                    outline: none;
-                                                }
-                                            }
+                                        @media (768px <=width <=1200px) {
+                                            grid-column: span 12;
+                                            display: flex;
+                                            flex-flow: row;
                                         }
 
-                                        &.field-enterfdamtwrap {
-                                            flex: 2;
-                                            background: url(../icons/triple_right_arrow.png) no-repeat 90% center;
-                                            width: 100px;
-                                            height: 50px;
-                                            position: relative;
+                                        @media (max-width: 767px) {
+                                            grid-column: span 12;
+                                            flex-flow: column;
+                                        }
 
-                                            @media (max-width: 767px) {
-                                                width: 100%;
-                                                background: url('../icons/mob_vertical_three_arrow.png') no-repeat bottom center;
-                                                padding-bottom: 80px;
-                                            }
+                                        .field-enterfdamtwrap,
+                                        .field-yourcclimitwrap {
 
-                                            .field-enterfdamt {
-                                                display: flex;
-                                                align-items: center;
-                                                justify-content: center;
-                                                flex-direction: column;
-
-                                                @media (max-width: 767px) {
-                                                    width: 100%;
-                                                    border: 1px solid #fff;
-                                                    border-radius: 16px;
-                                                    padding: 20px;
-                                                }
-
+                                            .number-wrapper {
                                                 label {
-                                                    font-weight: var(--font-weight-regular);
-                                                    font-size: var(--body-md-font-size);
-                                                    padding: 0;
-                                                    margin-bottom: 5px;
-
-                                                    @media (max-width: 767px) {
-                                                        font-size: var(--body-fd-sm-font-size);
-                                                    }
+                                                    margin: 0;
+                                                    background: none;
+                                                    position: initial;
+                                                    color: var(--color-interface-background-primary);
+                                                    transform: none;
                                                 }
 
                                                 input {
-                                                    font-size: var(--body-fd-xx-xlg-font-size);
-                                                    font-weight: var(--font-weight-extra-bold);
-                                                    border-bottom: 1px solid;
+                                                    letter-spacing: 0;
+                                                    width: auto;
+                                                    border-radius: 0;
+                                                    field-sizing: content;
+                                                    background: none;
+                                                    border: 0;
+                                                    margin: 0;
+                                                    padding: 0;
+                                                    height: auto;
+                                                    line-height: normal;
+                                                    color: var(--color-interface-background-primary) !important;
 
-                                                    @media (max-width: 767px) {
-                                                        font-size: var(--body-fd-lg-font-size);
-                                                        border: none;
+                                                    &:focus {
+                                                        outline: none;
                                                     }
                                                 }
                                             }
-                                        }
 
-                                        &.field-yourcclimitwrap {
-                                            flex: 1;
-
-                                            .field-yourcclimit {
-                                                display: flex;
-                                                justify-content: center;
-                                                flex-direction: column;
-                                                background-color: var(--color-interface-promotion-text-primary);
-                                                width: 206px;
-                                                height: 76px;
-                                                border-radius: 16px;
+                                            &.field-enterfdamtwrap {
+                                                background: url(../icons/triple_right_arrow.png) no-repeat 90% center;
+                                                width: 100%;
                                                 position: relative;
-
-                                                * {
-                                                    padding-left: 60px;
-
-                                                    @media (max-width: 767px) {
-                                                        padding-left: 0;
-                                                    }
+                                                @media (768px <=width <=1200px) {
+                                                    background-position-x: 100%;
                                                 }
-
                                                 @media (max-width: 767px) {
                                                     width: 100%;
-                                                    align-items: center;
-                                                    padding-top: 50px;
-                                                    height: auto;
-                                                    padding-bottom: 20px;
+                                                    background: url('../icons/mob_vertical_three_arrow.png') no-repeat bottom center;
+                                                    padding-bottom: 80px;
                                                 }
 
+                                                .field-enterfdamt {
+                                                    display: flex;
+                                                    align-items: center;
+                                                    justify-content: center;
+                                                    flex-direction: column;
 
-                                                &::before {
-                                                    content: '';
-                                                    position: absolute;
-                                                    background: url('../icons/credit_limit_tick_icon.png') no-repeat left center;
-                                                    width: 32px;
-                                                    height: 32px;
-                                                    top: 30%;
-                                                    left: 15px;
+                                                    @media (768px <=width <=1200px) {
+                                                        width: 210px;
+                                                        border-radius: 16px;
+                                                        border: 1px solid var(--color-interface-background-primary);
+                                                        margin-left: auto;
+                                                        margin-right: 120px;
+                                                    }
 
                                                     @media (max-width: 767px) {
-                                                        left: auto;
-                                                        top: 10px;
+                                                        width: 100%;
+                                                        border: 1px solid #fff;
+                                                        border-radius: 16px;
+                                                        padding: 20px;
+                                                    }
+
+                                                    label {
+                                                        font-weight: var(--font-weight-regular);
+                                                        font-size: var(--body-md-font-size);
+                                                        padding: 0;
+                                                        margin-bottom: 5px;
+
+                                                      
+                                                        @media (max-width: 768px) {
+                                                            font-size: var(--body-fd-sm-font-size);
+                                                        }
+                                                    }
+
+                                                    input {
+                                                        font-size: var(--body-fd-xx-xlg-font-size);
+                                                        font-weight: var(--font-weight-extra-bold);
+                                                        border-bottom: 1px solid;
+
+                                                        @media (max-width: 768px) {
+                                                            font-size: var(--body-fd-lg-font-size);
+                                                            border: none;
+                                                        }
                                                     }
                                                 }
+                                            }
+
+                                            &.field-enterfdamtwrap{
+                                                grid-column: span 8;      
+                                                @media (max-width: 767px) {
+                                                    grid-column: span 12;
+                                                }                                         
+                                            }
+                                            &.field-yourcclimitwrap {
+                                                grid-column: span 4;
+                                                @media (max-width: 767px) {
+                                                    grid-column: span 12;
+                                                }   
+                                             
+                                                .field-yourcclimit {
+                                                    display: flex;
+                                                    justify-content: center;
+                                                    flex-direction: column;
+                                                    background-color: var(--color-interface-promotion-text-primary);
+                                                    width: 206px;
+                                                    height: 76px;
+                                                    border-radius: 16px;
+                                                    position: relative;
+                                                    margin-left: auto;
+                                                    margin-right: 10px;
+
+                                                    @media (768px <=width <=1200px) {
+                                                        margin-left: initial;
+                                                        margin-right: 0;
+                                                        margin-left: 70px;
+                                                    }
+
+                                                    * {
+                                                        padding-left: 60px;
+
+                                                        @media (max-width: 767px) {
+                                                            padding-left: 0;
+                                                        }
+                                                    }
+
+                                                    @media (max-width: 767px) {
+                                                        width: 100%;
+                                                        align-items: center;
+                                                        padding-top: 50px;
+                                                        height: auto;
+                                                        padding-bottom: 20px;
+                                                    }
 
 
-                                                label {
-                                                    font-size: var(--body-sm-font-size);
-                                                    font-weight: var(--font-weight-regular);
+                                                    &::before {
+                                                        content: '';
+                                                        position: absolute;
+                                                        background: url('../icons/credit_limit_tick_icon.png') no-repeat left center;
+                                                        width: 32px;
+                                                        height: 32px;
+                                                        top: 30%;
+                                                        left: 15px;
+
+                                                        @media (max-width: 767px) {
+                                                            left: auto;
+                                                            top: 10px;
+                                                        }
+                                                    }
+
+
+                                                    label {
+                                                        font-size: var(--body-sm-font-size);
+                                                        font-weight: var(--font-weight-regular);
+                                                    }
                                                 }
                                             }
                                         }
@@ -1885,8 +1991,9 @@ body.fd-backed-cc {
                                             display: inline-block;
                                             width: calc(50% - 10px);
 
-                                            &:first-child, &:nth-child(2n){
-                                               margin-right: 20px;
+                                            &:first-child,
+                                            &:nth-child(2n) {
+                                                margin-right: 20px;
                                             }
 
                                             @media (max-width: 768px) {
@@ -1998,10 +2105,6 @@ body.fd-backed-cc {
                                                     }
                                                 }
                                             }
-                                        }
-
-                                        button.item-add {
-                                            display: none;
                                         }
                                     }
                                 }
@@ -3353,7 +3456,9 @@ body.fd-backed-cc {
                             }
                         }
 
-                        .wizard-button-wrapper {
+
+                        .wizard-button-wrapper,
+                        .repeat-wrapper button.item-add {
                             display: none;
                         }
                     }
