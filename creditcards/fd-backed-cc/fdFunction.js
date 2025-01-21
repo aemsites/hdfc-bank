@@ -11,6 +11,7 @@ import {
   fetchCardDetails,
   customerAccountDetails,
   fetchCardDetailsSuccessHandler,
+  retailCardAllFeaturesAndBenefits,
 } from './fdbacked-function.js';
 
 import { createJourneyId } from '../../common/journey-utils.js';
@@ -54,4 +55,5 @@ export {
   fetchCardDetails,
   customerAccountDetails,
   fetchCardDetailsSuccessHandler,
+  retailCardAllFeaturesAndBenefits,
 };

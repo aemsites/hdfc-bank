@@ -259,25 +259,29 @@ function editCreds(globals) {
   globals.functions.setProperty(globals.form.loginMainPanel, { visible: true });
 }
 
-const fetchCardDetails = () => {
+const fetchCardDetails = async () => {
 // const jsonObj = {
 //   retailsProductCode:['dtdy66', ''],
 //   bussinessProductCode:['dtdy66', '']
 // };
 // return fetchJsonResponse('./cardDetails.json', {}, 'POST', true);
   const cardUrl = '../../../creditcards/fd-backed-cc/cardDetails.json';
-  fetch('../../../creditcards/fd-backed-cc/cardDetails.json')
+  return fetch(cardUrl)
     .then((response) => response.json());
 };
 
 const fetchCardDetailsSuccessHandler = async (response, globals) => {
-  console.log('reerereresss', response);
+  // console.log('reerereresss', response);
   const { functions } = globals;
   const { importData } = functions;
 
-  const value = [{ retailCardName: 'hello', retailCardTagline: "tetinff" }, { retailCardName: 'hell1o1', retailCardTagline: "ppppp" }, { retailCardName: 'hello2', retailCardTagline: "mmmmmm" }];
+  const value = [{ retailCardName: 'hello', retailCardTagline: 'tetinff' }, { retailCardName: 'hell1o1', retailCardTagline: 'ppppp' }, { retailCardName: 'hello2', retailCardTagline: 'mmmmmm' }];
 
-  importData(value, globals.form?.accountSelectionWrapper?.accountSelectionPanel?.repeatWrapper?.$qualifiedName);
+  importData(value, globals?.form?.landingPageMainWrapper?.perfectCardPanel?.retailCardsSectionMainWrapper?.retailCardsSection?.retailCardsSectionRepeatable?.$qualifiedName);
+};
+
+const retailCardAllFeaturesAndBenefits = (globals) => {
+  console.log('globaslssss', globals);
 };
 
 const customerAccountDetails = (casaRes, globals) => {
@@ -335,4 +339,5 @@ export {
   fetchCardDetails,
   customerAccountDetails,
   fetchCardDetailsSuccessHandler,
+  retailCardAllFeaturesAndBenefits,
 };

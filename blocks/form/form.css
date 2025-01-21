@@ -1,4 +1,5 @@
 @import url('./styles.css');
+@import url('../modal/modal.css');
 
 :root {
   --background-color-primary: #fff;

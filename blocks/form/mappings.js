@@ -30,6 +30,10 @@ export default async function componentDecorator(fd) {
     const module = await import('./components/passwordField.js');
     return module.default;
   }
+  if (fd.appliedCssClassNames?.includes('forms-modal')) {
+    const module = await import('./components/modal.js');
+    return module.default;
+  }
   if ((fieldType?.includes('input') || fieldType === 'drop-down' || fieldType === 'email') && fd.appliedCssClassNames !== 'passwordField') {
     const module = await import('./components/floatingFields.js');
     return module.default;
