@@ -6,7 +6,8 @@ import { CURRENT_FORM_CONTEXT } from '../../common/constants.js';
   const JOURNEY_NAME = 'EXTERNAL_FUNDING_FD';
   const JOURNEY_ABBR_VALUE = 'FDEF';
   const VISIT_MODE = 'U';
-  const NTB_REDIRECTION_URL = 'https://smartx.hdfcbank.com/?journey=NTBFD&channel=RBB'
+  const NTB_REDIRECTION_URL = 'https://smartx.hdfcbank.com/?journey=NTBFD&channel=RBB';
+  const FORM_URL = 'https://platform-ci--hdfc-bank--aemsites.hlx.page/content/forms/af/hdfc_haf/assets/fd-external-funding/forms/external-funding';
   const BASE_URL = getSubmitBaseUrl();
 
   const DOM_ELEMENT = {
@@ -246,6 +247,7 @@ import { CURRENT_FORM_CONTEXT } from '../../common/constants.js';
 
   export {
     CHANNEL,
+    FORM_URL,
     JOURNEY_NAME,
     VISIT_MODE,
     DOM_ELEMENT,

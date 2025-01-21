@@ -6,6 +6,7 @@ import {
 
 import {
   EFFD_ENDPOINTS,
+  FORM_URL,
   NTB_REDIRECTION_URL,
 } from './constant.js';
 
@@ -443,8 +444,11 @@ function customSetFocus(errorMessage, numRetries, globals) {
     globals.functions.setProperty(globals.form.otpPanelWrapper, { visible: false });
     globals.functions.setProperty(globals.form.otpPanelWrapper.submitOTP, { visible: false });
     globals.functions.setProperty(globals.form.resultPanel, { visible: true });
-    globals.functions.setProperty(globals.form.resultPanel.errorResultPanel, { visible: true });
-    globals.functions.setProperty(globals.form.resultPanel.errorResultPanel.errorMessageText, { value: errorMessage });
+    globals.functions.setProperty(globals.form.resultPanel.commonErrorPanel, { visible: true });
+    globals.functions.setProperty(globals.form.resultPanel.commonErrorPanel.errorMessageText2Col, { value: 'You have entered invalid OTP for 3 consecutive attempts.' });
+    globals.functions.setProperty(globals.form.resultPanel.commonErrorPanel.errorMessageTextPlaceHolder2, { value: 'Please retry again later.' });
+    // globals.functions.setProperty(globals.form.resultPanel.errorResultPanel, { visible: true });
+    // globals.functions.setProperty(globals.form.resultPanel.errorResultPanel.errorMessageText, { value: errorMessage });
   }
 }
 
@@ -513,11 +517,19 @@ function getOtpResponseHandling(custIdentResp, otpGenResp, globals) {
   } else {
     globals.functions.setProperty(globals.form.loginMainPanel, { visible: false });
     globals.functions.setProperty(globals.form.resultPanel, { visible: true });
-    globals.functions.setProperty(globals.form.resultPanel.technicalIssueErrorPanel, { visible: true });
+    globals.functions.setProperty(globals.form.resultPanel.commonErrorPanel, { visible: true });
+    globals.functions.setProperty(globals.form.resultPanel.commonErrorPanel.errorMessageText2Col, { value: 'We are experiencing some technical issues.' });
+    globals.functions.setProperty(globals.form.resultPanel.commonErrorPanel.errorMessageTextPlaceHolder2, { value: 'Please reinitiate the journey after some time.' });
   }
 }
 
-function setFetchCasaResponse(globals, casaResponse){
+function loadHomePage(globals){
+  if(window){
+    window.location.href = FORM_URL;
+  }
+}
+
+function setFetchCasaResponse(casaResponse, globals){
   currentFormContext.fetchCasaResponse = casaResponse;
 }
 
@@ -592,4 +604,5 @@ export {
     customSetFocus,
     customFocus,
     setFetchCasaResponse,
+    loadHomePage,
 }
