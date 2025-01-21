@@ -10,6 +10,7 @@ import {
     customSetFocus,
     customFocus,
     setFetchCasaResponse,
+    loadHomePage,
 } from './fd-external-fundingFunctions.js';
 
 import {
@@ -46,6 +47,7 @@ export {
     customSetFocus,
     customFocus,
     setFetchCasaResponse,
+    loadHomePage,
     createJourneyId,
     investAmtChangeHandler,
     selectFundAcct,

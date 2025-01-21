@@ -6,6 +6,8 @@ import {
 
 import {
   EFFD_ENDPOINTS,
+  FORM_URL,
+  NTB_REDIRECTION_URL,
 } from './constant.js';
 
 import {
@@ -119,26 +121,32 @@ const ageValidate = (minAge, maxAge, dobValue) => {
     return age >= minAge && age < maxAge;
 };
 
-const editMobileNumber = (globals) => {
-    globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.otpSubPanel.hiddenMaxCount, { value : 3 }); // Resetting to 3. Need to confirm whether we should reset to 3.
-    globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.otpSubPanel.numRetries, { value : 3 });
-    globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.otpNumber, { value : '' });
-    globals.functions.setProperty(globals.form.otpPanelWrapper, { visible : false });
-    globals.functions.setProperty(globals.form.loginMainPanel, { visible : true });
-
+function otpPageReset(globals){
+  globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.otpSubPanel.hiddenMaxCount, { value : 3 }); // Resetting to 3. Need to confirm whether we should reset to 3.
+  globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.otpSubPanel.numRetries, { value : 3 });
+  globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.otpNumber, { value : '' });
+  if(document)
+  {
     const eyeButton = document.querySelector('.bi-eye');
     if(eyeButton){
       eyeButton.click();
     }
+  }
 
-    resendOtpCount = 0;
-    sec = OTP_TIMER;
-    dispSec = OTP_TIMER;
-    globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.otpSubPanel.numRetries, { value: (MAX_OTP_RESEND_COUNT - resendOtpCount)});
-    globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.secondsPanel.seconds, { value: dispSec });
-    if(timer){
-      clearInterval(timer);
-    }
+  resendOtpCount = 0;
+  sec = OTP_TIMER;
+  dispSec = OTP_TIMER;
+  globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.otpSubPanel.numRetries, { value: (MAX_OTP_RESEND_COUNT - resendOtpCount)});
+  globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.secondsPanel.seconds, { value: dispSec });
+  if(timer){
+    clearInterval(timer);
+  }
+}
+
+const editMobileNumber = (globals) => {
+  globals.functions.setProperty(globals.form.otpPanelWrapper, { visible : false });
+  globals.functions.setProperty(globals.form.loginMainPanel, { visible : true });
+  otpPageReset(globals);
 };
 
 const validatePanDynamically = (pan, panValue, globals) => {
@@ -352,7 +360,7 @@ const getOtpExternalFundingFD = async (mobileNumber, pan, dob, globals) => {
  * @param {object} dob
  * @return {PROMISE}
  */
-const otpValidationExternalFundingFD = async (mobileNumber, pan, dob, otpNumber, globals) => {
+const otpValidationExternalFundingFD = async (mobileNumber, pan, dob, otpNumber, globals) => {    
   const referenceNumber = `AD${getTimeStamp(new Date())}` ?? '';
   currentFormContext.referenceNumber = referenceNumber;
   // currentFormContext.leadProfileId = globals.form.runtime.leadProifileId.$value;
@@ -443,8 +451,11 @@ function customSetFocus(errorMessage, numRetries, globals) {
     globals.functions.setProperty(globals.form.otpPanelWrapper, { visible: false });
     globals.functions.setProperty(globals.form.otpPanelWrapper.submitOTP, { visible: false });
     globals.functions.setProperty(globals.form.resultPanel, { visible: true });
-    globals.functions.setProperty(globals.form.resultPanel.errorResultPanel, { visible: true });
-    globals.functions.setProperty(globals.form.resultPanel.errorResultPanel.errorMessageText, { value: errorMessage });
+    globals.functions.setProperty(globals.form.resultPanel.commonErrorPanel, { visible: true });
+    globals.functions.setProperty(globals.form.resultPanel.commonErrorPanel.errorMessageText2Col, { value: 'You have entered invalid OTP for 3 consecutive attempts.' });
+    globals.functions.setProperty(globals.form.resultPanel.commonErrorPanel.errorMessageTextPlaceHolder2, { value: 'Please retry again later.' });
+    // globals.functions.setProperty(globals.form.resultPanel.errorResultPanel, { visible: true });
+    // globals.functions.setProperty(globals.form.resultPanel.errorResultPanel.errorMessageText, { value: errorMessage });
   }
 }
 
@@ -479,7 +490,11 @@ function invalidOTP(globals) {
     }
     sec = OTP_TIMER;
     dispSec = OTP_TIMER;
+    globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.otpResend, { visible: false });
+    globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.secondsPanel, { visible: true });
     globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.secondsPanel.seconds, { value: dispSec });
+    globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.incorrectOTPText, { visible: true });
+    globals.functions.setProperty(globals.form.otpPanelWrapper.submitOTP, { enabled: false });
     otpTimer(globals);
 
     if (resendOtpCount === MAX_OTP_RESEND_COUNT) {
@@ -495,18 +510,36 @@ function getOtpResponseHandling(custIdentResp, otpGenResp, globals) {
     globals.functions.setProperty(globals.form.loginMainPanel, { visible: false });
     globals.functions.setProperty(globals.form.otpPanelWrapper, { visible: true });
     otpTimer(globals);
-  } else if(custIdentResp.existingCustomer === 'N' && custIdentResp.status.errorCode === '0') {
+  } else if(custIdentResp.existingCustomer === 'N' && custIdentResp.status.errorCode === 'nonExistingCustomer') {
     if(window){
-      window.location.href = NTB_REDIRECTION_URL;
+      const params = new URLSearchParams(window.location.search);
+      // Convert the redirection URL into a URL object
+      const redirectionUrl = new URL(NTB_REDIRECTION_URL);
+      // Append all UTM parameters (or all query parameters) to the redirection URL
+      params.forEach((value, key) => {
+        redirectionUrl.searchParams.append(key, value);
+      });
+      window.location.href = redirectionUrl.toString();
     }
   } else {
     globals.functions.setProperty(globals.form.loginMainPanel, { visible: false });
-    globals.functions.setProperty(globals.form.resultPanel.errorResultPanel, { visible: true });
-    globals.functions.setProperty(globals.form.resultPanel.errorResultPanel.errorMessageText, { value: 'Error' });
+    globals.functions.setProperty(globals.form.resultPanel, { visible: true });
+    globals.functions.setProperty(globals.form.resultPanel.commonErrorPanel, { visible: true });
+    globals.functions.setProperty(globals.form.resultPanel.commonErrorPanel.errorMessageText2Col, { value: 'We are experiencing some technical issues.' });
+    globals.functions.setProperty(globals.form.resultPanel.commonErrorPanel.errorMessageTextPlaceHolder2, { value: 'Please reinitiate the journey after some time.' });
   }
 }
 
-function setFetchCasaResponse(casaResponse ,globals){
+function loadHomePage(globals){
+  if(window){
+    window.location.href = FORM_URL;
+  }
+  // globals.functions.setProperty(globals.form.loginMainPanel, { visible: true });
+  // globals.functions.setProperty(globals.form.resultPanel, { visible: false });
+  // globals.functions.setProperty(globals.form.resultPanel.commonErrorPanel, { visible: false });
+}
+
+function setFetchCasaResponse(casaResponse, globals){
   currentFormContext.fetchCasaResponse = casaResponse;
   handleFetchCasaPrefill(casaResponse ,globals)
 }
@@ -582,4 +615,5 @@ export {
     customSetFocus,
     customFocus,
     setFetchCasaResponse,
+    loadHomePage,
 }
