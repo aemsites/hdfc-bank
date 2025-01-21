@@ -1227,7 +1227,7 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                 }
                         
                                 /* Select Account */
-                                .field-selectaccount {
+                                .field-selectaccount.current-wizard-step {
                                     display: block;
                                     padding: 50px 40px;
                         
@@ -1325,7 +1325,7 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                             }
                         
                             /* Create FD */
-                            .field-createfd { padding: 50px 40px;
+                            .field-createfd.field-createfd.current-wizard-step { padding: 50px 40px;
 
                                 .field-createfdheading p {
                                     font-size: var(--font-linehight-large);
@@ -1494,7 +1494,7 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                             }
                     
                             /* Review */
-                            .field-review { padding: 50px 40px 0;
+                            .field-review.current-wizard-step { padding: 50px 40px 0;
 
                                 .field-reviewwizard p {
                                     font-size: var(--font-linehight-large);
