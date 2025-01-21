@@ -20,7 +20,10 @@ const FD_SIM_API = {
 const createFdEfReqPayload = (globals) => {
   const mobileNo = '91' + (globals.form.loginMainPanel.loginPanel.mobilePanel.mobileNumberWrapper.registeredMobileNumber.$value ?? '');
   const panValue = globals.form.loginMainPanel.loginPanel.identifierPanel.pan.$value ?? '';
-  const dobValue = (globals.form.loginMainPanel.loginPanel.identifierPanel.dateOfBirth.$value ?? '') === 'Date of Birth' ? '' : (globals.form.loginMainPanel.loginPanel.identifierPanel.dateOfBirth.$value ?? '');
+  const dobValue = (globals.form.loginMainPanel.loginPanel.identifierPanel.dateOfBirth.$value ?? '')
+  .replace(/-/g, '') === 'Date of Birth'
+  ? ''
+  : (globals.form.loginMainPanel.loginPanel.identifierPanel.dateOfBirth.$value ?? '').replace(/-/g, '');
   const debitAccountNo = currentFormContext?.selectedFundAcct?.accountNumber;
   const principalAmount = {
     amount: String(parseInt(currentFormContext?.selectedFundAcct?.investValue)) ?? '',
@@ -42,11 +45,11 @@ const createFdEfReqPayload = (globals) => {
     return acc;
   }, {});
   const term = {
-    days: day.$value ?? '',
+    days: day.$value ? String(parseInt(day.$value, 10)) : '',
     months: String((parseInt(year.$value) * 12) + (parseInt(months.$value))) ?? '',
   };
   const [_intPayNames, productGroupRaw] = mapInterestPayoust[interestPayoutOpt.$value] ?? '';
-  const productGroup = (parseInt(term.months)<=6)? 'Days': productGroupRaw;
+  const productGroup = (parseInt(term.months) + parseInt(term.days) <= 6) ? 'Days' : productGroupRaw;
   const payload = {
     RequestPayload: {
       SimulateTermDepositRequest: {
@@ -116,8 +119,8 @@ const fdEfSimErrorCallBack = (err, globals) => {
   if (FD_SIM_API.failureCount === 3) {
     hideLoaderGif();
     // add logics to show if the 3 attempt failed
-    globals.functions.setProperty(globals.form.wizardWrapper.wizardExternalFunding, { visible: false });
-    globals.functions.setProperty(globals.form.wizardWrapper.simulationErrPage, { visible: true });
+    globals.functions.setProperty(globals.form.fdDetailsWrapper.externalFundingWizardView.wizardExternalFunding, { visible: false });
+    globals.functions.setProperty(globals.form.fdDetailsWrapper.externalFundingWizardView.simulationErrPage, { visible: true });
   } else {
     // eslint-disable-next-line no-use-before-define
     fdEfSimulationExecute(FD_SIM_API.triggerPlace, globals);
@@ -130,8 +133,8 @@ const fdEfSimErrorCallBack = (err, globals) => {
  * @param {object} globals - object
  */
 const fdEfSimSuccessCallBack = (res, globals) => {
-  // const response = res;
-  const response = DATA_CONTRACT.fdSimResponse;
+  const response = res;
+  // const response = DATA_CONTRACT.fdSimResponse;
   const validResponse = ((response?.status?.errorCode === '0') && ((response?.status?.errorMsg) === 'Success'));
   if (validResponse) {
     hideLoaderGif();
