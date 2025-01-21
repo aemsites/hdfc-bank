@@ -21,7 +21,7 @@ const getAcctPanelData = async (accArr) => {
 };
 
 const fillActDtls = (data, globals) => {
-  const multAct = globals.form.wizardWrapper.wizardExternalFunding.selectAccount.multipleAccounts.multipleAccountRepeatable;
+  const multAct = globals.form.fdDetailsWrapper.externalFundingWizardView.wizardExternalFunding.selectAccount.multipleAccounts.multipleAccountRepeatable;
   (data || [])?.forEach(({ accountDtls: { accountNumber, availableBalance, accountType } }, i) => {
     const actNo = `${accountType} ${String(accountNumber)?.replace('XXXXXXXXXX', '**********')}`;
     const avlBal = `Available balance: ${FD_EF_CONSTANT.INR_CONST.nfObject.format(availableBalance)}`;
@@ -41,13 +41,13 @@ const updateFundAct = async (casaAcctDetails, selectedRadioBtnIndex, multipleAcc
   }, 0);
 };
 
-const handleFetchCasaPrefill = async (response, globals) => {
-  const otpValCasaRes = DATA_CONTRACT.otpValResponse;
-  currentFormContext.fetchCasaResponse = DATA_CONTRACT.otpValResponse;
-  const selectAcct = globals.form.wizardWrapper.wizardExternalFunding.selectAccount;
+const handleFetchCasaPrefill = async (otpValResponse, globals) => {
+  const otpValCasaRes = otpValResponse;
+  currentFormContext.fetchCasaResponse = otpValResponse;
+  const selectAcct = globals.form.fdDetailsWrapper.externalFundingWizardView.wizardExternalFunding.selectAccount;
   const custmerCasa = otpValCasaRes?.casaDetails?.customerCASADetailsDTO?.[0];
   const custNameField = formUtil(globals, selectAcct.customerName);
-  custNameField.setValue(custmerCasa?.customerFullName);
+  custNameField.setValue(`Hey, ${custmerCasa?.customerFullName}`);
   await updateFundAct(custmerCasa.casaAccountDetails, 0, selectAcct.multipleAccounts.multipleAccountRepeatable.$qualifiedName, globals);
 };
 
