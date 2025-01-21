@@ -482,7 +482,7 @@ function invalidOTP(globals) {
     globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.otpResend, { visible: false });
     globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.secondsPanel, { visible: true });
     globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.secondsPanel.seconds, { value: dispSec });
-    globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.incorrectOTPText, { visible: false });
+    globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.incorrectOTPText, { visible: true });
     globals.functions.setProperty(globals.form.otpPanelWrapper.submitOTP, { enabled: false });
     otpTimer(globals);
 
@@ -501,7 +501,14 @@ function getOtpResponseHandling(custIdentResp, otpGenResp, globals) {
     otpTimer(globals);
   } else if(custIdentResp.existingCustomer === 'N' && custIdentResp.status.errorCode === 'nonExistingCustomer') {
     if(window){
-      window.location.href = NTB_REDIRECTION_URL;
+      const params = new URLSearchParams(window.location.search);
+      // Convert the redirection URL into a URL object
+      const redirectionUrl = new URL(NTB_REDIRECTION_URL);
+      // Append all UTM parameters (or all query parameters) to the redirection URL
+      params.forEach((value, key) => {
+        redirectionUrl.searchParams.append(key, value);
+      });
+      window.location.href = redirectionUrl.toString();
     }
   } else {
     globals.functions.setProperty(globals.form.loginMainPanel, { visible: false });
