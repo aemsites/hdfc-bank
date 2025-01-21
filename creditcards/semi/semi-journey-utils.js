@@ -162,8 +162,8 @@ const invokeJourneyDropOffUpdate = async (state, mobileNumber, leadProfileId, jo
   if ((state === 'CUSTOMER_ONBOARDING_COMPLETE') && (isNodeEnv && (String(journeyId).includes('WHATSAPP')))) {
     formDataSanitized = structuredClone(formDataSanitized);
     const calcTxns = (txnData) => {
-      const selected = txnData.filter((el) => el?.aem_Txn_checkBox === 'on');
-      const amtTotal = selected?.reduce((acc, el) => acc + parseFloat((String(el?.aem_TxnAmt)).replace(/[^\d]/g, '')) / 100, 0);
+      const selected = txnData?.filter((el) => el?.aem_Txn_checkBox === 'on');
+      const amtTotal = selected?.reduce((acc, el) => acc + parseFloat((String(el?.aem_TxnAmt))?.replace(/[^\d]/g, '')) / 100, 0);
       return amtTotal;
     };
     formDataSanitized.smartemi.billedTotalAmt = calcTxns(formDataSanitized?.smartemi?.aem_billedTxn?.aem_billedTxnSelection || []) ?? 0;
