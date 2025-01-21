@@ -47,7 +47,7 @@ const handleFetchCasaPrefill = async (otpValResponse, globals) => {
   const selectAcct = globals.form.fdDetailsWrapper.externalFundingWizardView.wizardExternalFunding.selectAccount;
   const custmerCasa = otpValCasaRes?.casaDetails?.customerCASADetailsDTO?.[0];
   const custNameField = formUtil(globals, selectAcct.customerName);
-  custNameField.setValue(custmerCasa?.customerFullName);
+  custNameField.setValue(`Hey, ${custmerCasa?.customerFullName}`);
   await updateFundAct(custmerCasa.casaAccountDetails, 0, selectAcct.multipleAccounts.multipleAccountRepeatable.$qualifiedName, globals);
 };
 
