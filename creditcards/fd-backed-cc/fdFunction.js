@@ -10,6 +10,7 @@ import {
   updateOTPHelpText,
   fetchCardDetails,
   customerAccountDetails,
+  fetchCardDetailsSuccessHandler,
 } from './fdbacked-function.js';
 
 import { createJourneyId } from '../../common/journey-utils.js';
@@ -52,4 +53,5 @@ export {
   updateOTPHelpText,
   fetchCardDetails,
   customerAccountDetails,
+  fetchCardDetailsSuccessHandler,
 };
