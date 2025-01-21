@@ -18,16 +18,12 @@ const FD_SIM_API = {
 
 // eslint-disable-next-line no-unused-vars
 const createFdEfReqPayload = (globals) => {
-//   const mobileNo = globals.form.loginMainPanel.loginPanel.mobilePanel.mobileNumberWrapper.registeredMobileNumber.$value ?? '';
-//   const panValue = globals.form.loginMainPanel.loginPanel.identifierPanel.pan.$value ?? '';
-//   const dobValue = globals.form.loginMainPanel.loginPanel.identifierPanel.dateOfBirth.$value ?? '';
-  const mobileNo = '918619484593';
-  const panValue = '';
-  const dobValue = '19920910';
-  //
+  const mobileNo = '91' + (globals.form.loginMainPanel.loginPanel.mobilePanel.mobileNumberWrapper.registeredMobileNumber.$value ?? '');
+  const panValue = globals.form.loginMainPanel.loginPanel.identifierPanel.pan.$value ?? '';
+  const dobValue = (globals.form.loginMainPanel.loginPanel.identifierPanel.dateOfBirth.$value ?? '') === 'Date of Birth' ? '' : (globals.form.loginMainPanel.loginPanel.identifierPanel.dateOfBirth.$value ?? '');
   const debitAccountNo = currentFormContext?.selectedFundAcct?.accountNumber;
   const principalAmount = {
-    amount: String(currentFormContext?.selectedFundAcct?.investValue) ?? '',
+    amount: String(parseInt(currentFormContext?.selectedFundAcct?.investValue)) ?? '',
     currencyCode: 'INR',
   };
   const {
@@ -39,18 +35,18 @@ const createFdEfReqPayload = (globals) => {
         },
       },
     },
-  } = globals.form.wizardWrapper.wizardExternalFunding;
-  const INT_PAY_KEYS = ['OnMaturity', 'MIP', 'QIP']; // OnMaturity or Reinvestment in api.
+  } = globals.form.fdDetailsWrapper.externalFundingWizardView.wizardExternalFunding;
+  const INT_PAY_KEYS = ['Reinvestment', 'MIP', 'QIP'];
   const mapInterestPayoust = (interestPayoutOpt.$enum || [])?.reduce((acc, prev, i) => {
     acc[interestPayoutOpt.$enum[i]] = [interestPayoutOpt.$enumNames[i], INT_PAY_KEYS[i]];
     return acc;
   }, {});
-  // eslint-disable-next-line no-unused-vars
-  const [_intPayNames, productGroup] = mapInterestPayoust[interestPayoutOpt.$value] ?? '';
   const term = {
     days: day.$value ?? '',
-    months: String((year.$value * 12) + (months.$value)) ?? '',
+    months: String((parseInt(year.$value) * 12) + (parseInt(months.$value))) ?? '',
   };
+  const [_intPayNames, productGroupRaw] = mapInterestPayoust[interestPayoutOpt.$value] ?? '';
+  const productGroup = (parseInt(term.months)<=6)? 'Days': productGroupRaw;
   const payload = {
     RequestPayload: {
       SimulateTermDepositRequest: {
@@ -160,19 +156,16 @@ const fdEfSimSuccessCallBack = (res, globals) => {
 function fdEfSimulationExecute(triggerPlace, globals) {
   const tenureYears = parseInt(globals.form.fdDetailsWrapper.externalFundingWizardView.wizardExternalFunding.createFD.leftWrapper.tenurePanel.tenureWrapper.year.$value);
   const tenureMonths = parseInt(globals.form.fdDetailsWrapper.externalFundingWizardView.wizardExternalFunding.createFD.leftWrapper.tenurePanel.tenureWrapper.months.$value);
-  const interestPayoutPanel = globals.form.fdDetailsWrapper.externalFundingWizardView.wizardExternalFunding.createFD.leftWrapper.interestPayout
+  const interestPayoutPanel = globals.form.fdDetailsWrapper.externalFundingWizardView.wizardExternalFunding.createFD.leftWrapper.interestPayout;
   const interestPayoutPanelVisibility = formUtil(globals, interestPayoutPanel);
   const isEligibleForInterestPayout = tenureMonths >= 6 || tenureYears >= 1;
   interestPayoutPanelVisibility.visible(isEligibleForInterestPayout);
-  if (isEligibleForInterestPayout) {
-    const urlPath = fdEfEndpoints.fdSimulation;
-    // const jsonObj = createFdEfReqPayload(globals);
-    const jsonObj = DATA_CONTRACT.fdSimReques;
-    FD_SIM_API.triggerPlace = triggerPlace?.$name || triggerPlace?.name;
-    displayLoader();
-    restAPICall(globals, 'POST', jsonObj, urlPath, fdEfSimSuccessCallBack, fdEfSimErrorCallBack);
-  }
-  
+  const urlPath = fdEfEndpoints.fdSimulation;
+  const jsonObj = createFdEfReqPayload(globals);
+  // const jsonObj = DATA_CONTRACT.fdSimReques;
+  FD_SIM_API.triggerPlace = triggerPlace?.$name || triggerPlace?.name;
+  displayLoader();
+  restAPICall(globals, 'POST', jsonObj, urlPath, fdEfSimSuccessCallBack, fdEfSimErrorCallBack); 
 }
 
 export default fdEfSimulationExecute;
