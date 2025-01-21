@@ -1231,7 +1231,7 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                     display: block;
                                     padding: 50px 40px;
                         
-                                    .field-customername, .field-customername b {
+                                    .field-customername, .field-customername label, .field-customername b {
                                         font-size: var(--body-fd-xx-xlg-font-size);
                                         font-weight: var(--font-weight-bold);
                                         color: var(--color-interface-text-primary);
@@ -1249,6 +1249,7 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                             font-size: var(--body-lg-font-size);
                                             color: var(--color-interface-text-primary);
                                             border: solid 1px var(--color-action-border-secondary-default);
+                                            letter-spacing: 0;
                                         }
 
                                         label {
@@ -1323,221 +1324,224 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                 }
                             }
                         
-                                /* Create FD */
-                                .field-createfd { padding: 50px 40px;
+                            /* Create FD */
+                            .field-createfd { padding: 50px 40px;
 
-                                    .field-createfdheading p {
-                                        font-size: var(--font-linehight-large);
-                                        margin: 0;
+                                .field-createfdheading p {
+                                    font-size: var(--font-linehight-large);
+                                    margin: 0;
+                                    color: var(--color-interface-text-primary);
+                                }
+                        
+                                .field-fdfootnotetxt{
+                                    margin: -20px 0 0;
+                                    font-size: var(--body-md-font-size);
+                                    p { font-size: var(--body-md-font-size); }
+                                }
+                    
+                                .field-leftwrapper {
+                                    .field-investmentamtpanel, .field-tenurepanel, .field-interestpayout, .field-renewalinstructions {
+                                        border: solid 1px var(--color-interface-border-primary);
+                                        border-radius: 24px;
+                                        width: 97%;
+                                        padding: 24px 32px;
+                    
+                                        p { 
+                                            margin: 0; 
+                                            color: var(--color-input-text-placeholder-disabled);
+                                        }
+                                    }
+                    
+                                    .field-investmentamountlabel b, .field-tenurelabel b, .field-interestpayoutlabel b, .field-renewalinstructionslabel b {
                                         color: var(--color-interface-text-primary);
                                     }
-                            
-                                    .field-fdfootnotetxt{
-                                        margin: -20px 0 0;
-                                        font-size: var(--body-md-font-size);
-                                        p { font-size: var(--body-md-font-size); }
-                                    }
-                        
-                                    .field-leftwrapper {
-                                        .field-investmentamtpanel, .field-tenurepanel, .field-interestpayout, .field-renewalinstructions {
-                                            border: solid 1px var(--color-interface-border-primary);
-                                            border-radius: 24px;
-                                            width: 97%;
-                                            padding: 24px 32px;
-                        
-                                            p { 
-                                                margin: 0; 
-                                                color: var(--color-input-text-placeholder-disabled);
-                                            }
-                                        }
-                        
-                                        .field-investmentamountlabel b, .field-tenurelabel b, .field-interestpayoutlabel b, .field-renewalinstructionslabel b {
+                    
+                                    .field-investmentamt { position: relative;
+                    
+                                        input {
+                                            height: 65px;
+                                            font-size: var(--body-fd-xx-xlg-font-size);
                                             color: var(--color-interface-text-primary);
+                                            margin: 0;
+                                            max-width: -webkit-fill-available;
+                                            letter-spacing: 0;
                                         }
-                        
-                                        .field-investmentamt { position: relative;
-                        
-                                            input {
-                                                height: 65px;
-                                                font-size: var(--body-fd-xx-xlg-font-size);
-                                                color: var(--color-interface-text-primary);
-                                                margin: 0;
-                                                max-width: -webkit-fill-available;
-                                            }
 
-                                            label { 
-                                                color: var(--color-input-text-placeholder-disabled); 
-                                                margin-top: 13px;
-                                            }
-                        
-                                            .field-description {
-                                                position: absolute;
-                                                right: 3%;
-                                                top: 30%;
-                        
-                                                p {
-                                                    color: var(--color-input-text-disabled);
-                                                    font-size: var(--body-fd-xxx-lg-font-size);
-                                                }
+                                        label { 
+                                            color: var(--color-input-text-placeholder-disabled); 
+                                            margin-top: 13px;
+                                        }
+                    
+                                        .field-description {
+                                            position: absolute;
+                                            right: 3%;
+                                            top: 30%;
+                    
+                                            p {
+                                                color: var(--color-input-text-disabled);
+                                                font-size: var(--body-fd-xxx-lg-font-size);
                                             }
                                         }
-                                        
-                                        .field-tenurepanel {
-                                            .field-tenurewrapper {
-                                                display: flex;
-                                                border: 1px solid var(--color-interface-border-secondary);
-                                                border-radius: 11px;
-                                                padding: 5px;
-                            
-                                                legend {
-                                                    display: inline-block !important;
-                                                    width: auto;
-                                                    margin-left: 10px;
-                                                    padding: 0 5px;
-                                                }
-                            
-                                                .drop-down-wrapper {
-                                                    flex: 1;
-                                                    position: relative;
-                            
-                                                    select {
-                                                        appearance: none;
-                                                        border: none !important;
-                                                        font-size: var(--body-xx-lg-font-size);
-                                                        font-weight: var( --font-weight-medium);
-                                                    }
-                            
-                                                    &.field-year, &.field-months {
-                                                        &::after {
-                                                            content: '.';
-                                                            font-size: var(--font-linehight-x-large);
-                                                            position: absolute;
-                                                            top: -15px;
-                                                            color: var(--color-interface-border-secondary);
-                                                        }
-                                                    }
-                                                }
-                                                
-                                                .field-ytxt, .field-mtxt, .field-dtxt {
-                                                    font-size: var(--body-md-font-size);
+                                    }
+                                    
+                                    .field-tenurepanel {
+                                        .field-tenurewrapper {
+                                            display: flex;
+                                            border: 1px solid var(--color-interface-border-secondary);
+                                            border-radius: 11px;
+                                            padding: 5px;
+                        
+                                            legend {
+                                                display: inline-block !important;
+                                                width: auto;
+                                                margin-left: 10px;
+                                                padding: 0 5px;
+                                            }
+                        
+                                            .drop-down-wrapper {
+                                                flex: 1;
+                                                position: relative;
+                        
+                                                select {
+                                                    appearance: none;
+                                                    border: none !important;
+                                                    font-size: var(--body-xx-lg-font-size);
                                                     font-weight: var( --font-weight-medium);
-                                                    position: relative;
-                                                    left: -22%;
-                                                    top: 20px;
+                                                }
+                        
+                                                &.field-year, &.field-months {
+                                                    &::after {
+                                                        content: '.';
+                                                        font-size: var(--font-linehight-x-large);
+                                                        position: absolute;
+                                                        top: -15px;
+                                                        color: var(--color-interface-border-secondary);
+                                                    }
                                                 }
                                             }
-                                        }
-                        
-                                        .field-interestpayout {
-                                            .field-interestpayoutopt { display: flex;
-                        
-                                                .radio-wrapper { padding-right: 32px; 
-                                                    label { color: var(--color-interface-text-primary); }
-                                                }
-                                            }
-                                        }
-                                    }
-                        
-                                    .field-rightwrapper {
-                                        display: block;
-                        
-                                        .field-maturitydetailspanel {
-                                            padding: 32px;
-                                            margin-bottom: 24px;
-                                            background: linear-gradient(91.26deg, var(--color-interface-promotion-text-primary) 0%, #997EF7 100%);
-                                            border-radius: 24px;
-                        
-                                            p {
-                                                margin: -10px 0 0; 
-                                                color: var(--color-interface-text-tertiary);
-                                            }
-                        
-                                            .field-titlem p, .field-mdetails p, .field-mdetails {
-                                                font-size: var(--body-fd-xx-lg-font-size);
-                                                font-weight: var(--font-weight-bold);
-                                            }
-                        
-                                            .field-textm1 p { font-size: var(--body-fd-md-font-size); }
                                             
-                                            .field-mfootnote p { 
-                                                font-size: var(--body-fd-sm-font-size);
-                                            }
-                                        }
-                        
-                                        .field-infopanel {
-                                            background-color: var(--color-interface-background-quinary);
-                                            padding: 10px 24px;
-                                            border-radius: 8px;
-                        
-                                            p {
-                                                color: var(--color-action-text-secondary-default);
-                                                font-weight: var(--font-weight-bold);
+                                            .field-ytxt, .field-mtxt, .field-dtxt {
                                                 font-size: var(--body-md-font-size);
-                                                margin: 0;
-                                            }
-                        
-                                            .field-infom { display: flex;
-                        
-                                                &::before {
-                                                    content: url('../icons/info-icon.svg');
-                                                    align-content: center;
-                                                    padding-right: 12px;
-                                                }
+                                                font-weight: var( --font-weight-medium);
+                                                position: relative;
+                                                left: -22%;
+                                                top: 20px;
                                             }
                                         }
                                     }
-                        
-                                    .field-continuecreatefd { max-width: 272px; }
+                    
+                                    .field-interestpayout {
+                                        .field-interestpayoutopt { display: flex;
+                    
+                                            .radio-wrapper { padding-right: 32px; 
+                                                label { color: var(--color-interface-text-primary); }
+                                            }
+                                        }
+                                    }
                                 }
-                        
-                                /* Review */
-                                .field-review {
-                                    .field-reviewwizard p {
-                                        font-size: var(--font-linehight-large);
-                                        font-weight: var(--font-weight-bold);
-                                        color: var(--color-interface-text-primary);
-                                    }
-                                    
-                                    fieldset.nre-style-accordian {
-                                        padding: 15px 0;
-                                        border: 1px solid var(--color-interface-border-primary); 
-                                        border-bottom-left-radius: 24px;      
-                                        border-bottom-right-radius: 24px;
-                                    }
-                        
-                                    legend.nrenro-accordian {
-                                        height: 70px;
-                                        padding: 24px 32px 10px;
-                                        border-radius: 24px 24px 4px 4px;
-                                        background-color: var(--color-interface-background-quinary);
-                                        color: var(--color-interface-background-quaternary);
-                                        position: relative;
-                                        width: 100.3%;
-                                        left: -2px;
-                                        p { color: var(--color-interface-background-quaternary); }
-                                    }
+                    
+                                .field-rightwrapper {
+                                    display: block;
+                    
+                                    .field-maturitydetailspanel {
+                                        padding: 32px;
+                                        margin-bottom: 24px;
+                                        background: linear-gradient(91.26deg, var(--color-interface-promotion-text-primary) 0%, #997EF7 100%);
+                                        border-radius: 24px;
+                    
+                                        p {
+                                            margin: -10px 0 0; 
+                                            color: var(--color-interface-text-tertiary);
+                                        }
+                    
+                                        .field-titlem p, .field-mdetails p, .field-mdetails {
+                                            font-size: var(--body-fd-xx-lg-font-size);
+                                            font-weight: var(--font-weight-bold);
+                                            color: var(--color-interface-text-tertiary);
+                                        }
+                    
+                                        .field-textm1 p { font-size: var(--body-fd-md-font-size); }
                                         
-                                    .nrenro-accordian::after {
-                                        content: '\221F';
-                                        color: #1c3fca;
-                                        font-size: 19px;
-                                        display: inline;
-                                        position: absolute;
-                                        transition: transform 0s;
-                                        right: 22px;
-                                        cursor: pointer;
-                                        transform: rotate(-225deg);
-                                        top: 23px;
+                                        .field-mfootnote p { 
+                                            font-size: var(--body-fd-sm-font-size);
+                                        }
                                     }
-                                    
-                                    .accordion-collapse::after {
-                                        transform: rotate(-45deg);
-                                        top: 18px;
+                    
+                                    .field-infopanel {
+                                        background-color: var(--color-interface-background-quinary);
+                                        padding: 10px 24px;
+                                        border-radius: 8px;
+                    
+                                        p {
+                                            color: var(--color-action-text-secondary-default);
+                                            font-weight: var(--font-weight-bold);
+                                            font-size: var(--body-md-font-size);
+                                            margin: 0;
+                                        }
+                    
+                                        .field-infom { display: flex;
+                    
+                                            &::before {
+                                                content: url('../icons/info-icon.svg');
+                                                align-content: center;
+                                                padding-right: 12px;
+                                            }
+                                        }
                                     }
                                 }
-
-                                .wizard-button-wrapper { display: none; }
+                    
+                                .field-continuecreatefd { max-width: 272px; }
                             }
+                    
+                            /* Review */
+                            .field-review { padding: 50px 40px 0;
+
+                                .field-reviewwizard p {
+                                    font-size: var(--font-linehight-large);
+                                    font-weight: var(--font-weight-bold);
+                                    color: var(--color-interface-text-primary);
+                                }
+                                
+                                fieldset.nre-style-accordian {
+                                    padding: 15px 0;
+                                    border: 1px solid var(--color-interface-border-primary); 
+                                    border-bottom-left-radius: 24px;      
+                                    border-bottom-right-radius: 24px;
+                                }
+                    
+                                legend.nrenro-accordian {
+                                    height: 70px;
+                                    padding: 24px 32px 10px;
+                                    border-radius: 24px 24px 4px 4px;
+                                    background-color: var(--color-interface-background-quinary);
+                                    color: var(--color-interface-background-quaternary);
+                                    position: relative;
+                                    width: 100.3%;
+                                    left: -2px;
+                                    p { color: var(--color-interface-background-quaternary); }
+                                }
+                                    
+                                .nrenro-accordian::after {
+                                    content: '\221F';
+                                    color: #1c3fca;
+                                    font-size: 19px;
+                                    display: inline;
+                                    position: absolute;
+                                    transition: transform 0s;
+                                    right: 22px;
+                                    cursor: pointer;
+                                    transform: rotate(-225deg);
+                                    top: 23px;
+                                }
+                                
+                                .accordion-collapse::after {
+                                    transform: rotate(-45deg);
+                                    top: 18px;
+                                }
+                            }
+
+                            .wizard-button-wrapper { display: none; }
+                        }
 
                         /* End of wizard styling */
                     }
@@ -1612,12 +1616,37 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
 }
 
 
-@media (width < 950px) {
-    .fd-ext-fund {
-        .field-wizardwrapper .field-wizardexternalfunding {
+@media (width < 1200px) {
+    body.fd-ext-fund:not(.semi-form, .fdlien) main .form-container .form-wrapper .form form {
+        .field-fddetailswrapper .field-wizardexternalfunding {
             .field-selectaccount {
                 .field-multipleaccountrepeatable { .panel-wrapper { margin-bottom: 12px; } }
                 .field-continuebtn { padding-top: 20px; }
+            }
+
+            .field-createfd.current-wizard-step {
+                display: block;
+                .field-fdfootnotetxt { margin-top: 0; }
+                .field-leftwrapper, .field-rightwrapper { margin-top: 20px; }
+
+                .field-leftwrapper {
+                    fieldset { margin-top: 10px; }
+
+                    .field-tenurepanel .field-tenurewrapper {
+                        display: grid;
+                        div { width: max-content; }
+
+                        .field-year, .field-months, .field-day { grid-column: span 1; 
+                            &::after { margin-left: 90px; }
+                        }
+
+                        .field-ytxt, .field-mtxt, .field-dtxt {
+                            left: 10px;
+                            top: 16px;
+                            grid-column: span 3;
+                        }
+                    }
+                }
             }
         }
     }
