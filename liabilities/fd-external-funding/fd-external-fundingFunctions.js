@@ -120,26 +120,32 @@ const ageValidate = (minAge, maxAge, dobValue) => {
     return age >= minAge && age < maxAge;
 };
 
-const editMobileNumber = (globals) => {
-    globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.otpSubPanel.hiddenMaxCount, { value : 3 }); // Resetting to 3. Need to confirm whether we should reset to 3.
-    globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.otpSubPanel.numRetries, { value : 3 });
-    globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.otpNumber, { value : '' });
-    globals.functions.setProperty(globals.form.otpPanelWrapper, { visible : false });
-    globals.functions.setProperty(globals.form.loginMainPanel, { visible : true });
-
+function otpPageReset(globals){
+  globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.otpSubPanel.hiddenMaxCount, { value : 3 }); // Resetting to 3. Need to confirm whether we should reset to 3.
+  globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.otpSubPanel.numRetries, { value : 3 });
+  globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.otpNumber, { value : '' });
+  if(document)
+  {
     const eyeButton = document.querySelector('.bi-eye');
     if(eyeButton){
       eyeButton.click();
     }
+  }
 
-    resendOtpCount = 0;
-    sec = OTP_TIMER;
-    dispSec = OTP_TIMER;
-    globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.otpSubPanel.numRetries, { value: (MAX_OTP_RESEND_COUNT - resendOtpCount)});
-    globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.secondsPanel.seconds, { value: dispSec });
-    if(timer){
-      clearInterval(timer);
-    }
+  resendOtpCount = 0;
+  sec = OTP_TIMER;
+  dispSec = OTP_TIMER;
+  globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.otpSubPanel.numRetries, { value: (MAX_OTP_RESEND_COUNT - resendOtpCount)});
+  globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.resendOTPPanel.secondsPanel.seconds, { value: dispSec });
+  if(timer){
+    clearInterval(timer);
+  }
+}
+
+const editMobileNumber = (globals) => {
+  globals.functions.setProperty(globals.form.otpPanelWrapper, { visible : false });
+  globals.functions.setProperty(globals.form.loginMainPanel, { visible : true });
+  otpPageReset(globals);
 };
 
 const validatePanDynamically = (pan, panValue, globals) => {
@@ -527,6 +533,9 @@ function loadHomePage(globals){
   if(window){
     window.location.href = FORM_URL;
   }
+  // globals.functions.setProperty(globals.form.loginMainPanel, { visible: true });
+  // globals.functions.setProperty(globals.form.resultPanel, { visible: false });
+  // globals.functions.setProperty(globals.form.resultPanel.commonErrorPanel, { visible: false });
 }
 
 function setFetchCasaResponse(casaResponse, globals){
