@@ -156,7 +156,19 @@ const invokeJourneyDropOffUpdate = async (state, mobileNumber, leadProfileId, jo
     formContext.LoanReferenceNumber = journeyId?.loanNbr;
   }
   const sanitizedFormData = santizeFormTxnFieldDesc(santizedFormDataWithContext(globals, formContext));
-  const formDataSanitized = restructFormData(sanitizedFormData, formContext, globals);
+  let formDataSanitized = restructFormData(sanitizedFormData, formContext, globals);
+  /* Condition to fix the WhatsApp split report issue:
+   - 'billedTotalAmt' and 'unBilledTotalAmt' were not being reflected in the report. */
+  if ((state === 'CUSTOMER_ONBOARDING_COMPLETE') && (isNodeEnv && (String(journeyId).includes('WHATSAPP')))) {
+    formDataSanitized = structuredClone(formDataSanitized);
+    const calcTxns = (txnData) => {
+      const selected = txnData.filter((el) => el?.aem_Txn_checkBox === 'on');
+      const amtTotal = selected?.reduce((acc, el) => acc + parseFloat((String(el?.aem_TxnAmt)).replace(/[^\d]/g, '')) / 100, 0);
+      return amtTotal;
+    };
+    formDataSanitized.smartemi.billedTotalAmt = calcTxns(formDataSanitized?.smartemi?.aem_billedTxn?.aem_billedTxnSelection || []) ?? 0;
+    formDataSanitized.smartemi.unBilledTotalAmt = calcTxns(formDataSanitized?.smartemi?.aem_unbilledTxn?.aem_unbilledTxnSection || []) ?? 0;
+  }
   const journeyJSONObj = {
     RequestPayload: {
       userAgent: (typeof window !== 'undefined') ? window.navigator.userAgent : '',
