@@ -210,6 +210,13 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                             box-shadow: none !important;
                                             width: 90%;
                                             background-color: transparent;
+
+                                            &:-webkit-autofill,
+                                            &:-webkit-autofill:hover,
+                                            &:-webkit-autofill:focus,
+                                            :-webkit-autofill:active {
+                                              -webkit-box-shadow: 0 0 0 30px white inset !important;
+                                            }                                            
                                         }
 
                                         &[data-empty="false"],
@@ -949,6 +956,14 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                         }
                                     }
                                 }
+
+                                .field-incorrectotptext{
+                                    p{
+                                        &::before{
+                                            margin-top: 5px;
+                                        }
+                                    }
+                                }
                             }
                         }
 
@@ -961,7 +976,8 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                             text-align: center;
                             height: calc(100vh - 80px);
 
-                            .field-technicalissueerrorpanel {
+                            .field-technicalissueerrorpanel,
+                            .field-commonerrorpanel {
                                 display: flex;
                                 flex-direction: column;
                                 align-items: center;
@@ -989,7 +1005,6 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                 }
 
                                 .field-errormessagetext2col {
-                                    margin-top: 135px;
 
                                     p p {
                                         font-size: var(--font-linehight-large);
@@ -999,14 +1014,37 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                 }
 
                                 .field-errormessagetextplaceholder2 {
-                                    margin-top: -20px;
+
                                     p p {
                                         font-size: var(--body-md-font-size);
                                         font-weight: var(--font-weight-regular);
                                         color: var(--color-input-text-primary);
                                         margin-bottom: 0;
                                     }
-                                }                            
+                                }       
+                                
+                                &.field-commonerrorpanel {
+
+                                    .field-errormessagetext2col {
+                                        margin-top: 185px;
+                                        font-size: var(--font-linehight-large);
+                                        font-weight: var(--font-weight-bold);
+                                        color: var(--color-interface-text-primary);
+                                    }
+
+                                    .field-errormessagetextplaceholder2 {
+                                        margin-top: -20px;
+                                        font-size: var(--body-md-font-size);
+                                        font-weight: var(--font-weight-regular);
+                                        color: var(--color-input-text-primary);
+                                    }
+
+                                    &::before{
+                                        width: 177px;
+                                        height: 145px;
+                                        background: url('../icons/validation_failed.png') no-repeat center center;
+                                    }
+                                }
                             }
                         }
 
