@@ -17,6 +17,7 @@ import { createJourneyId } from '../../common/journey-utils.js';
 import {
   invokeJourneyDropOff,
   invokeJourneyDropOffUpdate,
+  fdWizardSwitch,
 } from './fdbacked-journey-util.js';
 
 import {
@@ -52,4 +53,5 @@ export {
   updateOTPHelpText,
   fetchCardDetails,
   customerAccountDetails,
+  fdWizardSwitch,
 };
