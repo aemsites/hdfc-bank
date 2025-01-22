@@ -44,12 +44,27 @@ const createFdEfReqPayload = (globals) => {
     acc[interestPayoutOpt.$enum[i]] = [interestPayoutOpt.$enumNames[i], INT_PAY_KEYS[i]];
     return acc;
   }, {});
+
   const term = {
     days: day.$value ? String(parseInt(day.$value, 10)) : '',
     months: String((parseInt(year.$value) * 12) + (parseInt(months.$value))) ?? '',
   };
+  
+  let totalMonths = parseInt(term.months) || 0;
+  let totalDays = parseInt(term.days) || 0;
+  
+  if (totalMonths < 6) {
+    totalDays += totalMonths * 30;
+    totalMonths = 0;
+  }
+  
+  // Update term based on months <6
+  term.days = String(totalDays);
+  term.months = String(totalMonths);
+
   const [_intPayNames, productGroupRaw] = mapInterestPayoust[interestPayoutOpt.$value] ?? '';
-  const productGroup = (parseInt(term.months) + parseInt(term.days) <= 6) ? 'Days' : productGroupRaw;
+  const totalDayspg = (parseInt(term.months) * 30) + parseInt(term.days);
+  const productGroup = totalDayspg <= 180 ? 'Days' : productGroupRaw;
   const payload = {
     RequestPayload: {
       SimulateTermDepositRequest: {
@@ -106,6 +121,7 @@ const createFdEfReqPayload = (globals) => {
       pseudoID: 'abcd',
     },
   };
+  currentFormContext.simulationReqPayload = payload;
   return payload;
 };
 
@@ -132,7 +148,8 @@ const fdEfSimErrorCallBack = (err, globals) => {
  * @param {object} res - fd simulation response object
  * @param {object} globals - object
  */
-const fdEfSimSuccessCallBack = (res, globals) => {
+const fdEfSimSuccessCallBack = (res, globals) => {  
+  currentFormContext.simulationResponse = res;
   const response = res;
   // const response = DATA_CONTRACT.fdSimResponse;
   const validResponse = ((response?.status?.errorCode === '0') && ((response?.status?.errorMsg) === 'Success'));
@@ -159,16 +176,21 @@ const fdEfSimSuccessCallBack = (res, globals) => {
 function fdEfSimulationExecute(triggerPlace, globals) {
   const tenureYears = parseInt(globals.form.fdDetailsWrapper.externalFundingWizardView.wizardExternalFunding.createFD.leftWrapper.tenurePanel.tenureWrapper.year.$value);
   const tenureMonths = parseInt(globals.form.fdDetailsWrapper.externalFundingWizardView.wizardExternalFunding.createFD.leftWrapper.tenurePanel.tenureWrapper.months.$value);
+  const tenureDays = parseInt(globals.form.fdDetailsWrapper.externalFundingWizardView.wizardExternalFunding.createFD.leftWrapper.tenurePanel.tenureWrapper.day.$value);
+  currentFormContext.tenureWhole = (tenureYears ? tenureYears + 'Y, ' : '') + (tenureMonths ? tenureMonths + 'M, ' : '') + (tenureDays ? tenureDays + 'D' : '');
   const interestPayoutPanel = globals.form.fdDetailsWrapper.externalFundingWizardView.wizardExternalFunding.createFD.leftWrapper.interestPayout;
   const interestPayoutPanelVisibility = formUtil(globals, interestPayoutPanel);
   const isEligibleForInterestPayout = tenureMonths >= 6 || tenureYears >= 1;
   interestPayoutPanelVisibility.visible(isEligibleForInterestPayout);
-  const urlPath = fdEfEndpoints.fdSimulation;
-  const jsonObj = createFdEfReqPayload(globals);
-  // const jsonObj = DATA_CONTRACT.fdSimReques;
-  FD_SIM_API.triggerPlace = triggerPlace?.$name || triggerPlace?.name;
-  displayLoader();
-  restAPICall(globals, 'POST', jsonObj, urlPath, fdEfSimSuccessCallBack, fdEfSimErrorCallBack); 
+  const isMakeSimulationAPICall = tenureMonths >= 1 || tenureYears >= 1 || tenureDays >=7;
+  if (isMakeSimulationAPICall){
+    const urlPath = fdEfEndpoints.fdSimulation;
+    const jsonObj = createFdEfReqPayload(globals);
+    // const jsonObj = DATA_CONTRACT.fdSimReques;
+    FD_SIM_API.triggerPlace = triggerPlace?.$name || triggerPlace?.name;
+    displayLoader();
+    restAPICall(globals, 'POST', jsonObj, urlPath, fdEfSimSuccessCallBack, fdEfSimErrorCallBack);
+  }   
 }
 
 export default fdEfSimulationExecute;

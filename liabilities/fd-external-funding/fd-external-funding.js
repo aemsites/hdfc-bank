@@ -27,6 +27,8 @@ import {
     effdInvokeJourneyDropOffByParam,
   } from './fd-external-funding-journey-utils.js';
 
+import {updateReviewPage} from './fd-ef-prefilutils.js';
+
 import {
     sendAnalytics,
 } from './analytics.js';
@@ -53,4 +55,5 @@ export {
     selectFundAcct,
     fdEfSimulationExecute,
     fdEfSwitchWizard,
+    updateReviewPage
 };
