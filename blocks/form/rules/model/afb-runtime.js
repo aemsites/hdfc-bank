@@ -2056,10 +2056,10 @@ class Container extends Scriptable {
         return {
             ...super.getState(forRestore),
             ...(forRestore ? {
+                initialItems : this.items.length,
                 ':items': undefined,
                 ':itemsOrder': undefined
             } : {}),
-            initialItems : this.items.length,
             items: this.getItemsState(isRepeatableChild, forRestore),
             enabled: this.enabled,
             readOnly: this.readOnly
