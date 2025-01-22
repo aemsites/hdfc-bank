@@ -1457,7 +1457,7 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                 /* Select Account */
                                 .field-selectaccount.current-wizard-step {
                                     display: block;
-                                    padding: 50px 40px;
+                                    padding: 50px 40px 0;
 
                                     .field-customername,
                                     .field-customername label,
@@ -1586,7 +1586,7 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                         }
                                     }
                                 }/* Create FD */
-                            .field-createfd.current-wizard-step { padding: 50px 40px;
+                            .field-createfd.current-wizard-step { padding: 50px 40px 0;
 
                                 .field-createfdheading p {
                                     font-size: var(--font-linehight-large);
@@ -1815,7 +1815,7 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                             }
 
                             /* Review */
-                            .field-review.current-wizard-step { padding: 50px 40px;
+                            .field-review.current-wizard-step { padding: 50px 40px 0;
 
                                 .field-reviewlabelwizard {
                                     b {
@@ -2060,7 +2060,8 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                             }
                         }
                         
-                            
+                        /* Continue buttons */
+                        .field-continuebtn, .field-continuecreatefd, .field-reviewcontinue { margin: 10px 0 60px 40px; }
 
                         .wizard-button-wrapper {
                             display: none;
