@@ -2,6 +2,7 @@ import { CHANNEL, ENDPOINTS } from '../../common/constants.js';
 import { santizedFormDataWithContext, urlPath } from '../../common/formutils.js';
 import { localJsonCompatibleTime } from '../../common/functions.js';
 import { fetchJsonResponse } from '../../common/makeRestAPI.js';
+import { moveWizardView } from '../domutils/domutils.js';
 
 /**
  * @name invokeJourneyDropOff to log on success and error call backs of api calls
@@ -134,10 +135,15 @@ const invokeJourneyDropOffUpdate = async (state, mobileNumber, leadProfileId, jo
   return fetchJsonResponse(url, journeyJSONObj, method);
 };
 
+const fdWizardSwitch = (currentPanel, nextPanel) => {
+  moveWizardView(currentPanel, nextPanel);
+};
+
 export {
   invokeJourneyDropOff,
   journeyResponseHandlerUtil,
   invokeJourneyDropOffByParam,
   invokeJourneyDropOffByJourneyId,
   invokeJourneyDropOffUpdate,
+  fdWizardSwitch
 };
