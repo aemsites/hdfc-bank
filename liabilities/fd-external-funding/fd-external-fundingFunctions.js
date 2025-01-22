@@ -12,6 +12,7 @@ import {
 
 import {
     createJourneyId,
+    invokeJourneyDropOff,
     invokeJourneyDropOffUpdate,
 } from './fd-external-funding-journey-utils.js';
 
@@ -153,9 +154,9 @@ const editMobileNumber = (globals) => {
   // sendAnalytics('submit otp click', '', 'CUSTOMER_LEAD_QUALIFIED_FAILURE');
   invokeJourneyDropOffUpdate(
     'EDIT_MOBILE_NUMBER', 
-    globals.form.loginMainPanel.loginPanel.mobilePanel.mobileNumberWrapper.registeredMobileNumber,
-    globals.form.runtime.leadProifileId,
-    globals.form.runtime.journeyId,
+    globals.form.loginMainPanel.loginPanel.mobilePanel.mobileNumberWrapper.registeredMobileNumber.$value,
+    globals.form.runtime.leadProifileId.$value,
+    globals.form.runtime.journeyId.$value,
     globals
   );
 };
@@ -488,9 +489,9 @@ function invalidOTP(globals) {
   sendAnalytics('submit otp click', '', 'CUSTOMER_LEAD_QUALIFIED_FAILURE');
   invokeJourneyDropOffUpdate(
     'CUSTOMER_LEAD_QUALIFIED_FAILURE', 
-    globals.form.loginMainPanel.loginPanel.mobilePanel.mobileNumberWrapper.registeredMobileNumber,
-    globals.form.runtime.leadProifileId,
-    globals.form.runtime.journeyId,
+    globals.form.loginMainPanel.loginPanel.mobilePanel.mobileNumberWrapper.registeredMobileNumber.$value,
+    globals.form.runtime.leadProifileId.$value,
+    globals.form.runtime.journeyId.$value,
     globals
   );
   if (resendOtpCount < MAX_OTP_RESEND_COUNT) {
@@ -525,14 +526,18 @@ function maskMobileNo(mobileNo){
   return '';
 }
 
-function getOtpResponseHandling(custIdentResp, otpGenResp, globals) {
+async function getOtpResponseHandling(custIdentResp, otpGenResp, globals) {
   if(custIdentResp.existingCustomer === 'Y' && custIdentResp.status.errorCode === '0' && otpGenResp.status.errorCode === '00000'){
-    let mobileNo = 
+    let journeyDropOffResp = await invokeJourneyDropOff('CUSTOMER_IDENTITY_INITIATED', globals.form.loginMainPanel.loginPanel.mobilePanel.mobileNumberWrapper.registeredMobileNumber.$value, globals);
+    globals.functions.setProperty(globals.form.runtime.leadProifileId, { value: journeyDropOffResp?.lead_profile_info?.leadProfileId });
+    sendAnalytics('otp click', custIdentResp, 'CUSTOMER_IDENTITY_INITIATED');
     globals.functions.setProperty(globals.form.loginMainPanel, { visible: false });
     globals.functions.setProperty(globals.form.otpPanelWrapper, { visible: true });
     globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.otpTextPanel.maskedMobileNo, { value: maskMobileNo(globals.form.loginMainPanel.loginPanel.mobilePanel.mobileNumberWrapper.registeredMobileNumber.$value) })
     otpTimer(globals);
   } else if(custIdentResp.existingCustomer === 'N' && custIdentResp.status.errorCode === 'nonExistingCustomer') {
+    invokeJourneyDropOff('CUSTOMER_IDENTITY_INITIATED', globals.form.loginMainPanel.loginPanel.mobilePanel.mobileNumberWrapper.registeredMobileNumber.$value, globals);
+    sendAnalytics('otp click', custIdentResp, 'CUSTOMER_IDENTITY_INITIATED');
     if(window){
       const params = new URLSearchParams(window.location.search);
       // Convert the redirection URL into a URL object
@@ -544,6 +549,8 @@ function getOtpResponseHandling(custIdentResp, otpGenResp, globals) {
       window.location.href = redirectionUrl.toString();
     }
   } else {
+    invokeJourneyDropOff('CUSTOMER_IDENTITY_INITIATED', globals.form.loginMainPanel.loginPanel.mobilePanel.mobileNumberWrapper.registeredMobileNumber.$value, globals);
+    sendAnalytics('otp click', custIdentResp, 'CUSTOMER_IDENTITY_INITIATED');
     globals.functions.setProperty(globals.form.loginMainPanel, { visible: false });
     globals.functions.setProperty(globals.form.resultPanel, { visible: true });
     globals.functions.setProperty(globals.form.resultPanel.commonErrorPanel, { visible: true });
