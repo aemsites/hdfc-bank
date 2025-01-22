@@ -6,11 +6,11 @@
 
 .fd-ext-fund:has(.field-fddetailswrapper:not([data-visible="false"])) {
     header {
-      height: 100px !important;
+        height: 100px !important;
     }
-  
+
     main .section.form-container {
-      margin-top: 0 !important;
+        margin-top: 0 !important;
     }
 }
 
@@ -216,8 +216,8 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                             &:-webkit-autofill:hover,
                                             &:-webkit-autofill:focus,
                                             :-webkit-autofill:active {
-                                              -webkit-box-shadow: 0 0 0 30px white inset !important;
-                                            }                                            
+                                                -webkit-box-shadow: 0 0 0 30px white inset !important;
+                                            }
                                         }
 
                                         &[data-empty="false"],
@@ -284,6 +284,30 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                         }
                                     }
 
+                                    & .field-registermobilenumbererror[data-visible="true"] {
+                                        p {
+                                            margin: 0;
+
+                                            p {
+                                                color: var(--color-input-text-msg-error) !important;
+                                                font-weight: var(--font-weight-regular);
+                                                font-size: var(--body-sm-font-size) !important;
+                                                margin: -12px 0 0;
+                                            }
+                                        }
+                                    }
+
+                                    &:has(.field-registermobilenumbererror[data-visible="true"]) {
+                                        label {
+                                            color: var(--color-input-text-msg-error) !important;
+                                        }
+
+                                        .field-countrycode {
+                                            border-color: var(--color-input-border-error);
+                                            box-shadow: 0 0 0 2px var(--color-input-box-shadow-error-default);
+                                            outline: none;
+                                        }
+                                    }
                                 }
                             }
 
@@ -386,10 +410,6 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                             color: var(--color-interface-text-primary);
                                             margin-bottom: 0;
                                         }
-                                    }
-
-                                    .field-description {
-                                        margin-top: 0;
                                     }
                                 }
 
@@ -764,18 +784,63 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                         }
                                     }
 
-                                    .field-otphelptext {
-                                        margin-top: -35px;
-                                        font-size: var(--body-fd-md-font-size);
-                                        font-weight: var(--font-weight-bold);
-                                        color: var(--color-input-text-primary);
+                                    .field-otptextpanel {
                                         display: flex;
 
-                                        p {
-                                            color: var(--color-input-text-primary);
+                                        @media (min-width: 883px) {
+                                            flex-direction: row;
+                                        }
+                                        
+                                        .field-otphelptext,
+                                        .field-maskedmobileno {
+                                            margin-top: -35px;
                                             font-size: var(--body-fd-md-font-size);
                                             font-weight: var(--font-weight-regular);
-                                            margin-bottom: 0;
+                                            color: var(--color-input-text-primary);
+                                            display: flex;
+
+                                            p {
+                                                color: var(--color-input-text-primary);
+                                                font-size: var(--body-fd-md-font-size);
+                                                font-weight: var(--font-weight-regular);
+                                                margin-bottom: 0;
+                                            }
+
+                                            &.field-maskedmobileno {
+                                                margin-left: -20px;
+
+                                                @media (max-width: 883px) {
+                                                    margin-left: 0;
+                                                    margin-top: -20px;
+                                                }
+
+                                                @media (max-width: 752px) {
+                                                    margin-left: 60px;
+                                                    margin-top: -45px;
+                                                }
+
+                                                @media (max-width: 652px) {
+                                                    margin-left: 115px;
+                                                }
+
+                                                @media (max-width: 640px) {
+                                                    margin-left: 0;
+                                                    margin-top: -20px;
+                                                }
+
+                                                @media (max-width: 497px) {
+                                                    margin-left: 60px;
+                                                    margin-top: -45px;
+                                                }
+
+                                                @media (max-width: 429px) {
+                                                    margin-left: 115px;
+                                                }
+
+                                                @media (max-width: 374px) {
+                                                    margin-left: 195px;
+                                                }
+                                            }
                                         }
                                     }
 
@@ -827,8 +892,8 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
 
                                             &::placeholder {
                                                 font-size: var(--body-fd-xxx-lg-font-size);
-                                                letter-spacing: 35px;
                                                 color: var(--color-interface-border-primary);
+                                                letter-spacing: 35px;
                                             }
                                         }
 
@@ -850,6 +915,7 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
 
                                             input[type="password"] {
                                                 font-size: var(--body-fd-xxx-lg-font-size);
+                                                cursor: pointer;
 
                                                 &~.bi-eye {
                                                     margin-bottom: -4px;
@@ -936,7 +1002,7 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                         margin-top: -1px;
                                         grid-column: span 6;
 
-                                        .field-numretries,
+                                        .number-wrapper,
                                         .field-attempts {
                                             input,
                                             p {
@@ -948,7 +1014,7 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                             }
                                         }
 
-                                        .field-numretries {
+                                        .number-wrapper {
                                             position: relative;
                                             margin-right: -24px;
                                             margin-top: -1px;
@@ -956,6 +1022,8 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                             input {
                                                 margin: 4px 8px 0;
                                                 position: absolute;
+                                                letter-spacing: 0;
+                                                color: var(--color-interface-text-secondary) !important;
                                             }
                                         }
                                     }
@@ -1041,7 +1109,7 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                         color: var(--color-input-text-primary);
                                     }
 
-                                    &::before{
+                                    &::before {
                                         width: 177px;
                                         height: 145px;
                                         background: url('../icons/validation_failed.png') no-repeat center center;
@@ -1149,7 +1217,7 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
 
                             .field-description {
                                 font-weight: var(--font-weight-regular);
-                                margin-top: 0;
+                                margin-top: 5px;
                             }
                         }
 
@@ -1284,7 +1352,8 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
 
                         /* Wizard styling */
                         .field-fddetailswrapper {
-                            .field-wizardexternalfunding { padding: 0;
+                            .field-wizardexternalfunding {
+                                padding: 0;
 
                                 /* Wizard menu items styling */
                                 .wizard-menu-items {
@@ -1389,8 +1458,10 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                 .field-selectaccount.current-wizard-step {
                                     display: block;
                                     padding: 50px 40px;
-                        
-                                    .field-customername, .field-customername label, .field-customername b {
+
+                                    .field-customername,
+                                    .field-customername label,
+                                    .field-customername b {
                                         font-size: var(--body-fd-xx-xlg-font-size);
                                         font-weight: var(--font-weight-bold);
                                         color: var(--color-interface-text-primary);
@@ -1526,18 +1597,23 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                 .field-fdfootnotetxt{
                                     margin: -20px 0 0;
                                     font-size: var(--body-md-font-size);
-                                    p { font-size: var(--body-md-font-size); }
+
+                                    p {
+                                        font-size: var(--body-md-font-size);
+                                    }
                                 }
-                    
-                                .field-leftwrapper {
-                                    .field-investmentamtpanel, .field-tenurepanel, .field-interestpayout, .field-renewalinstructions {
+
+                                .field-leftwrapper {                                    .field-investmentamtpanel,
+                                    .field-tenurepanel,
+                                    .field-interestpayout,
+                                    .field-renewalinstructions {
                                         border: solid 1px var(--color-interface-border-primary);
                                         border-radius: 24px;
                                         width: 97%;
                                         padding: 24px 32px;
-                    
-                                        p { 
-                                            margin: 0; 
+
+                                        p {
+                                            margin: 0;
                                             color: var(--color-input-text-placeholder-disabled);
                                         }
 
@@ -1551,11 +1627,14 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                             }
                                         }
                                     }
-                    
-                                    .field-investmentamountlabel b, .field-tenurelabel b, .field-interestpayoutlabel b, .field-renewalinstructionslabel b {
+
+                                    .field-investmentamountlabel b,
+                                    .field-tenurelabel b,
+                                    .field-interestpayoutlabel b,
+                                    .field-renewalinstructionslabel b {
                                         color: var(--color-interface-text-primary);
                                     }
-                    
+
                                     .field-investmentamt { position: relative;
 
                                         input {
@@ -1568,8 +1647,8 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                             pointer-events: none;
                                         }
 
-                                        label { 
-                                            color: var(--color-input-text-placeholder-disabled); 
+                                        label {
+                                            color: var(--color-input-text-placeholder-disabled);
                                             margin-top: 13px;
                                         }
 
@@ -1577,7 +1656,7 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                             position: absolute;
                                             right: 3%;
                                             top: 30%;
-                    
+
                                             p {
                                                 color: var(--color-input-text-disabled);
                                                 font-size: var(--body-fd-xxx-lg-font-size);
@@ -1603,14 +1682,14 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                             border: 1px solid var(--color-interface-border-secondary);
                                             border-radius: 11px;
                                             padding: 5px;
-                        
+
                                             legend {
                                                 display: inline-block !important;
                                                 width: auto;
                                                 margin-left: 10px;
                                                 padding: 0 5px;
                                             }
-                        
+
                                             .drop-down-wrapper {
                                                 flex: 1;
                                                 position: relative;
@@ -1625,8 +1704,9 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                                     padding: 0 0 0 20px !important;
                                                     margin: 0;
                                                 }
-                        
-                                                &.field-year, &.field-months {
+
+                                                &.field-year,
+                                                &.field-months {
                                                     &::after {
                                                         content: '.';
                                                         font-size: var(--font-linehight-x-large);
@@ -1636,22 +1716,29 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                                     }
                                                 }
                                             }
-                                            
-                                            .field-ytxt, .field-mtxt, .field-dtxt {
+
+                                            .field-ytxt,
+                                            .field-mtxt,
+                                            .field-dtxt {
                                                 font-size: var(--body-md-font-size);
-                                                font-weight: var( --font-weight-medium);
+                                                font-weight: var(--font-weight-medium);
                                                 position: relative;
                                                 left: -22%;
                                                 top: -4px;
                                             }
                                         }
                                     }
-                    
+
                                     .field-interestpayout {
-                                        .field-interestpayoutopt { display: flex;
-                    
-                                            .radio-wrapper { padding-right: 32px; 
-                                                label { color: var(--color-interface-text-primary); }
+                                        .field-interestpayoutopt {
+                                            display: flex;
+
+                                            .radio-wrapper {
+                                                padding-right: 32px;
+
+                                                label {
+                                                    color: var(--color-interface-text-primary);
+                                                }
                                             }
                                         }
                                     }
@@ -1660,7 +1747,7 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                         .field-tenurepanel, .field-interestpayout, .field-renewalinstructions { margin-top: 20px; }
                                     }
                                 }
-                    
+
                                 .field-rightwrapper {
                                     display: block;
 
@@ -1671,19 +1758,23 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                         border-radius: 24px;
 
                                         p {
-                                            margin: -10px 0 0; 
+                                            margin: -10px 0 0;
                                             color: var(--color-interface-text-tertiary);
                                         }
-                    
-                                        .field-titlem p, .field-mdetails p, .field-mdetails {
+
+                                        .field-titlem p,
+                                        .field-mdetails p,
+                                        .field-mdetails {
                                             font-size: var(--body-fd-xx-lg-font-size);
                                             font-weight: var(--font-weight-bold);
                                             color: var(--color-interface-text-tertiary);
                                         }
-                    
-                                        .field-textm1 p { font-size: var(--body-fd-md-font-size); }
-                                        
-                                        .field-mfootnote p { 
+
+                                        .field-textm1 p {
+                                            font-size: var(--body-fd-md-font-size);
+                                        }
+
+                                        .field-mfootnote p {
                                             font-size: var(--body-fd-sm-font-size);
                                         }
                                     }
@@ -1722,7 +1813,7 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                     }
                                 }
                             }
-                    
+
                             /* Review */
                             .field-review.current-wizard-step { padding: 50px 40px;
 
@@ -1776,11 +1867,11 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                 
                                 fieldset.nre-style-accordian {
                                     padding: 15px 0;
-                                    border: 1px solid var(--color-interface-border-primary); 
-                                    border-bottom-left-radius: 24px;      
+                                    border: 1px solid var(--color-interface-border-primary);
+                                    border-bottom-left-radius: 24px;
                                     border-bottom-right-radius: 24px;
                                 }
-                    
+
                                 legend.nrenro-accordian {
                                     height: 70px;
                                     padding: 24px 32px 10px;
@@ -1794,7 +1885,7 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
 
                                     p { color: var(--color-interface-background-quaternary); }
                                 }
-                                    
+
                                 .nrenro-accordian::after {
                                     content: '\221F';
                                     color: #1c3fca;
@@ -1807,7 +1898,7 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                     transform: rotate(-225deg);
                                     top: 23px;
                                 }
-                                
+
                                 .accordion-collapse::after {
                                     transform: rotate(-45deg);
                                     top: 18px;
@@ -1968,8 +2059,11 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                 .field-confirmdetailsaccordion > fieldset > :not(legend) { padding: 0 20px; }
                             }
                         }
+                        
+                            
 
-                            .wizard-button-wrapper { display: none; }
+                        .wizard-button-wrapper {
+                            display: none;
                         }
                         
                             
@@ -1977,26 +2071,29 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                         /* End of wizard styling */
                     }
 
-                    /* form tag close */
+                    /* End of wizard styling */
                 }
 
-                /* .form calss close */
+                /* form tag close */
             }
+
+            /* .form calss close */
         }
     }
+}
 
-    /* main tag close */
+/* main tag close */
 
-    footer {
-        background: var(--color-interface-fd-background-primary);
-        text-align: center;
+footer {
+    background: var(--color-interface-fd-background-primary);
+    text-align: center;
 
-        & .cmp-container {
-            div:nth-child(1) {
-                text-align: center;
-            }
+    & .cmp-container {
+        div:nth-child(1) {
+            text-align: center;
         }
     }
+}
 }
 
 @media (350px <=width <=767px) {
@@ -2078,7 +2175,10 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
 
                     .field-tenurepanel .field-tenurewrapper {
                         display: grid;
-                        div { width: max-content; }
+
+                        div {
+                            width: max-content;
+                        }
 
                         .field-year, .field-months, .field-day { grid-column: span 1; 
                             &::after { margin-left: 90px; }
