@@ -41,6 +41,56 @@ const updateFundAct = async (casaAcctDetails, selectedRadioBtnIndex, multipleAcc
   }, 0);
 };
 
+const updateReviewPage = async (globals) => {
+  const { 
+    fundingAccount: { accountNumberReview }, 
+    fixedDeposit: { principalAmount },
+    fixedDeposit: { tenureReview },
+    fixedDeposit: { interestPayoutReview },
+    fixedDeposit: { maturityInstructionReview },
+    fixedDeposit: { roiReview },
+    fixedDeposit: { maturityAmountReview },
+    fixedDeposit: { maturityDateReview },
+  } = globals.form.fdDetailsWrapper.externalFundingWizardView.wizardExternalFunding.review.confirmDetailsAccordion;
+  
+  const fields = [
+    { key: accountNumberReview, 
+      value: currentFormContext.selectedFundAcct.accountNumber
+    },
+    { 
+      key: principalAmount, 
+      value: currentFormContext.simulationReqPayload.RequestPayload.SimulateTermDepositRequest.tdSimulationRequestDTO.termDepositFactsDTO.principalAmount.amount
+    },
+    {
+      key: tenureReview,
+      value: currentFormContext.tenureWhole
+    },
+    { 
+      key: interestPayoutReview, 
+      value: currentFormContext.simulationReqPayload.RequestPayload.SimulateTermDepositRequest.tdSimulationRequestDTO.termDepositFactsDTO.productGroup
+    },
+    { 
+      key: maturityInstructionReview, 
+      value: currentFormContext.simulationReqPayload.RequestPayload.SimulateTermDepositRequest.tdSimulationRequestDTO.termDepositFactsDTO.productGroup
+    },
+    { 
+      key: roiReview, 
+      value: currentFormContext.simulationResponse.tdSimulationResponse.interestRate + '% p.a.'
+    },    
+    { 
+      key: maturityAmountReview, 
+      value: currentFormContext.simulationResponse.tdSimulationResponse.maturityAmount.amount
+    },
+    { 
+      key: maturityDateReview, 
+      value: currentFormContext.simulationResponse.tdSimulationResponse.maturityDate.dateString
+    }
+  ];
+  
+  fields.forEach(({ key, value }) => formUtil(globals, key).setValue(value));
+  
+}
+
 const handleFetchCasaPrefill = async (otpValResponse, globals) => {
   const otpValCasaRes = otpValResponse;
   currentFormContext.fetchCasaResponse = otpValResponse;
@@ -53,6 +103,7 @@ const handleFetchCasaPrefill = async (otpValResponse, globals) => {
 
 export {
   updateFundAct,
+  updateReviewPage,
   getAcctPanelData,
   handleFetchCasaPrefill,
 };
