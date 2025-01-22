@@ -9,8 +9,9 @@ import {
   editCreds,
   updateOTPHelpText,
   fetchCardDetails,
-  fetchCardDetailsSuccessHandler,
   customerAccountDetails,
+  fetchCardDetailsSuccessHandler,
+  retailCardAllFeaturesAndBenefits,
 } from './fdbacked-function.js';
 
 import { createJourneyId } from '../../common/journey-utils.js';
@@ -52,6 +53,7 @@ export {
   loadHomePage,
   updateOTPHelpText,
   fetchCardDetails,
-  fetchCardDetailsSuccessHandler,
   customerAccountDetails,
+  fetchCardDetailsSuccessHandler,
+  retailCardAllFeaturesAndBenefits,
 };

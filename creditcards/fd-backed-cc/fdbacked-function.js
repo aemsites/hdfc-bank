@@ -259,20 +259,29 @@ function editCreds(globals) {
   globals.functions.setProperty(globals.form.loginMainPanel, { visible: true });
 }
 
-const fetchCardDetails = () =>
-// const resp = await fetch('./cardDetails.json');
+const fetchCardDetails = async () => {
 // const jsonObj = {
 //   retailsProductCode:['dtdy66', ''],
 //   bussinessProductCode:['dtdy66', '']
 // };
-
 // return fetchJsonResponse('./cardDetails.json', {}, 'POST', true);
-
-  fetch('../../../creditcards/fd-backed-cc/cardDetails.json')
+  const cardUrl = '../../../creditcards/fd-backed-cc/cardDetails.json';
+  return fetch(cardUrl)
     .then((response) => response.json());
+};
 
-const fetchCardDetailsSuccessHandler = async (response) => {
+const fetchCardDetailsSuccessHandler = async (response, globals) => {
   // console.log('reerereresss', response);
+  const { functions } = globals;
+  const { importData } = functions;
+
+  const value = [{ retailCardName: 'hello', retailCardTagline: 'tetinff' }, { retailCardName: 'hell1o1', retailCardTagline: 'ppppp' }, { retailCardName: 'hello2', retailCardTagline: 'mmmmmm' }];
+
+  importData(value, globals?.form?.landingPageMainWrapper?.perfectCardPanel?.retailCardsSectionMainWrapper?.retailCardsSection?.retailCardsSectionRepeatable?.$qualifiedName);
+};
+
+const retailCardAllFeaturesAndBenefits = (globals) => {
+  console.log('globaslssss', globals);
 };
 
 const customerAccountDetails = (casaRes, globals) => {
@@ -284,9 +293,36 @@ const customerAccountDetails = (casaRes, globals) => {
     balanceAmount: account.clearBalance,
   }));
 
-  // const value = [{ savingsAccNumber: 'XXXXXXXXXX4042', balanceAmount: 22474.99 }, { savingsAccNumber: 'XXXXXXXXXX4033', balanceAmount: 22400 }, { savingsAccNumber: 'XXXXXXXXXX2233', balanceAmount: 12344 }];
-
   importData(value, globals.form?.accountSelectionWrapper?.accountSelectionPanel?.repeatWrapper?.$qualifiedName);
+
+  setTimeout(() => {
+    const panels = document.querySelectorAll("[data-repeatable='true']");
+    let maxBalance = -Infinity;
+    let selectedRadio = null;
+
+    if (panels.length > 0) {
+      panels.forEach((panel) => {
+        const balanceInput = panel.querySelector("input[name='balanceAmount']");
+        const checkbox = panel.querySelector("input[type='checkbox']");
+
+        if (balanceInput && checkbox) {
+          checkbox.type = 'radio';
+          checkbox.name = 'accSelectionGroup';
+
+          const balance = parseFloat(balanceInput.getAttribute('edit-value') || balanceInput.value || '0');
+
+          if (balance > maxBalance) {
+            maxBalance = balance;
+            selectedRadio = checkbox;
+          }
+        }
+      });
+
+      if (selectedRadio) {
+        selectedRadio.checked = true;
+      }
+    }
+  }, 1000);
 };
 
 export {
@@ -301,6 +337,7 @@ export {
   editCreds,
   updateOTPHelpText,
   fetchCardDetails,
-  fetchCardDetailsSuccessHandler,
   customerAccountDetails,
+  fetchCardDetailsSuccessHandler,
+  retailCardAllFeaturesAndBenefits,
 };
