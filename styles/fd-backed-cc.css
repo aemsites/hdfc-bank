@@ -1667,8 +1667,8 @@ body.fd-backed-cc {
                                     margin-top: 0 !important;
                                 }
 
-                                @media (350px <= width <= 767px) {
-                                        padding: 0 !important;
+                                @media (350px <=width <=767px) {
+                                    padding: 0 !important;
                                 }
 
                                 .field-otppanel {
@@ -1700,33 +1700,40 @@ body.fd-backed-cc {
                                             color: var(--color-input-text-primary);
                                             font-size: var(--body-fd-md-font-size);
                                             font-weight: var(--font-weight-regular);
-                                            margin-bottom: 0;                                           
+                                            margin-bottom: 0;
                                         }
 
                                         &.field-maskedmobileno {
                                             margin-left: -20px;
+
                                             @media (max-width: 883px) {
                                                 margin-left: 0;
                                                 margin-top: -20px;
                                             }
+
                                             @media (max-width: 752px) {
                                                 margin-left: 60px;
                                                 margin-top: -45px;
                                             }
+
                                             @media (max-width: 652px) {
                                                 margin-left: 115px;
                                             }
+
                                             @media (max-width: 640px) {
                                                 margin-left: 0;
                                                 margin-top: -20px;
                                             }
+
                                             @media (max-width: 497px) {
                                                 margin-left: 60px;
                                                 margin-top: -45px;
                                             }
+
                                             @media (max-width: 429px) {
                                                 margin-left: 115px;
                                             }
+
                                             @media (max-width: 374px) {
                                                 margin-left: 195px;
                                             }
@@ -1737,7 +1744,7 @@ body.fd-backed-cc {
                                         max-width: none;
                                         margin-top: -25px;
 
-                                        @media (320px <= width <= 767px) {
+                                        @media (320px <=width <=767px) {
                                             margin-top: -25px !important;
                                         }
 
@@ -1761,9 +1768,10 @@ body.fd-backed-cc {
                                     }
 
                                     .field-otpnumber {
-                                        @media (350px <= width <= 767px) {
+                                        @media (350px <=width <=767px) {
                                             margin: 0 !important;
                                         }
+
                                         input {
                                             letter-spacing: 40px;
                                             margin-top: 0;
@@ -1825,7 +1833,7 @@ body.fd-backed-cc {
                                             margin-top: -5px;
                                         }
 
-                                        @media (max-width: 600px) {                                            
+                                        @media (max-width: 600px) {
                                             max-width: 100%;
                                         }
                                     }
@@ -1931,6 +1939,10 @@ body.fd-backed-cc {
                             display: inherit;
                             padding-top: 40px;
 
+                            @media (max-width: 600px) {
+                                padding: 40px 30px;
+                            }
+
                             @media (width >=1200px) {
                                 display: initial;
                             }
@@ -1956,8 +1968,13 @@ body.fd-backed-cc {
                                 width: 199px;
                                 height: 125px;
                                 margin: 30px auto;
-                                background: url('../icons/credit-card-sample.png') no-repeat;
+                                background: url('../icons/credit-card-sample.png') no-repeat center center;
 
+                                @media (320px <=width <=768px) {
+                                    background: url('../icons/credit-card-sample_ipad.png') no-repeat center center;
+                                    width: 299px;
+                                    height: 187px;
+                                }
 
                                 picture {
                                     display: none;
@@ -2071,6 +2088,12 @@ body.fd-backed-cc {
                                             display: inline-block;
                                             width: calc(50% - 10px);
 
+                                            @media (max-width: 670px) {
+                                                display: flex;
+                                                width: 100%;
+                                                flex-direction: column;
+                                            }
+
                                             &:first-child,
                                             &:nth-child(2n) {
                                                 margin-right: 20px;
@@ -2088,6 +2111,7 @@ body.fd-backed-cc {
                                                 border-radius: 0;
                                                 border: none;
                                                 line-height: normal;
+                                                background: none;
                                             }
 
                                             .field-savingsaccountnumwrapper {
@@ -2111,6 +2135,7 @@ body.fd-backed-cc {
                                                         font-weight: var(--font-weight-small);
                                                         color: var(--color-interface-text-primary);
                                                         padding: 0;
+                                                        background: none;
                                                     }
 
                                                     input {
@@ -2163,6 +2188,7 @@ body.fd-backed-cc {
                                                 display: flex;
                                                 align-items: center;
                                                 justify-content: space-between;
+                                                margin-top: 10px;
 
                                                 .field-balanceamountlabel {
                                                     margin-top: 3px;
@@ -2185,15 +2211,23 @@ body.fd-backed-cc {
                                                     }
                                                 }
                                             }
+
+                                            &:has(input[type="radio"]:checked) {
+                                                background-color: var(--color-interface-background-quinary);
+                                                border: 1px solid var(--color-action-border-primary-hover);
+                                            }
                                         }
                                     }
                                 }
                             }
 
                             .field-employmenttypewrapper {
-                                margin-top: 20px;
+                                margin-top: 30px;
 
                                 .field-employmenttypelabel {
+                                    @media (max-width: 768px) {
+                                        margin-bottom: 10px;
+                                    }
                                     p {
                                         font-size: var(--body-x-lg-font-size);
                                         font-weight: var(--font-weight-bold);
@@ -3384,7 +3418,7 @@ body.fd-backed-cc {
                                 padding: 40px 35px;
                             }
 
-                            @media (max-width: 768px) {
+                           @media (601px <=width <=768px) {
                                 padding: 40px 35px 40px 40px;
                             }
 
@@ -3491,6 +3525,15 @@ body.fd-backed-cc {
                             text-align: left;
                             max-width: 272px;
 
+                            @media (max-width: 480px) {
+                                max-width: none;
+
+                                button {
+                                    width: 100%;
+                                    max-width: none;
+                                }
+                            }
+
                             button {
                                 font-size: var(--body-fd-md-font-size);
                                 font-weight: var(--font-weight-medium);
@@ -3539,6 +3582,37 @@ body.fd-backed-cc {
                         .wizard-button-wrapper,
                         .repeat-wrapper button.item-add {
                             display: none;
+                        }
+
+                        .checkbox-wrapper {
+                            & input[type="radio"] {
+                                border-radius: 100%;
+                                border: 1px solid var(--color-interface-border-secondary);
+                                appearance: none;
+                                -webkit-appearance: none;
+                                outline: none;
+                                padding: 0;
+                                width: 24px !important;
+                                height: 24px !important;
+
+                                &:checked {
+                                    cursor: pointer;
+                                    position: relative;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    border: 1px solid var(--color-interface-icon-highlight);
+
+                                    &::before {
+                                        content: '';
+                                        border-radius: 100%;
+                                        width: 12px !important;
+                                        height: 12px !important;
+                                        background-color: var(--color-interface-icon-highlight);
+                                        position: absolute;
+                                    }
+                                }
+                            }
                         }
                     }
 
