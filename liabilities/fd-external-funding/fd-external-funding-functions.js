@@ -105,7 +105,7 @@ function selectFundAcct(acctField, globals) {
   currentFormContext.selectedFundAcct = accountsPanelData[selectedIndex]; // selectedFundAcct data {}
   currentFormContext.selectedFundAcctBal = selectedFundAcctBal; // selected account  {accountRadio, accountNumber, availableBalance, accountType}
   currentFormContext.initialLoadInvestBal = initialLoadInvestBal; // selected account 50% of avl balance .
-  investAmtFied.setValue(initialLoadInvestBal, changeDataAttrObj);
+  // investAmtFied.setValue(initialLoadInvestBal, changeDataAttrObj);
   setAcctInCreateFdTitle(currentFormContext?.selectedFundAcct?.accountNumber, createFD.fdFootNoteTxt, globals); // create fd -foot note, set the account value in that heading.
 }
 
