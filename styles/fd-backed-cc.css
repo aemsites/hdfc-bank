@@ -515,7 +515,7 @@ body.fd-backed-cc {
 
                                                     p p,
                                                     input {
-                                                        padding-left: 30px;
+                                                        padding-left: 10px;
                                                         font-size: var(--body-fd-sm-font-size);
                                                         font-weight: var(--font-weight-regular);
                                                         color: var(--color-interface-text-primary);
@@ -2473,6 +2473,20 @@ body.fd-backed-cc {
                                         display: inline-block;
                                         height: fit-content;
 
+                                        input {
+                                            margin: 0;
+                                            padding: 0;
+                                            letter-spacing: 0;
+                                            border: none;
+                                            height: auto;
+                                            line-height: normal;
+                                            color: #0A0F1C !important;
+                                        }
+                                        label {
+                                            display: none;
+                                        }
+
+
                                         .field-singlecardviewimage {
                                             width: 283px;
                                             height: 178px;
@@ -2489,7 +2503,7 @@ body.fd-backed-cc {
                                             margin-top: 20px;
                                             margin-bottom: 5px;
 
-                                            p {
+                                            p, input {
                                                 font-size: var(--body-fd-md-font-size);
                                                 font-weight: var(--font-weight-bold);
                                                 color: #0A0F1C;
@@ -2498,7 +2512,7 @@ body.fd-backed-cc {
 
                                         .field-singlecardfeature2,
                                         .field-singlecardfeature3 {
-                                            p {
+                                            p, input {
                                                 font-size: var(--body-fd-sm-font-size);
                                                 font-weight: var(--font-weight-regular);
                                                 color: #0A0F1C;
@@ -2667,6 +2681,19 @@ body.fd-backed-cc {
                                                 margin-bottom: 0;
                                             }
 
+                                            input {
+                                                margin: 0;
+                                                padding: 0;
+                                                letter-spacing: 0;
+                                                border: none;
+                                                height: auto;
+                                                line-height: normal;
+                                                color: var(--color-input-text-primary) !important;
+                                            }
+                                            label {
+                                                display: none;
+                                            }
+
                                             .field-multicardselection {
 
                                                 .field-multicardselection {
@@ -2714,7 +2741,7 @@ body.fd-backed-cc {
                                             }
 
                                             .field-multicardtagline1 {
-                                                p {
+                                                p, input {
                                                     font-size: var(--body-fd-md-font-size);
                                                     font-weight: var(--font-weight-regular);
                                                     color: var(--color-input-text-primary);
@@ -2736,7 +2763,8 @@ body.fd-backed-cc {
                                                 margin-top: 20px;
                                                 display: inline-block;
 
-                                                .plain-text-wrapper {
+                                                .plain-text-wrapper,
+                                                .text-wrapper.field-wrapper {
                                                     margin-bottom: 7px;
                                                     display: flex;
                                                     align-items: center;
@@ -2749,8 +2777,8 @@ body.fd-backed-cc {
                                                         background: url('../icons/folder_icon.png') no-repeat top left;
                                                     }
 
-                                                    p p {
-                                                        padding-left: 30px;
+                                                    p p, input {
+                                                        padding-left: 10px;
                                                         font-size: var(--body-fd-sm-font-size);
                                                         font-weight: var(--font-weight-regular);
                                                         color: var(--color-interface-text-primary);
@@ -2761,6 +2789,12 @@ body.fd-backed-cc {
                                                     &.field-multicardfeatures1 {
                                                         &::before {
                                                             background: url('../icons/bank_gray_icon.png') no-repeat top left;
+                                                        }
+                                                    }
+
+                                                    &.text-wrapper.field-wrapper {
+                                                        &::before {
+                                                            position: initial;
                                                         }
                                                     }
                                                 }
