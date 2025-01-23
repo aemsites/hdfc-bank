@@ -515,8 +515,9 @@ body.fd-backed-cc {
 
                                                     p p,
                                                     input {
-                                                        padding-left: 10px;
-                                                        font-size: var(--body-fd-sm-font-size);
+                                                        <<<<<<< HEAD padding-left: 10px;
+                                                        =======padding-left: 30px;
+                                                        >>>>>>>e91aae5eeb12ff498778e19f7118053630b1a3e2 font-size: var(--body-fd-sm-font-size);
                                                         font-weight: var(--font-weight-regular);
                                                         color: var(--color-interface-text-primary);
                                                         position: relative;
@@ -2228,6 +2229,7 @@ body.fd-backed-cc {
                                     @media (max-width: 768px) {
                                         margin-bottom: 10px;
                                     }
+
                                     p {
                                         font-size: var(--body-x-lg-font-size);
                                         font-weight: var(--font-weight-bold);
@@ -2464,6 +2466,21 @@ body.fd-backed-cc {
                                         margin-bottom: 0;
                                     }
 
+                                    input {
+                                        margin: 0;
+                                        padding: 0;
+                                        letter-spacing: 0;
+                                        border: none;
+                                        height: auto;
+                                        line-height: normal;
+                                        color: #0A0F1C !important;
+                                    }
+
+                                    label {
+                                        display: none;
+                                    }
+
+
                                     .field-selectccsingleimagewrapper {
                                         border: 1px solid var(--color-interface-border-secondary);
                                         border-radius: 16px;
@@ -2471,21 +2488,7 @@ body.fd-backed-cc {
                                         max-width: 324px;
                                         margin-right: 20px;
                                         display: inline-block;
-                                        height: fit-content;
-
-                                        input {
-                                            margin: 0;
-                                            padding: 0;
-                                            letter-spacing: 0;
-                                            border: none;
-                                            height: auto;
-                                            line-height: normal;
-                                            color: #0A0F1C !important;
-                                        }
-                                        label {
-                                            display: none;
-                                        }
-
+                                        height: fit-content;                                      
 
                                         .field-singlecardviewimage {
                                             width: 283px;
@@ -2499,29 +2502,34 @@ body.fd-backed-cc {
                                             }
                                         }
 
-                                        .field-singlecardfeature1 {
+                                        .field-singlecardfeatureswrapper {
+                                            display: inline;
                                             margin-top: 20px;
-                                            margin-bottom: 5px;
 
-                                            p, input {
-                                                font-size: var(--body-fd-md-font-size);
-                                                font-weight: var(--font-weight-bold);
-                                                color: #0A0F1C;
+                                            .field-singlecardfeature1 {
+                                                p,
+                                                input {
+                                                    font-size: var(--body-fd-md-font-size);
+                                                    font-weight: var(--font-weight-bold);
+                                                    color: #0A0F1C;
+                                                }
                                             }
-                                        }
 
-                                        .field-singlecardfeature2,
-                                        .field-singlecardfeature3 {
-                                            p, input {
-                                                font-size: var(--body-fd-sm-font-size);
-                                                font-weight: var(--font-weight-regular);
-                                                color: #0A0F1C;
+                                            .field-singlecardfeature2,
+                                            .field-singlecardfeature3 {
+                                                margin-top: -10px;
+                                                p,
+                                                input {
+                                                    font-size: var(--body-fd-sm-font-size);
+                                                    font-weight: var(--font-weight-regular);
+                                                    color: #0A0F1C;
+                                                }
                                             }
                                         }
 
                                         .field-viewothercardoptionssingle {
                                             border-top: 1px solid var(--color-interface-border-secondary);
-                                            margin-top: 30px;
+                                            margin-top: 20px;
                                             padding-top: 10px;
                                         }
                                     }
@@ -2554,7 +2562,8 @@ body.fd-backed-cc {
                                             justify-content: space-between;
                                             margin-bottom: 20px;
 
-                                            .plain-text-wrapper {
+                                            .plain-text-wrapper,
+                                            .text-wrapper {
                                                 border: 1px solid var(--color-interface-border-primary);
                                                 border-radius: 16px;
                                                 padding: 20px;
@@ -2572,11 +2581,16 @@ body.fd-backed-cc {
                                                     border-radius: 100px;
                                                 }
 
-                                                p {
+                                                p, input {
                                                     font-size: var(--body-fd-md-font-size);
                                                     font-weight: var(--font-weight-regular);
                                                     color: #0A0F1C;
-                                                    padding-left: 30px;
+                                                    padding-left: 50px;
+                                                }
+
+                                                input{
+                                                    background: none;
+                                                    color: #0A0F1C !important
                                                 }
 
                                                 &.field-singleccfeature1 {
@@ -2689,10 +2703,7 @@ body.fd-backed-cc {
                                                 height: auto;
                                                 line-height: normal;
                                                 color: var(--color-input-text-primary) !important;
-                                            }
-                                            label {
-                                                display: none;
-                                            }
+                                            }                                           
 
                                             .field-multicardselection {
 
@@ -2741,7 +2752,9 @@ body.fd-backed-cc {
                                             }
 
                                             .field-multicardtagline1 {
-                                                p, input {
+
+                                                p,
+                                                input {
                                                     font-size: var(--body-fd-md-font-size);
                                                     font-weight: var(--font-weight-regular);
                                                     color: var(--color-input-text-primary);
@@ -2777,7 +2790,8 @@ body.fd-backed-cc {
                                                         background: url('../icons/folder_icon.png') no-repeat top left;
                                                     }
 
-                                                    p p, input {
+                                                    p p,
+                                                    input {
                                                         padding-left: 10px;
                                                         font-size: var(--body-fd-sm-font-size);
                                                         font-weight: var(--font-weight-regular);
@@ -3452,7 +3466,7 @@ body.fd-backed-cc {
                                 padding: 40px 35px;
                             }
 
-                           @media (601px <=width <=768px) {
+                            @media (601px <=width <=768px) {
                                 padding: 40px 35px 40px 40px;
                             }
 
