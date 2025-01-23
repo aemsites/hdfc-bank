@@ -167,15 +167,16 @@ const getOTP = (mobileNumber, pan, dob, globals) => {
   CURRENT_FORM_CONTEXT.action = 'getOTP';
   CURRENT_FORM_CONTEXT.journeyID = globals.form.runtime.journeyId.$value;
   CURRENT_FORM_CONTEXT.leadIdParam = globals.functions.exportData().queryParams;
+  const isdCode = globals.form.loginMainPanel.loginPanel.mobilePanel.mobileNumberWrapper.countryCode.$value ?? '91';
   const panValue = (pan.$value)?.replace(/\s+/g, '');
   
-  
+
   const jsonObj = {
     requestString: {
       common: {
         journeyID: globals.form.runtime.journeyId.$value ?? jidTemporary,
         journeyName: globals.form.runtime.journeyName.$value || CURRENT_FORM_CONTEXT.journeyName,
-        mobileNumber: CURRENT_FORM_CONTEXT.isdCode + mobileNumber.$value,
+        mobileNumber: isdCode + mobileNumber.$value,
         userAgent: (typeof window !== 'undefined') ? window.navigator.userAgent : 'onLoad',
         identifierValue: panValue || dob.$value,
         identifierName: panValue ? 'PAN' : 'DOB',
@@ -185,15 +186,15 @@ const getOTP = (mobileNumber, pan, dob, globals) => {
         payload: {
           dateOfBirth: clearString(dob.$value) || '',
           panNumber: panValue?.toUpperCase() || '',
-          mobileNumber: CURRENT_FORM_CONTEXT.isdCode + mobileNumber.$value,
+          mobileNumber: isdCode + mobileNumber.$value,
         }
       },
       otpGen: {
-        version: "V2",
+        version: "V4",
         payload: {
           dateOfBirth: clearString(dob.$value) || '',
           panNumber: panValue?.toUpperCase() || '',
-          mobileNumber: CURRENT_FORM_CONTEXT.isdCode + mobileNumber.$value,
+          mobileNumber: isdCode + mobileNumber.$value,
         }
       }
     }
