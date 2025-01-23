@@ -95,12 +95,12 @@ body.fd-backed-cc {
 
 
                             @media (768px <=width <=1200px) {
-                                background: var(--color-interface-fd-background-secondary) url('../icons/banner_tablet.webp') no-repeat center center / 100% 100%;
+                                background: var(--color-interface-fd-background-secondary) url('../icons/banner_tablet.png') no-repeat center center / 100% 100%;
                                 min-height: 225px;
                             }
 
                             @media (320px <=width <=767px) {
-                                background: var(--color-interface-fd-background-secondary) url('../icons/banner_mobile.webp') no-repeat center center / 100% 100%;
+                                background: var(--color-interface-fd-background-secondary) url('../icons/banner_mobile.png') no-repeat center center / 100% 100%;
                                 min-height: 225px;
                             }
                         }
@@ -121,10 +121,14 @@ body.fd-backed-cc {
                             .field-headertext {
                                 position: absolute;
                                 top: -50px;
-                                left: 250px;
+                                left: 240px;
                                 color: var(--color-interface-text-tertiary);
                                 border-left: 1px solid var(--color-interface-fd-title-border);
                                 padding-left: 20px;
+
+                                @media (769px <=width <=1024px) {
+                                    left: 210px;
+                                }
 
                                 @media (max-width: 768px) {
                                     display: none;
@@ -282,7 +286,7 @@ body.fd-backed-cc {
 
                                         @media (768px <=width <=991px) {
                                             width: 100%;
-                                           
+
                                             background: url('../icons/landing_banner_right_ipad.png') no-repeat right top;
                                             background-size: 100%;
                                         }
@@ -293,13 +297,14 @@ body.fd-backed-cc {
                                             width: 100%;
                                             margin-top: 50px;
                                             background-position: bottom center;
-                                            max-width:none;
+                                            max-width: none;
                                         }
 
                                         @media (max-width: 600px) {
                                             background-size: 56%;
                                             margin-top: 70px;
                                         }
+
                                         @media (max-width: 480px) {
                                             background-size: 70%;
                                             margin-top: 70px;
@@ -409,7 +414,7 @@ body.fd-backed-cc {
 
                                     .field-retailcardssection,
                                     .field-businesscardssection {
-                                      
+
                                         display: flex;
                                         flex-wrap: nowrap;
 
@@ -429,6 +434,7 @@ body.fd-backed-cc {
                                             p {
                                                 margin-bottom: 0;
                                             }
+
                                             input {
                                                 margin: 0;
                                                 padding: 0;
@@ -438,9 +444,9 @@ body.fd-backed-cc {
                                                 line-height: normal;
                                             }
 
-                                            .repeat-wrapper{
-                                               & > .panel-wrapper.field-wrapper {
-                                                display: inline;
+                                            .repeat-wrapper {
+                                                &>.panel-wrapper.field-wrapper {
+                                                    display: inline;
                                                 }
                                             }
 
@@ -452,17 +458,19 @@ body.fd-backed-cc {
                                                     font-size: var(--body-x-lg-font-size);
                                                     font-weight: var(--font-weight-bold);
                                                     color: var(--color-interface-text-primary);
-                                                }                                               
+                                                }
                                             }
 
                                             .field-cardtagline1,
                                             .field-cardtagline2 {
                                                 position: relative;
+
                                                 @media (min-width: 768px) {
-                                                margin-top: -5px;
+                                                    margin-top: -5px;
                                                 }
 
-                                                p, input {
+                                                p,
+                                                input {
                                                     font-size: var(--body-fd-md-font-size);
                                                     font-weight: var(--font-weight-regular);
                                                     color: var(--color-input-text-primary);
@@ -487,7 +495,7 @@ body.fd-backed-cc {
                                                 display: inline-block;
 
                                                 .plain-text-wrapper,
-                                                .text-wrapper.field-wrapper  {
+                                                .text-wrapper.field-wrapper {
                                                     margin-bottom: 7px;
                                                     display: flex;
                                                     align-items: center;
@@ -501,11 +509,12 @@ body.fd-backed-cc {
                                                         background: url('../icons/folder_icon.png') no-repeat top left;
                                                     }
 
-                                                    label{
+                                                    label {
                                                         display: none;
                                                     }
 
-                                                    p p, input {
+                                                    p p,
+                                                    input {
                                                         padding-left: 30px;
                                                         font-size: var(--body-fd-sm-font-size);
                                                         font-weight: var(--font-weight-regular);
@@ -514,12 +523,12 @@ body.fd-backed-cc {
                                                         margin-bottom: 0;
                                                     }
 
-                                                    input{
-                                                        color: var(--color-interface-text-primary) !important;    
+                                                    input {
+                                                        color: var(--color-interface-text-primary) !important;
                                                     }
 
-                                                    &.text-wrapper.field-wrapper  {
-                                                        &::before{
+                                                    &.text-wrapper.field-wrapper {
+                                                        &::before {
                                                             position: initial;
                                                         }
                                                     }
@@ -710,9 +719,16 @@ body.fd-backed-cc {
 
                                             .field-leftarrow1,
                                             .field-leftarrow2 {
+                                                display: none;
+
                                                 button {
                                                     rotate: 180deg;
                                                 }
+                                            }
+
+                                            .field-rightarrow1,
+                                            .field-rightarrow2 {
+                                                margin-left: auto;
                                             }
                                         }
 
@@ -803,7 +819,7 @@ body.fd-backed-cc {
 
                                     .field-knowyourcclimittextwrapper {
                                         display: inline;
-                                        grid-column: span 5;                                   
+                                        grid-column: span 5;
 
                                         @media (768px <=width <=1200px) {
                                             grid-column: span 12;
@@ -833,7 +849,7 @@ body.fd-backed-cc {
                                         grid-column: span 7;
                                         display: grid;
 
-                                      
+
 
                                         @media (768px <=width <=1200px) {
                                             grid-column: span 12;
@@ -881,9 +897,11 @@ body.fd-backed-cc {
                                                 background: url(../icons/triple_right_arrow.png) no-repeat 90% center;
                                                 width: 100%;
                                                 position: relative;
+
                                                 @media (768px <=width <=1200px) {
                                                     background-position-x: 100%;
                                                 }
+
                                                 @media (max-width: 767px) {
                                                     width: 100%;
                                                     background: url('../icons/mob_vertical_three_arrow.png') no-repeat bottom center;
@@ -917,7 +935,7 @@ body.fd-backed-cc {
                                                         padding: 0;
                                                         margin-bottom: 5px;
 
-                                                      
+
                                                         @media (max-width: 768px) {
                                                             font-size: var(--body-fd-sm-font-size);
                                                         }
@@ -936,18 +954,21 @@ body.fd-backed-cc {
                                                 }
                                             }
 
-                                            &.field-enterfdamtwrap{
-                                                grid-column: span 8;      
+                                            &.field-enterfdamtwrap {
+                                                grid-column: span 8;
+
                                                 @media (max-width: 767px) {
                                                     grid-column: span 12;
-                                                }                                         
+                                                }
                                             }
+
                                             &.field-yourcclimitwrap {
                                                 grid-column: span 4;
+
                                                 @media (max-width: 767px) {
                                                     grid-column: span 12;
-                                                }   
-                                             
+                                                }
+
                                                 .field-yourcclimit {
                                                     display: flex;
                                                     justify-content: center;
@@ -1141,6 +1162,10 @@ body.fd-backed-cc {
                                     font-weight: var(--font-weight-bold);
                                     margin-bottom: 2.5rem;
                                     color: var(--color-interface-text-quaternary);
+
+                                    @media (768px <=width <=991px) {
+                                        margin-bottom: 1.5rem;
+                                    }
                                 }
                             }
 
@@ -1179,9 +1204,14 @@ body.fd-backed-cc {
                                         border-radius: 12px;
                                         height: 60px;
                                         width: 100%;
+                                        max-width: 368px;
 
-                                        @media (max-width: 768px) {
-                                            max-width: 368px;
+                                        @media (768px <=width <=1200px) {
+                                            max-width: none;
+                                        }
+
+                                        @media (max-width: 600px) {
+                                            max-width: 100%;
                                         }
 
                                         &::before {
@@ -1313,6 +1343,11 @@ body.fd-backed-cc {
                                     font-weight: var(--font-weight-medium);
                                     margin-right: 24px;
                                     color: var(--color-interface-text-quaternary) !important;
+
+                                    @media (320px <=width <=480px) {
+                                        float: inline-end;
+                                        margin-bottom: 0;
+                                    }
                                 }
 
                                 .field-pandobselection {
@@ -1320,6 +1355,10 @@ body.fd-backed-cc {
                                     gap: 4px;
                                     display: flex;
                                     align-items: center;
+
+                                    @media (320px <=width <=480px) {
+                                        margin-bottom: 0 !important;
+                                    }
 
                                     label.field-label {
                                         font-size: var(--body-sm-font-size) !important;
@@ -1368,6 +1407,15 @@ body.fd-backed-cc {
                                     input[type="text"] {
                                         margin-top: 0;
                                         padding-left: 22px;
+
+                                        @media (768px <=width <=1200px) {
+                                            max-width: none;
+                                        }
+
+                                        @media (max-width: 600px) {
+                                            max-width: 100%;
+                                        }
+
                                     }
 
                                     &[data-active="true"],
@@ -1450,9 +1498,8 @@ body.fd-backed-cc {
                                     &::before {
                                         content: '';
                                         position: absolute;
-                                        top: 12px;
                                         left: 15px;
-                                        background: url('../icons/info-icon.svg') no-repeat;
+                                        background: url('../icons/info-icon.svg') no-repeat center center;
                                         width: 16px;
                                         height: 16px;
                                         background-size: 100%;
@@ -1474,13 +1521,17 @@ body.fd-backed-cc {
 
                                 p p {
                                     font-size: var(--body-fd-sm-font-size);
-                                    color: var(--color-interface-text-secondary);
+                                    color: var(--color-interface-text-quaternary);
                                     font-weight: var(--font-weight-regular);
                                 }
 
                                 a {
-                                    text-decoration: underline;
-                                    font-weight: var(--font-weight-regular) !important;
+                                    color: var(--color-action-text-secondary-default);
+                                    font-weight: var(--font-weight-medium) !important;
+
+                                    &:hover {
+                                        text-decoration: underline;
+                                    }
                                 }
                             }
 
@@ -1489,12 +1540,11 @@ body.fd-backed-cc {
                             }
 
                             .field-stepstofollow {
-                                /*  display: grid;
-                                grid-template-columns: repeat(4, 1fr); */
                                 background: var(--color-interface-background-quinary);
                                 padding: 30px;
                                 border-radius: 20px;
                                 margin-top: 30px;
+                                display: grid;
 
                                 @media (320px <=width <=767px) {
                                     margin-top: 32px;
@@ -1504,20 +1554,20 @@ body.fd-backed-cc {
                                     border-radius: 20px;
                                 }
 
-                                @media (320px <=width <=991px) {
-                                    display: block;
-                                }
-
                                 @media (320px <=width <=767px) {
                                     margin-bottom: 30px;
                                 }
 
                                 & .field-step-follow-heading {
                                     p {
-                                        font-weight: 600;
+                                        font-weight: var(--font-weight-bold);
                                         font-size: var(--body-fd-xx-lg-font-size);
                                         color: var(--color-interface-text-primary);
                                         margin-bottom: 0px;
+
+                                        @media (min-width: 600px) {
+                                            font-size: var(--body-fd-lg-font-size);
+                                        }
 
                                         @media (320px <=width <=767px) {
                                             margin-top: 20px;
@@ -1531,12 +1581,6 @@ body.fd-backed-cc {
                                     align-items: center;
                                     flex-direction: column;
                                     gap: initial !important;
-                                    /* grid-column: initial; */
-
-                                    @media (320px <=width <=991px) {
-                                        flex-direction: row;
-                                        margin-bottom: 20px;
-                                    }
 
                                     &:last-child {
                                         @media (768px <=width <=991px) {
@@ -1555,10 +1599,6 @@ body.fd-backed-cc {
 
                                         picture {
                                             display: none;
-                                        }
-
-                                        @media (320px <=width <=991px) {
-                                            margin-right: 15px;
                                         }
 
                                         &::after {
@@ -1597,16 +1637,12 @@ body.fd-backed-cc {
                                         text-align: center;
                                         margin-top: 10px;
 
-                                        @media (320px <=width <=991px) {
-                                            margin-top: 0;
-                                            text-align: left;
-                                        }
-
                                         p {
                                             font-size: var(--body-fd-sm-font-size);
                                             font-weight: var(--font-weight-regular);
                                             color: var(--color-input-text-primary);
                                             margin-bottom: 0;
+                                            line-height: 20px;
 
                                         }
 
@@ -1631,9 +1667,12 @@ body.fd-backed-cc {
                                     margin-top: 0 !important;
                                 }
 
+                                @media (350px <=width <=767px) {
+                                    padding: 0 !important;
+                                }
+
                                 .field-otppanel {
                                     text-align: left;
-                                    margin-bottom: 10px;
 
                                     @media (350px <=width <=767px) {
                                         padding: 0 !important;
@@ -1649,7 +1688,8 @@ body.fd-backed-cc {
                                         }
                                     }
 
-                                    .field-otphelptext {
+                                    .field-otphelptext,
+                                    .field-maskedmobileno {
                                         margin-top: -35px;
                                         font-size: var(--body-fd-md-font-size);
                                         font-weight: var(--font-weight-bold);
@@ -1662,11 +1702,51 @@ body.fd-backed-cc {
                                             font-weight: var(--font-weight-regular);
                                             margin-bottom: 0;
                                         }
+
+                                        &.field-maskedmobileno {
+                                            margin-left: -20px;
+
+                                            @media (max-width: 883px) {
+                                                margin-left: 0;
+                                                margin-top: -20px;
+                                            }
+
+                                            @media (max-width: 752px) {
+                                                margin-left: 60px;
+                                                margin-top: -45px;
+                                            }
+
+                                            @media (max-width: 652px) {
+                                                margin-left: 115px;
+                                            }
+
+                                            @media (max-width: 640px) {
+                                                margin-left: 0;
+                                                margin-top: -20px;
+                                            }
+
+                                            @media (max-width: 497px) {
+                                                margin-left: 60px;
+                                                margin-top: -45px;
+                                            }
+
+                                            @media (max-width: 429px) {
+                                                margin-left: 115px;
+                                            }
+
+                                            @media (max-width: 374px) {
+                                                margin-left: 195px;
+                                            }
+                                        }
                                     }
 
                                     .field-editmobilenumbtn {
                                         max-width: none;
                                         margin-top: -25px;
+
+                                        @media (320px <=width <=767px) {
+                                            margin-top: -25px !important;
+                                        }
 
                                         button {
                                             color: var(--color-action-text-secondary-default);
@@ -1688,8 +1768,9 @@ body.fd-backed-cc {
                                     }
 
                                     .field-otpnumber {
-                                        /* margin: -28px 0 -18px; */
-                                        margin-top: 10px;
+                                        @media (350px <=width <=767px) {
+                                            margin: 0 !important;
+                                        }
 
                                         input {
                                             letter-spacing: 40px;
@@ -1697,7 +1778,7 @@ body.fd-backed-cc {
                                             max-width: 445px;
                                             font-size: var(--body-fd-xxx-lg-font-size);
 
-                                            @media (320px <=width < 767px) {
+                                            @media (320px <=width < 600px) {
                                                 width: 100%;
                                                 max-width: initial;
                                             }
@@ -1744,9 +1825,16 @@ body.fd-backed-cc {
                                         max-width: 445px;
                                         display: grid;
 
-                                        @media (max-width: 768px) {
-                                            max-width: 100%;
+                                        @media (768px <=width <=1200px) {
+                                            margin-top: 10px;
+                                        }
+
+                                        @media (320px <=width <=767px) {
                                             margin-top: -5px;
+                                        }
+
+                                        @media (max-width: 600px) {
+                                            max-width: 100%;
                                         }
                                     }
 
@@ -1763,7 +1851,7 @@ body.fd-backed-cc {
                                         display: flex;
                                         grid-column: span 6;
 
-                                        @media (350px <=width <=992px) {
+                                        @media (350px <=width <=1200px) {
                                             flex-direction: row;
                                         }
 
@@ -1851,6 +1939,10 @@ body.fd-backed-cc {
                             display: inherit;
                             padding-top: 40px;
 
+                            @media (max-width: 600px) {
+                                padding: 40px 30px;
+                            }
+
                             @media (width >=1200px) {
                                 display: initial;
                             }
@@ -1876,8 +1968,13 @@ body.fd-backed-cc {
                                 width: 199px;
                                 height: 125px;
                                 margin: 30px auto;
-                                background: url('../icons/credit-card-sample.png') no-repeat;
+                                background: url('../icons/credit-card-sample.png') no-repeat center center;
 
+                                @media (320px <=width <=768px) {
+                                    background: url('../icons/credit-card-sample_ipad.png') no-repeat center center;
+                                    width: 299px;
+                                    height: 187px;
+                                }
 
                                 picture {
                                     display: none;
@@ -1991,6 +2088,12 @@ body.fd-backed-cc {
                                             display: inline-block;
                                             width: calc(50% - 10px);
 
+                                            @media (max-width: 670px) {
+                                                display: flex;
+                                                width: 100%;
+                                                flex-direction: column;
+                                            }
+
                                             &:first-child,
                                             &:nth-child(2n) {
                                                 margin-right: 20px;
@@ -2008,6 +2111,7 @@ body.fd-backed-cc {
                                                 border-radius: 0;
                                                 border: none;
                                                 line-height: normal;
+                                                background: none;
                                             }
 
                                             .field-savingsaccountnumwrapper {
@@ -2031,6 +2135,7 @@ body.fd-backed-cc {
                                                         font-weight: var(--font-weight-small);
                                                         color: var(--color-interface-text-primary);
                                                         padding: 0;
+                                                        background: none;
                                                     }
 
                                                     input {
@@ -2083,6 +2188,7 @@ body.fd-backed-cc {
                                                 display: flex;
                                                 align-items: center;
                                                 justify-content: space-between;
+                                                margin-top: 10px;
 
                                                 .field-balanceamountlabel {
                                                     margin-top: 3px;
@@ -2105,15 +2211,23 @@ body.fd-backed-cc {
                                                     }
                                                 }
                                             }
+
+                                            &:has(input[type="radio"]:checked) {
+                                                background-color: var(--color-interface-background-quinary);
+                                                border: 1px solid var(--color-action-border-primary-hover);
+                                            }
                                         }
                                     }
                                 }
                             }
 
                             .field-employmenttypewrapper {
-                                margin-top: 20px;
+                                margin-top: 30px;
 
                                 .field-employmenttypelabel {
+                                    @media (max-width: 768px) {
+                                        margin-bottom: 10px;
+                                    }
                                     p {
                                         font-size: var(--body-x-lg-font-size);
                                         font-weight: var(--font-weight-bold);
@@ -2194,22 +2308,19 @@ body.fd-backed-cc {
                                 }
 
                                 .wizard-menu-item {
-                                    font-size: 14px;
-                                    font-weight: 400;
+                                    font-size: var(--body-sm-font-size);
+                                    font-weight: var(--font-weight-regular);
                                     line-height: 20px;
                                     color: var(--color-interface-text-primary);
                                     position: relative;
 
                                     @media (min-width: 768px) {
-                                        font-size: 16px;
-                                        font-weight: 400;
+                                        font-size: var(--body-md-font-size);
                                         line-height: 28px;
                                     }
 
                                     @media (min-width: 992px) {
-                                        font-size: 18px;
-                                        font-weight: 400;
-                                        line-height: 28px;
+                                        font-size: var(--body-lg-font-size);
                                     }
 
 
@@ -2234,7 +2345,7 @@ body.fd-backed-cc {
 
                                         &.wizard-menu-active-item {
                                             color: var(--color-interface-icon-highlight);
-                                            font-weight: 600;
+                                            font-weight: var(--font-weight-bold);
 
                                             &::before {
                                                 background: var(--color-input-border-focus) url('../icons/wizard_select_credit_card_active_icon.png') no-repeat center center;
@@ -2991,7 +3102,6 @@ body.fd-backed-cc {
                                             font-size: var(--body-fd-md-font-size);
                                             font-weight: var(--font-weight-medium);
                                             color: var(--color-interface-text-quaternary);
-                                            font-weight: var(--font-weight-medium);
                                         }
                                     }
 
@@ -3038,9 +3148,9 @@ body.fd-backed-cc {
                                         label p {
                                             margin-bottom: 0;
                                             margin-top: 0;
-                                            font-size: 14px;
+                                            font-size: var(--body-fd-sm-font-size);
                                             line-height: 20px;
-                                            font-weight: 400;
+                                            font-weight: var(--font-weight-regular);
                                             color: var(--color-interface-text-secondary);
 
                                             @media (320px <=width <=767px) {
@@ -3308,8 +3418,12 @@ body.fd-backed-cc {
                                 padding: 40px 35px;
                             }
 
-                            @media (max-width: 768px) {
+                           @media (601px <=width <=768px) {
                                 padding: 40px 35px 40px 40px;
+                            }
+
+                            @media (max-width: 600px) {
+                                padding: 30px;
                             }
 
                             &.field-fdbackedccwizard {
@@ -3342,7 +3456,6 @@ body.fd-backed-cc {
                                 font-size: var(--body-lg-font-size);
                                 font-weight: var(--font-weight-regular);
                                 color: var(--color-input-text-placeholder-default);
-                                font-weight: var(--font-weight-regular);
                                 letter-spacing: 0;
                             }
 
@@ -3412,6 +3525,15 @@ body.fd-backed-cc {
                             text-align: left;
                             max-width: 272px;
 
+                            @media (max-width: 480px) {
+                                max-width: none;
+
+                                button {
+                                    width: 100%;
+                                    max-width: none;
+                                }
+                            }
+
                             button {
                                 font-size: var(--body-fd-md-font-size);
                                 font-weight: var(--font-weight-medium);
@@ -3460,6 +3582,37 @@ body.fd-backed-cc {
                         .wizard-button-wrapper,
                         .repeat-wrapper button.item-add {
                             display: none;
+                        }
+
+                        .checkbox-wrapper {
+                            & input[type="radio"] {
+                                border-radius: 100%;
+                                border: 1px solid var(--color-interface-border-secondary);
+                                appearance: none;
+                                -webkit-appearance: none;
+                                outline: none;
+                                padding: 0;
+                                width: 24px !important;
+                                height: 24px !important;
+
+                                &:checked {
+                                    cursor: pointer;
+                                    position: relative;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    border: 1px solid var(--color-interface-icon-highlight);
+
+                                    &::before {
+                                        content: '';
+                                        border-radius: 100%;
+                                        width: 12px !important;
+                                        height: 12px !important;
+                                        background-color: var(--color-interface-icon-highlight);
+                                        position: absolute;
+                                    }
+                                }
+                            }
                         }
                     }
 
