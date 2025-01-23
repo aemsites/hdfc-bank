@@ -292,7 +292,7 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                                 color: var(--color-input-text-msg-error) !important;
                                                 font-weight: var(--font-weight-regular);
                                                 font-size: var(--body-sm-font-size) !important;
-                                                margin: -12px 0 0 0;
+                                                margin: -12px 0 0;
                                             }
                                         }
                                     }
@@ -347,6 +347,8 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                         align-items: center;
                                         justify-content: center;
                                         position: relative;
+                                        width: 26px !important;
+                                        height: 26px !important;
 
                                         &:focus-visible {
                                             outline: none;
@@ -354,8 +356,8 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
 
                                         &::before {
                                             content: '';
-                                            width: 12px;
-                                            height: 12px;
+                                            width: 14px;
+                                            height: 14px;
                                             border-radius: 100%;
                                             position: absolute;
                                         }
@@ -390,7 +392,7 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                         margin-top: 0;
                                         padding-left: 22px;
 
-                                        x &::-webkit-calendar-picker-indicator {
+                                        &::-webkit-calendar-picker-indicator {
                                             background: none;
                                         }
 
@@ -409,9 +411,6 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                             margin-bottom: 0;
                                         }
                                     }
-                                    /*  .field-description {
-                                        margin-top: -12px;
-                                    } */
                                 }
 
                                 .field-pan {
@@ -809,28 +808,35 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
 
                                             &.field-maskedmobileno {
                                                 margin-left: -20px;
+
                                                 @media (max-width: 883px) {
                                                     margin-left: 0;
                                                     margin-top: -20px;
                                                 }
+
                                                 @media (max-width: 752px) {
                                                     margin-left: 60px;
                                                     margin-top: -45px;
                                                 }
+
                                                 @media (max-width: 652px) {
                                                     margin-left: 115px;
                                                 }
+
                                                 @media (max-width: 640px) {
                                                     margin-left: 0;
                                                     margin-top: -20px;
                                                 }
+
                                                 @media (max-width: 497px) {
                                                     margin-left: 60px;
                                                     margin-top: -45px;
                                                 }
+
                                                 @media (max-width: 429px) {
                                                     margin-left: 115px;
                                                 }
+
                                                 @media (max-width: 374px) {
                                                     margin-left: 195px;
                                                 }
@@ -881,7 +887,6 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
 
                                             &[type="password"] {
                                                 font-size: var(--body-fd-xxx-lg-font-size);
-                                                color: var(--color-interface-border-primary) !important;
                                                 letter-spacing: 35px;
                                             }
 
@@ -889,7 +894,6 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                                 font-size: var(--body-fd-xxx-lg-font-size);
                                                 color: var(--color-interface-border-primary);
                                                 letter-spacing: 35px;
-                                                color: var(--color-interface-border-primary);
                                             }
                                         }
 
@@ -911,6 +915,7 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
 
                                             input[type="password"] {
                                                 font-size: var(--body-fd-xxx-lg-font-size);
+                                                cursor: pointer;
 
                                                 &~.bi-eye {
                                                     margin-bottom: -4px;
@@ -1015,7 +1020,7 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                             margin-top: -1px;
 
                                             input {
-                                                margin-top: 4px;
+                                                margin: 4px 8px 0;
                                                 position: absolute;
                                                 letter-spacing: 0;
                                                 color: var(--color-interface-text-secondary) !important;
@@ -1023,9 +1028,11 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                         }
                                     }
                                 }
-                                .field-incorrectotptext {
-                                    p {
-                                        &::before {
+
+                                .field-incorrectotptext { margin: 0 !important;
+
+                                    p{
+                                        &::before{
                                             margin-top: 5px;
                                         }
                                     }
@@ -1085,8 +1092,8 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                         color: var(--color-input-text-primary);
                                         margin-bottom: 0;
                                     }
-                                }
-
+                                }       
+                                
                                 &.field-commonerrorpanel {
                                     .field-errormessagetext2col {
                                         margin-top: 185px;
@@ -1101,6 +1108,7 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                         font-weight: var(--font-weight-regular);
                                         color: var(--color-input-text-primary);
                                     }
+
                                     &::before {
                                         width: 177px;
                                         height: 145px;
@@ -1304,6 +1312,13 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                             background-color: #1c3fca;
                         }
 
+                        /* Selected radio */
+                        .field-multipleaccountrepeatable fieldset:has(.field-accountradio input[type='radio']:checked):not(.radio-group-wrapper), 
+                        .field-nomineepanelrepeatable fieldset:has(.field-nomineerd input[type='radio']:checked):not(.radio-group-wrapper) {
+                            border: 1px solid var(--color-action-border-primary-default) !important;
+                        }
+                        .field-multipleaccountrepeatable input[type='radio'] { cursor: pointer; }
+
                         /* success text above wizard */
                         .field-accountsuccessmsg.field-wrapper {
                             margin-top: -106px;
@@ -1442,7 +1457,7 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                 /* Select Account */
                                 .field-selectaccount.current-wizard-step {
                                     display: block;
-                                    padding: 50px 40px;
+                                    padding: 50px 40px 0;
 
                                     .field-customername,
                                     .field-customername label,
@@ -1571,12 +1586,14 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                         }
                                     }
                                 }/* Create FD */
-                            .field-createfd.current-wizard-step { padding: 50px 40px;
+                            .field-createfd.current-wizard-step { padding: 50px 40px 0;
+
                                 .field-createfdheading p {
                                     font-size: var(--font-linehight-large);
                                     margin: 0;
                                     color: var(--color-interface-text-primary);
                                 }
+
                                 .field-fdfootnotetxt{
                                     margin: -20px 0 0;
                                     font-size: var(--body-md-font-size);
@@ -1586,9 +1603,7 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                     }
                                 }
 
-                                .field-leftwrapper {
-
-                                    .field-investmentamtpanel,
+                                .field-leftwrapper {                                    .field-investmentamtpanel,
                                     .field-tenurepanel,
                                     .field-interestpayout,
                                     .field-renewalinstructions {
@@ -1608,6 +1623,7 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                             select {
                                                 font-size: var(--body-lg-font-size);
                                                 font-weight: var(--font-weight-medium);
+                                                height: 60px !important;
                                             }
                                         }
                                     }
@@ -1618,7 +1634,9 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                     .field-renewalinstructionslabel b {
                                         color: var(--color-interface-text-primary);
                                     }
+
                                     .field-investmentamt { position: relative;
+
                                         input {
                                             height: 65px;
                                             font-size: var(--body-fd-xx-xlg-font-size);
@@ -1645,16 +1663,19 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                             }
                                         }
                                     }
+
                                     .field-editinvestmentamt {
-                                        margin: 0;
+                                        margin: -18px 0 0;
                                         
                                         button, button:hover {
+                                            height: fit-content;
                                             font-weight: var(--font-weight-medium);
                                             text-align: left;
                                             background: var(--color-action-text-primary-default) !important;
                                             color: var(--color-action-background-primary-default);
                                         }
                                     }
+                                    
                                     .field-tenurepanel {
                                         .field-tenurewrapper {
                                             display: flex;
@@ -1672,12 +1693,16 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                             .drop-down-wrapper {
                                                 flex: 1;
                                                 position: relative;
-
+                                                margin-top: -13px;
+                        
                                                 select {
                                                     appearance: none;
+                                                    outline: none;
                                                     border: none !important;
                                                     font-size: var(--body-xx-lg-font-size);
-                                                    font-weight: var(--font-weight-medium);
+                                                    font-weight: var( --font-weight-medium);
+                                                    padding: 0 0 0 20px !important;
+                                                    margin: 0;
                                                 }
 
                                                 &.field-year,
@@ -1686,7 +1711,7 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                                         content: '.';
                                                         font-size: var(--font-linehight-x-large);
                                                         position: absolute;
-                                                        top: -15px;
+                                                        top: -28px;
                                                         color: var(--color-interface-border-secondary);
                                                     }
                                                 }
@@ -1699,7 +1724,7 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                                 font-weight: var(--font-weight-medium);
                                                 position: relative;
                                                 left: -22%;
-                                                top: 20px;
+                                                top: -4px;
                                             }
                                         }
                                     }
@@ -1716,6 +1741,10 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                                 }
                                             }
                                         }
+                                    }
+
+                                    @media (width < 767px) { 
+                                        .field-tenurepanel, .field-interestpayout, .field-renewalinstructions { margin-top: 20px; }
                                     }
                                 }
 
@@ -1763,6 +1792,7 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                         }
 
                                         .field-infom { display: flex;
+
                                             &::before {
                                                 content: url('../icons/info-icon.svg');
                                                 align-content: center;
@@ -1785,7 +1815,7 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                             }
 
                             /* Review */
-                            .field-review.current-wizard-step { padding: 50px 40px;
+                            .field-review.current-wizard-step { padding: 50px 40px 0;
 
                                 .field-reviewlabelwizard {
                                     b {
@@ -1834,7 +1864,7 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                     font-weight: var(--font-weight-bold);
                                     color: var(--color-interface-text-primary);
                                 }
-
+                                
                                 fieldset.nre-style-accordian {
                                     padding: 15px 0;
                                     border: 1px solid var(--color-interface-border-primary);
@@ -1852,6 +1882,7 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                     position: relative;
                                     width: 100.3%;
                                     left: -2px;
+
                                     p { color: var(--color-interface-background-quaternary); }
                                 }
 
@@ -1893,10 +1924,6 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                         font-size: var(--body-md-font-size) !important;
                                         color: var(--color-interface-text-primary);
                                     }
-                                }
-
-                                .field-nomineepanelrepeatable fieldset:has(.field-nomineerd input[type='radio']:checked):not( .radio-group-wrapper) {
-                                    border: 1px solid var(--color-action-border-primary-default) !important;
                                 }
 
                                 .field-nomineepanelrepeatable {
@@ -1947,7 +1974,17 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                             }
                                         }
                                     }
+
+                                    @media (width < 1000px) {
+                                        margin-top: 15px;
+
+                                        .repeat-wrapper { display: block;
+                                            .panel-wrapper.col-4 {  margin-bottom: 15px; }
+                                        }
+                                    }
+
                                     .item-add { display: none; }
+
                                 }
 
                                 .field-nomineesectionbtns .field-addnewnominee{
@@ -2022,31 +2059,17 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                 .field-confirmdetailsaccordion > fieldset > :not(legend) { padding: 0 20px; }
                             }
                         }
-                                .nrenro-accordian::after {
-                                    content: '\221F';
-                                    color: #1c3fca;
-                                    font-size: 19px;
-                                    display: inline;
-                                    position: absolute;
-                                    transition: transform 0s;
-                                    right: 22px;
-                                    cursor: pointer;
-                                    transform: rotate(-225deg);
-                                    top: 23px;
-                                }
-
-                                .accordion-collapse::after {
-                                    transform: rotate(-45deg);
-                                    top: 18px;
-                                }
-                            }
-                        }
                         
-                            
+                        /* Continue buttons */
+                        .field-continuebtn, .field-continuecreatefd, .field-reviewcontinue { margin: 10px 0 60px 40px; }
 
                         .wizard-button-wrapper {
                             display: none;
                         }
+                        
+                            
+
+                        /* End of wizard styling */
                     }
 
                     /* End of wizard styling */
@@ -2099,6 +2122,15 @@ footer {
         .field-selectaccount {
             margin-top: 50px !important;
         }
+
+        .field-review.current-wizard-step {
+            display: block;
+
+            .field-reviewcontinue {
+                max-width: 100%;
+                button { max-width: none; }
+            }
+        }
   
         .wizard-menu-item:has(+ .wizard-menu-active-item) {
           &::before {
@@ -2106,9 +2138,11 @@ footer {
               center center / 40px 40px !important;
           }
         }
-
-        .field-selectaccount {
-            margin-top: 50px !important;
+  
+        li:nth-child(1):has(~ li:nth-child(3).wizard-menu-active-item)::before {
+          background: url('../icons/Indicator_Mobile_Completed.png') no-repeat
+            center center / 40px 40px !important;
+          content: '';
         }
       }
     }
@@ -2132,13 +2166,11 @@ footer {
 
             .field-createfd.current-wizard-step {
                 display: block;
-                margin-top: 15px;
                 padding: 50px 15px;
                 .field-fdfootnotetxt { margin-top: 0; }
                 .field-leftwrapper, .field-rightwrapper { margin-top: 20px; }
 
                 .field-leftwrapper {
-                    fieldset { margin-top: 25px; }
                     .field-investmentamt input { margin: 0; }
                     .field-investmentamountlabel, .field-interestpayoutlabel, .field-renewalinstructionslabel { margin-bottom: 15px; }
 
@@ -2149,21 +2181,13 @@ footer {
                             width: max-content;
                         }
 
-                        .field-year,
-                        .field-months,
-                        .field-day {
-                            grid-column: span 1;
-
-                            &::after {
-                                margin-left: 90px;
-                            }
+                        .field-year, .field-months, .field-day { grid-column: span 1; 
+                            &::after { margin-left: 90px; }
                         }
 
-                        .field-ytxt,
-                        .field-mtxt,
-                        .field-dtxt {
-                            left: 10px;
-                            top: 16px;
+                        .field-ytxt, .field-mtxt, .field-dtxt {
+                            left: 17px;
+                            top: -4px;
                             grid-column: span 3;
                         }
                     }
