@@ -6,6 +6,7 @@ import {
   selectFundAcct,
   fdEfSimulationExecute,
   fdEfSwitchWizard,
+  fdOpenBankAccount,
 } from './fd-external-funding-functions.js';
 
 import { errorHandlingFDExt } from './fd-ef-error-handler.js';
@@ -19,4 +20,5 @@ export {
   fdEfSimulationExecute,
   fdEfSwitchWizard,
   errorHandlingFDExt,
+  fdOpenBankAccount,
 };

@@ -19,6 +19,7 @@ import {
     selectFundAcct,
     fdEfSimulationExecute,
     fdEfSwitchWizard,
+    fdOpenBankAccount,
   } from './fd-external-funding-functions.js';
 
 import {
@@ -55,5 +56,6 @@ export {
     selectFundAcct,
     fdEfSimulationExecute,
     fdEfSwitchWizard,
-    updateReviewPage
+    updateReviewPage,
+    fdOpenBankAccount
 };
