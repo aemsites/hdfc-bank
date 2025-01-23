@@ -12,6 +12,7 @@ import {
   customerAccountDetails,
   fetchCardDetailsSuccessHandler,
   retailCardAllFeaturesAndBenefits,
+  validateLoginFd,
 } from './fdbacked-function.js';
 
 import { createJourneyId } from '../../common/journey-utils.js';
@@ -23,6 +24,7 @@ import {
 
 import {
   validateOtpInput,
+  linkModalFunction,
 } from './fdBacked-dom-functions.js';
 
 import {
@@ -56,4 +58,6 @@ export {
   customerAccountDetails,
   fetchCardDetailsSuccessHandler,
   retailCardAllFeaturesAndBenefits,
+  validateLoginFd,
+  linkModalFunction,
 };

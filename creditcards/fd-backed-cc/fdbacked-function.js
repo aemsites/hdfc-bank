@@ -253,6 +253,95 @@ function customSetFocus(errorMessage, numRetries, globals) {
   }
 }
 
+
+const validateLoginFd = (globals) => {
+    const mobileNo = globals.form.loginMainPanel.loginPanel.mobilePanel.mobileNumberWrapper.registeredMobileNumber.$value;
+    const isdCode = (globals.form.loginMainPanel.loginPanel.mobilePanel.mobileNumberWrapper.countryCode.$value)?.replace(/[^a-zA-Z0-9]+/g, '');
+    const dobValue = globals.form.loginMainPanel.loginPanel.identifierPanel.dateOfBirth.$value;
+    const panValue = globals.form.loginMainPanel.loginPanel.identifierPanel.pan.$value;
+    const panDobSelection = globals.form.loginMainPanel.loginPanel.identifierPanel.panDobSelection.$value;
+    const radioSelect = (panDobSelection === '0') ? 'DOB' : 'PAN';
+    const consentFirst = globals.form.loginMainPanel.consent_fragment.checkboxConsent1Label.$value;
+    const panErrorText = 'Please enter a valid PAN';
+    const isdNumberPattern = /^(?!0)([5-9]\d{9})$/;
+    const panIsValid = validFDPan(panValue);
+    const nonISDNumberPattern = /^(?!0)\d{3,15}$/;
+    let mobileNoValid = false;
+    //currentFormContext.isdCode = isdCode;
+    globals.functions.setProperty(globals.form.loginMainPanel.getOTPbutton, { enabled: false });
+
+    const panInput = document?.querySelector(`[name=${'pan'} ]`);
+    const panWrapper = panInput?.parentElement;
+
+    // Mobile Field Validation
+    if((mobileNo && mobileNo.length == 1 && /^[0-5]/.test(mobileNo)) || (mobileNo && !(/^[0-9]/.test(mobileNo.slice(-1))))){
+      globals.functions.setProperty(globals.form.loginMainPanel.loginPanel.mobilePanel.mobileNumberWrapper.registeredMobileNumber , { value : '' });
+    }
+    if (mobileNo && ((isdCode === '91' && !isdNumberPattern.test(mobileNo)))) {
+      globals.functions.setProperty(globals.form.loginMainPanel.loginPanel.mobilePanel.mobileNumberWrapper.registerMobileNumberError, { visible: true });
+      globals.functions.setProperty(globals.form.loginMainPanel.getOTPbutton, { enabled: false });
+    } else {
+      globals.functions.setProperty(globals.form.loginMainPanel.loginPanel.mobilePanel.mobileNumberWrapper.registerMobileNumberError, { visible: false });
+      mobileNoValid = true;
+    }
+
+    //validatePanDynamically(globals.form.loginMainPanel.loginPanel.identifierPanel.pan, panValue, globals);
+
+    switch (radioSelect) {
+      case 'DOB':
+        if (dobValue && String(new Date(dobValue).getFullYear()).length === 4) {
+          const minAge = 18;
+          const maxAge = 100;
+          const dobErrorText = `Customers with age below ${minAge} years and above ${maxAge} are not allowed.`;
+          const ageValid = ageValidate(minAge, maxAge, dobValue);
+          if (ageValid && consentFirst && mobileNo && mobileNoValid) {
+            globals.functions.setProperty(globals.form.loginMainPanel.getOTPbutton, { enabled: true });
+            globals.functions.markFieldAsInvalid('$form.loginMainPanel.loginPanel.identifierPanel.dateOfBirth', '', { useQualifiedName: true });
+          }
+          if (ageValid) {
+            globals.functions.markFieldAsInvalid('$form.loginMainPanel.loginPanel.identifierPanel.dateOfBirth', '', { useQualifiedName: true });
+            globals.functions.setProperty(globals.form.loginMainPanel.loginPanel.identifierPanel.dateOfBirth, { valid: true });
+            globals.functions.setProperty(globals.form.loginMainPanel.loginPanel.identifierPanel.dobErrorText, { visible: false });
+          }
+          if (!ageValid) {
+            globals.functions.markFieldAsInvalid('$form.loginMainPanel.loginPanel.identifierPanel.dateOfBirth', dobErrorText, { useQualifiedName: true });
+            globals.functions.setProperty(globals.form.loginMainPanel.loginPanel.identifierPanel.dobErrorText, { visible: true });
+            globals.functions.setProperty(globals.form.loginMainPanel.getOTPbutton, { enabled: false });
+          }
+          if (!consentFirst && !ageValid && (!mobileNo || mobileNoValid == false)) {
+            globals.functions.setProperty(globals.form.loginMainPanel.getOTPbutton, { enabled: false });
+          }
+        }
+        break;
+      case 'PAN':
+        panWrapper?.setAttribute('data-empty', true);
+        if (panValue) {
+          panWrapper?.setAttribute('data-empty', false);
+          if (panIsValid && consentFirst && mobileNo && mobileNoValid) {
+            globals.functions.markFieldAsInvalid('$form.loginMainPanel.loginPanel.identifierPanel.pan', '', { useQualifiedName: true });
+            globals.functions.setProperty(globals.form.loginMainPanel.getOTPbutton, { enabled: true });
+          }
+          if (panIsValid) {
+            globals.functions.markFieldAsInvalid('$form.loginMainPanel.loginPanel.identifierPanel.pan', '', { useQualifiedName: true });
+            globals.functions.setProperty(globals.form.loginMainPanel.loginPanel.identifierPanel.pan, { valid: true });
+            globals.functions.setProperty(globals.form.loginMainPanel.loginPanel.identifierPanel.panErrorText, { visible: false });
+          }
+          if (!panIsValid) {
+            globals.functions.markFieldAsInvalid('$form.loginMainPanel.loginPanel.identifierPanel.pan', panErrorText, { useQualifiedName: true });
+            globals.functions.setProperty(globals.form.loginMainPanel.loginPanel.identifierPanel.panErrorText, { visible: true });
+            globals.functions.setProperty(globals.form.loginMainPanel.getOTPbutton, { enabled: false });
+          }
+          if (!consentFirst && (!mobileNo || mobileNoValid == false) && !panIsValid) {
+            globals.functions.setProperty(globals.form.loginMainPanel.getOTPbutton, { enabled: false });
+          }
+        }
+        break;
+      default:
+        globals.functions.setProperty(globals.form.loginMainPanel.getOTPbutton, { enabled: false });
+    }
+  };
+
+
 function editCreds(globals) {
   globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.otpHelpText, { value: '<p>We\'ve sent a 6-digit OTP&nbsp;to your registered mobile number&nbsp;</p>' });
   globals.functions.setProperty(globals.form.otpPanelWrapper, { visible: false });
@@ -340,4 +429,5 @@ export {
   customerAccountDetails,
   fetchCardDetailsSuccessHandler,
   retailCardAllFeaturesAndBenefits,
+  validateLoginFd,
 };
