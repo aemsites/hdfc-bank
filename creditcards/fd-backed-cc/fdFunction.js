@@ -22,17 +22,16 @@ import {
   invokeJourneyDropOffUpdate,
 } from './fdbacked-journey-util.js';
 
-import {
-  validateOtpInput,
-  linkModalFunction,
-} from './fdBacked-dom-functions.js';
+// import {
+//   validateOtpInput,
+// } from './fdBacked-dom-functions.js'; // dom -function -- ? required in Form
 
 import {
   validatePan,
   loadHomePage,
 } from '../../common/functions.js';
 
-import { hideLoaderGif } from '../domutils/domutils.js';
+// import { hideLoaderGif } from '../domutils/domutils.js'; // dom -function -- ? required in Form
 
 import { fullNamePanValidation } from '../../common/panvalidation.js';
 
@@ -48,8 +47,8 @@ export {
   invokeJourneyDropOff,
   invokeJourneyDropOffUpdate,
   createJourneyId,
-  validateOtpInput,
-  hideLoaderGif,
+  // validateOtpInput,
+  // hideLoaderGif,
   fullNamePanValidation,
   validatePan,
   loadHomePage,
@@ -59,5 +58,4 @@ export {
   fetchCardDetailsSuccessHandler,
   retailCardAllFeaturesAndBenefits,
   validateLoginFd,
-  linkModalFunction,
 };

@@ -1,3 +1,4 @@
+import openModal from '../../blocks/modal/modal.js';
 import {
   groupCharacters,
   validatePhoneNumber,
@@ -35,7 +36,6 @@ const validateOtpInput = () => {
  */
 
 const linkModalFunction = (config) => {
-debugger;
   config?.triggerElement?.addEventListener('click', async (e) => {
     const { checked, type } = e.target;
     const checkBoxElement = (type === 'checkbox') && checked;
@@ -57,9 +57,9 @@ debugger;
 // conset-1 checbox - modal
 const consent1Config = {
   // config to create modal for consent-1
-  triggerElement: document.getElementsByName("checkboxConsent1Label")?.[0], // trigger element for calling modalFunction
-  content: document.getElementsByName("consentPanel1")?.[0], // content to display in modal
-  actionWrapClass: "button-wrapper", // wrapper class containing all the buttons
+  triggerElement: document.getElementsByName(DOM_ELEMENT.identifyYourself.chekbox1Label)?.[0], // trigger element for calling modalFunction
+  content: document.getElementsByName(DOM_ELEMENT.identifyYourself.consent1Content)?.[0], // content to display in modal
+  actionWrapClass: DOM_ELEMENT.identifyYourself.modalBtnWrapper, // wrapper class containing all the buttons
   reqConsentAgree: true, // Indicates if consent agreement is needed; shows close icon if not.
   /**
   * Updates the UI based on received data.
@@ -78,7 +78,6 @@ const consent1Config = {
     }
   },
 };
-linkModalFunction(consent1Config);
 
 // consent-2 checkbox - modal
 const consent2Config = {
@@ -104,8 +103,9 @@ const consent2Config = {
     }
   },
 };
-linkModalFunction(consent2Config);
 
+linkModalFunction(consent1Config);
+linkModalFunction(consent2Config);
 
 const addGaps = (elSelector) => {
   if (typeof document === 'undefined') return;
@@ -176,5 +176,4 @@ export {
   updateElementAttr,
   changeCheckboxToToggle,
   buttonEnableOnCheck,
-  linkModalFunction,
 };

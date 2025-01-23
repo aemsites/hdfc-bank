@@ -55,14 +55,14 @@ const DOM_ELEMENT = {
   },
   identifyYourself: {
     dob: 'dateOfBirth',
-    anchorTagClass : 'link',
-    checkbox1ProductLabel : '.field-checkboxconsent1label',
-    checkbox2ProductLabel : '.field-checkboxconsent2label',
-    chekbox1Label : "checkboxConsent1Label",
-    chekbox2Label : "checkboxConsent2Label",
-    consent1Content : "consentPanel1",
-    consent2Content : "consentPanel2",
-    modalBtnWrapper : "button-wrapper"
+    anchorTagClass: 'link',
+    checkbox1ProductLabel: '.field-checkboxconsent1label',
+    checkbox2ProductLabel: '.field-checkboxconsent2label',
+    chekbox1Label: 'checkboxConsent1Label',
+    chekbox2Label: 'checkboxConsent2Label',
+    consent1Content: 'consentPanel1',
+    consent2Content: 'consentPanel2',
+    modalBtnWrapper: 'button-wrapper',
   },
   personalDetails: {
     dob: 'dateOfBirthPersonalDetails',
