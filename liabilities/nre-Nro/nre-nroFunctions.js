@@ -633,7 +633,7 @@ function setupBankUseSection(mainBankUsePanel, globals) {
   }
   globals.functions.setProperty(resetAllBtn, { enabled: false });
   globals.functions.setProperty(lcCode, { enabled: false });
-  globals.functions.setProperty(lcCode, { value: 'NRI INSTASTP' });
+  globals.functions.setProperty(lcCode, { value: 'NRISTP' });
 }
 
 async function showFinancialDetails(financialDetails, response, occupation, globals) {
@@ -1374,7 +1374,7 @@ const crmLeadIdDetail = async (globals) => {
       countryOfNominee: '',
       country: response.namPermadrCntry ? await getCountryName(response.namPermadrCntry) : '',
       passpostExpiryDate: '',
-      codeLC: 'NRI INSTASTP',
+      codeLC: 'NRISTP',
       codeLG: globals.form.wizardPanel.wizardFragment.wizardNreNro.confirmDetails.needBankHelp.bankUseFragment.mainBankUsePanel.lgCode.$value || 'MKTG',
       applicationDate: new Date().toISOString().slice(0, 19),
       DLExpiryDate: '',
