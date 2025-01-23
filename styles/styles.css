@@ -14,7 +14,7 @@
  @import url('./login-page.css');
  @import url('./accordion-pages.css');
  @import url('./header-banner.css');
- @import url('./fd-styles.css');
+ @import url('../creditcards/fd-backed-cc/assets/css/fd-backed-cc.css');
  @import url('./semi-styles.css');
  @import url('./fd-backed-cc.css');
  
