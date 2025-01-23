@@ -114,84 +114,112 @@ function selectFundAcct(acctField, globals) {
  * @name fdOpenBankAccount
  * @return {PROMISE}
  */
-const fdOpenBankAccount = async(globals) => {
-debugger;
- const formData = globals.functions.exportData();
- const jsonObj = {
- requestString: {
-         OpenTermDepositAccountRequest: {
-             termDepositXfaceAccountOpeningRequestDTO: {
-                 codAcctNo: "XXXXXXXXXX4042",
-                 intPayAcctNbr: "XXXXXXXXXX4042",
-                 codAutoRenewRedem: "2",
-                 codCcBrn: "2373",
-                 depositAmt: "5000",
-                 depositTermDays: "1",
-                 codLg: "mktg",
-                 codLc: "",
-                 depositTermMnths: "60",
-                 holdPattern: "Y",
-                 productCatagory: "Reinvestment",
-                 intPayoutMode: "0",
-                 codTypTd: "C",
-                 makerId: "Adobe",
-                 checkerID: "Adobe",
-                 flgReplicateCASANominee: "N",
-                 flgNomineeFacility: "N"
-             },
-             mobileNo: "918619484593",
-             operationMode: "5",
-             password: "123456",
-             dictionaryArray: [
-                 {
-                     nameValuePairDTOArray: [
-                         {
-                             name: "DOB",
-                             value: "19920910"
-                         },
-                         {
-                             name: "PAN",
-                             value: ""
-                         },
-                         {
-                             name: "callingApplication",
-                             value: "DigitalFD"
-                         },
-                         {
-                             name: "misCode",
-                             value: ""
-                         }
-                     ]
-                 }
-             ]
-         },
-         userAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
-         journeyID: "686d61bb-d065-42fc-8551-6282a185916a_01_ECFD_U_WEB",
-         journeyName: "FD_BOOKING_JOURNEY",
-         pseudoID: "abcd"
+const fdOpenBankAccount = async (globals) => {
+  debugger;
+  const formData = globals.functions.exportData();
+  const jsonObj = {
+    requestString: {
+      OpenTermDepositAccountRequest: {
+
+        termDepositXfaceAccountOpeningRequestDTO: {
+
+          codAcctNo: 'XXXXXXXXXX4042',
+
+          intPayAcctNbr: 'XXXXXXXXXX4042',
+
+          codAutoRenewRedem: '2',
+
+          codCcBrn: '2373',
+
+          depositAmt: '6237',
+
+          depositTermDays: '1',
+
+          codLg: 'mktg',
+
+          codLc: '',
+
+          depositTermMnths: '60',
+
+          holdPattern: 'Y',
+
+          productCatagory: 'Reinvestment',
+
+          intPayoutMode: '0',
+
+          codTypTd: 'C',
+
+          makerId: 'Adobe',
+
+          checkerID: 'Adobe',
+
+          flgReplicateCASANominee: 'N',
+
+          flgNomineeFacility: 'N',
+
+        },
+
+        mobileNo: '918619484593',
+
+        operationMode: '5',
+
+        password: '123456',
+
+        dictionaryArray: [
+
+          {
+
+            nameValuePairDTOArray: [
+
+              {
+
+                name: 'DOB',
+
+                value: '19920910',
+
+              },
+
+              {
+
+                name: 'PAN',
+
+                value: '',
+
+              },
+
+              {
+
+                name: 'callingApplication',
+
+                value: 'DigitalFD',
+
+              },
+
+              {
+
+                name: 'misCode',
+
+                value: '',
+
+              },
+
+            ],
+
+          },
+
+        ],
+
       },
-};
+      userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
+      journeyID: '3d03a132-8c32-415e-aaed-343acbf65e10_01_ECFD_U_WEB',
+      journeyName: 'FD_BOOKING_JOURNEY',
+      pseudoID: 'abcd',
+    },
+  };
 
   const path = fdEfEndpoints.fdAccountOpening;
-  //const response = await fetchJsonResponse(path, jsonObj, 'POST');
-  fetch(path, {
-         method,
-         body: jsonObj ? JSON.stringify(jsonObj) : null,
-         mode: 'cors',
-         headers: {
-           'Content-type': 'text/plain',
-           Accept: 'application/json',
-           iat: typeof window !== 'undefined' ? btoa(currentDate.getTime()) : '',
-
-         },
-       })
-         .then((res) => {
-           if (loader) hideLoaderGif();
-           return res.json();
-         });
-  console.log(response);
-  //return fetchJsonResponse(path, jsonObj, 'POST', true);
-}
+  return fetchJsonResponse(path, jsonObj, 'POST', true);
+};
 
 /**
  * @name fdEfSwitchWizard to switch panel visibility
