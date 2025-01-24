@@ -2,6 +2,8 @@ const NRENROENDPOINTS = {
   accountOpening: '/content/hdfc_haf_nrenro/api/nrenroAccountOpening.json',
 };
 
+const FORM_DATA = {};
+
 // declare CONSTANTS for NRE NRO only.
 const FORM_NAME = 'NRE NRO Account Opening';
 const CHANNEL = 'WEB';
@@ -26,4 +28,5 @@ export {
   DOM_ELEMENT,
   FORM_NAME,
   NRENROENDPOINTS,
+  FORM_DATA,
 };
