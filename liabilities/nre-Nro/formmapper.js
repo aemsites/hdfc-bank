@@ -3,6 +3,13 @@ import {
 } from './constant.js';
 
 const handler = {
+    get(target, key) {
+        if (typeof target[key] === 'object' && target[key] !== null) {
+            return new Proxy(target[key], validator)
+        } else {
+            return target[key];
+        }
+    },
     set(target, property, value) {
         console.log(`Property "${property}" changed from "${target[property]}" to "${value}"`);
         target[property] = value; // Don't forget to update the property
@@ -24,9 +31,9 @@ const globalObjectMapper = (globals) => {
     FORM_DATA.form = globals.functions.exportData()?.form;
     console.log(FORM_DATA.form);
     const proxyMapper = new Proxy(FORM_DATA.form, handler);
-    proxyMapper.confirmDetails['countryOfBirth'] = 'helloji';
-    console.log('here'); 
-    
+    proxyMapper.confirmDetails.countryOfBirth = 'helloji';
+    console.log('here');
+
 }
 
 
