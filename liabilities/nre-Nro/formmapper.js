@@ -47,5 +47,4 @@ const modifyValue = (value) => {
 
 export {
     globalObjectMapper,
-    modifyValue,
 };
