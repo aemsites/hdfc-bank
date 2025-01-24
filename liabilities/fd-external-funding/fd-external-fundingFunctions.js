@@ -486,9 +486,9 @@ function customFocus(globals) {
 function invalidOTP(globals) {
   globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.otpNumber, { value : '' });
   globals.functions.setProperty(globals.form.otpPanelWrapper.submitOTP, { enabled: false });
-  sendAnalytics('submit otp click', '', 'CUSTOMER_LEAD_QUALIFIED_FAILURE');
+  sendAnalytics('submit otp click', '', 'CUSTOMER_IDENTITY_ACQ_CASA_INVALID');
   invokeJourneyDropOffUpdate(
-    'CUSTOMER_LEAD_QUALIFIED_FAILURE', 
+    'CUSTOMER_IDENTITY_ACQ_CASA_INVALID',
     globals.form.loginMainPanel.loginPanel.mobilePanel.mobileNumberWrapper.registeredMobileNumber.$value,
     globals.form.runtime.leadProifileId.$value,
     globals.form.runtime.journeyId.$value,
