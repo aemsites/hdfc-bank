@@ -24,8 +24,17 @@ const hello = (target, value) => {
 const globalObjectMapper = (globals) => {
     FORM_DATA.form = globals.functions.exportData()?.form;
     console.log(FORM_DATA.form);
-    const proxyMapper = new Proxy(FORM_DATA.form, handler);
-    proxyMapper.confirmDetails.addressForTaxPurpose = 'Jane';
+    
+    
+}
+const proxyMapper = new Proxy(FORM_DATA.form, handler);
+
+/**
+ * modifyValue function
+ * @param {Object} value 
+ */
+const modifyValue = (value) => {
+    proxyMapper.confirmDetails.addressForTaxPurpose = value;
     console.log(FORM_DATA.form);
 }
 
