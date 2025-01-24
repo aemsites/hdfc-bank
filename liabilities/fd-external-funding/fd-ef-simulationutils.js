@@ -182,8 +182,11 @@ const fdEfSimSuccessCallBack = (res, globals) => {
       moveWizardView(DOM_NAME.wizardPanel, DOM_NAME.wizardCreateFd);
     }else if(FD_SIM_API.triggerPlace === DOM_NAME.wizardReview) {
       globals.functions.setProperty(globals.form.fdDetailsWrapper, { visible: false });
-      // globals.functions.setProperty(globals.form.bannerimagepanel, { visible: true });
+      const {bannerImagePanel} = globals.form;
+      globals.functions.setProperty(bannerImagePanel, { visible: true });      
       globals.functions.setProperty(globals.form.otpPanelWrapper, { visible: true });
+      globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.otpNumber, { value: '' }); 
+      globals.functions.setProperty(globals.form.otpPanelWrapper.reviewSubmit, { visible: true });      
       globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.editMobileNumBtn, { visible: false });
     }
   } else {
