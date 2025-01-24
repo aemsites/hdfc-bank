@@ -214,6 +214,7 @@ body.fd-backed-cc {
 
                                         .button-wrapper {
                                             width: 225px;
+                                            order: 2;
 
                                             @media (768px <=width <=991px) {
                                                 width: auto;
@@ -246,6 +247,7 @@ body.fd-backed-cc {
                                             }
 
                                             &.field-knowyourcclimit {
+                                                order: 1;
                                                 button {
                                                     background: none;
                                                     border: 1px solid var(--color-action-border-primary-default);
@@ -1040,6 +1042,7 @@ body.fd-backed-cc {
 
                             .field-benefitsofsecuredcc {
                                 padding: 30px 20px;
+                                margin-bottom: 20px;
 
                                 @media (min-width: 768px) {
                                     display: inline;
@@ -3487,7 +3490,6 @@ body.fd-backed-cc {
                                         border: 1px solid var(--color-interface-border-primary);
                                         padding: 15px;
                                         display: flex;
-                                        flex: 1;
 
                                         p {
                                             margin: 0;
@@ -3509,6 +3511,7 @@ body.fd-backed-cc {
                                             background: url("../assets/images/fd_summary_image.png") no-repeat center center;
                                             width: 115px;
                                             height: 84px;
+                                            flex: 0 0 10%;
 
                                             picture {
                                                 display: none;
@@ -3516,6 +3519,8 @@ body.fd-backed-cc {
                                         }
 
                                         .field-fdsummarywrapper {
+                                            flex: 1;
+
                                             .field-fdsummarylabel2 {
                                                 p {
                                                     font-size: var(--body-fd-x-lg-font-size);
@@ -3526,16 +3531,21 @@ body.fd-backed-cc {
 
                                             .field-fdsummarydetailspanel {
                                                 display: flex;
-                                                flex: 1;
 
                                                 .field-wrapper {
+                                                    flex: 1;
+                                                    display: flex;
+                                                    justify-content: center;
+                                                    flex-direction: column;
+
                                                     label {
                                                         font-size: var(--body-sm-font-size);
                                                         font-weight: var(--font-weight-regular);
                                                         color: var(--color-interface-text-secondary);
                                                         margin: 0;
-                                                        transform: none;
+                                                       /*  transform: none; */
                                                         padding: 0;
+                                                        background: none;
                                                     }
 
                                                     input {
@@ -3557,17 +3567,19 @@ body.fd-backed-cc {
                                     }
                                 }
 
-                                .field-reviewccdetailssection{
-                                    .field-reviewccdetailslabel{
-                                        p{
+                                .field-reviewccdetailssection {
+                                    margin-top: 20px;
+
+                                    .field-reviewccdetailslabel {
+                                        p {
                                             font-size: var(--body-xx-lg-font-size);
                                             font-weight: var(--font-weight-bold);
                                             color: var(--color-interface-text-primary);
                                         }
                                     }
 
-                                    .field-reviewccapplicationdetailsview{
-                                        p{
+                                    .field-reviewccapplicationdetailsview {
+                                        p {
                                             margin: 0;
                                         }
 
@@ -3577,221 +3589,279 @@ body.fd-backed-cc {
                                         fieldset.field-personaldetails,
                                         fieldset.field-creditcarddetails,
                                         fieldset.field-addressdetails,
-                                        fieldset.field-employeeassistance {
-                                          border: 1px solid var(--color-interface-border-primary);
-                                          border-radius: 15px;
-                                          margin-bottom: 10px;
-                                
-                                          @media (320px <=width <=767px) {
-                                            margin-bottom: 20px;
-                                          }
-                                
-                                          legend {
-                                           p{
-                                            font-size: var(--body-xx-lg-font-size);
+                                        fieldset.field-employeeassistance,
+                                        .field-employeeassistancelabel{
+                                            border: 1px solid var(--color-interface-border-primary);
+                                            border-radius: 15px;
+                                            margin-bottom: 10px;
+
+                                            @media (320px <=width <=767px) {
+                                                margin-bottom: 20px;
+                                            }
+
+                                            legend {
+                                                font-size: var(--body-xx-lg-font-size);
+                                                font-weight: var(--font-weight-bold);
+                                                color: var(--color-interface-text-primary);
+                                                line-height: 32px;
+                                                letter-spacing: -0.02em;
+                                                padding: 15px 30px;
+                                                background: linear-gradient(270deg, #F3F6FD 0%, #F3F6FD 100%);
+                                                margin-bottom: 20px;
+                                                position: relative;
+                                                height: 70px;
+                                                display: flex;
+                                                align-items: center;
+                                                border-radius: 15px 15px 0 0;
+
+                                                @media (768px <=width <=991px) {
+                                                    font-size: 24px;
+                                                    line-height: 32px;
+                                                }
+
+                                                @media (320px <=width <=767px) {
+                                                    font-size: 18px;
+                                                    line-height: 24px;
+                                                    padding: 15px;
+                                                }
+
+                                                &::after {
+                                                    content: '';
+                                                    position: absolute;
+                                                    right: 30px;
+                                                    width: 22px;
+                                                    height: 13px;
+                                                    background: url("../assets/icons/accordian-arrow-up.png") no-repeat top center;
+                                                    transition: 0.4s;
+                                                    background-size: contain;
+                                                    /*  transform: rotate(180deg); */
+                                                }
+
+                                                &.accordion-collapse {
+                                                    margin-bottom: 0;
+                                                    border-radius: 15px;
+
+                                                    &::after {
+                                                        transform: rotate(180deg);
+                                                        top: 30px;
+                                                    }
+                                                }
+                                            }
+
+                                            & .text-wrapper.field-wrapper,
+                                            & .email-wrapper.field-wrapper,
+                                            & .drop-down-wrapper.field-wrapper,
+                                            & .date-wrapper.field-wrapper,
+                                            & .number-wrapper.field-wrapper,
+                                            & .field-mailingaddresslabel.field-wrapper,
+                                            & .multiline-wrapper.field-wrapper,
+                                            & .plain-text-wrapper.field-wrapper,
+                                            & .checkbox-wrapper.field-wrapper {
+                                                padding: 0px 30px 20px 30px;
+                                                display: flex;
+                                                justify-content: center;
+                                                flex-direction: column;
+
+                                                @media (320px <=width <=767px) {
+                                                    padding: 0px 15px;
+                                                }
+
+                                                label {
+                                                    padding: 0;
+                                                    background: none;
+                                                    margin: 0;
+                                                    transform: none;
+                                                    position: initial;
+                                                    color: var(--color-interface-text-secondary) !important;
+                                                    font-size: var(--body-fd-sm-font-size);
+                                                    font-weight: var(--font-weight-regular);
+                                                    line-height: normal;
+                                                }
+
+                                                input,
+                                                select,
+                                                textarea {
+                                                    border: none;
+                                                    background: none;
+                                                    padding: 0;
+                                                    height: auto;
+                                                    letter-spacing: 0;
+                                                    margin: 0;
+                                                    line-height: normal;
+                                                    border-radius: 0;
+                                                    color: var(--color-interface-text-primary) !important;
+                                                    font-size: var(--body-fd-lg-font-size);
+                                                    font-weight: var(--font-weight-medium);
+                                                    box-shadow: none;
+                                                    margin-top: 5px;
+                                                }
+
+                                                select {
+                                                    border: none !important;
+                                                    padding: 0 !important;
+                                                    height: auto !important;
+                                                    border-radius: 0 !important;
+                                                }
+
+                                                textarea {
+                                                    resize: none;
+                                                    min-height: auto;
+                                                }
+
+                                                .field-description {
+                                                    margin-top: 0;
+                                                    display: none;
+                                                }
+                                                
+                                                &[data-active]{
+                                                    
+                                                 
+                                                    label{
+                                                        margin: 0;
+                                                        transform: none;
+                                                        padding: 0;
+                                                    }
+                                                }
+
+                                                &.field-employeeassisttoggle{
+                                                    display: flex;
+                                                    align-items: center !important;
+                                                    flex-direction: row-reverse;
+                                                    justify-content: flex-end;
+                                      
+                                                    @media (320px <=width <=767px) {
+                                                      margin-bottom: 20px;
+                                                      align-items: flex-start;
+                                                    }
+                                      
+                                                    label {
+                                                      font-size: var(--body-fd-sm-font-size);
+                                                      font-weight: var(--font-weight-medium);
+                                                      color: var(--color-interface-text-quaternary);
+                                                      flex-basis: initial;                                     
+                                                    
+                                                    }
+                                      
+                                                    input[type="checkbox"] { 
+                                                      width: 45px !important;
+                                                      height: 28px !important;
+                                                      padding: 0;
+                                                      box-sizing: content-box;
+                                                      border-radius: 16px;
+                                                      background-color: var(--color-input-text-disabled);
+                                                      -webkit-appearance: none;
+                                                      -moz-appearance: none;
+                                                      appearance: none;
+                                                      cursor: pointer;
+                                                      position: relative;
+                                                      transition: background-color 0.3s, background-position 0.3s;
+                                                      margin-top: 5px;
+                                                      margin-left: 10px;
+                                      
+                                                      &[disabled] {
+                                                        background-color: var(--color-action-background-primary-disabled);
+                                                      }
+                                      
+                                                      &:checked {
+                                                        background-color: var(--color-interface-icon-highlight);
+                                                      }
+                                                    }
+                                      
+                                                    input[type="checkbox"]::after {
+                                                      content: '';
+                                                      position: absolute;
+                                                      top: 50%;
+                                                      left: 4px;
+                                                      width: 20px;
+                                                      height: 20px;
+                                                      border-radius: 50%;
+                                                      background: var(--color-interface-background-primary);
+                                                      transform: translateY(-50%);
+                                                      transition: transform 0.3s;
+                                                    }
+                                      
+                                                    input[type="checkbox"]:checked::after {
+                                                      content: '';
+                                                      position: absolute;
+                                                      top: 50%;
+                                                      left: 4px;
+                                                      width: 20px;
+                                                      height: 20px;
+                                                      border-radius: 50%;
+                                                      background:var(--color-interface-background-primary);
+                                                      transform: translateY(-50%) translateX(17px);
+                                                      transition: transform 0.3s;
+                                                    }
+                                                }
+
+                                                &.field-mailingaddresslabel{
+                                                    padding-bottom: 0;
+                                                }
+
+                                                &.field-addressdetailhelptag2{
+                                                    p{
+                                                        font-size: var(--body-fd-sm-font-size);
+                                                        font-weight: var(--font-weight-medium);
+                                                        color: var(--color-interface-text-primary);
+
+                                                        a{
+                                                            font-size: var(--body-fd-md-font-size);
+                                                            font-weight: var(--font-weight-bold);
+                                                        }
+                                                    }
+                                                }
+                                            }
+
+                                            &:has(legend.accordion-collapse) {
+                                                padding-bottom: 20px;
+                                                transition: transform 0.3s;
+                                            }
+
+                                            .field-addressdetailshelptag {
+                                                padding: 0 30px;
+
+                                                p {
+                                                    font-size: var(--body-fd-sm-font-size);
+                                                    font-weight: var(--font-weight-regular);
+                                                    color: var(--color-interface-text-primary);
+                                                    background: var(--color-interface-background-quinary);
+                                                    width: fit-content;
+                                                    border-radius: 12px;
+                                                    padding: 3px 7px;
+                                                }
+                                            }
+
+                                            &.field-addressdetails{
+                                                display: inline;
+                                            }
+                                        }
+                                    }
+
+                                    .field-selectcardtnc {
+                                        display: inline;
+
+                                        legend {
+                                            font-size: var(--body-fd-lg-font-size);
                                             font-weight: var(--font-weight-bold);
                                             color: var(--color-interface-text-primary);
-                                            line-height: 32px;
-                                            letter-spacing: -0.02em;
-                                            padding: 15px 30px;
-                                            background: linear-gradient(270deg, #F3F6FD 0%, #F3F6FD 100%);
-                                            border-radius: 15px;
-                                            margin-bottom: 0;
-                                            position: relative;
-                                            height: 70px;
-                                            display: flex;
-                                            align-items: center;
-                                           }
-                                
-                                            @media (768px <=width <=991px) {
-                                              font-size: 24px;
-                                              line-height: 32px;
-                                            }
-                                
-                                            @media (320px <=width <=767px) {
-                                              font-size: 18px;
-                                              line-height: 24px;
-                                              padding: 15px;
-                                            }
-                                
-                                            &::after {
-                                              content: '';
-                                              position: absolute;
-                                              right: 30px;
-                                              width: 22px;
-                                              height: 13px;
-                                              background: url("../assets/icons/Arrow-Collapse.svg") no-repeat top center;
-                                              transition: 0.4s;
-                                              background-size: contain;
-                                              transform: rotate(180deg);
-                                            }
-                                
-                                            &.accordion-collapse {
-                                              border-bottom-left-radius: 0;
-                                              border-bottom-right-radius: 0;
-                                              margin-bottom: 20px;
-                                
-                                
-                                              &::after {
-                                                transform: rotate(0deg);
-                                                top: 30px;
-                                              }
-                                            }
-                                          }
-                                
-                                          & .text-wrapper.field-wrapper,
-                                          & .multiline-wrapper,
-                                          & .drop-down-wrapper,
-                                          & .plain-text-wrapper.field-wrapper {
-                                            padding: 0px 30px;
-                                
-                                            @media (320px <=width <=767px) {
-                                              padding: 0px 15px;
-                                            }
-                                          }
-                                
-                                          .field-nonomineetext {
-                                            position: relative;
-                                            display: flex;
-                                            align-items: center;
-                                            background-color: #FEF8E6;
-                                            margin: 10px 30px;
-                                            border-radius: 8px;
-                                
-                                            @media (320px <=width <=767px) {
-                                              margin: 10px;
-                                            }
-                                
-                                            p {
-                                              margin-bottom: 0;
-                                              display: flex;
-                                              align-items: center;
-                                
-                                              &::before {
-                                                content: '';
-                                                position: absolute;
-                                                height: 20px;
-                                                width: 20px;
-                                                background: url('../icons/info-circle.png') no-repeat left center;
-                                                left: 15px;
-                                
-                                                @media (320px <=width <=767px) {
-                                                  margin-left: -5px;
-                                                }
-                                              }
-                                
-                                              p {
-                                                min-height: 40px;
-                                                color: #F99F35;
-                                                font-size: 12px;
-                                                font-weight: 600;
-                                                line-height: 20px;
-                                                margin-bottom: 0;
-                                                padding: 10px 15px;
-                                
-                                                @media (320px <=width <=767px) {
-                                                  padding: 10px 0 10px 25px;
-                                                }
-                                
-                                                a {
-                                                  color: var(--color-action-text-secondary-default);
-                                                  margin-left: 3px;
-                                                }
-                                              }
-                                            }
-                                          }
-                                
-                                          .multiline-wrapper {
-                                            position: relative;
-                                
-                                            label {
-                                              margin: 2px 0 0 0;
-                                              padding: 0;
-                                            }
-                                
-                                            textarea {
-                                              border: none;
-                                              background: none;
-                                              margin: 0;
-                                              padding: 0;
-                                              font-size: 18px;
-                                              line-height: 28px;
-                                              font-weight: 500;
-                                              color: var(--color-interface-text-primary);
-                                              width: 90% !important;
-                                              height: fit-content;
-                                              resize: none;
-                                              min-height: auto;
-                                
-                                              @media (320px <=width <=767px) {
-                                                font-size: 14px;
-                                                line-height: 20px;
-                                              }
-                                
-                                              &:focus-visible {
-                                                outline: none;
-                                              }
-                                            }
-                                
-                                            &.field-emailid {
-                                              textarea {
-                                                height: 28px;
-                                              }
-                                            }
-                                
-                                            &.field-communicationaddress,
-                                            &.field-permanentaddress {
-                                
-                                              @media (320px <=width <=767px) {
-                                                margin-bottom: 20px;
-                                              }
-                                
-                                              textarea {
-                                                height: 115px !important;
-                                                margin-bottom: 20px;
-                                                width: 100% !important;
-                                
-                                                @media (320px <=width <=767px) {
-                                                  height: auto;
-                                                }
-                                              }
-                                            }
-                                          }
-                                
-                                          &:has(legend.accordion-collapse) {
-                                            padding-bottom: 20px;
-                                            transition: transform 0.3s;
-                                          }
-                                
-                                          fieldset.field-nomineedetails {
-                                            padding-bottom: 0;
-                                
-                                            legend {
-                                              margin-bottom: 0;
-                                              border-top-left-radius: 15px;
-                                              border-top-right-radius: 15px;
-                                            }
-                                          }
                                         }
 
+                                        .checkbox-wrapper {
+                                            label {
+                                                p {
+                                                    color: var(--color-interface-text-primary);
+                                                }
+                                            }
 
+                                            ul {
+                                                margin-left: 30px;
+                                                padding: 0;
+                                            }
+                                        }
+                                    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                                    .button-wrapper {
+                                        margin-top: 10px;
                                     }
                                 }
 
@@ -3842,7 +3912,8 @@ body.fd-backed-cc {
                         input[type="text"],
                         input[type="number"],
                         input[type="password"],
-                        input[type="date"] {
+                        input[type="date"],
+                        input[type="email"] {
                             font-size: var(--body-lg-font-size);
                             font-weight: var(--font-weight-medium);
                             color: var(--color-interface-text-primary) !important;
