@@ -1514,9 +1514,8 @@ body.fd-backed-cc {
                             }
 
                             .field-consenttext,
-                            .field-consent-fragment {
-                                border-top: 1px dashed var(--color-interface-border-secondary);
-                                padding-top: 20px;
+                            .field-consent-fragment,
+                            .field-consent3label {
                                 margin-top: 20px;
 
                                 p p,
@@ -1537,6 +1536,8 @@ body.fd-backed-cc {
 
                                 .field-checkboxconsent1label {
                                     flex-wrap: wrap;
+                                    border-top: 1px dashed var(--color-interface-border-secondary);
+                                    padding-top: 20px;
 
                                     .field-description {
                                         margin: -5px 0 5px 0;
@@ -2375,7 +2376,7 @@ body.fd-backed-cc {
 
                                         &.wizard-menu-active-item {
                                             &::before {
-                                                background: url("../assets/icons/wizard_step-confirm-details_active_icon.png")  var(--color-input-border-focus) no-repeat center center;
+                                                background: url("../assets/icons/wizard_step-confirm-details_active_icon.png") var(--color-input-border-focus) no-repeat center center;
                                             }
                                         }
                                     }
@@ -3469,7 +3470,8 @@ body.fd-backed-cc {
                                 P {
                                     margin: 0;
                                 }
-                                
+
+
                                 .field-fdsummarylabel1 {
                                     p {
                                         font-size: var(--body-fd-xx-lg-font-size);
@@ -3478,60 +3480,321 @@ body.fd-backed-cc {
                                     }
                                 }
 
-                                .field-fdsummary {
-                                    border-radius: 16px;
-                                    background: var(--color-interface-toaster-background-primary);
-                                    border: 1px solid var(--color-interface-border-primary);
-                                    padding: 15px;
-                                    display: flex;
-                                    align-items: center;
-                                    p{
-                                        margin: 0;
-                                    }
+                                .field-fdsummarysection {
+                                    .field-fdsummary {
+                                        border-radius: 16px;
+                                        background: var(--color-interface-toaster-background-primary);
+                                        border: 1px solid var(--color-interface-border-primary);
+                                        padding: 15px;
+                                        display: flex;
+                                        flex: 1;
 
-                                    input {
-                                        margin: 0;
-                                        padding: 0;
-                                        letter-spacing: 0;
-                                        border-radius: 0;
-                                        border: none;
-                                        height: auto;
-                                        line-height: normal;
-                                        background: none;
-                                    }
+                                        p {
+                                            margin: 0;
+                                        }
+
+                                        input {
+                                            margin: 0;
+                                            padding: 0;
+                                            letter-spacing: 0;
+                                            border-radius: 0;
+                                            border: none;
+                                            height: auto;
+                                            line-height: normal;
+                                            background: none;
+                                        }
 
 
-                                    .image-wrapper {
-                                        background: url("../assets/images/fd_summary_image.png") no-repeat center center;
-                                        width: 115px;
-                                        height: 84px;
-                                        picture{
-                                            display: none;
+                                        .image-wrapper {
+                                            background: url("../assets/images/fd_summary_image.png") no-repeat center center;
+                                            width: 115px;
+                                            height: 84px;
+
+                                            picture {
+                                                display: none;
+                                            }
+                                        }
+
+                                        .field-fdsummarywrapper {
+                                            .field-fdsummarylabel2 {
+                                                p {
+                                                    font-size: var(--body-fd-x-lg-font-size);
+                                                    font-weight: var(--font-weight-bold);
+                                                    color: var(--color-interface-text-primary);
+                                                }
+                                            }
+
+                                            .field-fdsummarydetailspanel {
+                                                display: flex;
+                                                flex: 1;
+
+                                                .field-wrapper {
+                                                    label {
+                                                        font-size: var(--body-sm-font-size);
+                                                        font-weight: var(--font-weight-regular);
+                                                        color: var(--color-interface-text-secondary);
+                                                        margin: 0;
+                                                        transform: none;
+                                                        padding: 0;
+                                                    }
+
+                                                    input {
+                                                        font-size: var(--body-fd-lg-font-size);
+                                                        font-weight: var(--font-weight-medium);
+                                                        color: #030612 !important;
+                                                    }
+                                                }
+                                            }
+
+                                            .field-fdsummaryhelpnote {
+                                                p {
+                                                    font-size: var(--body-fd-sm-font-size);
+                                                    font-weight: var(--font-weight-regular);
+                                                    color: var(--color-interface-text-secondary);
+                                                }
+                                            }
                                         }
                                     }
+                                }
 
-                                    .field-fdsummarylabel2{
+                                .field-reviewccdetailssection{
+                                    .field-reviewccdetailslabel{
                                         p{
-                                            font-size: var(--body-fd-x-lg-font-size);
+                                            font-size: var(--body-xx-lg-font-size);
                                             font-weight: var(--font-weight-bold);
                                             color: var(--color-interface-text-primary);
                                         }
                                     }
 
-                                    .field-wrapper{
-                                        label{
-                                            font-size: var(--body-sm-font-size);
-                                            font-weight: var(--font-weight-regular);
-                                            color: var(--color-interface-text-secondary);
-                                        }   
-
-                                        input{
-                                            font-size: var(--body-fd-lg-font-size);
-                                            font-weight: var(--font-weight-medium);
-                                            color: #030612 !important;
+                                    .field-reviewccapplicationdetailsview{
+                                        p{
+                                            margin: 0;
                                         }
+
+
+
+
+                                        fieldset.field-personaldetails,
+                                        fieldset.field-creditcarddetails,
+                                        fieldset.field-addressdetails,
+                                        fieldset.field-employeeassistance {
+                                          border: 1px solid var(--color-interface-border-primary);
+                                          border-radius: 15px;
+                                          margin-bottom: 10px;
+                                
+                                          @media (320px <=width <=767px) {
+                                            margin-bottom: 20px;
+                                          }
+                                
+                                          legend {
+                                           p{
+                                            font-size: var(--body-xx-lg-font-size);
+                                            font-weight: var(--font-weight-bold);
+                                            color: var(--color-interface-text-primary);
+                                            line-height: 32px;
+                                            letter-spacing: -0.02em;
+                                            padding: 15px 30px;
+                                            background: linear-gradient(270deg, #F3F6FD 0%, #F3F6FD 100%);
+                                            border-radius: 15px;
+                                            margin-bottom: 0;
+                                            position: relative;
+                                            height: 70px;
+                                            display: flex;
+                                            align-items: center;
+                                           }
+                                
+                                            @media (768px <=width <=991px) {
+                                              font-size: 24px;
+                                              line-height: 32px;
+                                            }
+                                
+                                            @media (320px <=width <=767px) {
+                                              font-size: 18px;
+                                              line-height: 24px;
+                                              padding: 15px;
+                                            }
+                                
+                                            &::after {
+                                              content: '';
+                                              position: absolute;
+                                              right: 30px;
+                                              width: 22px;
+                                              height: 13px;
+                                              background: url("../assets/icons/Arrow-Collapse.svg") no-repeat top center;
+                                              transition: 0.4s;
+                                              background-size: contain;
+                                              transform: rotate(180deg);
+                                            }
+                                
+                                            &.accordion-collapse {
+                                              border-bottom-left-radius: 0;
+                                              border-bottom-right-radius: 0;
+                                              margin-bottom: 20px;
+                                
+                                
+                                              &::after {
+                                                transform: rotate(0deg);
+                                                top: 30px;
+                                              }
+                                            }
+                                          }
+                                
+                                          & .text-wrapper.field-wrapper,
+                                          & .multiline-wrapper,
+                                          & .drop-down-wrapper,
+                                          & .plain-text-wrapper.field-wrapper {
+                                            padding: 0px 30px;
+                                
+                                            @media (320px <=width <=767px) {
+                                              padding: 0px 15px;
+                                            }
+                                          }
+                                
+                                          .field-nonomineetext {
+                                            position: relative;
+                                            display: flex;
+                                            align-items: center;
+                                            background-color: #FEF8E6;
+                                            margin: 10px 30px;
+                                            border-radius: 8px;
+                                
+                                            @media (320px <=width <=767px) {
+                                              margin: 10px;
+                                            }
+                                
+                                            p {
+                                              margin-bottom: 0;
+                                              display: flex;
+                                              align-items: center;
+                                
+                                              &::before {
+                                                content: '';
+                                                position: absolute;
+                                                height: 20px;
+                                                width: 20px;
+                                                background: url('../icons/info-circle.png') no-repeat left center;
+                                                left: 15px;
+                                
+                                                @media (320px <=width <=767px) {
+                                                  margin-left: -5px;
+                                                }
+                                              }
+                                
+                                              p {
+                                                min-height: 40px;
+                                                color: #F99F35;
+                                                font-size: 12px;
+                                                font-weight: 600;
+                                                line-height: 20px;
+                                                margin-bottom: 0;
+                                                padding: 10px 15px;
+                                
+                                                @media (320px <=width <=767px) {
+                                                  padding: 10px 0 10px 25px;
+                                                }
+                                
+                                                a {
+                                                  color: var(--color-action-text-secondary-default);
+                                                  margin-left: 3px;
+                                                }
+                                              }
+                                            }
+                                          }
+                                
+                                          .multiline-wrapper {
+                                            position: relative;
+                                
+                                            label {
+                                              margin: 2px 0 0 0;
+                                              padding: 0;
+                                            }
+                                
+                                            textarea {
+                                              border: none;
+                                              background: none;
+                                              margin: 0;
+                                              padding: 0;
+                                              font-size: 18px;
+                                              line-height: 28px;
+                                              font-weight: 500;
+                                              color: var(--color-interface-text-primary);
+                                              width: 90% !important;
+                                              height: fit-content;
+                                              resize: none;
+                                              min-height: auto;
+                                
+                                              @media (320px <=width <=767px) {
+                                                font-size: 14px;
+                                                line-height: 20px;
+                                              }
+                                
+                                              &:focus-visible {
+                                                outline: none;
+                                              }
+                                            }
+                                
+                                            &.field-emailid {
+                                              textarea {
+                                                height: 28px;
+                                              }
+                                            }
+                                
+                                            &.field-communicationaddress,
+                                            &.field-permanentaddress {
+                                
+                                              @media (320px <=width <=767px) {
+                                                margin-bottom: 20px;
+                                              }
+                                
+                                              textarea {
+                                                height: 115px !important;
+                                                margin-bottom: 20px;
+                                                width: 100% !important;
+                                
+                                                @media (320px <=width <=767px) {
+                                                  height: auto;
+                                                }
+                                              }
+                                            }
+                                          }
+                                
+                                          &:has(legend.accordion-collapse) {
+                                            padding-bottom: 20px;
+                                            transition: transform 0.3s;
+                                          }
+                                
+                                          fieldset.field-nomineedetails {
+                                            padding-bottom: 0;
+                                
+                                            legend {
+                                              margin-bottom: 0;
+                                              border-top-left-radius: 15px;
+                                              border-top-right-radius: 15px;
+                                            }
+                                          }
+                                        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                                     }
                                 }
+
                             }
 
                             /* CONFIRM DETAILS SCREEN END */
