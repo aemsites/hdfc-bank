@@ -7,8 +7,14 @@ const handler = {
         console.log(`Property "${property}" changed from "${target[property]}" to "${value}"`);
         target[property] = value; // Don't forget to update the property
         console.log('again {}', FORM_DATA.form);
+        hello(`${property}`, `${value}`);
         return true; // Indicate success
     }
+};
+
+const hello = (target, value) = {
+    console.log(target);
+    console.log(value);
 };
 
 /**
