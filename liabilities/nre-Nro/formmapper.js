@@ -17,10 +17,10 @@ const handler = {
  */
 const globalObjectMapper = (globals) => {
     FORM_DATA.form = globals.functions.exportData()?.form;
-    debugger;
     console.log(FORM_DATA.form);
     const proxyMapper = new Proxy(FORM_DATA.form, handler);
     proxyMapper.confirmDetails.addressForTaxPurpose = 'Jane';
+    console.log(FORM_DATA.form);
 }
 
 
