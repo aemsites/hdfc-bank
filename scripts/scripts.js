@@ -41,7 +41,7 @@ const FORM_CONSTANT = [
   },
   {
     // NRE NRO
-    formPath: ['nre-nro', 'account-opening-nre-nro'],
+    formPath: ['nre-nro', 'account-opening-nre-nro', 'platform'],
     class: 'nre',
     urlKey: ['nre-nro', 'account-opening-nre-nro'],
     launchScript: {
