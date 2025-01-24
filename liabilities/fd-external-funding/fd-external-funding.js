@@ -11,6 +11,7 @@ import {
     customFocus,
     setFetchCasaResponse,
     loadHomePage,
+    confirmDetailsConsent,
 } from './fd-external-fundingFunctions.js';
 
 import {
@@ -55,5 +56,6 @@ export {
     selectFundAcct,
     fdEfSimulationExecute,
     fdEfSwitchWizard,
-    updateReviewPage
+    updateReviewPage,
+    confirmDetailsConsent
 };
