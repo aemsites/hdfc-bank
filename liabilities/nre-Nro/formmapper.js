@@ -5,13 +5,14 @@ import {
 const validator = {
     get(target, key) {
         if (typeof target[key] === 'object' && target[key] !== null) {
+            console.log(target);
             return new Proxy(target[key], validator)
         } else {
             return target[key];
         }
     },
     set(target, property, value) {
-        console.log(`Property "${property}" changed from "${target[property]}" to "${value}"`);
+        console.log(`${target} Property "${property}" changed from "${target[property]}" to "${value}"`);
         target[property] = value; // Don't forget to update the property
         hello(`${property}`, `${value}`);
         return true; // Indicate success
