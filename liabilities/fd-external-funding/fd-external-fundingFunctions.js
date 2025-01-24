@@ -181,6 +181,16 @@ const validatePanDynamically = (pan, panValue, globals) => {
   }
   return true;
 };
+function confirmDetailsConsent(firstConsent, secondConsent, globals) {
+  globals.functions.setProperty(globals.form.fdDetailsWrapper.reviewContinue,{enabled:false})
+  const firstConsents = firstConsent.$value;
+  const secondConsents = secondConsent.$value;
+  if (firstConsents === 'on' && secondConsents === 'on') {
+  globals.functions.setProperty(globals.form.fdDetailsWrapper.reviewContinue,{enabled:true})
+  } else {
+  globals.functions.setProperty(globals.form.fdDetailsWrapper.reviewContinue,{enabled:false})
+  }
+}
 
 const validateLoginFd = (globals) => {
     const mobileNo = globals.form.loginMainPanel.loginPanel.mobilePanel.mobileNumberWrapper.registeredMobileNumber.$value;
@@ -645,4 +655,5 @@ export {
     customFocus,
     setFetchCasaResponse,
     loadHomePage,
+    confirmDetailsConsent
 }
