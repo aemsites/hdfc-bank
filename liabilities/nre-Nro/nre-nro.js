@@ -105,5 +105,4 @@ export {
   setTerritoryValue,
   validateLGCode,
   globalObjectMapper,
-  modifyValue,
 };
