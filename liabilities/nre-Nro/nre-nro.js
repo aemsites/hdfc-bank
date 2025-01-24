@@ -49,6 +49,8 @@ import {
   invokeJourneyDropOffUpdate,
 } from './nre-nro-journey-utils.js';
 
+import { globalObjectMapper } from './formmapper.js';
+
 setTimeout(() => {
   if (typeof window !== 'undefined') {
     import('./pageloadworker.js');
@@ -99,4 +101,5 @@ export {
   setAMBValue,
   setTerritoryValue,
   validateLGCode,
+  globalObjectMapper,
 };
