@@ -51,7 +51,6 @@ import {
 
 import { 
   globalObjectMapper,
-  modifyValue,
  } from './formmapper.js';
 
 setTimeout(() => {
