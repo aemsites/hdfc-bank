@@ -13,7 +13,9 @@ const validator = {
     },
     set(target, property, value) {
         console.log('target, {}', target);
-        console.log(`Property "${property}" changed from "${target[property]}" to "${value}"`);
+        console.log('path, {}',`globals.${value.path}`);
+        debugger;
+        console.log(`Property "${property}" changed from "${target[property]}" to "${value.key}"`);
         target[property] = value; // Don't forget to update the property
         //hello(`${property}`, `${value}`);
         return true; // Indicate success
@@ -34,7 +36,10 @@ const globalObjectMapper = (globals) => {
     console.log(FORM_DATA.form);
     FORM_DATA.form.confirmDetails.countryOfBirth = 'helloji1';
     const proxyMapper = new Proxy(FORM_DATA.form.confirmDetails, validator);
-    proxyMapper.countryOfBirth = 'helloji';
+    proxyMapper.countryOfBirth = {
+        'key':'helloji',
+        'path': 'form.confirmDetails'
+    };
     console.log('here');
 
 }
