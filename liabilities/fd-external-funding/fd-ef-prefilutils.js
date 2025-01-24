@@ -53,6 +53,16 @@ const updateReviewPage = async (globals) => {
     fixedDeposit: { maturityDateReview },
   } = globals.form.fdDetailsWrapper.externalFundingWizardView.wizardExternalFunding.review.confirmDetailsAccordion;
   
+  const renewalInstructionLabels = ['Renew Principle and Interest', 'Renew Principal only', 'Do not renew'];
+  const renewalInstructionValue = globals.form.fdDetailsWrapper.externalFundingWizardView.wizardExternalFunding.createFD.leftWrapper.renewalInstructions.selectAnyone.$value;
+  const renewalInstructionLabel = renewalInstructionLabels[renewalInstructionValue - 1] || "Unknown";
+  currentFormContext.renewalInstructionValue = renewalInstructionValue;
+  currentFormContext.nomineeSelectionValue = globals.form.fdDetailsWrapper.externalFundingWizardView.wizardExternalFunding.review.confirmDetailsAccordion.nomineeDetails.nomineePanel.nomineeRadioBtn.$value ?? '';
+
+
+  const rawMaturityDate = currentFormContext.simulationResponse.tdSimulationResponse.maturityDate.dateString;
+  const formattedMaturityDate = formatDate(rawMaturityDate);
+
   const fields = [
     { key: accountNumberReview, 
       value: currentFormContext.selectedFundAcct.accountNumber
@@ -71,7 +81,7 @@ const updateReviewPage = async (globals) => {
     },
     { 
       key: maturityInstructionReview, 
-      value: currentFormContext.simulationReqPayload.RequestPayload.SimulateTermDepositRequest.tdSimulationRequestDTO.termDepositFactsDTO.productGroup
+      value: renewalInstructionLabel
     },
     { 
       key: roiReview, 
@@ -83,12 +93,25 @@ const updateReviewPage = async (globals) => {
     },
     { 
       key: maturityDateReview, 
-      value: currentFormContext.simulationResponse.tdSimulationResponse.maturityDate.dateString
+      value: formattedMaturityDate
     }
   ];
   
   fields.forEach(({ key, value }) => formUtil(globals, key).setValue(value));
   
+}
+
+function formatDate(rawDate) {
+  const year = rawDate.slice(0, 4);
+  const month = rawDate.slice(4, 6) - 1;
+  const day = rawDate.slice(6, 8);
+  const date = new Date(year, month, day);
+  const formatter = new Intl.DateTimeFormat('en-GB', {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+  });
+  return formatter.format(date).replace(',', ''); // Example: "21 Nov 2025"
 }
 
 const handleFetchCasaPrefill = async (otpValResponse, globals) => {

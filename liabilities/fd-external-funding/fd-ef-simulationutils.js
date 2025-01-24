@@ -17,7 +17,7 @@ const FD_SIM_API = {
 };
 
 // eslint-disable-next-line no-unused-vars
-const createFdEfReqPayload = (globals) => {
+const createFdEfReqPayload = (triggerPlace, globals) => {
   const mobileNo = '91' + (globals.form.loginMainPanel.loginPanel.mobilePanel.mobileNumberWrapper.registeredMobileNumber.$value ?? '');
   const panValue = globals.form.loginMainPanel.loginPanel.identifierPanel.pan.$value ?? '';
   const dobValue = (globals.form.loginMainPanel.loginPanel.identifierPanel.dateOfBirth.$value ?? '')
@@ -65,6 +65,19 @@ const createFdEfReqPayload = (globals) => {
   const [_intPayNames, productGroupRaw] = mapInterestPayoust[interestPayoutOpt.$value] ?? '';
   const totalDayspg = (parseInt(term.months) * 30) + parseInt(term.days);
   const productGroup = totalDayspg <= 180 ? 'Days' : productGroupRaw;
+
+  const flgSendSMS = FD_SIM_API.triggerPlace === 'review' ? 'Y' : 'N';
+  const flgReplicateCASANominee = FD_SIM_API.triggerPlace === 'review' ? currentFormContext.nomineeSelectionValue : 'N';
+
+  const extraKey = FD_SIM_API.triggerPlace === 'review'
+    ? [
+        {
+          name: 'codAutoRenewRedeem',
+          value: currentFormContext?.renewalInstructionValue,
+        },
+      ]
+    : [];
+  
   const payload = {
     RequestPayload: {
       SimulateTermDepositRequest: {
@@ -101,16 +114,17 @@ const createFdEfReqPayload = (globals) => {
               },
               {
                 name: 'flgReplicateCASANominee',
-                value: 'Y',
+                value: flgReplicateCASANominee,
               },
               {
                 name: 'flgSendSMS',
-                value: 'N',
+                value: flgSendSMS,
               },
               {
                 name: 'makerID',
                 value: 'Adobe',
               },
+              ...extraKey,
             ],
           },
         ],
@@ -132,16 +146,20 @@ const createFdEfReqPayload = (globals) => {
  */
 // eslint-disable-next-line no-unused-vars
 const fdEfSimErrorCallBack = (err, globals) => {
-  if (FD_SIM_API.failureCount === 3) {
-    hideLoaderGif();
+  hideLoaderGif();
     // add logics to show if the 3 attempt failed
     globals.functions.setProperty(globals.form.fdDetailsWrapper.externalFundingWizardView.wizardExternalFunding, { visible: false });
     globals.functions.setProperty(globals.form.fdDetailsWrapper.externalFundingWizardView.simulationErrPage, { visible: true });
+}
+
+const recursiveSimulateAPI = (failureCount, triggerPlace, err, globals) => {
+  if (failureCount === 3 || FD_SIM_API.triggerPlace === 'review') {
+    fdEfSimErrorCallBack(err, globals);
   } else {
     // eslint-disable-next-line no-use-before-define
-    fdEfSimulationExecute(FD_SIM_API.triggerPlace, globals);
+    fdEfSimulationExecute(triggerPlace, globals);
   }
-};
+}
 
 /**
  * fdEfSimulation api success case scenario
@@ -160,10 +178,16 @@ const fdEfSimSuccessCallBack = (res, globals) => {
     globals.functions.setProperty(globals.form.fdDetailsWrapper.externalFundingWizardView.wizardExternalFunding.createFD.rightWrapper.maturityDetailsPanel.mDetails, { value: maturity });
     if (FD_SIM_API.triggerPlace === DOM_NAME.wizardSelectAct) {
       moveWizardView(DOM_NAME.wizardPanel, DOM_NAME.wizardCreateFd);
+    }else if(FD_SIM_API.triggerPlace === DOM_NAME.wizardReview) {
+      globals.functions.setProperty(globals.form.fdDetailsWrapper, { visible: false });
+      // globals.functions.setProperty(globals.form.bannerimagepanel, { visible: true });
+      globals.functions.setProperty(globals.form.otpPanelWrapper, { visible: true });
+      globals.functions.setProperty(globals.form.otpPanelWrapper.otpPanel.otpPanel.editMobileNumBtn, { visible: false });
     }
   } else {
     FD_SIM_API.failureCount += 1;
-    fdEfSimErrorCallBack(response, globals);
+    recursiveSimulateAPI(FD_SIM_API.failureCount, FD_SIM_API.triggerPlace, response, globals);
+    // fdEfSimErrorCallBack(response, globals);
   }
 };
 
@@ -185,9 +209,9 @@ function fdEfSimulationExecute(triggerPlace, globals) {
   const isMakeSimulationAPICall = tenureMonths >= 1 || tenureYears >= 1 || tenureDays >=7;
   if (isMakeSimulationAPICall){
     const urlPath = fdEfEndpoints.fdSimulation;
-    const jsonObj = createFdEfReqPayload(globals);
-    // const jsonObj = DATA_CONTRACT.fdSimReques;
     FD_SIM_API.triggerPlace = triggerPlace?.$name || triggerPlace?.name;
+    const jsonObj = createFdEfReqPayload(triggerPlace, globals);
+    // const jsonObj = DATA_CONTRACT.fdSimReques;
     displayLoader();
     restAPICall(globals, 'POST', jsonObj, urlPath, fdEfSimSuccessCallBack, fdEfSimErrorCallBack);
   }   
