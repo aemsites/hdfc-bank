@@ -12,6 +12,7 @@ const validator = {
         }
     },
     set(target, property, value) {
+        console.log('target, {}', target);
         console.log(`Property "${property}" changed from "${target[property]}" to "${value}"`);
         target[property] = value; // Don't forget to update the property
         //hello(`${property}`, `${value}`);
@@ -32,7 +33,7 @@ const globalObjectMapper = (globals) => {
     FORM_DATA.form = globals.functions.exportData()?.form;
     console.log(FORM_DATA.form);
     FORM_DATA.form.confirmDetails.countryOfBirth = 'helloji1';
-    const proxyMapper = new Proxy(FORM_DATA.form, validator);
+    const proxyMapper = new Proxy(FORM_DATA.form.confirmDetails, validator);
     proxyMapper.countryOfBirth = 'helloji';
     console.log('here');
 
