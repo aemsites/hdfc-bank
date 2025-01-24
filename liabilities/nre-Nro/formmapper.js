@@ -12,7 +12,7 @@ const handler = {
     }
 };
 
-const hello = (target, value) = {
+const hello = (target, value) => {
     console.log(target);
     console.log(value);
 };
