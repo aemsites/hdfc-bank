@@ -35,7 +35,7 @@ const globalObjectMapper = (globals) => {
     FORM_DATA.form = globals.functions.exportData()?.form;
     console.log(FORM_DATA.form);
     FORM_DATA.form.confirmDetails.countryOfBirth = 'helloji1';
-    const proxyMapper = new Proxy(FORM_DATA.form.confirmDetails, validator);
+    const proxyMapper = new Proxy(FORM_DATA.form, validator);
     proxyMapper.countryOfBirth = {
         'key':'helloji',
         'path': 'form.confirmDetails'
