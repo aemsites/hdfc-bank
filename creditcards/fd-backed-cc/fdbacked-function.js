@@ -239,19 +239,38 @@ const otpValidation = (mobileNumber, pan, dob, otpNumber, globals) => {
   const referenceNumber = generateErefNumber() ?? '';
   CURRENT_FORM_CONTEXT.referenceNumber = referenceNumber;
   const panValue = (pan.$value)?.replace(/\s+/g, ''); // remove white space
+  const isdCode = globals.form.loginMainPanel.loginPanel.mobilePanel.mobileNumberWrapper.countryCode.$value ?? '91';
+
   const jsonObj = {
     requestString: {
-      mobileNumber: mobileNumber.$value,
-      passwordValue: otpNumber.$value,
-      dateOfBirth: clearString(dob.$value) || '',
-      panNumber: panValue?.toUpperCase() || '',
-      channelSource: '',
-      journeyID: CURRENT_FORM_CONTEXT.journeyID,
-      journeyName: globals.form.runtime.journeyName.$value || CURRENT_FORM_CONTEXT.journeyName,
-      dedupeFlag: 'N',
-      referenceNumber: referenceNumber ?? '',
-    },
-  };
+        common: {
+            journeyID: globals.form.runtime.journeyId.$value ?? jidTemporary,
+            journeyName: globals.form.runtime.journeyName.$value || CURRENT_FORM_CONTEXT.journeyName,
+            userAgent: (typeof window !== 'undefined') ? window.navigator.userAgent : 'onLoad',
+            mobileNumber: isdCode + mobileNumber.$value,
+        },
+        otpValidation: {
+            version: "V4",
+            payload: {
+                passwordValue: otpNumber.$value,
+                dateOfBirth: clearString(dob.$value) || '',
+                panNumber: panValue?.toUpperCase() || '',
+                referenceNumber: referenceNumber ?? '',
+            }
+        },
+        orchestration: {
+            amlFatca: {
+                version: "V1",
+                payload: {
+                    passwordValue: otpNumber.$value,
+                    dateOfBirth: clearString(dob.$value) || '',
+                    panNumber: panValue?.toUpperCase() || '',
+                    referenceNumber: referenceNumber ?? '',
+                }
+            }
+        }
+    }
+}
   const path = urlPath(FD_ENDPOINTS.otpVal);
   formRuntime?.otpValLoader();
   return fetchJsonResponse(path, jsonObj, 'POST', true);
