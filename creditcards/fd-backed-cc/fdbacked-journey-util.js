@@ -145,5 +145,5 @@ export {
   invokeJourneyDropOffByParam,
   invokeJourneyDropOffByJourneyId,
   invokeJourneyDropOffUpdate,
-  fdWizardSwitch
+  fdWizardSwitch,
 };
