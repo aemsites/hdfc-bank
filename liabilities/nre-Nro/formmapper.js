@@ -1,6 +1,15 @@
 import {
     FORM_DATA
-  } from './constant.js';
+} from './constant.js';
+
+const handler = {
+    set(target, property, value) {
+        console.log(`Property "${property}" changed from "${target[property]}" to "${value}"`);
+        target[property] = value; // Don't forget to update the property
+        console.log('again {}', FORM_DATA.form);
+        return true; // Indicate success
+    }
+};
 
 /**
  * Maps form fields to data.
@@ -10,7 +19,15 @@ const globalObjectMapper = (globals) => {
     FORM_DATA.form = globals.functions.exportData()?.form;
     debugger;
     console.log(FORM_DATA.form);
+    const proxyMapper = new Proxy(FORM_DATA.form, handler);
+    proxyMapper.confirmDetails.addressForTaxPurpose = 'Jane';
 }
+
+
+
+
+
+
 
 export {
     globalObjectMapper
