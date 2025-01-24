@@ -50,6 +50,7 @@ import { CURRENT_FORM_CONTEXT } from '../../common/constants.js';
     wizardPanel: 'wizardExternalFunding',
     wizardCreateFd: 'createFD',
     wizardSelectAct: 'selectAccount',
+    wizardReview: 'review',
   };
   
   const DATA_CONTRACT = {
