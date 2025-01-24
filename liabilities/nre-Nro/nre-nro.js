@@ -49,7 +49,10 @@ import {
   invokeJourneyDropOffUpdate,
 } from './nre-nro-journey-utils.js';
 
-import { globalObjectMapper } from './formmapper.js';
+import { 
+  globalObjectMapper,
+  modifyValue,
+ } from './formmapper.js';
 
 setTimeout(() => {
   if (typeof window !== 'undefined') {
@@ -102,4 +105,5 @@ export {
   setTerritoryValue,
   validateLGCode,
   globalObjectMapper,
+  modifyValue,
 };
