@@ -57,7 +57,6 @@ const updateReviewPage = async (globals) => {
   const renewalInstructionValue = globals.form.fdDetailsWrapper.externalFundingWizardView.wizardExternalFunding.createFD.leftWrapper.renewalInstructions.selectAnyone.$value;
   const renewalInstructionLabel = renewalInstructionLabels[renewalInstructionValue - 1] || "Unknown";
   currentFormContext.renewalInstructionValue = renewalInstructionValue;
-  currentFormContext.nomineeSelectionValue = globals.form.fdDetailsWrapper.externalFundingWizardView.wizardExternalFunding.review.confirmDetailsAccordion.nomineeDetails.nomineePanel.nomineeRadioBtn.$value ?? '';
 
 
   const rawMaturityDate = currentFormContext.simulationResponse.tdSimulationResponse.maturityDate.dateString;

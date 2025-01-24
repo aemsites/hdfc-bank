@@ -67,7 +67,9 @@ const createFdEfReqPayload = (triggerPlace, globals) => {
   const productGroup = totalDayspg <= 180 ? 'Days' : productGroupRaw;
 
   const flgSendSMS = FD_SIM_API.triggerPlace === 'review' ? 'Y' : 'N';
-  const flgReplicateCASANominee = FD_SIM_API.triggerPlace === 'review' ? currentFormContext.nomineeSelectionValue : 'N';
+  
+  currentFormContext.nomineeSelectionValue = globals.form.fdDetailsWrapper.externalFundingWizardView.wizardExternalFunding.review.confirmDetailsAccordion.nomineeDetails.nomineePanel.nomineeRadioBtn.$value ?? '';
+  const flgReplicateCASANominee =   FD_SIM_API.triggerPlace === 'review' ? (currentFormContext.nomineeSelectionValue === 'Yes' ? 'Y' : 'N') : 'N';
 
   const extraKey = FD_SIM_API.triggerPlace === 'review'
     ? [
