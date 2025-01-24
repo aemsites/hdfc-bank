@@ -169,12 +169,11 @@ const getOTP = (mobileNumber, pan, dob, globals) => {
   CURRENT_FORM_CONTEXT.leadIdParam = globals.functions.exportData().queryParams;
   const isdCode = globals.form.loginMainPanel.loginPanel.mobilePanel.mobileNumberWrapper.countryCode.$value ?? '91';
   const panValue = (pan.$value)?.replace(/\s+/g, '');
-  
 
   const jsonObj = {
     requestString: {
       common: {
-        journeyID: globals.form.runtime.journeyId.$value ?? jidTemporary,
+        journeyID: globals.form.runtime.journeyId.$value,
         journeyName: globals.form.runtime.journeyName.$value || CURRENT_FORM_CONTEXT.journeyName,
         mobileNumber: isdCode + mobileNumber.$value,
         userAgent: (typeof window !== 'undefined') ? window.navigator.userAgent : 'onLoad',
@@ -182,22 +181,22 @@ const getOTP = (mobileNumber, pan, dob, globals) => {
         identifierName: panValue ? 'PAN' : 'DOB',
       },
       customerIdentification: {
-        version: "V1",
+        version: 'V1',
         payload: {
           dateOfBirth: clearString(dob.$value) || '',
           panNumber: panValue?.toUpperCase() || '',
           mobileNumber: isdCode + mobileNumber.$value,
-        }
+        },
       },
       otpGen: {
-        version: "V4",
+        version: 'V4',
         payload: {
           dateOfBirth: clearString(dob.$value) || '',
           panNumber: panValue?.toUpperCase() || '',
           mobileNumber: isdCode + mobileNumber.$value,
-        }
-      }
-    }
+        },
+      },
+    },
   };
   const path = urlPath(FD_ENDPOINTS.otpGen);
   formRuntime?.getOtpLoader();
@@ -243,34 +242,34 @@ const otpValidation = (mobileNumber, pan, dob, otpNumber, globals) => {
 
   const jsonObj = {
     requestString: {
-        common: {
-            journeyID: globals.form.runtime.journeyId.$value ?? jidTemporary,
-            journeyName: globals.form.runtime.journeyName.$value || CURRENT_FORM_CONTEXT.journeyName,
-            userAgent: (typeof window !== 'undefined') ? window.navigator.userAgent : 'onLoad',
-            mobileNumber: isdCode + mobileNumber.$value,
+      common: {
+        journeyID: globals.form.runtime.journeyId.$value,
+        journeyName: globals.form.runtime.journeyName.$value || CURRENT_FORM_CONTEXT.journeyName,
+        userAgent: (typeof window !== 'undefined') ? window.navigator.userAgent : 'onLoad',
+        mobileNumber: isdCode + mobileNumber.$value,
+      },
+      otpValidation: {
+        version: 'V4',
+        payload: {
+          passwordValue: otpNumber.$value,
+          dateOfBirth: clearString(dob.$value) || '',
+          panNumber: panValue?.toUpperCase() || '',
+          referenceNumber: referenceNumber ?? '',
         },
-        otpValidation: {
-            version: "V4",
-            payload: {
-                passwordValue: otpNumber.$value,
-                dateOfBirth: clearString(dob.$value) || '',
-                panNumber: panValue?.toUpperCase() || '',
-                referenceNumber: referenceNumber ?? '',
-            }
+      },
+      orchestration: {
+        amlFatca: {
+          version: 'V1',
+          payload: {
+            passwordValue: otpNumber.$value,
+            dateOfBirth: clearString(dob.$value) || '',
+            panNumber: panValue?.toUpperCase() || '',
+            referenceNumber: referenceNumber ?? '',
+          },
         },
-        orchestration: {
-            amlFatca: {
-                version: "V1",
-                payload: {
-                    passwordValue: otpNumber.$value,
-                    dateOfBirth: clearString(dob.$value) || '',
-                    panNumber: panValue?.toUpperCase() || '',
-                    referenceNumber: referenceNumber ?? '',
-                }
-            }
-        }
-    }
-}
+      },
+    },
+  };
   const path = urlPath(FD_ENDPOINTS.otpVal);
   formRuntime?.otpValLoader();
   return fetchJsonResponse(path, jsonObj, 'POST', true);
