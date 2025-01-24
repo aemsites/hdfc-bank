@@ -45,7 +45,7 @@ body.fd-backed-cc {
                 right: 0;
                 top: 0.5em;
                 height: 32px;
-                content: url("../icons/safe-secure.svg");
+                content: url("../assets/icons/safe-secure.svg");
                 padding: 0;
 
 
@@ -90,17 +90,17 @@ body.fd-backed-cc {
                         }
 
                         .field-bannerimagepanel {
-                            background: var(--color-interface-fd-background-secondary) url("../images/side_bar_banner.png") no-repeat top center;
+                            background: var(--color-interface-fd-background-secondary) url("../assets/images/side_bar_banner.png") no-repeat top center;
                             min-height: 648px;
 
 
                             @media (768px <=width <=1200px) {
-                                background: var(--color-interface-fd-background-secondary) url("../images/banner_tablet.png") no-repeat center center / 100% 100%;
+                                background: var(--color-interface-fd-background-secondary) url("../assets/images/banner_tablet.png") no-repeat center center / 100% 100%;
                                 min-height: 225px;
                             }
 
                             @media (320px <=width <=767px) {
-                                background: var(--color-interface-fd-background-secondary) url("../images/banner_mobile.png") no-repeat center center / 100% 100%;
+                                background: var(--color-interface-fd-background-secondary) url("../assets/images/banner_mobile.png") no-repeat center center / 100% 100%;
                                 min-height: 225px;
                             }
                         }
@@ -139,7 +139,7 @@ body.fd-backed-cc {
                             }
 
                             .field-landingpagebanner {
-                                background: url("../images/landing_banner_bg.png") repeat-x center top;
+                                background: url("../assets/images/landing_banner_bg.png") repeat-x center top;
                                 display: grid;
                                 animation: someanimation 1s linear forwards;
 
@@ -153,7 +153,7 @@ body.fd-backed-cc {
 
 
                                     .field-landingpanel11 {
-                                        background: url("../images/landing_banner_smily-bg.png") no-repeat -20px -10px;
+                                        background: url("../assets/images/landing_banner_smily-bg.png") no-repeat -20px -10px;
 
                                         @media (768px <=width <=991px) {
                                             background-size: 170%;
@@ -165,17 +165,17 @@ body.fd-backed-cc {
                                         }
 
                                         .field-landingpagetext1 {
-                                            background: url("../images/landing_banner_left-text.png") no-repeat 40px 50px;
+                                            background: url("../assets/images/landing_banner_left-text.png") no-repeat 40px 50px;
                                             height: 378px;
                                             width: 100%;
 
                                             @media (768px <=width <=991px) {
-                                                background: url("../images/landing_banner_left-text_ipad.png") no-repeat 40px 20px;
+                                                background: url("../assets/images/landing_banner_left-text_ipad.png") no-repeat 40px 20px;
                                                 height: 252px;
                                             }
 
                                             @media (max-width: 767px) {
-                                                background: url("../images/banner_mobile_text.png") no-repeat top center;
+                                                background: url("../assets/images/banner_mobile_text.png") no-repeat top center;
                                                 height: 194px;
                                             }
 
@@ -266,7 +266,7 @@ body.fd-backed-cc {
                                     @media (max-width: 767px) {
                                         grid-column: span 12;
                                         order: 1;
-                                        background: url("../images/banner_mobile_users.png") no-repeat center top;
+                                        background: url("../assets/images/banner_mobile_users.png") no-repeat center top;
                                     }
 
                                     @media (max-width: 400px) {
@@ -277,13 +277,13 @@ body.fd-backed-cc {
                                     .image-wrapper {
                                         max-width: 380px;
                                         height: 405px;
-                                        background: url("../images/landing_banner_right.png") no-repeat right 50px;
+                                        background: url("../assets/images/landing_banner_right.png") no-repeat right 50px;
                                         background-size: 95%;
 
                                         @media (768px <=width <=991px) {
                                             width: 100%;
 
-                                            background: url("../images/landing_banner_right_ipad.png") no-repeat right top;
+                                            background: url("../assets/images/landing_banner_right_ipad.png") no-repeat right top;
                                             background-size: 100%;
                                         }
 
@@ -476,7 +476,7 @@ body.fd-backed-cc {
 
 
                                             .image-wrapper {
-                                                background: url("../images/freedom_card.png") no-repeat;
+                                                background: url("../assets/images/freedom_card.png") no-repeat;
                                                 margin-top: 20px;
 
                                                 height: 125px;
@@ -503,7 +503,7 @@ body.fd-backed-cc {
                                                         position: absolute;
                                                         width: 16px;
                                                         height: 16px;
-                                                        background: url("../icons/folder_icon.png") no-repeat top left;
+                                                        background: url("../assets/icons/folder_icon.png") no-repeat top left;
                                                     }
 
                                                     label {
@@ -545,7 +545,7 @@ body.fd-backed-cc {
                                                     height: auto;
 
                                                     &::after {
-                                                        background: url("../icons/right_blue_arrow.png") no-repeat right 3px;
+                                                        background: url("../assets/icons/right_blue_arrow.png") no-repeat right 3px;
                                                     }
 
                                                     &:hover {
@@ -601,7 +601,7 @@ body.fd-backed-cc {
                                                         transform: none;
                                                         margin: 0;
                                                         padding: 0;
-                                                        background: url("../icons/only_amount_icon.png") no-repeat center center;
+                                                        background: url("../assets/icons/only_amount_icon.png") no-repeat center center;
                                                         background-size: 15px;
                                                         width: 20px;
                                                         font-size: 0;
@@ -701,7 +701,7 @@ body.fd-backed-cc {
                                                     position: absolute;
                                                     height: 100%;
                                                     width: 100%;
-                                                    background: transparent url("../icons/right-arrow.png") no-repeat center center;
+                                                    background: transparent url("../assets/icons/right-arrow.png") no-repeat center center;
                                                     transition: transform 0.3s ease, background 0.3s ease;
                                                 }
 
@@ -710,7 +710,7 @@ body.fd-backed-cc {
 
                                                     &::before {
                                                         transform: rotate(360deg);
-                                                        background: var(--color-interface-border-highlight) url("../icons/right-arrow.png") no-repeat center center;
+                                                        background: var(--color-interface-border-highlight) url("../assets/icons/right-arrow.png") no-repeat center center;
                                                     }
                                                 }
                                             }
@@ -892,7 +892,7 @@ body.fd-backed-cc {
                                             }
 
                                             &.field-enterfdamtwrap {
-                                                background: url("../icons/triple_right_arrow.png") no-repeat 90% center;
+                                                background: url("../assets/icons/triple_right_arrow.png") no-repeat 90% center;
                                                 width: 100%;
                                                 position: relative;
 
@@ -902,7 +902,7 @@ body.fd-backed-cc {
 
                                                 @media (max-width: 767px) {
                                                     width: 100%;
-                                                    background: url("../icons/mob_vertical_three_arrow.png") no-repeat bottom center;
+                                                    background: url("../assets/icons/mob_vertical_three_arrow.png") no-repeat bottom center;
                                                     padding-bottom: 80px;
                                                 }
 
@@ -1005,7 +1005,7 @@ body.fd-backed-cc {
                                                     &::before {
                                                         content: '';
                                                         position: absolute;
-                                                        background: url("../icons/credit_limit_tick_icon.png") no-repeat left center;
+                                                        background: url("../assets/icons/credit_limit_tick_icon.png") no-repeat left center;
                                                         width: 32px;
                                                         height: 32px;
                                                         top: 30%;
@@ -1102,19 +1102,19 @@ body.fd-backed-cc {
                                             }
 
                                             &.field-secureccinfo1img {
-                                                background: url("../icons/benifit_build_credit_icon.png") no-repeat center center;
+                                                background: url("../assets/icons/benifit_build_credit_icon.png") no-repeat center center;
                                             }
 
                                             &.field-secureccinfo2img {
-                                                background: url("../icons/benifit_high_rates_icon.png") no-repeat center center;
+                                                background: url("../assets/icons/benifit_high_rates_icon.png") no-repeat center center;
                                             }
 
                                             &.field-secureccinfo3img {
-                                                background: url("../icons/benifit_unsecure_card_icon.png") no-repeat center center;
+                                                background: url("../assets/icons/benifit_unsecure_card_icon.png") no-repeat center center;
                                             }
 
                                             &.field-secureccinfo4img {
-                                                background: url("../icons/benifit_reward_icon.png") no-repeat center center;
+                                                background: url("../assets/icons/benifit_reward_icon.png") no-repeat center center;
                                             }
 
                                         }
@@ -1224,7 +1224,7 @@ body.fd-backed-cc {
                                         }
 
                                         select {
-                                            background: url("../icons/india-flag.png") no-repeat 20px center;
+                                            background: url("../assets/icons/india-flag.png") no-repeat 20px center;
                                             padding: 0 !important;
                                             text-align: right;
                                             appearance: none;
@@ -1449,11 +1449,11 @@ body.fd-backed-cc {
                                         padding-left: 22px;
 
                                         &[type="text"] {
-                                            background: url("../icons/date_picker_cal_icon_default.svg") no-repeat 98% center;
+                                            background: url("../assets/icons/date_picker_cal_icon_default.svg") no-repeat 98% center;
                                         }
 
                                         &[type="date"] {
-                                            background: url("../icons/date_picker_cal_icon_select.svg") no-repeat 98% center;
+                                            background: url("../assets/icons/date_picker_cal_icon_select.svg") no-repeat 98% center;
                                         }
 
                                         &:focus-visible {
@@ -1468,7 +1468,7 @@ body.fd-backed-cc {
                                     &[data-empty="false"] {
                                         input {
                                             color: var(--color-interface-text-primary);
-                                            background: url("../icons/date_picker_cal_icon_select.svg") no-repeat 98% center;
+                                            background: url("../assets/icons/date_picker_cal_icon_select.svg") no-repeat 98% center;
                                         }
                                     }
                                 }
@@ -1487,7 +1487,7 @@ body.fd-backed-cc {
                                 .field-mobilenumfootnote {
                                     background: #E7EEFD;
                                     position: relative;
-                                    margin: 10px 0 20px 0;
+                                    margin: 10px 0 5px 0;
                                     padding-left: 30px;
                                     display: flex;
                                     align-items: center;
@@ -1498,7 +1498,7 @@ body.fd-backed-cc {
                                         content: '';
                                         position: absolute;
                                         left: 15px;
-                                        background: url("../icons/info-icon.svg") no-repeat center center;
+                                        background: url("../assets/icons/info-icon.svg") no-repeat center center;
                                         width: 16px;
                                         height: 16px;
                                         background-size: 100%;
@@ -1619,25 +1619,25 @@ body.fd-backed-cc {
 
                                         &.field-step1image {
                                             &::after {
-                                                background: url("../icons/step_follow_verify-identify.png") no-repeat center center;
+                                                background: url("../assets/icons/step_follow_verify-identify.png") no-repeat center center;
                                             }
                                         }
 
                                         &.field-step2image {
                                             &::after {
-                                                background: url("../icons/step_follow_credit-card.png") no-repeat center center;
+                                                background: url("../assets/icons/step_follow_credit-card.png") no-repeat center center;
                                             }
                                         }
 
                                         &.field-step3image {
                                             &::after {
-                                                background: url("../icons/step_follow_select-fd.png") no-repeat center center;
+                                                background: url("../assets/icons/step_follow_select-fd.png") no-repeat center center;
                                             }
                                         }
 
                                         &.field-step4image {
                                             &::after {
-                                                background: url("../icons/step_follow_verify-identify.png") no-repeat center center;
+                                                background: url("../assets/icons/step_follow_verify-identify.png") no-repeat center center;
 
                                             }
                                         }
@@ -1978,10 +1978,10 @@ body.fd-backed-cc {
                                 width: 199px;
                                 height: 125px;
                                 margin: 30px auto;
-                                background: url("../images/credit-card-sample.png") no-repeat center center;
+                                background: url("../assets/images/credit-card-sample.png") no-repeat center center;
 
                                 @media (320px <=width <=768px) {
-                                    background: url("../images/credit-card-sample_ipad.png") no-repeat center center;
+                                    background: url("../assets/images/credit-card-sample_ipad.png") no-repeat center center;
                                     width: 299px;
                                     height: 187px;
                                 }
@@ -2033,7 +2033,7 @@ body.fd-backed-cc {
                                         transform: none;
                                         margin: 0;
                                         padding: 0;
-                                        background: url("../icons/only_amount_icon.png") no-repeat center center;
+                                        background: url("../assets/icons/only_amount_icon.png") no-repeat center center;
                                         background-size: 15px;
                                         width: 20px;
                                         font-size: 0;
@@ -2353,7 +2353,7 @@ body.fd-backed-cc {
 
                                     &:first-child {
                                         &::before {
-                                            background: url("../icons/wizard_select_credit_card_icon.png") no-repeat center center;
+                                            background: url("../assets/icons/wizard_select_credit_card_icon.png") no-repeat center center;
                                             /*  border-color: var(--color-action-border-primary-default); */
                                         }
 
@@ -2362,7 +2362,7 @@ body.fd-backed-cc {
                                             font-weight: var(--font-weight-bold);
 
                                             &::before {
-                                                background: var(--color-input-border-focus) url("../icons/wizard_select_credit_card_active_icon.png") no-repeat center center;
+                                                background: var(--color-input-border-focus) url("../assets/icons/wizard_select_credit_card_active_icon.png") no-repeat center center;
                                                 border: 2px solid #c6d4ff;
                                             }
                                         }
@@ -2370,24 +2370,24 @@ body.fd-backed-cc {
 
                                     &:nth-child(2) {
                                         &::before {
-                                            background: url("../icons/wizard_step-confirm-details.png") no-repeat center center;
+                                            background: url("../assets/icons/wizard_step-confirm-details.png") no-repeat center center;
                                         }
 
                                         &.wizard-menu-active-item {
                                             &::before {
-                                                background: url("../icons/wizard_step-confirm-details_active_icon.png")  var(--color-input-border-focus) no-repeat center center;
+                                                background: url("../assets/icons/wizard_step-confirm-details_active_icon.png")  var(--color-input-border-focus) no-repeat center center;
                                             }
                                         }
                                     }
 
                                     &:nth-child(3) {
                                         &::before {
-                                            background: url("../icons/wizard_verify_icon.png") no-repeat center center;
+                                            background: url("../assets/icons/wizard_verify_icon.png") no-repeat center center;
                                         }
 
                                         &.wizard-menu-active-item {
                                             &::before {
-                                                background: var(--color-input-border-focus) url("../icons/wizard_verify_active_icon.png") no-repeat center center;
+                                                background: var(--color-input-border-focus) url("../assets/icons/wizard_verify_active_icon.png") no-repeat center center;
                                             }
                                         }
 
@@ -2458,7 +2458,7 @@ body.fd-backed-cc {
                                             position: absolute;
                                             height: 20px;
                                             width: 20px;
-                                            background: url("../icons/arrow-right-blue_light_icon.png") no-repeat left center;
+                                            background: url("../assets/icons/arrow-right-blue_light_icon.png") no-repeat left center;
                                             top: 15px;
                                             left: 0;
                                         }
@@ -2506,7 +2506,7 @@ body.fd-backed-cc {
                                         .field-singlecardviewimage {
                                             width: 283px;
                                             height: 178px;
-                                            background: url("../images/credit-card-sample.png") no-repeat;
+                                            background: url("../assets/images/credit-card-sample.png") no-repeat;
                                             background-size: cover;
                                             margin: 0 auto;
 
@@ -2611,37 +2611,37 @@ body.fd-backed-cc {
 
                                                 &.field-singleccfeature1 {
                                                     &::before {
-                                                        background: #FEFAE6 url("../icons/currency_conversion_icon1.png") no-repeat center center;
+                                                        background: #FEFAE6 url("../assets/icons/currency_conversion_icon1.png") no-repeat center center;
                                                     }
                                                 }
 
                                                 &.field-singleccfeature2 {
                                                     &::before {
-                                                        background: #EBF9EF url("../icons/dollar_icon2.png") no-repeat center center;
+                                                        background: #EBF9EF url("../assets/icons/dollar_icon2.png") no-repeat center center;
                                                     }
                                                 }
 
                                                 &.field-singleccfeature3 {
                                                     &::before {
-                                                        background: #F4F0FF url("../icons/lounge_icon3.png") no-repeat center center;
+                                                        background: #F4F0FF url("../assets/icons/lounge_icon3.png") no-repeat center center;
                                                     }
                                                 }
 
                                                 &.field-singleccfeature4 {
                                                     &::before {
-                                                        background: #FDEFED url("../icons/insurance_icon4.png") no-repeat center center;
+                                                        background: #FDEFED url("../assets/icons/insurance_icon4.png") no-repeat center center;
                                                     }
                                                 }
 
                                                 &.field-singleccfeature5 {
                                                     &::before {
-                                                        background: #EBF9EF url("../icons/dollar_icon2.png") no-repeat center center;
+                                                        background: #EBF9EF url("../assets/icons/dollar_icon2.png") no-repeat center center;
                                                     }
                                                 }
 
                                                 &.field-singleccfeature6 {
                                                     &::before {
-                                                        background: #FEFAE6 url("../icons/currency_conversion_icon1.png") no-repeat center center;
+                                                        background: #FEFAE6 url("../assets/icons/currency_conversion_icon1.png") no-repeat center center;
                                                     }
                                                 }
                                             }
@@ -2779,7 +2779,7 @@ body.fd-backed-cc {
                                             }
 
                                             .image-wrapper {
-                                                background: url("../images/freedom_card.png") no-repeat;
+                                                background: url("../assets/images/freedom_card.png") no-repeat;
                                                 margin-top: 20px;
 
                                                 height: 125px;
@@ -2804,7 +2804,7 @@ body.fd-backed-cc {
                                                         position: absolute;
                                                         width: 16px;
                                                         height: 16px;
-                                                        background: url("../icons/folder_icon.png") no-repeat top left;
+                                                        background: url("../assets/icons/folder_icon.png") no-repeat top left;
                                                     }
 
                                                     p p,
@@ -2819,7 +2819,7 @@ body.fd-backed-cc {
 
                                                     &.field-multicardfeatures1 {
                                                         &::before {
-                                                            background: url("../icons/bank_gray_icon.png") no-repeat top left;
+                                                            background: url("../assets/icons/bank_gray_icon.png") no-repeat top left;
                                                         }
                                                     }
 
@@ -2843,7 +2843,7 @@ body.fd-backed-cc {
                                                     height: auto;
 
                                                     &::after {
-                                                        background: url("../icons/right_blue_arrow.png") no-repeat right 3px;
+                                                        background: url("../assets/icons/right_blue_arrow.png") no-repeat right 3px;
                                                     }
 
                                                     &:hover {
@@ -2899,7 +2899,7 @@ body.fd-backed-cc {
                                                         transform: none;
                                                         margin: 0;
                                                         padding: 0;
-                                                        background: url("../icons/only_amount_icon.png") no-repeat center center;
+                                                        background: url("../assets/icons/only_amount_icon.png") no-repeat center center;
                                                         background-size: 15px;
                                                         width: 20px;
                                                         font-size: 0;
@@ -3025,7 +3025,7 @@ body.fd-backed-cc {
                                                     position: absolute;
                                                     height: 29px;
                                                     width: 29px;
-                                                    background: url("../icons/eligible_credit_limit_icon.png") no-repeat;
+                                                    background: url("../assets/icons/eligible_credit_limit_icon.png") no-repeat;
                                                     margin-left: -40px;
                                                 }
                                             }
@@ -3203,7 +3203,7 @@ body.fd-backed-cc {
                                             padding: 0;
 
                                             &:checked {
-                                                background: var(--color-interface-icon-highlight) url("../icons/checkbox-checked-arrow.png") no-repeat center center;
+                                                background: var(--color-interface-icon-highlight) url("../assets/icons/checkbox-checked-arrow.png") no-repeat center center;
                                                 border: none;
                                                 cursor: pointer;
                                             }
@@ -3243,7 +3243,7 @@ body.fd-backed-cc {
 
                                         p p {
                                             padding-left: 30px;
-                                            background: url("../icons/info-icon.svg") no-repeat center left;
+                                            background: url("../assets/icons/info-icon.svg") no-repeat center left;
                                             font-size: var(--body-fd-sm-font-size);
                                             font-weight: var(--font-weight-medium);
                                             color: var(--color-action-border-primary-default);
@@ -3320,7 +3320,7 @@ body.fd-backed-cc {
                                                 padding-left: 22px;
 
                                                 &[type="date"] {
-                                                    background: url("../icons/date_picker_cal_icon_select.svg") no-repeat 98% center;
+                                                    background: url("../assets/icons/date_picker_cal_icon_select.svg") no-repeat 98% center;
                                                 }
 
                                                 &:focus-visible {
@@ -3358,7 +3358,7 @@ body.fd-backed-cc {
 
                                         p p {
                                             padding-left: 30px;
-                                            background: url("../icons/info-icon.svg") no-repeat center left;
+                                            background: url("../assets/icons/info-icon.svg") no-repeat center left;
                                             font-size: var(--body-fd-sm-font-size);
                                             font-weight: var(--font-weight-medium);
                                             color: var(--color-action-border-primary-default);
@@ -3390,7 +3390,7 @@ body.fd-backed-cc {
                                                 padding: 0;
 
                                                 &:checked {
-                                                    background: var(--color-interface-icon-highlight) url("../icons/checkbox-checked-arrow.png") no-repeat center center;
+                                                    background: var(--color-interface-icon-highlight) url("../assets/icons/checkbox-checked-arrow.png") no-repeat center center;
                                                     border: none;
                                                     cursor: pointer;
                                                 }
@@ -3469,7 +3469,7 @@ body.fd-backed-cc {
                                 P {
                                     margin: 0;
                                 }
-
+                                
                                 .field-fdsummarylabel1 {
                                     p {
                                         font-size: var(--body-fd-xx-lg-font-size);
@@ -3489,8 +3489,20 @@ body.fd-backed-cc {
                                         margin: 0;
                                     }
 
+                                    input {
+                                        margin: 0;
+                                        padding: 0;
+                                        letter-spacing: 0;
+                                        border-radius: 0;
+                                        border: none;
+                                        height: auto;
+                                        line-height: normal;
+                                        background: none;
+                                    }
+
+
                                     .image-wrapper {
-                                        background: url("../images/fd_summary_image.png") no-repeat center center;
+                                        background: url("../assets/images/fd_summary_image.png") no-repeat center center;
                                         width: 115px;
                                         height: 84px;
                                         picture{
@@ -3500,7 +3512,23 @@ body.fd-backed-cc {
 
                                     .field-fdsummarylabel2{
                                         p{
+                                            font-size: var(--body-fd-x-lg-font-size);
+                                            font-weight: var(--font-weight-bold);
+                                            color: var(--color-interface-text-primary);
+                                        }
+                                    }
 
+                                    .field-wrapper{
+                                        label{
+                                            font-size: var(--body-sm-font-size);
+                                            font-weight: var(--font-weight-regular);
+                                            color: var(--color-interface-text-secondary);
+                                        }   
+
+                                        input{
+                                            font-size: var(--body-fd-lg-font-size);
+                                            font-weight: var(--font-weight-medium);
+                                            color: #030612 !important;
                                         }
                                     }
                                 }
@@ -3595,7 +3623,7 @@ body.fd-backed-cc {
                             -moz-appearance: none;
                             -webkit-appearance: none;
                             appearance: none;
-                            background: var(--color-interface-background-primary) url("./../icons/select_arrow.svg") no-repeat 95% center;
+                            background: var(--color-interface-background-primary) url("./../assets/icons/select_arrow.svg") no-repeat 95% center;
 
                             &:focus-visible {
                                 outline: none;
@@ -3664,7 +3692,7 @@ body.fd-backed-cc {
                                 font-family: "Inter", sans-serif !important;
 
                                 &::after {
-                                    content: url("../../icons/Arrow.png");
+                                    content: url("../../assets/icons/Arrow.png");
                                     position: absolute;
                                     margin-top: 2px;
                                 }
@@ -3753,7 +3781,7 @@ body.fd-backed-cc {
                                 padding: 0;
 
                                 &:checked {
-                                    background: var(--color-interface-icon-highlight) url("../icons/checkbox-checked-arrow.png") no-repeat center center;
+                                    background: var(--color-interface-icon-highlight) url("../assets/icons/checkbox-checked-arrow.png") no-repeat center center;
                                     border: none;
                                     cursor: pointer;
                                 }
