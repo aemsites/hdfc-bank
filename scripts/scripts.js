@@ -12,7 +12,7 @@ import {
   loadScript,
 } from './aem.js';
 
-import { getSubmitBaseUrl } from '../blocks/form/constant.js';
+import { getSubmitBaseUrl, setSubmitBaseUrl } from '../blocks/form/constant.js';
 
 const LCP_BLOCKS = []; // add your LCP blocks to the list
 
@@ -40,21 +40,10 @@ const FORM_CONSTANT = [
     },
   },
   {
-    // FD
-    formPath: ['etb-fixed-deposit-cc', 'pvtestfdliencugtest', 'fd-lien-cug-test'],
-    class: 'fdlien',
-    urlKey: ['fdlien', 'pvtestfdliencugtest', 'fd-lien-cug-test', 'etb-fixed-deposit-cc'],
-    launchScript: {
-      dev: 'https://assets.adobedtm.com/80673311e435/029b16140ccd/launch-a47f215bcdb9-development.min.js',
-      prod: 'https://assets.adobedtm.com/80673311e435/029b16140ccd/launch-a47f215bcdb9-development.min.js',
-      loadTime: 1200,
-    },
-  },
-  {
     // NRE NRO
-    formPath: ['nre-nro', 'account-opening-nre-nro'],
+    formPath: ['nre-nro', 'account-opening-nre-nro', 'nriaddonaccounts'],
     class: 'nre',
-    urlKey: ['nre-nro', 'account-opening-nre-nro'],
+    urlKey: ['nre-nro', 'account-opening-nre-nro', 'nriaddonaccounts'],
     launchScript: {
       dev: 'https://assets.adobedtm.com/80673311e435/029b16140ccd/launch-e17de29eec01-development.min.js',
       prod: 'https://assets.adobedtm.com/80673311e435/029b16140ccd/launch-39d52f236cd6.min.js',
@@ -86,6 +75,18 @@ function buildHeroBlock(main) {
     const section = document.createElement('div');
     section.append(buildBlock('hero', { elems: [picture, h1] }));
     main.prepend(section);
+  }
+}
+
+if ((typeof window !== 'undefined') && (typeof window.location !== 'undefined')) {
+  const queryString = window.location.search;
+  const params = new URLSearchParams(queryString);
+  const isBlueGreenActive = params.get('isBGPrd');
+  // eslint-disable-next-line no-console
+  console.log(isBlueGreenActive);
+  // const isReferrerAllowed = GREEN_ENV.some(hostname => GREEN_ENV.includes(hostname));
+  if (isBlueGreenActive) {
+    setSubmitBaseUrl('https://publish1apsouth1-b80-28947060.prod.hdfc.adobecqms.net');
   }
 }
 

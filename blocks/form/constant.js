@@ -28,17 +28,17 @@ function isLocalDev() {
   return false;
 }
 
-function isMainProd() {
-  // eslint-disable-next-line no-restricted-globals
-  if(typeof location !== 'undefined') {
-    const { hostname } = location;
-    return mainProd.some((main) => hostname.includes(main));
-  }
-  return false;
+function isMainProd() {	
+  // eslint-disable-next-line no-restricted-globals	
+  if (typeof location !== 'undefined') {	
+    const { hostname } = location;	
+    return mainProd.some((main) => hostname.includes(main));	
+  }	
+  return false;	
 }
 
-if (isLocalDev() && !isMainProd()) {
-  submitBaseUrl = 'https://applyonlinedev.hdfcbank.com';
+if (isLocalDev()) {
+  submitBaseUrl = 'https://applyonlinestage.hdfcbank.com';
 }
 
 export function setSubmitBaseUrl(url) {
