@@ -2,7 +2,7 @@ import {
     FORM_DATA
 } from './constant.js';
 
-const handler = {
+const validator = {
     get(target, key) {
         if (typeof target[key] === 'object' && target[key] !== null) {
             return new Proxy(target[key], validator)
@@ -30,7 +30,7 @@ const hello = (target, value) => {
 const globalObjectMapper = (globals) => {
     FORM_DATA.form = globals.functions.exportData()?.form;
     console.log(FORM_DATA.form);
-    const proxyMapper = new Proxy(FORM_DATA.form, handler);
+    const proxyMapper = new Proxy(FORM_DATA.form, validator);
     proxyMapper.confirmDetails.countryOfBirth = 'helloji';
     console.log('here');
 
