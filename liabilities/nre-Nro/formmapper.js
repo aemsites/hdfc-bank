@@ -24,6 +24,7 @@ const hello = (target, value) => {
 const globalObjectMapper = (globals) => {
     FORM_DATA.form = globals.functions.exportData()?.form;
     console.log(FORM_DATA.form);
+    modifyValue('helloji');
     
     
 }
