@@ -8,6 +8,7 @@ import {
  */
 const globalObjectMapper = (globals) => {
     FORM_DATA = globals.functions.exportData()?.form;
+    debugger;
     console.log(FORM_DATA);
 }
 
