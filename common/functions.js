@@ -130,6 +130,12 @@ function updateFormElement(form, key, value) {
  */
 async function aadharInit(mobileNumber, pan, dob, globals) {
   currentFormContext.VISIT_TYPE = 'AADHAR';
+  /**
+  * Retrieves the lead type value stored in the `currentFormContext.LEAD_TYPE` variable.
+  * Example: For a CCC form, `currentFormContext.LEAD_TYPE` holds the `leadTypeValue`.
+  */
+  const FORM_LEAD_TYPE = currentFormContext?.LEAD_TYPE;
+  const leadType = (FORM_LEAD_TYPE && { leadType: FORM_LEAD_TYPE });
   const jsonObj = {
     requestString: {
       initParameters: {
@@ -207,6 +213,7 @@ async function aadharInit(mobileNumber, pan, dob, globals) {
           long: '19.0760° N',
         },
       },
+      ...leadType,
     },
   };
 
