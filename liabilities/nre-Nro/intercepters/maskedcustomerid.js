@@ -1,4 +1,4 @@
-export default async function intercept(element, key, path, globals, val, type) {
+export default async function intercept(element, globals, val, type) {
     val = val.toString();
     val = 'X'.repeat((val.length - 4))
         +

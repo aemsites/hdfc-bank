@@ -1,3 +1,3 @@
-export default async function intercept(element, key, path, globals, val, type) {
+export default async function intercept(element, globals, val, type) {
     globals.functions.setProperty(element, {value: val});
 }

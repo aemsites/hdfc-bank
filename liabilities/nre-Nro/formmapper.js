@@ -24,20 +24,36 @@ export function initializeData() {
  * Maps form fields to data.
  * @param {Object} globals 
  */
-export async function globalObjectMapper(globals){
-    initializeData();   
+export async function globalObjectMapper(globals) {
+    initializeData();
     await formDataModelling(globals, fatcaResponse);
 }
 
 export default async function formDataModelling(globals, jsonObject) {
+    let objValArr = [];
+    let typeArr = [];
     for (const [key, value] of Object.entries(datatoformmodel)) {
-        const path = value.split('|')[0];
-        const type = value.split('|')[1];
-        const objVal = deepFindES6(jsonObject, key);
-        const element = eval(`${path}`);
+        if (Array.isArray(value)) {
+            for (const val of value) {
+                const jsonObjectPath = val.split('|')[0];
+                const type = val.split('|')[1];
+                let prop = deepFindES6(jsonObject, jsonObjectPath);
+                objValArr.push(prop);
+                typeArr.push(type);
+            }
+        } else {
+            const jsonObjectPath = value.split('|')[0];
+            const type = value.split('|')[1];
+            let prop = deepFindES6(jsonObject, jsonObjectPath);
+            objValArr.push(prop);
+            typeArr.push(type);
+        }
+        const element = eval(`${key}`);
         const intercepterModule = await import('./intercepter.js')
-        intercepterModule.default(element, key, path, globals, objVal, type);
+        intercepterModule.default(element, globals, objValArr, typeArr);
+        objValArr = [];
+        typeArr = [];
     }
 }
 
-  const deepFindES6 = (o, p) => p.split('.').reduce((a, v) => a[v], o);
+const deepFindES6 = (o, p) => p.split('.').reduce((a, v) => a[v], o);
