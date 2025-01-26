@@ -38,6 +38,8 @@ function setAnalyticPageLoadProps(journeyState, formData, digitalData) {
     digitalData.user.casa = USER === 'ETB' ? 'yes' : 'no';
   }
   digitalData.form.name = leadType;
+  const journeyFormContext = (formData?.currentFormContext || currentFormContext);
+  journeyFormContext.LEAD_TYPE = leadType;
   digitalData.user.leadID = leadID;
 }
 
@@ -73,6 +75,8 @@ function setAnalyticClickGenericProps(linkName, linkType, formData, journeyState
     digitalData.user.casa = (USER === 'ETB') ? 'Yes' : 'No';
   }
   digitalData.user.leadID = leadID;
+  const journeyFormContext = (formData?.currentFormContext || currentFormContext);
+  journeyFormContext.LEAD_TYPE = leadType;
   // window.digitalData = digitalData || {};
 }
 
