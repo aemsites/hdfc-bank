@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable no-underscore-dangle */
 import {
   ageValidator,
@@ -271,17 +272,46 @@ const fetchCardDetails = async () => {
 };
 
 const fetchCardDetailsSuccessHandler = async (response, globals) => {
-  // console.log('reerereresss', response);
   const { functions } = globals;
   const { importData } = functions;
 
-  const value = [{ retailCardName: 'hello', retailCardTagline: 'tetinff' }, { retailCardName: 'hell1o1', retailCardTagline: 'ppppp' }, { retailCardName: 'hello2', retailCardTagline: 'mmmmmm' }];
+  const retailValue = response.retailCards.map((card) => {
+    const benefits = card.allBenefitsAndFeatures[0];
+    return {
+      retailCardName: card.cardName,
+      retailCardTagline: card.cardDescription,
+      retailCardFeatureText1: card.features[0],
+      retailCardFeatureText2: card.features[1],
+      retailCardFeatureText3: card.features[2],
+      backLinkRetailPopup: benefits.heading,
+      retailCardBenefitMain1: benefits.features[0],
+      retailCardBenefitMain2: benefits.features[1],
+      retailCardBenefitMain3: benefits.features[2],
+      retailCardFeaturesBenefits: benefits.benefitsForYou[0],
+      retailCardMinFDAmount: card.minumumFdAmount.replace(/,/g, ''),
+    };
+  });
 
-  importData(value, globals?.form?.landingPageMainWrapper?.perfectCardPanel?.retailCardsSectionMainWrapper?.retailCardsSection?.retailCardsSectionRepeatable?.$qualifiedName);
-};
+  const businessValue = response.businessCards.map((card) => {
+    const benefits = card.allBenefitsAndFeatures[0];
+    return {
+      businessCardName: card.cardName,
+      businessCardTagline: card.cardDescription,
+      businessCardFeatureText1: card.features[0],
+      businessCardFeatureText2: card.features[1],
+      businessCardFeatureText3: card.features[2],
+      backLinkBusinessPopup: benefits.heading,
+      businessCardBenefitMain1: benefits.features[0],
+      businessCardBenefitMain2: benefits.features[1],
+      businessCardBenefitMain3: benefits.features[2],
+      businessCardFeaturesBenefits: benefits.benefitsForYou[0],
+      businessCardMinFDAmount: card.minumumFdAmount.replace(/,/g, ''),
+    };
+  });
 
-const retailCardAllFeaturesAndBenefits = (globals) => {
-  console.log('globaslssss', globals);
+  importData(retailValue, globals?.form?.landingPageMainWrapper?.perfectCardPanel?.retailCardsSectionMainWrapper?.retailCardsSection?.retailCardsSectionRepeatable?.$qualifiedName);
+
+  importData(businessValue, globals?.form?.landingPageMainWrapper?.perfectCardPanel?.businessCardsSectionMainWrapper?.businessCardsSection?.businessCardsSectionRepeatable?.$qualifiedName);
 };
 
 const customerAccountDetails = (casaRes, globals) => {
@@ -339,5 +369,4 @@ export {
   fetchCardDetails,
   customerAccountDetails,
   fetchCardDetailsSuccessHandler,
-  retailCardAllFeaturesAndBenefits,
 };
