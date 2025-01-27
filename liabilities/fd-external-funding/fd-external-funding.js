@@ -19,6 +19,7 @@ import {
     investAmtChangeHandler,
     selectFundAcct,
     fdEfSimulationExecute,
+    fdEfAccOpenExecute,
     fdEfSwitchWizard,
   } from './fd-external-funding-functions.js';
 
@@ -55,6 +56,7 @@ export {
     investAmtChangeHandler,
     selectFundAcct,
     fdEfSimulationExecute,
+    fdEfAccOpenExecute,
     fdEfSwitchWizard,
     updateReviewPage,
     confirmDetailsConsent

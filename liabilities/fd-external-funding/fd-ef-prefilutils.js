@@ -57,7 +57,8 @@ const updateReviewPage = async (globals) => {
   const renewalInstructionValue = globals.form.fdDetailsWrapper.externalFundingWizardView.wizardExternalFunding.createFD.leftWrapper.renewalInstructions.selectAnyone.$value;
   const renewalInstructionLabel = renewalInstructionLabels[renewalInstructionValue - 1] || "Unknown";
   currentFormContext.renewalInstructionValue = renewalInstructionValue;
-
+  const intPayoutMode = (parseInt(renewalInstructionValue) === 1 || parseInt(renewalInstructionValue) === 3) ? "2" : (parseInt(renewalInstructionValue) === 2 ? "0" : intPayoutMode);
+  currentFormContext.intPayoutModeValue = intPayoutMode;
 
   const rawMaturityDate = currentFormContext.simulationResponse.tdSimulationResponse.maturityDate.dateString;
   const formattedMaturityDate = formatDate(rawMaturityDate);

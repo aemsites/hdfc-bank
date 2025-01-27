@@ -3,6 +3,7 @@ import { fetchJsonResponse } from '../../common/makeRestAPI.js';
 import { createJourneyId } from './fd-ef-journeyutils.js';
 import { handleFetchCasaPrefill, updateFundAct } from './fd-ef-prefilutils.js';
 import fdEfSimulationExecute from './fd-ef-simulationutils.js';
+import fdEfAccOpenExecute from './fd-ef-account-opening.js';
 import * as FD_EF_CONSTANT from './constant.js';
 import { moveWizardView } from '../domutils/domutils.js';
 
@@ -125,5 +126,6 @@ export {
   investAmtChangeHandler,
   selectFundAcct,
   fdEfSimulationExecute,
+  fdEfAccOpenExecute,
   fdEfSwitchWizard,
 };
