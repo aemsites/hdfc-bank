@@ -37,8 +37,8 @@ const ERROR_MSG = {
 };
 
 const FD_ENDPOINTS = {
-  otpGen: '/content/hdfc_hafcards/api/customeridentificationotpgen.json',
-  otpVal: '/content/hdfc_hafcards/api/otpvalidationandcardsinquiry.json',
+  otpGen: '/content/hdfc_customerinfo/api/customerIdentificationOTPGen.json',
+  otpVal: '/content/hdfc_customerinfo/api/otpValidationOrchestration.json',
   journeyDropOff: '/content/hdfc_commonforms/api/journeydropoff.json',
   emailId: '/content/hdfc_commonforms/api/emailid.json',
 };
