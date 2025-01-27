@@ -248,6 +248,7 @@ body.fd-backed-cc {
 
                                             &.field-knowyourcclimit {
                                                 order: 1;
+
                                                 button {
                                                     background: none;
                                                     border: 1px solid var(--color-action-border-primary-default);
@@ -3543,7 +3544,7 @@ body.fd-backed-cc {
                                                         font-weight: var(--font-weight-regular);
                                                         color: var(--color-interface-text-secondary);
                                                         margin: 0;
-                                                       /*  transform: none; */
+                                                        /*  transform: none; */
                                                         padding: 0;
                                                         background: none;
                                                     }
@@ -3590,7 +3591,7 @@ body.fd-backed-cc {
                                         fieldset.field-creditcarddetails,
                                         fieldset.field-addressdetails,
                                         fieldset.field-employeeassistance,
-                                        .field-employeeassistancelabel{
+                                        .field-employeeassistancelabel {
                                             border: 1px solid var(--color-interface-border-primary);
                                             border-radius: 15px;
                                             margin-bottom: 10px;
@@ -3712,99 +3713,99 @@ body.fd-backed-cc {
                                                     margin-top: 0;
                                                     display: none;
                                                 }
-                                                
-                                                &[data-active]{
-                                                    
-                                                 
-                                                    label{
+
+                                                &[data-active] {
+
+
+                                                    label {
                                                         margin: 0;
                                                         transform: none;
                                                         padding: 0;
                                                     }
                                                 }
 
-                                                &.field-employeeassisttoggle{
+                                                &.field-employeeassisttoggle {
                                                     display: flex;
                                                     align-items: center !important;
                                                     flex-direction: row-reverse;
                                                     justify-content: flex-end;
-                                      
+
                                                     @media (320px <=width <=767px) {
-                                                      margin-bottom: 20px;
-                                                      align-items: flex-start;
+                                                        margin-bottom: 20px;
+                                                        align-items: flex-start;
                                                     }
-                                      
+
                                                     label {
-                                                      font-size: var(--body-fd-sm-font-size);
-                                                      font-weight: var(--font-weight-medium);
-                                                      color: var(--color-interface-text-quaternary);
-                                                      flex-basis: initial;                                     
-                                                    
+                                                        font-size: var(--body-fd-sm-font-size);
+                                                        font-weight: var(--font-weight-medium);
+                                                        color: var(--color-interface-text-quaternary);
+                                                        flex-basis: initial;
+
                                                     }
-                                      
-                                                    input[type="checkbox"] { 
-                                                      width: 45px !important;
-                                                      height: 28px !important;
-                                                      padding: 0;
-                                                      box-sizing: content-box;
-                                                      border-radius: 16px;
-                                                      background-color: var(--color-input-text-disabled);
-                                                      -webkit-appearance: none;
-                                                      -moz-appearance: none;
-                                                      appearance: none;
-                                                      cursor: pointer;
-                                                      position: relative;
-                                                      transition: background-color 0.3s, background-position 0.3s;
-                                                      margin-top: 5px;
-                                                      margin-left: 10px;
-                                      
-                                                      &[disabled] {
-                                                        background-color: var(--color-action-background-primary-disabled);
-                                                      }
-                                      
-                                                      &:checked {
-                                                        background-color: var(--color-interface-icon-highlight);
-                                                      }
+
+                                                    input[type="checkbox"] {
+                                                        width: 45px !important;
+                                                        height: 28px !important;
+                                                        padding: 0;
+                                                        box-sizing: content-box;
+                                                        border-radius: 16px;
+                                                        background-color: var(--color-input-text-disabled);
+                                                        -webkit-appearance: none;
+                                                        -moz-appearance: none;
+                                                        appearance: none;
+                                                        cursor: pointer;
+                                                        position: relative;
+                                                        transition: background-color 0.3s, background-position 0.3s;
+                                                        margin-top: 5px;
+                                                        margin-left: 10px;
+
+                                                        &[disabled] {
+                                                            background-color: var(--color-action-background-primary-disabled);
+                                                        }
+
+                                                        &:checked {
+                                                            background-color: var(--color-interface-icon-highlight);
+                                                        }
                                                     }
-                                      
+
                                                     input[type="checkbox"]::after {
-                                                      content: '';
-                                                      position: absolute;
-                                                      top: 50%;
-                                                      left: 4px;
-                                                      width: 20px;
-                                                      height: 20px;
-                                                      border-radius: 50%;
-                                                      background: var(--color-interface-background-primary);
-                                                      transform: translateY(-50%);
-                                                      transition: transform 0.3s;
+                                                        content: '';
+                                                        position: absolute;
+                                                        top: 50%;
+                                                        left: 4px;
+                                                        width: 20px;
+                                                        height: 20px;
+                                                        border-radius: 50%;
+                                                        background: var(--color-interface-background-primary);
+                                                        transform: translateY(-50%);
+                                                        transition: transform 0.3s;
                                                     }
-                                      
+
                                                     input[type="checkbox"]:checked::after {
-                                                      content: '';
-                                                      position: absolute;
-                                                      top: 50%;
-                                                      left: 4px;
-                                                      width: 20px;
-                                                      height: 20px;
-                                                      border-radius: 50%;
-                                                      background:var(--color-interface-background-primary);
-                                                      transform: translateY(-50%) translateX(17px);
-                                                      transition: transform 0.3s;
+                                                        content: '';
+                                                        position: absolute;
+                                                        top: 50%;
+                                                        left: 4px;
+                                                        width: 20px;
+                                                        height: 20px;
+                                                        border-radius: 50%;
+                                                        background: var(--color-interface-background-primary);
+                                                        transform: translateY(-50%) translateX(17px);
+                                                        transition: transform 0.3s;
                                                     }
                                                 }
 
-                                                &.field-mailingaddresslabel{
+                                                &.field-mailingaddresslabel {
                                                     padding-bottom: 0;
                                                 }
 
-                                                &.field-addressdetailhelptag2{
-                                                    p{
+                                                &.field-addressdetailhelptag2 {
+                                                    p {
                                                         font-size: var(--body-fd-sm-font-size);
                                                         font-weight: var(--font-weight-medium);
                                                         color: var(--color-interface-text-primary);
 
-                                                        a{
+                                                        a {
                                                             font-size: var(--body-fd-md-font-size);
                                                             font-weight: var(--font-weight-bold);
                                                         }
@@ -3831,7 +3832,7 @@ body.fd-backed-cc {
                                                 }
                                             }
 
-                                            &.field-addressdetails{
+                                            &.field-addressdetails {
                                                 display: inline;
                                             }
                                         }
@@ -3876,6 +3877,438 @@ body.fd-backed-cc {
 
                         /* WIZARD SCREENS END */
 
+                        .field-resultpanel {
+                            p {
+                                margin: 0;
+                            }
+
+                            .field-error2colresultpanel,
+                            .field-errorresultpanel {
+                                margin-top: -250px;
+                                position: relative;
+
+                                &::before {
+                                    background: url("../assets/images/error_screen_cloud_image.png") no-repeat top right;
+                                    content: "";
+                                    position: absolute;
+                                    width: 218px;
+                                    height: 218px;
+                                    top: -80px;
+                                    right: 0;
+                                }
+
+                                .field-errormessagetext2col,
+                                .field-apierrormessage {
+                                    p {
+                                        font-size: var(--body-fd-xxx-lg-font-size) !important;
+                                        font-size: var(--font-weight-bold);
+                                        color: var(--color-interface-text-tertiary);
+                                    }
+                                }
+
+                                .field-errormessagetextplaceholder2,
+                                .field-apierrormessageplaceholder {
+                                    p {
+                                        font-size: var(--body-lg-font-size);
+                                        font-size: var(--font-weight-regular);
+                                        color: var(--color-interface-text-tertiary);
+                                    }
+                                }
+
+                                .field-twocollayoutwrapper {
+                                    display: flex;
+                                    margin-top: 100px;
+
+                                    .field-errorctapanel {
+                                        background: url("../assets/images/get_credit_card_image.png") var(--color-interface-error-cta-background) no-repeat left 5px;
+                                        border-radius: 24px;
+                                        padding: 32px;
+                                        width: 272px;
+                                        height: 240px;
+                                        display: inline;
+                                        padding-top: 150px;
+                                        flex: 0 0 272px;
+
+                                        .field-getccnowlabel {
+                                            p {
+                                                font-size: var(--body-fd-md-font-size);
+                                                font-weight: var(--font-weight-bold);
+                                                color: var(--color-interface-text-quaternary);
+                                            }
+                                        }
+
+                                        .field-errorctabutton {
+                                            button {
+                                                color: var(--color-action-border-primary-default);
+                                                font-weight: var(--font-weight-bold);
+                                                font-size: var(--body-x-lg-font-size);
+                                                background: none;
+                                                width: auto;
+                                                height: auto;
+
+                                                &:hover {
+                                                    background: none !important;
+                                                }
+
+                                                &::after {
+                                                    background: url("../assets/icons/right_blue_arrow.png") no-repeat right 3px;
+                                                    width: 24px;
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    .field-errorassistancepanel {
+                                        border-radius: 24px;
+                                        padding: 24px;
+                                        background: var(--color-interface-background-primary);
+                                        flex: 1;
+                                        gap: 0 !important;
+                                        display: flex;
+                                        flex-wrap: wrap;
+                                        justify-content: space-between;
+
+                                        legend {
+                                            font-size: var(--body-xx-lg-font-size);
+                                            font-weight: var(--font-weight-bold);
+                                            color: var(--color-interface-text-primary);
+                                            margin-bottom: 0;
+                                        }
+
+                                        .plain-text-wrapper {
+                                            flex: 1 1 45%;
+                                            border-bottom: 1px solid var(--color-interface-border-primary);
+                                            padding: 20px 0 20px 10px;
+
+                                            p {
+                                                font-size: var(--body-md-font-size);
+                                                font-weight: var(--font-weight-regular);
+                                                color: var(--color-interface-text-primary);
+
+                                                p {
+                                                    padding: 3px 0 3px 40px;
+                                                }
+                                            }
+                                        }
+
+                                        .plain-text-wrapper:nth-child(odd) {
+                                            p {
+                                                font-size: var(--body-md-font-size);
+                                                font-weight: var(--font-weight-bold);
+                                                color: var(--color-interface-text-primary);
+                                                padding: 0
+                                            }
+
+                                            &.field-furtherassistancetext1 {
+                                                p {
+                                                    a {
+                                                        position: relative;
+
+                                                        &::after {
+                                                            content: "";
+                                                            position: absolute;
+                                                            background: url("../assets/icons/right_blue_arrow.png") no-repeat right 5px;
+                                                            width: 20px;
+                                                            height: 20px;
+                                                            background-size: 6px;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+
+                                        .field-furtherassistance1 {
+                                            p p {
+                                                background: url("../assets/icons/visit_bank_icon.png") no-repeat left top;
+                                            }
+                                        }
+
+                                        .field-furtherassistance2 {
+                                            p p {
+                                                background: url("../assets/icons/call_us_icon.png") no-repeat left top;
+                                            }
+                                        }
+
+                                        .field-furtherassistance3 {
+                                            p p {
+                                                background: url("../assets/icons/wahtsup_icon.png") no-repeat left top;
+                                            }
+                                        }
+
+                                        .field-furtherassistance4 {
+                                            p p {
+                                                background: url("../assets/icons/write_to_us_icon.png") no-repeat left top;
+                                            }
+                                        }
+                                    }
+                                }
+
+                                .field-errortagtext,
+                                .field-errserviceslink,
+                                .field-errresdealertext3 {
+                                    p {
+                                        font-size: var(--body-md-font-size);
+                                        font-weight: var(--font-weight-regular);
+                                        color: var(--color-input-text-primary);
+
+                                        a {
+                                            font-weight: var(--font-weight-bold);
+                                        }
+                                    }
+                                }
+
+                                .field-errresdealerpanel {
+                                    margin-top: 120px;
+
+                                    .field-errresdealertext1,
+                                    .field-errresdealertext2 {
+                                        p {
+                                            font-size: var(--body-fd-lg-font-size);
+                                            font-weight: var(--font-weight-bold);
+                                            color: var(--color-interface-text-primary);
+                                        }
+                                    }
+
+                                    .field-hdfcdealershipdetails {
+                                        border: 1px solid var(--color-interface-border-secondary);
+                                        border-radius: 24px;
+                                        display: inline;
+
+                                        .plain-text-wrapper {
+                                            padding: 15px 25px;
+                                        }
+
+                                        .field-errresdealertext2 {
+                                            background: var(--color-interface-background-quinary);
+                                            border-radius: 24px 24px 0 0;
+                                        }
+
+                                        .field-errresdealertext3 {
+                                            border-radius: 0 0 24px 24px;
+
+                                            p {
+                                                font-size: var(--body-fd-lg-font-size);
+
+                                                a {
+                                                    font-size: var(--body-fd-lg-font-size) !important;
+                                                }
+                                            }
+                                        }
+
+                                    }
+                                }
+
+                                .field-errserviceslink {
+                                    margin-top: 10px;
+                                }
+
+                                &.field-errorresultpanel {
+                                    margin-top: -200px;
+
+                                    .field-errorresctapanel {
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: space-between;
+
+                                        button {
+                                            width: 272px;
+
+                                            &::after {
+                                                width: 24px;
+                                                background: url("../assets/icons/right-arrow.png") no-repeat right top;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            .field-successresultpanel {
+                                margin-top: -250px;
+                                position: relative;
+
+                                &::before {
+                                    background: url("../assets/images/moneyback_card_success.png") no-repeat top right;
+                                    content: "";
+                                    position: absolute;
+                                    width: 318px;
+                                    height: 200px;
+                                    top: -80px;
+                                    right: 0;
+                                }
+
+                                .plain-text-wrapper {
+                                    max-width: none;
+                                    margin: 0;
+                                }
+
+                                .field-tqbannertext1 {
+                                    p {
+                                        font-size: var(--body-fd-xxx-lg-font-size) !important;
+                                        font-size: var(--font-weight-bold);
+                                        color: var(--color-interface-text-tertiary);
+                                        line-height: var(--font-linehight-x-large);
+                                    }
+                                }
+
+                                .field-tqbannertext2 {
+                                    p {
+                                        font-size: var(--body-lg-font-size);
+                                        font-size: var(--font-weight-regular);
+                                        color: var(--color-interface-text-tertiary);
+                                    }
+                                }
+
+                                .field-tqsuccesswrapper {
+                                    margin-top: 50px;
+
+                                    .field-refnumpanel {
+                                        border: 1px solid var(--color-interface-border-secondary);
+                                        border-radius: 24px;
+                                        padding: 32px;
+                                        background: #fff;
+
+                                        @media (768px <=width <=991px) {
+                                            margin-top: -10px;
+                                            border-bottom: none;
+                                            border-bottom-left-radius: 0;
+                                            border-bottom-right-radius: 0;
+                                            padding-bottom: 0;
+                                        }
+
+                                        @media (320px <=width <=767px) {
+                                            margin-top: 45px;
+                                            padding: 20px;
+                                            margin-bottom: 20px;
+                                        }
+
+                                        &>.field-accountnumber,
+                                        &>.field-leadid-number {
+                                            position: relative;
+                                            padding-left: 95px;
+
+                                            @media (320px <=width <=767px) {
+                                                padding-left: 75px;
+                                            }
+
+                                            label {
+                                                color: var(--color-interface-text-secondary);
+                                                font-size: 16px;
+                                                font-weight: 400;
+                                                line-height: 24px;
+                                                position: initial;
+                                                transition: none;
+                                                margin: 0;
+                                                transform: none;
+                                                padding: 0;
+                                                display: block;
+
+                                                @media (320px <=width <=767px) {
+                                                    font-size: 12px;
+                                                    line-height: 20px;
+                                                }
+                                            }
+
+                                            input {
+                                                color: var(--color-interface-text-primary);
+                                                font-size: 32px;
+                                                font-weight: 600;
+                                                line-height: 40px;
+                                                border: none;
+                                                height: auto;
+                                                padding: 0;
+                                                margin: 0;
+                                                background: url("../icons/copy_icon.png") no-repeat 72% center;
+                                                width: auto;
+
+                                                @media (768px <=width <=991px) {
+                                                    font-size: 28px;
+                                                    line-height: 36px;
+                                                }
+
+                                                @media (320px <=width <=767px) {
+                                                    font-size: 24px;
+                                                    line-height: 32px;
+                                                    background-position-x: 100%;
+                                                    width: 100%;
+                                                }
+
+                                                &:focus-visible {
+                                                    outline: none;
+                                                }
+                                            }
+
+                                            &::before {
+                                                content: '';
+                                                background: #F4F0FF url("../icons/account_number_icon.png") no-repeat center center;
+                                                width: 72px;
+                                                height: 72px;
+                                                position: absolute;
+                                                left: 0;
+                                                border-radius: 50%;
+
+                                                @media (320px <=width <=767px) {
+                                                    width: 52px;
+                                                    height: 52px;
+                                                    background-size: 35%;
+                                                }
+                                            }
+
+                                            &.field-leadid-number {
+                                                input {
+                                                    background-position-x: 48%;
+
+                                                    @media (481px <=width <=767px) {
+                                                        background-position-x: 50%;
+                                                    }
+
+                                                    @media (320px <=width <=480px) {
+                                                        background-position-x: 74%;
+                                                    }
+
+                                                }
+                                            }
+                                        }
+
+                                        &>.plain-text-wrapper {
+                                            border-top: 1px dashed var(--color-interface-border-secondary);
+                                            margin-top: 15px;
+
+                                            @media (768px <=width <=991px) {
+                                                border-top: none;
+                                                border-bottom: 1px dashed var(--color-interface-border-secondary);
+                                                padding-bottom: 20px;
+                                            }
+
+                                            p {
+                                                padding-top: 10px;
+                                                margin-bottom: 0;
+
+                                                p {
+                                                    font-size: 16px;
+                                                    font-weight: 400;
+                                                    line-height: 24px;
+                                                    color: var(--color-interface-text-secondary);
+                                                    margin-bottom: 0;
+
+                                                    @media (320px <=width <=767px) {
+                                                        font-size: 12px;
+                                                        line-height: 20px;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+
+
+
+                                }
+                            }
+
+
+                        }
+
+                        /* ERROR/RESULT SCREEN END */
+
 
                         /* COMMON STYLES FOR JOURNEY  */
 
@@ -3906,6 +4339,20 @@ body.fd-backed-cc {
                             &.field-fdbackedccwizard {
                                 grid-column: span 12;
                                 padding: 40px 35px;
+                            }
+
+                            &.field-resultpanel {
+                                grid-column: span 12;
+                                padding: 40px 46px;
+                            }
+                        }
+
+                        &:has(.field-carddetailswrapper[data-visible="true"]),
+                        &:has(.field-landingpagemainwrapper:not([data-visible="false"])),
+                        &:has(.field-fdbackedccwizard[data-visible="true"]),
+                        &:has(.field-resultpanel[data-visible="true"]) {
+                            .field-bannerimagepanel {
+                                display: none;
                             }
                         }
 
@@ -4056,14 +4503,6 @@ body.fd-backed-cc {
                             }
                         }
 
-                        &:has(.field-carddetailswrapper[data-visible="true"]),
-                        &:has(.field-landingpagemainwrapper:not([data-visible="false"])),
-                        &:has(.field-fdbackedccwizard[data-visible="true"]) {
-                            .field-bannerimagepanel {
-                                display: none;
-                            }
-                        }
-
 
                         .wizard-button-wrapper,
                         .repeat-wrapper button.item-add {
@@ -4158,6 +4597,27 @@ body.fd-backed-cc {
 
     /*MAIN TAG CLOSE */
 
+    &:has(.field-fdbackedccwizard[data-visible="true"]) {
+        header {
+            height: 115px !important;
+            align-items: flex-start;
+        }
+    }
+
+    &:has(.field-resultpanel[data-visible="true"]) {
+        header {
+            height: 350px !important;
+            align-items: flex-start;
+        }
+
+        &:has(.field-errorresultpanel[data-visible="true"]) {
+            header {
+                height: 300px !important;
+                align-items: flex-start;
+            }
+        }
+    }
+
     footer {
         background: var(--color-interface-fd-background-primary);
         text-align: center;
@@ -4166,13 +4626,6 @@ body.fd-backed-cc {
             div:nth-child(1) {
                 text-align: center;
             }
-        }
-    }
-
-    &:has(.field-fdbackedccwizard[data-visible="true"]) {
-        header {
-            height: 115px !important;
-            align-items: flex-start;
         }
     }
 }
