@@ -313,43 +313,56 @@ const fetchCardDetailsSuccessHandler = async (response, globals) => {
   const { functions } = globals;
   const { importData } = functions;
 
-  const retailValue = response.retailCards.map((card) => {
-    const benefits = card.allBenefitsAndFeatures[0];
-    return {
-      retailCardName: card.cardName,
-      retailCardTagline: card.cardDescription,
-      retailCardFeatureText1: card.features[0],
-      retailCardFeatureText2: card.features[1],
-      retailCardFeatureText3: card.features[2],
-      backLinkRetailPopup: benefits.heading,
-      retailCardBenefitMain1: benefits.features[0],
-      retailCardBenefitMain2: benefits.features[1],
-      retailCardBenefitMain3: benefits.features[2],
-      retailCardFeaturesBenefits: benefits.benefitsForYou[0],
-      retailCardMinFDAmount: card.minumumFdAmount.replace(/,/g, ''),
-    };
-  });
+  const processCards = (cards, type) => {
+    const capsType = type.charAt(0).toUpperCase() + type.slice(1);
+    if (!cards || cards.length === 0) return [];
 
-  const businessValue = response.businessCards.map((card) => {
-    const benefits = card.allBenefitsAndFeatures[0];
-    return {
-      businessCardName: card.cardName,
-      businessCardTagline: card.cardDescription,
-      businessCardFeatureText1: card.features[0],
-      businessCardFeatureText2: card.features[1],
-      businessCardFeatureText3: card.features[2],
-      backLinkBusinessPopup: benefits.heading,
-      businessCardBenefitMain1: benefits.features[0],
-      businessCardBenefitMain2: benefits.features[1],
-      businessCardBenefitMain3: benefits.features[2],
-      businessCardFeaturesBenefits: benefits.benefitsForYou[0],
-      businessCardMinFDAmount: card.minumumFdAmount.replace(/,/g, ''),
-    };
-  });
+    return cards.map((card) => {
+      const benefits = card.allBenefitsAndFeatures?.[0] || {};
+      const features = card.features || [];
+      const benefitFeatures = benefits.features || [];
+      const benefitsForYou = benefits.benefitsForYou || [];
 
-  importData(retailValue, globals?.form?.landingPageMainWrapper?.perfectCardPanel?.retailCardsSectionMainWrapper?.retailCardsSection?.retailCardsSectionRepeatable?.$qualifiedName);
+      const flattenedFeatures = features.reduce((acc, feature, index) => {
+        acc[`${type}CardFeatureText${index + 1}`] = feature || '';
+        return acc;
+      }, {});
 
-  importData(businessValue, globals?.form?.landingPageMainWrapper?.perfectCardPanel?.businessCardsSectionMainWrapper?.businessCardsSection?.businessCardsSectionRepeatable?.$qualifiedName);
+      const flattenedBenefits = benefitFeatures.reduce((acc, benefit, index) => {
+        acc[`${type}CardBenefitMain${index + 1}`] = benefit || '';
+        return acc;
+      }, {});
+
+      const processedCard = {
+        [`${type}CardName`]: card.cardName || '',
+        [`${type}CardTagline`]: card.cardDescription || '',
+        ...flattenedFeatures,
+        [`backLink${capsType}Popup`]: benefits.heading || '',
+        ...flattenedBenefits,
+        [`${type}CardFeaturesBenefits`]: benefitsForYou[0] || '',
+        [`${type}CardMinFDAmount`]: card.minumumFdAmount?.replace(/,/g, '') || '',
+      };
+
+      return processedCard;
+    });
+  };
+
+  const retailValue = processCards(response.retailCards, 'retail');
+  const businessValue = processCards(response.businessCards, 'business');
+
+  if (retailValue.length > 0) {
+    importData(
+      retailValue,
+      globals?.form?.landingPageMainWrapper?.perfectCardPanel?.retailCardsSectionMainWrapper?.retailCardsSection?.retailCardsSectionRepeatable?.$qualifiedName,
+    );
+  }
+
+  if (businessValue.length > 0) {
+    importData(
+      businessValue,
+      globals?.form?.landingPageMainWrapper?.perfectCardPanel?.businessCardsSectionMainWrapper?.businessCardsSection?.businessCardsSectionRepeatable?.$qualifiedName,
+    );
+  }
 };
 
 const customerAccountDetails = (casaRes, globals) => {
