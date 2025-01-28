@@ -221,7 +221,8 @@ function createPlainText(fd) {
 
 function createImage(fd) {
   const field = createFieldWrapper(fd);
-  const imagePath = fd.source || fd.properties['fd:repoPath'] || '';
+  field.id = fd?.id;
+  const imagePath = fd.source || fd.properties['fd:repoPath'] || fd.value || '';
   const image = `
   <picture>
     <source srcset="${imagePath}?width=2000&optimize=medium" media="(min-width: 600px)">
@@ -489,6 +490,7 @@ export default async function decorate(block) {
     form.dataset.action = formDef.action || pathname?.split('.json')[0];
     form.dataset.source = source;
     form.dataset.rules = rules;
+    form.dataset.id = formDef.id;
     container.replaceWith(form);
   }
 }

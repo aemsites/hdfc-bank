@@ -1,4 +1,4 @@
-import { createFormInstanceAsync } from './model/afb-runtime.js';
+import { createFormInstanceSync } from './model/afb-runtime.js';
 import registerCustomFunctions from './functionRegistration.js';
 
 let customFunctionRegistered = false;
@@ -7,7 +7,7 @@ export default class RuleEngine {
   rulesOrder = {};
 
   async createFormInstance(formDef) {
-    this.form = await createFormInstanceAsync(formDef);
+    this.form = await createFormInstanceSync(formDef);
   }
 
   getState() {

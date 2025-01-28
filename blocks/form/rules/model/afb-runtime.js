@@ -17,7 +17,7 @@
  * Adobe permits you to use and modify this file solely in accordance with
  * the terms of the Adobe license agreement accompanying it.
  *************************************************************************/
-
+//v0.22.116
 import { propertyChange, ExecuteRule, Initialize, RemoveItem, Change, FormLoad, FieldChanged, ValidationComplete, Valid, Invalid, SubmitSuccess, CustomEvent, SubmitError, SubmitFailure, Submit, Save, Reset, RemoveInstance, AddInstance, AddItem, Click } from './afb-events.js';
 import Formula from '../formula/index.js';
 import { format, parseDefaultDate, datetimeToNumber, parseDateSkeleton, numberToDatetime, formatDate, parseDate } from './afb-formatters.min.js';
@@ -2056,6 +2056,7 @@ class Container extends Scriptable {
         return {
             ...super.getState(forRestore),
             ...(forRestore ? {
+                initialItems : this.items.length,
                 ':items': undefined,
                 ':itemsOrder': undefined
             } : {}),
@@ -3071,8 +3072,7 @@ class FunctionRuntimeImpl {
                         success = valueOf(args[4]);
                         error = valueOf(args[5]);
                     }
-                    request(interpreter.globals, uri, httpVerb, payload, success, error, headers);
-                    return {};
+                    return request(interpreter.globals, uri, httpVerb, payload, success, error, headers);
                 },
                 _signature: []
             },
@@ -3254,7 +3254,11 @@ class Form extends Container {
         this.promises.push(updates);
     }
     async waitForPromises() {
-        await Promise.all(this.promises);
+        let length = 0;
+        while (this.promises.length > length) {
+            length = this.promises.length;
+            await Promise.all(this.promises);
+        }
         this.promises = [];
     }
     _applyDefaultsInModel() {
@@ -3338,6 +3342,12 @@ class Form extends Container {
                 captchaInfoObj[field.qualifiedName] = field.value;
             }
         });
+        const draftId = this.properties['fd:draftId'] || '';
+        if (draftId) {
+            this.setAdditionalSubmitMetadata({
+                'fd:draftId': draftId
+            });
+        }
         const options = {
             lang: this.lang,
             captchaInfo: captchaInfoObj,
@@ -3533,7 +3543,7 @@ class Form extends Container {
         payload.metadata = {
             'draftMetadata': {
                 'lang': this.lang,
-                'draftId': this.properties?.draftId || ''
+                'fd:draftId': this.properties['fd:draftId'] || ''
             }
         };
         payload.success = 'custom:saveSuccess';
@@ -3547,7 +3557,7 @@ class Form extends Container {
         const draftId = action?.payload?.body?.draftId || '';
         const properties = this.properties;
         if (draftId && properties) {
-            properties.draftId = draftId;
+            properties['fd:draftId'] = draftId;
         }
     }
     reset() {
@@ -4732,7 +4742,7 @@ class Captcha extends Field {
         super(params, _options);
         this._captchaDisplayMode = params.captchaDisplayMode;
         this._captchaProvider = params.captchaProvider;
-        this._captchaSiteKey = params.siteKey;
+        this._captchaSiteKey = params.captchaSiteKey;
     }
     getDataNode() {
         return undefined;
@@ -4867,7 +4877,7 @@ const createFormInstance = (formModel, callback, logLevel = 'error', fModel = un
         throw new Error(e);
     }
 };
-const createFormInstanceAsync = async (formModel, callback, logLevel = 'error', fModel = undefined) => {
+const createFormInstanceSync = async (formModel, callback, logLevel = 'error', fModel = undefined) => {
     try {
         const f = createFormInstanceHelper(formModel, logLevel, fModel);
         if (typeof callback === 'function') {
@@ -4954,4 +4964,4 @@ const registerFunctions = (functions) => {
     FunctionRuntime.registerFunctions(functions);
 };
 
-export { createFormInstance, createFormInstanceAsync, fetchForm, registerFunctions, restoreFormInstance, validateFormData, validateFormInstance };
+export { createFormInstance, createFormInstanceSync, fetchForm, registerFunctions, restoreFormInstance, validateFormData, validateFormInstance };

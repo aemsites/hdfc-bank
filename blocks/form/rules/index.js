@@ -6,6 +6,8 @@ import registerCustomFunctions from './functionRegistration.js';
 import { externalize } from './functions.js';
 import initializeRuleEngineWorker from './worker.js';
 
+const formModel = {};
+
 function disableElement(el, value) {
   el.toggleAttribute('disabled', value === true);
   el.toggleAttribute('aria-readonly', value === true);
@@ -23,15 +25,18 @@ function compare(fieldVal, htmlVal, type) {
 
 export async function fieldChanged(payload, form, generateFormRendition) {
   const { changes, field: fieldModel } = payload;
+  const {
+    id, name, fieldType, readOnly, type, displayValue, displayFormat, displayValueExpression,
+    activeChild,
+  } = fieldModel;
+  const field = form.querySelector(`#${id}`);
+  if (!field) {
+    return;
+  }
+  const fieldWrapper = field?.closest('.field-wrapper');
   changes.forEach((change) => {
-    const {
-      id, fieldType, readOnly, type, displayValue, displayFormat, displayValueExpression,
-    } = fieldModel;
     const { propertyName, currentValue, prevValue } = change;
     const field = form.querySelector(`#${id}`);
-    if (!field) {
-      return;
-    }
     switch (propertyName) {
       case 'required':
         if (currentValue === true) {
@@ -68,6 +73,14 @@ export async function fieldChanged(payload, form, generateFormRendition) {
           field.checked = compare(currentValue, field.value, type);
         } else if (fieldType === 'plain-text') {
           field.innerHTML = currentValue;
+        } else if(fieldType === 'image') {
+          const picture = field.querySelector(':scope > picture');
+          const sources = picture?.querySelectorAll('source');
+          const image = picture?.querySelector('img');
+          sources?.forEach(source => {
+            source.srcset = currentValue + source.srcset;
+          });
+          image.src = currentValue + image.src;
         } else if (field.type !== 'file') {
           field.value = currentValue;
         }
@@ -155,6 +168,9 @@ export async function fieldChanged(payload, form, generateFormRendition) {
         break;
     }
   });
+  if (fieldWrapper?.dataset?.subscribe) {
+    fieldWrapper.dataset.fieldModelChanged = JSON.stringify(Math.random());
+  }
 }
 
 function handleRuleEngineEvent(e, form, generateFormRendition) {
@@ -220,6 +236,7 @@ export async function loadRuleEngine(formDef, htmlForm, captcha, genFormRenditio
   const ruleEngine = await import('./model/afb-runtime.js');
   const form = ruleEngine.restoreFormInstance(formDef, data);
   window.myForm = form;
+  formModel[htmlForm.dataset?.id] = form;
 
   form.subscribe((e) => {
     handleRuleEngineEvent(e, htmlForm, genFormRendition);
@@ -262,4 +279,24 @@ export async function initAdaptiveForm(formDef, createForm) {
     data,
   }, createForm);
   return form;
+}
+
+/**
+ * Subscribes to changes in the specified field element and triggers a callback
+ * with access to formModel when changes occur.
+ * @param {HTMLElement} fieldDiv - The field element to observe for changes.
+ * @param {Function} callback - The callback function to execute when changes are detected.
+ */
+export function subscribe(fieldDiv, callback) {
+  if (callback) {
+    fieldDiv.dataset.subscribe = true;
+    const observer = new MutationObserver((mutationsList) => {
+      mutationsList?.forEach((mutation) => {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'data-field-model-changed') {
+          callback(fieldDiv, formModel[fieldDiv.closest('form')?.dataset?.id]);
+        }
+      });
+    });
+    observer.observe(fieldDiv, { attributes: true });
+  }
 }
