@@ -3,7 +3,7 @@
 
 import * as CONSTANT from './constants.js';
 import * as DOM_API from '../creditcards/domutils/domutils.js';
-import { getJsonResponse } from './makeRestAPI.js';
+import { getJsonWithoutEncrypt } from './makeRestAPI.js';
 
 const {
   setDataAttributeOnClosestAncestor,
@@ -222,7 +222,7 @@ const composeNameOption = (fn, mn, ln, cardType, maxlength) => {
   const initial = (str) => str?.charAt(0);
   const createNames = (patterns) => patterns
     .map(([a, b]) => [a, b].filter(Boolean).join(' '))
-    .filter((el) => el.length <= maxlength);
+    .filter((el) => (!maxlength || el.length <= maxlength));
 
   const basePatterns = [
     fn && mn ? [fn, initial(mn)] : null,
@@ -235,6 +235,15 @@ const composeNameOption = (fn, mn, ln, cardType, maxlength) => {
     mn && ln ? [initial(mn), ln] : null,
   ].filter(Boolean); // Remove nulls
 
+  /**
+    * Generates a pattern for edge cases in CCC where no option exceeds the maximum limit.
+    * The pattern combines the first name and the initial of the last name, or vice versa.
+   */
+  const cccExtraPattern = [
+    fn && ln ? [fn, initial(ln)] : null,
+    fn && ln ? [ln, initial(fn)] : null,
+  ].filter(Boolean);
+
   const fdExtraPatterns = [
     fn ? [fn] : null,
     mn ? [mn] : null,
@@ -244,7 +253,7 @@ const composeNameOption = (fn, mn, ln, cardType, maxlength) => {
   let names = [];
   switch (cardType) {
     case 'ccc':
-      names = createNames(basePatterns);
+      names = (createNames(basePatterns)?.length === 0) ? createNames(cccExtraPattern) : createNames(basePatterns);
       break;
     case 'fd':
       names = createNames([...basePatterns, ...fdExtraPatterns]);
@@ -547,7 +556,7 @@ const pinCodeMasterCheck = async (globals, cityField, stateField, pincodeField, 
   };
 
   try {
-    const response = await getJsonResponse(url, null, method);
+    const response = await getJsonWithoutEncrypt(url, null, method);
     globals.functions.setProperty(pincodeField, { valid: true });
     const [{ CITY, STATE }] = response;
     const [{ errorCode, errorMessage }] = response;
@@ -633,7 +642,7 @@ const pincodeCheck = async (pincode, city, state) => {
   };
 
   try {
-    const response = await getJsonResponse(url, null, 'GET');
+    const response = await getJsonWithoutEncrypt(url, null, 'GET');
 
     if (response && Array.isArray(response)) {
       const [{
@@ -689,16 +698,10 @@ function createDeepCopyFromBlueprint(blueprint) {
 }
 
 const generateErefNumber = () => {
-  const now = new Date();
-
-  const year = String(now.getFullYear());
-  const month = String(now.getMonth() + 1).padStart(2, '0');
-  const day = String(now.getDate()).padStart(2, '0');
-  const hours = String(now.getHours()).padStart(2, '0');
-  const minutes = String(now.getMinutes()).padStart(2, '0');
-  const firstDigitOfSeconds = String(now.getSeconds()).charAt(0);
-
-  return `AD${year}${month}${day}${hours}${minutes}${firstDigitOfSeconds}`;
+  const timestamp = Date.now().toString(); // Current time in milliseconds
+  const randomComponent = Math.floor(Math.random() * 1000).toString().padStart(3, '0'); // Random 3-digit number
+  const uniqueNumber = timestamp.slice(-9) + randomComponent; // Take the last 9 digits of timestamp + 3 random digits
+  return `AD${uniqueNumber}`;
 };
 
 /**
@@ -711,6 +714,33 @@ const generateErefNumber = () => {
 const maskString = (str, visibleCount = 4) => {
   if (str === undefined || str?.length <= visibleCount) return str;
   return 'X'.repeat(str.length - visibleCount) + str.slice(-visibleCount);
+};
+
+/**
+ * Asynchronously generates a SHA-256 hash of the provided input value.
+ *
+ * @async
+ * @function generateHash
+ * @param {*} value - The input value to be hashed. It will be converted to a string before hashing.
+ * @returns {Promise<string>} A promise that resolves to the hexadecimal representation of the SHA-256 hash.
+ *
+ * @example
+ * generateHash("example").then(hash => {
+ * console.log(hash)
+ * return hash;
+ * });
+ * or
+ * await generateHash("example")
+ * // Output: "2d711642b726b04401627ca9fbac32f5c7b6d23fa8d39e21e5e8b4eebf7e5e73"
+ */
+const generateHash = async (value) => {
+  const input = String(value);
+  const encoder = new TextEncoder();
+  const rawdata = encoder.encode(input);
+  const hash = await crypto.subtle.digest('SHA-256', rawdata);
+  return Array.from(new Uint8Array(hash))
+    .map((b) => b.toString(16).padStart(2, '0'))
+    .join('');
 };
 
 export {
@@ -755,4 +785,5 @@ export {
   formatIndian,
   generateErefNumber,
   maskString,
+  generateHash,
 };

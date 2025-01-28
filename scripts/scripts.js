@@ -1,3 +1,4 @@
+/* eslint no-unused-expressions: ["error", { "allowShortCircuit": true }] */
 import {
   sampleRUM,
   buildBlock,
@@ -59,6 +60,17 @@ const FORM_CONSTANT = [
       prod: 'https://assets.adobedtm.com/80673311e435/029b16140ccd/launch-39d52f236cd6.min.js',
       loadTime: 1200,
     },
+  },
+  {
+    // FD_EXTERNAL_FUNDING
+    formPath: ['external-funding', 'fd-external-funding'],
+    class: 'fd-ext-fund',
+    urlKey: ['external-funding', 'fd-external-funding'],
+    // launchScript: { // enable once the correct launch scripts got confirmed
+    //   dev: 'https://assets.adobedtm.com/80673311e435/029b16140ccd/launch-94203efd95a9-development.min.js',
+    //   prod: 'https://assets.adobedtm.com/80673311e435/029b16140ccd/launch-94203efd95a9-staging.min.js',
+    //   loadTime: 1200,
+    // },
   },
 ];
 const ENV = getSubmitBaseUrl()?.includes('dev') ? 'dev' : 'prod';
@@ -191,7 +203,7 @@ function loadDelayed() {
   const pathName = window.location.pathname;
   FORM_CONSTANT.some((form) => {
     if (form.urlKey.some((el) => pathName.includes(el))) {
-      window.setTimeout(() => loadScript(form.launchScript[ENV]), form.launchScript.loadTime);
+      form?.launchScript?.[ENV] && window.setTimeout(() => loadScript(form.launchScript[ENV]), form.launchScript.loadTime);
       return true;
     }
     return false;
