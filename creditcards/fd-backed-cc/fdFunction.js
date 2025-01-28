@@ -11,6 +11,7 @@ import {
   fetchCardDetails,
   customerAccountDetails,
   fetchCardDetailsSuccessHandler,
+  knowYourLimit,
 } from './fdbacked-function.js';
 
 import { createJourneyId } from '../../common/journey-utils.js';
@@ -56,4 +57,5 @@ export {
   customerAccountDetails,
   fetchCardDetailsSuccessHandler,
   fdWizardSwitch,
+  knowYourLimit,
 };

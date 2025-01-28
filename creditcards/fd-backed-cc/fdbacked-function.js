@@ -298,6 +298,12 @@ function editCreds(globals) {
   globals.functions.setProperty(globals.form.loginMainPanel, { visible: true });
 }
 
+function knowYourLimit(fdAmount,globals){
+const ccLimit= globals.form.landingPageMainWrapper.perfectCardPanel.knowYourCCLimitPanel.knowYourCCLimitCalcPanel.knowYourCCDetails.yourCCLimitWrap.yourCCLimit;
+const ccLimitCalc = parseInt((fdAmount*90)/100);
+globals.functions.setProperty(ccLimit,{value:ccLimitCalc});
+}
+
 const fetchCardDetails = async () => {
 // const jsonObj = {
 //   retailsProductCode:['dtdy66', ''],
@@ -420,4 +426,5 @@ export {
   fetchCardDetails,
   customerAccountDetails,
   fetchCardDetailsSuccessHandler,
+  knowYourLimit,
 };
