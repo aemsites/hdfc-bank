@@ -680,10 +680,6 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                 margin-top: 40px;
                                 display: flex;
 
-                                @media (320px <=width <=640px) {
-                                    display: none;
-                                }
-
                                 legend {
                                     font-size: var(--body-lg-font-size);
                                     font-weight: var(--font-weight-bold);
@@ -1870,6 +1866,8 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                     border: 1px solid var(--color-interface-border-primary);
                                     border-bottom-left-radius: 24px;
                                     border-bottom-right-radius: 24px;
+
+                                    @media (width < 767px) { margin-top: 20px; }
                                 }
 
                                 legend.nrenro-accordian {
@@ -1945,6 +1943,7 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                             .field-nomineerd {
                                                 width: fit-content;
                                                 align-content: center;
+                                                margin-bottom: 0 !important;
                                                 label { display: none; }
                                             }
 
@@ -1960,7 +1959,7 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                                 color: var(--color-interface-text-primary);
                                             }
 
-                                            .field-editnominee { margin: 0;
+                                            .field-editnominee { margin-top: 0 !important;
 
                                                 button, button:hover {
                                                     height: fit-content;
@@ -1976,8 +1975,6 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                     }
 
                                     @media (width < 1000px) {
-                                        margin-top: 15px;
-
                                         .repeat-wrapper { display: block;
                                             .panel-wrapper.col-4 {  margin-bottom: 15px; }
                                         }
@@ -2002,18 +1999,28 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                 .field-bankusefragment {
                                     border: solid 1px var(--color-interface-background-quinary);
                                     border-radius: 24px;
+                                    position: relative;
 
                                     .field-bankusetogglepanel {
                                         background-color: var(--color-interface-background-quinary);
                                         padding: 22px 0 6px 32px;
                                         border-radius: 24px 24px 0 0;
     
-                                        .field-bankusetogglelabel p {
-                                            font-size: var(--body-xx-lg-font-size);
-                                            font-weight: var(--font-weight-bold);
-                                            color: var(--color-interface-text-primary);
+                                        .field-bankusetogglelabel { width: 80%;
+
+                                            p {
+                                                font-size: var(--body-xx-lg-font-size);
+                                                font-weight: var(--font-weight-bold);
+                                                color: var(--color-interface-text-primary);
+                                            }
                                         }
-                                        .field-bankusetoggle label { margin: 7px 0 0 20px; }
+                                    }
+
+                                    .field-bankusetoggle label { 
+                                        margin: 7px 0 0 20px; 
+                                        position: absolute;
+                                        right: 30px;
+                                        top: 27px;
                                     }
 
                                     .field-lgcode, .field-lccode { padding: 0 0 0 30px; }
@@ -2021,7 +2028,7 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                     .field-resetallbtn { 
                                         padding: 0 0 30px 30px; 
                                         justify-self: flex-start;
-                                        margin-top: -15px;
+                                        margin-top: -9px !important;
 
                                         button, button:hover {
                                             height: fit-content;
@@ -2031,6 +2038,8 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                                             font-weight: var(--font-weight-bold);
                                         }
                                     }
+
+                                    @media (width < 767px) { margin-top: 20px; }
                                 }
 
                                 .field-confirmdetailsconsent1 { margin-top: 20px; }
@@ -2066,13 +2075,624 @@ body.fd-ext-fund:not(.semi-form, .fdlien) {
                         .wizard-button-wrapper {
                             display: none;
                         }
-                        
-                            
 
                         /* End of wizard styling */
-                    }
+                        }
 
-                    /* End of wizard styling */
+                        /* End of wizard styling */
+
+                        /* Thank you screen styling */
+
+                        .field-thankyoupanel {
+                            input { letter-spacing: 0; }
+
+                            .field-thankyoufragment {
+                                @media (width <=1080px) {
+                                    display: block;
+                                }
+
+                                .field-headingpanel {
+                                    padding: 40px 60px 85px;
+                                    background-color: var(--color-interface-fd-background-primary);
+    
+                                    p { 
+                                        margin: 0; 
+                                        color: var(--color-interface-background-primary);
+                                    }
+    
+                                    .field-fdsuccessheaderleftpanel {
+                                        display: block;
+    
+                                        .field-thankyoupagetitle {
+                                            p { font-size: var(--body-fd-xxx-lg-font-size); }
+    
+                                            b::after {
+                                                content: '';
+                                                background: url("../icons/green-tick.png") no-repeat 100% center;
+                                                width: 58px;
+                                                height: 55px;
+                                                position: absolute;
+                                              }
+                                        }
+                                        
+                                        .field-thankyoupagedesc p { 
+                                            font-size: var(--font-linehight-regular);
+                                            font-weight: var(--font-weight-extra-small); 
+                                            margin-bottom: 20px;
+                                        }
+    
+                                        .field-btnwrapper {
+                                            display: flex;
+    
+                                            .button-wrapper { width: 272px; 
+    
+                                                button {
+                                                    background-color: var(--color-action-button-background-primary);
+                                                    &::after { content: ''; }
+                                                }
+                                            }
+                                        }
+                                    }
+    
+                                    .field-fdopeningimage {
+                                        content: '';
+                                        background: url("../icons/thank-you-page-header-img.png") no-repeat 100% center;
+                                        margin-left: -40px;
+                                    }
+                                }
+    
+                                .field-thankyouleftpanel { 
+                                    padding-left: 60px;
+                                    margin-top: -90px;
+    
+                                    fieldset.field-accountnumber {
+                                        border: 1px solid var(--color-interface-border-secondary);
+                                        border-radius: 20px;
+                                        padding: 30px;
+                                        background: var(--color-interface-background-primary);
+                                        margin-top: 4px;
+                          
+                          
+                                        @media (768px <=width <=991px) {
+                                          margin-top: -10px;
+                                          border-bottom: none;
+                                          border-bottom-left-radius: 0;
+                                          border-bottom-right-radius: 0;
+                                          padding-bottom: 0;
+                                        }
+                          
+                                        @media (320px <=width <=767px) {
+                                          margin-top: 45px;
+                                          padding: 20px;
+                                        }
+                          
+                                        &>.field-referencenumber {
+                                          position: relative;
+                                          padding-left: 95px;
+                          
+                                          @media (320px <=width <=767px) {
+                                            padding-left: 75px;
+                                          }
+                          
+                                          label {
+                                            color: var(--color-interface-text-secondary);
+                                            font-size: var(--body-md-font-size);
+                                            font-weight: var(--font-weight-regular);
+                                            position: initial;
+                                            transition: none;
+                                            margin: 0;
+                                            transform: none;
+                                            padding: 0;
+                                            display: block;
+                          
+                                            @media (320px <=width <=767px) {
+                                              font-size: var(--body-x-sm-font-size);
+                                            }
+                                          }
+                          
+                                          input {
+                                            color: var(--color-interface-text-primary);
+                                            font-size: var(--font-linehight-m-large);
+                                            font-weight: var(--font-weight-bold);
+                                            border: none;
+                                            height: auto;
+                                            padding: 0;
+                                            margin: 0;
+                                            background: url("../icons/copy_icon.png") no-repeat 72% center;
+                                            width: auto;
+                          
+                                            @media (768px <=width <=991px) {
+                                              font-size: var(--body-fd-xx-xlg-font-size);
+                                            }
+                          
+                                            @media (320px <=width <=767px) {
+                                              font-size: var(--body-fd-xx-lg-font-size);
+                                              background-position-x: 100%;
+                                              width: 100%;
+                                            }
+                          
+                                            &:focus-visible {
+                                              outline: none;
+                                            }
+                                          }
+                          
+                                          &::before {
+                                            content: '';
+                                            background: var(--color-interface-error-cta-background) url("../icons/account_number_icon.png") no-repeat center center;
+                                            width: 72px;
+                                            height: 72px;
+                                            position: absolute;
+                                            left: 0;
+                                            border-radius: 50%;
+                          
+                                            @media (320px <=width <=767px) {
+                                              width: 52px;
+                                              height: 52px;
+                                              background-size: 35%;
+                                            }
+                                          }
+                                        }
+                          
+                                        &>.plain-text-wrapper {
+                                          border-top: 1px dashed var(--color-interface-border-secondary);
+                                          margin-top: 15px;
+                          
+                                          @media (768px <=width <=991px) {
+                                            border-top: none;
+                                            border-bottom: 1px dashed var(--color-interface-border-secondary);
+                                            padding-bottom: 20px;
+                                          }
+                          
+                                          p {
+                                            padding-top: 10px;
+                                            margin-bottom: 0;
+                          
+                                            p {
+                                              font-size: var(--body-md-font-size);
+                                              font-weight: var(--font-weight-regular);
+                                              color: var(--color-interface-text-secondary);
+                                              margin-bottom: 0;
+                          
+                                              @media (320px <=width <=767px) {
+                                                font-size: var(--body-x-sm-font-size);
+                                              }
+                                            }
+                                          }
+                                        }
+                                    }
+                          
+                                    .field-accountsummary {
+                                    border: 1px solid var(--color-interface-border-secondary);
+                                    border-radius: 20px;
+                                    padding: 30px;
+                        
+                                    @media (768px <=width <=991px) {
+                                        border-top: none;
+                                        border-top-left-radius: 0;
+                                        border-top-right-radius: 0;
+                                        padding-bottom: 0;
+                                        margin-top: -20px;
+                                        padding-top: 20px;
+                                    }
+                        
+                                    @media (320px <=width <=767px) {
+                                        padding: 20px;
+                                    }
+                        
+                                    .field-accountdetails {
+                                        p {
+                                        font-size: var(--body-fd-xx-xlg-font-size);
+                                        font-weight: var(--font-weight-bold);
+                                        color: var(--color-interface-text-primary);
+                                        margin-bottom: 0;
+                        
+                                        @media (320px <=width <=767px) {
+                                            font-size: var(--body-x-lg-font-size);
+                                            margin-bottom: 20px;
+                                        }
+                                        }
+                                    }
+                        
+                                    .field-accounttype.text-wrapper.field-wrapper {
+                                        input {
+                                        @media (1200px <=width <=1300px) {
+                                            font-size: var(--body-fd-md-font-size);
+                                        }
+                                        }
+                                    }
+                        
+                                    .text-wrapper.field-wrapper,
+                                    .multiline-wrapper {
+                                        @media (768px <=width <=991px) {
+                                        grid-column: span 6;
+                                        }
+                        
+                                        @media (320px <=width <=767px) {
+                                        display: flex;
+                                        flex-direction: column;
+                                        margin-bottom: 20px;
+                                        }
+                        
+                                        label {
+                                        color: var(--color-interface-text-secondary);
+                                        font-size: var(--body-sm-font-size);
+                                        position: initial;
+                                        transition: none;
+                                        margin: 0;
+                                        transform: none;
+                                        padding: 0;
+                                        display: initial;
+                        
+                                        @media (320px <=width <=767px) {
+                                            font-size: var(--body-x-sm-font-size);
+                                        }
+                                        }
+                        
+                                        input {
+                                        color: var(--color-interface-text-primary);
+                                        font-size: var(--body-lg-font-size);
+                                        font-weight: var(--font-weight-medium);
+                                        border: none;
+                                        height: auto;
+                                        padding: 0;
+                                        margin: 0;
+                                        border-radius: 0;
+                        
+                                        @media (320px <=width <=767px) {
+                                            font-size: var(--body-sm-font-size);
+                                            margin-top: 5px;
+                                        }
+                        
+                                        &:focus-visible {
+                                            outline: none;
+                                        }
+                                        }
+                        
+                                        textarea {
+                                        border: none;
+                                        background: none;
+                                        margin: 0;
+                                        padding: 0;
+                                        height: 100%;
+                                        font-size: var(--body-lg-font-size);
+                                        font-weight: var(--font-weight-medium);
+                                        color: var(--color-interface-text-primary);
+                                        resize: none;
+                        
+                                        @media (768px <=width <=991px) {
+                                            min-height: auto;
+                                        }
+                        
+                                        @media (320px <=width <=767px) {
+                                            font-size: var(--body-sm-font-size);
+                                            min-height: 60px;
+                                        }
+                        
+                                        &:focus-visible {
+                                            outline: none;
+                                        }
+                                        }
+                        
+                                        &.field-communicationaddress {
+                                        @media (768px <=width <=991px) {
+                                            grid-column: span 12;
+                                        }
+                                        }
+                                    }
+                                    }
+                        
+                                    .field-feedbackconfirmation {
+                                    border: 1px solid var(--color-interface-border-secondary);
+                                    border-radius: 20px;
+                                    padding: 30px 30px 10px;
+                        
+                                    @media (320px <=width <=767px) {
+                                        padding: 20px;
+                                    }
+                        
+                                    .field-onlineservice {
+                                        p {
+                                        font-size: var(--body-xx-lg-font-size);
+                                        font-weight: var(--font-weight-bold);
+                                        color: var(--color-interface-text-primary);
+                                        margin-bottom: 0;
+                        
+                                        @media (768px <=width <=991px) {
+                                            font-size: var(--body-x-lg-font-size);
+                                        }
+                        
+                                        @media (320px <=width <=767px) {
+                                            font-size: var(--body-md-font-size);
+                                            margin-bottom: 15px;
+                                        }
+                                        }
+                                    }
+                        
+                                    .field-ratingbuttons {
+                                        gap: initial !important;
+                                        border: 1px solid var(--color-interface-border-secondary);
+                                        border-radius: 7px;
+                                        display: flex;
+                                        flex-direction: row;
+                        
+                                        .button-wrapper {
+                                        border-right: 1px solid var(--color-interface-border-secondary);
+                                        flex: 1;
+                                        height: 44px;
+                                        margin-top: 0 !important;
+                        
+                                        button {
+                                            font-size: var(--body-sm-font-size);
+                                            font-weight: var(--font-weight-medium);
+                                            color: var(--color-input-text-primary);
+                                            background: none;
+                                            height: 100%;
+                                            border-radius: 0;
+                        
+                                            &:hover {
+                                            background: transparent !important;
+                                            border: none;
+                                            }
+                        
+                                            &.active {
+                                            background: var(--color-interface-feedback-notlikelyrating) !important;
+                                            height: 52px;
+                                            border-radius: 4px;
+                                            font-weight: 700;
+                                            color: var(--color-interface-background-primary);
+                                            margin-top: -5px;
+                                            }
+                                        }
+                        
+                                        &:nth-child(9),
+                                        &:nth-child(10) {
+                                            button {
+                                            &.active { background: var(--color-interface-feedback-mayberating) !important; }
+                                            }
+                                        }
+                        
+                                        &:nth-child(11),
+                                        &:nth-child(12) {
+                                            button {
+                                            &.active {
+                                                background: var(--color-interface-feedback-verylikelyrating) !important;
+                                            }
+                                            }
+                                        }
+                        
+                                        &:last-child {
+                                            border-right: none;
+                                        }
+                                        }
+                        
+                                        &:has(.button-wrapper button.active)~.field-ratingcolorcodes {
+                                        display: flex;
+                                        }
+                                    }
+                                    }
+                        
+                                    .field-ratingcolorcodes {display: flex;grid-gap: initial !important;transition: transform 0.3s;flex-direction: row;
+                        
+                                    @media (320px <=width <=768px) {
+                                        display: flex;
+                                    }
+                        
+                                    @media (320px <=width <=767px) {
+                                        margin-top: 15px;
+                                        margin-bottom: 20px;
+                                    }
+                        
+                                    p {
+                                        margin-bottom: 0;
+                                        font-size: var(--body-sm-font-size);
+                                        color: var(--color-interface-text-secondary);
+                                        margin-top: 10px;
+                        
+                                        @media (320px <=width <=767px) {
+                                        font-size: 10px;
+                                        }
+                                    }
+                        
+                                    .field-notlikelytext,
+                                    .field-maybetext,
+                                    .field-verylikelytext {
+                                        position: relative;
+                                        
+                        
+                                        &::before {
+                                        content: '';
+                                        height: 6px;
+                                        position: absolute;
+                                        width: 100%;
+                                        margin-top: -5px;
+                                        }
+                                    }
+                        
+                        
+                                    .field-notlikelytext {
+                                        width: 63.5%;
+                        
+                                        &::before {
+                                        background-color: var(--color-interface-feedback-notlikelyrating);
+                                        border-top-left-radius: 5px;
+                                        border-bottom-left-radius: 5px;
+                                        }
+                                    }
+                        
+                                    .field-maybetext {
+                                        width: 18.3%;
+                        
+                                        &::before {
+                                        background-color: var(--color-interface-feedback-mayberating);
+                                        border-left: 2px solid var(--color-interface-background-primary);
+                                        }
+                                    }
+                        
+                                    .field-verylikelytext {
+                                        width: 18.2%;
+                        
+                                        &::before {
+                                        background-color: var(--color-interface-feedback-verylikelyrating);
+                                        border-top-right-radius: 5px;
+                                        border-bottom-right-radius: 5px;
+                                        border-left: 2px solid var(--color-interface-background-primary);
+                                        }
+                                    }
+                                    }
+                                                        
+                                    .field-tqsubmitbutton {
+                                        max-width: 252px;
+                                        text-align: left;
+                                    }
+
+                                    @media (width <=1080px) {
+                                        padding: 0 20px;
+                                        display: flex;
+                                        margin-top: -45px;
+                                    }
+
+                                    @media (width <= 767px) {
+                                        margin-top: -90px;
+                                    }
+                                }
+    
+                                .field-thankyourightpanel { 
+                                    padding-right: 60px; 
+                                    height: fit-content;
+                                    margin-top: -90px;
+                                    p { margin: 0; }
+    
+                                    .image-wrapper {
+                                        width: 272px;
+                                        height: 240px;
+                          
+                                        picture {
+                                          display: none;
+                                        }
+                          
+                                        @media (768px <=width <=991px) {
+                                          height: 202px;
+                                          width: 100%;
+                                          border-radius: 16px;
+                                        }
+                          
+                                        @media (320px <=width <=767px) {
+                                          height: 85px;
+                                          width: 100%;
+                                          background-size: contain;
+                                          border-radius: 16px;
+                                        }
+                                    }
+    
+                                    .field-nri3in1demat {
+                                        background-color: var(--color-interface-error-cta-background);
+                                        border-radius: 24px;
+                                        display: block;
+                                        height: fit-content;
+    
+                                        .image-wrapper { 
+                                            background: url('../icons/nri-3-in-1-demat.png') no-repeat top center; 
+                                            margin-top: 24px;
+                                            width: 140px;
+                                            height: 143px;
+                                        }
+                                        .plain-text-wrapper, .button-wrapper { padding: 0 30px; }
+    
+                                        .field-nri3in1btn {
+                                            margin: 0;
+                                            display: flex;
+    
+                                            &::after {
+                                                content: ' > ';
+                                                margin-top: -7px;
+                                            }
+    
+                                            button, button:hover {
+                                                background-color: var(--color-interface-error-cta-background) !important;
+                                                color: var(--color-interface-text-primary);
+                                                text-align: left;
+                                                height: fit-content;
+                                                margin-bottom: 20px;
+                                                font-size: var(--body-x-lg-font-size);
+                                                font-weight: var(--font-weight-bold);
+    
+                                                &::after { content: ''; }
+                                            }
+                                        }
+                                    }
+    
+                                    .field-insurancenri {
+                                        background-color: var(--color-interface-promotion-background-primary);
+                                        border-radius: 24px;
+                                        display: block;
+                                        height: fit-content;
+    
+                                        .image-wrapper { 
+                                            background: url('../icons/NRI-promotion-icon.svg') no-repeat top center; 
+                                            margin-top: 24px;
+                                            width: 155px;
+                                            height: 143px;
+                                        }
+                                        .plain-text-wrapper, .button-wrapper { padding: 0 30px; }
+    
+                                        .field-nriinsurancebtn {
+                                            margin: 0;
+                                            display: flex;
+    
+                                            &::after {
+                                                content: ' > ';
+                                                margin-top: -7px;
+                                            }
+    
+                                            button, button:hover {
+                                                background-color: var(--color-interface-promotion-background-primary) !important;
+                                                color: var(--color-interface-text-primary);
+                                                text-align: left;
+                                                height: fit-content;
+                                                margin-bottom: 20px;
+                                                font-size: var(--body-x-lg-font-size);
+                                                font-weight: var(--font-weight-bold);
+    
+                                                &::after { content: ''; }
+                                            }
+                                        }
+                                    }
+    
+                                    @media (width <=1080px) {
+                                        padding: 20px 20px 0;
+                                        display: grid;
+                                        margin-top: 0;
+
+                                        .field-nri3in1demat, .field-insurancenri { grid-column: span 4; }
+                                    }
+
+                                    @media (width <=767px) {
+                                        .field-nri3in1demat, .field-insurancenri { grid-column: span 6; }
+                                    }
+                                }
+    
+                                .field-hdfcbankwebsite { 
+                                    p {
+                                        font-size: 16px;
+                                        font-weight: 400;
+                                        line-height: 24px;
+                                        color: var(--color-input-text-primary);
+                                        padding: 0 30px 15px;
+                          
+                                        a {
+                                          font-weight: 600;
+                                        }
+                                    }
+
+                                    @media (width < 1080px) {
+                                      padding: 0 30px;
+                                      p { padding: 10px 0 20px; }
+                                    }  
+                                }
+                            }
+                        }
+
+                        /* End of ty screen */
                 }
 
                 /* form tag close */
@@ -2110,8 +2730,6 @@ footer {
   
           &::before {
             margin: 0 25px !important;
-            background: url('../icons/Indicator_Mobile.png') no-repeat center
-              center / 40px 40px !important;
           }
   
           &::after {
@@ -2130,19 +2748,6 @@ footer {
                 max-width: 100%;
                 button { max-width: none; }
             }
-        }
-  
-        .wizard-menu-item:has(+ .wizard-menu-active-item) {
-          &::before {
-            background: url('../icons/Indicator_Mobile_Completed.png') no-repeat
-              center center / 40px 40px !important;
-          }
-        }
-  
-        li:nth-child(1):has(~ li:nth-child(3).wizard-menu-active-item)::before {
-          background: url('../icons/Indicator_Mobile_Completed.png') no-repeat
-            center center / 40px 40px !important;
-          content: '';
         }
       }
     }
