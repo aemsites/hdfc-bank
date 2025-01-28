@@ -5,7 +5,7 @@ import {
   createHelpText,
   getId,
   stripTags,
-  checkValidation,
+  checkValidation, createPictureTemplate,
 } from './util.js';
 import GoogleReCaptcha from './integrations/recaptcha.js';
 import componentDecorater from './mappings.js';
@@ -222,14 +222,9 @@ function createPlainText(fd) {
 function createImage(fd) {
   const field = createFieldWrapper(fd);
   field.id = fd?.id;
-  const imagePath = fd.source || fd.properties['fd:repoPath'] || fd.value || '';
-  const image = `
-  <picture>
-    <source srcset="${imagePath}?width=2000&optimize=medium" media="(min-width: 600px)">
-    <source srcset="${imagePath}?width=750&optimize=medium">
-    <img alt="${fd.altText || fd.name}" src="${imagePath}?width=750&optimize=medium">
-  </picture>`;
-  field.innerHTML = image;
+  const imagePath = fd.value || fd.source || fd.properties['fd:repoPath'] || '';
+  const altText = fd.altText || fd.name;
+  field.innerHTML = createPictureTemplate(imagePath, altText);
   return field;
 }
 

@@ -227,3 +227,12 @@ export function checkValidation(fieldElement) {
   const message = getValidationMessage(fieldElement, wrapper);
   updateOrCreateInvalidMsg(fieldElement, message);
 }
+
+export function createPictureTemplate(imagePath, altText) {
+  return `
+  <picture>
+    <source srcset="${imagePath}?width=2000&optimize=medium" media="(min-width: 600px)">
+    <source srcset="${imagePath}?width=750&optimize=medium">
+    <img alt="${altText}" src="${imagePath}?width=750&optimize=medium">
+  </picture>`;
+}
