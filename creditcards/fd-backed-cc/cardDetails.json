@@ -1,104 +1,137 @@
 {
-    "cardDetails": {
-      "retailCards": [
-        {
-          "cardName": "Freedom",
-          "productCode": "dtdy66",
-          "cardDescription": "Best Card for Rewards & Offers",
-          "cardImage": "/conent/dam/../../../",
-          "minumumFdAmount": "15,000",
-          "features": [
-            "<p><span class=green-highlight> upto 10x cash points </span>",
-            "<p><span class=green-highlight> 150 spent = 1 fuel point </span>",
-            "<p><span class=green-highlight> Joining fees 500</span>"
-          ],
-          "allBenefitsAndFeatures": [
-            {
-              "features": [
-                "<p><span class=green-highlight>Complimentary insurance cover</span>",
-                "<p><span class=green-highlight>zero cross currency conversion mark up</span>"
-              ],
-              "benefitsForYou": [
-                "1. Avail upto 50 days"
-              ]
-            }
-          ]
-        },
-        {
-          "cardName": "Millenia",
-          "productCode": "stdy66",
-          "cardDescription": "Best Card for Rewards & Offers",
-          "cardImage": "/conent/dam/../../../",
-          "minumumFdAmount": "15,000",
-          "features": [
-            "<p><span class=green-highlight> upto 10x cash points </span>",
-            "<p><span class=green-highlight> 150 spent = 1 fuel point </span>",
-            "<p><span class=green-highlight> Joining fees 500</span>"
-          ],
-          "allBenefitsAndFeatures": [
-            {
-              "features": [
-                "<p><span class=green-highlight>Complimentary insurance cover</span>",
-                "<p><span class=green-highlight>zero cross currency conversion mark up</span>"
-              ],
-              "benefitsForYou": [
-                "1. Avail upto 50 days"
-              ]
-            }
-          ]
-        }
-      ],
-      "businessCards": [
-        {
-          "cardName": "Freedom",
-          "productCode": "atdy66",
-          "cardDescription": "Best Card for Rewards & Offers",
-          "cardImage": "/conent/dam/../../../",
-          "minumumFdAmount": "15,000",
-          "features": [
-            "<p><span class=green-highlight> upto 10x cash points </span>",
-            "<p><span class=green-highlight> 150 spent = 1 fuel point </span>",
-            "<p><span class=green-highlight> Joining fees 500</span>"
-          ],
-          "allBenefitsAndFeatures": [
-            {
-              "features": [
-                "<p><span class=green-highlight>Complimentary insurance cover</span>",
-                "<p><span class=green-highlight>zero cross currency conversion mark up</span>"
-              ],
-              "benefitsForYou": [
-                "1. Avail upto 50 days"
-              ]
-            }
-          ]
-        },
-        {
-          "cardName": "Millenia Business",
-          "productCode": "ptdy66",
-          "cardDescription": "Best Card for Rewards & Offers",
-          "cardImage": "/conent/dam/../../../",
-          "minumumFdAmount": "15,000",
-          "features": [
-            "<p><span class=green-highlight> upto 10x cash points </span>",
-            "<p><span class=green-highlight> 150 spent = 1 fuel point </span>",
-            "<p><span class=green-highlight> Joining fees 500</span>"
-          ],
-          "allBenefitsAndFeatures": [
-            {
-              "features": [
-                "<p><span class=green-highlight>Complimentary insurance cover</span>",
-                "<p><span class=green-highlight>zero cross currency conversion mark up</span>"
-              ],
-              "benefitsForYou": [
-                "1. Avail upto 50 days"
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    "status": {
-      "errorCode": "0",
-      "errorMessage": "Success"
-    }
+  "cardDetails": {
+    "retailCards": [
+      {
+        "cardName": "Freedom1",
+        "productCode": "dtdy66",
+        "cardDescription": "Best Card for Rewards & Offers",
+        "cardImage": "/content/dam/hdfc_pacc_wo_forms/Com_MoneyBack.svg",
+        "minumumFdAmount": "15,000",
+        "features": [
+          "<p><span class=green-highlight> upto 10x cash points </span></p>",
+          "<p><span class=green-highlight> 150 spent = 1 fuel point </span></p>",
+          "<p><span class=green-highlight> Joining fees 500</span></p>"
+        ],
+        "allBenefitsAndFeatures": [
+          {
+            "heading": "Freedom popup2",
+            "features": [
+              "<p><span class=green-highlight>Complimentary insurance cover</span></p>",
+              "<p><span class=green-highlight>zero cross currency conversion mark up</span></p>",
+              "<p><span class=green-highlight>Free petrol upto 25L</span></p>"
+            ],
+            "benefitsForYou": [
+              "Benifits for you 1. Avail upto 50 days 2. 25% off on movie ticket"
+            ]
+          }
+        ]
+      },
+      {
+        "cardName": "Millenia3",
+        "productCode": "stdy66",
+        "cardDescription": "Best Card for Rewards & Offers",
+        "cardImage": "/content/dam/hdfc_pacc_wo_forms/Com_MoneyBack.svg",
+        "minumumFdAmount": "15,000",
+        "features": [
+          "<p><span class=green-highlight> Millllll</span>",
+          "<p><span class=green-highlight> 150 spent = 1 fuel point </span>",
+          "<p><span class=green-highlight> Joining fees 500</span>"
+        ],
+        "allBenefitsAndFeatures": [
+          {
+            "heading": "Millenia popup4",
+            "features": [
+              "<p><span class=green-highlight>Milllllsssss</span>",
+              "<p><span class=green-highlight>zero cross currency conversion mark up</span>",
+              "<p><span class=green-highlight>Free petrol upto 25L</span>"
+            ],
+            "benefitsForYou": [
+              "Benifits for you 1. Avail upto 50 days 2. 25% off on movie ticket"
+            ]
+          }
+        ]
+      },
+      {
+        "cardName": "MoneyBack+",
+        "productCode": "stdy66",
+        "cardDescription": "Best Card for Rewards & Offers",
+        "cardImage": "/content/dam/hdfc_pacc_wo_forms/Com_MoneyBack.svg",
+        "minumumFdAmount": "15,000",
+        "features": [
+          "<p><span class=green-highlight> upto 10x cash points </span>",
+          "<p><span class=green-highlight> 150 spent = 1 fuel point </span>",
+          "<p><span class=green-highlight> Joining fees 500</span>"
+        ],
+        "allBenefitsAndFeatures": [
+          {
+            "heading": "MoneyBack+ popup",
+            "features": [
+              "<p><span class=green-highlight>Complimentary insurance cover</span>",
+              "<p><span class=green-highlight>zero cross currency conversion mark up</span>",
+              "<p><span class=green-highlight>Free petrol upto 25L</span>"
+            ],
+            "benefitsForYou": [
+              "Benifits for you 1. Avail upto 50 days 2. 25% off on movie ticket"
+            ]
+          }
+        ]
+      }
+    ],
+    "businessCards": [
+      {
+        "cardName": "Business Freedom",
+        "productCode": "atdy66",
+        "cardDescription": "Best Card for Rewards & Offers",
+        "cardImage": "/content/dam/hdfc_pacc_wo_forms/Com_MoneyBack.svg",
+        "minumumFdAmount": "15,000",
+        "features": [
+          "<p><span class=green-highlight> upto 10x cash points </span>",
+          "<p><span class=green-highlight> 150 spent = 1 fuel point </span>",
+          "<p><span class=green-highlight> Joining fees 500</span>"
+        ],
+        "allBenefitsAndFeatures": [
+          {
+            "heading": "Business Freedom popup",
+            "features": [
+              "<p><span class=green-highlight>Complimentary insurance cover</span>",
+              "<p><span class=green-highlight>zero cross currency conversion mark up</span>",
+              "<p><span class=green-highlight>Free petrol upto 25L</span>"
+            ],
+            "benefitsForYou": [
+              "Benifits for you 1. Avail upto 50 days 2. 25% off on movie ticket"
+            ]
+          }
+        ]
+      },
+      {
+        "cardName": "Business Millenia Business",
+        "productCode": "ptdy66",
+        "cardDescription": "Best Card for Rewards & Offers",
+        "cardImage": "/content/dam/hdfc_pacc_wo_forms/Com_MoneyBack.svg",
+        "minumumFdAmount": "15,000",
+        "features": [
+          "<p><span class=green-highlight> upto 10x cash points </span>",
+          "<p><span class=green-highlight> 150 spent = 1 fuel point </span>",
+          "<p><span class=green-highlight> Joining fees 500</span>"
+        ],
+        "allBenefitsAndFeatures": [
+          {
+            "heading": "Business Millenia Business popup",
+            "features": [
+              "<p><span class=green-highlight>Complimentary insurance cover</span>",
+              "<p><span class=green-highlight>zero cross currency conversion mark up</span>",
+              "<p><span class=green-highlight>Free petrol upto 25L</span>"
+            ],
+            "benefitsForYou": [
+              "Benifits for you 1. Avail upto 50 days 2. 25% off on movie ticket"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "status": {
+    "errorCode": "0",
+    "errorMessage": "Success"
   }
+}

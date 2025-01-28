@@ -336,13 +336,13 @@ const fetchCardDetailsSuccessHandler = async (response, globals) => {
       const processedCard = {
         [`${type}CardName`]: card.cardName || '',
         [`${type}CardTagline`]: card.cardDescription || '',
+        [`${type}CardImage`]: card.cardImage || '',
         ...flattenedFeatures,
         [`backLink${capsType}Popup`]: benefits.heading || '',
         ...flattenedBenefits,
         [`${type}CardFeaturesBenefits`]: benefitsForYou[0] || '',
         [`${type}CardMinFDAmount`]: card.minumumFdAmount?.replace(/,/g, '') || '',
       };
-
       return processedCard;
     });
   };
@@ -369,9 +369,9 @@ const customerAccountDetails = (casaRes, globals) => {
   const { functions } = globals;
   const { importData } = functions;
 
-  const value = casaRes[0].casaAccountDetails.map((account) => ({
+  const value = casaRes.customerAccountDetailsDTO.map((account) => ({
     savingsAccNumber: account.accountNumber,
-    balanceAmount: account.clearBalance,
+    balanceAmount: account.availableBalance,
   }));
 
   importData(value, globals.form?.accountSelectionWrapper?.accountSelectionPanel?.repeatWrapper?.$qualifiedName);
