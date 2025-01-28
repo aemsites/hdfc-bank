@@ -13,6 +13,7 @@ import DocBasedFormToAF from './transform.js';
 import transferRepeatableDOM from './components/repeat.js';
 import { handleSubmit } from './submit.js';
 import { emailPattern, getSubmitBaseUrl } from './constant.js';
+import { createOptimizedPicture } from '../../scripts/aem.js';
 
 export const DELAY_MS = 0;
 let captchaField;
@@ -222,14 +223,14 @@ function createPlainText(fd) {
 function createImage(fd) {
   const field = createFieldWrapper(fd);
   field.id = fd?.id;
-  const imagePath = fd.source || fd.properties['fd:repoPath'] || fd.value || '';
-  const image = `
-  <picture>
-    <source srcset="${imagePath}?width=2000&optimize=medium" media="(min-width: 600px)">
-    <source srcset="${imagePath}?width=750&optimize=medium">
-    <img alt="${fd.altText || fd.name}" src="${imagePath}?width=750&optimize=medium">
-  </picture>`;
-  field.innerHTML = image;
+  const imagePath = fd.value || fd.source || fd.properties['fd:repoPath'] || '';
+  // const image = `
+  // <picture>
+  //   <source srcset="${imagePath}?width=2000&optimize=medium" media="(min-width: 600px)">
+  //   <source srcset="${imagePath}?width=750&optimize=medium">
+  //   <img alt="${fd.altText || fd.name}" src="${imagePath}?width=750&optimize=medium">
+  // </picture>`;
+  field.append(createOptimizedPicture(imagePath, fd.altText || fd.name));
   return field;
 }
 
