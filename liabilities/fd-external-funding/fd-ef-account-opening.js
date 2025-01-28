@@ -11,7 +11,7 @@ const {
 
 const fillSummaryDtls = (data, globals) => {
     const refAccountNumber = globals.form.thankYouPanel.thankYouFragment.thankyouLeftPanel.accountNumber;
-    const refAccountNumberField = formUtil(globals, refAccountNumber.accountNumberTY);
+    const refAccountNumberField = formUtil(globals, refAccountNumber.fdReferenceNumberTY);
     refAccountNumberField.setValue(data.termDepositXfaceAccountOpeningResponseDTO.tdaccounTNo);
     const { 
         tyFDholder,
