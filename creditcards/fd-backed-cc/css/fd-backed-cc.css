@@ -45,7 +45,7 @@ body.fd-backed-cc {
                 right: 0;
                 top: 0.5em;
                 height: 32px;
-                content: url('../icons/safe-secure.svg');
+                content: url("../assets/icons/safe-secure.svg");
                 padding: 0;
 
 
@@ -90,17 +90,17 @@ body.fd-backed-cc {
                         }
 
                         .field-bannerimagepanel {
-                            background: var(--color-interface-fd-background-secondary) url(../icons/side_bar_banner.png) no-repeat top center;
+                            background: var(--color-interface-fd-background-secondary) url("../assets/images/side_bar_banner.png") no-repeat top center;
                             min-height: 648px;
 
 
                             @media (768px <=width <=1200px) {
-                                background: var(--color-interface-fd-background-secondary) url('../icons/banner_tablet.png') no-repeat center center / 100% 100%;
+                                background: var(--color-interface-fd-background-secondary) url("../assets/images/banner_tablet.png") no-repeat center center / 100% 100%;
                                 min-height: 225px;
                             }
 
                             @media (320px <=width <=767px) {
-                                background: var(--color-interface-fd-background-secondary) url('../icons/banner_mobile.png') no-repeat center center / 100% 100%;
+                                background: var(--color-interface-fd-background-secondary) url("../assets/images/banner_mobile.png") no-repeat center center / 100% 100%;
                                 min-height: 225px;
                             }
                         }
@@ -114,10 +114,6 @@ body.fd-backed-cc {
                                 padding-bottom: 40px;
                             }
 
-                            /*   @media (min-width: 992px) {
-                                padding: 40px 35px 40px 0;
-                            }
- */
                             .field-headertext {
                                 position: absolute;
                                 top: -50px;
@@ -143,7 +139,7 @@ body.fd-backed-cc {
                             }
 
                             .field-landingpagebanner {
-                                background: url('../icons/landing_banner_bg.png') repeat-x center top;
+                                background: url("../assets/images/landing_banner_bg.png") repeat-x center top;
                                 display: grid;
                                 animation: someanimation 1s linear forwards;
 
@@ -157,7 +153,7 @@ body.fd-backed-cc {
 
 
                                     .field-landingpanel11 {
-                                        background: url('../icons/landing_banner_smily-bg.png') no-repeat -20px -10px;
+                                        background: url("../assets/images/landing_banner_smily-bg.png") no-repeat -20px -10px;
 
                                         @media (768px <=width <=991px) {
                                             background-size: 170%;
@@ -169,17 +165,17 @@ body.fd-backed-cc {
                                         }
 
                                         .field-landingpagetext1 {
-                                            background: url('../icons/landing_banner_left-text.png') no-repeat 40px 50px;
+                                            background: url("../assets/images/landing_banner_left-text.png") no-repeat 40px 50px;
                                             height: 378px;
                                             width: 100%;
 
                                             @media (768px <=width <=991px) {
-                                                background: url('../icons/landing_banner_left-text_ipad.png') no-repeat 40px 20px;
+                                                background: url("../assets/images/landing_banner_left-text_ipad.png") no-repeat 40px 20px;
                                                 height: 252px;
                                             }
 
                                             @media (max-width: 767px) {
-                                                background: url('../icons/banner_mobile_text.png') no-repeat top center;
+                                                background: url("../assets/images/banner_mobile_text.png") no-repeat top center;
                                                 height: 194px;
                                             }
 
@@ -218,6 +214,7 @@ body.fd-backed-cc {
 
                                         .button-wrapper {
                                             width: 225px;
+                                            order: 2;
 
                                             @media (768px <=width <=991px) {
                                                 width: auto;
@@ -250,6 +247,8 @@ body.fd-backed-cc {
                                             }
 
                                             &.field-knowyourcclimit {
+                                                order: 1;
+
                                                 button {
                                                     background: none;
                                                     border: 1px solid var(--color-action-border-primary-default);
@@ -270,7 +269,7 @@ body.fd-backed-cc {
                                     @media (max-width: 767px) {
                                         grid-column: span 12;
                                         order: 1;
-                                        background: url('../icons/banner_mobile_users.png') no-repeat center top;
+                                        background: url("../assets/images/banner_mobile_users.png") no-repeat center top;
                                     }
 
                                     @media (max-width: 400px) {
@@ -281,13 +280,13 @@ body.fd-backed-cc {
                                     .image-wrapper {
                                         max-width: 380px;
                                         height: 405px;
-                                        background: url('../icons/landing_banner_right.png') no-repeat right 50px;
+                                        background: url("../assets/images/landing_banner_right.png") no-repeat right 50px;
                                         background-size: 95%;
 
                                         @media (768px <=width <=991px) {
                                             width: 100%;
 
-                                            background: url('../icons/landing_banner_right_ipad.png') no-repeat right top;
+                                            background: url("../assets/images/landing_banner_right_ipad.png") no-repeat right top;
                                             background-size: 100%;
                                         }
 
@@ -438,6 +437,7 @@ body.fd-backed-cc {
                                             input {
                                                 margin: 0;
                                                 padding: 0;
+                                                border-radius: 0;
                                                 letter-spacing: 0;
                                                 border: none;
                                                 height: auto;
@@ -479,7 +479,7 @@ body.fd-backed-cc {
 
 
                                             .image-wrapper {
-                                                background: url('../icons/freedom_card.png') no-repeat;
+                                                background: url("../assets/images/freedom_card.png") no-repeat;
                                                 margin-top: 20px;
 
                                                 height: 125px;
@@ -506,7 +506,7 @@ body.fd-backed-cc {
                                                         position: absolute;
                                                         width: 16px;
                                                         height: 16px;
-                                                        background: url('../icons/folder_icon.png') no-repeat top left;
+                                                        background: url("../assets/icons/folder_icon.png") no-repeat top left;
                                                     }
 
                                                     label {
@@ -515,7 +515,7 @@ body.fd-backed-cc {
 
                                                     p p,
                                                     input {
-                                                        padding-left: 30px;
+                                                        padding-left: 25px;
                                                         font-size: var(--body-fd-sm-font-size);
                                                         font-weight: var(--font-weight-regular);
                                                         color: var(--color-interface-text-primary);
@@ -548,7 +548,7 @@ body.fd-backed-cc {
                                                     height: auto;
 
                                                     &::after {
-                                                        background: url('../icons/right_blue_arrow.png') no-repeat right 3px;
+                                                        background: url("../assets/icons/right_blue_arrow.png") no-repeat right 3px;
                                                     }
 
                                                     &:hover {
@@ -604,7 +604,7 @@ body.fd-backed-cc {
                                                         transform: none;
                                                         margin: 0;
                                                         padding: 0;
-                                                        background: url('../icons/only_amount_icon.png') no-repeat center center;
+                                                        background: url("../assets/icons/only_amount_icon.png") no-repeat center center;
                                                         background-size: 15px;
                                                         width: 20px;
                                                         font-size: 0;
@@ -655,7 +655,7 @@ body.fd-backed-cc {
                                         }
                                     }
 
-                                    .field-navigationarrowswrap1,
+                                    /* .field-navigationarrowswrap1,
                                     .field-navigationdotswrap1,
                                     .field-navigationarrowswrap2,
                                     .field-navigationdotswrap2 {
@@ -697,13 +697,14 @@ body.fd-backed-cc {
                                                 align-items: center;
                                                 justify-content: center;
                                                 overflow: hidden;
+                                                color: transparent;
 
                                                 &::before {
                                                     content: '';
                                                     position: absolute;
                                                     height: 100%;
                                                     width: 100%;
-                                                    background: transparent url('../icons/right-arrow.png') no-repeat center center;
+                                                    background: transparent url("../assets/icons/right-arrow.png") no-repeat center center;
                                                     transition: transform 0.3s ease, background 0.3s ease;
                                                 }
 
@@ -712,7 +713,7 @@ body.fd-backed-cc {
 
                                                     &::before {
                                                         transform: rotate(360deg);
-                                                        background: var(--color-interface-border-highlight) url('../icons/right-arrow.png') no-repeat center center;
+                                                        background: var(--color-interface-border-highlight) url("../assets/icons/right-arrow.png") no-repeat center center;
                                                     }
                                                 }
                                             }
@@ -760,7 +761,7 @@ body.fd-backed-cc {
                                                 }
                                             }
                                         }
-                                    }
+                                    } */
                                 }
 
                                 &:has(.field-retailcardssectionmainwrapper[data-visible="true"]),
@@ -894,7 +895,7 @@ body.fd-backed-cc {
                                             }
 
                                             &.field-enterfdamtwrap {
-                                                background: url(../icons/triple_right_arrow.png) no-repeat 90% center;
+                                                background: url("../assets/icons/triple_right_arrow.png") no-repeat 90% center;
                                                 width: 100%;
                                                 position: relative;
 
@@ -904,7 +905,7 @@ body.fd-backed-cc {
 
                                                 @media (max-width: 767px) {
                                                     width: 100%;
-                                                    background: url('../icons/mob_vertical_three_arrow.png') no-repeat bottom center;
+                                                    background: url("../assets/icons/mob_vertical_three_arrow.png") no-repeat bottom center;
                                                     padding-bottom: 80px;
                                                 }
 
@@ -1007,7 +1008,7 @@ body.fd-backed-cc {
                                                     &::before {
                                                         content: '';
                                                         position: absolute;
-                                                        background: url('../icons/credit_limit_tick_icon.png') no-repeat left center;
+                                                        background: url("../assets/icons/credit_limit_tick_icon.png") no-repeat left center;
                                                         width: 32px;
                                                         height: 32px;
                                                         top: 30%;
@@ -1042,6 +1043,7 @@ body.fd-backed-cc {
 
                             .field-benefitsofsecuredcc {
                                 padding: 30px 20px;
+                                margin-bottom: 20px;
 
                                 @media (min-width: 768px) {
                                     display: inline;
@@ -1104,19 +1106,19 @@ body.fd-backed-cc {
                                             }
 
                                             &.field-secureccinfo1img {
-                                                background: url('../icons/benifit_build_credit_icon.png') no-repeat center center;
+                                                background: url("../assets/icons/benifit_build_credit_icon.png") no-repeat center center;
                                             }
 
                                             &.field-secureccinfo2img {
-                                                background: url('../icons/benifit_high_rates_icon.png') no-repeat center center;
+                                                background: url("../assets/icons/benifit_high_rates_icon.png") no-repeat center center;
                                             }
 
                                             &.field-secureccinfo3img {
-                                                background: url('../icons/benifit_unsecure_card_icon.png') no-repeat center center;
+                                                background: url("../assets/icons/benifit_unsecure_card_icon.png") no-repeat center center;
                                             }
 
                                             &.field-secureccinfo4img {
-                                                background: url('../icons/benifit_reward_icon.png') no-repeat center center;
+                                                background: url("../assets/icons/benifit_reward_icon.png") no-repeat center center;
                                             }
 
                                         }
@@ -1186,6 +1188,7 @@ body.fd-backed-cc {
                                 }
 
                                 .field-landinglabel {
+                                    margin-bottom: 10px;
 
                                     p {
                                         margin: 0;
@@ -1206,7 +1209,7 @@ body.fd-backed-cc {
                                         width: 100%;
                                         max-width: 368px;
 
-                                        @media (768px <=width <=1200px) {
+                                        @media (768px <=width <=1400px) {
                                             max-width: none;
                                         }
 
@@ -1225,7 +1228,7 @@ body.fd-backed-cc {
                                         }
 
                                         select {
-                                            background: url(../icons/india-flag.png) no-repeat 20px center;
+                                            background: url("../assets/icons/india-flag.png") no-repeat 20px center;
                                             padding: 0 !important;
                                             text-align: right;
                                             appearance: none;
@@ -1450,11 +1453,11 @@ body.fd-backed-cc {
                                         padding-left: 22px;
 
                                         &[type="text"] {
-                                            background: url('../icons/date_picker_cal_icon_default.svg') no-repeat 98% center;
+                                            background: url("../assets/icons/date_picker_cal_icon_default.svg") no-repeat 98% center;
                                         }
 
                                         &[type="date"] {
-                                            background: url('../icons/date_picker_cal_icon_select.svg') no-repeat 98% center;
+                                            background: url("../assets/icons/date_picker_cal_icon_select.svg") no-repeat 98% center;
                                         }
 
                                         &:focus-visible {
@@ -1469,7 +1472,7 @@ body.fd-backed-cc {
                                     &[data-empty="false"] {
                                         input {
                                             color: var(--color-interface-text-primary);
-                                            background: url('../icons/date_picker_cal_icon_select.svg') no-repeat 98% center;
+                                            background: url("../assets/icons/date_picker_cal_icon_select.svg") no-repeat 98% center;
                                         }
                                     }
                                 }
@@ -1499,7 +1502,7 @@ body.fd-backed-cc {
                                         content: '';
                                         position: absolute;
                                         left: 15px;
-                                        background: url('../icons/info-icon.svg') no-repeat center center;
+                                        background: url("../assets/icons/info-icon.svg") no-repeat center center;
                                         width: 16px;
                                         height: 16px;
                                         background-size: 100%;
@@ -1514,12 +1517,13 @@ body.fd-backed-cc {
                                 }
                             }
 
-                            .field-consenttext {
-                                border-top: 1px dashed var(--color-interface-border-secondary);
-                                padding-top: 20px;
+                            .field-consenttext,
+                            .field-consent-fragment,
+                            .field-consent3label {
                                 margin-top: 20px;
 
-                                p p {
+                                p p,
+                                label p {
                                     font-size: var(--body-fd-sm-font-size);
                                     color: var(--color-interface-text-quaternary);
                                     font-weight: var(--font-weight-regular);
@@ -1533,6 +1537,17 @@ body.fd-backed-cc {
                                         text-decoration: underline;
                                     }
                                 }
+
+                                .field-checkboxconsent1label {
+                                    flex-wrap: wrap;
+                                    border-top: 1px dashed var(--color-interface-border-secondary);
+                                    padding-top: 20px;
+
+                                    .field-description {
+                                        margin: -5px 0 5px 0;
+                                    }
+                                }
+
                             }
 
                             .field-getotpbutton {
@@ -1609,25 +1624,25 @@ body.fd-backed-cc {
 
                                         &.field-step1image {
                                             &::after {
-                                                background: url("../icons/step_follow_verify-identify.png") no-repeat center center;
+                                                background: url("../assets/icons/step_follow_verify-identify.png") no-repeat center center;
                                             }
                                         }
 
                                         &.field-step2image {
                                             &::after {
-                                                background: url("../icons/step_follow_credit-card.png") no-repeat center center;
+                                                background: url("../assets/icons/step_follow_credit-card.png") no-repeat center center;
                                             }
                                         }
 
                                         &.field-step3image {
                                             &::after {
-                                                background: url("../icons/step_follow_select-fd.png") no-repeat center center;
+                                                background: url("../assets/icons/step_follow_select-fd.png") no-repeat center center;
                                             }
                                         }
 
                                         &.field-step4image {
                                             &::after {
-                                                background: url("../icons/step_follow_verify-identify.png") no-repeat center center;
+                                                background: url("../assets/icons/step_follow_verify-identify.png") no-repeat center center;
 
                                             }
                                         }
@@ -1968,10 +1983,10 @@ body.fd-backed-cc {
                                 width: 199px;
                                 height: 125px;
                                 margin: 30px auto;
-                                background: url('../icons/credit-card-sample.png') no-repeat center center;
+                                background: url("../assets/images/credit-card-sample.png") no-repeat center center;
 
                                 @media (320px <=width <=768px) {
-                                    background: url('../icons/credit-card-sample_ipad.png') no-repeat center center;
+                                    background: url("../assets/images/credit-card-sample_ipad.png") no-repeat center center;
                                     width: 299px;
                                     height: 187px;
                                 }
@@ -2023,7 +2038,7 @@ body.fd-backed-cc {
                                         transform: none;
                                         margin: 0;
                                         padding: 0;
-                                        background: url('../icons/only_amount_icon.png') no-repeat center center;
+                                        background: url("../assets/icons/only_amount_icon.png") no-repeat center center;
                                         background-size: 15px;
                                         width: 20px;
                                         font-size: 0;
@@ -2064,6 +2079,50 @@ body.fd-backed-cc {
                         /* CARD DETAILS POPUP SCREEN END */
 
                         .field-accountselectionwrapper {
+                            .field-insufficientbalancepanel {
+                                background-color: var(--color-interface-error-box-primary);
+                                border-radius: 12px;
+                                padding: 10px 16px;
+                                margin-bottom: 30px;
+                                position: relative;
+                                display: inline;
+
+                                p {
+                                    font-size: var(--body-fd-sm-font-size);
+                                    font-weight: var(--font-weight-medium);
+                                    color: var(--color-input-text-msg-error);
+                                    margin-bottom: 0;
+                                    padding-left: 15px;
+                                }
+
+                                &::before {
+                                    content: "";
+                                    position: absolute;
+                                    background: url("../assets/icons/info-circle_error.png") no-repeat left center;
+                                    width: 20px;
+                                    height: 20px;
+                                    top: 22px;
+                                }
+
+                                .field-insufficientbalancetext1wrapper {
+                                    display: flex;
+                                    align-items: center;
+                                    gap: 0 !important;
+
+                                    .field-insufficientbalanceccname {
+                                        p {
+                                            padding-left: 0;
+                                        }
+                                    }
+                                }
+
+                                .field-insufficientbalancetext2{
+                                    p{
+                                        font-weight: var(--font-weight-regular);
+                                    }
+                                }
+                            }
+
                             .field-accountselectionlabel {
                                 p {
                                     font-size: var(--body-xx-lg-font-size);
@@ -2161,6 +2220,7 @@ body.fd-backed-cc {
                                                         padding: 0;
                                                         width: 24px !important;
                                                         height: 24px !important;
+                                                        background: none;
 
 
                                                         &:checked {
@@ -2228,6 +2288,7 @@ body.fd-backed-cc {
                                     @media (max-width: 768px) {
                                         margin-bottom: 10px;
                                     }
+
                                     p {
                                         font-size: var(--body-x-lg-font-size);
                                         font-weight: var(--font-weight-bold);
@@ -2277,6 +2338,8 @@ body.fd-backed-cc {
                         }
 
                         /* ACCOUNT SELECTION SCREEN END */
+
+                        /* WIZARD SCREENS START */
 
                         .field-fdbackedccwizard {
                             position: relative;
@@ -2339,8 +2402,8 @@ body.fd-backed-cc {
 
                                     &:first-child {
                                         &::before {
-                                            background: url('../icons/wizard_select_credit_card_icon.png') no-repeat center center;
-                                            border-color: var(--color-action-border-primary-default);
+                                            background: url("../assets/icons/wizard_select_credit_card_icon.png") no-repeat center center;
+                                            /*  border-color: var(--color-action-border-primary-default); */
                                         }
 
                                         &.wizard-menu-active-item {
@@ -2348,7 +2411,7 @@ body.fd-backed-cc {
                                             font-weight: var(--font-weight-bold);
 
                                             &::before {
-                                                background: var(--color-input-border-focus) url('../icons/wizard_select_credit_card_active_icon.png') no-repeat center center;
+                                                background: var(--color-input-border-focus) url("../assets/icons/wizard_select_credit_card_active_icon.png") no-repeat center center;
                                                 border: 2px solid #c6d4ff;
                                             }
                                         }
@@ -2356,24 +2419,24 @@ body.fd-backed-cc {
 
                                     &:nth-child(2) {
                                         &::before {
-                                            background: url('../icons/step-confirm-details.png') no-repeat center center;
+                                            background: url("../assets/icons/wizard_step-confirm-details.png") no-repeat center center;
                                         }
 
                                         &.wizard-menu-active-item {
                                             &::before {
-                                                background: var(--color-input-border-focus) url('../icons/step-confirm-details-select.png') no-repeat center center;
+                                                background: url("../assets/icons/wizard_step-confirm-details_active_icon.png") var(--color-input-border-focus) no-repeat center center;
                                             }
                                         }
                                     }
 
                                     &:nth-child(3) {
                                         &::before {
-                                            background: url('../icons/wizard_verify_icon.png') no-repeat center center;
+                                            background: url("../assets/icons/wizard_verify_icon.png") no-repeat center center;
                                         }
 
                                         &.wizard-menu-active-item {
                                             &::before {
-                                                background: var(--color-input-border-focus) url('../icons/wizard_verify_active_icon.png') no-repeat center center;
+                                                background: var(--color-input-border-focus) url("../assets/icons/wizard_verify_active_icon.png") no-repeat center center;
                                             }
                                         }
 
@@ -2444,7 +2507,7 @@ body.fd-backed-cc {
                                             position: absolute;
                                             height: 20px;
                                             width: 20px;
-                                            background: url('../icons/arrow-right-blue_light_icon.png') no-repeat left center;
+                                            background: url("../assets/icons/arrow-right-blue_light_icon.png") no-repeat left center;
                                             top: 15px;
                                             left: 0;
                                         }
@@ -2455,6 +2518,155 @@ body.fd-backed-cc {
                                     }
                                 }
 
+                                .field-updatepanpanel {
+                                    background: #FEF8E6;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: space-between;
+                                    border-radius: 12px;
+
+                                    .field-updatepantext {
+                                        position: relative;
+                                        margin: 10px 0 5px 0;
+                                        padding-left: 30px;
+                                        display: flex;
+                                        align-items: center;
+                                        padding: 10px 15px 10px 50px;
+
+                                        &::before {
+                                            content: '';
+                                            position: absolute;
+                                            left: 20px;
+                                            background: url("../assets/icons/info_yellow.png") no-repeat center center;
+                                            width: 20px;
+                                            height: 20px;
+                                            background-size: 100%;
+                                        }
+
+                                        p {
+                                            font-size: var(--body-md-font-size);
+                                            font-weight: var(--font-weight-medium);
+                                            color: #D67D26;
+                                        }
+                                    }
+
+                                    .field-updatepanbtn {
+                                        button {
+                                            background: none;
+                                            width: auto;
+                                            background: none;
+                                            color: var(--color-action-text-secondary-default);
+                                            font-size: var(--body-md-font-size);
+                                            font-weight: var(--font-weight-bold);
+                                            position: relative;
+                                            display: flex;
+                                            padding-right: 20px;
+                                            align-items: center;
+                                            margin-right: 15px;
+
+                                            &::after {
+                                                content: '';
+                                                position: absolute;
+                                                height: 20px;
+                                                width: 20px;
+                                                background: url("../assets/icons/right_blue_arrow.png") no-repeat 5px center;
+                                                top: 15px;
+                                                right: 0;
+                                            }
+
+                                            &:hover {
+                                                background: none !important;
+                                            }
+                                        }
+                                    }
+                                }
+
+                                .field-panupdatepopup {
+                                    width: 520px;
+                                    height: 508px;
+                                    border-radius: 12px;
+                                    background: var(--color-interface-background-primary);
+                                    margin: 0 auto;
+                                    text-align: center;
+                                    display: inline;
+                                    padding: 40px 32px;
+
+                                    .image-wrapper {
+                                        height: 141px;
+                                        background: url("../assets/images/pen_popup-image.png") no-repeat top center;
+                                        margin-bottom: 50px;
+
+                                        picture {
+                                            display: none;
+                                        }
+                                    }
+
+                                    .field-panupdatepopuptext1 {
+                                        margin-bottom: 10px;
+
+                                        p {
+                                            color: var(--color-interface-text-quaternary);
+                                            font-size: var(--body-fd-xx-lg-font-size);
+                                            font-weight: var(--font-weight-bold);
+                                        }
+                                    }
+
+                                    .field-panupdatepopuptext2 {
+                                        p p {
+                                            color: var(--color-input-text-primary);
+                                            font-size: var(--body-fd-lg-font-size);
+                                            font-weight: var(--font-weight-regular);
+                                        }
+                                    }
+
+                                    .field-panupdatebtnpanel {
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: center;
+                                        margin-top: 20px;
+
+                                        button {
+                                            width: 216px;
+                                            font-weight: var(--font-weight-bold);
+                                            position: relative;
+
+                                            &::after {
+                                                content: "";
+                                                position: absolute;
+                                                width: 20px;
+                                                height: 20px;
+                                            }
+                                        }
+
+                                        .field-skippanupdate {
+                                            button {
+                                                background: none;
+                                                border: 1px solid var(--color-action-border-primary-default);
+                                                color: var(--color-action-text-secondary-default);
+
+                                                &:hover {
+                                                    color: var(--color-interface-text-tertiary);
+                                                }
+
+                                                &::after {
+                                                    background: url("../assets/icons/right_blue_arrow.png") no-repeat 95% center;
+                                                    background-size: 7px;
+                                                }
+                                            }
+                                        }
+
+                                        .field-updatepanbtn {
+                                            button {
+                                                &::after {
+                                                    background: url("../assets/icons/right-arrow.png") no-repeat right center;
+                                                    background-size: 90%;
+                                                    margin: 1px 0 0 5px;
+
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
 
                                 .field-selectcreditcardsingle {
                                     display: flex;
@@ -2463,6 +2675,22 @@ body.fd-backed-cc {
                                     p {
                                         margin-bottom: 0;
                                     }
+
+                                    input {
+                                        margin: 0;
+                                        padding: 0;
+                                        letter-spacing: 0;
+                                        border-radius: 0;
+                                        border: none;
+                                        height: auto;
+                                        line-height: normal;
+                                        color: #0A0F1C !important;
+                                    }
+
+                                    label {
+                                        display: none;
+                                    }
+
 
                                     .field-selectccsingleimagewrapper {
                                         border: 1px solid var(--color-interface-border-secondary);
@@ -2476,7 +2704,7 @@ body.fd-backed-cc {
                                         .field-singlecardviewimage {
                                             width: 283px;
                                             height: 178px;
-                                            background: url('../icons/credit-card-sample.png') no-repeat;
+                                            background: url("../assets/images/credit-card-sample.png") no-repeat;
                                             background-size: cover;
                                             margin: 0 auto;
 
@@ -2485,29 +2713,36 @@ body.fd-backed-cc {
                                             }
                                         }
 
-                                        .field-singlecardfeature1 {
+                                        .field-singlecardfeatureswrapper {
+                                            display: inline;
                                             margin-top: 20px;
-                                            margin-bottom: 5px;
 
-                                            p {
-                                                font-size: var(--body-fd-md-font-size);
-                                                font-weight: var(--font-weight-bold);
-                                                color: #0A0F1C;
+                                            .field-singlecardfeature1 {
+
+                                                p,
+                                                input {
+                                                    font-size: var(--body-fd-md-font-size);
+                                                    font-weight: var(--font-weight-bold);
+                                                    color: #0A0F1C;
+                                                }
                                             }
-                                        }
 
-                                        .field-singlecardfeature2,
-                                        .field-singlecardfeature3 {
-                                            p {
-                                                font-size: var(--body-fd-sm-font-size);
-                                                font-weight: var(--font-weight-regular);
-                                                color: #0A0F1C;
+                                            .field-singlecardfeature2,
+                                            .field-singlecardfeature3 {
+                                                margin-top: -10px;
+
+                                                p,
+                                                input {
+                                                    font-size: var(--body-fd-sm-font-size);
+                                                    font-weight: var(--font-weight-regular);
+                                                    color: #0A0F1C;
+                                                }
                                             }
                                         }
 
                                         .field-viewothercardoptionssingle {
                                             border-top: 1px solid var(--color-interface-border-secondary);
-                                            margin-top: 30px;
+                                            margin-top: 20px;
                                             padding-top: 10px;
                                         }
                                     }
@@ -2540,7 +2775,8 @@ body.fd-backed-cc {
                                             justify-content: space-between;
                                             margin-bottom: 20px;
 
-                                            .plain-text-wrapper {
+                                            .plain-text-wrapper,
+                                            .text-wrapper {
                                                 border: 1px solid var(--color-interface-border-primary);
                                                 border-radius: 16px;
                                                 padding: 20px;
@@ -2558,46 +2794,52 @@ body.fd-backed-cc {
                                                     border-radius: 100px;
                                                 }
 
-                                                p {
+                                                p,
+                                                input {
                                                     font-size: var(--body-fd-md-font-size);
                                                     font-weight: var(--font-weight-regular);
                                                     color: #0A0F1C;
-                                                    padding-left: 30px;
+                                                    padding-left: 50px;
+                                                }
+
+                                                input {
+                                                    background: none;
+                                                    color: #0A0F1C !important
                                                 }
 
                                                 &.field-singleccfeature1 {
                                                     &::before {
-                                                        background: #FEFAE6 url('../icons/currency_conversion_icon1.png') no-repeat center center;
+                                                        background: #FEFAE6 url("../assets/icons/currency_conversion_icon1.png") no-repeat center center;
                                                     }
                                                 }
 
                                                 &.field-singleccfeature2 {
                                                     &::before {
-                                                        background: #EBF9EF url('../icons/dollar_icon2.png') no-repeat center center;
+                                                        background: #EBF9EF url("../assets/icons/dollar_icon2.png") no-repeat center center;
                                                     }
                                                 }
 
                                                 &.field-singleccfeature3 {
                                                     &::before {
-                                                        background: #F4F0FF url('../icons/lounge_icon3.png') no-repeat center center;
+                                                        background: #F4F0FF url("../assets/icons/lounge_icon3.png") no-repeat center center;
                                                     }
                                                 }
 
                                                 &.field-singleccfeature4 {
                                                     &::before {
-                                                        background: #FDEFED url('../icons/insurance_icon4.png') no-repeat center center;
+                                                        background: #FDEFED url("../assets/icons/insurance_icon4.png") no-repeat center center;
                                                     }
                                                 }
 
                                                 &.field-singleccfeature5 {
                                                     &::before {
-                                                        background: #EBF9EF url('../icons/dollar_icon2.png') no-repeat center center;
+                                                        background: #EBF9EF url("../assets/icons/dollar_icon2.png") no-repeat center center;
                                                     }
                                                 }
 
                                                 &.field-singleccfeature6 {
                                                     &::before {
-                                                        background: #FEFAE6 url('../icons/currency_conversion_icon1.png') no-repeat center center;
+                                                        background: #FEFAE6 url("../assets/icons/currency_conversion_icon1.png") no-repeat center center;
                                                     }
                                                 }
                                             }
@@ -2667,6 +2909,17 @@ body.fd-backed-cc {
                                                 margin-bottom: 0;
                                             }
 
+                                            input {
+                                                margin: 0;
+                                                padding: 0;
+                                                letter-spacing: 0;
+                                                border-radius: 0;
+                                                border: none;
+                                                height: auto;
+                                                line-height: normal;
+                                                color: var(--color-input-text-primary) !important;
+                                            }
+
                                             .field-multicardselection {
 
                                                 .field-multicardselection {
@@ -2714,7 +2967,9 @@ body.fd-backed-cc {
                                             }
 
                                             .field-multicardtagline1 {
-                                                p {
+
+                                                p,
+                                                input {
                                                     font-size: var(--body-fd-md-font-size);
                                                     font-weight: var(--font-weight-regular);
                                                     color: var(--color-input-text-primary);
@@ -2722,7 +2977,7 @@ body.fd-backed-cc {
                                             }
 
                                             .image-wrapper {
-                                                background: url('../icons/freedom_card.png') no-repeat;
+                                                background: url("../assets/images/freedom_card.png") no-repeat;
                                                 margin-top: 20px;
 
                                                 height: 125px;
@@ -2736,7 +2991,8 @@ body.fd-backed-cc {
                                                 margin-top: 20px;
                                                 display: inline-block;
 
-                                                .plain-text-wrapper {
+                                                .plain-text-wrapper,
+                                                .text-wrapper.field-wrapper {
                                                     margin-bottom: 7px;
                                                     display: flex;
                                                     align-items: center;
@@ -2746,11 +3002,12 @@ body.fd-backed-cc {
                                                         position: absolute;
                                                         width: 16px;
                                                         height: 16px;
-                                                        background: url('../icons/folder_icon.png') no-repeat top left;
+                                                        background: url("../assets/icons/folder_icon.png") no-repeat top left;
                                                     }
 
-                                                    p p {
-                                                        padding-left: 30px;
+                                                    p p,
+                                                    input {
+                                                        padding-left: 10px;
                                                         font-size: var(--body-fd-sm-font-size);
                                                         font-weight: var(--font-weight-regular);
                                                         color: var(--color-interface-text-primary);
@@ -2760,7 +3017,13 @@ body.fd-backed-cc {
 
                                                     &.field-multicardfeatures1 {
                                                         &::before {
-                                                            background: url('../icons/bank_gray_icon.png') no-repeat top left;
+                                                            background: url("../assets/icons/bank_gray_icon.png") no-repeat top left;
+                                                        }
+                                                    }
+
+                                                    &.text-wrapper.field-wrapper {
+                                                        &::before {
+                                                            position: initial;
                                                         }
                                                     }
                                                 }
@@ -2778,7 +3041,7 @@ body.fd-backed-cc {
                                                     height: auto;
 
                                                     &::after {
-                                                        background: url('../icons/right_blue_arrow.png') no-repeat right 3px;
+                                                        background: url("../assets/icons/right_blue_arrow.png") no-repeat right 3px;
                                                     }
 
                                                     &:hover {
@@ -2834,7 +3097,7 @@ body.fd-backed-cc {
                                                         transform: none;
                                                         margin: 0;
                                                         padding: 0;
-                                                        background: url('../icons/only_amount_icon.png') no-repeat center center;
+                                                        background: url("../assets/icons/only_amount_icon.png") no-repeat center center;
                                                         background-size: 15px;
                                                         width: 20px;
                                                         font-size: 0;
@@ -2960,7 +3223,7 @@ body.fd-backed-cc {
                                                     position: absolute;
                                                     height: 29px;
                                                     width: 29px;
-                                                    background: url('../icons/eligible_credit_limit_icon.png') no-repeat;
+                                                    background: url("../assets/icons/eligible_credit_limit_icon.png") no-repeat;
                                                     margin-left: -40px;
                                                 }
                                             }
@@ -3138,7 +3401,7 @@ body.fd-backed-cc {
                                             padding: 0;
 
                                             &:checked {
-                                                background: var(--color-interface-icon-highlight) url("../icons/checkbox-checked-arrow.png") no-repeat center center;
+                                                background: var(--color-interface-icon-highlight) url("../assets/icons/checkbox-checked-arrow.png") no-repeat center center;
                                                 border: none;
                                                 cursor: pointer;
                                             }
@@ -3178,7 +3441,7 @@ body.fd-backed-cc {
 
                                         p p {
                                             padding-left: 30px;
-                                            background: url('../icons/info-icon.svg') no-repeat center left;
+                                            background: url("../assets/icons/info-icon.svg") no-repeat center left;
                                             font-size: var(--body-fd-sm-font-size);
                                             font-weight: var(--font-weight-medium);
                                             color: var(--color-action-border-primary-default);
@@ -3255,7 +3518,7 @@ body.fd-backed-cc {
                                                 padding-left: 22px;
 
                                                 &[type="date"] {
-                                                    background: url('../icons/date_picker_cal_icon_select.svg') no-repeat 98% center;
+                                                    background: url("../assets/icons/date_picker_cal_icon_select.svg") no-repeat 98% center;
                                                 }
 
                                                 &:focus-visible {
@@ -3293,7 +3556,7 @@ body.fd-backed-cc {
 
                                         p p {
                                             padding-left: 30px;
-                                            background: url('../icons/info-icon.svg') no-repeat center left;
+                                            background: url("../assets/icons/info-icon.svg") no-repeat center left;
                                             font-size: var(--body-fd-sm-font-size);
                                             font-weight: var(--font-weight-medium);
                                             color: var(--color-action-border-primary-default);
@@ -3325,7 +3588,7 @@ body.fd-backed-cc {
                                                 padding: 0;
 
                                                 &:checked {
-                                                    background: var(--color-interface-icon-highlight) url("../icons/checkbox-checked-arrow.png") no-repeat center center;
+                                                    background: var(--color-interface-icon-highlight) url("../assets/icons/checkbox-checked-arrow.png") no-repeat center center;
                                                     border: none;
                                                     cursor: pointer;
                                                 }
@@ -3395,9 +3658,1049 @@ body.fd-backed-cc {
 
                                 /* nomineed-details screen end */
                             }
+
+                            /* SELECT CREDIT CARD Wizard1 SCREEN END */
+
+                            .field-confirmdetailswizard2 {
+                                margin-top: 20px;
+
+                                P {
+                                    margin: 0;
+                                }
+
+
+                                .field-fdsummarylabel1 {
+                                    p {
+                                        font-size: var(--body-fd-xx-lg-font-size);
+                                        font-weight: var(--font-weight-bold);
+                                        color: var(--color-interface-text-primary);
+                                    }
+                                }
+
+                                .field-fdsummarysection {
+                                    .field-fdsummary {
+                                        border-radius: 16px;
+                                        background: var(--color-interface-toaster-background-primary);
+                                        border: 1px solid var(--color-interface-border-primary);
+                                        padding: 15px;
+                                        display: flex;
+
+                                        p {
+                                            margin: 0;
+                                        }
+
+                                        input {
+                                            margin: 0;
+                                            padding: 0;
+                                            letter-spacing: 0;
+                                            border-radius: 0;
+                                            border: none;
+                                            height: auto;
+                                            line-height: normal;
+                                            background: none;
+                                        }
+
+
+                                        .image-wrapper {
+                                            background: url("../assets/images/fd_summary_image.png") no-repeat center center;
+                                            width: 115px;
+                                            height: 84px;
+                                            flex: 0 0 10%;
+
+                                            picture {
+                                                display: none;
+                                            }
+                                        }
+
+                                        .field-fdsummarywrapper {
+                                            flex: 1;
+
+                                            .field-fdsummarylabel2 {
+                                                p {
+                                                    font-size: var(--body-fd-x-lg-font-size);
+                                                    font-weight: var(--font-weight-bold);
+                                                    color: var(--color-interface-text-primary);
+                                                }
+                                            }
+
+                                            .field-fdsummarydetailspanel {
+                                                display: flex;
+
+                                                .field-wrapper {
+                                                    flex: 1;
+                                                    display: flex;
+                                                    justify-content: center;
+                                                    flex-direction: column;
+
+                                                    label {
+                                                        font-size: var(--body-sm-font-size);
+                                                        font-weight: var(--font-weight-regular);
+                                                        color: var(--color-interface-text-secondary);
+                                                        margin: 0;
+                                                        /*  transform: none; */
+                                                        padding: 0;
+                                                        background: none;
+                                                    }
+
+                                                    input {
+                                                        font-size: var(--body-fd-lg-font-size);
+                                                        font-weight: var(--font-weight-medium);
+                                                        color: #030612 !important;
+                                                    }
+                                                }
+                                            }
+
+                                            .field-fdsummaryhelpnote {
+                                                p {
+                                                    font-size: var(--body-fd-sm-font-size);
+                                                    font-weight: var(--font-weight-regular);
+                                                    color: var(--color-interface-text-secondary);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+                                .field-reviewccdetailssection {
+                                    margin-top: 20px;
+
+                                    .field-reviewccdetailslabel {
+                                        p {
+                                            font-size: var(--body-xx-lg-font-size);
+                                            font-weight: var(--font-weight-bold);
+                                            color: var(--color-interface-text-primary);
+                                        }
+                                    }
+
+                                    .field-reviewccapplicationdetailsview {
+                                        p {
+                                            margin: 0;
+                                        }
+
+
+
+
+                                        fieldset.field-personaldetails,
+                                        fieldset.field-creditcarddetails,
+                                        fieldset.field-addressdetails,
+                                        fieldset.field-employeeassistance,
+                                        .field-employeeassistancelabel {
+                                            border: 1px solid var(--color-interface-border-primary);
+                                            border-radius: 15px;
+                                            margin-bottom: 10px;
+
+                                            @media (320px <=width <=767px) {
+                                                margin-bottom: 20px;
+                                            }
+
+                                            legend {
+                                                font-size: var(--body-xx-lg-font-size);
+                                                font-weight: var(--font-weight-bold);
+                                                color: var(--color-interface-text-primary);
+                                                line-height: 32px;
+                                                letter-spacing: -0.02em;
+                                                padding: 15px 30px;
+                                                background: linear-gradient(270deg, #F3F6FD 0%, #F3F6FD 100%);
+                                                margin-bottom: 20px;
+                                                position: relative;
+                                                height: 70px;
+                                                display: flex;
+                                                align-items: center;
+                                                border-radius: 15px 15px 0 0;
+
+                                                @media (768px <=width <=991px) {
+                                                    font-size: 24px;
+                                                    line-height: 32px;
+                                                }
+
+                                                @media (320px <=width <=767px) {
+                                                    font-size: 18px;
+                                                    line-height: 24px;
+                                                    padding: 15px;
+                                                }
+
+                                                &::after {
+                                                    content: '';
+                                                    position: absolute;
+                                                    right: 30px;
+                                                    width: 22px;
+                                                    height: 13px;
+                                                    background: url("../assets/icons/accordian-arrow-up.png") no-repeat top center;
+                                                    transition: 0.4s;
+                                                    background-size: contain;
+                                                    /*  transform: rotate(180deg); */
+                                                }
+
+                                                &.accordion-collapse {
+                                                    margin-bottom: 0;
+                                                    border-radius: 15px;
+
+                                                    &::after {
+                                                        transform: rotate(180deg);
+                                                        top: 30px;
+                                                    }
+                                                }
+                                            }
+
+                                            & .text-wrapper.field-wrapper,
+                                            & .email-wrapper.field-wrapper,
+                                            & .drop-down-wrapper.field-wrapper,
+                                            & .date-wrapper.field-wrapper,
+                                            & .number-wrapper.field-wrapper,
+                                            & .field-mailingaddresslabel.field-wrapper,
+                                            & .multiline-wrapper.field-wrapper,
+                                            & .plain-text-wrapper.field-wrapper,
+                                            & .checkbox-wrapper.field-wrapper {
+                                                padding: 0px 30px 20px 30px;
+                                                display: flex;
+                                                justify-content: center;
+                                                flex-direction: column;
+
+                                                @media (320px <=width <=767px) {
+                                                    padding: 0px 15px;
+                                                }
+
+                                                label {
+                                                    padding: 0;
+                                                    background: none;
+                                                    margin: 0;
+                                                    transform: none;
+                                                    position: initial;
+                                                    color: var(--color-interface-text-secondary) !important;
+                                                    font-size: var(--body-fd-sm-font-size);
+                                                    font-weight: var(--font-weight-regular);
+                                                    line-height: normal;
+                                                }
+
+                                                input,
+                                                select,
+                                                textarea {
+                                                    border: none;
+                                                    background: none;
+                                                    padding: 0;
+                                                    height: auto;
+                                                    letter-spacing: 0;
+                                                    margin: 0;
+                                                    line-height: normal;
+                                                    border-radius: 0;
+                                                    color: var(--color-interface-text-primary) !important;
+                                                    font-size: var(--body-fd-lg-font-size);
+                                                    font-weight: var(--font-weight-medium);
+                                                    box-shadow: none;
+                                                    margin-top: 5px;
+                                                }
+
+                                                select {
+                                                    border: none !important;
+                                                    padding: 0 !important;
+                                                    height: auto !important;
+                                                    border-radius: 0 !important;
+                                                }
+
+                                                textarea {
+                                                    resize: none;
+                                                    min-height: auto;
+                                                }
+
+                                                .field-description {
+                                                    margin-top: 0;
+                                                    display: none;
+                                                }
+
+                                                &[data-active] {
+
+
+                                                    label {
+                                                        margin: 0;
+                                                        transform: none;
+                                                        padding: 0;
+                                                    }
+                                                }
+
+                                                &.field-employeeassisttoggle {
+                                                    display: flex;
+                                                    align-items: center !important;
+                                                    flex-direction: row-reverse;
+                                                    justify-content: flex-end;
+
+                                                    @media (320px <=width <=767px) {
+                                                        margin-bottom: 20px;
+                                                        align-items: flex-start;
+                                                    }
+
+                                                    label {
+                                                        font-size: var(--body-fd-sm-font-size);
+                                                        font-weight: var(--font-weight-medium);
+                                                        color: var(--color-interface-text-quaternary);
+                                                        flex-basis: initial;
+
+                                                    }
+
+                                                    input[type="checkbox"] {
+                                                        width: 45px !important;
+                                                        height: 28px !important;
+                                                        padding: 0;
+                                                        box-sizing: content-box;
+                                                        border-radius: 16px;
+                                                        background-color: var(--color-input-text-disabled);
+                                                        -webkit-appearance: none;
+                                                        -moz-appearance: none;
+                                                        appearance: none;
+                                                        cursor: pointer;
+                                                        position: relative;
+                                                        transition: background-color 0.3s, background-position 0.3s;
+                                                        margin-top: 5px;
+                                                        margin-left: 10px;
+
+                                                        &[disabled] {
+                                                            background-color: var(--color-action-background-primary-disabled);
+                                                        }
+
+                                                        &:checked {
+                                                            background-color: var(--color-interface-icon-highlight);
+                                                        }
+                                                    }
+
+                                                    input[type="checkbox"]::after {
+                                                        content: '';
+                                                        position: absolute;
+                                                        top: 50%;
+                                                        left: 4px;
+                                                        width: 20px;
+                                                        height: 20px;
+                                                        border-radius: 50%;
+                                                        background: var(--color-interface-background-primary);
+                                                        transform: translateY(-50%);
+                                                        transition: transform 0.3s;
+                                                    }
+
+                                                    input[type="checkbox"]:checked::after {
+                                                        content: '';
+                                                        position: absolute;
+                                                        top: 50%;
+                                                        left: 4px;
+                                                        width: 20px;
+                                                        height: 20px;
+                                                        border-radius: 50%;
+                                                        background: var(--color-interface-background-primary);
+                                                        transform: translateY(-50%) translateX(17px);
+                                                        transition: transform 0.3s;
+                                                    }
+                                                }
+
+                                                &.field-mailingaddresslabel {
+                                                    padding-bottom: 0;
+                                                }
+
+                                                &.field-addressdetailhelptag2 {
+                                                    p {
+                                                        font-size: var(--body-fd-sm-font-size);
+                                                        font-weight: var(--font-weight-medium);
+                                                        color: var(--color-interface-text-primary);
+
+                                                        a {
+                                                            font-size: var(--body-fd-md-font-size);
+                                                            font-weight: var(--font-weight-bold);
+                                                        }
+                                                    }
+                                                }
+                                            }
+
+                                            &:has(legend.accordion-collapse) {
+                                                padding-bottom: 20px;
+                                                transition: transform 0.3s;
+                                            }
+
+                                            .field-addressdetailshelptag {
+                                                padding: 0 30px;
+
+                                                p {
+                                                    font-size: var(--body-fd-sm-font-size);
+                                                    font-weight: var(--font-weight-regular);
+                                                    color: var(--color-interface-text-primary);
+                                                    background: var(--color-interface-background-quinary);
+                                                    width: fit-content;
+                                                    border-radius: 12px;
+                                                    padding: 3px 7px;
+                                                }
+                                            }
+
+                                            &.field-addressdetails {
+                                                display: inline;
+                                            }
+                                        }
+                                    }
+
+                                    .field-selectcardtnc {
+                                        display: inline;
+
+                                        legend {
+                                            font-size: var(--body-fd-lg-font-size);
+                                            font-weight: var(--font-weight-bold);
+                                            color: var(--color-interface-text-primary);
+                                        }
+
+                                        .checkbox-wrapper {
+                                            label {
+                                                p {
+                                                    color: var(--color-interface-text-primary);
+                                                }
+                                            }
+
+                                            ul {
+                                                margin-left: 30px;
+                                                padding: 0;
+                                            }
+                                        }
+                                    }
+
+                                    .button-wrapper {
+                                        margin-top: 10px;
+                                    }
+                                }
+
+                            }
+
+                            /* CONFIRM DETAILS SCREEN END */
+
+                            .field-verifydetailswizard3 {}
+
+                            /* VERIFY DETAILS SCREEN END */
                         }
 
-                        /* SELECT CREDIT CARD SCREEN END */
+                        /* WIZARD SCREENS END */
+
+                        .field-resultpanel {
+                            p {
+                                margin: 0;
+                            }
+
+                            .field-error2colresultpanel,
+                            .field-errorresultpanel {
+                                margin-top: -250px;
+                                position: relative;
+
+                                &::before {
+                                    background: url("../assets/images/error_screen_cloud_image.png") no-repeat top right;
+                                    content: "";
+                                    position: absolute;
+                                    width: 218px;
+                                    height: 218px;
+                                    top: -80px;
+                                    right: 0;
+                                }
+
+                                .field-errormessagetext2col,
+                                .field-apierrormessage {
+                                    p {
+                                        font-size: var(--body-fd-xxx-lg-font-size) !important;
+                                        font-size: var(--font-weight-bold);
+                                        color: var(--color-interface-text-tertiary);
+                                    }
+                                }
+
+                                .field-errormessagetextplaceholder2,
+                                .field-apierrormessageplaceholder {
+                                    p {
+                                        font-size: var(--body-lg-font-size);
+                                        font-size: var(--font-weight-regular);
+                                        color: var(--color-interface-text-tertiary);
+                                    }
+                                }
+
+                                .field-twocollayoutwrapper {
+                                    display: flex;
+                                    margin-top: 100px;
+
+                                    .field-errorctapanel {
+                                        background: url("../assets/images/get_credit_card_image.png") var(--color-interface-error-cta-background) no-repeat left 5px;
+                                        border-radius: 24px;
+                                        padding: 32px;
+                                        width: 272px;
+                                        height: 240px;
+                                        display: inline;
+                                        padding-top: 150px;
+                                        flex: 0 0 272px;
+
+                                        .field-getccnowlabel {
+                                            p {
+                                                font-size: var(--body-fd-md-font-size);
+                                                font-weight: var(--font-weight-bold);
+                                                color: var(--color-interface-text-quaternary);
+                                            }
+                                        }
+
+                                        .field-errorctabutton {
+                                            button {
+                                                color: var(--color-action-border-primary-default);
+                                                font-weight: var(--font-weight-bold);
+                                                font-size: var(--body-x-lg-font-size);
+                                                background: none;
+                                                width: auto;
+                                                height: auto;
+
+                                                &:hover {
+                                                    background: none !important;
+                                                }
+
+                                                &::after {
+                                                    background: url("../assets/icons/right_blue_arrow.png") no-repeat right 3px;
+                                                    width: 24px;
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    .field-errorassistancepanel {
+                                        border-radius: 24px;
+                                        padding: 24px 24px 0 24px;
+                                        background: var(--color-interface-background-primary);
+                                        flex: 1;
+
+                                        border: 1px solid var(--color-interface-border-primary);
+
+                                        .field-furtherassistancelabel {
+
+                                            p {
+                                                font-size: var(--body-xx-lg-font-size);
+                                                font-weight: var(--font-weight-bold);
+                                                color: var(--color-interface-text-primary);
+                                                margin-bottom: 0;
+                                            }
+                                        }
+
+                                        .field-assistancepaneldetails {
+                                            display: flex;
+                                            flex-wrap: wrap;
+                                            justify-content: space-between;
+                                            gap: 0 !important;
+
+                                            .plain-text-wrapper {
+                                                flex: 1 1 45%;
+                                                padding: 15px 0 15px 10px;
+
+                                                p {
+                                                    font-size: var(--body-md-font-size);
+                                                    font-weight: var(--font-weight-regular);
+                                                    color: var(--color-interface-text-primary);
+
+                                                    p {
+                                                        padding: 3px 0 3px 40px;
+                                                    }
+                                                }
+
+                                                &:not(:last-child) {
+                                                    border-bottom: 1px solid var(--color-interface-border-primary);
+                                                }
+
+                                                &:nth-last-child(2) {
+                                                    border-bottom: none;
+                                                    padding-bottom: 0;
+                                                }
+                                            }
+
+                                            .plain-text-wrapper:nth-child(odd) {
+                                                text-align: right;
+
+                                                p {
+                                                    font-size: var(--body-md-font-size);
+                                                    font-weight: var(--font-weight-bold);
+                                                    color: var(--color-interface-text-primary);
+                                                    padding: 0
+                                                }
+
+                                                &.field-furtherassistancetext1 {
+                                                    p {
+                                                        a {
+                                                            position: relative;
+                                                            margin-right: 24px;
+
+                                                            &::after {
+                                                                content: "";
+                                                                position: absolute;
+                                                                background: url("../assets/icons/right_blue_arrow.png") no-repeat right 5px;
+                                                                width: 20px;
+                                                                height: 20px;
+                                                                background-size: 6px;
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+
+                                            .field-furtherassistance1 {
+                                                p p {
+                                                    background: url("../assets/icons/visit_bank_icon.png") no-repeat left top;
+                                                }
+                                            }
+
+                                            .field-furtherassistance2 {
+                                                p p {
+                                                    background: url("../assets/icons/call_us_icon.png") no-repeat left top;
+                                                }
+                                            }
+
+                                            .field-furtherassistance3 {
+                                                p p {
+                                                    background: url("../assets/icons/wahtsup_icon.png") no-repeat left top;
+                                                }
+                                            }
+
+                                            .field-furtherassistance4 {
+                                                p p {
+                                                    background: url("../assets/icons/write_to_us_icon.png") no-repeat left top;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+                                .field-errortagtext,
+                                .field-errserviceslink,
+                                .field-errresdealertext3 {
+                                    p {
+                                        font-size: var(--body-md-font-size);
+                                        font-weight: var(--font-weight-regular);
+                                        color: var(--color-input-text-primary);
+
+                                        a {
+                                            font-weight: var(--font-weight-bold);
+                                        }
+                                    }
+
+                                    &.field-errortagtext {
+                                        margin-top: 20px;
+                                    }
+                                }
+
+                                .field-errresdealerpanel {
+                                    margin-top: 120px;
+
+                                    .field-errresdealertext1,
+                                    .field-errresdealertext2 {
+                                        p {
+                                            font-size: var(--body-fd-lg-font-size);
+                                            font-weight: var(--font-weight-bold);
+                                            color: var(--color-interface-text-primary);
+                                        }
+                                    }
+
+                                    .field-hdfcdealershipdetails {
+                                        border: 1px solid var(--color-interface-border-secondary);
+                                        border-radius: 24px;
+                                        display: inline;
+
+                                        .plain-text-wrapper {
+                                            padding: 15px 25px;
+                                        }
+
+                                        .field-errresdealertext2 {
+                                            background: var(--color-interface-background-quinary);
+                                            border-radius: 24px 24px 0 0;
+                                        }
+
+                                        .field-errresdealertext3 {
+                                            border-radius: 0 0 24px 24px;
+
+                                            p {
+                                                font-size: var(--body-fd-lg-font-size);
+
+                                                a {
+                                                    font-size: var(--body-fd-lg-font-size) !important;
+                                                }
+                                            }
+                                        }
+
+                                    }
+                                }
+
+                                .field-errserviceslink {
+                                    margin-top: 10px;
+                                }
+
+                                &.field-errorresultpanel {
+                                    margin-top: -200px;
+
+                                    .field-errorresctapanel {
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: space-between;
+
+                                        button {
+                                            width: 272px;
+
+                                            &::after {
+                                                width: 24px;
+                                                background: url("../assets/icons/right-arrow.png") no-repeat right top;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            .field-successresultpanel {
+                                margin-top: -250px;
+                                position: relative;
+
+                                &::before {
+                                    background: url("../assets/images/moneyback_card_success.png") no-repeat top right;
+                                    content: "";
+                                    position: absolute;
+                                    width: 318px;
+                                    height: 200px;
+                                    top: -80px;
+                                    right: 0;
+                                }
+
+                                .plain-text-wrapper {
+                                    max-width: none;
+                                    margin: 0;
+                                }
+
+                                .field-tqbannertext1 {
+                                    p {
+                                        font-size: var(--body-fd-xxx-lg-font-size) !important;
+                                        font-size: var(--font-weight-bold);
+                                        color: var(--color-interface-text-tertiary);
+                                        line-height: var(--font-linehight-x-large);
+                                    }
+                                }
+
+                                .field-tqbannertext2 {
+                                    p {
+                                        font-size: var(--body-lg-font-size);
+                                        font-size: var(--font-weight-regular);
+                                        color: var(--color-interface-text-tertiary);
+                                    }
+                                }
+
+                                .field-tqsuccesswrapper {
+                                    margin-top: 50px;
+
+                                    .field-refnumpanel,
+                                    .field-tqsummarysection {
+                                        border: 1px solid var(--color-interface-border-secondary);
+                                        border-radius: 24px;
+                                        padding: 32px;
+                                        background: #fff;
+
+                                        @media (768px <=width <=991px) {
+                                            margin-top: -10px;
+                                            border-bottom: none;
+                                            border-bottom-left-radius: 0;
+                                            border-bottom-right-radius: 0;
+                                            padding-bottom: 0;
+                                        }
+
+                                        @media (320px <=width <=767px) {
+                                            margin-top: 45px;
+                                            padding: 20px;
+                                            margin-bottom: 20px;
+                                        }
+
+                                        &>.field-accountnumber,
+                                        &>.field-leadid-number {
+                                            position: relative;
+                                            padding-left: 95px;
+
+                                            @media (320px <=width <=767px) {
+                                                padding-left: 75px;
+                                            }
+
+                                            label {
+                                                color: var(--color-interface-text-secondary);
+                                                font-size: 16px;
+                                                font-weight: 400;
+                                                line-height: 24px;
+                                                position: initial;
+                                                transition: none;
+                                                margin: 0;
+                                                transform: none;
+                                                padding: 0;
+                                                display: block;
+
+                                                @media (320px <=width <=767px) {
+                                                    font-size: 12px;
+                                                    line-height: 20px;
+                                                }
+                                            }
+
+                                            input {
+                                                color: var(--color-interface-text-primary);
+                                                font-size: 32px;
+                                                font-weight: 600;
+                                                line-height: 40px;
+                                                border: none;
+                                                height: auto;
+                                                padding: 0;
+                                                margin: 0;
+                                                background: url("../icons/copy_icon.png") no-repeat 72% center;
+                                                width: auto;
+
+                                                @media (768px <=width <=991px) {
+                                                    font-size: 28px;
+                                                    line-height: 36px;
+                                                }
+
+                                                @media (320px <=width <=767px) {
+                                                    font-size: 24px;
+                                                    line-height: 32px;
+                                                    background-position-x: 100%;
+                                                    width: 100%;
+                                                }
+
+                                                &:focus-visible {
+                                                    outline: none;
+                                                }
+                                            }
+
+                                            &::before {
+                                                content: '';
+                                                background: #F4F0FF url("../icons/account_number_icon.png") no-repeat center center;
+                                                width: 72px;
+                                                height: 72px;
+                                                position: absolute;
+                                                left: 0;
+                                                border-radius: 50%;
+
+                                                @media (320px <=width <=767px) {
+                                                    width: 52px;
+                                                    height: 52px;
+                                                    background-size: 35%;
+                                                }
+                                            }
+
+                                            &.field-leadid-number {
+                                                input {
+                                                    background-position-x: 48%;
+
+                                                    @media (481px <=width <=767px) {
+                                                        background-position-x: 50%;
+                                                    }
+
+                                                    @media (320px <=width <=480px) {
+                                                        background-position-x: 74%;
+                                                    }
+
+                                                }
+                                            }
+                                        }
+
+                                        &>.plain-text-wrapper {
+                                            border-top: 1px dashed var(--color-interface-border-secondary);
+                                            margin-top: 15px;
+
+                                            @media (768px <=width <=991px) {
+                                                border-top: none;
+                                                border-bottom: 1px dashed var(--color-interface-border-secondary);
+                                                padding-bottom: 20px;
+                                            }
+
+                                            p {
+                                                padding-top: 10px;
+                                                margin-bottom: 0;
+
+                                                p {
+                                                    font-size: 16px;
+                                                    font-weight: 400;
+                                                    line-height: 24px;
+                                                    color: var(--color-interface-text-secondary);
+                                                    margin-bottom: 0;
+
+                                                    @media (320px <=width <=767px) {
+                                                        font-size: 12px;
+                                                        line-height: 20px;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+
+
+
+                                    .field-feedbackconfirmation {
+                                        border: 1px solid var(--color-interface-border-secondary);
+                                        border-radius: 20px;
+                                        padding: 30px 30px 10px 30px;
+
+                                        @media (320px <=width <=767px) {
+                                            padding: 20px;
+                                        }
+
+                                        .field-onlineservice {
+                                            p {
+                                                font-size: 24px;
+                                                font-weight: 600;
+                                                line-height: 32px;
+                                                color: var(--color-interface-text-primary);
+                                                margin-bottom: 0;
+
+                                                @media (768px <=width <=991px) {
+                                                    font-size: 20px;
+                                                    line-height: 28px;
+                                                }
+
+                                                @media (320px <=width <=767px) {
+                                                    font-size: 16px;
+                                                    line-height: 24px;
+                                                    margin-bottom: 15px;
+                                                }
+                                            }
+                                        }
+
+                                        .field-ratingbuttons {
+                                            gap: initial !important;
+                                            border: 1px solid var(--color-interface-border-secondary);
+                                            border-radius: 7px;
+                                            display: flex;
+                                            flex-direction: row;
+
+                                            .button-wrapper {
+                                                border-right: 1px solid var(--color-interface-border-secondary);
+                                                flex: 1;
+                                                height: 44px;
+                                                margin-top: 0 !important;
+
+                                                button {
+                                                    font-size: 14px;
+                                                    font-weight: 500;
+                                                    line-height: 20px;
+                                                    color: var(--color-input-text-primary);
+                                                    background: none;
+                                                    height: 100%;
+                                                    border-radius: 0;
+
+                                                    &:hover {
+                                                        background: transparent !important;
+                                                        border: none;
+                                                    }
+
+                                                    &.active {
+                                                        background: #ED5A6E !important;
+
+                                                        height: 52px;
+                                                        border-radius: 4px;
+                                                        font-weight: 700;
+                                                        color: #fff;
+                                                        margin-top: -5px;
+                                                    }
+                                                }
+
+                                                &:nth-child(9),
+                                                &:nth-child(10) {
+                                                    button {
+
+                                                        &.active {
+                                                            background: #F99F35 !important;
+                                                        }
+                                                    }
+                                                }
+
+                                                &:nth-child(11),
+                                                &:nth-child(12) {
+                                                    button {
+                                                        &.active {
+                                                            background: #2DB780 !important;
+                                                        }
+                                                    }
+                                                }
+
+                                                &:last-child {
+                                                    border-right: none;
+                                                }
+                                            }
+
+                                            &:has(.button-wrapper button.active)~.field-ratingcolorcodes {
+                                                display: flex;
+                                            }
+                                        }
+                                    }
+
+                                    .field-ratingcolorcodes {
+
+                                        grid-gap: initial !important;
+                                        display: flex;
+                                        transition: transform 0.3s;
+                                        flex-direction: row;
+
+                                        @media (320px <=width <=768px) {
+                                            display: flex;
+                                        }
+
+                                        @media (320px <=width <=767px) {
+                                            margin-top: 15px;
+                                            margin-bottom: 20px;
+                                        }
+
+                                        p {
+                                            margin-bottom: 0;
+                                            font-size: 14px;
+                                            font-weight: 400;
+                                            line-height: 20px;
+                                            color: var(--color-interface-text-secondary);
+                                            margin-top: 10px;
+
+                                            @media (320px <=width <=767px) {
+                                                font-size: 10px;
+                                                line-height: 12px;
+                                            }
+                                        }
+
+                                        .field-notlikelytext,
+                                        .field-maybetext,
+                                        .field-verylikelytext {
+                                            position: relative;
+
+                                            &::before {
+                                                content: '';
+                                                height: 6px;
+                                                position: absolute;
+                                                width: 100%;
+                                                margin-top: -5px;
+                                            }
+                                        }
+
+
+                                        .field-notlikelytext {
+                                            width: 63.5%;
+
+                                            &::before {
+                                                background-color: #ED5A6E;
+                                                border-top-left-radius: 5px;
+                                                border-bottom-left-radius: 5px;
+                                            }
+                                        }
+
+                                        .field-maybetext {
+                                            width: 18.3%;
+
+                                            &::before {
+                                                background-color: #F99F35;
+                                                border-left: 2px solid #fff;
+                                            }
+                                        }
+
+                                        .field-verylikelytext {
+                                            width: 18.2%;
+
+                                            &::before {
+                                                background-color: #2DB780;
+                                                border-top-right-radius: 5px;
+                                                border-bottom-right-radius: 5px;
+                                                border-left: 2px solid #fff;
+                                            }
+                                        }
+                                    }
+
+
+
+                                }
+                            }
+
+
+                        }
+
+                        /* ERROR/RESULT SCREEN END */
 
 
                         /* COMMON STYLES FOR JOURNEY  */
@@ -3418,7 +4721,7 @@ body.fd-backed-cc {
                                 padding: 40px 35px;
                             }
 
-                           @media (601px <=width <=768px) {
+                            @media (601px <=width <=768px) {
                                 padding: 40px 35px 40px 40px;
                             }
 
@@ -3430,12 +4733,27 @@ body.fd-backed-cc {
                                 grid-column: span 12;
                                 padding: 40px 35px;
                             }
+
+                            &.field-resultpanel {
+                                grid-column: span 12;
+                                padding: 40px 46px;
+                            }
+                        }
+
+                        &:has(.field-carddetailswrapper[data-visible="true"]),
+                        &:has(.field-landingpagemainwrapper:not([data-visible="false"])),
+                        &:has(.field-fdbackedccwizard[data-visible="true"]),
+                        &:has(.field-resultpanel[data-visible="true"]) {
+                            .field-bannerimagepanel {
+                                display: none;
+                            }
                         }
 
                         input[type="text"],
                         input[type="number"],
                         input[type="password"],
-                        input[type="date"] {
+                        input[type="date"],
+                        input[type="email"] {
                             font-size: var(--body-lg-font-size);
                             font-weight: var(--font-weight-medium);
                             color: var(--color-interface-text-primary) !important;
@@ -3447,6 +4765,14 @@ body.fd-backed-cc {
                             letter-spacing: .7rem;
                             line-height: 60px;
                             position: relative;
+
+                            @media (768px <=width <=1400px) {
+                                max-width: none;
+                            }
+
+                            @media (max-width: 600px) {
+                                max-width: 100%;
+                            }
 
                             &:focus {
                                 outline: none;
@@ -3471,7 +4797,7 @@ body.fd-backed-cc {
                             -moz-appearance: none;
                             -webkit-appearance: none;
                             appearance: none;
-                            background: var(--color-interface-background-primary) url('./../icons/select_arrow.svg') no-repeat 95% center;
+                            background: var(--color-interface-background-primary) url("./../assets/icons/select_arrow.svg") no-repeat 95% center;
 
                             &:focus-visible {
                                 outline: none;
@@ -3540,7 +4866,7 @@ body.fd-backed-cc {
                                 font-family: "Inter", sans-serif !important;
 
                                 &::after {
-                                    content: url(../../icons/Arrow.png);
+                                    content: url("../../assets/icons/Arrow.png");
                                     position: absolute;
                                     margin-top: 2px;
                                 }
@@ -3567,14 +4893,6 @@ body.fd-backed-cc {
                             >label,
                             label p {
                                 color: transparent;
-                            }
-                        }
-
-                        &:has(.field-carddetailswrapper[data-visible="true"]),
-                        &:has(.field-landingpagemainwrapper:not([data-visible="false"])),
-                        &:has(.field-fdbackedccwizard[data-visible="true"]) {
-                            .field-bannerimagepanel {
-                                display: none;
                             }
                         }
 
@@ -3614,17 +4932,201 @@ body.fd-backed-cc {
                                 }
                             }
                         }
+
+                        .checkbox-wrapper {
+                            @media (320px <=width <=767px) {
+                                margin-bottom: 10px;
+                            }
+
+                            input[type="checkbox"] {
+                                border-radius: 5px;
+                                border: 1.5px solid var(--color-interface-border-secondary);
+                                appearance: none;
+                                -webkit-appearance: none;
+                                outline: none;
+                                padding: 0;
+
+                                &:checked {
+                                    background: var(--color-interface-icon-highlight) url("../assets/icons/checkbox-checked-arrow.png") no-repeat center center;
+                                    border: none;
+                                    cursor: pointer;
+                                }
+                            }
+
+                            label,
+                            label p {
+                                margin-bottom: 0;
+                                margin-top: 0;
+                                font-size: var(--body-fd-sm-font-size);
+                                line-height: 20px;
+                                font-weight: var(--font-weight-regular);
+                                color: var(--color-interface-text-secondary);
+
+                                @media (320px <=width <=767px) {
+                                    margin-bottom: 10px;
+                                }
+
+                                a {
+                                    text-decoration: none;
+                                    font-weight: normal !important;
+
+                                    &:hover {
+                                        color: var(--color-interface-icon-highlight);
+                                        text-decoration: underline;
+                                    }
+                                }
+                            }
+                        }
+
+                        /* navigation for scroller */
+                        .field-navigationarrowswrap1,
+                        .field-navigationdotswrap1,
+                        .field-navigationarrowswrap2,
+                        .field-navigationdotswrap2,
+                        .field-navigationarrowsselectcardwrapper,
+                        .field-navigationdotsselectcardwrapper {
+                            display: flex;
+                            flex-direction: row;
+
+                            .button-wrapper {
+
+                                button {
+                                    color: transparent;
+                                    width: auto;
+
+
+                                    &::after {
+                                        display: none;
+                                    }
+                                }
+                            }
+
+                            &.field-navigationarrowswrap1,
+                            &.field-navigationarrowswrap2,
+                            &.field-navigationarrowsselectcardwrapper {
+                                position: absolute;
+                                width: 100%;
+                                display: flex;
+                                align-items: center;
+                                justify-content: space-between;
+                                top: 40%;
+
+                                @media (max-width: 767px) {
+                                    display: none;
+                                }
+
+                                button {
+                                    width: 42px;
+                                    height: 42px;
+                                    border-radius: 50px;
+                                    position: relative;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    overflow: hidden;
+                                    color: transparent;
+
+                                    &::before {
+                                        content: '';
+                                        position: absolute;
+                                        height: 100%;
+                                        width: 100%;
+                                        background: transparent url("../assets/icons/right-arrow.png") no-repeat center center;
+                                        transition: transform 0.3s ease, background 0.3s ease;
+                                    }
+
+                                    &:hover {
+                                        background: var(--color-interface-border-highlight);
+
+                                        &::before {
+                                            transform: rotate(360deg);
+                                            background: var(--color-interface-border-highlight) url("../assets/icons/right-arrow.png") no-repeat center center;
+                                        }
+                                    }
+                                }
+
+                                .field-leftarrow1,
+                                .field-leftarrow2,
+                                .field-leftarrowsc {
+                                    display: none;
+
+                                    button {
+                                        rotate: 180deg;
+                                    }
+                                }
+
+                                .field-rightarrow1,
+                                .field-rightarrow2,
+                                .field-rightarrowsc {
+                                    margin-left: auto;
+                                }
+                            }
+
+                            &.field-navigationdotswrap1,
+                            &.field-navigationdotswrap2,
+                            &.field-navigationdotsselectcardwrapper {
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+
+                                .field-navigationdot11,
+                                .field-navigationdot31,
+                                .field-navigationdot1sc {
+                                    button {
+                                        width: 40px;
+                                        height: 8px;
+                                        border-radius: 200px;
+                                        background-color: var(--color-action-scroll-primary);
+                                    }
+                                }
+
+                                .field-navigationdot21,
+                                .field-navigationdot22,
+                                .field-navigationdot2sc {
+                                    margin-left: -10px;
+
+                                    button {
+                                        width: 8px;
+                                        height: 8px;
+                                        border-radius: 100%;
+                                        background-color: #D0DDFC;
+                                    }
+                                }
+                            }
+                        }
+
                     }
 
-                    /* form tag close */
+                    /* FORM TAG CLOSE */
                 }
 
-                /* .form calss close */
+                /* .FORM CLASS CLOSE */
             }
         }
     }
 
-    /* main tag close */
+    /*MAIN TAG CLOSE */
+
+    &:has(.field-fdbackedccwizard[data-visible="true"]) {
+        header {
+            height: 115px !important;
+            align-items: flex-start;
+        }
+    }
+
+    &:has(.field-resultpanel[data-visible="true"]) {
+        header {
+            height: 350px !important;
+            align-items: flex-start;
+        }
+
+        &:has(.field-errorresultpanel[data-visible="true"]) {
+            header {
+                height: 300px !important;
+                align-items: flex-start;
+            }
+        }
+    }
 
     footer {
         background: var(--color-interface-fd-background-primary);
@@ -3636,11 +5138,6 @@ body.fd-backed-cc {
             }
         }
     }
-
-    &:has(.field-fdbackedccwizard[data-visible="true"]) {
-        header {
-            height: 115px !important;
-            align-items: flex-start;
-        }
-    }
 }
+
+/*FD BACKED CC BODY END */
