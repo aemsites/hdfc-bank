@@ -49,13 +49,19 @@ const createFdEfReqPayload = (triggerPlace, globals) => {
     days: day.$value ? String(parseInt(day.$value, 10)) : '',
     months: String((parseInt(year.$value) * 12) + (parseInt(months.$value))) ?? '',
   };
-  
+
+  let totalYears = year.$value || 0;
   let totalMonths = parseInt(term.months) || 0;
   let totalDays = parseInt(term.days) || 0;
   
   if (totalMonths < 6) {
     totalDays += totalMonths * 30;
     totalMonths = 0;
+  }
+
+  if (totalYears >= 10) {
+    totalDays = 0;
+    totalMonths = totalYears * 12;
   }
   
   // Update term based on months <6
