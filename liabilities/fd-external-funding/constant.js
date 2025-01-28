@@ -31,6 +31,7 @@ import { CURRENT_FORM_CONTEXT } from '../../common/constants.js';
   const END_POINTS = {
     otpGen: `${BASE_URL}/content/hdfc_fdforms/api/customeridentificationotpgen.json`,
     fdSimulation: `${BASE_URL}/content/hdfc_fdforms/api/fdsimulation.json`,
+    accOpening: `${BASE_URL}/content/hdfc_fdforms/api/fdbooking.json`,
   };
   const DATA_LIMITS = {
     minInvest: 5000,
