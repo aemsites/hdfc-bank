@@ -478,16 +478,16 @@ body.fd-backed-cc {
                                             }
 
 
-                                            .image-wrapper {
-                                                background: url('../icons/freedom_card.png') no-repeat;
-                                                margin-top: 20px;
+                                            /*.image-wrapper {*/
+                                            /*    background: url('../icons/freedom_card.png') no-repeat;*/
+                                            /*    margin-top: 20px;*/
 
-                                                height: 125px;
+                                            /*    height: 125px;*/
 
-                                                picture {
-                                                    display: none;
-                                                }
-                                            }
+                                            /*    picture {*/
+                                            /*        display: none;*/
+                                            /*    }*/
+                                            /*}*/
 
                                             .field-cardfeatureswrapper1,
                                             .field-cardfeatureswrapper2 {
