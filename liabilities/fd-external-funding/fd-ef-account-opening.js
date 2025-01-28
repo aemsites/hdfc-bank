@@ -11,7 +11,7 @@ const {
 
 const fillSummaryDtls = (data, globals) => {
     const refAccountNumber = globals.form.thankYouPanel.thankYouFragment.thankyouLeftPanel.accountNumber;
-    const refAccountNumberField = formUtil(globals, refAccountNumber.referenceNumber);
+    const refAccountNumberField = formUtil(globals, refAccountNumber.accountNumberTY);
     refAccountNumberField.setValue(data.termDepositXfaceAccountOpeningResponseDTO.tdaccounTNo);
     const { 
         tyFDholder,
@@ -144,6 +144,9 @@ const createFdEfAccOpenReqPayload = (globals) => {
       globals.functions.setProperty(bannerImagePanel, { visible: false });      
       globals.functions.setProperty(globals.form.otpPanelWrapper, { visible: false });
       fillSummaryDtls(res, globals);
+    }
+    else {
+      errorHandlingFDExt(res, globals);
     }
   };
   
