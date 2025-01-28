@@ -1,25 +1,25 @@
 /*************************************************************************
-* ADOBE CONFIDENTIAL
-* ___________________
-*
-* Copyright 2022 Adobe
-* All Rights Reserved.
-*
-* NOTICE: All information contained herein is, and remains
-* the property of Adobe and its suppliers, if any. The intellectual
-* and technical concepts contained herein are proprietary to Adobe
-* and its suppliers and are protected by all applicable intellectual
-* property laws, including trade secret and copyright laws.
-* Dissemination of this information or reproduction of this material
-* is strictly forbidden unless prior written permission is obtained
-* from Adobe.
+ * ADOBE CONFIDENTIAL
+ * ___________________
+ *
+ * Copyright 2022 Adobe
+ * All Rights Reserved.
+ *
+ * NOTICE: All information contained herein is, and remains
+ * the property of Adobe and its suppliers, if any. The intellectual
+ * and technical concepts contained herein are proprietary to Adobe
+ * and its suppliers and are protected by all applicable intellectual
+ * property laws, including trade secret and copyright laws.
+ * Dissemination of this information or reproduction of this material
+ * is strictly forbidden unless prior written permission is obtained
+ * from Adobe.
 
-* Adobe permits you to use and modify this file solely in accordance with
-* the terms of the Adobe license agreement accompanying it.
-*************************************************************************/
-
+ * Adobe permits you to use and modify this file solely in accordance with
+ * the terms of the Adobe license agreement accompanying it.
+ *************************************************************************/
+//v0.22.116
 const DATE_TIME_REGEX =
-    /(?:[Eec]{1,6}|G{1,5}|[Qq]{1,5}|(?:[yYur]+|U{1,5})|[ML]{1,5}|d{1,2}|D{1,3}|F{1}|[abB]{1,5}|[hkHK]{1,2}|w{1,2}|W{1}|m{1,2}|s{1,2}|[zZOvV]{1,5}|[zZOvVxX]{1,3}|S{1,3}|'(?:[^']|'')*')|[^a-zA-Z']+/g;
+  /(?:[Eec]{1,6}|G{1,5}|[Qq]{1,5}|(?:[yYur]+|U{1,5})|[ML]{1,5}|d{1,2}|D{1,3}|F{1}|[abB]{1,5}|[hkHK]{1,2}|w{1,2}|W{1}|m{1,2}|s{1,2}|[zZOvV]{1,5}|[zZOvVxX]{1,3}|S{1,3}|'(?:[^']|'')*')|[^a-zA-Z']+/g;
 const ShorthandStyles$1 = ["full", "long", "medium", "short"];
 function getSkeleton(skeleton, language) {
     if (ShorthandStyles$1.find(type => skeleton.includes(type))) {
@@ -90,7 +90,7 @@ function parseDateTimeSkeleton(skeleton, language) {
             case 'U':
             case 'r':
                 throw new RangeError(
-                    '`Y/u/U/r` (year) patterns are not supported, use `y` instead'
+                  '`Y/u/U/r` (year) patterns are not supported, use `y` instead'
                 );
             case 'q':
             case 'Q':
@@ -109,7 +109,7 @@ function parseDateTimeSkeleton(skeleton, language) {
             case 'F':
             case 'g':
                 throw new RangeError(
-                    '`D/F/g` (day) patterns are not supported, use `d` instead'
+                  '`D/F/g` (day) patterns are not supported, use `d` instead'
                 );
             case 'E':
                 result.push(['weekday', ['short', 'short', 'short', 'long', 'narrow', 'narrow'][len - 1], len]);
@@ -132,7 +132,7 @@ function parseDateTimeSkeleton(skeleton, language) {
             case 'b':
             case 'B':
                 throw new RangeError(
-                    '`b/B` (period) patterns are not supported, use `a` instead'
+                  '`b/B` (period) patterns are not supported, use `a` instead'
                 );
             case 'h':
                 result.push(['hourCycle', 'h12']);
@@ -154,7 +154,7 @@ function parseDateTimeSkeleton(skeleton, language) {
             case 'J':
             case 'C':
                 throw new RangeError(
-                    '`j/J/C` (hour) patterns are not supported, use `h/H/K/k` instead'
+                  '`j/J/C` (hour) patterns are not supported, use `h/H/K/k` instead'
                 );
             case 'm':
                 result.push(['minute', ['numeric', '2-digit'][len - 1], len]);
@@ -167,7 +167,7 @@ function parseDateTimeSkeleton(skeleton, language) {
                 break;
             case 'A':
                 throw new RangeError(
-                    '`S/A` (millisecond) patterns are not supported, use `s` instead'
+                  '`S/A` (millisecond) patterns are not supported, use `s` instead'
                 );
             case 'O':
                 result.push(['timeZoneName', len < 4 ? 'shortOffset' : 'longOffset', len]);
@@ -183,7 +183,7 @@ function parseDateTimeSkeleton(skeleton, language) {
             case 'v':
             case 'V':
                 throw new RangeError(
-                    'z/v/V` (timeZone) patterns are not supported, use `X/x/Z/O` instead'
+                  'z/v/V` (timeZone) patterns are not supported, use `X/x/Z/O` instead'
                 );
             case '\'':
                 result.push(['literal', match.slice(1, -1).replace(/''/g, '\''), -1]);
@@ -205,9 +205,9 @@ function monthNames(locale, options) {
 }
 function digitChars(locale) {
     return new Intl.NumberFormat(locale, {style:'decimal', useGrouping:false})
-        .format(9876543210)
-        .split('')
-        .reverse();
+      .format(9876543210)
+      .split('')
+      .reverse();
 }
 function calendarName(locale) {
     const parts = new Intl.DateTimeFormat(locale, {era:'short'}).formatToParts(new Date());
@@ -379,7 +379,6 @@ function parseDate(dateString, language, skeleton, timeZone, bUseUTC = false) {
     let hourCycle = 'h12';
     let _bUseUTC = bUseUTC;
     let _setFullYear = false;
-    const isSeparator = str => str.length === 1 &&  ':-/.'.includes(str);
     const monthNumber = str => getNumber(str) - 1;
     const getNumber = str => str.split('').reduce((total, digit) => (total * 10) + digits.indexOf(digit), 0);
     const yearNumber = templateDigits => str => {
@@ -396,8 +395,7 @@ function parseDate(dateString, language, skeleton, timeZone, bUseUTC = false) {
     const months = monthNames(language, Object.fromEntries(parsed));
     parsed.forEach(([option, value, len]) => {
         if (option === 'literal') {
-            if (isSeparator(value)) regexParts.push(`[^${digits[0]}-${digits[9]}]`);
-            else regexParts.push(value);
+            regexParts.push(value);
         } else if (option === 'month' && ['numeric', '2-digit'].includes(value)) {
             regexParts.push(twoDigit);
             lookups.push(['month', monthNumber]);
@@ -449,9 +447,9 @@ function parseDate(dateString, language, skeleton, timeZone, bUseUTC = false) {
         }
         return regexParts;
     }, []);
-    const regex = new RegExp(regexParts.join(''));
+    const regex = new RegExp(`^${regexParts.join('')}$`);
     const match = dateString.match(regex);
-    if (match === null) return dateString;
+    if (match === null) return null;
     const dateObj = {year: 1972, month: 0, day: 1, hour: 0, minute: 0, second: 0, fractionalSecondDigits: 0};
     match.slice(1).forEach((m, index) => {
         const [element, func] = lookups[index];
@@ -461,13 +459,13 @@ function parseDate(dateString, language, skeleton, timeZone, bUseUTC = false) {
     if (hourCycle === 'h12' && dateObj.hour === 12) dateObj.hour = 0;
     if (_bUseUTC) {
         const utcDate = new Date(Date.UTC(
-            dateObj.year,
-            dateObj.month,
-            dateObj.day,
-            dateObj.hour,
-            dateObj.minute,
-            dateObj.second,
-            dateObj.fractionalSecondDigits,
+          dateObj.year,
+          dateObj.month,
+          dateObj.day,
+          dateObj.hour,
+          dateObj.minute,
+          dateObj.second,
+          dateObj.fractionalSecondDigits,
         ));
         if (_setFullYear) {
             utcDate.setUTCFullYear(dateObj.year);
@@ -475,13 +473,13 @@ function parseDate(dateString, language, skeleton, timeZone, bUseUTC = false) {
         return utcDate;
     }
     const jsDate = new Date(
-        dateObj.year,
-        dateObj.month,
-        dateObj.day,
-        dateObj.hour,
-        dateObj.minute,
-        dateObj.second,
-        dateObj.fractionalSecondDigits,
+      dateObj.year,
+      dateObj.month,
+      dateObj.day,
+      dateObj.hour,
+      dateObj.minute,
+      dateObj.second,
+      dateObj.fractionalSecondDigits,
     );
     if (_setFullYear) {
         jsDate.setFullYear(dateObj.year);
@@ -492,41 +490,41 @@ function parseDefaultDate(dateString, language, bUseUTC) {
     return parseDate(dateString, language, 'yyyy-MM-dd', null, bUseUTC);
 }
 const currencies = {
-  'da-DK': 'DKK',
-  'de-DE': 'EUR',
-  'en-US': 'USD',
-  'en-GB': 'GBP',
-  'es-ES': 'EUR',
-  'fi-FI': 'EUR',
-  'fr-FR': 'EUR',
-  'it-IT': 'EUR',
-  'ja-JP': 'JPY',
-  'nb-NO': 'NOK',
-  'nl-NL': 'EUR',
-  'pt-BR': 'BRL',
-  'sv-SE': 'SEK',
-  'zh-CN': 'CNY',
-  'zh-TW': 'TWD',
-  'ko-KR': 'KRW',
-  'cs-CZ': 'CZK',
-  'pl-PL': 'PLN',
-  'ru-RU': 'RUB',
-  'tr-TR': 'TRY'
+    'da-DK': 'DKK',
+    'de-DE': 'EUR',
+    'en-US': 'USD',
+    'en-GB': 'GBP',
+    'es-ES': 'EUR',
+    'fi-FI': 'EUR',
+    'fr-FR': 'EUR',
+    'it-IT': 'EUR',
+    'ja-JP': 'JPY',
+    'nb-NO': 'NOK',
+    'nl-NL': 'EUR',
+    'pt-BR': 'BRL',
+    'sv-SE': 'SEK',
+    'zh-CN': 'CNY',
+    'zh-TW': 'TWD',
+    'ko-KR': 'KRW',
+    'cs-CZ': 'CZK',
+    'pl-PL': 'PLN',
+    'ru-RU': 'RUB',
+    'tr-TR': 'TRY'
 };
 const locales = Object.keys(currencies);
 const getCurrency = function (locale) {
-  if (locales.indexOf(locale) > -1) {
-    return currencies[locale]
-  } else {
-    const matchingLocale = locales.find(x => x.startsWith(locale));
-    if (matchingLocale) {
-      return currencies[matchingLocale]
+    if (locales.indexOf(locale) > -1) {
+        return currencies[locale]
+    } else {
+        const matchingLocale = locales.find(x => x.startsWith(locale));
+        if (matchingLocale) {
+            return currencies[matchingLocale]
+        }
     }
-  }
-  return ''
+    return ''
 };
 const NUMBER_REGEX =
-    /(?:[#]+|[@]+(#+)?|[0]+|[,]|[.]|[-]|[+]|[%]|[¤]{1,4}(?:\/([a-zA-Z]{3}))?|[;]|[K]{1,2}|E{1,2}[+]?|'(?:[^']|'')*')|[^a-zA-Z']+/g;
+  /(?:[#]+|[@]+(#+)?|[0]+|[,]|[.]|[-]|[+]|[%]|[¤]{1,4}(?:\/([a-zA-Z]{3}))?|[;]|[K]{1,2}|E{1,2}[+]?|'(?:[^']|'')*')|[^a-zA-Z']+/g;
 const supportedUnits = ['acre', 'bit', 'byte', 'celsius', 'centimeter', 'day',
     'degree', 'fahrenheit', 'fluid-ounce', 'foot', 'gallon', 'gigabit',
     'gigabyte', 'gram', 'hectare', 'hour', 'inch', 'kilobit', 'kilobyte',

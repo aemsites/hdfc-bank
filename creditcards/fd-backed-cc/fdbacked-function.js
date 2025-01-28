@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable no-underscore-dangle */
 import {
   ageValidator,
@@ -297,9 +298,71 @@ function editCreds(globals) {
   globals.functions.setProperty(globals.form.loginMainPanel, { visible: true });
 }
 
-const fetchCardDetails = () => {
-  fetch('../../../creditcards/fd-backed-cc/cardDetails.json')
+const fetchCardDetails = async () => {
+// const jsonObj = {
+//   retailsProductCode:['dtdy66', ''],
+//   bussinessProductCode:['dtdy66', '']
+// };
+// return fetchJsonResponse('./cardDetails.json', {}, 'POST', true);
+  const cardUrl = '../../../creditcards/fd-backed-cc/cardDetails.json';
+  return fetch(cardUrl)
     .then((response) => response.json());
+};
+
+const fetchCardDetailsSuccessHandler = async (response, globals) => {
+  const { functions } = globals;
+  const { importData } = functions;
+
+  const processCards = (cards, type) => {
+    const capsType = type.charAt(0).toUpperCase() + type.slice(1);
+    if (!cards || cards.length === 0) return [];
+
+    return cards.map((card) => {
+      const benefits = card.allBenefitsAndFeatures?.[0] || {};
+      const features = card.features || [];
+      const benefitFeatures = benefits.features || [];
+      const benefitsForYou = benefits.benefitsForYou || [];
+
+      const flattenedFeatures = features.reduce((acc, feature, index) => {
+        acc[`${type}CardFeatureText${index + 1}`] = feature || '';
+        return acc;
+      }, {});
+
+      const flattenedBenefits = benefitFeatures.reduce((acc, benefit, index) => {
+        acc[`${type}CardBenefitMain${index + 1}`] = benefit || '';
+        return acc;
+      }, {});
+
+      const processedCard = {
+        [`${type}CardName`]: card.cardName || '',
+        [`${type}CardTagline`]: card.cardDescription || '',
+        ...flattenedFeatures,
+        [`backLink${capsType}Popup`]: benefits.heading || '',
+        ...flattenedBenefits,
+        [`${type}CardFeaturesBenefits`]: benefitsForYou[0] || '',
+        [`${type}CardMinFDAmount`]: card.minumumFdAmount?.replace(/,/g, '') || '',
+      };
+
+      return processedCard;
+    });
+  };
+
+  const retailValue = processCards(response.retailCards, 'retail');
+  const businessValue = processCards(response.businessCards, 'business');
+
+  if (retailValue.length > 0) {
+    importData(
+      retailValue,
+      globals?.form?.landingPageMainWrapper?.perfectCardPanel?.retailCardsSectionMainWrapper?.retailCardsSection?.retailCardsSectionRepeatable?.$qualifiedName,
+    );
+  }
+
+  if (businessValue.length > 0) {
+    importData(
+      businessValue,
+      globals?.form?.landingPageMainWrapper?.perfectCardPanel?.businessCardsSectionMainWrapper?.businessCardsSection?.businessCardsSectionRepeatable?.$qualifiedName,
+    );
+  }
 };
 
 const customerAccountDetails = (casaRes, globals) => {
@@ -314,28 +377,31 @@ const customerAccountDetails = (casaRes, globals) => {
   importData(value, globals.form?.accountSelectionWrapper?.accountSelectionPanel?.repeatWrapper?.$qualifiedName);
 
   setTimeout(() => {
-    const repeatPanels = document.querySelectorAll('.repeat-wrapper .panel-wrapper');
+    const panels = document.querySelectorAll("[data-repeatable='true']");
+    let maxBalance = -Infinity;
+    let selectedRadio = null;
 
-    if (repeatPanels.length > 0) {
-      repeatPanels.forEach((panel, index) => {
-        const checkboxWrapper = panel.querySelector('.checkbox-wrapper');
+    if (panels.length > 0) {
+      panels.forEach((panel) => {
+        const balanceInput = panel.querySelector("input[name='balanceAmount']");
+        const checkbox = panel.querySelector("input[type='checkbox']");
 
-        if (checkboxWrapper) {
-          const radioInput = document.createElement('input');
-          radioInput.type = 'radio';
-          radioInput.name = 'accSelectionGroup'; // Shared name for grouping radio buttons
-          radioInput.id = `radio-${index}`;
-          radioInput.value = `panel-${index}`;
+        if (balanceInput && checkbox) {
+          checkbox.type = 'radio';
+          checkbox.name = 'accSelectionGroup';
 
-          const radioLabel = document.createElement('label');
-          radioLabel.setAttribute('for', `radio-${index}`);
+          const balance = parseFloat(balanceInput.getAttribute('edit-value') || balanceInput.value || '0');
 
-          checkboxWrapper.innerHTML = '';
-
-          checkboxWrapper.appendChild(radioInput);
-          checkboxWrapper.appendChild(radioLabel);
+          if (balance > maxBalance) {
+            maxBalance = balance;
+            selectedRadio = checkbox;
+          }
         }
       });
+
+      if (selectedRadio) {
+        selectedRadio.checked = true;
+      }
     }
   }, 1000);
 };
@@ -353,4 +419,5 @@ export {
   updateOTPHelpText,
   fetchCardDetails,
   customerAccountDetails,
+  fetchCardDetailsSuccessHandler,
 };
