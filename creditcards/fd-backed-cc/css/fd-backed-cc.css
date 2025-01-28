@@ -655,7 +655,7 @@ body.fd-backed-cc {
                                         }
                                     }
 
-                                    .field-navigationarrowswrap1,
+                                    /* .field-navigationarrowswrap1,
                                     .field-navigationdotswrap1,
                                     .field-navigationarrowswrap2,
                                     .field-navigationdotswrap2 {
@@ -761,7 +761,7 @@ body.fd-backed-cc {
                                                 }
                                             }
                                         }
-                                    }
+                                    } */
                                 }
 
                                 &:has(.field-retailcardssectionmainwrapper[data-visible="true"]),
@@ -2474,6 +2474,152 @@ body.fd-backed-cc {
                                     }
                                 }
 
+                                .field-updatepanpanel {
+                                    background: #FEF8E6;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: space-between;
+                                    border-radius: 12px;
+
+                                    .field-updatepantext {
+                                        position: relative;
+                                        margin: 10px 0 5px 0;
+                                        padding-left: 30px;
+                                        display: flex;
+                                        align-items: center;
+                                        padding: 10px 15px 10px 50px;
+
+                                        &::before {
+                                            content: '';
+                                            position: absolute;
+                                            left: 20px;
+                                            background: url("../assets/icons/info_yellow.png") no-repeat center center;
+                                            width: 20px;
+                                            height: 20px;
+                                            background-size: 100%;
+                                        }
+
+                                        p {
+                                            font-size: var(--body-md-font-size);
+                                            font-weight: var(--font-weight-medium);
+                                            color: #D67D26;
+                                        }
+                                    }
+
+                                    .field-updatepanbtn{
+                                        button{
+                                            background: none;
+                                            width: auto;
+                                            background: none;
+                                            color: var(--color-action-text-secondary-default);
+                                            font-size: var(--body-md-font-size);
+                                            font-weight: var(--font-weight-bold);
+                                            position: relative;
+                                            display: flex;
+                                            padding-right: 20px;
+                                            align-items: center;    
+                                            margin-right: 15px;
+
+                                            &::after {
+                                                content: '';
+                                                position: absolute;
+                                                height: 20px;
+                                                width: 20px;
+                                                background: url("../assets/icons/right_blue_arrow.png") no-repeat 5px center;
+                                                top: 15px;
+                                                right: 0;
+                                            }
+
+                                            &:hover{
+                                                background: none !important;
+                                            }
+                                        }
+                                    }
+                                }
+
+                                .field-panupdatepopup{
+                                    width: 520px;
+                                    height: 508px;
+                                    border-radius: 12px;
+                                    background: var(--color-interface-background-primary);
+                                    margin: 0 auto;
+                                    text-align: center;
+                                    display: inline;
+                                    padding: 40px 32px;
+
+                                    .image-wrapper{
+                                        height: 141px;
+                                        background: url("../assets/images/pen_popup-image.png") no-repeat top center;
+                                        margin-bottom: 50px;
+                                        picture{
+                                            display: none;
+                                        }
+                                    }
+
+                                    .field-panupdatepopuptext1{
+                                        margin-bottom: 10px;
+                                        p{
+                                            color: var(--color-interface-text-quaternary);
+                                            font-size: var(--body-fd-xx-lg-font-size);
+                                            font-weight: var(--font-weight-bold);
+                                        }
+                                    }
+
+                                    .field-panupdatepopuptext2{
+                                        p p{
+                                            color: var(--color-input-text-primary);
+                                            font-size: var(--body-fd-lg-font-size);
+                                            font-weight: var(--font-weight-regular);
+                                        }
+                                    }
+
+                                    .field-panupdatebtnpanel{
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: center;                                        
+                                        margin-top: 20px;
+
+                                        button {
+                                           width: 216px;
+                                            font-weight: var(--font-weight-bold);
+                                            position: relative;
+
+                                            &::after{
+                                                content: "";
+                                                position: absolute;
+                                                width: 20px;
+                                                height: 20px;
+                                            }
+                                        }
+                                        .field-skippanupdate{
+                                            button {
+                                                background: none;
+                                                border: 1px solid var(--color-action-border-primary-default);
+                                                color: var(--color-action-text-secondary-default);
+
+                                                &:hover {
+                                                    color: var(--color-interface-text-tertiary);
+                                                }
+
+                                                &::after{                                                  
+                                                    background: url("../assets/icons/right_blue_arrow.png") no-repeat 95% center;
+                                                    background-size: 7px;
+                                                }
+                                            }                                          
+                                        }
+
+                                        .field-updatepanbtn{
+                                            button {
+                                                &::after{                                                  
+                                                    background: url("../assets/icons/right-arrow.png") no-repeat right center;
+                                                    background-size: 90%;
+                                                    margin: 1px 0 0 5px;
+                                                    
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
 
                                 .field-selectcreditcardsingle {
                                     display: flex;
@@ -4006,8 +4152,9 @@ body.fd-backed-cc {
                                                 }
                                             }
 
-                                            .plain-text-wrapper:nth-child(odd) {                                                
+                                            .plain-text-wrapper:nth-child(odd) {
                                                 text-align: right;
+
                                                 p {
                                                     font-size: var(--body-md-font-size);
                                                     font-weight: var(--font-weight-bold);
@@ -4779,6 +4926,123 @@ body.fd-backed-cc {
                                     &:hover {
                                         color: var(--color-interface-icon-highlight);
                                         text-decoration: underline;
+                                    }
+                                }
+                            }
+                        }
+
+                        /* navigation for scroller */
+                        .field-navigationarrowswrap1,
+                        .field-navigationdotswrap1,
+                        .field-navigationarrowswrap2,
+                        .field-navigationdotswrap2,
+                        .field-navigationarrowsselectcardwrapper,
+                        .field-navigationdotsselectcardwrapper {
+                            display: flex;
+                            flex-direction: row;
+
+                            .button-wrapper {
+
+                                button {
+                                    color: transparent;
+                                    width: auto;
+
+
+                                    &::after {
+                                        display: none;
+                                    }
+                                }
+                            }
+
+                            &.field-navigationarrowswrap1,
+                            &.field-navigationarrowswrap2,
+                            &.field-navigationarrowsselectcardwrapper {
+                                position: absolute;
+                                width: 100%;
+                                display: flex;
+                                align-items: center;
+                                justify-content: space-between;
+                                top: 40%;
+
+                                @media (max-width: 767px) {
+                                    display: none;
+                                }
+
+                                button {
+                                    width: 42px;
+                                    height: 42px;
+                                    border-radius: 50px;
+                                    position: relative;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    overflow: hidden;
+                                    color: transparent;
+
+                                    &::before {
+                                        content: '';
+                                        position: absolute;
+                                        height: 100%;
+                                        width: 100%;
+                                        background: transparent url("../assets/icons/right-arrow.png") no-repeat center center;
+                                        transition: transform 0.3s ease, background 0.3s ease;
+                                    }
+
+                                    &:hover {
+                                        background: var(--color-interface-border-highlight);
+
+                                        &::before {
+                                            transform: rotate(360deg);
+                                            background: var(--color-interface-border-highlight) url("../assets/icons/right-arrow.png") no-repeat center center;
+                                        }
+                                    }
+                                }
+
+                                .field-leftarrow1,
+                                .field-leftarrow2,
+                                .field-leftarrowsc {
+                                    display: none;
+
+                                    button {
+                                        rotate: 180deg;
+                                    }
+                                }
+
+                                .field-rightarrow1,
+                                .field-rightarrow2,
+                                .field-rightarrowsc {
+                                    margin-left: auto;
+                                }
+                            }
+
+                            &.field-navigationdotswrap1,
+                            &.field-navigationdotswrap2,
+                            &.field-navigationdotsselectcardwrapper {
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+
+                                .field-navigationdot11,
+                                .field-navigationdot31,
+                                .field-navigationdot1sc {
+                                    button {
+                                        width: 40px;
+                                        height: 8px;
+                                        border-radius: 200px;
+                                        background-color: var(--color-action-scroll-primary);
+                                    }
+                                }
+
+                                .field-navigationdot21,
+                                .field-navigationdot22,
+                                .field-navigationdot2sc {
+                                    margin-left: -10px;
+
+                                    button {
+                                        width: 8px;
+                                        height: 8px;
+                                        border-radius: 100%;
+                                        background-color: #D0DDFC;
                                     }
                                 }
                             }
