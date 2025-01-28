@@ -336,13 +336,13 @@ const fetchCardDetailsSuccessHandler = async (response, globals) => {
       const processedCard = {
         [`${type}CardName`]: card.cardName || '',
         [`${type}CardTagline`]: card.cardDescription || '',
+        [`${type}CardImage`]: card.cardImage || '',
         ...flattenedFeatures,
         [`backLink${capsType}Popup`]: benefits.heading || '',
         ...flattenedBenefits,
         [`${type}CardFeaturesBenefits`]: benefitsForYou[0] || '',
         [`${type}CardMinFDAmount`]: card.minumumFdAmount?.replace(/,/g, '') || '',
       };
-
       return processedCard;
     });
   };
