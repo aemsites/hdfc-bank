@@ -1292,3 +1292,28 @@ body.semi-form {
         .field-aem-otpicon, .field-aem-otpicon2 { margin: 0 auto 0 90px !important; }
     }
 }
+/* banner styles */
+/* .semi-form .cmp-container-wrapper {
+  content: '';
+  background-color: var(--color-interface-background-primary);
+  width: 100%;
+  background-size: 100% 100%;
+  background-position: center;
+  background-image: url('../../../icons/bannerDesktopSemi.webp');
+  height: 200px;
+}
+
+@media (width < 991px) {
+    .semi-form {
+      footer .cmp-container div > div {
+        text-align: left;
+        padding-left: 10px;
+      }
+  
+      .cmp-container-wrapper {
+        content: '';
+        background-image: url('../../../icons/bannerTabletSemi.webp');
+        height: 160px;
+      }
+    }
+} */
