@@ -10,7 +10,9 @@ const {
 } = FD_EF_CONSTANT;
 
 const fillSummaryDtls = (data, globals) => {
-    console.log('Data in fillSummaryDtls:', data);
+    const refAccountNumber = globals.form.thankYouPanel.thankYouFragment.thankyouLeftPanel.accountNumber;
+    const refAccountNumberField = formUtil(globals, refAccountNumber.referenceNumber);
+    refAccountNumberField.setValue(data.termDepositXfaceAccountOpeningResponseDTO.tdaccounTNo);
     const { 
         tyFDholder,
         principalAmtTY,
@@ -73,7 +75,7 @@ const createFdEfAccOpenReqPayload = (globals) => {
                 termDepositXfaceAccountOpeningRequestDTO: {
                     codAcctNo: currentFormContext?.simulationReqPayload.RequestPayload.SimulateTermDepositRequest.tdSimulationRequestDTO.termDepositFactsDTO.debitAccountNo,
                     intPayAcctNbr: currentFormContext?.simulationReqPayload.RequestPayload.SimulateTermDepositRequest.tdSimulationRequestDTO.termDepositFactsDTO.debitAccountNo,
-                    codAutoRenewRedem: "2",
+                    codAutoRenewRedem: currentFormContext.renewalInstructionValue,
                     codCcBrn: "2373",
                     depositAmt: currentFormContext?.simulationReqPayload.RequestPayload.SimulateTermDepositRequest.tdSimulationRequestDTO.termDepositFactsDTO.principalAmount.amount,
                     depositTermDays: currentFormContext?.simulationReqPayload.RequestPayload.SimulateTermDepositRequest.tdSimulationRequestDTO.termDepositFactsDTO.term.days,
