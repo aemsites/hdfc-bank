@@ -515,7 +515,7 @@ body.fd-backed-cc {
 
                                                     p p,
                                                     input {
-                                                        padding-left: 10px;
+                                                        padding-left: 25px;
                                                         font-size: var(--body-fd-sm-font-size);
                                                         font-weight: var(--font-weight-regular);
                                                         color: var(--color-interface-text-primary);
@@ -2079,6 +2079,50 @@ body.fd-backed-cc {
                         /* CARD DETAILS POPUP SCREEN END */
 
                         .field-accountselectionwrapper {
+                            .field-insufficientbalancepanel {
+                                background-color: var(--color-interface-error-box-primary);
+                                border-radius: 12px;
+                                padding: 10px 16px;
+                                margin-bottom: 30px;
+                                position: relative;
+                                display: inline;
+
+                                p {
+                                    font-size: var(--body-fd-sm-font-size);
+                                    font-weight: var(--font-weight-medium);
+                                    color: var(--color-input-text-msg-error);
+                                    margin-bottom: 0;
+                                    padding-left: 15px;
+                                }
+
+                                &::before {
+                                    content: "";
+                                    position: absolute;
+                                    background: url("../assets/icons/info-circle_error.png") no-repeat left center;
+                                    width: 20px;
+                                    height: 20px;
+                                    top: 22px;
+                                }
+
+                                .field-insufficientbalancetext1wrapper {
+                                    display: flex;
+                                    align-items: center;
+                                    gap: 0 !important;
+
+                                    .field-insufficientbalanceccname {
+                                        p {
+                                            padding-left: 0;
+                                        }
+                                    }
+                                }
+
+                                .field-insufficientbalancetext2{
+                                    p{
+                                        font-weight: var(--font-weight-regular);
+                                    }
+                                }
+                            }
+
                             .field-accountselectionlabel {
                                 p {
                                     font-size: var(--body-xx-lg-font-size);
@@ -2506,8 +2550,8 @@ body.fd-backed-cc {
                                         }
                                     }
 
-                                    .field-updatepanbtn{
-                                        button{
+                                    .field-updatepanbtn {
+                                        button {
                                             background: none;
                                             width: auto;
                                             background: none;
@@ -2517,7 +2561,7 @@ body.fd-backed-cc {
                                             position: relative;
                                             display: flex;
                                             padding-right: 20px;
-                                            align-items: center;    
+                                            align-items: center;
                                             margin-right: 15px;
 
                                             &::after {
@@ -2530,14 +2574,14 @@ body.fd-backed-cc {
                                                 right: 0;
                                             }
 
-                                            &:hover{
+                                            &:hover {
                                                 background: none !important;
                                             }
                                         }
                                     }
                                 }
 
-                                .field-panupdatepopup{
+                                .field-panupdatepopup {
                                     width: 520px;
                                     height: 508px;
                                     border-radius: 12px;
@@ -2547,51 +2591,54 @@ body.fd-backed-cc {
                                     display: inline;
                                     padding: 40px 32px;
 
-                                    .image-wrapper{
+                                    .image-wrapper {
                                         height: 141px;
                                         background: url("../assets/images/pen_popup-image.png") no-repeat top center;
                                         margin-bottom: 50px;
-                                        picture{
+
+                                        picture {
                                             display: none;
                                         }
                                     }
 
-                                    .field-panupdatepopuptext1{
+                                    .field-panupdatepopuptext1 {
                                         margin-bottom: 10px;
-                                        p{
+
+                                        p {
                                             color: var(--color-interface-text-quaternary);
                                             font-size: var(--body-fd-xx-lg-font-size);
                                             font-weight: var(--font-weight-bold);
                                         }
                                     }
 
-                                    .field-panupdatepopuptext2{
-                                        p p{
+                                    .field-panupdatepopuptext2 {
+                                        p p {
                                             color: var(--color-input-text-primary);
                                             font-size: var(--body-fd-lg-font-size);
                                             font-weight: var(--font-weight-regular);
                                         }
                                     }
 
-                                    .field-panupdatebtnpanel{
+                                    .field-panupdatebtnpanel {
                                         display: flex;
                                         align-items: center;
-                                        justify-content: center;                                        
+                                        justify-content: center;
                                         margin-top: 20px;
 
                                         button {
-                                           width: 216px;
+                                            width: 216px;
                                             font-weight: var(--font-weight-bold);
                                             position: relative;
 
-                                            &::after{
+                                            &::after {
                                                 content: "";
                                                 position: absolute;
                                                 width: 20px;
                                                 height: 20px;
                                             }
                                         }
-                                        .field-skippanupdate{
+
+                                        .field-skippanupdate {
                                             button {
                                                 background: none;
                                                 border: 1px solid var(--color-action-border-primary-default);
@@ -2601,20 +2648,20 @@ body.fd-backed-cc {
                                                     color: var(--color-interface-text-tertiary);
                                                 }
 
-                                                &::after{                                                  
+                                                &::after {
                                                     background: url("../assets/icons/right_blue_arrow.png") no-repeat 95% center;
                                                     background-size: 7px;
                                                 }
-                                            }                                          
+                                            }
                                         }
 
-                                        .field-updatepanbtn{
+                                        .field-updatepanbtn {
                                             button {
-                                                &::after{                                                  
+                                                &::after {
                                                     background: url("../assets/icons/right-arrow.png") no-repeat right center;
                                                     background-size: 90%;
                                                     margin: 1px 0 0 5px;
-                                                    
+
                                                 }
                                             }
                                         }
